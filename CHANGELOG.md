@@ -1,5 +1,11 @@
 # Apptag Changelog
 
+## [3.1.1] — 2026-05-06
+
+- 修复语言菜单勾选与实际语言不一致（`L10n.currentCode` 替代 UserDefaults）
+- 修复 `setupMenuBar` 重复调用导致图标消失（先移除旧 statusItem）
+- Preferences → General 新增「Show in Dock」Toggle
+
 ## [3.1.0] — 2026-05-06
 
 - 国际化：支持 9 种语言（英/简中/繁中/日/韩/俄/法/意/西）

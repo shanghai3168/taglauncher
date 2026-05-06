@@ -25,7 +25,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         L10n.setup()
-        NSApp.setActivationPolicy(.accessory)
+        let showDock = UserDefaults.standard.bool(forKey: "showDockIcon")
+        NSApp.setActivationPolicy(showDock ? .regular : .accessory)
         setupMenuBar()
         registerHotkey()
         observeOtherWindows()
@@ -35,6 +36,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Menu Bar
 
     private func setupMenuBar() {
+        // Remove old status item if re-creating (language switch, etc.)
+        if let existing = statusItem {
+            NSStatusBar.system.removeStatusItem(existing)
+        }
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
         if let button = statusItem.button {
@@ -80,7 +85,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Language submenu
         let langMenu = NSMenu()
-        let currentLang = UserDefaults.standard.string(forKey: "appLanguage") ?? "en"
+        let currentLang = L10n.currentCode
         for (code, name) in L10n.supported {
             let item = NSMenuItem(title: name, action: #selector(switchLanguage(_:)), keyEquivalent: "")
             item.representedObject = code
@@ -343,6 +348,7 @@ struct PreferencesView: View {
     @AppStorage("defaultGroupName") private var defaultGroupName = "Other"
     @AppStorage("displayMode") private var displayMode = "flat"
     @AppStorage("hideAppNames") private var hideAppNames = false
+    @AppStorage("showDockIcon") private var showDockIcon = false
 
     @State private var allApps: [AppInfo] = []
     @State private var tagColors: [String: Int] = [:]
@@ -465,6 +471,10 @@ struct PreferencesView: View {
                     Text("Icon display size. Grid columns adjust automatically.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
+                }
+
+                Section {
+                    Toggle("Show in Dock", isOn: $showDockIcon)
                 }
 
                 Section {

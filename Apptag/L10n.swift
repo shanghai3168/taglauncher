@@ -4,6 +4,7 @@ import Foundation
 
 enum L10n {
     static var current: [String: String] = [:]
+    private(set) static var currentCode = "en"
 
     /// Call once at startup to load the saved or system language.
     static func setup() {
@@ -33,7 +34,6 @@ enum L10n {
             forResource: code, withExtension: "json",
             subdirectory: "Localization"
         ) else {
-            // Fallback to bundled English
             if code != "en" { load("en") }
             return
         }
@@ -41,6 +41,7 @@ enum L10n {
               let dict = try? JSONSerialization.jsonObject(with: data) as? [String: String]
         else { return }
         current = dict
+        currentCode = code
     }
 
     private static func fallbackCode() -> String {
