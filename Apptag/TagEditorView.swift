@@ -16,9 +16,11 @@ struct TagEditorView: View {
     @State private var newTagColorIndex = 0
 
     private var sortedTagNames: [String] {
-        tagColors.keys
-            .filter { !excludedTagNames.contains($0) }
-            .sorted { $0.localizedStandardCompare($1) == .orderedAscending }
+        let order = TagEditor.orderedTagNames()
+        let filtered = tagColors.keys.filter { !excludedTagNames.contains($0) }
+        let ordered = order.filter { filtered.contains($0) }
+        let remaining = filtered.filter { !ordered.contains($0) }.sorted()
+        return ordered + remaining
     }
 
     var body: some View {
@@ -48,12 +50,12 @@ struct TagEditorView: View {
                             .foregroundStyle(.secondary)
                             .padding(.vertical, 40)
                     }
-                    ForEach(sortedTagNames, id: \.self) { tagName in
-                        tagEditRow(tagName)
-                        Divider().opacity(0.15).padding(.leading, 16)
-                    }
                     if addingNewTag {
                         newTagRow()
+                        Divider().opacity(0.15).padding(.leading, 16)
+                    }
+                    ForEach(sortedTagNames, id: \.self) { tagName in
+                        tagEditRow(tagName)
                         Divider().opacity(0.15).padding(.leading, 16)
                     }
                 }
