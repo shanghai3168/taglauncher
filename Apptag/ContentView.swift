@@ -467,13 +467,16 @@ struct ContentView: View {
         return VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 0) {
                 Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
+                    .layoutPriority(0)
                 Text(group.name)
                     .font(.system(size: tagFontSize, weight: .semibold))
                     .foregroundStyle(.secondary)
                     .lineLimit(1)
                     .truncationMode(.middle)
                     .padding(.horizontal, 10)
+                    .layoutPriority(1)
                 Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
+                    .layoutPriority(0)
             }
             let itemSize = iconSize + 28
             LazyVGrid(
