@@ -299,6 +299,15 @@ enum TagEditor {
         TagDatabase.save(store)
     }
 
+    /// Create a new tag definition (no app assignments yet).
+    static func createTag(_ name: String, color: Int) {
+        var store = TagDatabase.load()
+        guard store.tags[name] == nil else { return }
+        store.tags[name] = TagDatabase.TagDef(color: color)
+        if !store.tagOrder.contains(name) { store.tagOrder.append(name) }
+        TagDatabase.save(store)
+    }
+
     /// Annotate scanned apps with tags from the database.
     static func annotate(apps: [AppInfo]) -> [AppInfo] {
         let store = TagDatabase.load()

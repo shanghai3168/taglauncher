@@ -147,13 +147,12 @@ struct TagEditorView: View {
         // SIP-protected apps where xattr write silently fails.
     }
 
-    /// Add a new tag name+color to the local registry only (no xattr write until
-    /// the tag is assigned to apps via "Edit App Categories").
-    /// Does NOT call onRefresh — would overwrite tagColors with scan results.
+    /// Add a new tag name+color and persist to the database.
     private func addNewTag() {
         let name = newTagNameText.trimmingCharacters(in: .whitespaces)
         guard !name.isEmpty else { return }
         tagColors[name] = newTagColorIndex
+        TagEditor.createTag(name, color: newTagColorIndex)
         addingNewTag = false
         newTagNameText = ""
     }
