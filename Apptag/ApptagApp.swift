@@ -1,6 +1,7 @@
 import SwiftUI
 import AppKit
 import Carbon
+import ServiceManagement
 
 // MARK: - Application Entry Point
 
@@ -31,6 +32,31 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         registerHotkey()
         observeOtherWindows()
         observeEditMode()
+        observeDockSetting()
+        setupLaunchAtLogin()
+    }
+
+    /// Observe Show in Dock changes so it takes effect immediately.
+    private func observeDockSetting() {
+        NotificationCenter.default.addObserver(
+            forName: UserDefaults.didChangeNotification,
+            object: nil, queue: .main
+        ) { _ in
+            let show = UserDefaults.standard.bool(forKey: "showDockIcon")
+            NSApp.setActivationPolicy(show ? .regular : .accessory)
+        }
+    }
+
+    /// Enable launch at login by default; prompt user if disabled.
+    private func setupLaunchAtLogin() {
+        let key = "launchAtLogin"
+        if UserDefaults.standard.object(forKey: key) == nil {
+            // First launch: enable by default
+            UserDefaults.standard.set(true, forKey: key)
+            try? SMAppService.mainApp.register()
+        } else if UserDefaults.standard.bool(forKey: key) {
+            try? SMAppService.mainApp.register()
+        }
     }
 
     // MARK: - Menu Bar
@@ -349,6 +375,7 @@ struct PreferencesView: View {
     @AppStorage("displayMode") private var displayMode = "flat"
     @AppStorage("hideAppNames") private var hideAppNames = false
     @AppStorage("showDockIcon") private var showDockIcon = false
+    @AppStorage("launchAtLogin") private var launchAtLogin = true
 
     @State private var allApps: [AppInfo] = []
     @State private var tagColors: [String: Int] = [:]
@@ -414,6 +441,17 @@ struct PreferencesView: View {
         TabView {
             // Tab 1: General
             Form {
+                Section {
+                    Toggle("Launch at login", isOn: $launchAtLogin)
+                        .onChange(of: launchAtLogin) { _, enabled in
+                            if enabled {
+                                try? SMAppService.mainApp.register()
+                            } else {
+                                try? SMAppService.mainApp.unregister()
+                            }
+                        }
+                }
+
                 Section {
                     LabeledContent("App list style:") {
                         Picker("", selection: $displayMode) {

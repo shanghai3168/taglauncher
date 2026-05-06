@@ -1,5 +1,9 @@
 # Apptag Changelog
 
+## [3.1.2] — 2026-05-06
+- 修复 Show in Dock 不生效：监听 UserDefaults 变化动态切换 activationPolicy
+- 新增 Launch at login（开机启动）开关，默认勾选，首次安装自动启用
+
 ## [3.1.1] — 2026-05-06
 
 - 修复语言菜单勾选与实际语言不一致（`L10n.currentCode` 替代 UserDefaults）
