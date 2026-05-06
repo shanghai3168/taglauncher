@@ -397,7 +397,9 @@ struct ContentView: View {
                         ).id(group.id)
                     }
                 }.padding(20)
-            }.onAppear { scrollProxy = proxy }
+            }
+            .id(displayMode)  // force rebuild on mode switch
+            .onAppear { scrollProxy = proxy }
         }
     }
 
@@ -426,6 +428,7 @@ struct ContentView: View {
                     }
                     .padding(outerPad)
                 }
+                .id(displayMode)  // force rebuild on mode switch
                 .onAppear { scrollProxy = proxy }
             }
         }
