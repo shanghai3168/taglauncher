@@ -455,6 +455,7 @@ struct PreferencesView: View {
                         Toggle("Hide app names", isOn: $hideAppNames)
                     }
                 }
+                .padding(.bottom, 12)
 
                 Section {
                     LabeledContent("App list style:") {
