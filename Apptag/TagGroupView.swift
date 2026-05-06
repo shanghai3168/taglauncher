@@ -7,6 +7,7 @@ struct TagGroupView: View {
     let onSelectApp: (AppInfo) -> Void
     let tagFontSize: CGFloat
     let iconSize: CGFloat
+    var showNames: Bool = true
 
     /// Adaptive columns — auto-fit based on icon size and available width.
     private var columns: [GridItem] {
@@ -43,6 +44,7 @@ struct TagGroupView: View {
                     AppGridItem(
                         app: app,
                         iconSize: iconSize,
+                        showName: showNames,
                         onSelect: { onSelectApp(app) }
                     )
                 }

@@ -320,6 +320,7 @@ struct PreferencesView: View {
     @AppStorage("tagPosition") private var tagPosition = "left"
     @AppStorage("defaultGroupName") private var defaultGroupName = "Other"
     @AppStorage("displayMode") private var displayMode = "flat"
+    @AppStorage("hideAppNames") private var hideAppNames = false
 
     @State private var allApps: [AppInfo] = []
     @State private var tagColors: [String: Int] = [:]
@@ -397,6 +398,10 @@ struct PreferencesView: View {
                     Text("\"Flat\" shows apps directly. \"Container\" wraps each tag group in a rounded box.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
+                }
+
+                Section {
+                    Toggle("Hide app names", isOn: $hideAppNames)
                 }
 
                 Section {

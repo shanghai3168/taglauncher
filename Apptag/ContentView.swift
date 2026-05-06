@@ -212,6 +212,7 @@ struct ContentView: View {
     @AppStorage("tagPosition") private var tagPosition = "left"
     @State private var notchHeight: CGFloat = 0
     @AppStorage("displayMode") private var displayMode = "flat"
+    @AppStorage("hideAppNames") private var hideAppNames = false
 
     private var isSideLayout: Bool {
         tagPosition == "left" || tagPosition == "right"
@@ -382,7 +383,8 @@ struct ContentView: View {
                             group: group,
                             onSelectApp: { app in openApp(app) },
                             tagFontSize: tagFontSize,
-                            iconSize: iconSize
+                            iconSize: iconSize,
+                            showNames: !hideAppNames
                         ).id(group.id)
                     }
                 }.padding(20)
@@ -456,7 +458,7 @@ struct ContentView: View {
                 spacing: 2
             ) {
                 ForEach(group.apps) { app in
-                    AppGridItem(app: app, iconSize: iconSize, onSelect: { openApp(app) })
+                    AppGridItem(app: app, iconSize: iconSize, showName: !hideAppNames, onSelect: { openApp(app) })
                 }
             }
         }
