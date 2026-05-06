@@ -442,14 +442,18 @@ struct PreferencesView: View {
             // Tab 1: General
             Form {
                 Section {
-                    Toggle("Launch at login", isOn: $launchAtLogin)
-                        .onChange(of: launchAtLogin) { _, enabled in
-                            if enabled {
-                                try? SMAppService.mainApp.register()
-                            } else {
-                                try? SMAppService.mainApp.unregister()
+                    HStack(spacing: 20) {
+                        Toggle("Launch at login", isOn: $launchAtLogin)
+                            .onChange(of: launchAtLogin) { _, enabled in
+                                if enabled {
+                                    try? SMAppService.mainApp.register()
+                                } else {
+                                    try? SMAppService.mainApp.unregister()
+                                }
                             }
-                        }
+                        Toggle("Show in Dock", isOn: $showDockIcon)
+                        Toggle("Hide app names", isOn: $hideAppNames)
+                    }
                 }
 
                 Section {
@@ -509,14 +513,6 @@ struct PreferencesView: View {
                     Text("Icon display size. Grid columns adjust automatically.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                }
-
-                Section {
-                    Toggle("Show in Dock", isOn: $showDockIcon)
-                }
-
-                Section {
-                    Toggle("Hide app names", isOn: $hideAppNames)
                 }
             }
             .tabItem { Label("General", systemImage: "gearshape") }

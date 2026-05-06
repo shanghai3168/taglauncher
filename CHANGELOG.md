@@ -1,6 +1,7 @@
 # Apptag Changelog
 
 ## [3.1.3] — 2026-05-06
+
 - 清除 Re-index 功能：已脱离 Finder，每次 overlay 打开自动扫描新 app，无需手动触发
 
 ## [3.1.2] — 2026-05-06
