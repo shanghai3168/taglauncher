@@ -203,6 +203,7 @@ struct ContentView: View {
     @State private var selectedTagNames: Set<String> = []
     @State private var successToast: String? = nil
     @State private var draggedTagNames: [String] = []  // live drag order
+    @State private var dragItem: String? = nil          // currently dragged tag
 
     // Configurable defaults
     @AppStorage("defaultGroupName") private var defaultGroupName = "Other"
@@ -438,23 +439,32 @@ struct ContentView: View {
             HStack(spacing: 0) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Select tags:").font(.caption).foregroundStyle(.secondary).padding(.bottom, 4)
-                    List {
-                        ForEach(sortedTagNames, id: \.self) { tagName in
-                            selectableTagItem(tagName)
-                        }
-                        .onMove { from, to in
-                            var names = sortedTagNames
-                            names.move(fromOffsets: from, toOffset: to)
-                            // Persist the new order
-                            let fullOrder = TagEditor.orderedTagNames()
-                            let otherTags = fullOrder.filter { !names.contains($0) }
-                            draggedTagNames = names + otherTags
-                            TagEditor.reorderTags(draggedTagNames)
-                        }
-                    }
-                    .listStyle(.plain)
-                    .scrollContentBackground(.hidden)
-                    .frame(width: 170)
+                    Text("Drag to reorder").font(.caption2).foregroundStyle(.tertiary).padding(.bottom, 2)
+                    ScrollView(.vertical, showsIndicators: false) {
+                        VStack(spacing: 4) {
+                            ForEach(sortedTagNames, id: \.self) { tagName in
+                                selectableTagItem(tagName)
+                                    .onDrag {
+                                        dragItem = tagName
+                                        return NSItemProvider(object: tagName as NSString)
+                                    }
+                                    .onDrop(of: [.text], isTargeted: nil) { providers, _ in
+                                        guard let fromName = dragItem,
+                                              var names = draggedTagNames as [String]?,
+                                              let fromIdx = names.firstIndex(of: fromName),
+                                              let toIdx = names.firstIndex(of: tagName),
+                                              fromIdx != toIdx
+                                        else { return false }
+                                        let toOffset = toIdx > fromIdx ? toIdx + 1 : toIdx
+                                        names.move(fromOffsets: [fromIdx], toOffset: toOffset)
+                                        draggedTagNames = names
+                                        TagEditor.reorderTags(names)
+                                        dragItem = nil
+                                        return true
+                                    }
+                            }
+                        }.padding(12)
+                    }.frame(width: 155)
                 }
                 Rectangle().fill(.secondary.opacity(0.12)).frame(width: 1)
 
@@ -497,22 +507,21 @@ struct ContentView: View {
 
     private func selectableTagItem(_ tagName: String) -> some View {
         let isSelected = selectedTagNames.contains(tagName)
-        return Button {
-            if isSelected { selectedTagNames.remove(tagName) } else { selectedTagNames.insert(tagName) }
-        } label: {
-            HStack(spacing: 6) {
-                Circle()
-                    .fill(isSelected ? Color.accentColor : Color.secondary.opacity(0.3))
-                    .frame(width: 16, height: 16)
-                    .overlay(isSelected ? Image(systemName: "checkmark").font(.system(size: 8, weight: .bold)).foregroundStyle(.white) : nil)
-                Text(tagName).font(.system(size: 13, weight: .medium)).foregroundStyle(.primary)
-            }
-            .padding(.horizontal, 10).padding(.vertical, 5)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(RoundedRectangle(cornerRadius: 6)
-                .fill(Color(nsColor: TagColor.nsColor(for: tagColors[tagName] ?? 0).withAlphaComponent(0.3))))
+        return HStack(spacing: 6) {
+            Circle()
+                .fill(isSelected ? Color.accentColor : Color.secondary.opacity(0.3))
+                .frame(width: 16, height: 16)
+                .overlay(isSelected ? Image(systemName: "checkmark").font(.system(size: 8, weight: .bold)).foregroundStyle(.white) : nil)
+            Text(tagName).font(.system(size: 13, weight: .medium)).foregroundStyle(.primary)
         }
-        .buttonStyle(.plain)
+        .padding(.horizontal, 10).padding(.vertical, 5)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(RoundedRectangle(cornerRadius: 6)
+            .fill(Color(nsColor: TagColor.nsColor(for: tagColors[tagName] ?? 0).withAlphaComponent(0.3))))
+        .contentShape(RoundedRectangle(cornerRadius: 6))
+        .onTapGesture {
+            if isSelected { selectedTagNames.remove(tagName) } else { selectedTagNames.insert(tagName) }
+        }
     }
 
     private func confirmAssign() {
