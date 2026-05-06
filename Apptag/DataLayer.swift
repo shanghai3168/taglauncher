@@ -96,10 +96,12 @@ enum AppIndexer {
     }
 
     /// Group apps by their tags (from TagDatabase).
+    /// Groups are sorted by tagOrder (user-defined), falling back to alpha.
     static func group(
         apps: [AppInfo],
         nameOverrides: [String: String] = [:],
-        defaultGroupName: String = "Other"
+        defaultGroupName: String = "Other",
+        tagOrder: [String] = []
     ) -> [TagGroup] {
         let macCategory = "Mac自带"
         var dict: [String: [AppInfo]] = [:]
@@ -116,19 +118,27 @@ enum AppIndexer {
             }
         }
 
+        // Build sort index from tagOrder: lower index = appears first
+        var orderIndex: [String: Int] = [:]
+        for (i, name) in tagOrder.enumerated() {
+            orderIndex[name] = i
+        }
+
         return dict
             .sorted { lhs, rhs in
                 if lhs.key == macCategory { return false }
                 if rhs.key == macCategory { return true }
                 if lhs.key == defaultGroupName { return false }
                 if rhs.key == defaultGroupName { return true }
+                // Use custom order if both are in tagOrder
+                let li = orderIndex[lhs.key] ?? Int.max
+                let ri = orderIndex[rhs.key] ?? Int.max
+                if li != ri { return li < ri }
                 return lhs.key.localizedStandardCompare(rhs.key) == .orderedAscending
             }
             .map { TagGroup(name: $0.key, apps: $0.value) }
     }
 }
-
-// MARK: - Local Tag Database (JSON-backed)
 
 enum TagDatabase {
 
@@ -142,6 +152,7 @@ enum TagDatabase {
         var version: Int = 1
         var tags: [String: TagDef] = [:]
         var appTags: [String: [String]] = [:]  // path → tag names
+        var tagOrder: [String] = []  // display order; empty → alpha sort
         var migrated: Bool = false
     }
 
@@ -273,6 +284,21 @@ enum TagEditor {
         return store.tags.mapValues { $0.color }
     }
 
+    /// Tag names in display order. Falls back to alpha sort if no custom order.
+    static func orderedTagNames() -> [String] {
+        let store = TagDatabase.load()
+        let ordered = store.tagOrder.filter { store.tags[$0] != nil }
+        let remaining = store.tags.keys.filter { !ordered.contains($0) }.sorted()
+        return ordered + remaining
+    }
+
+    /// Persist a new tag display order.
+    static func reorderTags(_ names: [String]) {
+        var store = TagDatabase.load()
+        store.tagOrder = names
+        TagDatabase.save(store)
+    }
+
     /// Annotate scanned apps with tags from the database.
     static func annotate(apps: [AppInfo]) -> [AppInfo] {
         let store = TagDatabase.load()
@@ -291,7 +317,11 @@ enum TagEditor {
     static func assignTag(_ tag: String, color: Int, to paths: [String]) {
         var store = TagDatabase.load()
         // Ensure tag definition exists
-        if store.tags[tag] == nil { store.tags[tag] = TagDatabase.TagDef(color: color) }
+        if store.tags[tag] == nil {
+            store.tags[tag] = TagDatabase.TagDef(color: color)
+            // New tag: append to display order
+            if !store.tagOrder.contains(tag) { store.tagOrder.append(tag) }
+        }
         for path in paths {
             var current = store.appTags[path] ?? []
             if !current.contains(tag) {
@@ -335,6 +365,7 @@ enum TagEditor {
     static func deleteTagCompletely(_ tag: String) {
         var store = TagDatabase.load()
         store.tags.removeValue(forKey: tag)
+        store.tagOrder.removeAll { $0 == tag }
         for (path, var tags) in store.appTags {
             tags.removeAll { $0 == tag }
             if tags.isEmpty {

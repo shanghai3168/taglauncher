@@ -202,6 +202,7 @@ struct ContentView: View {
     @State private var selectedAppPaths: Set<URL> = []
     @State private var selectedTagNames: Set<String> = []
     @State private var successToast: String? = nil
+    @State private var draggedTagNames: [String] = []  // live drag order
 
     // Configurable defaults
     @AppStorage("defaultGroupName") private var defaultGroupName = "Other"
@@ -267,8 +268,11 @@ struct ContentView: View {
     func setEditPhase(_ phase: EditPhase) {
         if phase != .none {
             NotificationCenter.default.post(name: .apptagEditModeChanged, object: nil, userInfo: ["active": true])
-            // Re-activate to ensure overlay window stays key during view transition
             NSApp.activate(ignoringOtherApps: true)
+            // Sync drag order from database when entering edit mode
+            if draggedTagNames.isEmpty {
+                draggedTagNames = TagEditor.orderedTagNames()
+            }
         }
         editPhase = phase
         if phase == .none {
@@ -434,13 +438,23 @@ struct ContentView: View {
             HStack(spacing: 0) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Select tags:").font(.caption).foregroundStyle(.secondary).padding(.bottom, 4)
-                    ScrollView(.vertical, showsIndicators: false) {
-                        VStack(spacing: 4) {
-                            ForEach(sortedTagNames, id: \.self) { tagName in
-                                selectableTagItem(tagName)
-                            }
-                        }.padding(12)
-                    }.frame(width: 145)
+                    List {
+                        ForEach(sortedTagNames, id: \.self) { tagName in
+                            selectableTagItem(tagName)
+                        }
+                        .onMove { from, to in
+                            var names = sortedTagNames
+                            names.move(fromOffsets: from, toOffset: to)
+                            // Persist the new order
+                            let fullOrder = TagEditor.orderedTagNames()
+                            let otherTags = fullOrder.filter { !names.contains($0) }
+                            draggedTagNames = names + otherTags
+                            TagEditor.reorderTags(draggedTagNames)
+                        }
+                    }
+                    .listStyle(.plain)
+                    .scrollContentBackground(.hidden)
+                    .frame(width: 170)
                 }
                 Rectangle().fill(.secondary.opacity(0.12)).frame(width: 1)
 
@@ -544,9 +558,11 @@ struct ContentView: View {
     // MARK: - Computed
 
     private var sortedTagNames: [String] {
-        tagColors.keys
-            .filter { $0 != "Mac自带" && $0 != defaultGroupName }
-            .sorted { $0.localizedStandardCompare($1) == .orderedAscending }
+        let filtered = tagColors.keys.filter { $0 != "Mac自带" && $0 != defaultGroupName }
+        // Use user-defined order, fall back to alpha
+        let ordered = draggedTagNames.filter { filtered.contains($0) }
+        let remaining = filtered.filter { !ordered.contains($0) }.sorted()
+        return ordered + remaining
     }
 
     private var tagLabels: [TagLabel] {
@@ -554,7 +570,10 @@ struct ContentView: View {
     }
 
     private var groups: [TagGroup] {
-        AppIndexer.group(apps: allApps, defaultGroupName: defaultGroupName)
+        let order = draggedTagNames.isEmpty
+            ? TagEditor.orderedTagNames()
+            : draggedTagNames
+        return AppIndexer.group(apps: allApps, defaultGroupName: defaultGroupName, tagOrder: order)
     }
 
     // MARK: - Actions
@@ -570,9 +589,11 @@ struct ContentView: View {
             let store = TagDatabase.migrateFromFinderIfNeeded(apps: apps)
             apps = TagEditor.annotate(apps: apps)
             let colors = store.tags.mapValues { $0.color }
+            let order = TagEditor.orderedTagNames()
             DispatchQueue.main.async {
                 allApps = apps
                 tagColors = colors
+                draggedTagNames = order
             }
         }
     }
