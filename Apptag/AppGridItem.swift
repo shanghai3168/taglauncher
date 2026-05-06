@@ -26,12 +26,13 @@ struct AppGridItem: View {
                     )
                     .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isHovered)
 
-                if showName {
+                if showName || isHovered {
                     Text(app.name)
                         .font(.system(size: 11, weight: .medium))
                         .lineLimit(1)
                         .truncationMode(.tail)
                         .frame(maxWidth: iconSize + 20)
+                        .opacity(showName ? 1 : 0.85)
                 }
             }
             .padding(.vertical, 8)
