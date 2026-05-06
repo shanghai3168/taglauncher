@@ -391,45 +391,50 @@ struct ContentView: View {
     }
 
     private var containerGrid: some View {
-        let minContainerWidth: CGFloat = max(iconSize * 3 + 100, 300)
-        let columns = [GridItem(.adaptive(minimum: minContainerWidth, maximum: minContainerWidth * 1.5), spacing: 16)]
-        return ScrollView {
-            LazyVGrid(columns: columns, alignment: .leading, spacing: 16) {
-                ForEach(groups) { group in
-                    VStack(alignment: .leading, spacing: 6) {
-                        // Group header
-                        HStack(spacing: 0) {
-                            Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
-                            Text(group.name)
-                                .font(.system(size: tagFontSize, weight: .semibold))
-                                .foregroundStyle(.secondary)
-                                .padding(.horizontal, 10)
-                            Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
-                        }
-                        // App grid
-                        let itemSize = iconSize + 28
-                        LazyVGrid(
-                            columns: [GridItem(.adaptive(minimum: itemSize, maximum: itemSize + 36), spacing: 6)],
-                            spacing: 2
-                        ) {
-                            ForEach(group.apps) { app in
-                                AppGridItem(app: app, iconSize: iconSize, onSelect: { openApp(app) })
+        GeometryReader { geo in
+            let availableWidth = geo.size.width - 40  // padding
+            let spacing: CGFloat = 16
+            let containerMin: CGFloat = 320
+            let colCount = max(1, Int((availableWidth + spacing) / (containerMin + spacing)))
+            let cols = Array(repeating: GridItem(.flexible(), spacing: spacing), count: colCount)
+            ScrollView {
+                LazyVGrid(columns: cols, alignment: .leading, spacing: spacing) {
+                    ForEach(groups) { group in
+                        VStack(alignment: .leading, spacing: 6) {
+                            // Group header
+                            HStack(spacing: 0) {
+                                Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
+                                Text(group.name)
+                                    .font(.system(size: tagFontSize, weight: .semibold))
+                                    .foregroundStyle(.secondary)
+                                    .padding(.horizontal, 10)
+                                Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
+                            }
+                            // App grid — adaptive inside the container
+                            let itemSize = iconSize + 28
+                            LazyVGrid(
+                                columns: [GridItem(.adaptive(minimum: itemSize, maximum: itemSize + 36), spacing: 6)],
+                                spacing: 2
+                            ) {
+                                ForEach(group.apps) { app in
+                                    AppGridItem(app: app, iconSize: iconSize, onSelect: { openApp(app) })
+                                }
                             }
                         }
+                        .id(group.id)
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 14)
+                                .fill(.ultraThinMaterial)
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 14)
+                                .stroke(Color.primary.opacity(0.08), lineWidth: 1)
+                        )
                     }
-                    .id(group.id)
-                    .padding(16)
-                    .background(
-                        RoundedRectangle(cornerRadius: 14)
-                            .fill(.ultraThinMaterial)
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 14)
-                            .stroke(Color.primary.opacity(0.08), lineWidth: 1)
-                    )
                 }
+                .padding(20)
             }
-            .padding(20)
         }
     }
 
