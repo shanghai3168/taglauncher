@@ -204,6 +204,7 @@ struct ContentView: View {
     @State private var successToast: String? = nil
     @State private var draggedTagNames: [String] = []  // live drag order
     @State private var dragItem: String? = nil          // currently dragged tag
+    @State private var highlightedGroup: String? = nil  // container highlight
 
     // Configurable defaults
     @AppStorage("defaultGroupName") private var defaultGroupName = "Other"
@@ -339,7 +340,11 @@ struct ContentView: View {
             HStack(spacing: 8) {
                 ForEach(tagLabels) { tag in
                     TagPill(name: tag.name, colorIndex: tag.colorIndex,
-                            action: { scrollTo(tag.id) })
+                            action: {
+                        if highlightedGroup == tag.id { highlightedGroup = nil }
+                        else { highlightedGroup = tag.id }
+                        scrollTo(tag.id)
+                    })
                 }
             }.padding(.horizontal, 24)
         }
@@ -350,7 +355,11 @@ struct ContentView: View {
             VStack(spacing: 6) {
                 ForEach(tagLabels) { tag in
                     SideTagPill(name: tag.name, colorIndex: tag.colorIndex,
-                                action: { scrollTo(tag.id) })
+                                action: {
+                        if highlightedGroup == tag.id { highlightedGroup = nil }
+                        else { highlightedGroup = tag.id }
+                        scrollTo(tag.id)
+                    })
                 }
             }.padding(12)
         }.frame(width: 135)
@@ -403,18 +412,21 @@ struct ContentView: View {
 
             let columns = distributeToColumns(groups: groups, colCount: colCount, colWidth: actualColW)
 
-            ScrollView {
-                HStack(alignment: .top, spacing: gap) {
-                    ForEach(0..<colCount, id: \.self) { ci in
-                        LazyVStack(spacing: gap) {
-                            ForEach(columns[ci]) { group in
-                                masonryCard(group, width: actualColW)
-                                    .id(group.id)
+            ScrollViewReader { proxy in
+                ScrollView {
+                    HStack(alignment: .top, spacing: gap) {
+                        ForEach(0..<colCount, id: \.self) { ci in
+                            LazyVStack(spacing: gap) {
+                                ForEach(columns[ci]) { group in
+                                    masonryCard(group, width: actualColW)
+                                        .id(group.id)
+                                }
                             }
                         }
                     }
+                    .padding(outerPad)
                 }
-                .padding(outerPad)
+                .onAppear { scrollProxy = proxy }
             }
         }
     }
@@ -441,7 +453,9 @@ struct ContentView: View {
     }
 
     private func masonryCard(_ group: TagGroup, width: CGFloat) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
+        let isHL = highlightedGroup == group.name
+        let hlColor = Color(nsColor: TagColor.nsColor(for: tagColors[group.name] ?? 0))
+        return VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 0) {
                 Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
                 Text(group.name)
@@ -470,7 +484,8 @@ struct ContentView: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 14)
-                .stroke(Color.primary.opacity(0.08), lineWidth: 1)
+                .stroke(isHL ? hlColor : Color.primary.opacity(0.08),
+                        lineWidth: isHL ? 3 : 1)
         )
     }
 
