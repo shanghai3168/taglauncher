@@ -391,26 +391,54 @@ struct ContentView: View {
     }
 
     private var containerGrid: some View {
-        let gap: CGFloat = 16
-        let minCardW: CGFloat = 260
-        let maxCardW: CGFloat = 500
-        return ScrollView {
-            LazyVGrid(
-                columns: [GridItem(.adaptive(minimum: minCardW, maximum: maxCardW), spacing: gap)],
-                spacing: gap
-            ) {
-                ForEach(groups) { group in
-                    containerView(for: group)
-                        .id(group.id)
+        GeometryReader { geo in
+            let outerPad: CGFloat = 20
+            let gap: CGFloat = 16
+            let available = geo.size.width - outerPad * 2
+            let colW: CGFloat = 280
+            let colCount = max(1, Int((available + gap) / (colW + gap)))
+            let actualColW = (available - gap * CGFloat(colCount - 1)) / CGFloat(colCount)
+
+            let columns = distributeToColumns(groups: groups, colCount: colCount, colWidth: actualColW)
+
+            ScrollView {
+                HStack(alignment: .top, spacing: gap) {
+                    ForEach(0..<colCount, id: \.self) { ci in
+                        LazyVStack(spacing: gap) {
+                            ForEach(columns[ci]) { group in
+                                masonryCard(group, width: actualColW)
+                                    .id(group.id)
+                            }
+                        }
+                    }
                 }
+                .padding(outerPad)
             }
-            .padding(20)
         }
     }
 
-    /// Single container: header + app grid inside rounded rect.
-    /// Width is intrinsic (not fixed) — adapts to content and grid column.
-    private func containerView(for group: TagGroup) -> some View {
+    /// Distribute groups to the shortest column.
+    private func distributeToColumns(groups: [TagGroup], colCount: Int, colWidth: CGFloat) -> [[TagGroup]] {
+        var cols = Array(repeating: [TagGroup](), count: colCount)
+        var h = Array(repeating: CGFloat(0), count: colCount)
+        for g in groups {
+            let est = estimatedCardHeight(g, width: colWidth)
+            let ci = h.firstIndex(of: h.min()!)!
+            cols[ci].append(g)
+            h[ci] += est + 16
+        }
+        return cols
+    }
+
+    private func estimatedCardHeight(_ group: TagGroup, width: CGFloat) -> CGFloat {
+        let inner = width - 32
+        let itemW = iconSize + 28 + 6
+        let perRow = max(1, Int(inner / itemW))
+        let rows = (group.apps.count + perRow - 1) / perRow
+        return 32 + CGFloat(rows) * (iconSize + 30)
+    }
+
+    private func masonryCard(_ group: TagGroup, width: CGFloat) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 0) {
                 Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
@@ -430,6 +458,7 @@ struct ContentView: View {
                 }
             }
         }
+        .frame(maxWidth: width)
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 14)
