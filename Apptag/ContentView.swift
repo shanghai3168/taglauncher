@@ -345,6 +345,9 @@ struct ContentView: View {
                         else { highlightedGroup = tag.id }
                         scrollTo(tag.id)
                     })
+                    .onHover { hovering in
+                        if hovering { scrollTo(tag.id) }
+                    }
                 }
             }.padding(.horizontal, 24)
         }
@@ -360,6 +363,9 @@ struct ContentView: View {
                         else { highlightedGroup = tag.id }
                         scrollTo(tag.id)
                     })
+                    .onHover { hovering in
+                        if hovering { scrollTo(tag.id) }
+                    }
                 }
             }.padding(12)
         }.frame(width: 135)
