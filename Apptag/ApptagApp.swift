@@ -24,7 +24,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var isInEditMode = false  // Suppress auto-dismiss during editing
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // Use .accessory so the app appears in Force Quit (unlike LSUIElement)
+        L10n.setup()
         NSApp.setActivationPolicy(.accessory)
         setupMenuBar()
         registerHotkey()
@@ -50,7 +50,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let menu = NSMenu()
         menu.addItem(
             NSMenuItem(
-                title: "Show Apptag",
+                title: tr("menu.show"),
                 action: #selector(toggleOverlay),
                 keyEquivalent: ""
             )
@@ -61,7 +61,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?"
         let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "?"
         let versionItem = NSMenuItem(
-            title: "Version \(appVersion) (\(buildNumber))",
+            title: "\(tr("menu.version")) \(appVersion) (\(buildNumber))",
             action: nil,
             keyEquivalent: ""
         )
@@ -70,16 +70,31 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         menu.addItem(.separator())
         let prefsItem = NSMenuItem(
-            title: "Preferences...",
+            title: tr("menu.preferences"),
             action: #selector(openPreferences),
             keyEquivalent: ","
         )
         prefsItem.keyEquivalentModifierMask = .command
         menu.addItem(prefsItem)
         menu.addItem(.separator())
+
+        // Language submenu
+        let langMenu = NSMenu()
+        let currentLang = UserDefaults.standard.string(forKey: "appLanguage") ?? "en"
+        for (code, name) in L10n.supported {
+            let item = NSMenuItem(title: name, action: #selector(switchLanguage(_:)), keyEquivalent: "")
+            item.representedObject = code
+            item.state = (code == currentLang) ? .on : .off
+            langMenu.addItem(item)
+        }
+        let langItem = NSMenuItem(title: tr("menu.language"), action: nil, keyEquivalent: "")
+        langItem.submenu = langMenu
+        menu.addItem(langItem)
+
+        menu.addItem(.separator())
         menu.addItem(
             NSMenuItem(
-                title: "Quit",
+                title: tr("menu.quit"),
                 action: #selector(NSApplication.terminate(_:)),
                 keyEquivalent: "q"
             )
@@ -236,6 +251,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func openPreferences() {
         hideOverlay()
         NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+    }
+
+    @objc private func switchLanguage(_ sender: NSMenuItem) {
+        guard let code = sender.representedObject as? String else { return }
+        L10n.switchTo(code)
+        // Rebuild menu to update checkmarks
+        setupMenuBar()
     }
 }
 

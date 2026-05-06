@@ -39,6 +39,9 @@ elif [ -f "$SWIFT_DIR/AppIcon.iconset/icon_512x512@2x.png" ]; then
     iconutil -c icns "$SWIFT_DIR/AppIcon.iconset" -o "$RESOURCES_DIR/AppIcon.icns" 2>/dev/null
 fi
 
+echo "==> Copying Localization files..."
+cp -r "$SWIFT_DIR/Localization" "$RESOURCES_DIR/Localization"
+
 echo "==> Setting permissions..."
 chmod +x "$MACOS_DIR/$APP_NAME"
 
