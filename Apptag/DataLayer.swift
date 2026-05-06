@@ -304,7 +304,7 @@ enum TagEditor {
         var store = TagDatabase.load()
         guard store.tags[name] == nil else { return }
         store.tags[name] = TagDatabase.TagDef(color: color)
-        if !store.tagOrder.contains(name) { store.tagOrder.append(name) }
+        if !store.tagOrder.contains(name) { store.tagOrder.insert(name, at: 0) }
         TagDatabase.save(store)
     }
 
@@ -329,7 +329,7 @@ enum TagEditor {
         if store.tags[tag] == nil {
             store.tags[tag] = TagDatabase.TagDef(color: color)
             // New tag: append to display order
-            if !store.tagOrder.contains(tag) { store.tagOrder.append(tag) }
+            if !store.tagOrder.contains(tag) { store.tagOrder.insert(tag, at: 0) }
         }
         for path in paths {
             var current = store.appTags[path] ?? []
