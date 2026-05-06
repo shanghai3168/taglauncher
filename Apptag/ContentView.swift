@@ -272,10 +272,10 @@ struct ContentView: View {
         if phase != .none {
             NotificationCenter.default.post(name: .apptagEditModeChanged, object: nil, userInfo: ["active": true])
             NSApp.activate(ignoringOtherApps: true)
-            // Sync drag order from database when entering edit mode
-            if draggedTagNames.isEmpty {
-                draggedTagNames = TagEditor.orderedTagNames()
-            }
+            // Always sync tag list from database when entering edit mode
+            let store = TagDatabase.load()
+            tagColors = store.tags.mapValues { $0.color }
+            draggedTagNames = TagEditor.orderedTagNames()
         }
         editPhase = phase
         if phase == .none {
