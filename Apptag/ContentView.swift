@@ -392,50 +392,81 @@ struct ContentView: View {
 
     private var containerGrid: some View {
         GeometryReader { geo in
-            let availableWidth = geo.size.width - 40  // padding
-            let spacing: CGFloat = 16
-            let containerMin: CGFloat = 320
-            let colCount = max(1, Int((availableWidth + spacing) / (containerMin + spacing)))
-            let cols = Array(repeating: GridItem(.flexible(), spacing: spacing), count: colCount)
+            let totalWidth = geo.size.width - 40  // outer padding
+            let gap: CGFloat = 12
+            let containerMin: CGFloat = 300
+            let colCount = max(1, Int(totalWidth / containerMin))
+            let colWidth = (totalWidth - gap * CGFloat(colCount - 1)) / CGFloat(colCount)
+            let columns = distributeColumns(groups: groups, colCount: colCount, colWidth: colWidth)
             ScrollView {
-                LazyVGrid(columns: cols, alignment: .leading, spacing: spacing) {
-                    ForEach(groups) { group in
-                        VStack(alignment: .leading, spacing: 6) {
-                            // Group header
-                            HStack(spacing: 0) {
-                                Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
-                                Text(group.name)
-                                    .font(.system(size: tagFontSize, weight: .semibold))
-                                    .foregroundStyle(.secondary)
-                                    .padding(.horizontal, 10)
-                                Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
-                            }
-                            // App grid — adaptive inside the container
-                            let itemSize = iconSize + 28
-                            LazyVGrid(
-                                columns: [GridItem(.adaptive(minimum: itemSize, maximum: itemSize + 36), spacing: 6)],
-                                spacing: 2
-                            ) {
-                                ForEach(group.apps) { app in
-                                    AppGridItem(app: app, iconSize: iconSize, onSelect: { openApp(app) })
-                                }
+                HStack(alignment: .top, spacing: gap) {
+                    ForEach(0..<colCount, id: \.self) { col in
+                        LazyVStack(spacing: gap) {
+                            ForEach(columns[col]) { group in
+                                containerView(for: group, width: colWidth)
+                                    .id(group.id)
                             }
                         }
-                        .id(group.id)
-                        .padding(16)
-                        .background(
-                            RoundedRectangle(cornerRadius: 14)
-                                .fill(.ultraThinMaterial)
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 14)
-                                .stroke(Color.primary.opacity(0.08), lineWidth: 1)
-                        )
                     }
                 }
                 .padding(20)
             }
         }
+    }
+
+    /// Distribute groups across columns, putting each group in the shortest column.
+    private func distributeColumns(groups: [TagGroup], colCount: Int, colWidth: CGFloat) -> [[TagGroup]] {
+        var columns = Array(repeating: [TagGroup](), count: colCount)
+        var heights = Array(repeating: CGFloat(0), count: colCount)
+        for group in groups {
+            let h = estimatedHeight(for: group, width: colWidth)
+            let col = heights.firstIndex(of: heights.min()!)!
+            columns[col].append(group)
+            heights[col] += h
+        }
+        return columns
+    }
+
+    /// Rough height estimate for a container.
+    private func estimatedHeight(for group: TagGroup, width: CGFloat) -> CGFloat {
+        let innerWidth = width - 32  // padding
+        let itemW = iconSize + 28 + 6  // item + spacing
+        let perRow = max(1, Int(innerWidth / itemW))
+        let rows = (group.apps.count + perRow - 1) / perRow
+        return 30 + CGFloat(rows) * (iconSize + 30) + 32
+    }
+
+    /// Single container: header + app grid inside rounded rect.
+    private func containerView(for group: TagGroup, width: CGFloat) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 0) {
+                Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
+                Text(group.name)
+                    .font(.system(size: tagFontSize, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 10)
+                Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
+            }
+            let itemSize = iconSize + 28
+            LazyVGrid(
+                columns: [GridItem(.adaptive(minimum: itemSize, maximum: itemSize + 36), spacing: 6)],
+                spacing: 2
+            ) {
+                ForEach(group.apps) { app in
+                    AppGridItem(app: app, iconSize: iconSize, onSelect: { openApp(app) })
+                }
+            }
+        }
+        .frame(width: width)
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 14)
+                .fill(.ultraThinMaterial)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 14)
+                .stroke(Color.primary.opacity(0.08), lineWidth: 1)
+        )
     }
 
     // MARK: - Edit Tags View
