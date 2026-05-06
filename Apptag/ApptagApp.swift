@@ -319,6 +319,7 @@ struct PreferencesView: View {
     @AppStorage("iconSize") private var iconSize: Double = 56
     @AppStorage("tagPosition") private var tagPosition = "left"
     @AppStorage("defaultGroupName") private var defaultGroupName = "Other"
+    @AppStorage("displayMode") private var displayMode = "flat"
 
     @State private var allApps: [AppInfo] = []
     @State private var tagColors: [String: Int] = [:]
@@ -384,6 +385,20 @@ struct PreferencesView: View {
         TabView {
             // Tab 1: General
             Form {
+                Section {
+                    LabeledContent("App list style:") {
+                        Picker("", selection: $displayMode) {
+                            Text("Flat").tag("flat")
+                            Text("Container").tag("container")
+                        }
+                        .pickerStyle(.segmented)
+                        .frame(width: 210)
+                    }
+                    Text("\"Flat\" shows apps directly. \"Container\" wraps each tag group in a rounded box.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+
                 Section {
                     LabeledContent("Tag position:") {
                         Picker("", selection: $tagPosition) {

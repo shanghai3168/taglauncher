@@ -211,6 +211,7 @@ struct ContentView: View {
     @AppStorage("iconSize") private var iconSize: Double = 56
     @AppStorage("tagPosition") private var tagPosition = "left"
     @State private var notchHeight: CGFloat = 0
+    @AppStorage("displayMode") private var displayMode = "flat"
 
     private var isSideLayout: Bool {
         tagPosition == "left" || tagPosition == "right"
@@ -364,22 +365,71 @@ struct ContentView: View {
                 Spacer()
                 ProgressView().scaleEffect(0.8)
                 Spacer()
+            } else if displayMode == "container" {
+                containerGrid
             } else {
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        LazyVStack(alignment: .leading, spacing: 24) {
-                            ForEach(groups) { group in
-                                TagGroupView(
-                                    group: group,
-                                    onSelectApp: { app in openApp(app) },
-                                    tagFontSize: tagFontSize,
-                                    iconSize: iconSize
-                                ).id(group.id)
+                flatGrid
+            }
+        }
+    }
+
+    private var flatGrid: some View {
+        ScrollViewReader { proxy in
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 24) {
+                    ForEach(groups) { group in
+                        TagGroupView(
+                            group: group,
+                            onSelectApp: { app in openApp(app) },
+                            tagFontSize: tagFontSize,
+                            iconSize: iconSize
+                        ).id(group.id)
+                    }
+                }.padding(20)
+            }.onAppear { scrollProxy = proxy }
+        }
+    }
+
+    private var containerGrid: some View {
+        let minContainerWidth: CGFloat = max(iconSize * 3 + 100, 300)
+        let columns = [GridItem(.adaptive(minimum: minContainerWidth, maximum: minContainerWidth * 1.5), spacing: 16)]
+        return ScrollView {
+            LazyVGrid(columns: columns, alignment: .leading, spacing: 16) {
+                ForEach(groups) { group in
+                    VStack(alignment: .leading, spacing: 6) {
+                        // Group header
+                        HStack(spacing: 0) {
+                            Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
+                            Text(group.name)
+                                .font(.system(size: tagFontSize, weight: .semibold))
+                                .foregroundStyle(.secondary)
+                                .padding(.horizontal, 10)
+                            Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
+                        }
+                        // App grid
+                        let itemSize = iconSize + 28
+                        LazyVGrid(
+                            columns: [GridItem(.adaptive(minimum: itemSize, maximum: itemSize + 36), spacing: 6)],
+                            spacing: 2
+                        ) {
+                            ForEach(group.apps) { app in
+                                AppGridItem(app: app, iconSize: iconSize, onSelect: { openApp(app) })
                             }
-                        }.padding(20)
-                    }.onAppear { scrollProxy = proxy }
+                        }
+                    }
+                    .id(group.id)
+                    .padding(16)
+                    .background(
+                        RoundedRectangle(cornerRadius: 14)
+                            .fill(.ultraThinMaterial)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 14)
+                            .stroke(Color.primary.opacity(0.08), lineWidth: 1)
+                    )
                 }
             }
+            .padding(20)
         }
     }
 
