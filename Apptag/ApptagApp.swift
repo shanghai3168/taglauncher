@@ -536,21 +536,6 @@ struct PreferencesView: View {
             // Tab 3: Data
             Form {
                 Section {
-                    HStack {
-                        Button("Re-index Now") {
-                            NotificationCenter.default.post(name: .apptagReindex, object: nil)
-                        }
-                        .buttonStyle(.borderedProminent)
-
-                        Text("Re-scan all app directories and refresh the tag database.")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                } header: {
-                    Text("Index Management")
-                }
-
-                Section {
                     HStack(spacing: 12) {
                         Button("Export Tags…") { exportTags() }
                             .buttonStyle(.bordered)

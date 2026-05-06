@@ -4,7 +4,6 @@ import AppKit
 // MARK: - Notification for manual re-index
 
 extension Notification.Name {
-    static let apptagReindex = Notification.Name("ApptagReindex")
     static let apptagEditModeChanged = Notification.Name("ApptagEditModeChanged")
 }
 
@@ -253,9 +252,6 @@ struct ContentView: View {
             refreshApps()
         }
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
-            refreshApps()
-        }
-        .onReceive(NotificationCenter.default.publisher(for: .apptagReindex)) { _ in
             refreshApps()
         }
         .onChange(of: editPhase) { _, newPhase in
