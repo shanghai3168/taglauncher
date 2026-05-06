@@ -445,6 +445,8 @@ struct ContentView: View {
                 Text(group.name)
                     .font(.system(size: tagFontSize, weight: .semibold))
                     .foregroundStyle(.secondary)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
                     .padding(.horizontal, 10)
                 Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
             }
