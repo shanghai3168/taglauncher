@@ -428,8 +428,6 @@ struct PreferencesView: View {
                     Text("Adjust the size of group-name labels in the overlay.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                } header: {
-                    Text("Appearance")
                 }
 
                 Section {
@@ -445,8 +443,6 @@ struct PreferencesView: View {
                     Text("Icon display size. Grid columns adjust automatically.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                } header: {
-                    Text("Layout")
                 }
 
                 Section {
