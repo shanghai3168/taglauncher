@@ -401,10 +401,6 @@ struct PreferencesView: View {
                 }
 
                 Section {
-                    Toggle("Hide app names", isOn: $hideAppNames)
-                }
-
-                Section {
                     LabeledContent("Tag position:") {
                         Picker("", selection: $tagPosition) {
                             Text("Left").tag("left")
@@ -451,6 +447,10 @@ struct PreferencesView: View {
                         .foregroundStyle(.secondary)
                 } header: {
                     Text("Layout")
+                }
+
+                Section {
+                    Toggle("Hide app names", isOn: $hideAppNames)
                 }
             }
             .tabItem { Label("General", systemImage: "gearshape") }
