@@ -204,6 +204,8 @@ struct ContentView: View {
     @State private var draggedTagNames: [String] = []  // live drag order
     @State private var dragItem: String? = nil          // currently dragged tag
     @State private var hoveredContainer: String? = nil  // colored container lift
+    // Fixed interaction for "Colorless Container": hover fills persistently; click clears.
+    @State private var filledColorlessContainer: String? = nil
 
     // Configurable defaults
     @AppStorage("defaultGroupName") private var defaultGroupName = "Other"
@@ -337,10 +339,16 @@ struct ContentView: View {
                 ForEach(tagLabels) { tag in
                     TagPill(name: tag.name, colorIndex: tag.colorIndex,
                             action: {
+                        if displayMode == "container" {
+                            toggleColorlessFill(tag.id)
+                        }
                         scrollTo(tag.id)
                     })
                     .onHover { hovering in
-                        if hovering { scrollTo(tag.id) }
+                        if hovering {
+                            fillColorlessContainer(tag.id)
+                            scrollTo(tag.id)
+                        }
                     }
                 }
             }.padding(.horizontal, 24)
@@ -353,10 +361,16 @@ struct ContentView: View {
                 ForEach(tagLabels) { tag in
                     SideTagPill(name: tag.name, colorIndex: tag.colorIndex,
                                 action: {
+                        if displayMode == "container" {
+                            toggleColorlessFill(tag.id)
+                        }
                         scrollTo(tag.id)
                     })
                     .onHover { hovering in
-                        if hovering { scrollTo(tag.id) }
+                        if hovering {
+                            fillColorlessContainer(tag.id)
+                            scrollTo(tag.id)
+                        }
                     }
                 }
             }.padding(12)
@@ -455,6 +469,8 @@ struct ContentView: View {
 
     private func masonryCard(_ group: TagGroup, width: CGFloat) -> some View {
         let isColored = displayMode == "coloredContainer"
+        let isColorless = displayMode == "container"
+        let isColorlessFilled = isColorless && filledColorlessContainer == group.name
         let isHovered = hoveredContainer == group.name
         let tagColor = Color(nsColor: TagColor.nsColor(for: tagColors[group.name] ?? 0))
         return VStack(alignment: .leading, spacing: 6) {
@@ -485,7 +501,7 @@ struct ContentView: View {
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 14)
-                .fill(isColored ? tagColor.opacity(0.30) : Color.clear)
+                .fill((isColored || isColorlessFilled) ? tagColor.opacity(0.30) : Color.clear)
                 .background(
                     RoundedRectangle(cornerRadius: 14)
                         .fill(.ultraThinMaterial)
@@ -501,7 +517,17 @@ struct ContentView: View {
         .scaleEffect(isColored && isHovered ? 1.015 : 1.0)
         .animation(.spring(response: 0.25, dampingFraction: 0.82), value: isHovered)
         .onHover { hovering in
-            hoveredContainer = hovering ? group.name : nil
+            if isColored {
+                hoveredContainer = hovering ? group.name : nil
+            } else if hovering {
+                fillColorlessContainer(group.name)
+            }
+        }
+        .contentShape(RoundedRectangle(cornerRadius: 14))
+        .onTapGesture {
+            if isColorlessFilled {
+                filledColorlessContainer = nil
+            }
         }
     }
 
@@ -765,6 +791,16 @@ struct ContentView: View {
 
     func scrollTo(_ id: String) {
         withAnimation(.easeInOut(duration: 0.25)) { scrollProxy?.scrollTo(id, anchor: .top) }
+    }
+
+    private func fillColorlessContainer(_ id: String) {
+        guard displayMode == "container" else { return }
+        filledColorlessContainer = id
+    }
+
+    private func toggleColorlessFill(_ id: String) {
+        guard displayMode == "container" else { return }
+        filledColorlessContainer = (filledColorlessContainer == id) ? nil : id
     }
 
     func refreshApps() {
