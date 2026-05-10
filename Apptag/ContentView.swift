@@ -547,23 +547,19 @@ struct ContentView: View {
             let gap: CGFloat = 16
             let available = geo.size.width - outerPad * 2
             let preferredCount = preferredGridContainersPerRow(availableWidth: available)
-            let rows = gridContainerRows(groups: groups, preferredCount: preferredCount)
+            let rows = gridContainerRows(groups: groups, trackCount: preferredCount, availableWidth: available, gap: gap)
 
             ScrollViewReader { proxy in
                 ScrollView {
-                    LazyVStack(alignment: .leading, spacing: gap) {
-                        ForEach(rows.indices, id: \.self) { rowIndex in
+                    VStack(alignment: .leading, spacing: gap) {
+                        ForEach(Array(rows.indices), id: \.self) { rowIndex in
                             let row = rows[rowIndex]
-                            let rowCount = max(1, row.count)
-                            let cardWidth = (available - gap * CGFloat(rowCount - 1)) / CGFloat(rowCount)
-                            let fixedRows = row.map {
-                                iconRows(appCount: $0.apps.count, width: cardWidth)
-                            }.max() ?? 1
 
                             HStack(alignment: .top, spacing: gap) {
-                                ForEach(row) { group in
-                                    gridContainerCard(group, width: cardWidth, fixedRows: fixedRows)
-                                        .id(group.id)
+                                ForEach(Array(row.items.indices), id: \.self) { itemIndex in
+                                    let item = row.items[itemIndex]
+                                    gridContainerCard(item.group, width: item.width, fixedRows: row.fixedRows)
+                                        .id(item.group.id)
                                 }
                             }
                         }
@@ -584,16 +580,100 @@ struct ContentView: View {
         return 1
     }
 
-    private func gridContainerRows(groups: [TagGroup], preferredCount: Int) -> [[TagGroup]] {
-        var rows: [[TagGroup]] = []
+    private struct GridContainerLayoutItem {
+        let group: TagGroup
+        let width: CGFloat
+    }
+
+    private struct GridContainerLayoutRow {
+        let items: [GridContainerLayoutItem]
+        let fixedRows: Int
+    }
+
+    private struct GridContainerCandidate {
+        let spans: [Int]
+        let rows: Int
+        let cost: CGFloat
+    }
+
+    private func gridContainerRows(groups: [TagGroup], trackCount: Int, availableWidth: CGFloat, gap: CGFloat) -> [GridContainerLayoutRow] {
+        let trackCount = max(1, trackCount)
+        let trackWidth = (availableWidth - gap * CGFloat(trackCount - 1)) / CGFloat(trackCount)
+        let patterns = gridContainerSpanPatterns(trackCount: trackCount)
+        let n = groups.count
+        guard n > 0 else { return [] }
+
+        var bestCost = Array(repeating: CGFloat.greatestFiniteMagnitude, count: n + 1)
+        var bestPattern = Array(repeating: [Int](), count: n)
+        bestCost[n] = 0
+
+        for index in stride(from: n - 1, through: 0, by: -1) {
+            for pattern in patterns where index + pattern.count <= n {
+                let candidate = gridContainerCandidate(
+                    groups: groups,
+                    startIndex: index,
+                    spans: pattern,
+                    trackWidth: trackWidth,
+                    availableWidth: availableWidth,
+                    gap: gap
+                )
+                let totalCost = candidate.cost + bestCost[index + pattern.count]
+                if totalCost < bestCost[index] {
+                    bestCost[index] = totalCost
+                    bestPattern[index] = candidate.spans
+                }
+            }
+        }
+
+        var rows: [GridContainerLayoutRow] = []
         var index = 0
-        while index < groups.count {
-            let remaining = groups.count - index
-            let count = min(max(1, preferredCount), remaining)
-            rows.append(Array(groups[index..<index + count]))
-            index += count
+        while index < n {
+            let spans = bestPattern[index].isEmpty ? [trackCount] : bestPattern[index]
+            let widths = spans.map { gridContainerWidth(trackWidth: trackWidth, span: $0, gap: gap) }
+            let fixedRows = widths.indices.map {
+                iconRows(appCount: groups[index + $0].apps.count, width: widths[$0])
+            }.max() ?? 1
+            let items = widths.indices.map {
+                GridContainerLayoutItem(group: groups[index + $0], width: widths[$0])
+            }
+            rows.append(GridContainerLayoutRow(items: items, fixedRows: fixedRows))
+            index += spans.count
         }
         return rows
+    }
+
+    private func gridContainerSpanPatterns(trackCount: Int) -> [[Int]] {
+        switch trackCount {
+        case 3:
+            return [[1, 1, 1], [1, 2], [2, 1], [3]]
+        case 2:
+            return [[1, 1], [2]]
+        default:
+            return [[1]]
+        }
+    }
+
+    private func gridContainerCandidate(
+        groups: [TagGroup],
+        startIndex: Int,
+        spans: [Int],
+        trackWidth: CGFloat,
+        availableWidth: CGFloat,
+        gap: CGFloat
+    ) -> GridContainerCandidate {
+        let widths = spans.map { gridContainerWidth(trackWidth: trackWidth, span: $0, gap: gap) }
+        let rowCounts = widths.indices.map {
+            iconRows(appCount: groups[startIndex + $0].apps.count, width: widths[$0])
+        }
+        let fixedRows = rowCounts.max() ?? 1
+        let rowArea = CGFloat(fixedRows) * iconCellHeight() * availableWidth
+        let paddingCost = CGFloat(spans.count) * 0.001
+        return GridContainerCandidate(spans: spans, rows: fixedRows, cost: rowArea + paddingCost)
+    }
+
+    private func gridContainerWidth(trackWidth: CGFloat, span: Int, gap: CGFloat) -> CGFloat {
+        let span = max(1, span)
+        return trackWidth * CGFloat(span) + gap * CGFloat(span - 1)
     }
 
     private func iconColumns(width: CGFloat) -> Int {
@@ -613,8 +693,11 @@ struct ContentView: View {
         let isColorlessFilled = isColorless && filledColorlessContainer == group.name
         let isHovered = hoveredContainer == group.name
         let cols = iconColumns(width: width)
-        let maxCells = max(cols, fixedRows * cols)
-        let emptyCells = max(0, maxCells - group.apps.count)
+        let contentWidth = max(1, width - 32)
+        let cellWidth = max(1, (contentWidth - 6 * CGFloat(cols - 1)) / CGFloat(cols))
+        let cellHeight = iconCellHeight()
+        let gridHeight = CGFloat(fixedRows) * cellHeight + CGFloat(max(0, fixedRows - 1)) * 2
+        let rows = appRows(group.apps, columns: cols, fixedRows: fixedRows)
         let tagColor = Color(nsColor: TagColor.nsColor(for: tagColors[group.name] ?? 0))
 
         return VStack(alignment: .leading, spacing: 6) {
@@ -632,20 +715,27 @@ struct ContentView: View {
                     .layoutPriority(0)
             }
 
-            LazyVGrid(
-                columns: Array(repeating: GridItem(.flexible(), spacing: 6), count: cols),
-                spacing: 2
-            ) {
-                ForEach(group.apps) { app in
-                    AppGridItem(app: app, iconSize: iconSize, showName: !hideAppNames, onSelect: { openApp(app) })
-                }
-                ForEach(0..<emptyCells, id: \.self) { _ in
-                    Color.clear
-                        .frame(width: iconSize + 20, height: iconSize + (hideAppNames ? 16 : 42))
+            VStack(alignment: .leading, spacing: 2) {
+                ForEach(rows.indices, id: \.self) { rowIndex in
+                    HStack(alignment: .top, spacing: 6) {
+                        ForEach(rows[rowIndex]) { app in
+                            AppGridItem(app: app, iconSize: iconSize, showName: !hideAppNames, onSelect: { openApp(app) })
+                                .frame(width: cellWidth)
+                                .frame(height: cellHeight)
+                        }
+
+                        let emptyCells = max(0, cols - rows[rowIndex].count)
+                        ForEach(0..<emptyCells, id: \.self) { _ in
+                            Color.clear
+                                .frame(width: cellWidth, height: cellHeight)
+                        }
+                    }
+                    .frame(height: cellHeight)
                 }
             }
+            .frame(height: gridHeight, alignment: .topLeading)
         }
-        .frame(width: width)
+        .frame(width: contentWidth)
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 14)
@@ -676,6 +766,21 @@ struct ContentView: View {
             if isColorlessFilled {
                 filledColorlessContainer = nil
             }
+        }
+    }
+
+    private func iconCellHeight() -> CGFloat {
+        iconSize + (hideAppNames ? 16 : 42)
+    }
+
+    private func appRows(_ apps: [AppInfo], columns: Int, fixedRows: Int) -> [[AppInfo]] {
+        let columns = max(1, columns)
+        let rowCount = max(1, fixedRows)
+        return (0..<rowCount).map { rowIndex in
+            let start = rowIndex * columns
+            guard start < apps.count else { return [] }
+            let end = min(start + columns, apps.count)
+            return Array(apps[start..<end])
         }
     }
 
@@ -786,46 +891,28 @@ struct ContentView: View {
     }
 
     private var editAppsGrid: some View {
-        GeometryReader { geo in
-            let outerPad: CGFloat = 20
-            let gap: CGFloat = 16
-            let available = geo.size.width - outerPad * 2
-            let colW: CGFloat = 300
-            let colCount = max(1, Int((available + gap) / (colW + gap)))
-            let actualColW = (available - gap * CGFloat(colCount - 1)) / CGFloat(colCount)
-            let columns = distributeToColumns(groups: groups, colCount: colCount, colWidth: actualColW)
-
-            ScrollView {
-                HStack(alignment: .top, spacing: gap) {
-                    ForEach(0..<colCount, id: \.self) { ci in
-                        LazyVStack(spacing: gap) {
-                            ForEach(columns[ci]) { group in
-                                editGroupCard(group, width: actualColW)
-                            }
-                        }
-                    }
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 24) {
+                ForEach(groups) { group in
+                    editFlatGroup(group)
                 }
-                .padding(outerPad)
-                .frame(maxWidth: .infinity, alignment: .topLeading)
             }
+            .padding(20)
         }
     }
 
-    private func editGroupCard(_ group: TagGroup, width: CGFloat) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
+    private func editFlatGroup(_ group: TagGroup) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 0) {
                 Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
-                    .layoutPriority(0)
                 Text(group.name)
                     .font(.system(size: tagFontSize, weight: .semibold))
                     .foregroundStyle(.secondary)
-                    .lineLimit(1)
-                    .truncationMode(.middle)
                     .padding(.horizontal, 10)
-                    .layoutPriority(1)
                 Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
-                    .layoutPriority(0)
             }
+            .padding(.bottom, 6)
+
             LazyVGrid(
                 columns: [GridItem(.adaptive(minimum: iconSize + 28, maximum: iconSize + 64), spacing: 6)],
                 spacing: 2
@@ -833,16 +920,6 @@ struct ContentView: View {
                 ForEach(group.apps) { app in editableAppItem(app) }
             }
         }
-        .frame(maxWidth: width)
-        .padding(16)
-        .background(
-            RoundedRectangle(cornerRadius: 14)
-                .fill(.ultraThinMaterial)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 14)
-                .stroke(Color.primary.opacity(0.08), lineWidth: 1)
-        )
     }
 
     private func selectableTagItem(_ tagName: String) -> some View {
@@ -968,7 +1045,18 @@ struct ContentView: View {
 
     func openApp(_ app: AppInfo) {
         hideOverlay()
-        NSWorkspace.shared.open(app.path)
+        if let bundleIdentifier = app.bundleIdentifier {
+            NSWorkspace.shared.launchApplication(
+                withBundleIdentifier: bundleIdentifier,
+                options: [],
+                additionalEventParamDescriptor: nil,
+                launchIdentifier: nil
+            )
+            return
+        }
+
+        let configuration = NSWorkspace.OpenConfiguration()
+        NSWorkspace.shared.openApplication(at: app.path, configuration: configuration)
     }
 }
 
