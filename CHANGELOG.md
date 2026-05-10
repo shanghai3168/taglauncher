@@ -1,5 +1,9 @@
 # Apptag Changelog
 
+## [3.1.33] — 2026-05-10
+
+- 修复点击 App 图标后应用列表仍置顶停留的问题：App 启动路径改为强制关闭并释放 overlay，确保焦点及时转移到被打开的应用
+
 ## [3.1.32] — 2026-05-10
 
 - 提升 overlay 到 CoreGraphics maximum window level，进一步避免被全屏应用窗口层遮挡

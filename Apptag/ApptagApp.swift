@@ -258,7 +258,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         panel.isReleasedWhenClosed = false
         panel.contentView = DismissibleHostingView(
             rootView: ContentView(hideOverlay: { [weak self] in
-                self?.hideOverlay()
+                self?.hideOverlay(force: true)
             }),
             onBackdropTap: { [weak self] in
                 self?.hideOverlay()
@@ -267,9 +267,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return panel
     }
 
-    private func hideOverlay() {
-        guard !isInEditMode else { return }
+    private func hideOverlay(force: Bool = false) {
+        guard force || !isInEditMode else { return }
         overlayWindow?.orderOut(nil)
+        if force {
+            overlayWindow = nil
+        }
     }
 
     // MARK: - Global Hotkey (Shift+Option+Space)
