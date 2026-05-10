@@ -13,7 +13,7 @@
   "settings.appListStyle": "Estilo de lista de apps:",
   "settings.flat": "Plano",
   "settings.container": "Contenedor sin color",
-  "settings.flatDesc": "\"Plano\" muestra las apps directamente. \"Contenedor sin color\" coloca cada grupo en un contenedor sin relleno. \"Contenedor coloreado\" rellena cada contenedor con el color de la etiqueta.",
+  "settings.flatDesc": "\"Plano\" muestra las apps directamente. \"Contenedor sin color\" y \"Contenedor coloreado\" usan contenedores en cascada. \"Contenedor de cuadrícula sin color\" y \"Contenedor de cuadrícula coloreado\" alinean los iconos en filas de cuadrícula de igual altura.",
   "settings.hideAppNames": "Ocultar nombres de apps",
   "settings.tagPosition": "Posición de etiquetas:",
   "settings.left": "Izquierda",
@@ -56,5 +56,7 @@
   "tag.entertainment": "Entretenimiento",
   "tag.system": "Sistema",
   "tag.productivity": "Oficina",
-  "settings.coloredContainer": "Contenedor coloreado"
+  "settings.coloredContainer": "Contenedor coloreado",
+  "settings.gridContainer": "Contenedor de cuadrícula sin color",
+  "settings.coloredGridContainer": "Contenedor de cuadrícula coloreado"
 }

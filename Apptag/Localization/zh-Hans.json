@@ -13,7 +13,7 @@
   "settings.appListStyle": "应用列表样式：",
   "settings.flat": "平铺",
   "settings.container": "无色容器",
-  "settings.flatDesc": "\"平铺\"直接显示应用。\"无色容器\"将每个标签组放入无填充容器。\"彩色容器\"会用标签颜色填充每个容器。",
+  "settings.flatDesc": "\"平铺\"直接显示应用。\"无色容器\"和\"彩色容器\"使用瀑布流容器。\"无色网格容器\"和\"彩色网格容器\"会按等高网格行对齐应用图标。",
   "settings.hideAppNames": "隐藏应用名称",
   "settings.tagPosition": "标签位置：",
   "settings.left": "左侧",
@@ -56,5 +56,7 @@
   "tag.entertainment": "娱乐",
   "tag.system": "系统优化",
   "tag.productivity": "办公",
-  "settings.coloredContainer": "彩色容器"
+  "settings.coloredContainer": "彩色容器",
+  "settings.gridContainer": "无色网格容器",
+  "settings.coloredGridContainer": "彩色网格容器"
 }

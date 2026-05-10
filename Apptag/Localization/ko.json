@@ -13,7 +13,7 @@
   "settings.appListStyle": "앱 목록 스타일:",
   "settings.flat": "플랫",
   "settings.container": "무색 컨테이너",
-  "settings.flatDesc": "\"플랫\"은 앱을 직접 표시합니다. \"무색 컨테이너\"는 각 태그 그룹을 채움 없는 컨테이너로 묶습니다. \"색상 컨테이너\"는 각 컨테이너를 태그 색으로 채웁니다.",
+  "settings.flatDesc": "\"플랫\"은 앱을 직접 표시합니다. \"무색 컨테이너\"와 \"색상 컨테이너\"는 컨테이너를 폭포식으로 배치합니다. \"무색 그리드 컨테이너\"와 \"색상 그리드 컨테이너\"는 같은 높이의 그리드 행으로 앱 아이콘을 정렬합니다.",
   "settings.hideAppNames": "앱 이름 숨기기",
   "settings.tagPosition": "태그 위치:",
   "settings.left": "왼쪽",
@@ -56,5 +56,7 @@
   "tag.entertainment": "엔터테인먼트",
   "tag.system": "시스템",
   "tag.productivity": "오피스",
-  "settings.coloredContainer": "색상 컨테이너"
+  "settings.coloredContainer": "색상 컨테이너",
+  "settings.gridContainer": "무색 그리드 컨테이너",
+  "settings.coloredGridContainer": "색상 그리드 컨테이너"
 }

@@ -590,9 +590,11 @@ struct PreferencesView: View {
                                 Text(tr("settings.flat")).tag("flat")
                                 Text(tr("settings.container")).tag("container")
                                 Text(tr("settings.coloredContainer")).tag("coloredContainer")
+                                Text(tr("settings.gridContainer")).tag("gridContainer")
+                                Text(tr("settings.coloredGridContainer")).tag("coloredGridContainer")
                             }
                             .pickerStyle(.segmented)
-                            .frame(width: 360, alignment: .leading)
+                            .frame(width: 520, alignment: .leading)
                             Text(tr("settings.flatDesc"))
                                 .font(.caption).foregroundStyle(.secondary)
                                 .fixedSize(horizontal: false, vertical: true)

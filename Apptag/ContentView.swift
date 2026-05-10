@@ -220,6 +220,14 @@ struct ContentView: View {
         tagPosition == "left" || tagPosition == "right"
     }
 
+    private var isColorlessContainerMode: Bool {
+        displayMode == "container" || displayMode == "gridContainer"
+    }
+
+    private var isColoredContainerMode: Bool {
+        displayMode == "coloredContainer" || displayMode == "coloredGridContainer"
+    }
+
     var body: some View {
         ZStack {
             VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
@@ -339,7 +347,7 @@ struct ContentView: View {
                 ForEach(tagLabels) { tag in
                     TagPill(name: tag.name, colorIndex: tag.colorIndex,
                             action: {
-                        if displayMode == "container" {
+                        if isColorlessContainerMode {
                             toggleColorlessFill(tag.id)
                         }
                         scrollTo(tag.id)
@@ -361,7 +369,7 @@ struct ContentView: View {
                 ForEach(tagLabels) { tag in
                     SideTagPill(name: tag.name, colorIndex: tag.colorIndex,
                                 action: {
-                        if displayMode == "container" {
+                        if isColorlessContainerMode {
                             toggleColorlessFill(tag.id)
                         }
                         scrollTo(tag.id)
@@ -387,6 +395,8 @@ struct ContentView: View {
                 Spacer()
                 ProgressView().scaleEffect(0.8)
                 Spacer()
+            } else if displayMode == "gridContainer" || displayMode == "coloredGridContainer" {
+                gridContainerGrid
             } else if displayMode == "container" || displayMode == "coloredContainer" {
                 containerGrid
             } else {
@@ -469,7 +479,7 @@ struct ContentView: View {
 
     private func masonryCard(_ group: TagGroup, width: CGFloat) -> some View {
         let isColored = displayMode == "coloredContainer"
-        let isColorless = displayMode == "container"
+        let isColorless = isColorlessContainerMode
         let isColorlessFilled = isColorless && filledColorlessContainer == group.name
         let isHovered = hoveredContainer == group.name
         let tagColor = Color(nsColor: TagColor.nsColor(for: tagColors[group.name] ?? 0))
@@ -498,6 +508,144 @@ struct ContentView: View {
             }
         }
         .frame(maxWidth: width)
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 14)
+                .fill((isColored || isColorlessFilled) ? tagColor.opacity(0.30) : Color.clear)
+                .background(
+                    RoundedRectangle(cornerRadius: 14)
+                        .fill(.ultraThinMaterial)
+                )
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 14)
+                .stroke(Color.primary.opacity(0.08), lineWidth: 1)
+        )
+        .shadow(color: .black.opacity(isColored && isHovered ? 0.22 : 0),
+                radius: isColored && isHovered ? 18 : 0,
+                y: isColored && isHovered ? 10 : 0)
+        .scaleEffect(isColored && isHovered ? 1.015 : 1.0)
+        .animation(.spring(response: 0.25, dampingFraction: 0.82), value: isHovered)
+        .onHover { hovering in
+            if isColored {
+                hoveredContainer = hovering ? group.name : nil
+            } else if hovering {
+                fillColorlessContainer(group.name)
+            }
+        }
+        .contentShape(RoundedRectangle(cornerRadius: 14))
+        .onTapGesture {
+            if isColorlessFilled {
+                filledColorlessContainer = nil
+            }
+        }
+    }
+
+    private var gridContainerGrid: some View {
+        GeometryReader { geo in
+            let outerPad: CGFloat = 20
+            let gap: CGFloat = 16
+            let available = geo.size.width - outerPad * 2
+            let preferredCount = preferredGridContainersPerRow(availableWidth: available)
+            let rows = gridContainerRows(groups: groups, preferredCount: preferredCount)
+
+            ScrollViewReader { proxy in
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: gap) {
+                        ForEach(rows.indices, id: \.self) { rowIndex in
+                            let row = rows[rowIndex]
+                            let rowCount = max(1, row.count)
+                            let cardWidth = (available - gap * CGFloat(rowCount - 1)) / CGFloat(rowCount)
+                            let fixedRows = row.map {
+                                iconRows(appCount: $0.apps.count, width: cardWidth)
+                            }.max() ?? 1
+
+                            HStack(alignment: .top, spacing: gap) {
+                                ForEach(row) { group in
+                                    gridContainerCard(group, width: cardWidth, fixedRows: fixedRows)
+                                        .id(group.id)
+                                }
+                            }
+                        }
+                    }
+                    .padding(outerPad)
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                }
+                .id(displayMode)
+                .onAppear { scrollProxy = proxy }
+            }
+        }
+    }
+
+    private func preferredGridContainersPerRow(availableWidth: CGFloat) -> Int {
+        let minCardWidth = max(260, iconSize * 3 + 88)
+        if availableWidth >= minCardWidth * 3 + 32 { return 3 }
+        if availableWidth >= minCardWidth * 2 + 16 { return 2 }
+        return 1
+    }
+
+    private func gridContainerRows(groups: [TagGroup], preferredCount: Int) -> [[TagGroup]] {
+        var rows: [[TagGroup]] = []
+        var index = 0
+        while index < groups.count {
+            let remaining = groups.count - index
+            let count = min(max(1, preferredCount), remaining)
+            rows.append(Array(groups[index..<index + count]))
+            index += count
+        }
+        return rows
+    }
+
+    private func iconColumns(width: CGFloat) -> Int {
+        let inner = width - 32
+        let itemW = iconSize + 34
+        return max(1, Int((inner + 6) / itemW))
+    }
+
+    private func iconRows(appCount: Int, width: CGFloat) -> Int {
+        let cols = iconColumns(width: width)
+        return max(1, (appCount + cols - 1) / cols)
+    }
+
+    private func gridContainerCard(_ group: TagGroup, width: CGFloat, fixedRows: Int) -> some View {
+        let isColored = displayMode == "coloredGridContainer"
+        let isColorless = isColorlessContainerMode
+        let isColorlessFilled = isColorless && filledColorlessContainer == group.name
+        let isHovered = hoveredContainer == group.name
+        let cols = iconColumns(width: width)
+        let maxCells = max(cols, fixedRows * cols)
+        let emptyCells = max(0, maxCells - group.apps.count)
+        let tagColor = Color(nsColor: TagColor.nsColor(for: tagColors[group.name] ?? 0))
+
+        return VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 0) {
+                Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
+                    .layoutPriority(0)
+                Text(group.name)
+                    .font(.system(size: tagFontSize, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+                    .padding(.horizontal, 10)
+                    .layoutPriority(1)
+                Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
+                    .layoutPriority(0)
+            }
+
+            LazyVGrid(
+                columns: Array(repeating: GridItem(.flexible(), spacing: 6), count: cols),
+                spacing: 2
+            ) {
+                ForEach(group.apps) { app in
+                    AppGridItem(app: app, iconSize: iconSize, showName: !hideAppNames, onSelect: { openApp(app) })
+                }
+                ForEach(0..<emptyCells, id: \.self) { _ in
+                    Color.clear
+                        .frame(width: iconSize + 20, height: iconSize + (hideAppNames ? 16 : 42))
+                }
+            }
+        }
+        .frame(width: width)
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 14)

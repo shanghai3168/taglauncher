@@ -13,7 +13,7 @@
   "settings.appListStyle": "アプリ一覧スタイル：",
   "settings.flat": "フラット",
   "settings.container": "無色コンテナ",
-  "settings.flatDesc": "\"フラット\"はアプリを直接表示します。\"無色コンテナ\"は各タググループを塗りなしのコンテナで囲みます。\"カラーコンテナ\"は各コンテナをタグ色で塗ります。",
+  "settings.flatDesc": "\"フラット\"はアプリを直接表示します。\"無色コンテナ\"と\"カラーコンテナ\"はコンテナを滝状に配置します。\"無色グリッドコンテナ\"と\"カラーグリッドコンテナ\"は等高のグリッド行でアプリアイコンを揃えます。",
   "settings.hideAppNames": "アプリ名を非表示",
   "settings.tagPosition": "タグ位置：",
   "settings.left": "左",
@@ -56,5 +56,7 @@
   "tag.entertainment": "エンタメ",
   "tag.system": "システム",
   "tag.productivity": "オフィス",
-  "settings.coloredContainer": "カラーコンテナ"
+  "settings.coloredContainer": "カラーコンテナ",
+  "settings.gridContainer": "無色グリッドコンテナ",
+  "settings.coloredGridContainer": "カラーグリッドコンテナ"
 }

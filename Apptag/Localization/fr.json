@@ -13,7 +13,7 @@
   "settings.appListStyle": "Style de liste d'applications :",
   "settings.flat": "Liste",
   "settings.container": "Conteneur sans couleur",
-  "settings.flatDesc": "\"Liste\" affiche les apps directement. \"Conteneur sans couleur\" place chaque groupe dans un conteneur sans remplissage. \"Conteneur coloré\" remplit chaque conteneur avec la couleur du tag.",
+  "settings.flatDesc": "\"Liste\" affiche les apps directement. \"Conteneur sans couleur\" et \"Conteneur coloré\" utilisent des conteneurs en cascade. \"Conteneur grille sans couleur\" et \"Conteneur grille coloré\" alignent les icônes dans des lignes de grille de hauteur égale.",
   "settings.hideAppNames": "Masquer les noms d'apps",
   "settings.tagPosition": "Position des étiquettes :",
   "settings.left": "Gauche",
@@ -56,5 +56,7 @@
   "tag.entertainment": "Divertissement",
   "tag.system": "Système",
   "tag.productivity": "Bureau",
-  "settings.coloredContainer": "Conteneur coloré"
+  "settings.coloredContainer": "Conteneur coloré",
+  "settings.gridContainer": "Conteneur grille sans couleur",
+  "settings.coloredGridContainer": "Conteneur grille coloré"
 }

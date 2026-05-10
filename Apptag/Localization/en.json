@@ -13,7 +13,7 @@
   "settings.appListStyle": "App list style:",
   "settings.flat": "Flat",
   "settings.container": "Colorless Container",
-  "settings.flatDesc": "\"Flat\" shows apps directly. \"Colorless Container\" wraps each tag group in a rounded box. \"Colored Container\" fills each container with its tag color.",
+  "settings.flatDesc": "\"Flat\" shows apps directly. \"Colorless Container\" and \"Colored Container\" use masonry containers. \"Colorless Grid Container\" and \"Colored Grid Container\" align app icons in equal-height grid rows.",
   "settings.hideAppNames": "Hide app names",
   "settings.tagPosition": "Tag position:",
   "settings.left": "Left",
@@ -56,5 +56,7 @@
   "tag.entertainment": "Entertainment",
   "tag.system": "System",
   "tag.productivity": "Productivity",
-  "settings.coloredContainer": "Colored Container"
+  "settings.coloredContainer": "Colored Container",
+  "settings.gridContainer": "Colorless Grid Container",
+  "settings.coloredGridContainer": "Colored Grid Container"
 }
