@@ -1,5 +1,106 @@
 # Apptag Changelog
 
+## [3.1.29] — 2026-05-10
+
+- 继续修复全屏 Space 唤出不可见问题：overlay 改为非激活 NSPanel，并加入 stationary/transient 全屏辅助行为，确保在当前全屏 Space 前置显示
+
+## [3.1.28] — 2026-05-10
+
+- 修复全屏 Space 下 Shift+Option+Space 唤出 Apptag 后 overlay 被全屏应用遮挡的问题：显示时刷新当前屏幕 frame，提升窗口层级并强制前置
+
+## [3.1.27] — 2026-05-07
+
+- 彻底移除 SMAppService，改用 LaunchAgent（~/Library/LaunchAgents）控制登录启动，零权限
+
+## [3.1.26] — 2026-05-07
+
+- 修复每次启动重复触发 App 管理权限弹窗：SMAppService.register() 只在首次调用
+
+## [3.1.25] — 2026-05-07
+
+- 首次启动自动 seed 7 个默认标签（设计/编程/写作/游戏/娱乐/系统优化/办公），9 语言适配
+
+## [3.1.24] — 2026-05-07
+
+- 关于页整体右移 100pt，视觉居中
+
+## [3.1.23] — 2026-05-07
+
+- 关于页：图标放大一倍 (128×128)，签名档精简为两行
+
+## [3.1.22] — 2026-05-07
+
+- 关于页签新增签名档
+
+## [3.1.21] — 2026-05-06
+
+- 大幅缩减包体：4.1MB → 900KB（二进制 strip + icon 压缩）
+
+## [3.1.20] — 2026-05-06
+
+- 修复设置页面切换 tab 时宽度跃变：固定宽度 660pt，高度可拖动调整
+
+## [3.1.19] — 2026-05-06
+
+- 修复默认组名不随语言切换的问题：存储语言中立 key "Other"，显示时翻译
+- 移除 Sandbox entitlements（不再索要 App 管理权限）
+- 移除 Accessibility 热键降级方案，保持纯 Carbon hotkey + 菜单栏 fallback
+- 新增 App Store 提审资料文档 (AppStore_Submission.md) + 截图脚本 (screenshots.sh)
+- 新增 App Store 1024×1024 图标 (AppStore_1024.png)
+
+## [3.1.16] — 2026-05-06
+
+- 回滚所有快捷键设置功能（v3.1.13~v3.1.15），回到 v3.1.12 稳定状态
+
+## [3.1.15] — 2026-05-06
+
+- 修复 HotkeyHelper 崩溃：kVK 常量非连续编号，改用字典查表替代 switch range
+
+## [3.1.14] — 2026-05-06
+
+- 快捷键设置独立为第 3 个页签（键盘图标），Data 恢复原样
+
+## [3.1.13] — 2026-05-06
+
+- 新增全局快捷键设置（Data 页签）：点击按钮后按下新快捷键即可更改，支持任意组合键
+- 菜单栏「Show Apptag」右侧显示当前快捷键
+- HotkeyHelper：Carbon keycode → 人类可读字符串（⇧⌥Space, ⌘A, F1 等）
+
+## [3.1.12] — 2026-05-06
+
+- General 标签页：放弃 Grid，回到逐行 HStack；4 个 Picker 统一 280pt 左对齐，描述文字左边缘与 Picker 严格对齐
+- "其他" 默认组改名为 "未分类"，9 语种全部翻译；启动时自动迁移旧 "Other" 值
+
+## [3.1.11] — 2026-05-06
+
+- General 标签页：改用 Grid 布局替代固定 frame，标签列按内容宽度自动右对齐
+- 点击 Dock 图标现在等同于菜单栏 "Show Apptag"，直接全屏显示 APP 列表
+
+## [3.1.10] — 2026-05-06
+
+- General 标签页：Toggle 行横向居中；标签-控件改为逐行 HStack（替代并行 VStack），消除垂直不对齐
+- 修复设置页面行为：打开偏好设置时不再隐藏 overlay，Settings 窗口提升至 overlay 上方供实时预览
+- Tags 标签页整体向右偏移 16px
+
+## [3.1.9] — 2026-05-06
+
+- Grid 布局替换独立 HStack：标签列 + 控件列严格对齐，16pt 间距
+
+## [3.1.8] — 2026-05-06
+
+- 优化 General 标签页排版：标签文字右对齐、选项/说明左对齐、间距16pt
+
+## [3.1.7] — 2026-05-06
+
+- 彻底清除 Finder 标签残留：移除 `migrateFromFinderIfNeeded()`, `readFinderTags()`, `Store.migrated`, `removeTag()`
+- 移除 AppIcon.iconset 目录（build 已改用 icon-icns.icns）
+
+## [3.1.6] — 2026-05-06
+
+- 完整国际化：Settings 所有页面、编辑模式、标签编辑器全部使用 tr() 翻译
+- 9 语种翻译补全（新增 settings.*, edit.*, tag.*, app.* 共 14 个 key）
+- 新增 key：settings.launchAtLogin, settings.showInDock, edit.tags, app.name, app.description, app.version, app.build
+
 ## [3.1.3] — 2026-05-06
 
 - 清除 Re-index 功能：已脱离 Finder，每次 overlay 打开自动扫描新 app，无需手动触发
@@ -117,4 +218,3 @@
 - Carbon 全局热键 Shift+Option+Space
 - Finder 标签读取、分组显示、全屏 overlay
 - 标签编辑（与 Finder xattr 同步）
-

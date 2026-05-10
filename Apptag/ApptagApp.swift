@@ -1,7 +1,6 @@
 import SwiftUI
 import AppKit
 import Carbon
-import ServiceManagement
 
 // MARK: - Application Entry Point
 
@@ -13,27 +12,61 @@ struct ApptagApp: App {
         Settings {
             PreferencesView()
         }
+        .defaultSize(width: 660, height: 380)
     }
 }
 
 // MARK: - App Delegate (menubar + overlay window + hotkey)
 
+final class OverlayPanel: NSPanel {
+    override var canBecomeKey: Bool { true }
+    override var canBecomeMain: Bool { true }
+}
+
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem!
     private var overlayWindow: NSWindow?
+    private var settingsWindow: NSWindow?    // Track Settings window to keep it above overlay
     private var hotkeyRef: EventHotKeyRef?
     private var isInEditMode = false  // Suppress auto-dismiss during editing
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         L10n.setup()
+        migrateDefaultGroupName()
+        TagDatabase.seedDefaultTags()
         let showDock = UserDefaults.standard.bool(forKey: "showDockIcon")
         NSApp.setActivationPolicy(showDock ? .regular : .accessory)
         setupMenuBar()
         registerHotkey()
         observeOtherWindows()
+        observeSettingsClose()
         observeEditMode()
         observeDockSetting()
         setupLaunchAtLogin()
+    }
+
+    /// Dock icon click → show overlay (same as menubar "Show Apptag")
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        showOverlay()
+        return false  // Suppress default "unhide all windows" behavior
+    }
+
+    /// Ensure defaultGroupName is always the language-neutral key "Other".
+    /// Translates known old values back to "Other" so switching languages works.
+    private func migrateDefaultGroupName() {
+        let key = "defaultGroupName"
+        let stored = UserDefaults.standard.string(forKey: key)
+        // "Other" is the neutral key — nothing to do
+        if stored == nil || stored == "Other" { return }
+        // Check if the stored value is a translated version of "group.uncategorized"
+        for (code, _) in L10n.supported {
+            let loc = L10n.loadedTranslation("group.uncategorized", for: code)
+            if stored == loc {
+                UserDefaults.standard.set("Other", forKey: key)
+                return
+            }
+        }
+        // User has set a custom name — keep it
     }
 
     /// Observe Show in Dock changes so it takes effect immediately.
@@ -47,15 +80,48 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    /// Enable launch at login by default; prompt user if disabled.
+    // MARK: - Launch at Login (LaunchAgent, zero permissions)
+
+    private static let launchAgentLabel = "com.apptag.launcher"
+
+    private static var launchAgentURL: URL {
+        FileManager.default.homeDirectoryForCurrentUser
+            .appendingPathComponent("Library/LaunchAgents/\(launchAgentLabel).plist")
+    }
+
+    static func enableLaunchAtLogin() {
+        let plist: [String: Any] = [
+            "Label": Self.launchAgentLabel,
+            "ProgramArguments": ["open", Bundle.main.bundlePath, "--hide"],
+            "RunAtLoad": true,
+        ]
+        let dir = Self.launchAgentURL.deletingLastPathComponent()
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        (plist as NSDictionary).write(to: Self.launchAgentURL, atomically: true)
+
+        let uid = getuid()
+        let task = Process()
+        task.launchPath = "/bin/launchctl"
+        task.arguments = ["bootstrap", "gui/\(uid)", Self.launchAgentURL.path]
+        task.launch()
+    }
+
+    static func disableLaunchAtLogin() {
+        let uid = getuid()
+        let task = Process()
+        task.launchPath = "/bin/launchctl"
+        task.arguments = ["bootout", "gui/\(uid)/\(Self.launchAgentLabel)"]
+        task.launch()
+        try? FileManager.default.removeItem(at: Self.launchAgentURL)
+    }
+
+    /// On first launch, enable login item by default via LaunchAgent.
+    /// Does NOT require App Management permission.
     private func setupLaunchAtLogin() {
         let key = "launchAtLogin"
         if UserDefaults.standard.object(forKey: key) == nil {
-            // First launch: enable by default
             UserDefaults.standard.set(true, forKey: key)
-            try? SMAppService.mainApp.register()
-        } else if UserDefaults.standard.bool(forKey: key) {
-            try? SMAppService.mainApp.register()
+            Self.enableLaunchAtLogin()
         }
     }
 
@@ -81,7 +147,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let menu = NSMenu()
         menu.addItem(
             NSMenuItem(
-                title: tr("menu.show"),
+                title: "\(tr("menu.show"))  ⇧⌥Space",
                 action: #selector(toggleOverlay),
                 keyEquivalent: ""
             )
@@ -144,23 +210,27 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func showOverlay() {
-        if overlayWindow == nil {
-            // Use the screen under the mouse cursor — works in fullscreen spaces
-            let mousePoint = NSEvent.mouseLocation
-            guard let screen = NSScreen.screens.first(where: {
-                NSMouseInRect(mousePoint, $0.frame, false)
-            }) ?? NSScreen.main ?? NSScreen.screens.first else { return }
+        // Use the screen under the mouse cursor — works in fullscreen spaces
+        let mousePoint = NSEvent.mouseLocation
+        guard let screen = NSScreen.screens.first(where: {
+            NSMouseInRect(mousePoint, $0.frame, false)
+        }) ?? NSScreen.main ?? NSScreen.screens.first else { return }
 
-            overlayWindow = NSWindow(
+        if overlayWindow == nil {
+            let panel = OverlayPanel(
                 contentRect: screen.frame,
-                styleMask: [.borderless, .fullSizeContentView],
+                styleMask: [.borderless, .fullSizeContentView, .nonactivatingPanel],
                 backing: .buffered,
                 defer: false
             )
-            overlayWindow?.level = .floating
+            panel.isFloatingPanel = true
+            panel.hidesOnDeactivate = false
+            overlayWindow = panel
             overlayWindow?.collectionBehavior = [
                 .canJoinAllSpaces,
                 .fullScreenAuxiliary,
+                .stationary,
+                .transient,
                 .ignoresCycle
             ]
             overlayWindow?.isOpaque = false
@@ -179,6 +249,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             )
         }
+        overlayWindow?.setFrame(screen.frame, display: true)
+        overlayWindow?.level = .screenSaver
 
         // Local key monitor: catch Escape while overlay is up
         NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
@@ -190,6 +262,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         overlayWindow?.makeKeyAndOrderFront(nil)
+        overlayWindow?.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
     }
 
@@ -200,6 +273,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Global Hotkey (Shift+Option+Space)
 
+    /// Carbon RegisterEventHotKey. If it fails (sandbox, etc.), falls back to menu bar only.
     private func registerHotkey() {
         var hotkeyID = EventHotKeyID()
         hotkeyID.signature = OSType(0x41505447) // 'APTG'
@@ -264,7 +338,36 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                   keyWindow != self.overlayWindow,
                   !self.isInEditMode
             else { return }
+
+            // Settings/Preferences window → float it above overlay for real-time preview
+            if NSApp.windows.contains(keyWindow) {
+                if self.overlayWindow?.isVisible == true {
+                    keyWindow.level = .popUpMenu
+                }
+                if self.settingsWindow == nil {
+                    keyWindow.minSize = NSSize(width: 660, height: 380)
+                    keyWindow.maxSize = NSSize(width: 660, height: CGFloat.greatestFiniteMagnitude)
+                }
+                self.settingsWindow = keyWindow
+                return
+            }
+
             self.hideOverlay()
+        }
+    }
+
+    /// Clean up settingsWindow reference when the Settings window closes.
+    private func observeSettingsClose() {
+        NotificationCenter.default.addObserver(
+            forName: NSWindow.willCloseNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            guard let self,
+                  let closingWindow = notification.object as? NSWindow,
+                  closingWindow == self.settingsWindow
+            else { return }
+            self.settingsWindow = nil
         }
     }
 
@@ -280,7 +383,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc private func openPreferences() {
-        hideOverlay()
+        // Don't hide overlay — keep it visible for real-time setting preview.
+        // observeOtherWindows handles raising the Settings window above the overlay.
         NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
     }
 
@@ -376,14 +480,13 @@ struct PreferencesView: View {
     @AppStorage("hideAppNames") private var hideAppNames = false
     @AppStorage("showDockIcon") private var showDockIcon = false
     @AppStorage("launchAtLogin") private var launchAtLogin = true
-
     @State private var allApps: [AppInfo] = []
     @State private var tagColors: [String: Int] = [:]
 
     private func scanApps() {
         DispatchQueue.global(qos: .userInitiated).async {
             var apps = AppIndexer.scan()
-            let store = TagDatabase.migrateFromFinderIfNeeded(apps: apps)
+            let store = TagDatabase.load()
             apps = TagEditor.annotate(apps: apps)
             let colors = store.tags.mapValues { $0.color }
             DispatchQueue.main.async {
@@ -395,7 +498,7 @@ struct PreferencesView: View {
 
     private func exportTags() {
         let panel = NSSavePanel()
-        panel.title = "Export Tags"
+        panel.title = tr("settings.export")
         panel.nameFieldStringValue = "Apptag-tags.json"
         panel.allowedContentTypes = [.json]
         panel.begin { response in
@@ -410,7 +513,7 @@ struct PreferencesView: View {
 
     private func importTags() {
         let panel = NSOpenPanel()
-        panel.title = "Import Tags"
+        panel.title = tr("settings.import")
         panel.allowedContentTypes = [.json]
         panel.allowsMultipleSelection = false
         panel.begin { response in
@@ -422,7 +525,7 @@ struct PreferencesView: View {
                 fputs("[Apptag] Import failed: \(error)\n", stderr)
                 // Show alert on failure
                 let alert = NSAlert()
-                alert.messageText = "Import Failed"
+                alert.messageText = tr("settings.importFailed")
                 alert.informativeText = error.localizedDescription
                 alert.alertStyle = .warning
                 alert.runModal()
@@ -440,84 +543,96 @@ struct PreferencesView: View {
     var body: some View {
         TabView {
             // Tab 1: General
-            Form {
-                Section {
-                    HStack(spacing: 20) {
-                        Toggle("Launch at login", isOn: $launchAtLogin)
-                            .onChange(of: launchAtLogin) { _, enabled in
-                                if enabled {
-                                    try? SMAppService.mainApp.register()
-                                } else {
-                                    try? SMAppService.mainApp.unregister()
+            VStack(alignment: .leading, spacing: 0) {
+                // Toggle row — centered as a rectangular block
+                HStack(spacing: 20) {
+                    Toggle(tr("settings.launchAtLogin"), isOn: $launchAtLogin)
+                        .onChange(of: launchAtLogin) { _, enabled in
+                            if enabled {
+                                AppDelegate.enableLaunchAtLogin()
+                            } else {
+                                AppDelegate.disableLaunchAtLogin()
+                            }
+                        }
+                    Toggle(tr("settings.showInDock"), isOn: $showDockIcon)
+                    Toggle(tr("settings.hideAppNames"), isOn: $hideAppNames)
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.bottom, 16)
+
+                Divider()
+                    .padding(.bottom, 16)
+
+                // Two-column layout: each row label (right-aligned) + controls (left-aligned)
+                // All pickers and descriptions share the same left edge
+                VStack(spacing: 16) {
+                    HStack(alignment: .top, spacing: 16) {
+                        Text(tr("settings.appListStyle"))
+                            .frame(width: 130, alignment: .trailing)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Picker("", selection: $displayMode) {
+                                Text(tr("settings.flat")).tag("flat")
+                                Text(tr("settings.container")).tag("container")
+                            }
+                            .pickerStyle(.segmented)
+                            .frame(width: 280, alignment: .leading)
+                            Text(tr("settings.flatDesc"))
+                                .font(.caption).foregroundStyle(.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
+                    HStack(alignment: .top, spacing: 16) {
+                        Text(tr("settings.tagPosition"))
+                            .frame(width: 130, alignment: .trailing)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Picker("", selection: $tagPosition) {
+                                Text(tr("settings.left")).tag("left")
+                                Text(tr("settings.right")).tag("right")
+                                Text(tr("settings.top")).tag("top")
+                            }
+                            .pickerStyle(.segmented)
+                            .frame(width: 280, alignment: .leading)
+                            Text(tr("settings.tagPosDesc"))
+                                .font(.caption).foregroundStyle(.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
+                    HStack(alignment: .top, spacing: 16) {
+                        Text(tr("settings.tagFontSize"))
+                            .frame(width: 130, alignment: .trailing)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Picker("", selection: $tagFontSize) {
+                                ForEach([16.0, 18.0, 20.0, 22.0, 24.0, 26.0], id: \.self) { size in
+                                    Text("\(Int(size))").tag(size)
                                 }
                             }
-                        Toggle("Show in Dock", isOn: $showDockIcon)
-                        Toggle("Hide app names", isOn: $hideAppNames)
-                    }
-                }
-                .padding(.bottom, 12)
-
-                Section {
-                    LabeledContent("App list style:") {
-                        Picker("", selection: $displayMode) {
-                            Text("Flat").tag("flat")
-                            Text("Container").tag("container")
+                            .pickerStyle(.segmented)
+                            .frame(width: 280, alignment: .leading)
+                            Text(tr("settings.tagFontDesc"))
+                                .font(.caption).foregroundStyle(.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
                         }
-                        .pickerStyle(.segmented)
-                        .frame(width: 210)
                     }
-                    Text("\"Flat\" shows apps directly. \"Container\" wraps each tag group in a rounded box.")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-
-                Section {
-                    LabeledContent("Tag position:") {
-                        Picker("", selection: $tagPosition) {
-                            Text("Left").tag("left")
-                            Text("Right").tag("right")
-                            Text("Top").tag("top")
-                        }
-                        .pickerStyle(.segmented)
-                        .frame(width: 210)
-                    }
-                    Text("Where the tag navigation bar appears. Left/Right puts tags in a sidebar.")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-
-                Section {
-                    LabeledContent("Tag font size:") {
-                        Picker("", selection: $tagFontSize) {
-                            ForEach([16.0, 18.0, 20.0, 22.0, 24.0, 26.0], id: \.self) { size in
-                                Text("\(Int(size))").tag(size)
+                    HStack(alignment: .top, spacing: 16) {
+                        Text(tr("settings.iconSize"))
+                            .frame(width: 130, alignment: .trailing)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Picker("", selection: $iconSize) {
+                                ForEach([40.0, 48.0, 56.0, 64.0, 72.0, 80.0], id: \.self) { size in
+                                    Text("\(Int(size))").tag(size)
+                                }
                             }
+                            .pickerStyle(.segmented)
+                            .frame(width: 280, alignment: .leading)
+                            Text(tr("settings.iconSizeDesc"))
+                                .font(.caption).foregroundStyle(.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
                         }
-                        .pickerStyle(.segmented)
-                        .frame(width: 280)
                     }
-                    Text("Adjust the size of group-name labels in the overlay.")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-
-                Section {
-                    LabeledContent("Icon size:") {
-                        Picker("", selection: $iconSize) {
-                            ForEach([40.0, 48.0, 56.0, 64.0, 72.0, 80.0], id: \.self) { size in
-                                Text("\(Int(size))").tag(size)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-                        .frame(width: 280)
-                    }
-                    Text("Icon display size. Grid columns adjust automatically.")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
                 }
             }
-            .tabItem { Label("General", systemImage: "gearshape") }
             .padding()
+            .tabItem { Label(tr("settings.general"), systemImage: "gearshape") }
 
             // Tab 2: Tags
             VStack(spacing: 0) {
@@ -527,54 +642,66 @@ struct PreferencesView: View {
                     onRefresh: { scanApps() }
                 )
             }
-            .tabItem { Label("Tags", systemImage: "tag.fill") }
+            .padding(.leading, 16)
+            .tabItem { Label(tr("settings.tags"), systemImage: "tag.fill") }
             .onAppear { scanApps() }
 
             // Tab 3: Data
             Form {
                 Section {
                     HStack(spacing: 12) {
-                        Button("Export Tags…") { exportTags() }
+                        Button(tr("settings.export")) { exportTags() }
                             .buttonStyle(.bordered)
-                        Button("Import Tags…") { importTags() }
+                        Button(tr("settings.import")) { importTags() }
                             .buttonStyle(.bordered)
                     }
-                    Text("Export saves your tag assignments to a JSON file. Import replaces the current database with one from a file.")
+                    Text(tr("settings.backupDesc"))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 } header: {
-                    Text("Backup & Restore")
+                    Text(tr("settings.backup"))
                 }
             }
-            .tabItem { Label("Data", systemImage: "externaldrive.fill") }
+            .tabItem { Label(tr("settings.data"), systemImage: "externaldrive.fill") }
             .padding()
 
-            // Tab 3: About
+            // Tab 4: About
             Form {
                 Section {
                     HStack {
                         if let icon = NSImage(named: NSImage.applicationIconName) {
                             Image(nsImage: icon)
                                 .resizable()
-                                .frame(width: 64, height: 64)
+                                .frame(width: 128, height: 128)
                         }
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Apptag")
                                 .font(.title2)
                                 .fontWeight(.semibold)
-                            Text("Tag-based app launcher")
+                            Text(tr("app.description"))
                                 .font(.body)
                                 .foregroundStyle(.secondary)
-                            Text("Version \(appVersion) (Build \(buildVersion))")
+                            Text("\(tr("app.version")) \(appVersion) (\(tr("app.build")) \(buildVersion))")
                                 .font(.callout)
                                 .foregroundStyle(.tertiary)
+
+                            Divider()
+                                .padding(.vertical, 4)
+
+                            Text("万物之中，希望最美")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            Text("永桔@2026-18602102518")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
                         }
                     }
+                    .padding(.leading, 100)
                 }
             }
-            .tabItem { Label("About", systemImage: "info.circle") }
+            .tabItem { Label(tr("settings.about"), systemImage: "info.circle") }
             .padding()
         }
-        .frame(minWidth: 660, idealWidth: 660, minHeight: 380, idealHeight: 380)
+        .frame(minWidth: 660, maxWidth: 660, minHeight: 380)
     }
 }
