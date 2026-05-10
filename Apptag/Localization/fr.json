@@ -1,5 +1,5 @@
 {
-  "menu.show": "Afficher Apptag",
+  "menu.show": "Afficher TagLauncher",
   "menu.preferences": "Préférences…",
   "menu.quit": "Quitter",
   "menu.language": "Langue",
@@ -13,7 +13,7 @@
   "settings.appListStyle": "Style de liste d'applications :",
   "settings.flat": "Liste",
   "settings.container": "Conteneur sans couleur",
-  "settings.flatDesc": "\"Liste\" affiche les apps directement. \"Conteneur sans couleur\" et \"Conteneur coloré\" utilisent des conteneurs en cascade. \"Conteneur grille sans couleur\" et \"Conteneur grille coloré\" alignent les icônes dans des lignes de grille de hauteur égale.",
+  "settings.flatDesc": "\"Liste\" affiche les apps directement. \"Conteneur sans couleur\" et \"Conteneur coloré\" utilisent des conteneurs en cascade. \"Grille sans couleur\" et \"Grille colorée\" alignent les icônes dans des lignes de grille de hauteur égale.",
   "settings.hideAppNames": "Masquer les noms d'apps",
   "settings.tagPosition": "Position des étiquettes :",
   "settings.left": "Gauche",
@@ -43,7 +43,7 @@
   "tag.cancel": "Annuler",
   "tag.add": "Ajouter",
   "tag.newName": "Nouveau nom d'étiquette",
-  "app.name": "Apptag",
+  "app.name": "TagLauncher",
   "app.description": "Lanceur d'applications par étiquettes",
   "app.version": "Version",
   "app.build": "Build",
@@ -57,6 +57,6 @@
   "tag.system": "Système",
   "tag.productivity": "Bureau",
   "settings.coloredContainer": "Conteneur coloré",
-  "settings.gridContainer": "Conteneur grille sans couleur",
-  "settings.coloredGridContainer": "Conteneur grille coloré"
+  "settings.gridContainer": "Grille sans couleur",
+  "settings.coloredGridContainer": "Grille colorée"
 }

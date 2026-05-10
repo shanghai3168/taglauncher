@@ -1,5 +1,5 @@
 {
-  "menu.show": "Mostrar Apptag",
+  "menu.show": "Mostrar TagLauncher",
   "menu.preferences": "Preferencias…",
   "menu.quit": "Salir",
   "menu.language": "Idioma",
@@ -13,7 +13,7 @@
   "settings.appListStyle": "Estilo de lista de apps:",
   "settings.flat": "Plano",
   "settings.container": "Contenedor sin color",
-  "settings.flatDesc": "\"Plano\" muestra las apps directamente. \"Contenedor sin color\" y \"Contenedor coloreado\" usan contenedores en cascada. \"Contenedor de cuadrícula sin color\" y \"Contenedor de cuadrícula coloreado\" alinean los iconos en filas de cuadrícula de igual altura.",
+  "settings.flatDesc": "\"Plano\" muestra las apps directamente. \"Contenedor sin color\" y \"Contenedor coloreado\" usan contenedores en cascada. \"Cuadrícula sin color\" y \"Cuadrícula coloreada\" alinean los iconos en filas de cuadrícula de igual altura.",
   "settings.hideAppNames": "Ocultar nombres de apps",
   "settings.tagPosition": "Posición de etiquetas:",
   "settings.left": "Izquierda",
@@ -43,7 +43,7 @@
   "tag.cancel": "Cancelar",
   "tag.add": "Añadir",
   "tag.newName": "Nuevo nombre de etiqueta",
-  "app.name": "Apptag",
+  "app.name": "TagLauncher",
   "app.description": "Lanzador de apps basado en etiquetas",
   "app.version": "Versión",
   "app.build": "Build",
@@ -57,6 +57,6 @@
   "tag.system": "Sistema",
   "tag.productivity": "Oficina",
   "settings.coloredContainer": "Contenedor coloreado",
-  "settings.gridContainer": "Contenedor de cuadrícula sin color",
-  "settings.coloredGridContainer": "Contenedor de cuadrícula coloreado"
+  "settings.gridContainer": "Cuadrícula sin color",
+  "settings.coloredGridContainer": "Cuadrícula coloreada"
 }

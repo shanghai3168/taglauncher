@@ -5,7 +5,7 @@ import Carbon
 // MARK: - Application Entry Point
 
 @main
-struct ApptagApp: App {
+struct TagLauncherApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
@@ -45,7 +45,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         setupLaunchAtLogin()
     }
 
-    /// Dock icon click → show overlay (same as menubar "Show Apptag")
+    /// Dock icon click → show overlay (same as menubar "Show TagLauncher")
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         showOverlay()
         return false  // Suppress default "unhide all windows" behavior
@@ -137,9 +137,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if let button = statusItem.button {
             button.image = NSImage(
                 systemSymbolName: "tag.fill",
-                accessibilityDescription: "Apptag"
+                accessibilityDescription: "TagLauncher"
             )
-            button.toolTip = "Apptag — Tag-based app launcher"
+            button.toolTip = "TagLauncher — Tag-based app launcher"
             button.action = #selector(toggleOverlay)
             button.target = self
         }
@@ -297,7 +297,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         hotkeyRef = ref
 
         if status != noErr {
-            print("[Apptag] Hotkey registration failed: \(status). Falling back to menu bar only.")
+            print("[TagLauncher] Hotkey registration failed: \(status). Falling back to menu bar only.")
             return
         }
 
@@ -385,7 +385,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// Track whether the overlay is in edit mode to suppress auto-dismiss.
     private func observeEditMode() {
         NotificationCenter.default.addObserver(
-            forName: .apptagEditModeChanged,
+            forName: .tagLauncherEditModeChanged,
             object: nil,
             queue: .main
         ) { [weak self] notification in
@@ -515,14 +515,14 @@ struct PreferencesView: View {
     private func exportTags() {
         let panel = NSSavePanel()
         panel.title = tr("settings.export")
-        panel.nameFieldStringValue = "Apptag-tags.json"
+        panel.nameFieldStringValue = "TagLauncher-tags.json"
         panel.allowedContentTypes = [.json]
         panel.begin { response in
             guard response == .OK, let url = panel.url else { return }
             do {
                 try TagDatabase.exportTo(url)
             } catch {
-                fputs("[Apptag] Export failed: \(error)\n", stderr)
+                fputs("[TagLauncher] Export failed: \(error)\n", stderr)
             }
         }
     }
@@ -538,7 +538,7 @@ struct PreferencesView: View {
                 _ = try TagDatabase.importFrom(url)
                 scanApps()
             } catch {
-                fputs("[Apptag] Import failed: \(error)\n", stderr)
+                fputs("[TagLauncher] Import failed: \(error)\n", stderr)
                 // Show alert on failure
                 let alert = NSAlert()
                 alert.messageText = tr("settings.importFailed")
@@ -694,7 +694,7 @@ struct PreferencesView: View {
                                 .frame(width: 128, height: 128)
                         }
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Apptag")
+                            Text("TagLauncher")
                                 .font(.title2)
                                 .fontWeight(.semibold)
                             Text(tr("app.description"))

@@ -1,5 +1,5 @@
 {
-  "menu.show": "Show Apptag",
+  "menu.show": "Show TagLauncher",
   "menu.preferences": "Preferences…",
   "menu.quit": "Quit",
   "menu.language": "Language",
@@ -13,7 +13,7 @@
   "settings.appListStyle": "App list style:",
   "settings.flat": "Flat",
   "settings.container": "Colorless Container",
-  "settings.flatDesc": "\"Flat\" shows apps directly. \"Colorless Container\" and \"Colored Container\" use masonry containers. \"Colorless Grid Container\" and \"Colored Grid Container\" align app icons in equal-height grid rows.",
+  "settings.flatDesc": "\"Flat\" shows apps directly. \"Colorless Container\" and \"Colored Container\" use masonry containers. \"Colorless Grid\" and \"Colored Grid\" align app icons in equal-height grid rows.",
   "settings.hideAppNames": "Hide app names",
   "settings.tagPosition": "Tag position:",
   "settings.left": "Left",
@@ -43,7 +43,7 @@
   "tag.cancel": "Cancel",
   "tag.add": "Add",
   "tag.newName": "New tag name",
-  "app.name": "Apptag",
+  "app.name": "TagLauncher",
   "app.description": "Tag-based app launcher",
   "app.version": "Version",
   "app.build": "Build",
@@ -57,6 +57,6 @@
   "tag.system": "System",
   "tag.productivity": "Productivity",
   "settings.coloredContainer": "Colored Container",
-  "settings.gridContainer": "Colorless Grid Container",
-  "settings.coloredGridContainer": "Colored Grid Container"
+  "settings.gridContainer": "Colorless Grid",
+  "settings.coloredGridContainer": "Colored Grid"
 }

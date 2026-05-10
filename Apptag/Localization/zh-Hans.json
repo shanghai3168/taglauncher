@@ -1,5 +1,5 @@
 {
-  "menu.show": "显示 Apptag",
+  "menu.show": "显示 TagLauncher",
   "menu.preferences": "偏好设置…",
   "menu.quit": "退出",
   "menu.language": "语言",
@@ -13,7 +13,7 @@
   "settings.appListStyle": "应用列表样式：",
   "settings.flat": "平铺",
   "settings.container": "无色容器",
-  "settings.flatDesc": "\"平铺\"直接显示应用。\"无色容器\"和\"彩色容器\"使用瀑布流容器。\"无色网格容器\"和\"彩色网格容器\"会按等高网格行对齐应用图标。",
+  "settings.flatDesc": "\"平铺\"直接显示应用。\"无色容器\"和\"彩色容器\"使用瀑布流容器。\"无色网格\"和\"彩色网格\"会按等高网格行对齐应用图标。",
   "settings.hideAppNames": "隐藏应用名称",
   "settings.tagPosition": "标签位置：",
   "settings.left": "左侧",
@@ -43,7 +43,7 @@
   "tag.cancel": "取消",
   "tag.add": "添加",
   "tag.newName": "新标签名称",
-  "app.name": "Apptag",
+  "app.name": "TagLauncher",
   "app.description": "基于标签的应用启动器",
   "app.version": "版本",
   "app.build": "构建",
@@ -57,6 +57,6 @@
   "tag.system": "系统优化",
   "tag.productivity": "办公",
   "settings.coloredContainer": "彩色容器",
-  "settings.gridContainer": "无色网格容器",
-  "settings.coloredGridContainer": "彩色网格容器"
+  "settings.gridContainer": "无色网格",
+  "settings.coloredGridContainer": "彩色网格"
 }

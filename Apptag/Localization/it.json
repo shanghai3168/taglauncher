@@ -1,5 +1,5 @@
 {
-  "menu.show": "Mostra Apptag",
+  "menu.show": "Mostra TagLauncher",
   "menu.preferences": "Preferenze…",
   "menu.quit": "Esci",
   "menu.language": "Lingua",
@@ -13,7 +13,7 @@
   "settings.appListStyle": "Stile elenco app:",
   "settings.flat": "Elenco",
   "settings.container": "Contenitore senza colore",
-  "settings.flatDesc": "\"Elenco\" mostra le app direttamente. \"Contenitore senza colore\" e \"Contenitore colorato\" usano contenitori a cascata. \"Contenitore griglia senza colore\" e \"Contenitore griglia colorato\" allineano le icone in righe griglia di uguale altezza.",
+  "settings.flatDesc": "\"Elenco\" mostra le app direttamente. \"Contenitore senza colore\" e \"Contenitore colorato\" usano contenitori a cascata. \"Griglia senza colore\" e \"Griglia colorata\" allineano le icone in righe griglia di uguale altezza.",
   "settings.hideAppNames": "Nascondi nomi app",
   "settings.tagPosition": "Posizione tag:",
   "settings.left": "Sinistra",
@@ -43,7 +43,7 @@
   "tag.cancel": "Annulla",
   "tag.add": "Aggiungi",
   "tag.newName": "Nuovo nome tag",
-  "app.name": "Apptag",
+  "app.name": "TagLauncher",
   "app.description": "Launcher di app basato su tag",
   "app.version": "Versione",
   "app.build": "Build",
@@ -57,6 +57,6 @@
   "tag.system": "Sistema",
   "tag.productivity": "Ufficio",
   "settings.coloredContainer": "Contenitore colorato",
-  "settings.gridContainer": "Contenitore griglia senza colore",
-  "settings.coloredGridContainer": "Contenitore griglia colorato"
+  "settings.gridContainer": "Griglia senza colore",
+  "settings.coloredGridContainer": "Griglia colorata"
 }

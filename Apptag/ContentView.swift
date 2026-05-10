@@ -4,7 +4,7 @@ import AppKit
 // MARK: - Notification for manual re-index
 
 extension Notification.Name {
-    static let apptagEditModeChanged = Notification.Name("ApptagEditModeChanged")
+    static let tagLauncherEditModeChanged = Notification.Name("TagLauncherEditModeChanged")
 }
 
 // MARK: - Edit Phase
@@ -267,7 +267,7 @@ struct ContentView: View {
         .onChange(of: editPhase) { _, newPhase in
             let active = newPhase != .none
             NotificationCenter.default.post(
-                name: .apptagEditModeChanged,
+                name: .tagLauncherEditModeChanged,
                 object: nil,
                 userInfo: ["active": active]
             )
@@ -277,7 +277,7 @@ struct ContentView: View {
     /// Set edit phase with synchronous notification BEFORE state change.
     func setEditPhase(_ phase: EditPhase) {
         if phase != .none {
-            NotificationCenter.default.post(name: .apptagEditModeChanged, object: nil, userInfo: ["active": true])
+            NotificationCenter.default.post(name: .tagLauncherEditModeChanged, object: nil, userInfo: ["active": true])
             NSApp.activate(ignoringOtherApps: true)
             // Always sync tag list from database when entering edit mode
             let store = TagDatabase.load()
@@ -287,7 +287,7 @@ struct ContentView: View {
         editPhase = phase
         if phase == .none {
             DispatchQueue.main.async {
-                NotificationCenter.default.post(name: .apptagEditModeChanged, object: nil, userInfo: ["active": false])
+                NotificationCenter.default.post(name: .tagLauncherEditModeChanged, object: nil, userInfo: ["active": false])
             }
         }
     }
@@ -482,6 +482,7 @@ struct ContentView: View {
         let isColorless = isColorlessContainerMode
         let isColorlessFilled = isColorless && filledColorlessContainer == group.name
         let isHovered = hoveredContainer == group.name
+        let isColorlessActive = isColorless && (isColorlessFilled || isHovered)
         let tagColor = Color(nsColor: TagColor.nsColor(for: tagColors[group.name] ?? 0))
         return VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 0) {
@@ -511,7 +512,7 @@ struct ContentView: View {
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 14)
-                .fill((isColored || isColorlessFilled) ? tagColor.opacity(0.30) : Color.clear)
+                .fill((isColored || isColorlessActive) ? tagColor.opacity(0.30) : Color.clear)
                 .background(
                     RoundedRectangle(cornerRadius: 14)
                         .fill(.ultraThinMaterial)
@@ -521,22 +522,21 @@ struct ContentView: View {
             RoundedRectangle(cornerRadius: 14)
                 .stroke(Color.primary.opacity(0.08), lineWidth: 1)
         )
-        .shadow(color: .black.opacity(isColored && isHovered ? 0.22 : 0),
-                radius: isColored && isHovered ? 18 : 0,
-                y: isColored && isHovered ? 10 : 0)
+        .shadow(color: .black.opacity((isColored && isHovered) || isColorlessActive ? 0.22 : 0),
+                radius: (isColored && isHovered) || isColorlessActive ? 18 : 0,
+                y: (isColored && isHovered) || isColorlessActive ? 10 : 0)
         .scaleEffect(isColored && isHovered ? 1.015 : 1.0)
         .animation(.spring(response: 0.25, dampingFraction: 0.82), value: isHovered)
+        .animation(.spring(response: 0.25, dampingFraction: 0.82), value: isColorlessFilled)
         .onHover { hovering in
-            if isColored {
+            if isColored || isColorless {
                 hoveredContainer = hovering ? group.name : nil
-            } else if hovering {
-                fillColorlessContainer(group.name)
             }
         }
         .contentShape(RoundedRectangle(cornerRadius: 14))
         .onTapGesture {
-            if isColorlessFilled {
-                filledColorlessContainer = nil
+            if isColorless {
+                toggleColorlessFill(group.name)
             }
         }
     }
@@ -689,9 +689,11 @@ struct ContentView: View {
 
     private func gridContainerCard(_ group: TagGroup, width: CGFloat, fixedRows: Int) -> some View {
         let isColored = displayMode == "coloredGridContainer"
+        let isColorlessGrid = displayMode == "gridContainer"
         let isColorless = isColorlessContainerMode
         let isColorlessFilled = isColorless && filledColorlessContainer == group.name
         let isHovered = hoveredContainer == group.name
+        let isColorlessGridActive = isColorlessGrid && (isColorlessFilled || isHovered)
         let cols = iconColumns(width: width)
         let contentWidth = max(1, width - 32)
         let cellWidth = max(1, (contentWidth - 6 * CGFloat(cols - 1)) / CGFloat(cols))
@@ -739,7 +741,7 @@ struct ContentView: View {
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 14)
-                .fill((isColored || isColorlessFilled) ? tagColor.opacity(0.30) : Color.clear)
+                .fill((isColored || isColorlessGridActive) ? tagColor.opacity(0.30) : Color.clear)
                 .background(
                     RoundedRectangle(cornerRadius: 14)
                         .fill(.ultraThinMaterial)
@@ -749,13 +751,14 @@ struct ContentView: View {
             RoundedRectangle(cornerRadius: 14)
                 .stroke(Color.primary.opacity(0.08), lineWidth: 1)
         )
-        .shadow(color: .black.opacity(isColored && isHovered ? 0.22 : 0),
-                radius: isColored && isHovered ? 18 : 0,
-                y: isColored && isHovered ? 10 : 0)
+        .shadow(color: .black.opacity((isColored && isHovered) || isColorlessGridActive ? 0.22 : 0),
+                radius: (isColored && isHovered) || isColorlessGridActive ? 18 : 0,
+                y: (isColored && isHovered) || isColorlessGridActive ? 10 : 0)
         .scaleEffect(isColored && isHovered ? 1.015 : 1.0)
         .animation(.spring(response: 0.25, dampingFraction: 0.82), value: isHovered)
+        .animation(.spring(response: 0.25, dampingFraction: 0.82), value: isColorlessFilled)
         .onHover { hovering in
-            if isColored {
+            if isColored || isColorlessGrid {
                 hoveredContainer = hovering ? group.name : nil
             } else if hovering {
                 fillColorlessContainer(group.name)
@@ -763,8 +766,8 @@ struct ContentView: View {
         }
         .contentShape(RoundedRectangle(cornerRadius: 14))
         .onTapGesture {
-            if isColorlessFilled {
-                filledColorlessContainer = nil
+            if isColorlessGrid {
+                toggleColorlessFill(group.name)
             }
         }
     }
@@ -1019,12 +1022,12 @@ struct ContentView: View {
     }
 
     private func fillColorlessContainer(_ id: String) {
-        guard displayMode == "container" else { return }
+        guard isColorlessContainerMode else { return }
         filledColorlessContainer = id
     }
 
     private func toggleColorlessFill(_ id: String) {
-        guard displayMode == "container" else { return }
+        guard isColorlessContainerMode else { return }
         filledColorlessContainer = (filledColorlessContainer == id) ? nil : id
     }
 

@@ -1,5 +1,5 @@
 {
-  "menu.show": "Показать Apptag",
+  "menu.show": "Показать TagLauncher",
   "menu.preferences": "Настройки…",
   "menu.quit": "Выйти",
   "menu.language": "Язык",
@@ -13,7 +13,7 @@
   "settings.appListStyle": "Стиль списка приложений:",
   "settings.flat": "Плоский",
   "settings.container": "Бесцветный контейнер",
-  "settings.flatDesc": "\"Плоский\" показывает приложения напрямую. \"Бесцветный контейнер\" и \"Цветной контейнер\" используют каскадные контейнеры. \"Бесцветный сеточный контейнер\" и \"Цветной сеточный контейнер\" выравнивают значки приложений в строках сетки одинаковой высоты.",
+  "settings.flatDesc": "\"Плоский\" показывает приложения напрямую. \"Бесцветный контейнер\" и \"Цветной контейнер\" используют каскадные контейнеры. \"Бесцветная сетка\" и \"Цветная сетка\" выравнивают значки приложений в строках сетки одинаковой высоты.",
   "settings.hideAppNames": "Скрыть названия приложений",
   "settings.tagPosition": "Положение тегов:",
   "settings.left": "Слева",
@@ -43,7 +43,7 @@
   "tag.cancel": "Отмена",
   "tag.add": "Добавить",
   "tag.newName": "Новое название тега",
-  "app.name": "Apptag",
+  "app.name": "TagLauncher",
   "app.description": "Лаунчер приложений на основе тегов",
   "app.version": "Версия",
   "app.build": "Сборка",
@@ -57,6 +57,6 @@
   "tag.system": "Система",
   "tag.productivity": "Офис",
   "settings.coloredContainer": "Цветной контейнер",
-  "settings.gridContainer": "Бесцветный сеточный контейнер",
-  "settings.coloredGridContainer": "Цветной сеточный контейнер"
+  "settings.gridContainer": "Бесцветная сетка",
+  "settings.coloredGridContainer": "Цветная сетка"
 }

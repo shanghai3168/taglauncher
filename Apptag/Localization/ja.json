@@ -1,5 +1,5 @@
 {
-  "menu.show": "Apptagを表示",
+  "menu.show": "TagLauncherを表示",
   "menu.preferences": "設定…",
   "menu.quit": "終了",
   "menu.language": "言語",
@@ -13,7 +13,7 @@
   "settings.appListStyle": "アプリ一覧スタイル：",
   "settings.flat": "フラット",
   "settings.container": "無色コンテナ",
-  "settings.flatDesc": "\"フラット\"はアプリを直接表示します。\"無色コンテナ\"と\"カラーコンテナ\"はコンテナを滝状に配置します。\"無色グリッドコンテナ\"と\"カラーグリッドコンテナ\"は等高のグリッド行でアプリアイコンを揃えます。",
+  "settings.flatDesc": "\"フラット\"はアプリを直接表示します。\"無色コンテナ\"と\"カラーコンテナ\"はコンテナを滝状に配置します。\"無色グリッド\"と\"カラーグリッド\"は等高のグリッド行でアプリアイコンを揃えます。",
   "settings.hideAppNames": "アプリ名を非表示",
   "settings.tagPosition": "タグ位置：",
   "settings.left": "左",
@@ -43,7 +43,7 @@
   "tag.cancel": "キャンセル",
   "tag.add": "追加",
   "tag.newName": "新しいタグ名",
-  "app.name": "Apptag",
+  "app.name": "TagLauncher",
   "app.description": "タグベースのアプリランチャー",
   "app.version": "バージョン",
   "app.build": "ビルド",
@@ -57,6 +57,6 @@
   "tag.system": "システム",
   "tag.productivity": "オフィス",
   "settings.coloredContainer": "カラーコンテナ",
-  "settings.gridContainer": "無色グリッドコンテナ",
-  "settings.coloredGridContainer": "カラーグリッドコンテナ"
+  "settings.gridContainer": "無色グリッド",
+  "settings.coloredGridContainer": "カラーグリッド"
 }
