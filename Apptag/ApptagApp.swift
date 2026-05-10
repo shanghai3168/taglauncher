@@ -345,19 +345,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
             // Settings/Preferences window → float it above overlay for real-time preview
             if NSApp.windows.contains(keyWindow) {
-                if self.overlayWindow?.isVisible == true {
-                    keyWindow.level = .popUpMenu
-                }
-                if self.settingsWindow == nil {
-                    keyWindow.minSize = NSSize(width: 660, height: 380)
-                    keyWindow.maxSize = NSSize(width: 660, height: CGFloat.greatestFiniteMagnitude)
-                }
-                self.settingsWindow = keyWindow
+                self.prepareSettingsWindow(keyWindow)
                 return
             }
 
             self.hideOverlay()
         }
+    }
+
+    /// Settings must always float above the overlay so changes can be previewed live.
+    private func prepareSettingsWindow(_ window: NSWindow) {
+        if overlayWindow?.isVisible == true {
+            let overlayLevel = overlayWindow?.level.rawValue ?? NSWindow.Level.screenSaver.rawValue
+            window.level = NSWindow.Level(rawValue: overlayLevel + 1)
+            window.orderFrontRegardless()
+        }
+        if settingsWindow == nil {
+            window.minSize = NSSize(width: 660, height: 380)
+            window.maxSize = NSSize(width: 660, height: CGFloat.greatestFiniteMagnitude)
+        }
+        settingsWindow = window
     }
 
     /// Clean up settingsWindow reference when the Settings window closes.
@@ -388,8 +395,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc private func openPreferences() {
         // Don't hide overlay — keep it visible for real-time setting preview.
-        // observeOtherWindows handles raising the Settings window above the overlay.
         NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            for window in NSApp.windows where window != self.overlayWindow {
+                self.prepareSettingsWindow(window)
+            }
+        }
     }
 
     @objc private func switchLanguage(_ sender: NSMenuItem) {
@@ -577,9 +589,10 @@ struct PreferencesView: View {
                             Picker("", selection: $displayMode) {
                                 Text(tr("settings.flat")).tag("flat")
                                 Text(tr("settings.container")).tag("container")
+                                Text(tr("settings.coloredContainer")).tag("coloredContainer")
                             }
                             .pickerStyle(.segmented)
-                            .frame(width: 280, alignment: .leading)
+                            .frame(width: 360, alignment: .leading)
                             Text(tr("settings.flatDesc"))
                                 .font(.caption).foregroundStyle(.secondary)
                                 .fixedSize(horizontal: false, vertical: true)

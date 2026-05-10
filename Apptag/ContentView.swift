@@ -203,7 +203,7 @@ struct ContentView: View {
     @State private var successToast: String? = nil
     @State private var draggedTagNames: [String] = []  // live drag order
     @State private var dragItem: String? = nil          // currently dragged tag
-    @State private var highlightedGroup: String? = nil  // container highlight
+    @State private var hoveredContainer: String? = nil  // colored container lift
 
     // Configurable defaults
     @AppStorage("defaultGroupName") private var defaultGroupName = "Other"
@@ -337,8 +337,6 @@ struct ContentView: View {
                 ForEach(tagLabels) { tag in
                     TagPill(name: tag.name, colorIndex: tag.colorIndex,
                             action: {
-                        if highlightedGroup == tag.id { highlightedGroup = nil }
-                        else { highlightedGroup = tag.id }
                         scrollTo(tag.id)
                     })
                     .onHover { hovering in
@@ -355,8 +353,6 @@ struct ContentView: View {
                 ForEach(tagLabels) { tag in
                     SideTagPill(name: tag.name, colorIndex: tag.colorIndex,
                                 action: {
-                        if highlightedGroup == tag.id { highlightedGroup = nil }
-                        else { highlightedGroup = tag.id }
                         scrollTo(tag.id)
                     })
                     .onHover { hovering in
@@ -377,7 +373,7 @@ struct ContentView: View {
                 Spacer()
                 ProgressView().scaleEffect(0.8)
                 Spacer()
-            } else if displayMode == "container" {
+            } else if displayMode == "container" || displayMode == "coloredContainer" {
                 containerGrid
             } else {
                 flatGrid
@@ -458,8 +454,9 @@ struct ContentView: View {
     }
 
     private func masonryCard(_ group: TagGroup, width: CGFloat) -> some View {
-        let isHL = highlightedGroup == group.name
-        let hlColor = Color(nsColor: TagColor.nsColor(for: tagColors[group.name] ?? 0))
+        let isColored = displayMode == "coloredContainer"
+        let isHovered = hoveredContainer == group.name
+        let tagColor = Color(nsColor: TagColor.nsColor(for: tagColors[group.name] ?? 0))
         return VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 0) {
                 Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
@@ -488,13 +485,24 @@ struct ContentView: View {
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 14)
-                .fill(.ultraThinMaterial)
+                .fill(isColored ? tagColor.opacity(0.30) : Color.clear)
+                .background(
+                    RoundedRectangle(cornerRadius: 14)
+                        .fill(.ultraThinMaterial)
+                )
         )
         .overlay(
             RoundedRectangle(cornerRadius: 14)
-                .stroke(isHL ? hlColor : Color.primary.opacity(0.08),
-                        lineWidth: isHL ? 3 : 1)
+                .stroke(Color.primary.opacity(0.08), lineWidth: 1)
         )
+        .shadow(color: .black.opacity(isColored && isHovered ? 0.22 : 0),
+                radius: isColored && isHovered ? 18 : 0,
+                y: isColored && isHovered ? 10 : 0)
+        .scaleEffect(isColored && isHovered ? 1.015 : 1.0)
+        .animation(.spring(response: 0.25, dampingFraction: 0.82), value: isHovered)
+        .onHover { hovering in
+            hoveredContainer = hovering ? group.name : nil
+        }
     }
 
     // MARK: - Edit Tags View
@@ -505,12 +513,12 @@ struct ContentView: View {
                 Button {
                     setEditPhase(.none)
                 } label: {
-                    Label("Exit editing", systemImage: "rectangle.portrait.and.arrow.right")
+                    Label(tr("edit.exit"), systemImage: "rectangle.portrait.and.arrow.right")
                         .font(.system(size: 12))
                 }
                 .buttonStyle(.bordered)
                 Spacer()
-                Text("Edit Tags").font(.headline)
+                Text(tr("edit.tags")).font(.headline)
                 Spacer()
             }
             .padding(.horizontal, 24)
@@ -533,14 +541,14 @@ struct ContentView: View {
         VStack(spacing: 0) {
             HStack {
                 Button { cancelEditApps(); setEditPhase(.none) } label: {
-                    Label("Exit editing", systemImage: "rectangle.portrait.and.arrow.right")
+                    Label(tr("edit.exit"), systemImage: "rectangle.portrait.and.arrow.right")
                         .font(.system(size: 12))
                 }
                 .buttonStyle(.bordered)
                 Spacer()
-                Text("Edit App Categories").font(.headline)
+                Text(tr("edit.title")).font(.headline)
                 Spacer()
-                Button("Confirm") { confirmAssign() }
+                Button(tr("edit.confirm")) { confirmAssign() }
                     .buttonStyle(.borderedProminent)
                     .disabled(selectedAppPaths.isEmpty || selectedTagNames.isEmpty)
             }
@@ -552,8 +560,8 @@ struct ContentView: View {
 
             HStack(spacing: 0) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Select tags:").font(.caption).foregroundStyle(.secondary).padding(.bottom, 4)
-                    Text("Drag to reorder").font(.caption2).foregroundStyle(.tertiary).padding(.bottom, 2)
+                    Text(tr("edit.selectTags")).font(.caption).foregroundStyle(.secondary).padding(.bottom, 4)
+                    Text(tr("edit.dragHint")).font(.caption2).foregroundStyle(.tertiary).padding(.bottom, 2)
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack(spacing: 4) {
                             ForEach(sortedTagNames, id: \.self) { tagName in
@@ -585,23 +593,7 @@ struct ContentView: View {
                 if allApps.isEmpty {
                     Spacer(); ProgressView().scaleEffect(0.8); Spacer()
                 } else {
-                    ScrollView {
-                        LazyVStack(alignment: .leading, spacing: 24) {
-                            ForEach(groups) { group in
-                                VStack(alignment: .leading, spacing: 6) {
-                                    HStack(spacing: 0) {
-                                        Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
-                                        Text(group.name).font(.system(size: tagFontSize, weight: .semibold))
-                                            .foregroundStyle(.secondary).padding(.horizontal, 10)
-                                        Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
-                                    }
-                                    LazyVGrid(columns: [GridItem(.adaptive(minimum: iconSize + 28, maximum: iconSize + 64), spacing: 6)], spacing: 2) {
-                                        ForEach(group.apps) { app in editableAppItem(app) }
-                                    }
-                                }
-                            }
-                        }.padding(20)
-                    }
+                    editAppsGrid
                 }
             }
 
@@ -617,6 +609,66 @@ struct ContentView: View {
                     }
             }
         }
+    }
+
+    private var editAppsGrid: some View {
+        GeometryReader { geo in
+            let outerPad: CGFloat = 20
+            let gap: CGFloat = 16
+            let available = geo.size.width - outerPad * 2
+            let colW: CGFloat = 300
+            let colCount = max(1, Int((available + gap) / (colW + gap)))
+            let actualColW = (available - gap * CGFloat(colCount - 1)) / CGFloat(colCount)
+            let columns = distributeToColumns(groups: groups, colCount: colCount, colWidth: actualColW)
+
+            ScrollView {
+                HStack(alignment: .top, spacing: gap) {
+                    ForEach(0..<colCount, id: \.self) { ci in
+                        LazyVStack(spacing: gap) {
+                            ForEach(columns[ci]) { group in
+                                editGroupCard(group, width: actualColW)
+                            }
+                        }
+                    }
+                }
+                .padding(outerPad)
+                .frame(maxWidth: .infinity, alignment: .topLeading)
+            }
+        }
+    }
+
+    private func editGroupCard(_ group: TagGroup, width: CGFloat) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 0) {
+                Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
+                    .layoutPriority(0)
+                Text(group.name)
+                    .font(.system(size: tagFontSize, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+                    .padding(.horizontal, 10)
+                    .layoutPriority(1)
+                Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
+                    .layoutPriority(0)
+            }
+            LazyVGrid(
+                columns: [GridItem(.adaptive(minimum: iconSize + 28, maximum: iconSize + 64), spacing: 6)],
+                spacing: 2
+            ) {
+                ForEach(group.apps) { app in editableAppItem(app) }
+            }
+        }
+        .frame(maxWidth: width)
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 14)
+                .fill(.ultraThinMaterial)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 14)
+                .stroke(Color.primary.opacity(0.08), lineWidth: 1)
+        )
     }
 
     private func selectableTagItem(_ tagName: String) -> some View {
@@ -646,7 +698,7 @@ struct ContentView: View {
         }
         selectedAppPaths = []; selectedTagNames = []
         refreshApps()
-        withAnimation { successToast = "分类成功" }
+        withAnimation { successToast = tr("edit.success") }
     }
 
     private func cancelEditApps() {
@@ -696,7 +748,17 @@ struct ContentView: View {
         let order = draggedTagNames.isEmpty
             ? TagEditor.orderedTagNames()
             : draggedTagNames
-        return AppIndexer.group(apps: allApps, defaultGroupName: defaultGroupName, tagOrder: order)
+        let raw = AppIndexer.group(apps: allApps, defaultGroupName: defaultGroupName, tagOrder: order)
+        // Translate stable keys for display
+        return raw.map { group in
+            if group.name == defaultGroupName {
+                return TagGroup(name: tr("group.uncategorized"), apps: group.apps)
+            }
+            if group.name == "Mac自带" {
+                return TagGroup(name: tr("group.appleBuiltIn"), apps: group.apps)
+            }
+            return group
+        }
     }
 
     // MARK: - Actions
@@ -708,8 +770,7 @@ struct ContentView: View {
     func refreshApps() {
         DispatchQueue.global(qos: .userInitiated).async {
             var apps = AppIndexer.scan()
-            // Ensure migration ran at least once
-            let store = TagDatabase.migrateFromFinderIfNeeded(apps: apps)
+            let store = TagDatabase.load()
             apps = TagEditor.annotate(apps: apps)
             let colors = store.tags.mapValues { $0.color }
             let order = TagEditor.orderedTagNames()
