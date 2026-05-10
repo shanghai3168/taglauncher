@@ -216,41 +216,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             NSMouseInRect(mousePoint, $0.frame, false)
         }) ?? NSScreen.main ?? NSScreen.screens.first else { return }
 
-        if overlayWindow == nil {
-            let panel = OverlayPanel(
-                contentRect: screen.frame,
-                styleMask: [.borderless, .fullSizeContentView, .nonactivatingPanel],
-                backing: .buffered,
-                defer: false
-            )
-            panel.isFloatingPanel = true
-            panel.hidesOnDeactivate = false
-            overlayWindow = panel
-            overlayWindow?.collectionBehavior = [
-                .canJoinAllSpaces,
-                .fullScreenAuxiliary,
-                .stationary,
-                .transient,
-                .ignoresCycle
-            ]
-            overlayWindow?.isOpaque = false
-            overlayWindow?.backgroundColor = .clear
-            overlayWindow?.hasShadow = false
-            overlayWindow?.titlebarAppearsTransparent = true
-            overlayWindow?.titleVisibility = .hidden
-            overlayWindow?.isReleasedWhenClosed = false
-
-            overlayWindow?.contentView = DismissibleHostingView(
-                rootView: ContentView(hideOverlay: { [weak self] in
-                    self?.hideOverlay()
-                }),
-                onBackdropTap: { [weak self] in
-                    self?.hideOverlay()
-                }
-            )
-        }
+        overlayWindow?.orderOut(nil)
+        overlayWindow = makeOverlayWindow(on: screen)
         overlayWindow?.setFrame(screen.frame, display: true)
-        overlayWindow?.level = .screenSaver
+        overlayWindow?.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.maximumWindow)))
 
         // Local key monitor: catch Escape while overlay is up
         NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
@@ -263,7 +232,39 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         overlayWindow?.makeKeyAndOrderFront(nil)
         overlayWindow?.orderFrontRegardless()
-        NSApp.activate(ignoringOtherApps: true)
+    }
+
+    private func makeOverlayWindow(on screen: NSScreen) -> NSWindow {
+        let panel = OverlayPanel(
+            contentRect: screen.frame,
+            styleMask: [.borderless, .fullSizeContentView, .nonactivatingPanel],
+            backing: .buffered,
+            defer: false
+        )
+        panel.isFloatingPanel = true
+        panel.hidesOnDeactivate = false
+        panel.collectionBehavior = [
+            .moveToActiveSpace,
+            .fullScreenAuxiliary,
+            .stationary,
+            .transient,
+            .ignoresCycle
+        ]
+        panel.isOpaque = false
+        panel.backgroundColor = .clear
+        panel.hasShadow = false
+        panel.titlebarAppearsTransparent = true
+        panel.titleVisibility = .hidden
+        panel.isReleasedWhenClosed = false
+        panel.contentView = DismissibleHostingView(
+            rootView: ContentView(hideOverlay: { [weak self] in
+                self?.hideOverlay()
+            }),
+            onBackdropTap: { [weak self] in
+                self?.hideOverlay()
+            }
+        )
+        return panel
     }
 
     private func hideOverlay() {

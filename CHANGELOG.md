@@ -1,5 +1,17 @@
 # Apptag Changelog
 
+## [3.1.32] — 2026-05-10
+
+- 提升 overlay 到 CoreGraphics maximum window level，进一步避免被全屏应用窗口层遮挡
+
+## [3.1.31] — 2026-05-10
+
+- 强化全屏 Space 唤出逻辑：每次显示 overlay 都重新创建绑定当前 Space 的 NSPanel，避免复用旧窗口导致全屏空间迁移失败
+
+## [3.1.30] — 2026-05-10
+
+- 再次修复全屏 Space 唤出不可见问题：overlay 显示时移动到当前活跃 Space，并避免激活 App 导致窗口回到非全屏空间
+
 ## [3.1.29] — 2026-05-10
 
 - 继续修复全屏 Space 唤出不可见问题：overlay 改为非激活 NSPanel，并加入 stationary/transient 全屏辅助行为，确保在当前全屏 Space 前置显示
