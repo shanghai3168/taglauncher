@@ -1,5 +1,6 @@
 import SwiftUI
 import AppKit
+import UniformTypeIdentifiers
 
 // MARK: - Notification for manual re-index
 
@@ -206,6 +207,8 @@ struct ContentView: View {
     @State private var hoveredContainer: String? = nil  // colored container lift
     // Fixed interaction for "Colorless Container": hover fills persistently; click clears.
     @State private var filledColorlessContainer: String? = nil
+    @State private var appDragModeActive = false
+    @State private var dropWarningToast: String? = nil
 
     // Configurable defaults
     @AppStorage("defaultGroupName") private var defaultGroupName = "Other"
@@ -251,6 +254,21 @@ struct ContentView: View {
                 editTagsView
             case .editingApps:
                 editAppsView
+            }
+
+            if let message = dropWarningToast {
+                Text(message)
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundStyle(.primary)
+                    .padding(.horizontal, 22)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(.ultraThickMaterial)
+                            .shadow(color: .black.opacity(0.22), radius: 18, y: 10)
+                    )
+                    .transition(.scale(scale: 0.96).combined(with: .opacity))
+                    .allowsHitTesting(false)
             }
         }
         .onAppear {
@@ -415,7 +433,12 @@ struct ContentView: View {
                             onSelectApp: { app in openApp(app) },
                             tagFontSize: tagFontSize,
                             iconSize: iconSize,
-                            showNames: !hideAppNames
+                            showNames: !hideAppNames,
+                            dragModeActive: appDragModeActive,
+                            onDragModeChange: { setAppDragMode($0) },
+                            onDropApp: { path, source, copy in
+                                dropApp(path: path, sourceTag: source, targetTag: group.name, copy: copy)
+                            }
                         ).id(group.id)
                     }
                 }.padding(20)
@@ -504,7 +527,15 @@ struct ContentView: View {
                 spacing: 2
             ) {
                 ForEach(group.apps) { app in
-                    AppGridItem(app: app, iconSize: iconSize, showName: !hideAppNames, onSelect: { openApp(app) })
+                    AppGridItem(
+                        app: app,
+                        iconSize: iconSize,
+                        showName: !hideAppNames,
+                        sourceTag: group.name,
+                        dragModeActive: appDragModeActive,
+                        onDragModeChange: { setAppDragMode($0) },
+                        onSelect: { openApp(app) }
+                    )
                 }
             }
         }
@@ -522,6 +553,12 @@ struct ContentView: View {
             RoundedRectangle(cornerRadius: 14)
                 .stroke(Color.primary.opacity(0.08), lineWidth: 1)
         )
+        .overlay {
+            AppDropTargetView(targetTag: group.name) { path, source, copy in
+                dropApp(path: path, sourceTag: source, targetTag: group.name, copy: copy)
+            }
+            .allowsHitTesting(false)
+        }
         .shadow(color: .black.opacity((isColored && isHovered) || isColorlessActive ? 0.22 : 0),
                 radius: (isColored && isHovered) || isColorlessActive ? 18 : 0,
                 y: (isColored && isHovered) || isColorlessActive ? 10 : 0)
@@ -538,6 +575,9 @@ struct ContentView: View {
             if isColorless {
                 toggleColorlessFill(group.name)
             }
+        }
+        .onDrop(of: [UTType.plainText], isTargeted: nil) { providers in
+            handleAppDrop(providers, targetTag: group.name)
         }
     }
 
@@ -721,7 +761,15 @@ struct ContentView: View {
                 ForEach(rows.indices, id: \.self) { rowIndex in
                     HStack(alignment: .top, spacing: 6) {
                         ForEach(rows[rowIndex]) { app in
-                            AppGridItem(app: app, iconSize: iconSize, showName: !hideAppNames, onSelect: { openApp(app) })
+                            AppGridItem(
+                                app: app,
+                                iconSize: iconSize,
+                                showName: !hideAppNames,
+                                sourceTag: group.name,
+                                dragModeActive: appDragModeActive,
+                                onDragModeChange: { setAppDragMode($0) },
+                                onSelect: { openApp(app) }
+                            )
                                 .frame(width: cellWidth)
                                 .frame(height: cellHeight)
                         }
@@ -751,6 +799,12 @@ struct ContentView: View {
             RoundedRectangle(cornerRadius: 14)
                 .stroke(Color.primary.opacity(0.08), lineWidth: 1)
         )
+        .overlay {
+            AppDropTargetView(targetTag: group.name) { path, source, copy in
+                dropApp(path: path, sourceTag: source, targetTag: group.name, copy: copy)
+            }
+            .allowsHitTesting(false)
+        }
         .shadow(color: .black.opacity((isColored && isHovered) || isColorlessGridActive ? 0.22 : 0),
                 radius: (isColored && isHovered) || isColorlessGridActive ? 18 : 0,
                 y: (isColored && isHovered) || isColorlessGridActive ? 10 : 0)
@@ -769,6 +823,9 @@ struct ContentView: View {
             if isColorlessGrid {
                 toggleColorlessFill(group.name)
             }
+        }
+        .onDrop(of: [UTType.plainText], isTargeted: nil) { providers in
+            handleAppDrop(providers, targetTag: group.name)
         }
     }
 
@@ -1031,6 +1088,83 @@ struct ContentView: View {
         filledColorlessContainer = (filledColorlessContainer == id) ? nil : id
     }
 
+    private func handleAppDrop(_ providers: [NSItemProvider], targetTag: String) -> Bool {
+        guard let provider = providers.first(where: { $0.hasItemConformingToTypeIdentifier(UTType.plainText.identifier) }) else {
+            return false
+        }
+        provider.loadItem(forTypeIdentifier: UTType.plainText.identifier, options: nil) { item, _ in
+            let text: String?
+            if let data = item as? Data {
+                text = String(data: data, encoding: .utf8)
+            } else if let string = item as? String {
+                text = string
+            } else if let string = item as? NSString {
+                text = string as String
+            } else {
+                text = nil
+            }
+            guard let text else { return }
+            let parts = text.components(separatedBy: "\n")
+            guard let path = parts.first, !path.isEmpty else { return }
+            let source = parts.dropFirst().first ?? ""
+            let copy = NSEvent.modifierFlags.contains(.option)
+            DispatchQueue.main.async {
+                dropApp(path: path, sourceTag: source, targetTag: targetTag, copy: copy)
+            }
+        }
+        return true
+    }
+
+    private func dropApp(path: String, sourceTag: String, targetTag: String, copy: Bool) {
+        appDragModeActive = false
+        guard !isSystemDefaultDropTarget(targetTag) else {
+            showDropWarning()
+            return
+        }
+        guard tagColors[targetTag] != nil else { return }
+        guard sourceTag != targetTag || copy else { return }
+        TagEditor.moveApp(
+            path: path,
+            from: sourceTag,
+            to: targetTag,
+            color: tagColors[targetTag] ?? 0,
+            copy: copy
+        )
+        refreshApps()
+    }
+
+    private func isSystemDefaultDropTarget(_ targetTag: String) -> Bool {
+        let defaultNames = [
+            defaultGroupName,
+            tr("group.uncategorized"),
+            "Mac自带",
+            tr("group.appleBuiltIn")
+        ]
+        return defaultNames.contains(targetTag)
+    }
+
+    private func showDropWarning() {
+        withAnimation(.spring(response: 0.24, dampingFraction: 0.82)) {
+            dropWarningToast = tr("drop.systemDefaultWarning")
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
+            withAnimation(.easeOut(duration: 0.18)) {
+                dropWarningToast = nil
+            }
+        }
+    }
+
+    private func setAppDragMode(_ active: Bool) {
+        appDragModeActive = active
+        if active {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
+                if appDragModeActive {
+                    appDragModeActive = false
+                }
+            }
+        }
+    }
+
     func refreshApps() {
         DispatchQueue.global(qos: .userInitiated).async {
             var apps = AppIndexer.scan()
@@ -1047,6 +1181,7 @@ struct ContentView: View {
     }
 
     func openApp(_ app: AppInfo) {
+        appDragModeActive = false
         hideOverlay()
         if let bundleIdentifier = app.bundleIdentifier {
             NSWorkspace.shared.launchApplication(

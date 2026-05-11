@@ -43,7 +43,7 @@ enum TagColor {
         default: return NSColor.systemGray
         }
     }
-    static let allIndices: [Int] = [0, 1, 2, 3, 4, 5, 6, 7]
+    static let allIndices: [Int] = [1, 2, 3, 4, 5, 6, 7]
 }
 
 // MARK: - App Scanner
@@ -57,8 +57,7 @@ enum AppIndexer {
             .appendingPathComponent("Applications")
     ]
 
-    /// Scan all standard locations. Tags are NOT read from Finder —
-    /// they're annotated from TagDatabase by the caller.
+    /// Scan all standard locations. Tags are annotated from TagDatabase by the caller.
     static func scan() -> [AppInfo] {
         var seen = Set<URL>()
         var apps: [AppInfo] = []
@@ -153,7 +152,6 @@ enum TagDatabase {
         var tags: [String: TagDef] = [:]
         var appTags: [String: [String]] = [:]  // path → tag names
         var tagOrder: [String] = []  // display order; empty → alpha sort
-        var migrated: Bool = false
     }
 
     // MARK: Paths
@@ -181,83 +179,6 @@ enum TagDatabase {
         try? data.write(to: storeURL, options: .atomic)
     }
 
-    // MARK: Migration (first launch: import Finder tags)
-
-    /// Run once on first launch. Reads Finder tags from all scanned apps
-    /// and seeds the local database. Also auto-assigns "Mac自带" to Apple apps.
-    static func migrateFromFinderIfNeeded(apps: [AppInfo]) -> Store {
-        var store = load()
-        guard !store.migrated else { return store }
-
-        // Read Finder tags from each app
-        for app in apps {
-            let finderTags = readFinderTags(from: app.path)
-            guard !finderTags.isEmpty else { continue }
-            store.appTags[app.path.path] = finderTags.map { $0.name }
-            for (name, color) in finderTags {
-                if store.tags[name] == nil {
-                    store.tags[name] = TagDef(color: color)
-                }
-            }
-        }
-
-        // Auto-assign "Mac自带" tag to Apple apps
-        for app in apps where app.isAppleApp {
-            var current = store.appTags[app.path.path] ?? []
-            if !current.contains("Mac自带") {
-                current.append("Mac自带")
-                store.appTags[app.path.path] = current
-            }
-        }
-        if store.tags["Mac自带"] == nil {
-            store.tags["Mac自带"] = TagDef(color: 1)  // gray
-        }
-
-        store.migrated = true
-        save(store)
-        return store
-    }
-
-    /// Read Finder tags (name, color) from a single .app bundle.
-    /// Only used during one-time migration.
-    private static func readFinderTags(from url: URL) -> [(name: String, color: Int)] {
-        // Read tag names via NSURL resource values
-        guard let values = try? url.resourceValues(forKeys: [.tagNamesKey]),
-              let tagNames = values.tagNames, !tagNames.isEmpty
-        else { return [] }
-
-        // Read tag colors from xattr
-        let xattrName = "com.apple.metadata:_kMDItemUserTags"
-        let path = url.path
-        let size = getxattr(path, xattrName, nil, 0, 0, 0)
-        guard size > 0 else {
-            return tagNames.map { ($0, 0) }
-        }
-
-        var buffer = [UInt8](repeating: 0, count: size)
-        guard getxattr(path, xattrName, &buffer, size, 0, 0) == size else {
-            return tagNames.map { ($0, 0) }
-        }
-
-        let data = Data(buffer)
-        guard let plist = try? PropertyListSerialization.propertyList(
-            from: data, options: [], format: nil
-        ) as? [String] else {
-            return tagNames.map { ($0, 0) }
-        }
-
-        // Build name→color map from xattr entries
-        var colorMap: [String: Int] = [:]
-        for entry in plist {
-            let parts = entry.components(separatedBy: "\n")
-            guard !parts[0].isEmpty else { continue }
-            let c = (parts.count >= 2) ? (Int(parts[1]) ?? 0) : 0
-            colorMap[parts[0]] = (0...7).contains(c) ? c : 0
-        }
-
-        return tagNames.map { ($0, colorMap[$0] ?? 0) }
-    }
-
     // MARK: Export / Import
 
     static func exportTo(_ url: URL) throws {
@@ -269,6 +190,27 @@ enum TagDatabase {
         let store = try JSONDecoder().decode(Store.self, from: data)
         save(store)
         return store
+    }
+
+    /// Seed default tags on first launch. Only runs if store doesn't exist yet.
+    /// Tag names are loaded from the current language's localization.
+    static func seedDefaultTags() {
+        guard !FileManager.default.fileExists(atPath: storeURL.path) else { return }
+
+        let keys = [
+            "tag.design", "tag.development", "tag.writing",
+            "tag.gaming", "tag.entertainment", "tag.system",
+            "tag.productivity"
+        ]
+        let colors: [Int] = [1, 2, 3, 4, 5, 6, 7]
+
+        var store = Store()
+        for (i, key) in keys.enumerated() {
+            let name = tr(key)
+            store.tags[name] = TagDef(color: colors[i])
+            store.tagOrder.append(name)
+        }
+        save(store)
     }
 }
 
@@ -341,14 +283,25 @@ enum TagEditor {
         TagDatabase.save(store)
     }
 
-    /// Remove a tag from specific apps.
-    static func removeTag(_ tag: String, from paths: [String]) {
+    static func moveApp(path: String, from sourceTag: String, to targetTag: String, color: Int, copy: Bool) {
         var store = TagDatabase.load()
-        for path in paths {
-            store.appTags[path]?.removeAll { $0 == tag }
-            if store.appTags[path]?.isEmpty == true {
-                store.appTags.removeValue(forKey: path)
-            }
+        if store.tags[targetTag] == nil {
+            store.tags[targetTag] = TagDatabase.TagDef(color: color)
+            if !store.tagOrder.contains(targetTag) { store.tagOrder.insert(targetTag, at: 0) }
+        }
+
+        var current = store.appTags[path] ?? []
+        if !copy, !sourceTag.isEmpty {
+            current.removeAll { $0 == sourceTag }
+        }
+        if !current.contains(targetTag) {
+            current.append(targetTag)
+        }
+
+        if current.isEmpty {
+            store.appTags.removeValue(forKey: path)
+        } else {
+            store.appTags[path] = current
         }
         TagDatabase.save(store)
     }

@@ -49,6 +49,7 @@
   "app.build": "빌드",
   "group.uncategorized": "미분류",
   "group.appleBuiltIn": "Mac 내장",
+  "drop.systemDefaultWarning": "시스템 기본 분류로 드래그하지 마세요",
   "tag.design": "디자인",
   "tag.development": "프로그래밍",
   "tag.writing": "글쓰기",

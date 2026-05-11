@@ -33,7 +33,7 @@ struct TagEditorView: View {
                     newTagNameText = ""
                     newTagColorIndex = 0
                 } label: {
-                    Label("New Tag", systemImage: "plus")
+                    Label(tr("tag.newTag"), systemImage: "plus")
                         .font(.system(size: 12))
                 }
                 .buttonStyle(.bordered)
@@ -45,7 +45,7 @@ struct TagEditorView: View {
             ScrollView {
                 VStack(spacing: 0) {
                     if sortedTagNames.isEmpty && !addingNewTag {
-                        Text("No tags yet. Click \"New Tag\" to create one.")
+                        Text(tr("edit.noTags"))
                             .font(.caption)
                             .foregroundStyle(.secondary)
                             .padding(.vertical, 40)
@@ -81,13 +81,13 @@ struct TagEditorView: View {
             if editingTagName == tagName {
                 MacTextField(
                     text: $editingTagText,
-                    placeholder: "Tag name",
+                    placeholder: tr("tag.name"),
                     onSubmit: { commitTagRename(tagName) }
                 )
                 .frame(width: 160, height: 24)
-                Button("Save") { commitTagRename(tagName) }
+                Button(tr("tag.save")) { commitTagRename(tagName) }
                     .buttonStyle(.borderedProminent).controlSize(.small)
-                Button("Cancel") { editingTagName = nil }
+                Button(tr("tag.cancel")) { editingTagName = nil }
                     .buttonStyle(.plain).foregroundStyle(.secondary)
             } else {
                 Text(tagName).font(.system(size: 14)).frame(width: 160, alignment: .leading)
@@ -118,13 +118,13 @@ struct TagEditorView: View {
             }
             MacTextField(
                 text: $newTagNameText,
-                placeholder: "New tag name",
+                placeholder: tr("tag.newName"),
                 onSubmit: { addNewTag() }
             )
             .frame(width: 160, height: 24)
-            Button("Add") { addNewTag() }
+            Button(tr("tag.add")) { addNewTag() }
                 .buttonStyle(.borderedProminent).controlSize(.small)
-            Button("Cancel") { addingNewTag = false; newTagNameText = "" }
+            Button(tr("tag.cancel")) { addingNewTag = false; newTagNameText = "" }
                 .buttonStyle(.plain).foregroundStyle(.secondary)
             Spacer()
         }
@@ -145,8 +145,7 @@ struct TagEditorView: View {
         tagColors[newName] = tagColors[oldName]
         tagColors.removeValue(forKey: oldName)
         editingTagName = nil
-        // Don't call onRefresh — re-scan may re-discover old tag from
-        // SIP-protected apps where xattr write silently fails.
+        onRefresh?()
     }
 
     /// Add a new tag name+color and persist to the database.

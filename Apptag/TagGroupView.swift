@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 
 // MARK: - Tag Group Section (with centered separator-line header)
 
@@ -8,6 +9,9 @@ struct TagGroupView: View {
     let tagFontSize: CGFloat
     let iconSize: CGFloat
     var showNames: Bool = true
+    var dragModeActive: Bool = false
+    var onDragModeChange: ((Bool) -> Void)? = nil
+    var onDropApp: ((String, String, Bool) -> Void)? = nil
 
     /// Adaptive columns — auto-fit based on icon size and available width.
     private var columns: [GridItem] {
@@ -45,10 +49,50 @@ struct TagGroupView: View {
                         app: app,
                         iconSize: iconSize,
                         showName: showNames,
+                        sourceTag: group.name,
+                        dragModeActive: dragModeActive,
+                        onDragModeChange: onDragModeChange,
                         onSelect: { onSelectApp(app) }
                     )
                 }
             }
         }
+        .contentShape(Rectangle())
+        .overlay {
+            AppDropTargetView(targetTag: group.name) { path, source, copy in
+                onDropApp?(path, source, copy)
+            }
+            .allowsHitTesting(false)
+        }
+        .onDrop(of: [UTType.plainText], isTargeted: nil) { providers in
+            handleDrop(providers)
+        }
+    }
+
+    private func handleDrop(_ providers: [NSItemProvider]) -> Bool {
+        guard let provider = providers.first(where: { $0.hasItemConformingToTypeIdentifier(UTType.plainText.identifier) }) else {
+            return false
+        }
+        provider.loadItem(forTypeIdentifier: UTType.plainText.identifier, options: nil) { item, _ in
+            let text: String?
+            if let data = item as? Data {
+                text = String(data: data, encoding: .utf8)
+            } else if let string = item as? String {
+                text = string
+            } else if let string = item as? NSString {
+                text = string as String
+            } else {
+                text = nil
+            }
+            guard let text else { return }
+            let parts = text.components(separatedBy: "\n")
+            guard let path = parts.first, !path.isEmpty else { return }
+            let source = parts.dropFirst().first ?? ""
+            let copy = NSEvent.modifierFlags.contains(.option)
+            DispatchQueue.main.async {
+                onDropApp?(path, source, copy)
+            }
+        }
+        return true
     }
 }

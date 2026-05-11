@@ -49,6 +49,7 @@
   "app.build": "Сборка",
   "group.uncategorized": "Без категории",
   "group.appleBuiltIn": "Встроенные",
+  "drop.systemDefaultWarning": "Не перетаскивайте в системные категории по умолчанию",
   "tag.design": "Дизайн",
   "tag.development": "Разработка",
   "tag.writing": "Текст",

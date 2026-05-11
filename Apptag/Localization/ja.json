@@ -49,6 +49,7 @@
   "app.build": "ビルド",
   "group.uncategorized": "未分類",
   "group.appleBuiltIn": "Mac内蔵",
+  "drop.systemDefaultWarning": "システム既定カテゴリにはドラッグできません",
   "tag.design": "デザイン",
   "tag.development": "プログラミング",
   "tag.writing": "ライティング",

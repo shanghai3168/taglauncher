@@ -49,6 +49,7 @@
   "app.build": "Build",
   "group.uncategorized": "Non classé",
   "group.appleBuiltIn": "Intégrées",
+  "drop.systemDefaultWarning": "Ne déposez pas dans les catégories système par défaut",
   "tag.design": "Design",
   "tag.development": "Développement",
   "tag.writing": "Écriture",

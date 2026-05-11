@@ -29,6 +29,18 @@ enum L10n {
         UserDefaults.standard.set(code, forKey: "appLanguage")
     }
 
+    /// Load a specific key's translation for a given language code without switching.
+    static func loadedTranslation(_ key: String, for code: String) -> String? {
+        guard let url = Bundle.main.url(
+            forResource: code, withExtension: "json",
+            subdirectory: "Localization"
+        ) else { return nil }
+        guard let data = try? Data(contentsOf: url),
+              let dict = try? JSONSerialization.jsonObject(with: data) as? [String: String]
+        else { return nil }
+        return dict[key]
+    }
+
     private static func load(_ code: String) {
         guard let url = Bundle.main.url(
             forResource: code, withExtension: "json",

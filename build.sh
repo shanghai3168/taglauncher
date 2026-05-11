@@ -10,7 +10,7 @@ RESOURCES_DIR="$APP_BUNDLE/Contents/Resources"
 SWIFT_DIR="$PROJECT_DIR/Apptag"
 
 SDK_PATH=$(xcrun --sdk macosx --show-sdk-path)
-TARGET="arm64-apple-macosx26.0"
+TARGET="arm64-apple-macosx15.0"
 
 # --- Optional: App Store / Sandbox signing ---
 # Set CODESIGN_IDENTITY to your "Apple Distribution" or "Mac Developer" cert name.

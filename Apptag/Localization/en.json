@@ -49,6 +49,7 @@
   "app.build": "Build",
   "group.uncategorized": "Uncategorized",
   "group.appleBuiltIn": "Built-in",
+  "drop.systemDefaultWarning": "Do not drag apps into system default categories",
   "tag.design": "Design",
   "tag.development": "Development",
   "tag.writing": "Writing",

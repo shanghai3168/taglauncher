@@ -49,6 +49,7 @@
   "app.build": "建置",
   "group.uncategorized": "未分類",
   "group.appleBuiltIn": "Mac內建",
+  "drop.systemDefaultWarning": "請勿拖動至系統預設分類",
   "tag.design": "設計",
   "tag.development": "程式設計",
   "tag.writing": "寫作",
