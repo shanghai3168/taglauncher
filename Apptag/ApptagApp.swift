@@ -94,6 +94,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Launch at Login (LaunchAgent, zero permissions)
 
     private static let launchAgentLabel = "com.apptag.launcher"
+    static var supportsLaunchAtLogin: Bool {
+        ProcessInfo.processInfo.environment["APP_SANDBOX_CONTAINER_ID"] == nil
+    }
 
     private static var launchAgentURL: URL {
         FileManager.default.homeDirectoryForCurrentUser
@@ -101,6 +104,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     static func enableLaunchAtLogin() {
+        guard supportsLaunchAtLogin else { return }
         let plist: [String: Any] = [
             "Label": Self.launchAgentLabel,
             "ProgramArguments": ["open", Bundle.main.bundlePath, "--hide"],
@@ -118,6 +122,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     static func disableLaunchAtLogin() {
+        guard supportsLaunchAtLogin else { return }
         let uid = getuid()
         let task = Process()
         task.launchPath = "/bin/launchctl"
@@ -129,6 +134,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// On first launch, enable login item by default via LaunchAgent.
     /// Does NOT require App Management permission.
     private func setupLaunchAtLogin() {
+        guard Self.supportsLaunchAtLogin else {
+            if UserDefaults.standard.object(forKey: "launchAtLogin") == nil {
+                UserDefaults.standard.set(false, forKey: "launchAtLogin")
+            }
+            return
+        }
         let key = "launchAtLogin"
         if UserDefaults.standard.object(forKey: key) == nil {
             UserDefaults.standard.set(true, forKey: key)
@@ -635,14 +646,16 @@ struct PreferencesView: View {
             VStack(alignment: .leading, spacing: 0) {
                 // Toggle row — centered as a rectangular block
                 HStack(spacing: 20) {
-                    Toggle(tr("settings.launchAtLogin"), isOn: $launchAtLogin)
-                        .onChange(of: launchAtLogin) { _, enabled in
-                            if enabled {
-                                AppDelegate.enableLaunchAtLogin()
-                            } else {
-                                AppDelegate.disableLaunchAtLogin()
+                    if AppDelegate.supportsLaunchAtLogin {
+                        Toggle(tr("settings.launchAtLogin"), isOn: $launchAtLogin)
+                            .onChange(of: launchAtLogin) { _, enabled in
+                                if enabled {
+                                    AppDelegate.enableLaunchAtLogin()
+                                } else {
+                                    AppDelegate.disableLaunchAtLogin()
+                                }
                             }
-                        }
+                    }
                     Toggle(tr("settings.showInDock"), isOn: $showDockIcon)
                     Toggle(tr("settings.hideAppNames"), isOn: $hideAppNames)
                 }

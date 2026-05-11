@@ -24,6 +24,10 @@ if [ -n "${APP_STORE:-}" ] && [ "$APP_STORE" = "1" ]; then
     if [ -z "$CODESIGN_IDENTITY" ]; then
         echo "⚠️  APP_STORE=1 but CODESIGN_IDENTITY not set. Will ad-hoc sign with entitlements."
     fi
+    if [ ! -f "$ENTITLEMENTS" ]; then
+        echo "❌ APP_STORE=1 requires entitlements at: $ENTITLEMENTS"
+        exit 1
+    fi
 fi
 
 echo "==> Cleaning..."

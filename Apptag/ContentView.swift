@@ -204,6 +204,7 @@ struct ContentView: View {
     @State private var successToast: String? = nil
     @State private var draggedTagNames: [String] = []  // live drag order
     @State private var dragItem: String? = nil          // currently dragged tag
+    @State private var tagReorderFrames: [String: CGRect] = [:]
     @State private var hoveredContainer: String? = nil  // colored container lift
     // Fixed interaction for "Colorless Container": hover fills persistently; click clears.
     @State private var filledColorlessContainer: String? = nil
@@ -931,27 +932,27 @@ struct ContentView: View {
                         VStack(spacing: 4) {
                             ForEach(sortedTagNames, id: \.self) { tagName in
                                 selectableTagItem(tagName)
-                                    .onDrag {
-                                        dragItem = tagName
-                                        return NSItemProvider(object: tagName as NSString)
-                                    }
-                                    .onDrop(of: [.text], isTargeted: nil) { providers, _ in
-                                        guard let fromName = dragItem,
-                                              var names = draggedTagNames as [String]?,
-                                              let fromIdx = names.firstIndex(of: fromName),
-                                              let toIdx = names.firstIndex(of: tagName),
-                                              fromIdx != toIdx
-                                        else { return false }
-                                        let toOffset = toIdx > fromIdx ? toIdx + 1 : toIdx
-                                        names.move(fromOffsets: [fromIdx], toOffset: toOffset)
-                                        draggedTagNames = names
-                                        TagEditor.reorderTags(names)
-                                        dragItem = nil
-                                        return true
-                                    }
+                                    .opacity(dragItem == tagName ? 0.72 : 1.0)
+                                    .scaleEffect(dragItem == tagName ? 1.03 : 1.0)
+                                    .background(
+                                        GeometryReader { proxy in
+                                            Color.clear.preference(
+                                                key: TagReorderFramePreferenceKey.self,
+                                                value: [tagName: proxy.frame(in: .named("tagReorderList"))]
+                                            )
+                                        }
+                                    )
+                                    .zIndex(dragItem == tagName ? 1 : 0)
+                                    .highPriorityGesture(tagReorderGesture(for: tagName))
                             }
-                        }.padding(12)
-                    }.frame(width: 155)
+                        }
+                        .padding(12)
+                        .coordinateSpace(name: "tagReorderList")
+                        .onPreferenceChange(TagReorderFramePreferenceKey.self) { frames in
+                            tagReorderFrames = frames
+                        }
+                    }
+                    .frame(width: 155)
                 }
                 Rectangle().fill(.secondary.opacity(0.12)).frame(width: 1)
 
@@ -1033,6 +1034,36 @@ struct ContentView: View {
         .onTapGesture {
             if isSelected { selectedTagNames.remove(tagName) } else { selectedTagNames.insert(tagName) }
         }
+    }
+
+    private func tagReorderGesture(for tagName: String) -> some Gesture {
+        DragGesture(minimumDistance: 4, coordinateSpace: .named("tagReorderList"))
+            .onChanged { value in
+                if dragItem == nil {
+                    dragItem = tagName
+                }
+                guard dragItem == tagName else { return }
+                reorderDraggedTag(at: value.location)
+            }
+            .onEnded { _ in
+                dragItem = nil
+                TagEditor.reorderTags(draggedTagNames)
+            }
+    }
+
+    private func reorderDraggedTag(at location: CGPoint) {
+        guard let fromName = dragItem,
+              let targetName = tagReorderFrames.first(where: { $0.value.contains(location) })?.key,
+              fromName != targetName,
+              let fromIndex = draggedTagNames.firstIndex(of: fromName),
+              let toIndex = draggedTagNames.firstIndex(of: targetName)
+        else { return }
+
+        withAnimation(.easeInOut(duration: 0.14)) {
+            let destination = toIndex > fromIndex ? toIndex + 1 : toIndex
+            draggedTagNames.move(fromOffsets: IndexSet(integer: fromIndex), toOffset: destination)
+        }
+        TagEditor.reorderTags(draggedTagNames)
     }
 
     private func confirmAssign() {
@@ -1269,22 +1300,20 @@ struct ContentView: View {
     func openApp(_ app: AppInfo) {
         appDragModeActive = false
         hideOverlay()
-        if let bundleIdentifier = app.bundleIdentifier {
-            NSWorkspace.shared.launchApplication(
-                withBundleIdentifier: bundleIdentifier,
-                options: [],
-                additionalEventParamDescriptor: nil,
-                launchIdentifier: nil
-            )
-            return
-        }
-
         let configuration = NSWorkspace.OpenConfiguration()
         NSWorkspace.shared.openApplication(at: app.path, configuration: configuration)
     }
 }
 
 // MARK: - Tag Label
+
+private struct TagReorderFramePreferenceKey: PreferenceKey {
+    static var defaultValue: [String: CGRect] = [:]
+
+    static func reduce(value: inout [String: CGRect], nextValue: () -> [String: CGRect]) {
+        value.merge(nextValue(), uniquingKeysWith: { _, new in new })
+    }
+}
 
 private struct TagLabel: Identifiable {
     var id: String { name }
