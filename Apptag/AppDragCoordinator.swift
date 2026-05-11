@@ -1,5 +1,6 @@
 import SwiftUI
 import AppKit
+import QuartzCore
 
 final class AppDragCoordinator {
     static let shared = AppDragCoordinator()
@@ -12,8 +13,11 @@ final class AppDragCoordinator {
 
     private var targets: [UUID: DropTarget] = [:]
     private weak var dragHostWindow: NSWindow?
-    private weak var dragPreviewSuperview: NSView?
-    private var dragPreviewView: DragPreviewView?
+    private weak var dragLayerHostView: NSView?
+    private var dragLayer: CALayer?
+    private var normalDragImage: CGImage?
+    private var copyDragImage: CGImage?
+    private var currentCopyMode = false
     private var dragWindow: NSWindow?
     private var dragImageSize: NSSize = .zero
     private var activePayload = ""
@@ -33,56 +37,73 @@ final class AppDragCoordinator {
         activePayload = payload
         dragImageSize = image.size
         dragHostWindow = hostWindow
+        currentCopyMode = copy
+        normalDragImage = Self.cgImage(from: image)
+        copyDragImage = Self.cgImage(from: Self.copyBadgeImage(from: image))
+
+        let hostView: NSView
 
         if let contentView = hostWindow?.contentView {
-            let preview = DragPreviewView(image: image, copy: copy, frame: NSRect(origin: .zero, size: image.size))
-            preview.translatesAutoresizingMaskIntoConstraints = true
-            preview.autoresizingMask = []
-            contentView.addSubview(preview, positioned: .above, relativeTo: nil)
-            preview.layer?.zPosition = 1_000_000
-            dragPreviewSuperview = contentView
-            dragPreviewView = preview
-            updateDragLocation(screenPoint)
-            return
+            hostView = contentView
+        } else {
+            let panel = NSPanel(
+                contentRect: NSRect(origin: .zero, size: image.size),
+                styleMask: [.borderless, .nonactivatingPanel],
+                backing: .buffered,
+                defer: false
+            )
+            panel.isOpaque = false
+            panel.backgroundColor = .clear
+            panel.hasShadow = false
+            panel.isFloatingPanel = true
+            panel.hidesOnDeactivate = false
+            panel.ignoresMouseEvents = true
+            panel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.maximumWindow)))
+            panel.collectionBehavior = [.moveToActiveSpace, .fullScreenAuxiliary, .stationary, .transient, .ignoresCycle]
+            panel.isReleasedWhenClosed = false
+            let contentView = NSView(frame: NSRect(origin: .zero, size: image.size))
+            panel.contentView = contentView
+            dragWindow = panel
+            dragHostWindow = panel
+            hostView = contentView
+            panel.setFrameOrigin(NSPoint(x: screenPoint.x - image.size.width / 2, y: screenPoint.y - image.size.height / 2))
+            panel.orderFrontRegardless()
         }
 
-        let panel = NSPanel(
-            contentRect: NSRect(origin: .zero, size: image.size),
-            styleMask: [.borderless, .nonactivatingPanel],
-            backing: .buffered,
-            defer: false
-        )
-        panel.isOpaque = false
-        panel.backgroundColor = .clear
-        panel.hasShadow = false
-        panel.isFloatingPanel = true
-        panel.hidesOnDeactivate = false
-        panel.ignoresMouseEvents = true
-        panel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.maximumWindow)))
-        panel.collectionBehavior = [.moveToActiveSpace, .fullScreenAuxiliary, .stationary, .transient, .ignoresCycle]
-        panel.isReleasedWhenClosed = false
+        hostView.wantsLayer = true
+        guard let rootLayer = hostView.layer else { return }
 
-        panel.contentView = DragPreviewView(image: image, copy: copy, frame: NSRect(origin: .zero, size: image.size))
+        let layer = CALayer()
+        layer.bounds = CGRect(origin: .zero, size: image.size)
+        layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        layer.contentsGravity = .resizeAspect
+        layer.contentsScale = NSScreen.main?.backingScaleFactor ?? 2
+        layer.contents = copy ? copyDragImage : normalDragImage
+        layer.zPosition = 1_000_000
+        layer.actions = [
+            "position": NSNull(),
+            "contents": NSNull(),
+            "bounds": NSNull(),
+            "opacity": NSNull()
+        ]
 
-        dragWindow = panel
+        rootLayer.addSublayer(layer)
+        dragLayerHostView = hostView
+        dragLayer = layer
         updateDragLocation(screenPoint)
-        panel.setFrame(panel.frame, display: true)
-        panel.orderFrontRegardless()
     }
 
     func updateDragLocation(_ screenPoint: NSPoint, copy: Bool? = nil) {
-        if let dragPreviewView, let dragHostWindow, let contentView = dragPreviewSuperview {
+        if let dragLayer, let dragHostWindow, let hostView = dragLayerHostView {
             if let copy {
-                dragPreviewView.isCopyMode = copy
+                updateCopyMode(copy)
             }
             let windowPoint = dragHostWindow.convertPoint(fromScreen: screenPoint)
-            let contentPoint = contentView.convert(windowPoint, from: nil)
-            dragPreviewView.setFrameOrigin(
-                NSPoint(
-                    x: contentPoint.x - dragImageSize.width / 2,
-                    y: contentPoint.y - dragImageSize.height / 2
-                )
-            )
+            let contentPoint = hostView.convert(windowPoint, from: nil)
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+            dragLayer.position = contentPoint
+            CATransaction.commit()
             return
         }
 
@@ -115,53 +136,43 @@ final class AppDragCoordinator {
         endDragVisuals()
     }
 
+    private func updateCopyMode(_ copy: Bool) {
+        guard currentCopyMode != copy else { return }
+        currentCopyMode = copy
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        dragLayer?.contents = copy ? copyDragImage : normalDragImage
+        CATransaction.commit()
+    }
+
     private func endDragVisuals() {
-        dragPreviewView?.removeFromSuperview()
-        dragPreviewView = nil
-        dragPreviewSuperview = nil
+        dragLayer?.removeFromSuperlayer()
+        dragLayer = nil
+        dragLayerHostView = nil
         dragHostWindow = nil
+        normalDragImage = nil
+        copyDragImage = nil
+        currentCopyMode = false
         dragWindow?.orderOut(nil)
         dragWindow = nil
         activePayload = ""
         dragImageSize = .zero
     }
-}
 
-private final class DragPreviewView: NSView {
-    private let image: NSImage
-    var isCopyMode: Bool {
-        didSet {
-            if oldValue != isCopyMode {
-                needsDisplay = true
-            }
-        }
+    private static func cgImage(from image: NSImage) -> CGImage? {
+        var rect = NSRect(origin: .zero, size: image.size)
+        return image.cgImage(forProposedRect: &rect, context: nil, hints: [
+            .interpolation: NSImageInterpolation.high
+        ])
     }
 
-    init(image: NSImage, copy: Bool, frame: NSRect) {
-        self.image = image
-        self.isCopyMode = copy
-        super.init(frame: frame)
-        wantsLayer = true
-        layer?.masksToBounds = false
-    }
+    private static func copyBadgeImage(from baseImage: NSImage) -> NSImage {
+        let image = NSImage(size: baseImage.size)
+        image.lockFocus()
+        NSGraphicsContext.current?.imageInterpolation = .high
+        baseImage.draw(in: NSRect(origin: .zero, size: baseImage.size), from: .zero, operation: .sourceOver, fraction: 1)
 
-    required init?(coder: NSCoder) {
-        nil
-    }
-
-    override var isOpaque: Bool { false }
-
-    override func hitTest(_ point: NSPoint) -> NSView? {
-        nil
-    }
-
-    override func draw(_ dirtyRect: NSRect) {
-        NSColor.clear.setFill()
-        dirtyRect.fill()
-        image.draw(in: bounds, from: .zero, operation: .sourceOver, fraction: 1.0)
-
-        guard isCopyMode else { return }
-
+        let bounds = NSRect(origin: .zero, size: baseImage.size)
         let badgeSize = min(bounds.width, bounds.height) * 0.28
         let badgeRect = NSRect(
             x: bounds.maxX - badgeSize - badgeSize * 0.22,
@@ -193,6 +204,8 @@ private final class DragPreviewView: NSView {
             ),
             withAttributes: attrs
         )
+        image.unlockFocus()
+        return image
     }
 }
 
