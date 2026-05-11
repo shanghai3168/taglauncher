@@ -15,38 +15,57 @@ struct AppGridItem: View {
     @State private var isHovered = false
     @State private var wiggle = false
 
-    private let hoverScale: CGFloat = 1.22
+    static let hoverScale: CGFloat = 1.22
+    static let labelHeight: CGFloat = 14
+
+    static func stableWidth(iconSize: CGFloat) -> CGFloat {
+        iconSize * hoverScale + 8
+    }
+
+    static func stableHeight(iconSize: CGFloat) -> CGFloat {
+        iconSize * hoverScale + labelHeight + 22
+    }
+
+    private var iconSlotSize: CGFloat { iconSize * Self.hoverScale }
+    private var labelWidth: CGFloat { iconSize + 20 }
+    private var labelHeight: CGFloat { Self.labelHeight }
 
     var body: some View {
         VStack(spacing: 6) {
-            DraggableAppIconView(
-                icon: app.icon,
-                iconSize: iconSize,
-                payload: "\(app.path.path)\n\(sourceTag ?? "")",
-                onHover: { isHovered = $0 },
-                onLongPress: { onDragModeChange?(true) },
-                onDragEnd: { onDragModeChange?(false) },
-                onClick: onSelect
-            )
-            .frame(width: iconSize, height: iconSize)
-            .scaleEffect(isHovered ? hoverScale : 1.0)
-            .shadow(
-                color: .black.opacity(isHovered ? 0.35 : 0),
-                radius: isHovered ? 14 : 0,
-                y: isHovered ? 8 : 0
-            )
-            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isHovered)
+            ZStack {
+                DraggableAppIconView(
+                    icon: app.icon,
+                    iconSize: iconSize,
+                    payload: "\(app.path.path)\n\(sourceTag ?? "")",
+                    onLongPress: { onDragModeChange?(true) },
+                    onDragEnd: { onDragModeChange?(false) },
+                    onClick: onSelect
+                )
+                .frame(width: iconSize, height: iconSize)
+                .scaleEffect(isHovered ? Self.hoverScale : 1.0)
+                .shadow(
+                    color: .black.opacity(isHovered ? 0.35 : 0),
+                    radius: isHovered ? 14 : 0,
+                    y: isHovered ? 8 : 0
+                )
+                .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isHovered)
+            }
+            .frame(width: iconSlotSize, height: iconSlotSize)
 
             Text(app.name)
                 .font(.system(size: 11, weight: .medium))
                 .lineLimit(1)
                 .truncationMode(.tail)
-                .frame(maxWidth: iconSize + 20)
+                .frame(width: labelWidth, height: labelHeight)
                 .opacity(showName ? 1 : (isHovered ? 0.85 : 0))
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 4)
-        .contentShape(RoundedRectangle(cornerRadius: 10))
+        .frame(width: Self.stableWidth(iconSize: iconSize), height: Self.stableHeight(iconSize: iconSize))
+        .contentShape(Rectangle())
+        .onHover { hovering in
+            isHovered = hovering
+        }
         .rotationEffect(.degrees(dragModeActive ? (wiggle ? 2.0 : -2.0) : 0))
         .animation(
             dragModeActive
@@ -64,7 +83,6 @@ private struct DraggableAppIconView: NSViewRepresentable {
     let icon: NSImage
     let iconSize: CGFloat
     let payload: String
-    let onHover: (Bool) -> Void
     let onLongPress: () -> Void
     let onDragEnd: () -> Void
     let onClick: () -> Void
@@ -74,7 +92,6 @@ private struct DraggableAppIconView: NSViewRepresentable {
         view.image = icon
         view.iconSize = iconSize
         view.payload = payload
-        view.onHover = onHover
         view.onLongPress = onLongPress
         view.onDragEnd = onDragEnd
         view.onClick = onClick
@@ -85,7 +102,6 @@ private struct DraggableAppIconView: NSViewRepresentable {
         view.image = icon
         view.iconSize = iconSize
         view.payload = payload
-        view.onHover = onHover
         view.onLongPress = onLongPress
         view.onDragEnd = onDragEnd
         view.onClick = onClick
@@ -97,7 +113,6 @@ private final class DragIconNSView: NSView {
     var image: NSImage = NSImage()
     var iconSize: CGFloat = 56
     var payload: String = ""
-    var onHover: ((Bool) -> Void)?
     var onLongPress: (() -> Void)?
     var onDragEnd: (() -> Void)?
     var onClick: (() -> Void)?
@@ -106,24 +121,7 @@ private final class DragIconNSView: NSView {
     private var didStartDrag = false
     private var isLongPressActive = false
     private var longPressWorkItem: DispatchWorkItem?
-    private var trackingAreaRef: NSTrackingArea?
-
     override var isFlipped: Bool { true }
-
-    override func updateTrackingAreas() {
-        super.updateTrackingAreas()
-        if let trackingAreaRef {
-            removeTrackingArea(trackingAreaRef)
-        }
-        let area = NSTrackingArea(
-            rect: bounds,
-            options: [.mouseEnteredAndExited, .activeAlways, .inVisibleRect],
-            owner: self,
-            userInfo: nil
-        )
-        trackingAreaRef = area
-        addTrackingArea(area)
-    }
 
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
@@ -134,10 +132,6 @@ private final class DragIconNSView: NSView {
             height: iconSize
         )
         image.draw(in: rect)
-    }
-
-    override func mouseEntered(with event: NSEvent) {
-        onHover?(true)
     }
 
     override func mouseDown(with event: NSEvent) {
@@ -194,12 +188,6 @@ private final class DragIconNSView: NSView {
         didStartDrag = false
         isLongPressActive = false
         mouseDownEvent = nil
-    }
-
-    override func mouseExited(with event: NSEvent) {
-        if !didStartDrag {
-            onHover?(false)
-        }
     }
 
     private func makeDragImage() -> NSImage {

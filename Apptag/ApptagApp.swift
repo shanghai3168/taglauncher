@@ -12,7 +12,7 @@ struct TagLauncherApp: App {
         Settings {
             PreferencesView()
         }
-        .defaultSize(width: 660, height: 380)
+        .defaultSize(width: 880, height: 420)
     }
 }
 
@@ -42,6 +42,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         observeSettingsClose()
         observeEditMode()
         observeDockSetting()
+        observeLanguageChanges()
         setupLaunchAtLogin()
     }
 
@@ -77,6 +78,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         ) { _ in
             let show = UserDefaults.standard.bool(forKey: "showDockIcon")
             NSApp.setActivationPolicy(show ? .regular : .accessory)
+        }
+    }
+
+    /// Keep app chrome in sync when language changes from any entry point.
+    private func observeLanguageChanges() {
+        NotificationCenter.default.addObserver(
+            forName: .appLanguageDidChange,
+            object: nil, queue: .main
+        ) { [weak self] _ in
+            self?.setupMenuBar()
         }
     }
 
@@ -353,18 +364,46 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    /// Settings must always float above the overlay so changes can be previewed live.
+    /// Settings must always appear centered over the current overlay view and float above it.
     private func prepareSettingsWindow(_ window: NSWindow) {
-        if overlayWindow?.isVisible == true {
-            let overlayLevel = overlayWindow?.level.rawValue ?? NSWindow.Level.screenSaver.rawValue
-            window.level = NSWindow.Level(rawValue: overlayLevel + 1)
-            window.orderFrontRegardless()
+        let settingsSize = NSSize(width: 880, height: max(window.frame.height, 420))
+        window.minSize = NSSize(width: 880, height: 420)
+        window.maxSize = NSSize(width: 880, height: CGFloat.greatestFiniteMagnitude)
+        if abs(window.frame.width - settingsSize.width) > 0.5 || window.frame.height < settingsSize.height {
+            window.setFrame(
+                NSRect(origin: window.frame.origin, size: settingsSize),
+                display: false
+            )
         }
-        if settingsWindow == nil {
-            window.minSize = NSSize(width: 660, height: 380)
-            window.maxSize = NSSize(width: 660, height: CGFloat.greatestFiniteMagnitude)
+
+        if let overlayWindow, overlayWindow.isVisible {
+            center(window, over: overlayWindow.frame)
+            window.level = NSWindow.Level(rawValue: overlayWindow.level.rawValue + 1)
+        } else if let screen = screenUnderMouse() {
+            center(window, over: screen.visibleFrame)
+            window.level = .floating
         }
+
+        window.collectionBehavior.formUnion([.moveToActiveSpace, .fullScreenAuxiliary])
+        window.makeKeyAndOrderFront(nil)
+        window.orderFrontRegardless()
         settingsWindow = window
+    }
+
+    private func center(_ window: NSWindow, over rect: NSRect) {
+        let frame = window.frame
+        let origin = NSPoint(
+            x: rect.midX - frame.width / 2,
+            y: rect.midY - frame.height / 2
+        )
+        window.setFrameOrigin(origin)
+    }
+
+    private func screenUnderMouse() -> NSScreen? {
+        let mousePoint = NSEvent.mouseLocation
+        return NSScreen.screens.first(where: {
+            NSMouseInRect(mousePoint, $0.frame, false)
+        }) ?? NSScreen.main ?? NSScreen.screens.first
     }
 
     /// Clean up settingsWindow reference when the Settings window closes.
@@ -396,10 +435,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func openPreferences() {
         // Don't hide overlay — keep it visible for real-time setting preview.
         NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-        DispatchQueue.main.async { [weak self] in
+        prepareSettingsWindowWhenAvailable(retries: 5)
+    }
+
+    private func prepareSettingsWindowWhenAvailable(retries: Int) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) { [weak self] in
             guard let self else { return }
-            for window in NSApp.windows where window != self.overlayWindow {
-                self.prepareSettingsWindow(window)
+            let candidates = NSApp.windows.filter { window in
+                window != self.overlayWindow && window.isVisible
+            }
+            candidates.forEach { self.prepareSettingsWindow($0) }
+            if candidates.isEmpty && retries > 0 {
+                self.prepareSettingsWindowWhenAvailable(retries: retries - 1)
             }
         }
     }
@@ -407,8 +454,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func switchLanguage(_ sender: NSMenuItem) {
         guard let code = sender.representedObject as? String else { return }
         L10n.switchTo(code)
-        // Rebuild menu to update checkmarks
-        setupMenuBar()
     }
 }
 
@@ -488,6 +533,12 @@ final class DismissibleHostingView<Content: View>: NSHostingView<Content> {
 // MARK: - Preferences View
 
 struct PreferencesView: View {
+    private let settingsWindowWidth: CGFloat = 880
+    private let settingsContentWidth: CGFloat = 820
+    private let settingsLabelWidth: CGFloat = 160
+    private let widePickerWidth: CGFloat = 650
+    private let compactPickerWidth: CGFloat = 320
+
     @AppStorage("tagFontSize") private var tagFontSize: Double = 18
     @AppStorage("iconSize") private var iconSize: Double = 56
     @AppStorage("tagPosition") private var tagPosition = "left"
@@ -496,6 +547,9 @@ struct PreferencesView: View {
     @AppStorage("hideAppNames") private var hideAppNames = false
     @AppStorage("showDockIcon") private var showDockIcon = false
     @AppStorage("launchAtLogin") private var launchAtLogin = true
+    @State private var selectedLanguage = L10n.currentCode
+    @State private var languageRefreshID = UUID()
+    @State private var isRefreshingLanguage = false
     @State private var allApps: [AppInfo] = []
     @State private var tagColors: [String: Int] = [:]
 
@@ -557,8 +611,27 @@ struct PreferencesView: View {
     }
 
     var body: some View {
-        TabView {
-            // Tab 1: General
+        ZStack {
+            TabView {
+                // Tab 1: Language
+                Form {
+                    Section {
+                        Picker(tr("settings.languagePicker"), selection: $selectedLanguage) {
+                            ForEach(L10n.supported, id: \.code) { language in
+                                Text(language.name).tag(language.code)
+                            }
+                        }
+                        .pickerStyle(.radioGroup)
+                    } header: {
+                        Text(tr("settings.language"))
+                    } footer: {
+                        Text(tr("settings.languageDesc"))
+                    }
+                }
+                .tabItem { Label(tr("settings.language"), systemImage: "globe") }
+                .padding()
+
+                // Tab 2: General
             VStack(alignment: .leading, spacing: 0) {
                 // Toggle row — centered as a rectangular block
                 HStack(spacing: 20) {
@@ -584,7 +657,7 @@ struct PreferencesView: View {
                 VStack(spacing: 16) {
                     HStack(alignment: .top, spacing: 16) {
                         Text(tr("settings.appListStyle"))
-                            .frame(width: 130, alignment: .trailing)
+                            .frame(width: settingsLabelWidth, alignment: .trailing)
                         VStack(alignment: .leading, spacing: 4) {
                             Picker("", selection: $displayMode) {
                                 Text(tr("settings.flat")).tag("flat")
@@ -594,7 +667,7 @@ struct PreferencesView: View {
                                 Text(tr("settings.coloredGridContainer")).tag("coloredGridContainer")
                             }
                             .pickerStyle(.segmented)
-                            .frame(width: 520, alignment: .leading)
+                            .frame(width: widePickerWidth, alignment: .leading)
                             Text(tr("settings.flatDesc"))
                                 .font(.caption).foregroundStyle(.secondary)
                                 .fixedSize(horizontal: false, vertical: true)
@@ -602,7 +675,7 @@ struct PreferencesView: View {
                     }
                     HStack(alignment: .top, spacing: 16) {
                         Text(tr("settings.tagPosition"))
-                            .frame(width: 130, alignment: .trailing)
+                            .frame(width: settingsLabelWidth, alignment: .trailing)
                         VStack(alignment: .leading, spacing: 4) {
                             Picker("", selection: $tagPosition) {
                                 Text(tr("settings.left")).tag("left")
@@ -610,7 +683,7 @@ struct PreferencesView: View {
                                 Text(tr("settings.top")).tag("top")
                             }
                             .pickerStyle(.segmented)
-                            .frame(width: 280, alignment: .leading)
+                            .frame(width: compactPickerWidth, alignment: .leading)
                             Text(tr("settings.tagPosDesc"))
                                 .font(.caption).foregroundStyle(.secondary)
                                 .fixedSize(horizontal: false, vertical: true)
@@ -618,7 +691,7 @@ struct PreferencesView: View {
                     }
                     HStack(alignment: .top, spacing: 16) {
                         Text(tr("settings.tagFontSize"))
-                            .frame(width: 130, alignment: .trailing)
+                            .frame(width: settingsLabelWidth, alignment: .trailing)
                         VStack(alignment: .leading, spacing: 4) {
                             Picker("", selection: $tagFontSize) {
                                 ForEach([16.0, 18.0, 20.0, 22.0, 24.0, 26.0], id: \.self) { size in
@@ -626,7 +699,7 @@ struct PreferencesView: View {
                                 }
                             }
                             .pickerStyle(.segmented)
-                            .frame(width: 280, alignment: .leading)
+                            .frame(width: compactPickerWidth, alignment: .leading)
                             Text(tr("settings.tagFontDesc"))
                                 .font(.caption).foregroundStyle(.secondary)
                                 .fixedSize(horizontal: false, vertical: true)
@@ -634,7 +707,7 @@ struct PreferencesView: View {
                     }
                     HStack(alignment: .top, spacing: 16) {
                         Text(tr("settings.iconSize"))
-                            .frame(width: 130, alignment: .trailing)
+                            .frame(width: settingsLabelWidth, alignment: .trailing)
                         VStack(alignment: .leading, spacing: 4) {
                             Picker("", selection: $iconSize) {
                                 ForEach([40.0, 48.0, 56.0, 64.0, 72.0, 80.0], id: \.self) { size in
@@ -642,7 +715,7 @@ struct PreferencesView: View {
                                 }
                             }
                             .pickerStyle(.segmented)
-                            .frame(width: 280, alignment: .leading)
+                            .frame(width: compactPickerWidth, alignment: .leading)
                             Text(tr("settings.iconSizeDesc"))
                                 .font(.caption).foregroundStyle(.secondary)
                                 .fixedSize(horizontal: false, vertical: true)
@@ -650,10 +723,11 @@ struct PreferencesView: View {
                     }
                 }
             }
+            .frame(maxWidth: settingsContentWidth, alignment: .center)
             .padding()
             .tabItem { Label(tr("settings.general"), systemImage: "gearshape") }
 
-            // Tab 2: Tags
+            // Tab 3: Tags
             VStack(spacing: 0) {
                 TagEditorView(
                     tagColors: $tagColors,
@@ -665,7 +739,7 @@ struct PreferencesView: View {
             .tabItem { Label(tr("settings.tags"), systemImage: "tag.fill") }
             .onAppear { scanApps() }
 
-            // Tab 3: Data
+            // Tab 4: Data
             Form {
                 Section {
                     HStack(spacing: 12) {
@@ -684,7 +758,7 @@ struct PreferencesView: View {
             .tabItem { Label(tr("settings.data"), systemImage: "externaldrive.fill") }
             .padding()
 
-            // Tab 4: About
+            // Tab 5: About
             Form {
                 Section {
                     HStack {
@@ -720,7 +794,40 @@ struct PreferencesView: View {
             }
             .tabItem { Label(tr("settings.about"), systemImage: "info.circle") }
             .padding()
+            }
+            .id(languageRefreshID)
+            .onChange(of: selectedLanguage) { _, code in
+                L10n.switchTo(code)
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .appLanguageDidChange)) { notification in
+                if let code = notification.userInfo?["code"] as? String {
+                    selectedLanguage = code
+                }
+                showLanguageRefresh()
+            }
+
+            if isRefreshingLanguage {
+                ZStack {
+                    Color(nsColor: .windowBackgroundColor)
+                        .opacity(0.84)
+                    Image(systemName: "arrow.clockwise")
+                        .font(.system(size: 30, weight: .regular))
+                        .symbolRenderingMode(.hierarchical)
+                        .foregroundStyle(.secondary)
+                }
+                .transition(.opacity)
+            }
         }
-        .frame(minWidth: 660, maxWidth: 660, minHeight: 380)
+        .frame(minWidth: settingsWindowWidth, maxWidth: settingsWindowWidth, minHeight: 420)
+    }
+
+    private func showLanguageRefresh() {
+        isRefreshingLanguage = true
+        languageRefreshID = UUID()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+            withAnimation(.easeOut(duration: 0.18)) {
+                isRefreshingLanguage = false
+            }
+        }
     }
 }

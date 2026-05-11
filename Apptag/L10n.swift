@@ -2,6 +2,10 @@ import Foundation
 
 // MARK: - Localization Manager
 
+extension Notification.Name {
+    static let appLanguageDidChange = Notification.Name("AppLanguageDidChange")
+}
+
 enum L10n {
     static var current: [String: String] = [:]
     private(set) static var currentCode = "en"
@@ -25,8 +29,11 @@ enum L10n {
     ]
 
     static func switchTo(_ code: String) {
+        guard supported.contains(where: { $0.code == code }) else { return }
+        guard code != currentCode else { return }
         load(code)
         UserDefaults.standard.set(code, forKey: "appLanguage")
+        NotificationCenter.default.post(name: .appLanguageDidChange, object: nil, userInfo: ["code": currentCode])
     }
 
     /// Load a specific key's translation for a given language code without switching.

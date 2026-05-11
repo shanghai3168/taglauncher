@@ -209,6 +209,9 @@ struct ContentView: View {
     @State private var filledColorlessContainer: String? = nil
     @State private var appDragModeActive = false
     @State private var dropWarningToast: String? = nil
+    @State private var dropRefreshVisible = false
+    @State private var dropRefreshStartedAt: Date? = nil
+    @State private var layoutRefreshID = UUID()
 
     // Configurable defaults
     @AppStorage("defaultGroupName") private var defaultGroupName = "Other"
@@ -268,6 +271,26 @@ struct ContentView: View {
                             .shadow(color: .black.opacity(0.22), radius: 18, y: 10)
                     )
                     .transition(.scale(scale: 0.96).combined(with: .opacity))
+                    .allowsHitTesting(false)
+            }
+
+            if dropRefreshVisible {
+                Color.black.opacity(0.08)
+                    .ignoresSafeArea()
+                    .transition(.opacity)
+                    .allowsHitTesting(false)
+
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .controlSize(.large)
+                    .scaleEffect(1.15)
+                    .padding(24)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(.ultraThickMaterial)
+                            .shadow(color: .black.opacity(0.26), radius: 24, y: 12)
+                    )
+                    .transition(.scale(scale: 0.92).combined(with: .opacity))
                     .allowsHitTesting(false)
             }
         }
@@ -421,6 +444,7 @@ struct ContentView: View {
                 flatGrid
             }
         }
+        .id(layoutRefreshID)
     }
 
     private var flatGrid: some View {
@@ -494,10 +518,12 @@ struct ContentView: View {
 
     private func estimatedCardHeight(_ group: TagGroup, width: CGFloat) -> CGFloat {
         let inner = width - 32
-        let itemW = iconSize + 28 + 6
+        let itemW = AppGridItem.stableWidth(iconSize: iconSize) + 6
         let perRow = max(1, Int(inner / itemW))
         let rows = (group.apps.count + perRow - 1) / perRow
-        return 32 + CGFloat(rows) * (iconSize + 30)
+        return 32
+            + CGFloat(rows) * AppGridItem.stableHeight(iconSize: iconSize)
+            + CGFloat(max(0, rows - 1)) * 2
     }
 
     private func masonryCard(_ group: TagGroup, width: CGFloat) -> some View {
@@ -521,7 +547,7 @@ struct ContentView: View {
                 Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
                     .layoutPriority(0)
             }
-            let itemSize = iconSize + 28
+            let itemSize = AppGridItem.stableWidth(iconSize: iconSize)
             LazyVGrid(
                 columns: [GridItem(.adaptive(minimum: itemSize, maximum: itemSize + 36), spacing: 6)],
                 spacing: 2
@@ -614,7 +640,7 @@ struct ContentView: View {
     }
 
     private func preferredGridContainersPerRow(availableWidth: CGFloat) -> Int {
-        let minCardWidth = max(260, iconSize * 3 + 88)
+        let minCardWidth = max(260, AppGridItem.stableWidth(iconSize: iconSize) * 3 + 64)
         if availableWidth >= minCardWidth * 3 + 32 { return 3 }
         if availableWidth >= minCardWidth * 2 + 16 { return 2 }
         return 1
@@ -718,7 +744,7 @@ struct ContentView: View {
 
     private func iconColumns(width: CGFloat) -> Int {
         let inner = width - 32
-        let itemW = iconSize + 34
+        let itemW = AppGridItem.stableWidth(iconSize: iconSize) + 6
         return max(1, Int((inner + 6) / itemW))
     }
 
@@ -830,7 +856,7 @@ struct ContentView: View {
     }
 
     private func iconCellHeight() -> CGFloat {
-        iconSize + (hideAppNames ? 16 : 42)
+        AppGridItem.stableHeight(iconSize: iconSize)
     }
 
     private func appRows(_ apps: [AppInfo], columns: Int, fixedRows: Int) -> [[AppInfo]] {
@@ -889,7 +915,7 @@ struct ContentView: View {
                 Spacer()
                 Button(tr("edit.confirm")) { confirmAssign() }
                     .buttonStyle(.borderedProminent)
-                    .disabled(selectedAppPaths.isEmpty || selectedTagNames.isEmpty)
+                    .disabled(selectedAppPaths.isEmpty)
             }
             .padding(.horizontal, 24)
             .padding(.top, notchHeight > 0 ? notchHeight + 10 : 20)
@@ -974,7 +1000,15 @@ struct ContentView: View {
             .padding(.bottom, 6)
 
             LazyVGrid(
-                columns: [GridItem(.adaptive(minimum: iconSize + 28, maximum: iconSize + 64), spacing: 6)],
+                columns: [
+                    GridItem(
+                        .adaptive(
+                            minimum: AppGridItem.stableWidth(iconSize: iconSize),
+                            maximum: AppGridItem.stableWidth(iconSize: iconSize) + 36
+                        ),
+                        spacing: 6
+                    )
+                ],
                 spacing: 2
             ) {
                 ForEach(group.apps) { app in editableAppItem(app) }
@@ -1002,11 +1036,10 @@ struct ContentView: View {
     }
 
     private func confirmAssign() {
-        guard !selectedAppPaths.isEmpty, !selectedTagNames.isEmpty else { return }
+        guard !selectedAppPaths.isEmpty else { return }
         let paths = selectedAppPaths.map { $0.path }
-        for tagName in selectedTagNames {
-            TagEditor.assignTag(tagName, color: tagColors[tagName] ?? 0, to: paths)
-        }
+        let tags = sortedTagNames.filter { selectedTagNames.contains($0) }
+        TagEditor.setTags(tags, to: paths)
         selectedAppPaths = []; selectedTagNames = []
         refreshApps()
         withAnimation { successToast = tr("edit.success") }
@@ -1019,7 +1052,7 @@ struct ContentView: View {
     private func editableAppItem(_ app: AppInfo) -> some View {
         let isSelected = selectedAppPaths.contains(app.path)
         return Button {
-            if isSelected { selectedAppPaths.remove(app.path) } else { selectedAppPaths.insert(app.path) }
+            toggleEditableAppSelection(app)
         } label: {
             VStack(spacing: 4) {
                 ZStack(alignment: .topTrailing) {
@@ -1039,6 +1072,33 @@ struct ContentView: View {
             .opacity(isSelected ? 1.0 : 0.65)
         }
         .buttonStyle(.plain)
+    }
+
+    private func toggleEditableAppSelection(_ app: AppInfo) {
+        if selectedAppPaths.contains(app.path) {
+            selectedAppPaths.remove(app.path)
+        } else {
+            selectedAppPaths.insert(app.path)
+        }
+        syncSelectedTagsFromSelectedApps()
+    }
+
+    private func syncSelectedTagsFromSelectedApps() {
+        let selectedApps = allApps.filter { selectedAppPaths.contains($0.path) }
+        guard !selectedApps.isEmpty else {
+            selectedTagNames = []
+            return
+        }
+
+        let editableTags = Set(sortedTagNames)
+        if selectedApps.count == 1 {
+            selectedTagNames = Set(selectedApps[0].tags.filter { editableTags.contains($0) })
+            return
+        }
+
+        selectedTagNames = selectedApps.reduce(into: Set<String>()) { result, app in
+            result.formUnion(app.tags.filter { editableTags.contains($0) })
+        }
     }
 
     // MARK: - Computed
@@ -1130,7 +1190,8 @@ struct ContentView: View {
             color: tagColors[targetTag] ?? 0,
             copy: copy
         )
-        refreshApps()
+        showDropRefresh()
+        refreshApps(forceLayoutRefresh: true)
     }
 
     private func isSystemDefaultDropTarget(_ targetTag: String) -> Bool {
@@ -1154,6 +1215,25 @@ struct ContentView: View {
         }
     }
 
+    private func showDropRefresh() {
+        dropRefreshStartedAt = Date()
+        withAnimation(.spring(response: 0.22, dampingFraction: 0.82)) {
+            dropRefreshVisible = true
+        }
+    }
+
+    private func finishDropRefreshAfterMinimumDuration() {
+        let minimumDuration: TimeInterval = 0.85
+        let elapsed = dropRefreshStartedAt.map { Date().timeIntervalSince($0) } ?? minimumDuration
+        let delay = max(0, minimumDuration - elapsed)
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            withAnimation(.easeOut(duration: 0.18)) {
+                dropRefreshVisible = false
+            }
+            dropRefreshStartedAt = nil
+        }
+    }
+
     private func setAppDragMode(_ active: Bool) {
         appDragModeActive = active
         if active {
@@ -1165,7 +1245,7 @@ struct ContentView: View {
         }
     }
 
-    func refreshApps() {
+    func refreshApps(forceLayoutRefresh: Bool = false) {
         DispatchQueue.global(qos: .userInitiated).async {
             var apps = AppIndexer.scan()
             let store = TagDatabase.load()
@@ -1176,6 +1256,12 @@ struct ContentView: View {
                 allApps = apps
                 tagColors = colors
                 draggedTagNames = order
+                if forceLayoutRefresh {
+                    withAnimation(.spring(response: 0.28, dampingFraction: 0.86)) {
+                        layoutRefreshID = UUID()
+                    }
+                    finishDropRefreshAfterMinimumDuration()
+                }
             }
         }
     }

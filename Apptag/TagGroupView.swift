@@ -15,7 +15,8 @@ struct TagGroupView: View {
 
     /// Adaptive columns — auto-fit based on icon size and available width.
     private var columns: [GridItem] {
-        [GridItem(.adaptive(minimum: iconSize + 28, maximum: iconSize + 64), spacing: 6)]
+        let itemWidth = AppGridItem.stableWidth(iconSize: iconSize)
+        return [GridItem(.adaptive(minimum: itemWidth, maximum: itemWidth + 36), spacing: 6)]
     }
 
     // Subtle separator line color — adapts to light/dark mode

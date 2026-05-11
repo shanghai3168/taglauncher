@@ -283,6 +283,20 @@ enum TagEditor {
         TagDatabase.save(store)
     }
 
+    /// Replace the full editable tag set for multiple apps.
+    static func setTags(_ tags: [String], to paths: [String]) {
+        var store = TagDatabase.load()
+        let validTags = tags.filter { store.tags[$0] != nil }
+        for path in paths {
+            if validTags.isEmpty {
+                store.appTags.removeValue(forKey: path)
+            } else {
+                store.appTags[path] = validTags
+            }
+        }
+        TagDatabase.save(store)
+    }
+
     static func moveApp(path: String, from sourceTag: String, to targetTag: String, color: Int, copy: Bool) {
         var store = TagDatabase.load()
         if store.tags[targetTag] == nil {
