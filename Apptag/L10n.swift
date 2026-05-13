@@ -18,14 +18,34 @@ enum L10n {
 
     static let supported: [(code: String, name: String)] = [
         ("en", "English"),
-        ("zh-Hans", "简体中文"),
-        ("zh-Hant", "繁體中文"),
-        ("ja", "日本語"),
-        ("ko", "한국어"),
-        ("ru", "Русский"),
         ("fr", "Français"),
         ("it", "Italiano"),
+        ("de", "Deutsch"),
         ("es", "Español"),
+        ("pt-BR", "Português (Brasil)"),
+        ("zh-Hans", "简体中文"),
+        ("zh-Hant", "繁體中文"),
+        ("ko", "한국어"),
+        ("ja", "日本語"),
+        ("ru", "Русский"),
+        ("sr-Cyrl", "Српски (ћирилица)"),
+        ("uk", "Українська"),
+        ("th", "ไทย"),
+        ("vi", "Tiếng Việt"),
+        ("ar", "العربية"),
+        ("ar-Najdi", "العربية (نجدي)"),
+        ("tr", "Türkçe"),
+        ("id", "Bahasa Indonesia"),
+        ("cs", "Čeština"),
+        ("da", "Dansk"),
+        ("nl", "Nederlands"),
+        ("no", "Norsk"),
+        ("nn", "Norsk nynorsk"),
+        ("nb", "Norsk bokmål"),
+        ("ms", "Bahasa Melayu"),
+        ("pl", "Polski"),
+        ("ro", "Română"),
+        ("sv", "Svenska"),
     ]
 
     static func switchTo(_ code: String) {
@@ -67,12 +87,31 @@ enum L10n {
         let lang = Locale.preferredLanguages.first ?? "en"
         if lang.hasPrefix("zh-Hant") || lang.hasPrefix("zh-HK") || lang.hasPrefix("zh-TW") { return "zh-Hant" }
         if lang.hasPrefix("zh") { return "zh-Hans" }
+        if lang.hasPrefix("pt-BR") || lang.hasPrefix("pt_BR") || lang.hasPrefix("pt") { return "pt-BR" }
+        if lang.hasPrefix("sr-Cyrl") || lang.hasPrefix("sr_Cyrl") || lang.hasPrefix("sr") { return "sr-Cyrl" }
+        if lang.hasPrefix("ar") { return "ar" }
+        if lang.hasPrefix("de") { return "de" }
         if lang.hasPrefix("ja") { return "ja" }
         if lang.hasPrefix("ko") { return "ko" }
         if lang.hasPrefix("ru") { return "ru" }
+        if lang.hasPrefix("uk") { return "uk" }
         if lang.hasPrefix("fr") { return "fr" }
         if lang.hasPrefix("it") { return "it" }
         if lang.hasPrefix("es") { return "es" }
+        if lang.hasPrefix("th") { return "th" }
+        if lang.hasPrefix("vi") { return "vi" }
+        if lang.hasPrefix("tr") { return "tr" }
+        if lang.hasPrefix("id") { return "id" }
+        if lang.hasPrefix("cs") { return "cs" }
+        if lang.hasPrefix("da") { return "da" }
+        if lang.hasPrefix("nl") { return "nl" }
+        if lang.hasPrefix("nn") { return "nn" }
+        if lang.hasPrefix("nb") { return "nb" }
+        if lang.hasPrefix("no") { return "no" }
+        if lang.hasPrefix("ms") { return "ms" }
+        if lang.hasPrefix("pl") { return "pl" }
+        if lang.hasPrefix("ro") { return "ro" }
+        if lang.hasPrefix("sv") { return "sv" }
         return "en"
     }
 }

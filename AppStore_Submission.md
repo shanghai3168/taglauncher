@@ -1,6 +1,6 @@
 # Apptag — Mac App Store 提审资料
 
-> 版本: 5.6.0 | Bundle ID: com.apptag.launcher | 更新日期: 2026-05-13
+> 版本: 5.7.0 | Bundle ID: com.apptag.launcher | 更新日期: 2026-05-13
 
 ---
 
@@ -11,8 +11,8 @@
 | **App 名称** | Apptag |
 | **副标题** | Tag-Based App Launcher |
 | **Bundle ID** | com.apptag.launcher |
-| **版本号** | 5.6.0 |
-| **Build 号** | 560 |
+| **版本号** | 5.7.0 |
+| **Build 号** | 570 |
 | **SKU** | apptag-mac-001 |
 | **主要类别** | Utilities (工具) |
 | **次要类别** | Productivity (效率) |
@@ -36,7 +36,7 @@
 - **Container mode** — Each tag group in its own rounded card with material background. Hover to highlight, click tag pills to jump.
 - **Zero Finder dependency** — Tags are stored in a local JSON database. No xattr pollution. No SIP permission issues. Export/import your tag setup as a portable JSON file.
 - **Privacy-first** — No network access. No analytics. No data collection. Everything stays on your Mac.
-- **9 languages** — English, 简体中文, 繁體中文, 日本語, 한국어, Русский, Français, Italiano, Español.
+- **29 language variants** — English, French, Italian, German, Spanish, Portuguese (Brazil), 简体中文, 繁體中文, Korean, Japanese, Russian, Serbian Cyrillic, Ukrainian, Thai, Vietnamese, Arabic, Arabic (Najdi), Turkish, Indonesian, Czech, Danish, Dutch, Norwegian, Norwegian Nynorsk, Norwegian Bokmål, Malay, Polish, Romanian, Swedish.
 - **Hover to reveal** — Hide app names for a clean icon-only grid. Hover to see the name.
 
 **Perfect for:**
@@ -58,7 +58,7 @@ Apptag lives in your menu bar. Zero clutter, always one hotkey away.
 - **容器模式** — 每个标签组独立圆角卡片，毛玻璃背景。悬停高亮，点击标签胶囊跳转。
 - **零 Finder 依赖** — 标签存储在本地 JSON 数据库。不污染 xattr。不受 SIP 限制。支持 JSON 文件导入/导出备份。
 - **隐私优先** — 无网络访问、无分析统计、无数据收集。一切只留在你的 Mac 上。
-- **9 种语言** — 简繁中、英、日、韩、俄、法、意、西。
+- **29 个语言版本** — 英语、法语、意大利语、德语、西班牙语、巴西葡萄牙语、简体中文、繁体中文、韩语、日语、俄语、西里尔塞尔维亚语、乌克兰语、泰语、越南语、阿拉伯语、Najdi 阿拉伯语、土耳其语、印尼语、捷克语、丹麦语、荷兰语、挪威语、挪威尼诺斯克语、挪威博克马尔语、马来语、波兰语、罗马尼亚语、瑞典语。
 - **悬停显示** — 可隐藏 App 名称获得纯粹图标网格。鼠标悬停时显示名称。
 
 **适合:** 重度 App 用户、设计师、开发者、以及厌倦翻 Dock/Launchpad 的所有人。
@@ -187,8 +187,10 @@ App Store 额外要求:
 ## 8. What's New (本次版本更新说明)
 
 ```
-Apptag 5.6.0
+Apptag 5.7.0
 
+- Expanded localization support to 29 language variants
+- Updated the Language preferences tab to a two-column layout for better readability
 - Added long-press drag sorting for tag navigation in normal app-list views
 - Tag sorting now works from top, left, or right tag navigation positions across all 5 app-list styles
 - Tag reorder animations now update both the tag navigation and matching app containers
@@ -196,11 +198,11 @@ Apptag 5.6.0
 - Added a dedicated Language tab in Preferences with live language switching
 - Preferences now opens centered above the active TagLauncher overlay, including multi-display setups
 - Improved tag reordering in edit mode with live visual feedback and synchronized group layout updates
-- Renamed backup actions to Export/Import Categories & Layout across all 9 languages
+- Renamed backup actions to Export/Import Categories & Layout across all supported languages
 - Added Mac App Store sandbox entitlements and App Store build validation
 - Hid Launch at Login controls in sandboxed App Store builds
 - Removed deprecated app launch API usage
-- Version updated to 5.6.0 (Build 560)
+- Version updated to 5.7.0 (Build 570)
 ```
 
 ---

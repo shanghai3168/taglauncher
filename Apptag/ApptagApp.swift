@@ -12,7 +12,7 @@ struct TagLauncherApp: App {
         Settings {
             PreferencesView()
         }
-        .defaultSize(width: 880, height: 420)
+        .defaultSize(width: 880, height: 460)
     }
 }
 
@@ -24,7 +24,7 @@ final class OverlayPanel: NSPanel {
 }
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    private var statusItem: NSStatusItem!
+    private var statusItem: NSStatusItem?
     private var overlayWindow: NSWindow?
     private var settingsWindow: NSWindow?    // Track Settings window to keep it above overlay
     private var hotkeyRef: EventHotKeyRef?
@@ -150,17 +150,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Menu Bar
 
     private func setupMenuBar() {
-        // Remove old status item if re-creating (language switch, etc.)
-        if let existing = statusItem {
-            NSStatusBar.system.removeStatusItem(existing)
+        if statusItem == nil {
+            statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         }
-        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        guard let statusItem else { return }
 
         if let button = statusItem.button {
-            button.image = NSImage(
+            let image = NSImage(
                 systemSymbolName: "tag.fill",
                 accessibilityDescription: "TagLauncher"
             )
+            image?.isTemplate = true
+            button.image = image
+            button.imagePosition = .imageOnly
             button.toolTip = "TagLauncher — Tag-based app launcher"
             button.action = #selector(toggleOverlay)
             button.target = self
@@ -365,8 +367,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                   !self.isInEditMode
             else { return }
 
-            // Settings/Preferences window → float it above overlay for real-time preview
-            if NSApp.windows.contains(keyWindow) {
+            // Settings/Preferences window -> float it above overlay for real-time preview.
+            if self.isSettingsWindowCandidate(keyWindow) {
                 self.prepareSettingsWindow(keyWindow)
                 return
             }
@@ -377,10 +379,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Settings must always appear centered over the current overlay view and float above it.
     private func prepareSettingsWindow(_ window: NSWindow) {
-        let settingsSize = NSSize(width: 880, height: max(window.frame.height, 420))
-        window.minSize = NSSize(width: 880, height: 420)
-        window.maxSize = NSSize(width: 880, height: CGFloat.greatestFiniteMagnitude)
-        if abs(window.frame.width - settingsSize.width) > 0.5 || window.frame.height < settingsSize.height {
+        window.identifier = NSUserInterfaceItemIdentifier("TagLauncherPreferencesWindow")
+        let settingsSize = NSSize(width: 880, height: 460)
+        window.minSize = settingsSize
+        window.maxSize = settingsSize
+        if abs(window.frame.width - settingsSize.width) > 0.5 || abs(window.frame.height - settingsSize.height) > 0.5 {
             window.setFrame(
                 NSRect(origin: window.frame.origin, size: settingsSize),
                 display: false
@@ -399,6 +402,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
         settingsWindow = window
+    }
+
+    private func isSettingsWindowCandidate(_ window: NSWindow) -> Bool {
+        if window == settingsWindow { return true }
+        if window.identifier?.rawValue == "TagLauncherPreferencesWindow" { return true }
+        guard NSApp.windows.contains(window),
+              window != overlayWindow,
+              window.isVisible,
+              !(window is NSPanel)
+        else { return false }
+        return true
     }
 
     private func center(_ window: NSWindow, over rect: NSRect) {
@@ -453,7 +467,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) { [weak self] in
             guard let self else { return }
             let candidates = NSApp.windows.filter { window in
-                window != self.overlayWindow && window.isVisible
+                self.isSettingsWindowCandidate(window)
             }
             candidates.forEach { self.prepareSettingsWindow($0) }
             if candidates.isEmpty && retries > 0 {
@@ -559,7 +573,6 @@ struct PreferencesView: View {
     @AppStorage("showDockIcon") private var showDockIcon = false
     @AppStorage("launchAtLogin") private var launchAtLogin = true
     @State private var selectedLanguage = L10n.currentCode
-    @State private var languageRefreshID = UUID()
     @State private var isRefreshingLanguage = false
     @State private var allApps: [AppInfo] = []
     @State private var tagColors: [String: Int] = [:]
@@ -624,25 +637,53 @@ struct PreferencesView: View {
     private var buildVersion: String {
         Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "?"
     }
+    private var languageColumns: [GridItem] {
+        [
+            GridItem(.flexible(minimum: 220), spacing: 18, alignment: .top),
+            GridItem(.flexible(minimum: 220), spacing: 18, alignment: .top),
+        ]
+    }
 
     var body: some View {
         ZStack {
             TabView {
                 // Tab 1: Language
-                Form {
-                    Section {
-                        Picker(tr("settings.languagePicker"), selection: $selectedLanguage) {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text(tr("settings.language"))
+                        .font(.headline)
+                    Text(tr("settings.languageDesc"))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+
+                    ScrollView {
+                        LazyVGrid(columns: languageColumns, alignment: .leading, spacing: 6) {
                             ForEach(L10n.supported, id: \.code) { language in
-                                Text(language.name).tag(language.code)
+                                Button {
+                                    selectedLanguage = language.code
+                                } label: {
+                                    HStack(spacing: 8) {
+                                        Image(systemName: selectedLanguage == language.code ? "checkmark" : "circle")
+                                            .font(.system(size: 12, weight: .semibold))
+                                            .foregroundStyle(selectedLanguage == language.code ? Color.accentColor : Color.secondary.opacity(0.28))
+                                            .frame(width: 16)
+                                        Text(language.name)
+                                            .foregroundStyle(.primary)
+                                            .lineLimit(1)
+                                            .truncationMode(.tail)
+                                        Spacer(minLength: 0)
+                                    }
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 5)
+                                    .contentShape(Rectangle())
+                                }
+                                .buttonStyle(.plain)
+                                .accessibilityLabel("\(tr("settings.languagePicker")) \(language.name)")
                             }
                         }
-                        .pickerStyle(.radioGroup)
-                    } header: {
-                        Text(tr("settings.language"))
-                    } footer: {
-                        Text(tr("settings.languageDesc"))
+                        .padding(.vertical, 4)
                     }
                 }
+                .frame(maxWidth: settingsContentWidth, alignment: .leading)
                 .tabItem { Label(tr("settings.language"), systemImage: "globe") }
                 .padding()
 
@@ -812,7 +853,6 @@ struct PreferencesView: View {
             .tabItem { Label(tr("settings.about"), systemImage: "info.circle") }
             .padding()
             }
-            .id(languageRefreshID)
             .onChange(of: selectedLanguage) { _, code in
                 L10n.switchTo(code)
             }
@@ -835,12 +875,11 @@ struct PreferencesView: View {
                 .transition(.opacity)
             }
         }
-        .frame(minWidth: settingsWindowWidth, maxWidth: settingsWindowWidth, minHeight: 420)
+        .frame(width: settingsWindowWidth, height: 460)
     }
 
     private func showLanguageRefresh() {
         isRefreshingLanguage = true
-        languageRefreshID = UUID()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
             withAnimation(.easeOut(duration: 0.18)) {
                 isRefreshingLanguage = false
