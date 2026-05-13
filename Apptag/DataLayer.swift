@@ -165,9 +165,25 @@ enum TagDatabase {
 
     static var storeURL: URL { storeDir.appendingPathComponent("tags.json") }
 
+    private static var legacyStoreURL: URL? {
+        guard ProcessInfo.processInfo.environment["APP_SANDBOX_CONTAINER_ID"] != nil else {
+            return nil
+        }
+
+        let home = FileManager.default.homeDirectoryForCurrentUser
+        let bundleID = Bundle.main.bundleIdentifier ?? "com.apptag.launcher"
+        let marker = "/Library/Containers/\(bundleID)/Data"
+        guard let range = home.path.range(of: marker) else { return nil }
+
+        let realHomePath = String(home.path[..<range.lowerBound])
+        return URL(fileURLWithPath: realHomePath)
+            .appendingPathComponent("Library/Application Support/Apptag/tags.json")
+    }
+
     // MARK: Load / Save
 
     static func load() -> Store {
+        migrateLegacyStoreIfNeeded()
         guard let data = try? Data(contentsOf: storeURL),
               let store = try? JSONDecoder().decode(Store.self, from: data)
         else { return Store() }
@@ -179,10 +195,40 @@ enum TagDatabase {
         try? data.write(to: storeURL, options: .atomic)
     }
 
+    /// App Store sandbox builds read Application Support inside the app container.
+    /// Older non-sandbox builds stored the same database directly under ~/Library.
+    /// On first sandbox launch, migrate the richer legacy database before seeding defaults.
+    static func migrateLegacyStoreIfNeeded() {
+        let fm = FileManager.default
+        guard let legacyURL = legacyStoreURL,
+              fm.fileExists(atPath: legacyURL.path)
+        else { return }
+
+        guard let legacyData = try? Data(contentsOf: legacyURL),
+              let legacyStore = try? JSONDecoder().decode(Store.self, from: legacyData)
+        else { return }
+
+        if let currentData = try? Data(contentsOf: storeURL),
+           let currentStore = try? JSONDecoder().decode(Store.self, from: currentData),
+           storeScore(currentStore) >= storeScore(legacyStore) {
+            return
+        }
+
+        try? fm.createDirectory(at: storeDir, withIntermediateDirectories: true)
+        try? legacyData.write(to: storeURL, options: .atomic)
+    }
+
+    private static func storeScore(_ store: Store) -> Int {
+        store.appTags.count * 100 + store.tagOrder.count * 10 + store.tags.count
+    }
+
     // MARK: Export / Import
 
     static func exportTo(_ url: URL) throws {
-        try FileManager.default.copyItem(at: storeURL, to: url)
+        migrateLegacyStoreIfNeeded()
+        let store = load()
+        let data = try JSONEncoder().encode(store)
+        try data.write(to: url, options: .atomic)
     }
 
     static func importFrom(_ url: URL) throws -> Store {
@@ -195,6 +241,7 @@ enum TagDatabase {
     /// Seed default tags on first launch. Only runs if store doesn't exist yet.
     /// Tag names are loaded from the current language's localization.
     static func seedDefaultTags() {
+        migrateLegacyStoreIfNeeded()
         guard !FileManager.default.fileExists(atPath: storeURL.path) else { return }
 
         let keys = [

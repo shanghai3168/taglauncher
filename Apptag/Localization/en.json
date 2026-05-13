@@ -29,6 +29,7 @@
   "settings.iconSizeDesc": "Icon display size. Grid columns adjust automatically.",
   "settings.backup": "Backup & Restore",
   "settings.export": "Export Categories & Layout…",
+  "settings.exportFailed": "Export Failed",
   "settings.import": "Import Categories & Layout…",
   "settings.backupDesc": "Export saves your categories and layout to a JSON file. Import replaces the current setup with one from a file.",
   "settings.importFailed": "Import Failed",

@@ -1,6 +1,6 @@
 # Apptag — Mac App Store 提审资料
 
-> 版本: 5.5.0 | Bundle ID: com.apptag.launcher | 更新日期: 2026-05-11
+> 版本: 5.6.0 | Bundle ID: com.apptag.launcher | 更新日期: 2026-05-13
 
 ---
 
@@ -11,8 +11,8 @@
 | **App 名称** | Apptag |
 | **副标题** | Tag-Based App Launcher |
 | **Bundle ID** | com.apptag.launcher |
-| **版本号** | 5.5.0 |
-| **Build 号** | 550 |
+| **版本号** | 5.6.0 |
+| **Build 号** | 560 |
 | **SKU** | apptag-mac-001 |
 | **主要类别** | Utilities (工具) |
 | **次要类别** | Productivity (效率) |
@@ -187,8 +187,12 @@ App Store 额外要求:
 ## 8. What's New (本次版本更新说明)
 
 ```
-Apptag 5.5.0
+Apptag 5.6.0
 
+- Added long-press drag sorting for tag navigation in normal app-list views
+- Tag sorting now works from top, left, or right tag navigation positions across all 5 app-list styles
+- Tag reorder animations now update both the tag navigation and matching app containers
+- Added automatic migration for legacy non-sandbox tag databases into the App Store sandbox container
 - Added a dedicated Language tab in Preferences with live language switching
 - Preferences now opens centered above the active TagLauncher overlay, including multi-display setups
 - Improved tag reordering in edit mode with live visual feedback and synchronized group layout updates
@@ -196,7 +200,7 @@ Apptag 5.5.0
 - Added Mac App Store sandbox entitlements and App Store build validation
 - Hid Launch at Login controls in sandboxed App Store builds
 - Removed deprecated app launch API usage
-- Version updated to 5.5.0 (Build 550)
+- Version updated to 5.6.0 (Build 560)
 ```
 
 ---
@@ -220,12 +224,17 @@ Apptag 5.5.0
 **已完成配置**:
 1. **Entitlements 文件**: `Apptag/TagLauncher.entitlements` 已创建，包含:
    - `com.apple.security.app-sandbox`
+   - `com.apple.security.files.user-selected.read-write`，用于用户主动选择位置后的导入/导出 JSON
+   - `com.apple.security.temporary-exception.files.home-relative-path.read-only`，用于一次性读取旧版非沙盒数据库 `~/Library/Application Support/Apptag/`
 2. **build.sh 已更新**:
    - `APP_STORE=1` 时强制检查 entitlements 文件存在
    - `APP_STORE=1 CODESIGN_IDENTITY="..." bash build.sh` 使用 entitlements 签名
 3. **代码处理**:
+   - App Store 沙盒环境下会优先迁移旧版非沙盒 `tags.json`，避免升级后标签和排序看起来丢失
    - 本地非沙盒版本保留 LaunchAgent 登录启动
    - App Store 沙盒环境下隐藏 Launch at Login 设置项，并跳过 LaunchAgent 写入
+
+**审核说明建议**: 临时 home-relative-path 读取权限仅用于从旧版非沙盒存储位置迁移用户已有标签、分类和排序数据到 sandbox 容器，不用于持续访问用户文件。
 
 **仍需验证**: TestFlight 中确认沙盒下 Carbon `RegisterEventHotKey` 是否可正常工作。
 

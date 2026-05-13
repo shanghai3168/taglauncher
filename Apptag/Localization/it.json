@@ -29,6 +29,7 @@
   "settings.iconSizeDesc": "Dimensione di visualizzazione delle icone. Le colonne si adattano automaticamente.",
   "settings.backup": "Backup e ripristino",
   "settings.export": "Esporta categorie e layout…",
+  "settings.exportFailed": "Esportazione fallita",
   "settings.import": "Importa categorie e layout…",
   "settings.backupDesc": "L'esportazione salva categorie e layout in un file JSON. L'importazione sostituisce la configurazione attuale.",
   "settings.importFailed": "Importazione fallita",

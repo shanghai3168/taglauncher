@@ -588,6 +588,7 @@ struct PreferencesView: View {
                 try TagDatabase.exportTo(url)
             } catch {
                 fputs("[TagLauncher] Export failed: \(error)\n", stderr)
+                showDataAlert(title: tr("settings.exportFailed"), message: error.localizedDescription)
             }
         }
     }
@@ -604,14 +605,17 @@ struct PreferencesView: View {
                 scanApps()
             } catch {
                 fputs("[TagLauncher] Import failed: \(error)\n", stderr)
-                // Show alert on failure
-                let alert = NSAlert()
-                alert.messageText = tr("settings.importFailed")
-                alert.informativeText = error.localizedDescription
-                alert.alertStyle = .warning
-                alert.runModal()
+                showDataAlert(title: tr("settings.importFailed"), message: error.localizedDescription)
             }
         }
+    }
+
+    private func showDataAlert(title: String, message: String) {
+        let alert = NSAlert()
+        alert.messageText = title
+        alert.informativeText = message
+        alert.alertStyle = .warning
+        alert.runModal()
     }
 
     private var appVersion: String {

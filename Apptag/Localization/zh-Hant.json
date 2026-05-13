@@ -29,6 +29,7 @@
   "settings.iconSizeDesc": "圖示顯示尺寸。網格列數自動調整。",
   "settings.backup": "備份與還原",
   "settings.export": "匯出分類與版面配置…",
+  "settings.exportFailed": "匯出失敗",
   "settings.import": "匯入分類與版面配置…",
   "settings.backupDesc": "匯出將分類與版面配置儲存為 JSON 檔案。匯入用一個檔案取代目前設定。",
   "settings.importFailed": "匯入失敗",

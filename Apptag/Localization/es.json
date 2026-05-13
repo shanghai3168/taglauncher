@@ -29,6 +29,7 @@
   "settings.iconSizeDesc": "Tamaño de visualización de iconos. Las columnas se ajustan automáticamente.",
   "settings.backup": "Copia de seguridad",
   "settings.export": "Exportar categorías y diseño…",
+  "settings.exportFailed": "Error de exportación",
   "settings.import": "Importar categorías y diseño…",
   "settings.backupDesc": "La exportación guarda las categorías y el diseño en un archivo JSON. La importación reemplaza la configuración actual.",
   "settings.importFailed": "Error de importación",

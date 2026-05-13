@@ -29,6 +29,7 @@
   "settings.iconSizeDesc": "图标显示尺寸。网格列数自动调整。",
   "settings.backup": "备份与恢复",
   "settings.export": "导出分类与布局…",
+  "settings.exportFailed": "导出失败",
   "settings.import": "导入分类与布局…",
   "settings.backupDesc": "导出将分类与布局保存为 JSON 文件。导入用一个文件替换当前设置。",
   "settings.importFailed": "导入失败",

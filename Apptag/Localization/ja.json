@@ -29,6 +29,7 @@
   "settings.iconSizeDesc": "アイコン表示サイズ。グリッド列は自動調整されます。",
   "settings.backup": "バックアップと復元",
   "settings.export": "カテゴリとレイアウトをエクスポート…",
+  "settings.exportFailed": "エクスポート失敗",
   "settings.import": "カテゴリとレイアウトをインポート…",
   "settings.backupDesc": "エクスポートはカテゴリとレイアウトをJSONファイルに保存します。インポートは現在の設定をファイルの内容で置き換えます。",
   "settings.importFailed": "インポート失敗",

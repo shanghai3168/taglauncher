@@ -110,7 +110,10 @@ struct MacTextField: NSViewRepresentable {
 struct TagPill: View {
     let name: String
     let colorIndex: Int
+    var dragModeActive: Bool = false
+    var isDragging: Bool = false
     let action: () -> Void
+    @State private var wiggle = false
 
     private var bgColor: Color {
         Color(nsColor: TagColor.nsColor(for: colorIndex))
@@ -124,16 +127,28 @@ struct TagPill: View {
     }
 
     var body: some View {
-        Button(action: action) {
-            Text(name)
-                .font(.system(size: 13, weight: .medium))
-                .foregroundStyle(textColor)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(RoundedRectangle(cornerRadius: 7).fill(bgColor))
-                .shadow(color: .black.opacity(0.2), radius: 3, y: 1)
+        Text(name)
+            .font(.system(size: 13, weight: .medium))
+            .foregroundStyle(textColor)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
+            .background(RoundedRectangle(cornerRadius: 7).fill(bgColor))
+            .shadow(color: .black.opacity(isDragging ? 0.34 : 0.2), radius: isDragging ? 8 : 3, y: isDragging ? 4 : 1)
+            .scaleEffect(isDragging ? 1.05 : 1.0)
+            .rotationEffect(.degrees(dragModeActive ? (wiggle ? 1.8 : -1.8) : 0))
+            .animation(
+                dragModeActive
+                    ? .easeInOut(duration: 0.12).repeatForever(autoreverses: true)
+                    : .default,
+                value: wiggle
+            )
+            .onChange(of: dragModeActive) { _, active in
+                wiggle = active
+            }
+            .contentShape(RoundedRectangle(cornerRadius: 7))
+            .onTapGesture {
+                if !dragModeActive { action() }
         }
-        .buttonStyle(.plain)
     }
 }
 
@@ -142,7 +157,10 @@ struct TagPill: View {
 struct SideTagPill: View {
     let name: String
     let colorIndex: Int
+    var dragModeActive: Bool = false
+    var isDragging: Bool = false
     let action: () -> Void
+    @State private var wiggle = false
 
     private var bgColor: Color {
         Color(nsColor: TagColor.nsColor(for: colorIndex))
@@ -152,16 +170,28 @@ struct SideTagPill: View {
     }
 
     var body: some View {
-        Button(action: action) {
-            Text(name)
-                .font(.system(size: 13, weight: .medium))
-                .foregroundStyle(textColor)
-                .padding(.horizontal, 10).padding(.vertical, 5)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(RoundedRectangle(cornerRadius: 6).fill(bgColor))
-                .shadow(color: .black.opacity(0.2), radius: 3, y: 1)
+        Text(name)
+            .font(.system(size: 13, weight: .medium))
+            .foregroundStyle(textColor)
+            .padding(.horizontal, 10).padding(.vertical, 5)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(RoundedRectangle(cornerRadius: 6).fill(bgColor))
+            .shadow(color: .black.opacity(isDragging ? 0.34 : 0.2), radius: isDragging ? 8 : 3, y: isDragging ? 4 : 1)
+            .scaleEffect(isDragging ? 1.03 : 1.0)
+            .rotationEffect(.degrees(dragModeActive ? (wiggle ? 1.6 : -1.6) : 0))
+            .animation(
+                dragModeActive
+                    ? .easeInOut(duration: 0.12).repeatForever(autoreverses: true)
+                    : .default,
+                value: wiggle
+            )
+            .onChange(of: dragModeActive) { _, active in
+                wiggle = active
+            }
+            .contentShape(RoundedRectangle(cornerRadius: 6))
+            .onTapGesture {
+                if !dragModeActive { action() }
         }
-        .buttonStyle(.plain)
     }
 }
 
@@ -205,6 +235,9 @@ struct ContentView: View {
     @State private var draggedTagNames: [String] = []  // live drag order
     @State private var dragItem: String? = nil          // currently dragged tag
     @State private var tagReorderFrames: [String: CGRect] = [:]
+    @State private var tagNavDragModeActive = false
+    @State private var tagNavDragItem: String? = nil
+    @State private var tagNavReorderFrames: [String: CGRect] = [:]
     @State private var hoveredContainer: String? = nil  // colored container lift
     // Fixed interaction for "Colorless Container": hover fills persistently; click clears.
     @State private var filledColorlessContainer: String? = nil
@@ -388,12 +421,17 @@ struct ContentView: View {
             HStack(spacing: 8) {
                 ForEach(tagLabels) { tag in
                     TagPill(name: tag.name, colorIndex: tag.colorIndex,
+                            dragModeActive: tagNavDragModeActive && canReorderTag(tag.name),
+                            isDragging: tagNavDragItem == tag.name,
                             action: {
                         if isColorlessContainerMode {
                             toggleColorlessFill(tag.id)
                         }
                         scrollTo(tag.id)
                     })
+                    .background(tagNavFrameReader(for: tag.name))
+                    .zIndex(tagNavDragItem == tag.name ? 1 : 0)
+                    .highPriorityGesture(tagNavReorderGesture(for: tag.name))
                     .onHover { hovering in
                         if hovering {
                             fillColorlessContainer(tag.id)
@@ -401,7 +439,12 @@ struct ContentView: View {
                         }
                     }
                 }
-            }.padding(.horizontal, 24)
+            }
+            .padding(.horizontal, 24)
+            .coordinateSpace(name: "tagNavReorder")
+            .onPreferenceChange(TagNavReorderFramePreferenceKey.self) { frames in
+                tagNavReorderFrames = frames
+            }
         }
     }
 
@@ -410,12 +453,17 @@ struct ContentView: View {
             VStack(spacing: 6) {
                 ForEach(tagLabels) { tag in
                     SideTagPill(name: tag.name, colorIndex: tag.colorIndex,
+                                dragModeActive: tagNavDragModeActive && canReorderTag(tag.name),
+                                isDragging: tagNavDragItem == tag.name,
                                 action: {
                         if isColorlessContainerMode {
                             toggleColorlessFill(tag.id)
                         }
                         scrollTo(tag.id)
                     })
+                    .background(tagNavFrameReader(for: tag.name))
+                    .zIndex(tagNavDragItem == tag.name ? 1 : 0)
+                    .highPriorityGesture(tagNavReorderGesture(for: tag.name))
                     .onHover { hovering in
                         if hovering {
                             fillColorlessContainer(tag.id)
@@ -423,7 +471,12 @@ struct ContentView: View {
                         }
                     }
                 }
-            }.padding(12)
+            }
+            .padding(12)
+            .coordinateSpace(name: "tagNavReorder")
+            .onPreferenceChange(TagNavReorderFramePreferenceKey.self) { frames in
+                tagNavReorderFrames = frames
+            }
         }.frame(width: 135)
     }
 
@@ -1179,6 +1232,78 @@ struct ContentView: View {
         filledColorlessContainer = (filledColorlessContainer == id) ? nil : id
     }
 
+    private func canReorderTag(_ name: String) -> Bool {
+        tagColors[name] != nil && name != "Mac自带" && name != defaultGroupName
+    }
+
+    private func tagNavFrameReader(for tagName: String) -> some View {
+        GeometryReader { proxy in
+            Color.clear.preference(
+                key: TagNavReorderFramePreferenceKey.self,
+                value: canReorderTag(tagName)
+                    ? [tagName: proxy.frame(in: .named("tagNavReorder"))]
+                    : [:]
+            )
+        }
+    }
+
+    private func tagNavReorderGesture(for tagName: String) -> some Gesture {
+        LongPressGesture(minimumDuration: 0.5)
+            .sequenced(before: DragGesture(minimumDistance: 3, coordinateSpace: .named("tagNavReorder")))
+            .onChanged { value in
+                guard canReorderTag(tagName) else { return }
+                switch value {
+                case .first(true):
+                    beginTagNavReorder(tagName)
+                case .second(true, let drag?):
+                    if tagNavDragItem == nil {
+                        beginTagNavReorder(tagName)
+                    }
+                    reorderTagNavItem(at: drag.location)
+                default:
+                    break
+                }
+            }
+            .onEnded { value in
+                guard canReorderTag(tagName) else { return }
+                if case .second(true, let drag?) = value {
+                    reorderTagNavItem(at: drag.location)
+                }
+                endTagNavReorder()
+            }
+    }
+
+    private func beginTagNavReorder(_ tagName: String) {
+        guard canReorderTag(tagName) else { return }
+        if tagNavDragItem == nil {
+            tagNavDragItem = tagName
+        }
+        tagNavDragModeActive = true
+    }
+
+    private func endTagNavReorder() {
+        if tagNavDragModeActive {
+            TagEditor.reorderTags(draggedTagNames)
+        }
+        tagNavDragModeActive = false
+        tagNavDragItem = nil
+    }
+
+    private func reorderTagNavItem(at location: CGPoint) {
+        guard let fromName = tagNavDragItem,
+              let targetName = tagNavReorderFrames.first(where: { $0.value.contains(location) })?.key,
+              fromName != targetName,
+              let fromIndex = draggedTagNames.firstIndex(of: fromName),
+              let toIndex = draggedTagNames.firstIndex(of: targetName)
+        else { return }
+
+        withAnimation(.spring(response: 0.22, dampingFraction: 0.82)) {
+            let destination = toIndex > fromIndex ? toIndex + 1 : toIndex
+            draggedTagNames.move(fromOffsets: IndexSet(integer: fromIndex), toOffset: destination)
+        }
+        TagEditor.reorderTags(draggedTagNames)
+    }
+
     private func handleAppDrop(_ providers: [NSItemProvider], targetTag: String) -> Bool {
         guard let provider = providers.first(where: { $0.hasItemConformingToTypeIdentifier(UTType.plainText.identifier) }) else {
             return false
@@ -1308,6 +1433,14 @@ struct ContentView: View {
 // MARK: - Tag Label
 
 private struct TagReorderFramePreferenceKey: PreferenceKey {
+    static var defaultValue: [String: CGRect] = [:]
+
+    static func reduce(value: inout [String: CGRect], nextValue: () -> [String: CGRect]) {
+        value.merge(nextValue(), uniquingKeysWith: { _, new in new })
+    }
+}
+
+private struct TagNavReorderFramePreferenceKey: PreferenceKey {
     static var defaultValue: [String: CGRect] = [:]
 
     static func reduce(value: inout [String: CGRect], nextValue: () -> [String: CGRect]) {
