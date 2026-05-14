@@ -13,6 +13,7 @@
   "settings.about": "Hakkında",
   "settings.launchAtLogin": "Girişte başlat",
   "settings.showInDock": "Dock’ta göster",
+  "settings.showMenuBarIcon": "Menü çubuğu simgesini göster",
   "settings.appListStyle": "Uygulama listesi stili:",
   "settings.flat": "Düz",
   "settings.container": "Renksiz Kapsayıcı",

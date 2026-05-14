@@ -1,6 +1,6 @@
 # Apptag — Mac App Store 提审资料
 
-> 版本: 5.7.0 | Bundle ID: com.apptag.launcher | 更新日期: 2026-05-13
+> 版本: 5.7.5 | Bundle ID: com.apptag.launcher | 更新日期: 2026-05-14
 
 ---
 
@@ -11,8 +11,8 @@
 | **App 名称** | Apptag |
 | **副标题** | Tag-Based App Launcher |
 | **Bundle ID** | com.apptag.launcher |
-| **版本号** | 5.7.0 |
-| **Build 号** | 570 |
+| **版本号** | 5.7.5 |
+| **Build 号** | 575 |
 | **SKU** | apptag-mac-001 |
 | **主要类别** | Utilities (工具) |
 | **次要类别** | Productivity (效率) |
@@ -187,8 +187,11 @@ App Store 额外要求:
 ## 8. What's New (本次版本更新说明)
 
 ```
-Apptag 5.7.0
+Apptag 5.7.5
 
+- Fixed the menu bar icon visibility issue and added a Show Menu Bar Icon preference
+- Fixed Preferences placement when opened above TagLauncher from a fullscreen app Space
+- Fixed tag navigation reorder mode so clicking elsewhere exits the shaking state
 - Expanded localization support to 29 language variants
 - Updated the Language preferences tab to a two-column layout for better readability
 - Added long-press drag sorting for tag navigation in normal app-list views
@@ -202,7 +205,7 @@ Apptag 5.7.0
 - Added Mac App Store sandbox entitlements and App Store build validation
 - Hid Launch at Login controls in sandboxed App Store builds
 - Removed deprecated app launch API usage
-- Version updated to 5.7.0 (Build 570)
+- Version updated to 5.7.5 (Build 575)
 ```
 
 ---

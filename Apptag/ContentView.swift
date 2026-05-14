@@ -237,6 +237,7 @@ struct ContentView: View {
     @State private var tagReorderFrames: [String: CGRect] = [:]
     @State private var tagNavDragModeActive = false
     @State private var tagNavDragItem: String? = nil
+    @State private var tagNavDismissMonitor: Any? = nil
     @State private var tagNavReorderFrames: [String: CGRect] = [:]
     @State private var hoveredContainer: String? = nil  // colored container lift
     // Fixed interaction for "Colorless Container": hover fills persistently; click clears.
@@ -347,6 +348,12 @@ struct ContentView: View {
                 userInfo: ["active": active]
             )
         }
+        .onChange(of: tagNavDragModeActive) { _, active in
+            updateTagNavDismissMonitor(active: active)
+        }
+        .onDisappear {
+            removeTagNavDismissMonitor()
+        }
     }
 
     /// Set edit phase with synchronous notification BEFORE state change.
@@ -377,6 +384,16 @@ struct ContentView: View {
                 topLayout
             }
 
+            if tagNavDragModeActive && tagNavDragItem == nil {
+                Color.clear
+                    .contentShape(Rectangle())
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        endTagNavReorder()
+                    }
+                    .zIndex(1)
+            }
+
             Button {
                 setEditPhase(.editingApps)
             } label: {
@@ -390,6 +407,7 @@ struct ContentView: View {
             .padding(.top, notchHeight > 0 ? notchHeight + 10 : 20)
             .padding(.trailing, 20)
             .keyboardShortcut("e", modifiers: .control)
+            .zIndex(2)
         }
     }
 
@@ -1287,6 +1305,27 @@ struct ContentView: View {
         }
         tagNavDragModeActive = false
         tagNavDragItem = nil
+        removeTagNavDismissMonitor()
+    }
+
+    private func updateTagNavDismissMonitor(active: Bool) {
+        if active {
+            guard tagNavDismissMonitor == nil else { return }
+            tagNavDismissMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { event in
+                guard tagNavDragModeActive, editPhase == .none else { return event }
+                endTagNavReorder()
+                return nil
+            }
+        } else {
+            removeTagNavDismissMonitor()
+        }
+    }
+
+    private func removeTagNavDismissMonitor() {
+        if let monitor = tagNavDismissMonitor {
+            NSEvent.removeMonitor(monitor)
+            tagNavDismissMonitor = nil
+        }
     }
 
     private func reorderTagNavItem(at location: CGPoint) {
@@ -1391,6 +1430,9 @@ struct ContentView: View {
     }
 
     private func setAppDragMode(_ active: Bool) {
+        if active {
+            endTagNavReorder()
+        }
         appDragModeActive = active
         if active {
             DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
@@ -1424,6 +1466,7 @@ struct ContentView: View {
 
     func openApp(_ app: AppInfo) {
         appDragModeActive = false
+        endTagNavReorder()
         hideOverlay()
         let configuration = NSWorkspace.OpenConfiguration()
         NSWorkspace.shared.openApplication(at: app.path, configuration: configuration)

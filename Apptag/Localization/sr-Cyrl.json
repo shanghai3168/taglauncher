@@ -13,6 +13,7 @@
   "settings.about": "О програму",
   "settings.launchAtLogin": "Покрени при пријављивању",
   "settings.showInDock": "Прикажи у Dock-у",
+  "settings.showMenuBarIcon": "Прикажи икону у траци менија",
   "settings.appListStyle": "Стил листе апликација:",
   "settings.flat": "Равно",
   "settings.container": "Безбојни контејнер",

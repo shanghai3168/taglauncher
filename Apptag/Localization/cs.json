@@ -13,6 +13,7 @@
   "settings.about": "O aplikaci",
   "settings.launchAtLogin": "Spustit při přihlášení",
   "settings.showInDock": "Zobrazit v Docku",
+  "settings.showMenuBarIcon": "Zobrazit ikonu v řádku nabídek",
   "settings.appListStyle": "Styl seznamu aplikací:",
   "settings.flat": "Plochý",
   "settings.container": "Bezbarvý kontejner",

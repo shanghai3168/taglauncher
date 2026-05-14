@@ -13,6 +13,7 @@
   "settings.about": "Acerca de",
   "settings.launchAtLogin": "Iniciar al iniciar sesión",
   "settings.showInDock": "Mostrar en el Dock",
+  "settings.showMenuBarIcon": "Mostrar icono en la barra de menús",
   "settings.appListStyle": "Estilo de lista de apps:",
   "settings.flat": "Plano",
   "settings.container": "Contenedor sin color",

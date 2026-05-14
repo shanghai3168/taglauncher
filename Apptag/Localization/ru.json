@@ -13,6 +13,7 @@
   "settings.about": "О программе",
   "settings.launchAtLogin": "Запускать при входе",
   "settings.showInDock": "Показывать в Dock",
+  "settings.showMenuBarIcon": "Показывать значок в строке меню",
   "settings.appListStyle": "Стиль списка приложений:",
   "settings.flat": "Плоский",
   "settings.container": "Бесцветный контейнер",

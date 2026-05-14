@@ -13,6 +13,7 @@
   "settings.about": "关于",
   "settings.launchAtLogin": "登录时启动",
   "settings.showInDock": "在 Dock 中显示",
+  "settings.showMenuBarIcon": "显示菜单栏图标",
   "settings.appListStyle": "应用列表样式：",
   "settings.flat": "平铺",
   "settings.container": "无色容器",

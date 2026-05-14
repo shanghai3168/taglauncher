@@ -13,6 +13,7 @@
   "settings.about": "Giới thiệu",
   "settings.launchAtLogin": "Khởi động khi đăng nhập",
   "settings.showInDock": "Hiển thị trong Dock",
+  "settings.showMenuBarIcon": "Hiển thị biểu tượng trên thanh menu",
   "settings.appListStyle": "Kiểu danh sách ứng dụng:",
   "settings.flat": "Phẳng",
   "settings.container": "Vùng chứa không màu",

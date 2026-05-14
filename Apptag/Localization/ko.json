@@ -13,6 +13,7 @@
   "settings.about": "정보",
   "settings.launchAtLogin": "로그인 시 시작",
   "settings.showInDock": "Dock에 표시",
+  "settings.showMenuBarIcon": "메뉴 막대 아이콘 표시",
   "settings.appListStyle": "앱 목록 스타일:",
   "settings.flat": "플랫",
   "settings.container": "무색 컨테이너",

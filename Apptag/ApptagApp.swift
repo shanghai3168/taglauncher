@@ -24,6 +24,8 @@ final class OverlayPanel: NSPanel {
 }
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
+    private static let showMenuBarIconKey = "showMenuBarIcon"
+
     private var statusItem: NSStatusItem?
     private var overlayWindow: NSWindow?
     private var settingsWindow: NSWindow?    // Track Settings window to keep it above overlay
@@ -32,6 +34,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         L10n.setup()
+        setupDefaultPreferences()
         migrateDefaultGroupName()
         TagDatabase.seedDefaultTags()
         let showDock = UserDefaults.standard.bool(forKey: "showDockIcon")
@@ -41,7 +44,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         observeOtherWindows()
         observeSettingsClose()
         observeEditMode()
-        observeDockSetting()
+        observeChromeSettings()
         observeLanguageChanges()
         setupLaunchAtLogin()
     }
@@ -70,14 +73,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // User has set a custom name — keep it
     }
 
-    /// Observe Show in Dock changes so it takes effect immediately.
-    private func observeDockSetting() {
+    private func setupDefaultPreferences() {
+        if UserDefaults.standard.object(forKey: Self.showMenuBarIconKey) == nil {
+            UserDefaults.standard.set(true, forKey: Self.showMenuBarIconKey)
+        }
+    }
+
+    /// Observe Dock/menu-bar visibility changes so they take effect immediately.
+    private func observeChromeSettings() {
         NotificationCenter.default.addObserver(
             forName: UserDefaults.didChangeNotification,
             object: nil, queue: .main
-        ) { _ in
+        ) { [weak self] _ in
             let show = UserDefaults.standard.bool(forKey: "showDockIcon")
             NSApp.setActivationPolicy(show ? .regular : .accessory)
+            self?.setupMenuBar()
         }
     }
 
@@ -150,19 +160,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Menu Bar
 
     private func setupMenuBar() {
+        guard UserDefaults.standard.object(forKey: Self.showMenuBarIconKey) as? Bool ?? true else {
+            removeMenuBarItem()
+            return
+        }
+
         if statusItem == nil {
-            statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+            statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         }
         guard let statusItem else { return }
 
         if let button = statusItem.button {
-            let image = NSImage(
-                systemSymbolName: "tag.fill",
-                accessibilityDescription: "TagLauncher"
-            )
-            image?.isTemplate = true
+            let image = makeMenuBarIcon()
             button.image = image
+            button.imageScaling = .scaleProportionallyDown
             button.imagePosition = .imageOnly
+            button.title = image == nil ? "T" : ""
             button.toolTip = "TagLauncher — Tag-based app launcher"
             button.action = #selector(toggleOverlay)
             button.target = self
@@ -221,6 +234,33 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             )
         )
         statusItem.menu = menu
+    }
+
+    private func removeMenuBarItem() {
+        guard let statusItem else { return }
+        NSStatusBar.system.removeStatusItem(statusItem)
+        self.statusItem = nil
+    }
+
+    private func makeMenuBarIcon() -> NSImage? {
+        let size = NSSize(width: 18, height: 18)
+        let image = NSImage(size: size)
+        image.lockFocus()
+        NSColor.black.setFill()
+        let tagPath = NSBezierPath()
+        tagPath.move(to: NSPoint(x: 2.5, y: 10.5))
+        tagPath.line(to: NSPoint(x: 8.5, y: 16.5))
+        tagPath.line(to: NSPoint(x: 15.5, y: 16.5))
+        tagPath.line(to: NSPoint(x: 15.5, y: 9.5))
+        tagPath.line(to: NSPoint(x: 8.5, y: 2.5))
+        tagPath.close()
+        tagPath.appendOval(in: NSRect(x: 10.6, y: 12.2, width: 2.6, height: 2.6))
+        tagPath.windingRule = .evenOdd
+        tagPath.fill()
+        image.unlockFocus()
+        image.isTemplate = true
+        image.accessibilityDescription = "TagLauncher"
+        return image
     }
 
     // MARK: - Overlay Window
@@ -393,15 +433,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if let overlayWindow, overlayWindow.isVisible {
             center(window, over: overlayWindow.frame)
             window.level = NSWindow.Level(rawValue: overlayWindow.level.rawValue + 1)
+            attachSettingsWindow(window, to: overlayWindow)
         } else if let screen = screenUnderMouse() {
             center(window, over: screen.visibleFrame)
             window.level = .floating
+            detachSettingsWindow(window)
         }
 
-        window.collectionBehavior.formUnion([.moveToActiveSpace, .fullScreenAuxiliary])
+        window.collectionBehavior.formUnion([.canJoinAllSpaces, .fullScreenAuxiliary, .moveToActiveSpace])
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
         settingsWindow = window
+    }
+
+    private func attachSettingsWindow(_ window: NSWindow, to overlayWindow: NSWindow) {
+        if window.parent != overlayWindow {
+            window.parent?.removeChildWindow(window)
+            overlayWindow.addChildWindow(window, ordered: .above)
+        }
+    }
+
+    private func detachSettingsWindow(_ window: NSWindow) {
+        window.parent?.removeChildWindow(window)
     }
 
     private func isSettingsWindowCandidate(_ window: NSWindow) -> Bool {
@@ -442,6 +495,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                   let closingWindow = notification.object as? NSWindow,
                   closingWindow == self.settingsWindow
             else { return }
+            self.detachSettingsWindow(closingWindow)
             self.settingsWindow = nil
         }
     }
@@ -459,8 +513,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc private func openPreferences() {
         // Don't hide overlay — keep it visible for real-time setting preview.
+        if let overlayWindow, overlayWindow.isVisible {
+            overlayWindow.makeKeyAndOrderFront(nil)
+            overlayWindow.orderFrontRegardless()
+        }
         NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-        prepareSettingsWindowWhenAvailable(retries: 5)
+        prepareSettingsWindowWhenAvailable(retries: 10)
     }
 
     private func prepareSettingsWindowWhenAvailable(retries: Int) {
@@ -570,6 +628,7 @@ struct PreferencesView: View {
     @AppStorage("defaultGroupName") private var defaultGroupName = "Other"
     @AppStorage("displayMode") private var displayMode = "flat"
     @AppStorage("hideAppNames") private var hideAppNames = false
+    @AppStorage("showMenuBarIcon") private var showMenuBarIcon = true
     @AppStorage("showDockIcon") private var showDockIcon = false
     @AppStorage("launchAtLogin") private var launchAtLogin = true
     @State private var selectedLanguage = L10n.currentCode
@@ -701,6 +760,7 @@ struct PreferencesView: View {
                                 }
                             }
                     }
+                    Toggle(tr("settings.showMenuBarIcon"), isOn: $showMenuBarIcon)
                     Toggle(tr("settings.showInDock"), isOn: $showDockIcon)
                     Toggle(tr("settings.hideAppNames"), isOn: $hideAppNames)
                 }
