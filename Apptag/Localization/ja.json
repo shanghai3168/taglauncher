@@ -1,5 +1,6 @@
 {
   "menu.show": "TagLauncherを表示",
+  "menu.showAppList": "アプリ一覧を表示",
   "menu.preferences": "設定…",
   "menu.quit": "終了",
   "menu.language": "言語",
@@ -13,7 +14,6 @@
   "settings.about": "概要",
   "settings.launchAtLogin": "ログイン時に起動",
   "settings.showInDock": "Dockに表示",
-  "settings.showMenuBarIcon": "メニューバーアイコンを表示",
   "settings.appListStyle": "アプリ一覧スタイル：",
   "settings.flat": "フラット",
   "settings.container": "無色コンテナ",

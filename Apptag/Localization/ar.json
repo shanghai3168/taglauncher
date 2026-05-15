@@ -1,5 +1,6 @@
 {
   "menu.show": "إظهار TagLauncher",
+  "menu.showAppList": "إظهار قائمة التطبيقات",
   "menu.preferences": "التفضيلات…",
   "menu.quit": "إنهاء",
   "menu.language": "اللغة",
@@ -13,7 +14,6 @@
   "settings.about": "حول",
   "settings.launchAtLogin": "التشغيل عند تسجيل الدخول",
   "settings.showInDock": "إظهار في Dock",
-  "settings.showMenuBarIcon": "إظهار أيقونة شريط القوائم",
   "settings.appListStyle": "نمط قائمة التطبيقات:",
   "settings.flat": "مسطح",
   "settings.container": "حاوية بلا لون",

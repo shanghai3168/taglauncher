@@ -1,5 +1,6 @@
 {
   "menu.show": "แสดง TagLauncher",
+  "menu.showAppList": "แสดงรายการแอป",
   "menu.preferences": "การตั้งค่า…",
   "menu.quit": "ออก",
   "menu.language": "ภาษา",
@@ -13,7 +14,6 @@
   "settings.about": "เกี่ยวกับ",
   "settings.launchAtLogin": "เปิดเมื่อเข้าสู่ระบบ",
   "settings.showInDock": "แสดงใน Dock",
-  "settings.showMenuBarIcon": "แสดงไอคอนในแถบเมนู",
   "settings.appListStyle": "รูปแบบรายการแอป:",
   "settings.flat": "แบน",
   "settings.container": "คอนเทนเนอร์ไม่มีสี",

@@ -1,5 +1,6 @@
 {
   "menu.show": "Visa TagLauncher",
+  "menu.showAppList": "Visa applista",
   "menu.preferences": "Inställningar…",
   "menu.quit": "Avsluta",
   "menu.language": "Språk",
@@ -13,7 +14,6 @@
   "settings.about": "Om",
   "settings.launchAtLogin": "Starta vid inloggning",
   "settings.showInDock": "Visa i Dock",
-  "settings.showMenuBarIcon": "Visa ikon i menyraden",
   "settings.appListStyle": "Applistestil:",
   "settings.flat": "Platt",
   "settings.container": "Färglös behållare",

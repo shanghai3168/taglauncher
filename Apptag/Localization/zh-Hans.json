@@ -1,5 +1,6 @@
 {
   "menu.show": "显示 TagLauncher",
+  "menu.showAppList": "显示应用列表",
   "menu.preferences": "偏好设置…",
   "menu.quit": "退出",
   "menu.language": "语言",
@@ -13,7 +14,6 @@
   "settings.about": "关于",
   "settings.launchAtLogin": "登录时启动",
   "settings.showInDock": "在 Dock 中显示",
-  "settings.showMenuBarIcon": "显示菜单栏图标",
   "settings.appListStyle": "应用列表样式：",
   "settings.flat": "平铺",
   "settings.container": "无色容器",

@@ -1,5 +1,6 @@
 {
   "menu.show": "TagLauncher anzeigen",
+  "menu.showAppList": "App-Liste anzeigen",
   "menu.preferences": "Einstellungen…",
   "menu.quit": "Beenden",
   "menu.language": "Sprache",
@@ -13,7 +14,6 @@
   "settings.about": "Über",
   "settings.launchAtLogin": "Beim Anmelden starten",
   "settings.showInDock": "Im Dock anzeigen",
-  "settings.showMenuBarIcon": "Menüleistensymbol anzeigen",
   "settings.appListStyle": "App-Listenstil:",
   "settings.flat": "Flach",
   "settings.container": "Farbloser Container",

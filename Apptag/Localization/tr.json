@@ -1,5 +1,6 @@
 {
   "menu.show": "TagLauncher’ı Göster",
+  "menu.showAppList": "Uygulama listesini göster",
   "menu.preferences": "Tercihler…",
   "menu.quit": "Çık",
   "menu.language": "Dil",
@@ -13,7 +14,6 @@
   "settings.about": "Hakkında",
   "settings.launchAtLogin": "Girişte başlat",
   "settings.showInDock": "Dock’ta göster",
-  "settings.showMenuBarIcon": "Menü çubuğu simgesini göster",
   "settings.appListStyle": "Uygulama listesi stili:",
   "settings.flat": "Düz",
   "settings.container": "Renksiz Kapsayıcı",

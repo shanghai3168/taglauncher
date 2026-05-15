@@ -1,5 +1,6 @@
 {
   "menu.show": "Показати TagLauncher",
+  "menu.showAppList": "Показати список програм",
   "menu.preferences": "Параметри…",
   "menu.quit": "Вийти",
   "menu.language": "Мова",
@@ -13,7 +14,6 @@
   "settings.about": "Про програму",
   "settings.launchAtLogin": "Запускати під час входу",
   "settings.showInDock": "Показувати в Dock",
-  "settings.showMenuBarIcon": "Показувати значок у рядку меню",
   "settings.appListStyle": "Стиль списку застосунків:",
   "settings.flat": "Плоский",
   "settings.container": "Безбарвний контейнер",

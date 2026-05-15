@@ -237,7 +237,6 @@ struct ContentView: View {
     @State private var tagReorderFrames: [String: CGRect] = [:]
     @State private var tagNavDragModeActive = false
     @State private var tagNavDragItem: String? = nil
-    @State private var tagNavDismissMonitor: Any? = nil
     @State private var tagNavReorderFrames: [String: CGRect] = [:]
     @State private var hoveredContainer: String? = nil  // colored container lift
     // Fixed interaction for "Colorless Container": hover fills persistently; click clears.
@@ -348,12 +347,6 @@ struct ContentView: View {
                 userInfo: ["active": active]
             )
         }
-        .onChange(of: tagNavDragModeActive) { _, active in
-            updateTagNavDismissMonitor(active: active)
-        }
-        .onDisappear {
-            removeTagNavDismissMonitor()
-        }
     }
 
     /// Set edit phase with synchronous notification BEFORE state change.
@@ -382,16 +375,6 @@ struct ContentView: View {
                 sideLayout
             } else {
                 topLayout
-            }
-
-            if tagNavDragModeActive && tagNavDragItem == nil {
-                Color.clear
-                    .contentShape(Rectangle())
-                    .ignoresSafeArea()
-                    .onTapGesture {
-                        endTagNavReorder()
-                    }
-                    .zIndex(1)
             }
 
             Button {
@@ -1271,8 +1254,6 @@ struct ContentView: View {
             .onChanged { value in
                 guard canReorderTag(tagName) else { return }
                 switch value {
-                case .first(true):
-                    beginTagNavReorder(tagName)
                 case .second(true, let drag?):
                     if tagNavDragItem == nil {
                         beginTagNavReorder(tagName)
@@ -1305,27 +1286,6 @@ struct ContentView: View {
         }
         tagNavDragModeActive = false
         tagNavDragItem = nil
-        removeTagNavDismissMonitor()
-    }
-
-    private func updateTagNavDismissMonitor(active: Bool) {
-        if active {
-            guard tagNavDismissMonitor == nil else { return }
-            tagNavDismissMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { event in
-                guard tagNavDragModeActive, editPhase == .none else { return event }
-                endTagNavReorder()
-                return nil
-            }
-        } else {
-            removeTagNavDismissMonitor()
-        }
-    }
-
-    private func removeTagNavDismissMonitor() {
-        if let monitor = tagNavDismissMonitor {
-            NSEvent.removeMonitor(monitor)
-            tagNavDismissMonitor = nil
-        }
     }
 
     private func reorderTagNavItem(at location: CGPoint) {

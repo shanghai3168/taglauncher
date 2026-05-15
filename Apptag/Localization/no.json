@@ -1,5 +1,6 @@
 {
   "menu.show": "Vis TagLauncher",
+  "menu.showAppList": "Vis appliste",
   "menu.preferences": "Innstillinger…",
   "menu.quit": "Avslutt",
   "menu.language": "Språk",
@@ -13,7 +14,6 @@
   "settings.about": "Om",
   "settings.launchAtLogin": "Start ved innlogging",
   "settings.showInDock": "Vis i Dock",
-  "settings.showMenuBarIcon": "Vis menylinjeikon",
   "settings.appListStyle": "App-listestil:",
   "settings.flat": "Flat",
   "settings.container": "Fargeløs beholder",

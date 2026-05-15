@@ -1,5 +1,6 @@
 {
   "menu.show": "Afișează TagLauncher",
+  "menu.showAppList": "Afișează lista aplicațiilor",
   "menu.preferences": "Preferințe…",
   "menu.quit": "Ieșire",
   "menu.language": "Limbă",
@@ -13,7 +14,6 @@
   "settings.about": "Despre",
   "settings.launchAtLogin": "Pornește la autentificare",
   "settings.showInDock": "Afișează în Dock",
-  "settings.showMenuBarIcon": "Afișează pictograma în bara de meniu",
   "settings.appListStyle": "Stil listă aplicații:",
   "settings.flat": "Plat",
   "settings.container": "Container fără culoare",

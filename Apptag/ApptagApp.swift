@@ -13,6 +13,10 @@ struct TagLauncherApp: App {
             PreferencesView()
         }
         .defaultSize(width: 880, height: 460)
+        .commands {
+            CommandGroup(replacing: .systemServices) { }
+            CommandGroup(replacing: .appVisibility) { }
+        }
     }
 }
 
@@ -24,29 +28,37 @@ final class OverlayPanel: NSPanel {
 }
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    private static let showMenuBarIconKey = "showMenuBarIcon"
+    private static let showDockIconKey = "showDockIcon"
+    private static let showAppListMenuItemIdentifier = NSUserInterfaceItemIdentifier("TagLauncherShowAppListMenuItem")
+    private static let showAppListShortcutGlyphs = "⌥⇧␣"
 
     private var statusItem: NSStatusItem?
     private var overlayWindow: NSWindow?
+    private var overlayKeyMonitor: Any?
     private var settingsWindow: NSWindow?    // Track Settings window to keep it above overlay
     private var hotkeyRef: EventHotKeyRef?
     private var isInEditMode = false  // Suppress auto-dismiss during editing
+    private var isConfiguringApplicationMenu = false
+    private var lastShowDockIcon: Bool?
+
+    static func refreshChromeSettings() {
+        (NSApp.delegate as? AppDelegate)?.syncChromeSettings(force: true)
+    }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         L10n.setup()
-        setupDefaultPreferences()
         migrateDefaultGroupName()
         TagDatabase.seedDefaultTags()
-        let showDock = UserDefaults.standard.bool(forKey: "showDockIcon")
-        NSApp.setActivationPolicy(showDock ? .regular : .accessory)
-        setupMenuBar()
+        syncChromeSettings(force: true)
         registerHotkey()
         observeOtherWindows()
         observeSettingsClose()
         observeEditMode()
+        observeApplicationMenuChanges()
         observeChromeSettings()
         observeLanguageChanges()
         setupLaunchAtLogin()
+        configureApplicationMenuWhenAvailable()
     }
 
     /// Dock icon click → show overlay (same as menubar "Show TagLauncher")
@@ -73,21 +85,27 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // User has set a custom name — keep it
     }
 
-    private func setupDefaultPreferences() {
-        if UserDefaults.standard.object(forKey: Self.showMenuBarIconKey) == nil {
-            UserDefaults.standard.set(true, forKey: Self.showMenuBarIconKey)
-        }
-    }
-
-    /// Observe Dock/menu-bar visibility changes so they take effect immediately.
+    /// Observe Dock visibility changes so they take effect immediately.
     private func observeChromeSettings() {
         NotificationCenter.default.addObserver(
             forName: UserDefaults.didChangeNotification,
             object: nil, queue: .main
         ) { [weak self] _ in
-            let show = UserDefaults.standard.bool(forKey: "showDockIcon")
-            NSApp.setActivationPolicy(show ? .regular : .accessory)
-            self?.setupMenuBar()
+            self?.syncChromeSettings()
+        }
+    }
+
+    private func syncChromeSettings(force: Bool = false) {
+        let showDock = UserDefaults.standard.bool(forKey: Self.showDockIconKey)
+        let dockChanged = lastShowDockIcon != showDock
+
+        if force || dockChanged {
+            NSApp.setActivationPolicy(showDock ? .regular : .accessory)
+            lastShowDockIcon = showDock
+        }
+
+        if force {
+            setupMenuBar()
         }
     }
 
@@ -98,6 +116,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             object: nil, queue: .main
         ) { [weak self] _ in
             self?.setupMenuBar()
+            self?.configureApplicationMenuWhenAvailable()
         }
     }
 
@@ -160,35 +179,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Menu Bar
 
     private func setupMenuBar() {
-        guard UserDefaults.standard.object(forKey: Self.showMenuBarIconKey) as? Bool ?? true else {
-            removeMenuBarItem()
-            return
-        }
-
-        if statusItem == nil {
-            statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        }
+        removeMenuBarItem()
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         guard let statusItem else { return }
+        statusItem.isVisible = true
 
         if let button = statusItem.button {
-            let image = makeMenuBarIcon()
-            button.image = image
+            button.image = makeMenuBarIcon()
             button.imageScaling = .scaleProportionallyDown
             button.imagePosition = .imageOnly
-            button.title = image == nil ? "T" : ""
             button.toolTip = "TagLauncher — Tag-based app launcher"
             button.action = #selector(toggleOverlay)
             button.target = self
         }
 
         let menu = NSMenu()
-        menu.addItem(
-            NSMenuItem(
-                title: "\(tr("menu.show"))  ⇧⌥Space",
-                action: #selector(toggleOverlay),
-                keyEquivalent: ""
-            )
+        let showItem = NSMenuItem(
+            title: showAppListMenuTitle,
+            action: #selector(toggleOverlay),
+            keyEquivalent: ""
         )
+        showItem.target = self
+        menu.addItem(showItem)
         menu.addItem(.separator())
 
         // Version display
@@ -236,31 +248,166 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem.menu = menu
     }
 
+    private func makeMenuBarIcon() -> NSImage {
+        let image = NSImage(size: NSSize(width: 18, height: 18))
+        image.lockFocus()
+        defer { image.unlockFocus() }
+
+        NSColor.black.setFill()
+
+        let tagBody = NSBezierPath()
+        tagBody.move(to: NSPoint(x: 5.0, y: 2.2))
+        tagBody.line(to: NSPoint(x: 15.6, y: 5.0))
+        tagBody.line(to: NSPoint(x: 12.8, y: 15.8))
+        tagBody.line(to: NSPoint(x: 2.2, y: 13.0))
+        tagBody.close()
+        tagBody.fill()
+
+        NSGraphicsContext.current?.compositingOperation = .clear
+        NSBezierPath(ovalIn: NSRect(x: 10.9, y: 11.2, width: 3.2, height: 3.2)).fill()
+        NSGraphicsContext.current?.compositingOperation = .sourceOver
+
+        image.isTemplate = true
+        image.accessibilityDescription = "TagLauncher"
+        return image
+    }
+
+    private var showAppListMenuTitle: String {
+        "\(tr("menu.showAppList"))  \(Self.showAppListShortcutGlyphs)"
+    }
+
+    private func observeApplicationMenuChanges() {
+        NotificationCenter.default.addObserver(
+            forName: NSApplication.didBecomeActiveNotification,
+            object: NSApp, queue: .main
+        ) { [weak self] _ in
+            self?.configureApplicationMenuWhenAvailable(retries: 4)
+        }
+
+        NotificationCenter.default.addObserver(
+            forName: NSMenu.didAddItemNotification,
+            object: nil, queue: .main
+        ) { [weak self] notification in
+            guard let self,
+                  !self.isConfiguringApplicationMenu,
+                  let menu = notification.object as? NSMenu,
+                  menu === NSApp.mainMenu?.items.first?.submenu
+            else { return }
+            self.configureApplicationMenuWhenAvailable(retries: 2)
+        }
+    }
+
+    private func configureApplicationMenuWhenAvailable(retries: Int = 20) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
+            guard let self else { return }
+            guard NSApp.mainMenu?.items.first?.submenu != nil else {
+                if retries > 0 {
+                    self.configureApplicationMenuWhenAvailable(retries: retries - 1)
+                }
+                return
+            }
+
+            self.configureApplicationMenu()
+            if retries > 0 && self.applicationMenuNeedsCleanup() {
+                self.configureApplicationMenuWhenAvailable(retries: retries - 1)
+            }
+        }
+    }
+
+    private func configureApplicationMenu() {
+        guard !isConfiguringApplicationMenu else { return }
+        guard let appMenu = NSApp.mainMenu?.items.first?.submenu else { return }
+
+        isConfiguringApplicationMenu = true
+        defer { isConfiguringApplicationMenu = false }
+
+        removeUnusedDefaultItems(from: appMenu)
+        upsertShowAppListItem(in: appMenu)
+        normalizeSeparators(in: appMenu)
+    }
+
+    private func applicationMenuNeedsCleanup() -> Bool {
+        guard let appMenu = NSApp.mainMenu?.items.first?.submenu else { return true }
+        let hasUnusedDefaultItems = appMenu.items.contains(where: isUnusedDefaultApplicationMenuItem)
+        let hasShowAppListItem = appMenu.items.contains {
+            $0.identifier == Self.showAppListMenuItemIdentifier
+        }
+        return hasUnusedDefaultItems || !hasShowAppListItem
+    }
+
+    private func removeUnusedDefaultItems(from menu: NSMenu) {
+        for item in menu.items.reversed() where isUnusedDefaultApplicationMenuItem(item) {
+            menu.removeItem(item)
+        }
+    }
+
+    private func isUnusedDefaultApplicationMenuItem(_ item: NSMenuItem) -> Bool {
+        if let servicesMenu = NSApp.servicesMenu, item.submenu === servicesMenu {
+            return true
+        }
+        return item.action == #selector(NSApplication.hide(_:))
+            || item.action == #selector(NSApplication.hideOtherApplications(_:))
+            || item.action == #selector(NSApplication.unhideAllApplications(_:))
+    }
+
+    private func upsertShowAppListItem(in menu: NSMenu) {
+        if let existingItem = menu.items.first(where: { $0.identifier == Self.showAppListMenuItemIdentifier }) {
+            configureShowAppListItem(existingItem)
+            return
+        }
+
+        let item = NSMenuItem()
+        item.identifier = Self.showAppListMenuItemIdentifier
+        configureShowAppListItem(item)
+
+        if let settingsIndex = menu.items.firstIndex(where: { isSettingsMenuItem($0) }) {
+            menu.insertItem(item, at: settingsIndex + 1)
+        } else if let firstSeparatorIndex = menu.items.firstIndex(where: { $0.isSeparatorItem }) {
+            menu.insertItem(item, at: firstSeparatorIndex)
+        } else {
+            menu.addItem(item)
+        }
+    }
+
+    private func configureShowAppListItem(_ item: NSMenuItem) {
+        item.title = showAppListMenuTitle
+        item.action = #selector(toggleOverlay)
+        item.target = self
+        item.keyEquivalent = ""
+        item.keyEquivalentModifierMask = []
+        item.isEnabled = true
+    }
+
+    private func isSettingsMenuItem(_ item: NSMenuItem) -> Bool {
+        item.action == Selector(("showSettingsWindow:"))
+            || item.action == #selector(openPreferences)
+            || item.title == tr("menu.preferences")
+    }
+
+    private func normalizeSeparators(in menu: NSMenu) {
+        var indexesToRemove: [Int] = []
+        var previousWasSeparator = false
+
+        for (index, item) in menu.items.enumerated() {
+            guard item.isSeparatorItem else {
+                previousWasSeparator = false
+                continue
+            }
+            if index == 0 || index == menu.items.count - 1 || previousWasSeparator {
+                indexesToRemove.append(index)
+            }
+            previousWasSeparator = true
+        }
+
+        for index in indexesToRemove.reversed() {
+            menu.removeItem(at: index)
+        }
+    }
+
     private func removeMenuBarItem() {
         guard let statusItem else { return }
         NSStatusBar.system.removeStatusItem(statusItem)
         self.statusItem = nil
-    }
-
-    private func makeMenuBarIcon() -> NSImage? {
-        let size = NSSize(width: 18, height: 18)
-        let image = NSImage(size: size)
-        image.lockFocus()
-        NSColor.black.setFill()
-        let tagPath = NSBezierPath()
-        tagPath.move(to: NSPoint(x: 2.5, y: 10.5))
-        tagPath.line(to: NSPoint(x: 8.5, y: 16.5))
-        tagPath.line(to: NSPoint(x: 15.5, y: 16.5))
-        tagPath.line(to: NSPoint(x: 15.5, y: 9.5))
-        tagPath.line(to: NSPoint(x: 8.5, y: 2.5))
-        tagPath.close()
-        tagPath.appendOval(in: NSRect(x: 10.6, y: 12.2, width: 2.6, height: 2.6))
-        tagPath.windingRule = .evenOdd
-        tagPath.fill()
-        image.unlockFocus()
-        image.isTemplate = true
-        image.accessibilityDescription = "TagLauncher"
-        return image
     }
 
     // MARK: - Overlay Window
@@ -285,17 +432,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         overlayWindow?.setFrame(screen.frame, display: true)
         overlayWindow?.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.maximumWindow)))
 
-        // Local key monitor: catch Escape while overlay is up
-        NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
+        installOverlayKeyMonitor()
+
+        overlayWindow?.makeKeyAndOrderFront(nil)
+        overlayWindow?.orderFrontRegardless()
+    }
+
+    private func installOverlayKeyMonitor() {
+        guard overlayKeyMonitor == nil else { return }
+        overlayKeyMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
             if event.keyCode == 53 { // Escape
                 self?.hideOverlay()
                 return nil
             }
             return event
         }
+    }
 
-        overlayWindow?.makeKeyAndOrderFront(nil)
-        overlayWindow?.orderFrontRegardless()
+    private func removeOverlayKeyMonitor() {
+        if let monitor = overlayKeyMonitor {
+            NSEvent.removeMonitor(monitor)
+            overlayKeyMonitor = nil
+        }
     }
 
     private func makeOverlayWindow(on screen: NSScreen) -> NSWindow {
@@ -333,7 +491,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func hideOverlay(force: Bool = false) {
         guard force || !isInEditMode else { return }
+        if let settingsWindow, settingsWindow.parent == overlayWindow {
+            detachSettingsWindow(settingsWindow)
+        }
         overlayWindow?.orderOut(nil)
+        removeOverlayKeyMonitor()
         if force {
             overlayWindow = nil
         }
@@ -419,8 +581,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Settings must always appear centered over the current overlay view and float above it.
     private func prepareSettingsWindow(_ window: NSWindow) {
-        window.identifier = NSUserInterfaceItemIdentifier("TagLauncherPreferencesWindow")
         let settingsSize = NSSize(width: 880, height: 460)
+        window.identifier = NSUserInterfaceItemIdentifier("TagLauncherPreferencesWindow")
         window.minSize = settingsSize
         window.maxSize = settingsSize
         if abs(window.frame.width - settingsSize.width) > 0.5 || abs(window.frame.height - settingsSize.height) > 0.5 {
@@ -432,15 +594,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         if let overlayWindow, overlayWindow.isVisible {
             center(window, over: overlayWindow.frame)
-            window.level = NSWindow.Level(rawValue: overlayWindow.level.rawValue + 1)
             attachSettingsWindow(window, to: overlayWindow)
+            window.level = overlayWindow.level
         } else if let screen = screenUnderMouse() {
             center(window, over: screen.visibleFrame)
             window.level = .floating
             detachSettingsWindow(window)
         }
 
-        window.collectionBehavior.formUnion([.canJoinAllSpaces, .fullScreenAuxiliary, .moveToActiveSpace])
+        var behavior = window.collectionBehavior
+        behavior.remove(.canJoinAllSpaces)
+        behavior.formUnion([.fullScreenAuxiliary, .moveToActiveSpace])
+        window.collectionBehavior = behavior
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
         settingsWindow = window
@@ -618,8 +783,9 @@ final class DismissibleHostingView<Content: View>: NSHostingView<Content> {
 struct PreferencesView: View {
     private let settingsWindowWidth: CGFloat = 880
     private let settingsContentWidth: CGFloat = 820
-    private let settingsLabelWidth: CGFloat = 160
-    private let widePickerWidth: CGFloat = 650
+    private let generalContentWidth: CGFloat = 720
+    private let generalLabelWidth: CGFloat = 190
+    private let generalControlWidth: CGFloat = 500
     private let compactPickerWidth: CGFloat = 320
 
     @AppStorage("tagFontSize") private var tagFontSize: Double = 18
@@ -628,7 +794,6 @@ struct PreferencesView: View {
     @AppStorage("defaultGroupName") private var defaultGroupName = "Other"
     @AppStorage("displayMode") private var displayMode = "flat"
     @AppStorage("hideAppNames") private var hideAppNames = false
-    @AppStorage("showMenuBarIcon") private var showMenuBarIcon = true
     @AppStorage("showDockIcon") private var showDockIcon = false
     @AppStorage("launchAtLogin") private var launchAtLogin = true
     @State private var selectedLanguage = L10n.currentCode
@@ -702,6 +867,52 @@ struct PreferencesView: View {
             GridItem(.flexible(minimum: 220), spacing: 18, alignment: .top),
         ]
     }
+    private var displayModeColumns: [GridItem] {
+        [
+            GridItem(.flexible(minimum: 220), spacing: 10, alignment: .top),
+            GridItem(.flexible(minimum: 220), spacing: 10, alignment: .top),
+        ]
+    }
+    private var displayModeOptions: [(id: String, title: String)] {
+        [
+            ("flat", tr("settings.flat")),
+            ("container", tr("settings.container")),
+            ("coloredContainer", tr("settings.coloredContainer")),
+            ("gridContainer", tr("settings.gridContainer")),
+            ("coloredGridContainer", tr("settings.coloredGridContainer")),
+        ]
+    }
+    private var containerDisplayModeOptions: [(id: String, title: String)] {
+        Array(displayModeOptions.dropFirst())
+    }
+
+    private func generalSettingRow<Control: View>(
+        _ label: String,
+        description: String,
+        @ViewBuilder control: () -> Control
+    ) -> some View {
+        HStack(alignment: .top, spacing: 16) {
+            Text(label)
+                .font(.system(size: 14, weight: .semibold))
+                .multilineTextAlignment(.trailing)
+                .lineLimit(2)
+                .minimumScaleFactor(0.86)
+                .frame(width: generalLabelWidth, alignment: .trailing)
+                .padding(.top, 5)
+
+            VStack(alignment: .leading, spacing: 6) {
+                control()
+                    .frame(width: generalControlWidth, alignment: .leading)
+                Text(description)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(width: generalControlWidth, alignment: .leading)
+            }
+        }
+        .frame(width: generalContentWidth, alignment: .leading)
+    }
 
     var body: some View {
         ZStack {
@@ -741,6 +952,12 @@ struct PreferencesView: View {
                         }
                         .padding(.vertical, 4)
                     }
+                    .frame(maxHeight: 250)
+
+                    Spacer(minLength: 0)
+                    ShortcutHintView()
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.bottom, 2)
                 }
                 .frame(maxWidth: settingsContentWidth, alignment: .leading)
                 .tabItem { Label(tr("settings.language"), systemImage: "globe") }
@@ -760,8 +977,10 @@ struct PreferencesView: View {
                                 }
                             }
                     }
-                    Toggle(tr("settings.showMenuBarIcon"), isOn: $showMenuBarIcon)
                     Toggle(tr("settings.showInDock"), isOn: $showDockIcon)
+                        .onChange(of: showDockIcon) { _, _ in
+                            AppDelegate.refreshChromeSettings()
+                        }
                     Toggle(tr("settings.hideAppNames"), isOn: $hideAppNames)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
@@ -770,78 +989,64 @@ struct PreferencesView: View {
                 Divider()
                     .padding(.bottom, 16)
 
-                // Two-column layout: each row label (right-aligned) + controls (left-aligned)
-                // All pickers and descriptions share the same left edge
-                VStack(spacing: 16) {
-                    HStack(alignment: .top, spacing: 16) {
-                        Text(tr("settings.appListStyle"))
-                            .frame(width: settingsLabelWidth, alignment: .trailing)
-                        VStack(alignment: .leading, spacing: 4) {
-                            Picker("", selection: $displayMode) {
-                                Text(tr("settings.flat")).tag("flat")
-                                Text(tr("settings.container")).tag("container")
-                                Text(tr("settings.coloredContainer")).tag("coloredContainer")
-                                Text(tr("settings.gridContainer")).tag("gridContainer")
-                                Text(tr("settings.coloredGridContainer")).tag("coloredGridContainer")
+                VStack(spacing: 18) {
+                    generalSettingRow(tr("settings.appListStyle"), description: tr("settings.flatDesc")) {
+                        VStack(spacing: 8) {
+                            DisplayModeOptionButton(
+                                mode: "flat",
+                                title: tr("settings.flat"),
+                                isSelected: displayMode == "flat"
+                            ) {
+                                displayMode = "flat"
                             }
-                            .pickerStyle(.segmented)
-                            .frame(width: widePickerWidth, alignment: .leading)
-                            Text(tr("settings.flatDesc"))
-                                .font(.caption).foregroundStyle(.secondary)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                    }
-                    HStack(alignment: .top, spacing: 16) {
-                        Text(tr("settings.tagPosition"))
-                            .frame(width: settingsLabelWidth, alignment: .trailing)
-                        VStack(alignment: .leading, spacing: 4) {
-                            Picker("", selection: $tagPosition) {
-                                Text(tr("settings.left")).tag("left")
-                                Text(tr("settings.right")).tag("right")
-                                Text(tr("settings.top")).tag("top")
-                            }
-                            .pickerStyle(.segmented)
-                            .frame(width: compactPickerWidth, alignment: .leading)
-                            Text(tr("settings.tagPosDesc"))
-                                .font(.caption).foregroundStyle(.secondary)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                    }
-                    HStack(alignment: .top, spacing: 16) {
-                        Text(tr("settings.tagFontSize"))
-                            .frame(width: settingsLabelWidth, alignment: .trailing)
-                        VStack(alignment: .leading, spacing: 4) {
-                            Picker("", selection: $tagFontSize) {
-                                ForEach([16.0, 18.0, 20.0, 22.0, 24.0, 26.0], id: \.self) { size in
-                                    Text("\(Int(size))").tag(size)
+
+                            LazyVGrid(columns: displayModeColumns, alignment: .leading, spacing: 8) {
+                                ForEach(containerDisplayModeOptions, id: \.id) { option in
+                                    DisplayModeOptionButton(
+                                        mode: option.id,
+                                        title: option.title,
+                                        isSelected: displayMode == option.id
+                                    ) {
+                                        displayMode = option.id
+                                    }
                                 }
                             }
-                            .pickerStyle(.segmented)
-                            .frame(width: compactPickerWidth, alignment: .leading)
-                            Text(tr("settings.tagFontDesc"))
-                                .font(.caption).foregroundStyle(.secondary)
-                                .fixedSize(horizontal: false, vertical: true)
                         }
+                        .frame(width: generalControlWidth, alignment: .leading)
                     }
-                    HStack(alignment: .top, spacing: 16) {
-                        Text(tr("settings.iconSize"))
-                            .frame(width: settingsLabelWidth, alignment: .trailing)
-                        VStack(alignment: .leading, spacing: 4) {
-                            Picker("", selection: $iconSize) {
-                                ForEach([40.0, 48.0, 56.0, 64.0, 72.0, 80.0], id: \.self) { size in
-                                    Text("\(Int(size))").tag(size)
-                                }
-                            }
-                            .pickerStyle(.segmented)
-                            .frame(width: compactPickerWidth, alignment: .leading)
-                            Text(tr("settings.iconSizeDesc"))
-                                .font(.caption).foregroundStyle(.secondary)
-                                .fixedSize(horizontal: false, vertical: true)
+
+                    generalSettingRow(tr("settings.tagPosition"), description: tr("settings.tagPosDesc")) {
+                        Picker("", selection: $tagPosition) {
+                            Text(tr("settings.left")).tag("left")
+                            Text(tr("settings.right")).tag("right")
+                            Text(tr("settings.top")).tag("top")
                         }
+                        .pickerStyle(.segmented)
+                        .frame(width: compactPickerWidth, alignment: .leading)
+                    }
+
+                    generalSettingRow(tr("settings.tagFontSize"), description: tr("settings.tagFontDesc")) {
+                        Picker("", selection: $tagFontSize) {
+                            ForEach([16.0, 18.0, 20.0, 22.0, 24.0, 26.0], id: \.self) { size in
+                                Text("\(Int(size))").tag(size)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        .frame(width: compactPickerWidth, alignment: .leading)
+                    }
+
+                    generalSettingRow(tr("settings.iconSize"), description: tr("settings.iconSizeDesc")) {
+                        Picker("", selection: $iconSize) {
+                            ForEach([40.0, 48.0, 56.0, 64.0, 72.0, 80.0], id: \.self) { size in
+                                Text("\(Int(size))").tag(size)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        .frame(width: compactPickerWidth, alignment: .leading)
                     }
                 }
             }
-            .frame(maxWidth: settingsContentWidth, alignment: .center)
+            .frame(maxWidth: generalContentWidth, alignment: .center)
             .padding()
             .tabItem { Label(tr("settings.general"), systemImage: "gearshape") }
 
@@ -858,8 +1063,12 @@ struct PreferencesView: View {
             .onAppear { scanApps() }
 
             // Tab 4: Data
-            Form {
-                Section {
+            VStack(spacing: 0) {
+                Spacer(minLength: 96)
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(tr("settings.backup"))
+                        .font(.headline)
                     HStack(spacing: 12) {
                         Button(tr("settings.export")) { exportTags() }
                             .buttonStyle(.bordered)
@@ -869,46 +1078,55 @@ struct PreferencesView: View {
                     Text(tr("settings.backupDesc"))
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                } header: {
-                    Text(tr("settings.backup"))
                 }
+                .frame(width: 420, alignment: .leading)
+
+                Spacer(minLength: 42)
+                ShortcutHintView()
+                    .frame(maxWidth: .infinity, alignment: .center)
+                Spacer(minLength: 18)
             }
             .tabItem { Label(tr("settings.data"), systemImage: "externaldrive.fill") }
             .padding()
 
             // Tab 5: About
-            Form {
-                Section {
-                    HStack {
-                        if let icon = NSImage(named: NSImage.applicationIconName) {
-                            Image(nsImage: icon)
-                                .resizable()
-                                .frame(width: 128, height: 128)
-                        }
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("TagLauncher")
-                                .font(.title2)
-                                .fontWeight(.semibold)
-                            Text(tr("app.description"))
-                                .font(.body)
-                                .foregroundStyle(.secondary)
-                            Text("\(tr("app.version")) \(appVersion) (\(tr("app.build")) \(buildVersion))")
-                                .font(.callout)
-                                .foregroundStyle(.tertiary)
+            VStack(spacing: 0) {
+                Spacer(minLength: 72)
 
-                            Divider()
-                                .padding(.vertical, 4)
-
-                            Text("万物之中，希望最美")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                            Text("永桔@2026-18602102518")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
+                HStack {
+                    if let icon = NSImage(named: NSImage.applicationIconName) {
+                        Image(nsImage: icon)
+                            .resizable()
+                            .frame(width: 128, height: 128)
                     }
-                    .padding(.leading, 100)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("TagLauncher")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                        Text(tr("app.description"))
+                            .font(.body)
+                            .foregroundStyle(.secondary)
+                        Text("\(tr("app.version")) \(appVersion) (\(tr("app.build")) \(buildVersion))")
+                            .font(.callout)
+                            .foregroundStyle(.tertiary)
+
+                        Divider()
+                            .padding(.vertical, 4)
+
+                        Text("万物之中，希望最美")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        Text("永桔@2026-18602102518")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
                 }
+                .frame(width: 560, alignment: .leading)
+
+                Spacer(minLength: 30)
+                ShortcutHintView()
+                    .frame(maxWidth: .infinity, alignment: .center)
+                Spacer(minLength: 18)
             }
             .tabItem { Label(tr("settings.about"), systemImage: "info.circle") }
             .padding()
@@ -945,5 +1163,155 @@ struct PreferencesView: View {
                 isRefreshingLanguage = false
             }
         }
+    }
+}
+
+private struct DisplayModeOptionButton: View {
+    let mode: String
+    let title: String
+    let isSelected: Bool
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 7) {
+                DisplayModeGlyph(mode: mode, isSelected: isSelected)
+                    .frame(width: 24, height: 18)
+                Text(title)
+                    .font(.system(size: 13, weight: .semibold))
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.82)
+                    .foregroundStyle(isSelected ? Color.white : Color.primary)
+                    .frame(maxWidth: .infinity)
+            }
+            .frame(maxWidth: .infinity, minHeight: 34)
+            .padding(.horizontal, 9)
+            .padding(.vertical, 2)
+            .background(
+                RoundedRectangle(cornerRadius: 7, style: .continuous)
+                    .fill(isSelected ? Color.accentColor : Color(nsColor: .controlBackgroundColor))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 7, style: .continuous)
+                    .stroke(isSelected ? Color.accentColor : Color.secondary.opacity(0.18), lineWidth: 1)
+            )
+            .contentShape(RoundedRectangle(cornerRadius: 7, style: .continuous))
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(title)
+    }
+}
+
+private struct DisplayModeGlyph: View {
+    let mode: String
+    let isSelected: Bool
+
+    var body: some View {
+        switch mode {
+        case "flat":
+            HStack(spacing: 2) {
+                cell(index: 0, width: 5, height: 5, colored: false)
+                cell(index: 1, width: 5, height: 5, colored: false)
+                cell(index: 2, width: 5, height: 5, colored: false)
+            }
+        case "gridContainer", "coloredGridContainer":
+            let colored = mode == "coloredGridContainer"
+            VStack(spacing: 2) {
+                HStack(spacing: 2) {
+                    cell(index: 0, width: 7, height: 6, colored: colored)
+                    cell(index: 1, width: 7, height: 6, colored: colored)
+                }
+                HStack(spacing: 2) {
+                    cell(index: 2, width: 7, height: 6, colored: colored)
+                    cell(index: 3, width: 7, height: 6, colored: colored)
+                }
+            }
+        default:
+            let colored = mode == "coloredContainer"
+            HStack(alignment: .bottom, spacing: 2) {
+                cell(index: 0, width: 5, height: 8, colored: colored)
+                cell(index: 1, width: 5, height: 14, colored: colored)
+                cell(index: 2, width: 5, height: 10, colored: colored)
+            }
+        }
+    }
+
+    private func cell(index: Int, width: CGFloat, height: CGFloat, colored: Bool) -> some View {
+        let fill = fillColor(index: index, colored: colored)
+        let stroke = isSelected ? Color.white.opacity(0.95) : Color.secondary.opacity(0.35)
+        return RoundedRectangle(cornerRadius: 1.8, style: .continuous)
+            .fill(fill)
+            .overlay(
+                RoundedRectangle(cornerRadius: 1.8, style: .continuous)
+                    .stroke(stroke, lineWidth: 0.8)
+            )
+            .frame(width: width, height: height)
+    }
+
+    private func fillColor(index: Int, colored: Bool) -> Color {
+        if isSelected {
+            return Color.white.opacity(colored ? 0.9 : 0.18)
+        }
+        guard colored else {
+            return Color.secondary.opacity(0.12)
+        }
+        let palette: [Color] = [.green, .purple, .blue, .orange]
+        return palette[index % palette.count].opacity(0.78)
+    }
+}
+
+private struct ShortcutHintView: View {
+    var body: some View {
+        HStack(spacing: 12) {
+            ShortcutKeycap(symbol: "⌥")
+            Text("+")
+                .font(.system(size: 22, weight: .semibold))
+                .foregroundStyle(.tertiary)
+            ShortcutKeycap(symbol: "⇧")
+            Text("+")
+                .font(.system(size: 22, weight: .semibold))
+                .foregroundStyle(.tertiary)
+            SpacebarKeycap()
+        }
+        .accessibilityLabel("⌥ ⇧ Space")
+        .allowsHitTesting(false)
+    }
+}
+
+private struct ShortcutKeycap: View {
+    let symbol: String
+
+    var body: some View {
+        Text(symbol)
+            .font(.system(size: 36, weight: .medium))
+            .foregroundStyle(.secondary)
+            .frame(width: 74, height: 58)
+            .background(KeycapBackground())
+    }
+}
+
+private struct SpacebarKeycap: View {
+    var body: some View {
+        ZStack {
+            KeycapBackground()
+            Capsule()
+                .fill(Color.secondary.opacity(0.38))
+                .frame(width: 72, height: 3)
+                .offset(y: 13)
+        }
+        .frame(width: 190, height: 58)
+    }
+}
+
+private struct KeycapBackground: View {
+    var body: some View {
+        RoundedRectangle(cornerRadius: 10, style: .continuous)
+            .fill(Color(nsColor: .controlBackgroundColor))
+            .overlay(
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .stroke(Color.primary.opacity(0.12), lineWidth: 1)
+            )
+            .shadow(color: .black.opacity(0.10), radius: 8, x: 0, y: 3)
     }
 }

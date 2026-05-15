@@ -1,5 +1,6 @@
 {
   "menu.show": "Toon TagLauncher",
+  "menu.showAppList": "Toon applijst",
   "menu.preferences": "Voorkeuren…",
   "menu.quit": "Stop",
   "menu.language": "Taal",
@@ -13,7 +14,6 @@
   "settings.about": "Over",
   "settings.launchAtLogin": "Start bij inloggen",
   "settings.showInDock": "Toon in Dock",
-  "settings.showMenuBarIcon": "Toon menubalkicoon",
   "settings.appListStyle": "App-lijststijl:",
   "settings.flat": "Plat",
   "settings.container": "Kleurloze container",

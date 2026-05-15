@@ -1,6 +1,6 @@
 # Apptag — Mac App Store 提审资料
 
-> 版本: 5.7.5 | Bundle ID: com.apptag.launcher | 更新日期: 2026-05-14
+> 版本: 5.7.8 | Bundle ID: com.apptag.launcher | 更新日期: 2026-05-15
 
 ---
 
@@ -11,8 +11,8 @@
 | **App 名称** | Apptag |
 | **副标题** | Tag-Based App Launcher |
 | **Bundle ID** | com.apptag.launcher |
-| **版本号** | 5.7.5 |
-| **Build 号** | 575 |
+| **版本号** | 5.7.8 |
+| **Build 号** | 583 |
 | **SKU** | apptag-mac-001 |
 | **主要类别** | Utilities (工具) |
 | **次要类别** | Productivity (效率) |
@@ -187,9 +187,20 @@ App Store 额外要求:
 ## 8. What's New (本次版本更新说明)
 
 ```
-Apptag 5.7.5
+Apptag 5.7.8
 
-- Fixed the menu bar icon visibility issue and added a Show Menu Bar Icon preference
+- Fixed duplicate overlay keyboard event monitors that could accumulate after repeatedly opening TagLauncher
+- Removed obsolete tag reorder fallback handlers that could interfere with click handling after drag sorting
+- Reduced unnecessary Dock refreshes when unrelated preferences change
+- Made the menu bar icon mandatory and removed the Show Menu Bar Icon preference across all localizations
+- Removed unused macOS app-menu items and added a localized Show App List command with symbol-only shortcut glyphs
+- Replaced the default macOS Services/Hide menu groups and made the menu bar status item use a fixed visible icon slot
+- Replaced the menu bar SF Symbol with a code-drawn template icon so the status item remains visible even if symbol rendering fails
+- Improved the General preferences layout for long localized text by using two-column style choices and aligned setting rows
+- Refined the app-list style chooser so Flat spans the first row and the remaining four styles form a balanced 2x2 grid
+- Reduced the app-list style option height and added compact visual glyphs for flat, masonry, and grid layouts
+- Added a symbol-only shortcut hint on the Language, Data, and About preference tabs for Option + Shift + Space
+- Fixed the menu bar icon visibility issue
 - Fixed Preferences placement when opened above TagLauncher from a fullscreen app Space
 - Fixed tag navigation reorder mode so clicking elsewhere exits the shaking state
 - Expanded localization support to 29 language variants
@@ -205,7 +216,7 @@ Apptag 5.7.5
 - Added Mac App Store sandbox entitlements and App Store build validation
 - Hid Launch at Login controls in sandboxed App Store builds
 - Removed deprecated app launch API usage
-- Version updated to 5.7.5 (Build 575)
+- Version kept at 5.7.8, Build updated to 583
 ```
 
 ---

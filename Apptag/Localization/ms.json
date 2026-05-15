@@ -1,5 +1,6 @@
 {
   "menu.show": "Tunjukkan TagLauncher",
+  "menu.showAppList": "Tunjukkan senarai app",
   "menu.preferences": "Keutamaan…",
   "menu.quit": "Keluar",
   "menu.language": "Bahasa",
@@ -13,7 +14,6 @@
   "settings.about": "Tentang",
   "settings.launchAtLogin": "Mula semasa log masuk",
   "settings.showInDock": "Tunjukkan dalam Dock",
-  "settings.showMenuBarIcon": "Tunjukkan ikon bar menu",
   "settings.appListStyle": "Gaya senarai app:",
   "settings.flat": "Datar",
   "settings.container": "Kontainer tanpa warna",

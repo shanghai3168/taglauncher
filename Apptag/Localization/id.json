@@ -1,5 +1,6 @@
 {
   "menu.show": "Tampilkan TagLauncher",
+  "menu.showAppList": "Tampilkan daftar app",
   "menu.preferences": "Preferensi…",
   "menu.quit": "Keluar",
   "menu.language": "Bahasa",
@@ -13,7 +14,6 @@
   "settings.about": "Tentang",
   "settings.launchAtLogin": "Mulai saat masuk",
   "settings.showInDock": "Tampilkan di Dock",
-  "settings.showMenuBarIcon": "Tampilkan ikon bilah menu",
   "settings.appListStyle": "Gaya daftar app:",
   "settings.flat": "Datar",
   "settings.container": "Kontainer tanpa warna",
