@@ -1,6 +1,6 @@
 # Apptag — Mac App Store 提审资料
 
-> 版本: 5.7.8 | Bundle ID: com.apptag.launcher | 更新日期: 2026-05-15
+> 版本: 6.0.5 | Bundle ID: com.apptag.launcher | 更新日期: 2026-05-17
 
 ---
 
@@ -11,8 +11,8 @@
 | **App 名称** | Apptag |
 | **副标题** | Tag-Based App Launcher |
 | **Bundle ID** | com.apptag.launcher |
-| **版本号** | 5.7.8 |
-| **Build 号** | 583 |
+| **版本号** | 6.0.5 |
+| **Build 号** | 610 |
 | **SKU** | apptag-mac-001 |
 | **主要类别** | Utilities (工具) |
 | **次要类别** | Productivity (效率) |
@@ -187,36 +187,23 @@ App Store 额外要求:
 ## 8. What's New (本次版本更新说明)
 
 ```
-Apptag 5.7.8
+Apptag 6.0.5
 
-- Fixed duplicate overlay keyboard event monitors that could accumulate after repeatedly opening TagLauncher
-- Removed obsolete tag reorder fallback handlers that could interfere with click handling after drag sorting
-- Reduced unnecessary Dock refreshes when unrelated preferences change
-- Made the menu bar icon mandatory and removed the Show Menu Bar Icon preference across all localizations
-- Removed unused macOS app-menu items and added a localized Show App List command with symbol-only shortcut glyphs
-- Replaced the default macOS Services/Hide menu groups and made the menu bar status item use a fixed visible icon slot
-- Replaced the menu bar SF Symbol with a code-drawn template icon so the status item remains visible even if symbol rendering fails
-- Improved the General preferences layout for long localized text by using two-column style choices and aligned setting rows
-- Refined the app-list style chooser so Flat spans the first row and the remaining four styles form a balanced 2x2 grid
-- Reduced the app-list style option height and added compact visual glyphs for flat, masonry, and grid layouts
-- Added a symbol-only shortcut hint on the Language, Data, and About preference tabs for Option + Shift + Space
-- Fixed the menu bar icon visibility issue
-- Fixed Preferences placement when opened above TagLauncher from a fullscreen app Space
-- Fixed tag navigation reorder mode so clicking elsewhere exits the shaking state
-- Expanded localization support to 29 language variants
-- Updated the Language preferences tab to a two-column layout for better readability
-- Added long-press drag sorting for tag navigation in normal app-list views
-- Tag sorting now works from top, left, or right tag navigation positions across all 5 app-list styles
-- Tag reorder animations now update both the tag navigation and matching app containers
-- Added automatic migration for legacy non-sandbox tag databases into the App Store sandbox container
-- Added a dedicated Language tab in Preferences with live language switching
-- Preferences now opens centered above the active TagLauncher overlay, including multi-display setups
-- Improved tag reordering in edit mode with live visual feedback and synchronized group layout updates
-- Renamed backup actions to Export/Import Categories & Layout across all supported languages
-- Added Mac App Store sandbox entitlements and App Store build validation
-- Hid Launch at Login controls in sandboxed App Store builds
-- Removed deprecated app launch API usage
-- Version kept at 5.7.8, Build updated to 583
+- Added an Uncommon app marker for apps you are still learning, with optional hover notes
+- New apps can be marked as Uncommon automatically and are cleared after enough launches from TagLauncher
+- Added local note editing for Uncommon apps; notes stay in the exported JSON even if the marker is removed later
+- Added an Uncommon bubble toggle in the Data preferences tab, enabled by default
+- Reworked batch category editing into clear Add Tags and Remove Tags modes
+- Fixed batch editing so selected apps no longer inherit unrelated tags from each other
+- Added clear confirmation feedback showing the real number of tag links added or removed
+- Improved Remove Tags mode with red delete indicators and safer label truncation
+- Fixed edit-sidebar layout so long localized hints no longer stretch the page
+- Removed the edit-page center title and gave more room to the action hint and confirmation button
+- Improved shortcut hints in Language, Data, and About settings pages using symbol-only key graphics
+- Fixed a crash caused by toolbar hint layout constraints in the edit screen
+- Fixed Safari and other modern macOS system apps being missed when they live behind Cryptex system paths
+- Kept duplicate app icons out by resolving symlinks for scanning deduplication
+- Version updated to 6.0.5, Build updated to 610
 ```
 
 ---

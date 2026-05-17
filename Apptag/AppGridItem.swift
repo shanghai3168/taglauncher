@@ -10,10 +10,14 @@ struct AppGridItem: View {
     var sourceTag: String? = nil
     var dragModeActive: Bool = false
     var onDragModeChange: ((Bool) -> Void)? = nil
+    var onBubbleHover: ((AppInfo, CGRect, Bool) -> Void)? = nil
+    var onEditNote: ((AppInfo, CGRect) -> Void)? = nil
     let onSelect: () -> Void
 
     @State private var isHovered = false
     @State private var wiggle = false
+    @State private var globalFrame: CGRect = .zero
+    @AppStorage("showUncommonAppBubbles") private var showUncommonAppBubbles = true
 
     static let hoverScale: CGFloat = 1.22
     static let labelHeight: CGFloat = 14
@@ -62,9 +66,28 @@ struct AppGridItem: View {
         .padding(.vertical, 8)
         .padding(.horizontal, 4)
         .frame(width: Self.stableWidth(iconSize: iconSize), height: Self.stableHeight(iconSize: iconSize))
+        .background(
+            GeometryReader { proxy in
+                Color.clear
+                    .onAppear { globalFrame = proxy.frame(in: .global) }
+                    .onChange(of: proxy.frame(in: .global)) { _, newFrame in
+                        globalFrame = newFrame
+                    }
+            }
+        )
         .contentShape(Rectangle())
         .onHover { hovering in
             isHovered = hovering
+            if showUncommonAppBubbles && app.isUncommon {
+                onBubbleHover?(app, globalFrame, hovering)
+            }
+        }
+        .contextMenu {
+            if app.isUncommon {
+                Button(tr("appNote.edit")) {
+                    onEditNote?(app, globalFrame)
+                }
+            }
         }
         .rotationEffect(.degrees(dragModeActive ? (wiggle ? 2.0 : -2.0) : 0))
         .animation(
@@ -76,6 +99,86 @@ struct AppGridItem: View {
         .onChange(of: dragModeActive) { _, active in
             wiggle = active
         }
+    }
+}
+
+enum BubblePlacement {
+    case above
+    case below
+}
+
+struct AppNameBubble: View {
+    let appName: String
+    let note: String?
+    let isEditing: Bool
+    let placement: BubblePlacement
+    @Binding var draftNote: String
+    var noteFocused: FocusState<Bool>.Binding
+    let onCommit: () -> Void
+    let onCancel: () -> Void
+
+    private var displayNote: String {
+        note?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+    }
+
+    var body: some View {
+        content
+        .onExitCommand(perform: onCancel)
+    }
+
+    private var content: some View {
+        VStack(spacing: isEditing || !displayNote.isEmpty ? 8 : 0) {
+            Text(appName)
+                .font(.system(size: isEditing ? 22 : 24, weight: .bold))
+                .foregroundStyle(.white)
+                .lineLimit(1)
+                .truncationMode(.middle)
+                .frame(maxWidth: .infinity)
+
+            if isEditing {
+                VStack(alignment: .trailing, spacing: 4) {
+                    TextField(tr("appNote.placeholder"), text: limitedDraft)
+                        .textFieldStyle(.plain)
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 12)
+                        .frame(height: 36)
+                        .background(
+                            RoundedRectangle(cornerRadius: 9)
+                                .fill(Color.white.opacity(0.12))
+                        )
+                        .focused(noteFocused)
+                        .onSubmit(onCommit)
+                    Text("\(draftNote.count) / \(TagDatabase.maxAppNoteLength)")
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundStyle(.white.opacity(0.35))
+                }
+            } else if !displayNote.isEmpty {
+                Text(displayNote)
+                    .font(.system(size: 14, weight: .medium))
+                    .lineSpacing(2)
+                    .foregroundStyle(.white.opacity(0.78))
+                    .lineLimit(4)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity)
+            }
+        }
+        .padding(.horizontal, isEditing ? 22 : 24)
+        .padding(.vertical, isEditing ? 18 : 16)
+        .background(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .fill(Color.black.opacity(0.92))
+                .shadow(color: .black.opacity(0.34), radius: 24, y: 16)
+                .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
+        )
+    }
+
+    private var limitedDraft: Binding<String> {
+        Binding(
+            get: { draftNote },
+            set: { draftNote = String($0.prefix(TagDatabase.maxAppNoteLength)) }
+        )
     }
 }
 

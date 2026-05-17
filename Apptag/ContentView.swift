@@ -16,6 +16,11 @@ enum EditPhase {
     case editingApps
 }
 
+enum EditTagOperation {
+    case add
+    case remove
+}
+
 // MARK: - Native NSTextField (avoids SwiftUI TextField event issues)
 
 /// Custom container that wraps NSTextField so that hitTest returns the container
@@ -220,6 +225,64 @@ struct ColorSwatch: View {
 
 // MARK: - Full-Screen Overlay
 
+private struct AppBubbleContext {
+    let app: AppInfo
+    let frame: CGRect
+}
+
+private struct EditActionFeedback: Identifiable {
+    let id = UUID()
+    let title: String
+    let message: String
+}
+
+private struct EditActionFeedbackBubble: View {
+    let title: String
+    let message: String
+    let onClose: () -> Void
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(alignment: .top, spacing: 12) {
+                Text(title)
+                    .font(.system(size: 24, weight: .bold))
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                Button(action: onClose) {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(.white.opacity(0.82))
+                        .frame(width: 26, height: 26)
+                        .background(
+                            Circle()
+                                .fill(Color.white.opacity(0.12))
+                        )
+                }
+                .buttonStyle(.plain)
+            }
+
+            ScrollView(.vertical, showsIndicators: true) {
+                Text(message)
+                    .font(.system(size: 15, weight: .medium))
+                    .lineSpacing(3)
+                    .foregroundStyle(.white.opacity(0.84))
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .frame(maxHeight: 220)
+        }
+        .padding(.horizontal, 24)
+        .padding(.vertical, 20)
+        .background(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .fill(Color.black.opacity(0.92))
+                .shadow(color: .black.opacity(0.34), radius: 24, y: 16)
+                .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
+        )
+    }
+}
+
 struct ContentView: View {
     let hideOverlay: () -> Void
 
@@ -231,7 +294,9 @@ struct ContentView: View {
     @State private var editPhase: EditPhase = .none
     @State private var selectedAppPaths: Set<URL> = []
     @State private var selectedTagNames: Set<String> = []
-    @State private var successToast: String? = nil
+    @State private var removableTagNames: Set<String> = []
+    @State private var editTagOperation: EditTagOperation = .add
+    @State private var editActionFeedback: EditActionFeedback? = nil
     @State private var draggedTagNames: [String] = []  // live drag order
     @State private var dragItem: String? = nil          // currently dragged tag
     @State private var tagReorderFrames: [String: CGRect] = [:]
@@ -246,6 +311,10 @@ struct ContentView: View {
     @State private var dropRefreshVisible = false
     @State private var dropRefreshStartedAt: Date? = nil
     @State private var layoutRefreshID = UUID()
+    @State private var hoveredBubble: AppBubbleContext? = nil
+    @State private var editingBubble: AppBubbleContext? = nil
+    @State private var bubbleDraftNote = ""
+    @FocusState private var bubbleNoteFocused: Bool
 
     // Configurable defaults
     @AppStorage("defaultGroupName") private var defaultGroupName = "Other"
@@ -255,6 +324,9 @@ struct ContentView: View {
     @State private var notchHeight: CGFloat = 0
     @AppStorage("displayMode") private var displayMode = "flat"
     @AppStorage("hideAppNames") private var hideAppNames = false
+
+    private let editSidebarWidth: CGFloat = 188
+    private let editSidebarHorizontalInset: CGFloat = 12
 
     private var isSideLayout: Bool {
         tagPosition == "left" || tagPosition == "right"
@@ -292,6 +364,9 @@ struct ContentView: View {
             case .editingApps:
                 editAppsView
             }
+
+            uncommonAppBubbleOverlay
+            editActionFeedbackOverlay
 
             if let message = dropWarningToast {
                 Text(message)
@@ -341,11 +416,17 @@ struct ContentView: View {
         }
         .onChange(of: editPhase) { _, newPhase in
             let active = newPhase != .none
+            dismissAppBubble()
             NotificationCenter.default.post(
                 name: .tagLauncherEditModeChanged,
                 object: nil,
                 userInfo: ["active": active]
             )
+        }
+        .onChange(of: bubbleNoteFocused) { _, focused in
+            if editingBubble != nil && !focused {
+                commitBubbleNote()
+            }
         }
     }
 
@@ -502,6 +583,43 @@ struct ContentView: View {
         .id(layoutRefreshID)
     }
 
+    private var uncommonAppBubbleOverlay: some View {
+        GeometryReader { proxy in
+            if let context = editingBubble ?? hoveredBubble {
+                let rootFrame = proxy.frame(in: .global)
+                let editing = editingBubble != nil
+                let width = min(editing ? 440 : 520, max(260, proxy.size.width - 48))
+                let placement = bubblePlacement(for: context.frame, rootFrame: rootFrame)
+                let metrics = bubbleMetrics(
+                    for: context,
+                    rootFrame: rootFrame,
+                    rootSize: proxy.size,
+                    width: width,
+                    placement: placement,
+                    isEditing: editing
+                )
+
+                AppNameBubble(
+                    appName: context.app.name,
+                    note: currentNote(for: context.app),
+                    isEditing: editing,
+                    placement: placement,
+                    draftNote: $bubbleDraftNote,
+                    noteFocused: $bubbleNoteFocused,
+                    onCommit: commitBubbleNote,
+                    onCancel: dismissAppBubble
+                )
+                .frame(width: width)
+                .fixedSize(horizontal: false, vertical: true)
+                .position(x: metrics.centerX, y: metrics.centerY)
+                .transition(.scale(scale: 0.94).combined(with: .opacity))
+                .zIndex(500)
+            }
+        }
+        .ignoresSafeArea()
+        .allowsHitTesting(editingBubble != nil)
+    }
+
     private var flatGrid: some View {
         ScrollViewReader { proxy in
             ScrollView {
@@ -515,6 +633,8 @@ struct ContentView: View {
                             showNames: !hideAppNames,
                             dragModeActive: appDragModeActive,
                             onDragModeChange: { setAppDragMode($0) },
+                            onBubbleHover: handleBubbleHover,
+                            onEditNote: beginEditingBubbleNote,
                             onDropApp: { path, source, copy in
                                 dropApp(path: path, sourceTag: source, targetTag: group.name, copy: copy)
                             }
@@ -615,6 +735,8 @@ struct ContentView: View {
                         sourceTag: group.name,
                         dragModeActive: appDragModeActive,
                         onDragModeChange: { setAppDragMode($0) },
+                        onBubbleHover: handleBubbleHover,
+                        onEditNote: beginEditingBubbleNote,
                         onSelect: { openApp(app) }
                     )
                 }
@@ -643,6 +765,7 @@ struct ContentView: View {
         .shadow(color: .black.opacity((isColored && isHovered) || isColorlessActive ? 0.22 : 0),
                 radius: (isColored && isHovered) || isColorlessActive ? 18 : 0,
                 y: (isColored && isHovered) || isColorlessActive ? 10 : 0)
+        .zIndex(isHovered ? 50 : 0)
         .scaleEffect(isColored && isHovered ? 1.015 : 1.0)
         .animation(.spring(response: 0.25, dampingFraction: 0.82), value: isHovered)
         .animation(.spring(response: 0.25, dampingFraction: 0.82), value: isColorlessFilled)
@@ -849,6 +972,8 @@ struct ContentView: View {
                                 sourceTag: group.name,
                                 dragModeActive: appDragModeActive,
                                 onDragModeChange: { setAppDragMode($0) },
+                                onBubbleHover: handleBubbleHover,
+                                onEditNote: beginEditingBubbleNote,
                                 onSelect: { openApp(app) }
                             )
                                 .frame(width: cellWidth)
@@ -889,6 +1014,7 @@ struct ContentView: View {
         .shadow(color: .black.opacity((isColored && isHovered) || isColorlessGridActive ? 0.22 : 0),
                 radius: (isColored && isHovered) || isColorlessGridActive ? 18 : 0,
                 y: (isColored && isHovered) || isColorlessGridActive ? 10 : 0)
+        .zIndex(isHovered ? 50 : 0)
         .scaleEffect(isColored && isHovered ? 1.015 : 1.0)
         .animation(.spring(response: 0.25, dampingFraction: 0.82), value: isHovered)
         .animation(.spring(response: 0.25, dampingFraction: 0.82), value: isColorlessFilled)
@@ -959,18 +1085,26 @@ struct ContentView: View {
 
     private var editAppsView: some View {
         VStack(spacing: 0) {
-            HStack {
-                Button { cancelEditApps(); setEditPhase(.none) } label: {
-                    Label(tr("edit.exit"), systemImage: "rectangle.portrait.and.arrow.right")
-                        .font(.system(size: 12))
+            HStack(alignment: .center, spacing: 14) {
+                HStack(alignment: .center, spacing: 12) {
+                    Button { cancelEditApps(); setEditPhase(.none) } label: {
+                        Label(tr("edit.exit"), systemImage: "rectangle.portrait.and.arrow.right")
+                            .font(.system(size: 12))
+                    }
+                    .buttonStyle(.bordered)
+
+                    operationHeaderPicker
                 }
-                .buttonStyle(.bordered)
-                Spacer()
-                Text(tr("edit.title")).font(.headline)
-                Spacer()
-                Button(tr("edit.confirm")) { confirmAssign() }
+
+                Spacer(minLength: 16)
+
+                headerModeHintView
+
+                Button(editConfirmTitle) { confirmAssign() }
                     .buttonStyle(.borderedProminent)
-                    .disabled(selectedAppPaths.isEmpty)
+                    .disabled(selectedAppPaths.isEmpty || pendingOperationTagNames.isEmpty)
+                    .fixedSize(horizontal: true, vertical: false)
+                    .layoutPriority(2)
             }
             .padding(.horizontal, 24)
             .padding(.top, notchHeight > 0 ? notchHeight + 10 : 20)
@@ -980,8 +1114,28 @@ struct ContentView: View {
 
             HStack(spacing: 0) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(tr("edit.selectTags")).font(.caption).foregroundStyle(.secondary).padding(.bottom, 4)
-                    Text(tr("edit.dragHint")).font(.caption2).foregroundStyle(.tertiary).padding(.bottom, 2)
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(tr("edit.selectTags"))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .multilineTextAlignment(.leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        Text(tr("edit.dragHint"))
+                            .font(.caption2)
+                            .foregroundStyle(.tertiary)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .multilineTextAlignment(.leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .padding(.horizontal, editSidebarHorizontalInset)
+                    .padding(.top, 4)
+                    .padding(.bottom, 4)
+                    .frame(width: editSidebarWidth, alignment: .leading)
+
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack(spacing: 4) {
                             ForEach(sortedTagNames, id: \.self) { tagName in
@@ -1006,8 +1160,9 @@ struct ContentView: View {
                             tagReorderFrames = frames
                         }
                     }
-                    .frame(width: 155)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 }
+                .frame(width: editSidebarWidth, alignment: .topLeading)
                 Rectangle().fill(.secondary.opacity(0.12)).frame(width: 1)
 
                 if allApps.isEmpty {
@@ -1017,29 +1172,19 @@ struct ContentView: View {
                 }
             }
 
-            if let msg = successToast {
-                Text(msg).font(.headline)
-                    .padding(.horizontal, 20).padding(.vertical, 10)
-                    .background(RoundedRectangle(cornerRadius: 10).fill(.ultraThickMaterial))
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            withAnimation { successToast = nil }
-                        }
-                    }
-            }
         }
     }
 
     private var editAppsGrid: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 24) {
-                ForEach(groups) { group in
+                ForEach(editGroups) { group in
                     editFlatGroup(group)
                 }
             }
             .padding(20)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 
     private func editFlatGroup(_ group: TagGroup) -> some View {
@@ -1068,31 +1213,71 @@ struct ContentView: View {
             ) {
                 ForEach(group.apps) { app in editableAppItem(app) }
             }
+            .frame(minHeight: group.apps.isEmpty ? max(52, iconSize + 12) : 0)
         }
     }
 
     private func selectableTagItem(_ tagName: String) -> some View {
         let isSelected = selectedTagNames.contains(tagName)
+        let isRemovableCandidate = removableTagNames.contains(tagName)
+        let isEnabled = editTagOperation == .add || isRemovableCandidate
+        let showsPendingRemoval = editTagOperation == .remove && isRemovableCandidate && !isSelected
+        let isUncommon = tagName == TagDatabase.uncommonTagKey
+        let colorIndex = isUncommon ? 0 : (tagColors[tagName] ?? 0)
         return HStack(spacing: 6) {
             Circle()
-                .fill(isSelected ? Color.accentColor : Color.secondary.opacity(0.3))
+                .fill(isSelected ? Color.accentColor : Color.secondary.opacity(isEnabled ? 0.3 : 0.18))
                 .frame(width: 16, height: 16)
                 .overlay(isSelected ? Image(systemName: "checkmark").font(.system(size: 8, weight: .bold)).foregroundStyle(.white) : nil)
-            Text(tagName).font(.system(size: 13, weight: .medium)).foregroundStyle(.primary)
+            Text(displayTagName(tagName))
+                .font(.system(size: 13, weight: isUncommon ? .semibold : .medium))
+                .foregroundStyle(isEnabled ? Color.primary : Color.secondary.opacity(0.66))
+                .lineLimit(1)
+                .truncationMode(.tail)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            HStack(spacing: 4) {
+                if isUncommon {
+                    Image(systemName: "questionmark.bubble.fill")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(isEnabled ? Color.secondary : Color.secondary.opacity(0.55))
+                        .frame(width: 16, height: 16)
+                }
+                if showsPendingRemoval {
+                    Image(systemName: "trash.fill")
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundStyle(.red)
+                        .frame(width: 16, height: 16)
+                        .transition(.scale(scale: 0.85).combined(with: .opacity))
+                } else if editTagOperation == .remove {
+                    Color.clear.frame(width: 16, height: 16)
+                }
+            }
+            .frame(
+                minWidth: editTagOperation == .remove
+                    ? (isUncommon ? 36 : 16)
+                    : (isUncommon ? 16 : 0),
+                alignment: .trailing
+            )
+            .layoutPriority(1)
         }
-        .padding(.horizontal, 10).padding(.vertical, 5)
+        .padding(.horizontal, 10)
+        .frame(height: 27)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(RoundedRectangle(cornerRadius: 6)
-            .fill(Color(nsColor: TagColor.nsColor(for: tagColors[tagName] ?? 0).withAlphaComponent(0.3))))
+            .fill(Color(nsColor: TagColor.nsColor(for: colorIndex).withAlphaComponent(isEnabled ? (isUncommon ? 0.22 : 0.3) : 0.12))))
         .contentShape(RoundedRectangle(cornerRadius: 6))
         .onTapGesture {
+            guard isEnabled else { return }
             if isSelected { selectedTagNames.remove(tagName) } else { selectedTagNames.insert(tagName) }
         }
+        .opacity(isEnabled ? 1.0 : 0.58)
+        .animation(.easeInOut(duration: 0.15), value: showsPendingRemoval)
     }
 
     private func tagReorderGesture(for tagName: String) -> some Gesture {
         DragGesture(minimumDistance: 4, coordinateSpace: .named("tagReorderList"))
             .onChanged { value in
+                guard canReorderTag(tagName) else { return }
                 if dragItem == nil {
                     dragItem = tagName
                 }
@@ -1100,6 +1285,7 @@ struct ContentView: View {
                 reorderDraggedTag(at: value.location)
             }
             .onEnded { _ in
+                guard canReorderTag(tagName) else { return }
                 dragItem = nil
                 TagEditor.reorderTags(draggedTagNames)
             }
@@ -1121,17 +1307,31 @@ struct ContentView: View {
     }
 
     private func confirmAssign() {
-        guard !selectedAppPaths.isEmpty else { return }
-        let paths = selectedAppPaths.map { $0.path }
-        let tags = sortedTagNames.filter { selectedTagNames.contains($0) }
-        TagEditor.setTags(tags, to: paths)
-        selectedAppPaths = []; selectedTagNames = []
+        let selectedApps = allApps.filter { selectedAppPaths.contains($0.path) }
+        let tags = pendingOperationTagNames
+        guard !selectedApps.isEmpty, !tags.isEmpty else { return }
+
+        let paths = selectedApps.map { $0.path.path }
+        let feedback = buildEditActionFeedback(for: selectedApps, tags: tags)
+
+        switch editTagOperation {
+        case .add:
+            TagEditor.appendTags(tags, to: paths)
+        case .remove:
+            TagEditor.removeTags(tags, from: paths)
+        }
+        selectedAppPaths = []
+        selectedTagNames = []
+        removableTagNames = []
         refreshApps()
-        withAnimation { successToast = tr("edit.success") }
+        showEditActionFeedback(feedback)
     }
 
     private func cancelEditApps() {
-        selectedAppPaths = []; selectedTagNames = []
+        selectedAppPaths = []
+        selectedTagNames = []
+        removableTagNames = []
+        editTagOperation = .add
     }
 
     private func editableAppItem(_ app: AppInfo) -> some View {
@@ -1169,20 +1369,219 @@ struct ContentView: View {
     }
 
     private func syncSelectedTagsFromSelectedApps() {
-        let selectedApps = allApps.filter { selectedAppPaths.contains($0.path) }
-        guard !selectedApps.isEmpty else {
+        guard !selectedAppPaths.isEmpty else {
             selectedTagNames = []
+            removableTagNames = []
             return
         }
 
-        let editableTags = Set(sortedTagNames)
-        if selectedApps.count == 1 {
-            selectedTagNames = Set(selectedApps[0].tags.filter { editableTags.contains($0) })
+        guard editTagOperation == .remove else {
+            removableTagNames = []
             return
         }
 
-        selectedTagNames = selectedApps.reduce(into: Set<String>()) { result, app in
-            result.formUnion(app.tags.filter { editableTags.contains($0) })
+        let selectedApps = allApps.filter { selectedAppPaths.contains($0.path) }
+        let autoSelectedTags = selectedApps.reduce(into: Set<String>()) { result, app in
+            result.formUnion(app.tags)
+            if app.isUncommon {
+                result.insert(TagDatabase.uncommonTagKey)
+            }
+        }
+        removableTagNames = autoSelectedTags
+        selectedTagNames = autoSelectedTags
+    }
+
+    private var operationHeaderPicker: some View {
+        HStack(spacing: 8) {
+            Text(tr("edit.operationLabel"))
+                .font(.system(size: 12, weight: .medium))
+                .foregroundStyle(.secondary)
+
+            HStack(spacing: 6) {
+                operationModeButton(.add, titleKey: "edit.modeAdd", systemImage: "plus.circle.fill")
+                operationModeButton(.remove, titleKey: "edit.modeRemove", systemImage: "minus.circle.fill")
+            }
+        }
+    }
+
+    private func operationModeButton(_ mode: EditTagOperation, titleKey: String, systemImage: String) -> some View {
+        let isActive = editTagOperation == mode
+        return Button {
+            setEditTagOperation(mode)
+        } label: {
+            Label(tr(titleKey), systemImage: systemImage)
+                .font(.system(size: 12, weight: .semibold))
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .foregroundStyle(isActive ? Color.white : Color.primary)
+                .background(
+                    Capsule(style: .continuous)
+                        .fill(isActive ? Color.accentColor : Color.secondary.opacity(0.12))
+                )
+        }
+        .buttonStyle(.plain)
+    }
+
+    private var editConfirmTitle: String {
+        switch editTagOperation {
+        case .add:
+            return tr("edit.confirmAdd")
+        case .remove:
+            return tr("edit.confirmRemove")
+        }
+    }
+
+    private func setEditTagOperation(_ mode: EditTagOperation) {
+        guard editTagOperation != mode else { return }
+        editTagOperation = mode
+        if mode == .add {
+            selectedTagNames = []
+            removableTagNames = []
+        } else {
+            syncSelectedTagsFromSelectedApps()
+        }
+    }
+
+    private var pendingOperationTagNames: [String] {
+        switch editTagOperation {
+        case .add:
+            return sortedTagNames.filter { selectedTagNames.contains($0) }
+        case .remove:
+            return sortedTagNames.filter { removableTagNames.contains($0) && !selectedTagNames.contains($0) }
+        }
+    }
+
+    private var editModeHintText: String {
+        editTagOperation == .remove ? tr("edit.removeHint") : tr("edit.modeHint")
+    }
+
+    private var headerModeHintView: some View {
+        Text(editModeHintText)
+            .font(.system(size: 12, weight: .medium))
+            .foregroundStyle(.secondary)
+            .lineLimit(1)
+            .truncationMode(.middle)
+            .frame(minWidth: 0, maxWidth: 760, alignment: .trailing)
+            .layoutPriority(1)
+            .help(editModeHintText)
+    }
+
+    private var editActionFeedbackOverlay: some View {
+        GeometryReader { proxy in
+            if let feedback = editActionFeedback {
+                ZStack {
+                    Color.black.opacity(0.08)
+                        .ignoresSafeArea()
+
+                    EditActionFeedbackBubble(
+                        title: feedback.title,
+                        message: feedback.message,
+                        onClose: dismissEditActionFeedback
+                    )
+                    .frame(width: min(760, max(360, proxy.size.width - 120)))
+                    .position(x: proxy.size.width / 2, y: proxy.size.height / 2)
+                    .transition(.scale(scale: 0.94).combined(with: .opacity))
+                }
+                .zIndex(700)
+            }
+        }
+        .ignoresSafeArea()
+        .allowsHitTesting(editActionFeedback != nil)
+    }
+
+    private func buildEditActionFeedback(for selectedApps: [AppInfo], tags: [String]) -> EditActionFeedback {
+        let appNames = selectedApps.map(\.name)
+            .joined(separator: localizedListSeparator)
+
+        switch editTagOperation {
+        case .add:
+            let actualAddCount = selectedApps.reduce(into: 0) { count, app in
+                count += tags.reduce(into: 0) { subtotal, tagName in
+                    if !appHasTag(app, tagName: tagName) {
+                        subtotal += 1
+                    }
+                }
+            }
+
+            return EditActionFeedback(
+                title: tr("edit.confirmAdd"),
+                message: formattedFeedbackMessage(
+                    forKey: "edit.feedbackAddFormat",
+                    replacements: [
+                        "%appCount%": "\(selectedApps.count)",
+                        "%appNames%": appNames,
+                        "%tagCount%": "\(actualAddCount)"
+                    ]
+                )
+            )
+
+        case .remove:
+            let actualRemovedTagNames = tags.filter { tagName in
+                selectedApps.contains(where: { appHasTag($0, tagName: tagName) })
+            }
+            let actualRemoveCount = selectedApps.reduce(into: 0) { count, app in
+                count += tags.reduce(into: 0) { subtotal, tagName in
+                    if appHasTag(app, tagName: tagName) {
+                        subtotal += 1
+                    }
+                }
+            }
+
+            return EditActionFeedback(
+                title: tr("edit.confirmRemove"),
+                message: formattedFeedbackMessage(
+                    forKey: "edit.feedbackRemoveFormat",
+                    replacements: [
+                        "%appCount%": "\(selectedApps.count)",
+                        "%appNames%": appNames,
+                        "%tagCount%": "\(actualRemoveCount)",
+                        "%tagNames%": actualRemovedTagNames
+                            .map(displayTagName)
+                            .joined(separator: localizedListSeparator)
+                    ]
+                )
+            )
+        }
+    }
+
+    private func appHasTag(_ app: AppInfo, tagName: String) -> Bool {
+        if tagName == TagDatabase.uncommonTagKey {
+            return app.isUncommon
+        }
+        return app.tags.contains(tagName)
+    }
+
+    private func formattedFeedbackMessage(forKey key: String, replacements: [String: String]) -> String {
+        replacements.reduce(tr(key)) { partial, replacement in
+            partial.replacingOccurrences(of: replacement.key, with: replacement.value)
+        }
+    }
+
+    private func showEditActionFeedback(_ feedback: EditActionFeedback) {
+        let feedbackID = feedback.id
+        withAnimation(.spring(response: 0.24, dampingFraction: 0.82)) {
+            editActionFeedback = feedback
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.6) {
+            guard editActionFeedback?.id == feedbackID else { return }
+            dismissEditActionFeedback()
+        }
+    }
+
+    private func dismissEditActionFeedback() {
+        withAnimation(.easeOut(duration: 0.18)) {
+            editActionFeedback = nil
+        }
+    }
+
+    private var localizedListSeparator: String {
+        switch L10n.currentCode {
+        case "zh-Hans", "zh-Hant", "ja":
+            return "、"
+        case "ar", "ar-Najdi":
+            return "، "
+        default:
+            return ", "
         }
     }
 
@@ -1193,7 +1592,11 @@ struct ContentView: View {
         // Use user-defined order, fall back to alpha
         let ordered = draggedTagNames.filter { filtered.contains($0) }
         let remaining = filtered.filter { !ordered.contains($0) }.sorted()
-        return ordered + remaining
+        return ordered + remaining + [TagDatabase.uncommonTagKey]
+    }
+
+    private func displayTagName(_ tagName: String) -> String {
+        tagName == TagDatabase.uncommonTagKey ? tr("group.uncommon") : tagName
     }
 
     private var tagLabels: [TagLabel] {
@@ -1217,7 +1620,98 @@ struct ContentView: View {
         }
     }
 
+    private var editGroups: [TagGroup] {
+        groups + [
+            TagGroup(
+                name: tr("group.uncommon"),
+                apps: allApps.filter(\.isUncommon).sorted {
+                    $0.name.localizedStandardCompare($1.name) == .orderedAscending
+                }
+            )
+        ]
+    }
+
     // MARK: - Actions
+
+    private func handleBubbleHover(app: AppInfo, frame: CGRect, hovering: Bool) {
+        guard editingBubble == nil else { return }
+        if hovering {
+            hoveredBubble = AppBubbleContext(app: app, frame: frame)
+        } else if hoveredBubble?.app.path == app.path {
+            hoveredBubble = nil
+        }
+    }
+
+    private func beginEditingBubbleNote(app: AppInfo, frame: CGRect) {
+        bubbleDraftNote = currentNote(for: app)
+        hoveredBubble = nil
+        editingBubble = AppBubbleContext(app: app, frame: frame)
+        DispatchQueue.main.async {
+            bubbleNoteFocused = true
+        }
+    }
+
+    private func commitBubbleNote() {
+        guard let context = editingBubble else { return }
+        let limited = String(bubbleDraftNote.prefix(TagDatabase.maxAppNoteLength))
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        TagEditor.setAppNote(limited, for: context.app.path.path)
+        bubbleDraftNote = limited
+        editingBubble = nil
+        bubbleNoteFocused = false
+        refreshApps()
+    }
+
+    private func dismissAppBubble() {
+        hoveredBubble = nil
+        editingBubble = nil
+        bubbleNoteFocused = false
+    }
+
+    private func currentNote(for app: AppInfo) -> String {
+        if let latest = allApps.first(where: { $0.path == app.path })?.note {
+            return latest
+        }
+        return app.note ?? ""
+    }
+
+    private func bubblePlacement(for frame: CGRect, rootFrame: CGRect) -> BubblePlacement {
+        frame.minY - rootFrame.minY < 170 ? .below : .above
+    }
+
+    private func bubbleMetrics(
+        for context: AppBubbleContext,
+        rootFrame: CGRect,
+        rootSize: CGSize,
+        width: CGFloat,
+        placement: BubblePlacement,
+        isEditing: Bool
+    ) -> (centerX: CGFloat, centerY: CGFloat) {
+        let appCenterX = context.frame.midX - rootFrame.minX
+        let halfWidth = width / 2
+        let centerX = min(max(appCenterX, halfWidth + 24), max(halfWidth + 24, rootSize.width - halfWidth - 24))
+        let estimatedHeight = estimatedBubbleHeight(for: context.app, width: width, isEditing: isEditing)
+        let topY: CGFloat
+        if placement == .below {
+            topY = context.frame.maxY - rootFrame.minY + 10
+        } else {
+            topY = context.frame.minY - rootFrame.minY - estimatedHeight - 10
+        }
+        let clampedTopY = min(max(topY, 14), max(14, rootSize.height - estimatedHeight - 14))
+        return (centerX, clampedTopY + estimatedHeight / 2)
+    }
+
+    private func estimatedBubbleHeight(for app: AppInfo, width: CGFloat, isEditing: Bool) -> CGFloat {
+        if isEditing {
+            return 120
+        }
+        let note = currentNote(for: app).trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !note.isEmpty else { return 68 }
+        let contentWidth = max(160, width - 48)
+        let approxCharsPerLine = max(16, Int(contentWidth / 14))
+        let lines = min(4, max(1, Int(ceil(Double(note.count) / Double(approxCharsPerLine)))))
+        return 70 + CGFloat(lines) * 20
+    }
 
     func scrollTo(_ id: String) {
         withAnimation(.easeInOut(duration: 0.25)) { scrollProxy?.scrollTo(id, anchor: .top) }
@@ -1405,9 +1899,9 @@ struct ContentView: View {
 
     func refreshApps(forceLayoutRefresh: Bool = false) {
         DispatchQueue.global(qos: .userInitiated).async {
-            var apps = AppIndexer.scan()
-            let store = TagDatabase.load()
-            apps = TagEditor.annotate(apps: apps)
+            let scannedApps = AppIndexer.scan()
+            let store = TagEditor.reconcileScannedApps(scannedApps)
+            let apps = TagEditor.annotate(apps: scannedApps, store: store)
             let colors = store.tags.mapValues { $0.color }
             let order = TagEditor.orderedTagNames()
             DispatchQueue.main.async {
@@ -1428,6 +1922,9 @@ struct ContentView: View {
         appDragModeActive = false
         endTagNavReorder()
         hideOverlay()
+        DispatchQueue.global(qos: .utility).async {
+            TagEditor.recordLauncherOpen(for: app.path.path)
+        }
         let configuration = NSWorkspace.OpenConfiguration()
         NSWorkspace.shared.openApplication(at: app.path, configuration: configuration)
     }

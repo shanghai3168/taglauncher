@@ -11,6 +11,8 @@ struct TagGroupView: View {
     var showNames: Bool = true
     var dragModeActive: Bool = false
     var onDragModeChange: ((Bool) -> Void)? = nil
+    var onBubbleHover: ((AppInfo, CGRect, Bool) -> Void)? = nil
+    var onEditNote: ((AppInfo, CGRect) -> Void)? = nil
     var onDropApp: ((String, String, Bool) -> Void)? = nil
 
     /// Adaptive columns — auto-fit based on icon size and available width.
@@ -53,6 +55,8 @@ struct TagGroupView: View {
                         sourceTag: group.name,
                         dragModeActive: dragModeActive,
                         onDragModeChange: onDragModeChange,
+                        onBubbleHover: onBubbleHover,
+                        onEditNote: onEditNote,
                         onSelect: { onSelectApp(app) }
                     )
                 }

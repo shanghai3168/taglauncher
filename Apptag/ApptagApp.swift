@@ -796,6 +796,7 @@ struct PreferencesView: View {
     @AppStorage("hideAppNames") private var hideAppNames = false
     @AppStorage("showDockIcon") private var showDockIcon = false
     @AppStorage("launchAtLogin") private var launchAtLogin = true
+    @AppStorage("showUncommonAppBubbles") private var showUncommonAppBubbles = true
     @State private var selectedLanguage = L10n.currentCode
     @State private var isRefreshingLanguage = false
     @State private var allApps: [AppInfo] = []
@@ -1064,7 +1065,19 @@ struct PreferencesView: View {
 
             // Tab 4: Data
             VStack(spacing: 0) {
-                Spacer(minLength: 96)
+                Spacer(minLength: 54)
+
+                VStack(alignment: .leading, spacing: 5) {
+                    Toggle(tr("settings.uncommonBubble"), isOn: $showUncommonAppBubbles)
+                        .font(.system(size: 13, weight: .medium))
+                    Text(tr("settings.uncommonBubbleDesc"))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(width: 420, alignment: .leading)
+
+                Spacer(minLength: 28)
 
                 VStack(alignment: .leading, spacing: 8) {
                     Text(tr("settings.backup"))

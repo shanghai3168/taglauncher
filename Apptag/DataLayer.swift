@@ -10,11 +10,13 @@ struct AppInfo: Identifiable, Hashable {
     let tags: [String]
     let bundleIdentifier: String?
     let icon: NSImage  // Pre-loaded during background scan
+    var isUncommon: Bool = false
+    var note: String? = nil
 
     /// True if this is an Apple pre-installed app.
     var isAppleApp: Bool {
         if let bid = bundleIdentifier, bid.hasPrefix("com.apple.") { return true }
-        return path.path.hasPrefix("/System/Applications/")
+        return AppIndexer.isSystemAppPath(path.path)
     }
 
     func hash(into hasher: inout Hasher) { hasher.combine(path) }
@@ -53,45 +55,95 @@ enum AppIndexer {
     static let searchPaths: [URL] = [
         URL(fileURLWithPath: "/Applications"),
         URL(fileURLWithPath: "/System/Applications"),
+        URL(fileURLWithPath: "/System/Cryptexes/App/System/Applications"),
+        URL(fileURLWithPath: "/System/Volumes/Preboot/Cryptexes/App/System/Applications"),
         FileManager.default.homeDirectoryForCurrentUser
             .appendingPathComponent("Applications")
     ]
 
+    private static let systemAppPathPrefixes = [
+        "/System/Applications/",
+        "/System/Cryptexes/App/System/Applications/",
+        "/System/Volumes/Preboot/Cryptexes/App/System/Applications/"
+    ]
+
+    static func isSystemAppPath(_ path: String) -> Bool {
+        systemAppPathPrefixes.contains { path.hasPrefix($0) }
+    }
+
     /// Scan all standard locations. Tags are annotated from TagDatabase by the caller.
     static func scan() -> [AppInfo] {
-        var seen = Set<URL>()
+        var seenResolvedPaths = Set<String>()
         var apps: [AppInfo] = []
 
         for baseURL in searchPaths {
+            scanDirectChildren(
+                in: baseURL,
+                apps: &apps,
+                seenResolvedPaths: &seenResolvedPaths
+            )
+
             guard let enumerator = FileManager.default.enumerator(
                 at: baseURL,
-                includingPropertiesForKeys: [.isDirectoryKey],
+                includingPropertiesForKeys: [.isDirectoryKey, .isSymbolicLinkKey],
                 options: [.skipsHiddenFiles, .skipsPackageDescendants]
             ) else { continue }
 
             for case let url as URL in enumerator {
-                guard url.pathExtension == "app" else { continue }
-                guard !seen.contains(url) else { continue }
-                seen.insert(url)
-
-                let name = url.deletingPathExtension().lastPathComponent
-                let icon = NSWorkspace.shared.icon(forFile: url.path)
-                icon.size = NSSize(width: 96, height: 96)
-                var bundleId: String? = nil
-                if let bundle = Bundle(url: url) {
-                    bundleId = bundle.bundleIdentifier
-                }
-
-                apps.append(AppInfo(
-                    name: name, path: url, tags: [],
-                    bundleIdentifier: bundleId, icon: icon
-                ))
+                appendAppIfNeeded(
+                    at: url,
+                    apps: &apps,
+                    seenResolvedPaths: &seenResolvedPaths
+                )
             }
         }
 
         return apps.sorted {
             $0.name.localizedStandardCompare($1.name) == .orderedAscending
         }
+    }
+
+    private static func scanDirectChildren(
+        in baseURL: URL,
+        apps: inout [AppInfo],
+        seenResolvedPaths: inout Set<String>
+    ) {
+        guard let names = try? FileManager.default.contentsOfDirectory(atPath: baseURL.path) else { return }
+
+        for name in names where !name.hasPrefix(".") {
+            appendAppIfNeeded(
+                at: baseURL.appendingPathComponent(name),
+                apps: &apps,
+                seenResolvedPaths: &seenResolvedPaths
+            )
+        }
+    }
+
+    private static func appendAppIfNeeded(
+        at url: URL,
+        apps: inout [AppInfo],
+        seenResolvedPaths: inout Set<String>
+    ) {
+        guard url.pathExtension.lowercased() == "app" else { return }
+
+        let displayURL = url.standardizedFileURL
+        let resolvedURL = displayURL.resolvingSymlinksInPath().standardizedFileURL
+        guard seenResolvedPaths.insert(resolvedURL.path).inserted else { return }
+
+        let name = displayURL.deletingPathExtension().lastPathComponent
+        let icon = NSWorkspace.shared.icon(forFile: displayURL.path)
+        icon.size = NSSize(width: 96, height: 96)
+
+        let bundleId = Bundle(url: displayURL)?.bundleIdentifier
+            ?? Bundle(url: resolvedURL)?.bundleIdentifier
+
+        apps.append(AppInfo(
+            name: name,
+            path: displayURL,
+            tags: [],
+            bundleIdentifier: bundleId,
+            icon: icon
+        ))
     }
 
     /// Group apps by their tags (from TagDatabase).
@@ -140,6 +192,14 @@ enum AppIndexer {
 }
 
 enum TagDatabase {
+    static let uncommonTagKey = "__system.uncommon"
+    static let maxAppNoteLength = 80
+    static let autoUncommonOpenThreshold = 100
+
+    enum UncommonSource: String, Codable {
+        case auto
+        case manual
+    }
 
     // MARK: Storage types
 
@@ -152,6 +212,42 @@ enum TagDatabase {
         var tags: [String: TagDef] = [:]
         var appTags: [String: [String]] = [:]  // path → tag names
         var tagOrder: [String] = []  // display order; empty → alpha sort
+        var uncommonAppPaths: [String] = []  // special marker; does not affect normal groups
+        var uncommonSources: [String: UncommonSource] = [:]  // current uncommon source: auto/manual
+        var appOpenCounts: [String: Int] = [:]  // launches opened from TagLauncher
+        var knownAppPaths: [String] = []  // baseline set to detect newly installed apps
+        var appNotes: [String: String] = [:]  // path → user note; retained even if marker is removed
+
+        enum CodingKeys: String, CodingKey {
+            case version
+            case tags
+            case appTags
+            case tagOrder
+            case uncommonAppPaths
+            case uncommonSources
+            case appOpenCounts
+            case knownAppPaths
+            case appNotes
+        }
+
+        init() {}
+
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            version = try container.decodeIfPresent(Int.self, forKey: .version) ?? 1
+            tags = try container.decodeIfPresent([String: TagDef].self, forKey: .tags) ?? [:]
+            appTags = try container.decodeIfPresent([String: [String]].self, forKey: .appTags) ?? [:]
+            tagOrder = try container.decodeIfPresent([String].self, forKey: .tagOrder) ?? []
+            uncommonAppPaths = try container.decodeIfPresent([String].self, forKey: .uncommonAppPaths) ?? []
+            uncommonSources = try container.decodeIfPresent([String: UncommonSource].self, forKey: .uncommonSources) ?? [:]
+            appOpenCounts = try container.decodeIfPresent([String: Int].self, forKey: .appOpenCounts) ?? [:]
+            knownAppPaths = try container.decodeIfPresent([String].self, forKey: .knownAppPaths) ?? []
+            appNotes = try container.decodeIfPresent([String: String].self, forKey: .appNotes) ?? [:]
+
+            for path in uncommonAppPaths where uncommonSources[path] == nil {
+                uncommonSources[path] = .manual
+            }
+        }
     }
 
     // MARK: Paths
@@ -191,7 +287,9 @@ enum TagDatabase {
     }
 
     static func save(_ store: Store) {
-        guard let data = try? JSONEncoder().encode(store) else { return }
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        guard let data = try? encoder.encode(store) else { return }
         try? data.write(to: storeURL, options: .atomic)
     }
 
@@ -299,12 +397,18 @@ enum TagEditor {
 
     /// Annotate scanned apps with tags from the database.
     static func annotate(apps: [AppInfo]) -> [AppInfo] {
-        let store = TagDatabase.load()
+        annotate(apps: apps, store: TagDatabase.load())
+    }
+
+    static func annotate(apps: [AppInfo], store: TagDatabase.Store) -> [AppInfo] {
+        let uncommonPaths = Set(store.uncommonAppPaths)
         return apps.map { app in
             let appTags = store.appTags[app.path.path] ?? []
             return AppInfo(
                 name: app.name, path: app.path, tags: appTags,
-                bundleIdentifier: app.bundleIdentifier, icon: app.icon
+                bundleIdentifier: app.bundleIdentifier, icon: app.icon,
+                isUncommon: uncommonPaths.contains(app.path.path),
+                note: store.appNotes[app.path.path]
             )
         }
     }
@@ -333,13 +437,138 @@ enum TagEditor {
     /// Replace the full editable tag set for multiple apps.
     static func setTags(_ tags: [String], to paths: [String]) {
         var store = TagDatabase.load()
+        let selectedUncommon = tags.contains(TagDatabase.uncommonTagKey)
         let validTags = tags.filter { store.tags[$0] != nil }
+        var uncommonPaths = Set(store.uncommonAppPaths)
         for path in paths {
             if validTags.isEmpty {
                 store.appTags.removeValue(forKey: path)
             } else {
                 store.appTags[path] = validTags
             }
+            if selectedUncommon {
+                uncommonPaths.insert(path)
+                store.uncommonSources[path] = .manual
+            } else {
+                uncommonPaths.remove(path)
+                store.uncommonSources.removeValue(forKey: path)
+            }
+        }
+        store.uncommonAppPaths = uncommonPaths.sorted()
+        TagDatabase.save(store)
+    }
+
+    /// Append tags to multiple apps without disturbing their existing tag sets.
+    static func appendTags(_ tags: [String], to paths: [String]) {
+        guard !tags.isEmpty, !paths.isEmpty else { return }
+
+        var store = TagDatabase.load()
+        let selectedUncommon = tags.contains(TagDatabase.uncommonTagKey)
+        let validTags = tags.filter { store.tags[$0] != nil }
+        var uncommonPaths = Set(store.uncommonAppPaths)
+
+        for path in paths {
+            var current = store.appTags[path] ?? []
+            for tag in validTags where !current.contains(tag) {
+                current.append(tag)
+            }
+            if !current.isEmpty {
+                store.appTags[path] = current
+            }
+
+            if selectedUncommon {
+                uncommonPaths.insert(path)
+                store.uncommonSources[path] = .manual
+            }
+        }
+
+        store.uncommonAppPaths = uncommonPaths.sorted()
+        TagDatabase.save(store)
+    }
+
+    /// Remove tags from multiple apps while preserving every unrelated tag.
+    static func removeTags(_ tags: [String], from paths: [String]) {
+        guard !tags.isEmpty, !paths.isEmpty else { return }
+
+        var store = TagDatabase.load()
+        let selectedUncommon = tags.contains(TagDatabase.uncommonTagKey)
+        let validTags = Set(tags.filter { store.tags[$0] != nil })
+        var uncommonPaths = Set(store.uncommonAppPaths)
+
+        for path in paths {
+            var current = store.appTags[path] ?? []
+            current.removeAll { validTags.contains($0) }
+
+            if current.isEmpty {
+                store.appTags.removeValue(forKey: path)
+            } else {
+                store.appTags[path] = current
+            }
+
+            if selectedUncommon {
+                uncommonPaths.remove(path)
+                store.uncommonSources.removeValue(forKey: path)
+            }
+        }
+
+        store.uncommonAppPaths = uncommonPaths.sorted()
+        TagDatabase.save(store)
+    }
+
+    static func reconcileScannedApps(_ apps: [AppInfo]) -> TagDatabase.Store {
+        var store = TagDatabase.load()
+        let scannedPaths = Set(apps.map { $0.path.path })
+        let knownPaths = Set(store.knownAppPaths)
+
+        if store.knownAppPaths.isEmpty {
+            store.knownAppPaths = scannedPaths.sorted()
+            if apps.isEmpty == false {
+                TagDatabase.save(store)
+            }
+            return store
+        }
+
+        let newPaths = scannedPaths.subtracting(knownPaths)
+        guard !newPaths.isEmpty else { return store }
+
+        var uncommonPaths = Set(store.uncommonAppPaths)
+        for path in newPaths {
+            uncommonPaths.insert(path)
+            store.uncommonSources[path] = .auto
+            if store.appOpenCounts[path] == nil {
+                store.appOpenCounts[path] = 0
+            }
+        }
+
+        store.uncommonAppPaths = uncommonPaths.sorted()
+        store.knownAppPaths = knownPaths.union(newPaths).sorted()
+        TagDatabase.save(store)
+        return store
+    }
+
+    static func recordLauncherOpen(for path: String) {
+        var store = TagDatabase.load()
+        store.appOpenCounts[path] = (store.appOpenCounts[path] ?? 0) + 1
+
+        if store.uncommonSources[path] == .auto,
+           store.appOpenCounts[path, default: 0] >= TagDatabase.autoUncommonOpenThreshold {
+            var uncommonPaths = Set(store.uncommonAppPaths)
+            uncommonPaths.remove(path)
+            store.uncommonAppPaths = uncommonPaths.sorted()
+            store.uncommonSources.removeValue(forKey: path)
+        }
+
+        TagDatabase.save(store)
+    }
+
+    static func setAppNote(_ note: String, for path: String) {
+        var store = TagDatabase.load()
+        let trimmed = note.trimmingCharacters(in: .whitespacesAndNewlines)
+        let limited = String(trimmed.prefix(TagDatabase.maxAppNoteLength))
+        if limited.isEmpty {
+            store.appNotes.removeValue(forKey: path)
+        } else {
+            store.appNotes[path] = limited
         }
         TagDatabase.save(store)
     }
