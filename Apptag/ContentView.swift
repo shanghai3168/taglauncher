@@ -396,6 +396,9 @@ struct ContentView: View {
     private let editSidebarHorizontalInset: CGFloat = 12
     private let floatingControlsTrailingInset: CGFloat = 20
     private let floatingControlsReservedWidth: CGFloat = 120
+    private var appBubbleDisabled: Bool {
+        appDragModeActive || pendingUncategorizedDrop != nil
+    }
     private let rightSidebarFloatingClearance: CGFloat = 44
 
     private var isSideLayout: Bool {
@@ -834,6 +837,7 @@ struct ContentView: View {
                             onDragModeChange: { setAppDragMode($0) },
                             onBubbleHover: handleBubbleHover,
                             onEditNote: beginEditingBubbleNote,
+                            bubbleDisabled: appBubbleDisabled,
                             hoveredAppItemID: $hoveredAppItemID,
                             onDropApp: { path, source, copy in
                                 dropApp(path: path, sourceTag: source, targetTag: group.name, copy: copy)
@@ -937,6 +941,7 @@ struct ContentView: View {
                         onDragModeChange: { setAppDragMode($0) },
                         onBubbleHover: handleBubbleHover,
                         onEditNote: beginEditingBubbleNote,
+                        bubbleDisabled: appBubbleDisabled,
                         itemID: "\(group.name)|\(app.path.path)",
                         hoveredAppItemID: $hoveredAppItemID,
                         onSelect: { openApp(app) }
@@ -1175,6 +1180,7 @@ struct ContentView: View {
                                 onDragModeChange: { setAppDragMode($0) },
                                 onBubbleHover: handleBubbleHover,
                                 onEditNote: beginEditingBubbleNote,
+                                bubbleDisabled: appBubbleDisabled,
                                 itemID: "\(group.name)|\(app.path.path)",
                                 hoveredAppItemID: $hoveredAppItemID,
                                 onSelect: { openApp(app) }
@@ -1848,6 +1854,10 @@ struct ContentView: View {
     // MARK: - Actions
 
     private func handleBubbleHover(app: AppInfo, frame: CGRect, hovering: Bool) {
+        guard !appBubbleDisabled else {
+            clearAppBubbleState()
+            return
+        }
         guard editingBubble == nil else { return }
         if hovering {
             hoveredBubble = AppBubbleContext(app: app, frame: frame)
@@ -1857,6 +1867,10 @@ struct ContentView: View {
     }
 
     private func beginEditingBubbleNote(app: AppInfo, frame: CGRect) {
+        guard !appBubbleDisabled else {
+            clearAppBubbleState()
+            return
+        }
         bubbleDraftNote = currentNote(for: app)
         hoveredBubble = nil
         editingBubble = AppBubbleContext(app: app, frame: frame)
@@ -1879,6 +1893,16 @@ struct ContentView: View {
     }
 
     private func dismissAppBubble() {
+        hoveredBubble = nil
+        if editingBubble != nil {
+            notifyAppNoteEditing(active: false)
+        }
+        editingBubble = nil
+        bubbleNoteFocused = false
+    }
+
+    private func clearAppBubbleState() {
+        hoveredAppItemID = nil
         hoveredBubble = nil
         if editingBubble != nil {
             notifyAppNoteEditing(active: false)
@@ -2089,6 +2113,7 @@ struct ContentView: View {
         let assignedTags = assignedRegularDisplayTags(for: app)
         guard !assignedTags.isEmpty else { return }
 
+        clearAppBubbleState()
         withAnimation(.spring(response: 0.24, dampingFraction: 0.84)) {
             pendingUncategorizedDrop = PendingUncategorizedDrop(app: app, assignedTags: assignedTags)
         }
@@ -2183,6 +2208,7 @@ struct ContentView: View {
     private func setAppDragMode(_ active: Bool) {
         if active {
             endTagNavReorder()
+            clearAppBubbleState()
         }
         appDragModeActive = active
         if active {

@@ -12,6 +12,7 @@ struct AppGridItem: View {
     var onDragModeChange: ((Bool) -> Void)? = nil
     var onBubbleHover: ((AppInfo, CGRect, Bool) -> Void)? = nil
     var onEditNote: ((AppInfo, CGRect) -> Void)? = nil
+    var bubbleDisabled: Bool = false
     var itemID: String
     @Binding var hoveredAppItemID: String?
     let onSelect: () -> Void
@@ -72,6 +73,11 @@ struct AppGridItem: View {
         .background(
             AppGridItemHoverTracker { hovering, frame in
                 interactionFrame = frame
+                if bubbleDisabled || dragModeActive {
+                    setHoverState(false)
+                    onBubbleHover?(app, frame, false)
+                    return
+                }
                 if hovering {
                     setHoverState(true)
                     guard shouldShowAppBubble else { return }
@@ -99,6 +105,16 @@ struct AppGridItem: View {
         )
         .onChange(of: dragModeActive) { _, active in
             wiggle = active
+            if active {
+                setHoverState(false)
+                onBubbleHover?(app, interactionFrame, false)
+            }
+        }
+        .onChange(of: bubbleDisabled) { _, disabled in
+            if disabled {
+                setHoverState(false)
+                onBubbleHover?(app, interactionFrame, false)
+            }
         }
         .onDisappear {
             if hoveredAppItemID == itemID {
