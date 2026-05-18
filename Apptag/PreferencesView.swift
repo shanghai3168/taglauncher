@@ -484,7 +484,6 @@ struct PreferencesView: View {
                     onRefresh: { scanApps() }
                 )
             }
-            .padding(.leading, 16)
             .tabItem { Label(tr("settings.tags"), systemImage: "tag.fill") }
             .onAppear { scanApps() }
 

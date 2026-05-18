@@ -15,6 +15,9 @@ struct TagEditorView: View {
     @State private var newTagNameText = ""
     @State private var newTagColorIndex = 0
 
+    private let contentMaxWidth: CGFloat = 980
+    private let contentHorizontalPadding: CGFloat = 34
+
     private var sortedTagNames: [String] {
         let order = TagEditor.orderedTagNames()
         let filtered = tagColors.keys.filter { !excludedTagNames.contains($0) }
@@ -38,9 +41,14 @@ struct TagEditorView: View {
                 }
                 .buttonStyle(.bordered)
             }
-            .padding(.horizontal, 16).padding(.vertical, 8)
+            .frame(maxWidth: contentMaxWidth)
+            .padding(.horizontal, contentHorizontalPadding)
+            .padding(.vertical, 8)
 
-            Divider().opacity(0.3)
+            Divider()
+                .opacity(0.3)
+                .frame(maxWidth: contentMaxWidth)
+                .padding(.horizontal, contentHorizontalPadding)
 
             ScrollView {
                 VStack(spacing: 0) {
@@ -52,15 +60,25 @@ struct TagEditorView: View {
                     }
                     if addingNewTag {
                         newTagRow()
-                        Divider().opacity(0.15).padding(.leading, 16)
+                        rowDivider
                     }
                     ForEach(sortedTagNames, id: \.self) { tagName in
                         tagEditRow(tagName)
-                        Divider().opacity(0.15).padding(.leading, 16)
+                        rowDivider
                     }
                 }
+                .frame(maxWidth: contentMaxWidth)
+                .padding(.horizontal, contentHorizontalPadding)
+                .frame(maxWidth: .infinity, alignment: .center)
             }
         }
+        .frame(maxWidth: .infinity, alignment: .center)
+    }
+
+    private var rowDivider: some View {
+        Divider()
+            .opacity(0.15)
+            .frame(maxWidth: contentMaxWidth)
     }
 
     // MARK: - Tag Row
@@ -84,13 +102,18 @@ struct TagEditorView: View {
                     placeholder: tr("tag.name"),
                     onSubmit: { commitTagRename(tagName) }
                 )
-                .frame(width: 160, height: 24)
+                .frame(minWidth: 220, maxWidth: .infinity, minHeight: 24, maxHeight: 24)
                 Button(tr("tag.save")) { commitTagRename(tagName) }
                     .buttonStyle(.borderedProminent).controlSize(.small)
                 Button(tr("tag.cancel")) { editingTagName = nil }
                     .buttonStyle(.plain).foregroundStyle(.secondary)
             } else {
-                Text(tagName).font(.system(size: 14)).frame(width: 160, alignment: .leading)
+                Text(tagName)
+                    .font(.system(size: 14))
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+                    .frame(minWidth: 220, maxWidth: .infinity, alignment: .leading)
+                    .help(tagName)
                 Button { startRename(tagName) } label: {
                     Image(systemName: "pencil").font(.system(size: 11))
                 }
@@ -100,9 +123,9 @@ struct TagEditorView: View {
                 }
                 .buttonStyle(.plain).foregroundStyle(.red)
             }
-            Spacer()
         }
-        .padding(.horizontal, 20).padding(.vertical, 10)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 10)
     }
 
     // MARK: - New Tag Row
@@ -121,14 +144,14 @@ struct TagEditorView: View {
                 placeholder: tr("tag.newName"),
                 onSubmit: { addNewTag() }
             )
-            .frame(width: 160, height: 24)
+            .frame(minWidth: 220, maxWidth: .infinity, minHeight: 24, maxHeight: 24)
             Button(tr("tag.add")) { addNewTag() }
                 .buttonStyle(.borderedProminent).controlSize(.small)
             Button(tr("tag.cancel")) { addingNewTag = false; newTagNameText = "" }
                 .buttonStyle(.plain).foregroundStyle(.secondary)
-            Spacer()
         }
-        .padding(.horizontal, 20).padding(.vertical, 10)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 10)
     }
 
     // MARK: - Actions
