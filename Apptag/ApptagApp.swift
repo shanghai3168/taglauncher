@@ -29,6 +29,9 @@ final class OverlayPanel: NSPanel {
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private static let showDockIconKey = "showDockIcon"
+    private static let statusItemAutosaveName = "com.apptag.launcher.statusItem"
+    private static let statusItemButtonIdentifier = NSUserInterfaceItemIdentifier("TagLauncherStatusItemButton")
+    private static let statusItemAccessibilityLabel = "TagLauncher"
     private static let showAppListMenuItemIdentifier = NSUserInterfaceItemIdentifier("TagLauncherShowAppListMenuItem")
     private static let showAppListShortcutGlyphs = "⌥⇧␣"
     private static let overlayDefaultLevel = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.maximumWindow)))
@@ -192,12 +195,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Menu Bar
 
     private func setupMenuBar() {
-        removeMenuBarItem()
-        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+        if statusItem == nil {
+            statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+        } else {
+            statusItem?.length = NSStatusItem.squareLength
+        }
         guard let statusItem else { return }
+        statusItem.autosaveName = Self.statusItemAutosaveName
         statusItem.isVisible = true
 
         if let button = statusItem.button {
+            button.identifier = Self.statusItemButtonIdentifier
+            button.setAccessibilityIdentifier(Self.statusItemAutosaveName)
+            button.setAccessibilityLabel(Self.statusItemAccessibilityLabel)
             button.image = makeMenuBarIcon()
             button.imageScaling = .scaleProportionallyDown
             button.imagePosition = .imageOnly
