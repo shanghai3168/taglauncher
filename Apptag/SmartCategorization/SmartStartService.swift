@@ -261,7 +261,8 @@ enum SmartStartService {
                 source: .localCatalog,
                 reason: "Matched Smart Start catalog entry: \(matched.name)",
                 provenance: matched.sourceEvidence,
-                defaultNote: matched.localizedNote
+                defaultNote: matched.localizedNote,
+                defaultNoteCandidates: matched.notes?.values.map { $0 } ?? []
             ))
         }
 
@@ -348,12 +349,21 @@ enum SmartStartService {
             }
 
             if let defaultNote = assignment.defaultNote?.trimmingCharacters(in: .whitespacesAndNewlines),
-               !defaultNote.isEmpty,
-               store.appNotes[path]?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty != false {
-                store.appNotes[path] = String(defaultNote.prefix(TagDatabase.maxAppNoteLength))
-                uncommonPaths.insert(path)
-                if store.uncommonSources[path] == nil {
-                    store.uncommonSources[path] = .auto
+               !defaultNote.isEmpty {
+                let currentNote = store.appNotes[path]?.trimmingCharacters(in: .whitespacesAndNewlines)
+                let knownDefaultNotes = Set(assignment.defaultNoteCandidates.compactMap(normalizedNote))
+                let normalizedCurrentNote = normalizedNote(currentNote)
+                let shouldSeedNote = currentNote?.isEmpty != false
+                    || normalizedCurrentNote.map { knownDefaultNotes.contains($0) } == true
+
+                if shouldSeedNote {
+                    store.appNotes[path] = String(defaultNote.prefix(TagDatabase.maxAppNoteLength))
+                    if currentNote?.isEmpty != false {
+                        uncommonPaths.insert(path)
+                        if store.uncommonSources[path] == nil {
+                            store.uncommonSources[path] = .auto
+                        }
+                    }
                 }
             }
         }

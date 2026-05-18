@@ -14,6 +14,7 @@ struct TagGroupView: View {
     var onBubbleHover: ((AppInfo, CGRect, Bool) -> Void)? = nil
     var onEditNote: ((AppInfo, CGRect) -> Void)? = nil
     var bubbleDisabled: Bool = false
+    var dragResetToken: Int = 0
     @Binding var hoveredAppItemID: String?
     var onDropApp: ((String, String, Bool) -> Void)? = nil
 
@@ -61,6 +62,7 @@ struct TagGroupView: View {
                         onEditNote: onEditNote,
                         bubbleDisabled: bubbleDisabled,
                         itemID: "\(group.name)|\(app.path.path)",
+                        dragResetToken: dragResetToken,
                         hoveredAppItemID: $hoveredAppItemID,
                         onSelect: { onSelectApp(app) }
                     )

@@ -1,6 +1,6 @@
 # Apptag — Mac App Store 提审资料
 
-> 版本: 6.0.5 | Bundle ID: com.apptag.launcher | 更新日期: 2026-05-17
+> 版本: 7.3.5 | Build: 744 | Bundle ID: com.apptag.launcher | 更新日期: 2026-05-18
 
 ---
 
@@ -11,8 +11,8 @@
 | **App 名称** | Apptag |
 | **副标题** | Tag-Based App Launcher |
 | **Bundle ID** | com.apptag.launcher |
-| **版本号** | 6.0.5 |
-| **Build 号** | 610 |
+| **版本号** | 7.3.5 |
+| **Build 号** | 744 |
 | **SKU** | apptag-mac-001 |
 | **主要类别** | Utilities (工具) |
 | **次要类别** | Productivity (效率) |
@@ -175,7 +175,9 @@ Mac App Store 要求至少 1 张截图（最多 10 张）。推荐尺寸：
 
 ## 7. App 图标
 
-已有自定义图标文件: `~/Projects/Apptag/icon-icns.icns`
+已有自定义图标文件:
+- `~/Projects/Apptag/icon-icns.icns`
+- `~/Projects/Apptag/Apptag/Assets.xcassets/AppIcon.appiconset/icon_1024_preview.png`
 
 App Store 额外要求:
 - **1024×1024 PNG** (用于 App Store 列表展示)
@@ -187,23 +189,21 @@ App Store 额外要求:
 ## 8. What's New (本次版本更新说明)
 
 ```
-Apptag 6.0.5
+Apptag 7.3.5
 
-- Added an Uncommon app marker for apps you are still learning, with optional hover notes
-- New apps can be marked as Uncommon automatically and are cleared after enough launches from TagLauncher
-- Added local note editing for Uncommon apps; notes stay in the exported JSON even if the marker is removed later
-- Added an Uncommon bubble toggle in the Data preferences tab, enabled by default
-- Reworked batch category editing into clear Add Tags and Remove Tags modes
-- Fixed batch editing so selected apps no longer inherit unrelated tags from each other
-- Added clear confirmation feedback showing the real number of tag links added or removed
-- Improved Remove Tags mode with red delete indicators and safer label truncation
-- Fixed edit-sidebar layout so long localized hints no longer stretch the page
-- Removed the edit-page center title and gave more room to the action hint and confirmation button
-- Improved shortcut hints in Language, Data, and About settings pages using symbol-only key graphics
-- Fixed a crash caused by toolbar hint layout constraints in the edit screen
+- Added Smart Start intelligent initial categorization with a built-in macOS app catalog, localized system tags, and default app notes
+- Added category scheme backup, restore, export, import, and automatic snapshots for safer tag management
+- Improved overlay performance with app scan caching, reduced full-view rebuilds, and smoother hover behavior
+- Improved drag-to-uncategorized handling with an in-overlay confirmation panel and better visual cleanup during drag operations
 - Fixed Safari and other modern macOS system apps being missed when they live behind Cryptex system paths
-- Kept duplicate app icons out by resolving symlinks for scanning deduplication
-- Version updated to 6.0.5, Build updated to 610
+- Improved settings and edit controls, including more stable settings access from the overlay and better multilingual layout behavior
+- Improved menu bar item stability with a persistent status item identity so macOS and menu bar managers can recognize it consistently
+- Fixed localized default notes for Apple apps during first launch in non-Chinese languages
+- Fixed Uncategorized drag-and-drop confirmation so cancel/confirm no longer leaves icon drag state stuck
+- Improved tag-list reordering feedback by replacing persistent wiggle animation with clearer opacity-based drag state
+- Fixed the Smart Start apply confirmation in Settings so the warning stays above the Settings window with clearer readable controls
+- Fixed right-side tag navigation getting stuck in a dimmed drag visual state after a tag click
+- Version updated to 7.3.5, Build updated to 744
 ```
 
 ---
@@ -263,6 +263,7 @@ App Store 沙盒环境下不写入 `~/Library/LaunchAgents`，设置面板也不
 - [ ] 生成 1024×1024 App Store 图标 PNG
 - [ ] 截取 6 张 Mac 截图 (3456×2234 PNG)
 - [ ] 准备隐私政策 URL（GitHub Pages / 独立页面 / Notion）
+- [ ] 确认 `Apptag/Info.plist` 与构建产物均为 `7.3.5` / Build `744`
 - [ ] 确认代码签名证书 (Mac App Distribution)
 - [ ] 通过 TestFlight 测试 sandbox 下快捷键功能
 - [ ] 使用 `APP_STORE=1 CODESIGN_IDENTITY="..." bash build.sh` 生成正式签名包

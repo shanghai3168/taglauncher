@@ -586,6 +586,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         overlayWindow?.orderOut(nil)
         removeOverlayKeyMonitor()
+        NotificationCenter.default.post(name: .tagLauncherOverlayDidHide, object: nil)
         if force {
             overlayWindow = nil
         }
@@ -836,15 +837,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
 final class DismissibleHostingView<Content: View>: NSHostingView<Content> {
     private let onBackdropTap: () -> Void
+    private var suppressBackdropDismiss = false
+    private var modalInteractionObserver: NSObjectProtocol?
 
     @MainActor required init(rootView: Content) {
         self.onBackdropTap = {}
         super.init(rootView: rootView)
+        observeModalInteractionChanges()
     }
 
     init(rootView: Content, onBackdropTap: @escaping () -> Void) {
         self.onBackdropTap = onBackdropTap
         super.init(rootView: rootView)
+        observeModalInteractionChanges()
+    }
+
+    deinit {
+        if let modalInteractionObserver {
+            NotificationCenter.default.removeObserver(modalInteractionObserver)
+        }
     }
 
     @available(*, unavailable)
@@ -857,6 +868,10 @@ final class DismissibleHostingView<Content: View>: NSHostingView<Content> {
             return
         }
         if hit == self {
+            if suppressBackdropDismiss {
+                super.mouseDown(with: event)
+                return
+            }
             onBackdropTap()
             return
         }
@@ -877,6 +892,16 @@ final class DismissibleHostingView<Content: View>: NSHostingView<Content> {
             return
         }
         super.mouseDown(with: event)
+    }
+
+    private func observeModalInteractionChanges() {
+        modalInteractionObserver = NotificationCenter.default.addObserver(
+            forName: .tagLauncherModalInteractionChanged,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            self?.suppressBackdropDismiss = (notification.userInfo?["active"] as? Bool) ?? false
+        }
     }
 
     private func findTextFieldContainer(in view: NSView) -> TextFieldContainer? {

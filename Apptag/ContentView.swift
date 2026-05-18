@@ -10,6 +10,8 @@ extension Notification.Name {
     static let tagLauncherDataDidChange = Notification.Name("TagLauncherDataDidChange")
     static let tagLauncherOpenPreferencesRequested = Notification.Name("TagLauncherOpenPreferencesRequested")
     static let tagLauncherOverlayDidShow = Notification.Name("TagLauncherOverlayDidShow")
+    static let tagLauncherOverlayDidHide = Notification.Name("TagLauncherOverlayDidHide")
+    static let tagLauncherModalInteractionChanged = Notification.Name("TagLauncherModalInteractionChanged")
 }
 
 // MARK: - Edit Phase
@@ -199,8 +201,8 @@ struct TagPill: View {
     let colorIndex: Int
     var dragModeActive: Bool = false
     var isDragging: Bool = false
+    var dragResetToken: Int = 0
     let action: () -> Void
-    @State private var wiggle = false
 
     private var bgColor: Color {
         Color(nsColor: TagColor.nsColor(for: colorIndex))
@@ -222,20 +224,14 @@ struct TagPill: View {
             .background(RoundedRectangle(cornerRadius: 7).fill(bgColor))
             .shadow(color: .black.opacity(isDragging ? 0.34 : 0.2), radius: isDragging ? 8 : 3, y: isDragging ? 4 : 1)
             .scaleEffect(isDragging ? 1.05 : 1.0)
-            .rotationEffect(.degrees(dragModeActive ? (wiggle ? 1.8 : -1.8) : 0))
-            .animation(
-                dragModeActive
-                    ? .easeInOut(duration: 0.12).repeatForever(autoreverses: true)
-                    : .default,
-                value: wiggle
-            )
-            .onChange(of: dragModeActive) { _, active in
-                wiggle = active
-            }
+            .opacity(dragModeActive ? (isDragging ? 1.0 : 0.62) : 1.0)
+            .animation(.easeOut(duration: 0.08), value: isDragging)
+            .animation(.easeOut(duration: 0.08), value: dragModeActive)
+            .id(dragResetToken)
             .contentShape(RoundedRectangle(cornerRadius: 7))
             .onTapGesture {
-                if !dragModeActive { action() }
-        }
+                action()
+            }
     }
 }
 
@@ -246,8 +242,8 @@ struct SideTagPill: View {
     let colorIndex: Int
     var dragModeActive: Bool = false
     var isDragging: Bool = false
+    var dragResetToken: Int = 0
     let action: () -> Void
-    @State private var wiggle = false
 
     private var bgColor: Color {
         Color(nsColor: TagColor.nsColor(for: colorIndex))
@@ -265,20 +261,14 @@ struct SideTagPill: View {
             .background(RoundedRectangle(cornerRadius: 6).fill(bgColor))
             .shadow(color: .black.opacity(isDragging ? 0.34 : 0.2), radius: isDragging ? 8 : 3, y: isDragging ? 4 : 1)
             .scaleEffect(isDragging ? 1.03 : 1.0)
-            .rotationEffect(.degrees(dragModeActive ? (wiggle ? 1.6 : -1.6) : 0))
-            .animation(
-                dragModeActive
-                    ? .easeInOut(duration: 0.12).repeatForever(autoreverses: true)
-                    : .default,
-                value: wiggle
-            )
-            .onChange(of: dragModeActive) { _, active in
-                wiggle = active
-            }
+            .opacity(dragModeActive ? (isDragging ? 1.0 : 0.62) : 1.0)
+            .animation(.easeOut(duration: 0.08), value: isDragging)
+            .animation(.easeOut(duration: 0.08), value: dragModeActive)
+            .id(dragResetToken)
             .contentShape(RoundedRectangle(cornerRadius: 6))
             .onTapGesture {
-                if !dragModeActive { action() }
-        }
+                action()
+            }
     }
 }
 
@@ -364,7 +354,9 @@ struct ContentView: View {
     @State private var tagReorderFrames: [String: CGRect] = [:]
     @State private var tagNavDragModeActive = false
     @State private var tagNavDragItem: String? = nil
+    @State private var tagNavDragResetToken = 0
     @State private var tagNavReorderFrames: [String: CGRect] = [:]
+    @State private var tagNavReorderDidMove = false
     @State private var hoveredContainer: String? = nil  // colored container lift
     // Fixed interaction for "Colorless Container": hover fills persistently; click clears.
     @State private var filledColorlessContainer: String? = nil
@@ -381,6 +373,7 @@ struct ContentView: View {
     @State private var hoveredBubble: AppBubbleContext? = nil
     @State private var editingBubble: AppBubbleContext? = nil
     @State private var pendingUncategorizedDrop: PendingUncategorizedDrop? = nil
+    @State private var appDragResetToken = 0
     @State private var bubbleDraftNote = ""
     @FocusState private var bubbleNoteFocused: Bool
 
@@ -488,8 +481,12 @@ struct ContentView: View {
             refreshApps()
         }
         .onReceive(NotificationCenter.default.publisher(for: .tagLauncherOverlayDidShow)) { _ in
+            resetTransientDragState()
             refreshNotchHeight()
             refreshApps()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .tagLauncherOverlayDidHide)) { _ in
+            resetTransientDragState()
         }
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
             guard allApps.isEmpty, !refreshInProgress else { return }
@@ -520,6 +517,20 @@ struct ContentView: View {
             if editingBubble != nil && !focused {
                 commitBubbleNote()
             }
+        }
+        .onChange(of: pendingUncategorizedDrop != nil) { _, active in
+            NotificationCenter.default.post(
+                name: .tagLauncherModalInteractionChanged,
+                object: nil,
+                userInfo: ["active": active]
+            )
+        }
+        .onDisappear {
+            NotificationCenter.default.post(
+                name: .tagLauncherModalInteractionChanged,
+                object: nil,
+                userInfo: ["active": false]
+            )
         }
     }
 
@@ -613,11 +624,9 @@ struct ContentView: View {
                     TagPill(name: tag.name, colorIndex: tag.colorIndex,
                             dragModeActive: tagNavDragModeActive && canReorderTag(tag.name),
                             isDragging: tagNavDragItem == tag.name,
+                            dragResetToken: tagNavDragResetToken,
                             action: {
-                        if isColorlessContainerMode {
-                            toggleColorlessFill(tag.id)
-                        }
-                        scrollTo(tag.id)
+                        activateTagNavigation(tag.id)
                     })
                     .background(tagNavFrameReader(for: tag.name))
                     .zIndex(tagNavDragItem == tag.name ? 1 : 0)
@@ -657,11 +666,9 @@ struct ContentView: View {
                     SideTagPill(name: tag.name, colorIndex: tag.colorIndex,
                                 dragModeActive: tagNavDragModeActive && canReorderTag(tag.name),
                                 isDragging: tagNavDragItem == tag.name,
+                                dragResetToken: tagNavDragResetToken,
                                 action: {
-                        if isColorlessContainerMode {
-                            toggleColorlessFill(tag.id)
-                        }
-                        scrollTo(tag.id)
+                        activateTagNavigation(tag.id)
                     })
                     .background(tagNavFrameReader(for: tag.name))
                     .zIndex(tagNavDragItem == tag.name ? 1 : 0)
@@ -840,6 +847,7 @@ struct ContentView: View {
                             onBubbleHover: handleBubbleHover,
                             onEditNote: beginEditingBubbleNote,
                             bubbleDisabled: appBubbleDisabled,
+                            dragResetToken: appDragResetToken,
                             hoveredAppItemID: $hoveredAppItemID,
                             onDropApp: { path, source, copy in
                                 dropApp(path: path, sourceTag: source, targetTag: group.name, copy: copy)
@@ -945,6 +953,7 @@ struct ContentView: View {
                         onEditNote: beginEditingBubbleNote,
                         bubbleDisabled: appBubbleDisabled,
                         itemID: "\(group.name)|\(app.path.path)",
+                        dragResetToken: appDragResetToken,
                         hoveredAppItemID: $hoveredAppItemID,
                         onSelect: { openApp(app) }
                     )
@@ -1184,6 +1193,7 @@ struct ContentView: View {
                                 onEditNote: beginEditingBubbleNote,
                                 bubbleDisabled: appBubbleDisabled,
                                 itemID: "\(group.name)|\(app.path.path)",
+                                dragResetToken: appDragResetToken,
                                 hoveredAppItemID: $hoveredAppItemID,
                                 onSelect: { openApp(app) }
                             )
@@ -1985,6 +1995,14 @@ struct ContentView: View {
         withAnimation(.easeInOut(duration: 0.25)) { scrollProxy?.scrollTo(id, anchor: .top) }
     }
 
+    private func activateTagNavigation(_ id: String) {
+        cancelTagNavReorderVisualState()
+        if isColorlessContainerMode {
+            toggleColorlessFill(id)
+        }
+        scrollTo(id)
+    }
+
     private func fillColorlessContainer(_ id: String) {
         guard isColorlessContainerMode else { return }
         guard filledColorlessContainer != id else { return }
@@ -2012,8 +2030,8 @@ struct ContentView: View {
     }
 
     private func tagNavReorderGesture(for tagName: String) -> some Gesture {
-        LongPressGesture(minimumDuration: 0.5)
-            .sequenced(before: DragGesture(minimumDistance: 3, coordinateSpace: .named("tagNavReorder")))
+        LongPressGesture(minimumDuration: 0.35)
+            .sequenced(before: DragGesture(minimumDistance: 0, coordinateSpace: .named("tagNavReorder")))
             .onChanged { value in
                 guard canReorderTag(tagName) else { return }
                 switch value {
@@ -2039,16 +2057,27 @@ struct ContentView: View {
         guard canReorderTag(tagName) else { return }
         if tagNavDragItem == nil {
             tagNavDragItem = tagName
+            tagNavReorderDidMove = false
         }
         tagNavDragModeActive = true
     }
 
     private func endTagNavReorder() {
-        if tagNavDragModeActive {
+        if tagNavDragModeActive && tagNavReorderDidMove {
             TagEditor.reorderTags(draggedTagNames)
         }
         tagNavDragModeActive = false
         tagNavDragItem = nil
+        tagNavReorderDidMove = false
+        tagNavDragResetToken &+= 1
+    }
+
+    private func cancelTagNavReorderVisualState() {
+        guard tagNavDragModeActive || tagNavDragItem != nil else { return }
+        tagNavDragModeActive = false
+        tagNavDragItem = nil
+        tagNavReorderDidMove = false
+        tagNavDragResetToken &+= 1
     }
 
     private func reorderTagNavItem(at location: CGPoint) {
@@ -2059,6 +2088,7 @@ struct ContentView: View {
               let toIndex = draggedTagNames.firstIndex(of: targetName)
         else { return }
 
+        tagNavReorderDidMove = true
         withAnimation(.spring(response: 0.22, dampingFraction: 0.82)) {
             let destination = toIndex > fromIndex ? toIndex + 1 : toIndex
             draggedTagNames.move(fromOffsets: IndexSet(integer: fromIndex), toOffset: destination)
@@ -2093,7 +2123,7 @@ struct ContentView: View {
     }
 
     private func dropApp(path: String, sourceTag: String, targetTag: String, copy: Bool) {
-        appDragModeActive = false
+        resetTransientDragState(keepingPendingUncategorizedDrop: true)
 
         if isUncategorizedDropTarget(targetTag) {
             confirmAndMoveAppToUncategorized(path: path)
@@ -2152,6 +2182,7 @@ struct ContentView: View {
     }
 
     private func dismissUncategorizedDropConfirm() {
+        resetTransientDragState(keepingPendingUncategorizedDrop: true)
         withAnimation(.easeOut(duration: 0.18)) {
             pendingUncategorizedDrop = nil
         }
@@ -2161,6 +2192,7 @@ struct ContentView: View {
         guard let pendingDrop = pendingUncategorizedDrop else { return }
         let path = pendingDrop.app.path.path
         let tags = pendingDrop.app.tags
+        resetTransientDragState(keepingPendingUncategorizedDrop: true)
         withAnimation(.easeOut(duration: 0.16)) {
             pendingUncategorizedDrop = nil
         }
@@ -2227,6 +2259,23 @@ struct ContentView: View {
                     appDragModeActive = false
                 }
             }
+        }
+    }
+
+    private func resetTransientDragState(keepingPendingUncategorizedDrop: Bool = false) {
+        AppDragCoordinator.shared.cancelDrag()
+        appDragModeActive = false
+        appDragResetToken &+= 1
+        tagNavDragModeActive = false
+        tagNavDragItem = nil
+        tagNavReorderDidMove = false
+        tagNavDragResetToken &+= 1
+        dragItem = nil
+        hoveredAppItemID = nil
+        hoveredContainer = nil
+        clearAppBubbleState()
+        if !keepingPendingUncategorizedDrop {
+            pendingUncategorizedDrop = nil
         }
     }
 

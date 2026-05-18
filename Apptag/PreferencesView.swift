@@ -30,6 +30,7 @@ struct PreferencesView: View {
     @State private var tagColors: [String: Int] = [:]
     @State private var categoryScheme = TagDatabase.CategorySchemeState()
     @State private var isApplyingSystemScheme = false
+    @State private var showApplySystemSchemeConfirmation = false
 
     private func scanApps() {
         DispatchQueue.global(qos: .userInitiated).async {
@@ -135,7 +136,15 @@ struct PreferencesView: View {
     }
 
     private func applySystemInitialScheme() {
-        guard confirmApplySystemInitialScheme() else { return }
+        guard !isApplyingSystemScheme else { return }
+        withAnimation(.easeOut(duration: 0.16)) {
+            showApplySystemSchemeConfirmation = true
+        }
+    }
+
+    private func performApplySystemInitialScheme() {
+        guard !isApplyingSystemScheme else { return }
+        showApplySystemSchemeConfirmation = false
         TagDatabase.flushPendingCategorySchemeBackupBatch()
         isApplyingSystemScheme = true
 
@@ -166,16 +175,6 @@ struct PreferencesView: View {
                 }
             }
         }
-    }
-
-    private func confirmApplySystemInitialScheme() -> Bool {
-        let alert = NSAlert()
-        alert.messageText = tr("settings.applySystemSchemeWarningTitle")
-        alert.informativeText = tr("settings.applySystemSchemeWarningMessage")
-        alert.alertStyle = .warning
-        alert.addButton(withTitle: tr("settings.confirmApplyScheme"))
-        alert.addButton(withTitle: tr("settings.cancel"))
-        return alert.runModal() == .alertFirstButtonReturn
     }
 
     private func formattedSystemSchemeAppliedMessage(_ summary: SmartStartSummary) -> String {
@@ -697,6 +696,23 @@ struct PreferencesView: View {
                 }
                 .transition(.opacity)
             }
+
+            if showApplySystemSchemeConfirmation {
+                ApplySystemSchemeConfirmationView(
+                    title: tr("settings.applySystemSchemeWarningTitle"),
+                    message: tr("settings.applySystemSchemeWarningMessage"),
+                    confirmTitle: tr("settings.confirmApplyScheme"),
+                    cancelTitle: tr("settings.cancel"),
+                    onConfirm: performApplySystemInitialScheme,
+                    onCancel: {
+                        withAnimation(.easeOut(duration: 0.14)) {
+                            showApplySystemSchemeConfirmation = false
+                        }
+                    }
+                )
+                .zIndex(3)
+                .transition(.opacity)
+            }
         }
         .frame(width: settingsWindowWidth, height: 460)
         .onAppear {
@@ -711,6 +727,108 @@ struct PreferencesView: View {
                 isRefreshingLanguage = false
             }
         }
+    }
+}
+
+private struct ApplySystemSchemeConfirmationView: View {
+    let title: String
+    let message: String
+    let confirmTitle: String
+    let cancelTitle: String
+    let onConfirm: () -> Void
+    let onCancel: () -> Void
+
+    var body: some View {
+        ZStack {
+            Color.black.opacity(0.20)
+                .contentShape(Rectangle())
+                .onTapGesture { }
+
+            VStack(alignment: .leading, spacing: 20) {
+                HStack(alignment: .top, spacing: 12) {
+                    ZStack {
+                        Circle()
+                            .fill(Color.orange.opacity(0.16))
+                            .frame(width: 38, height: 38)
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .font(.system(size: 19, weight: .semibold))
+                            .foregroundStyle(Color.orange)
+                    }
+                    .frame(width: 40, height: 40)
+
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(title)
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundStyle(.primary)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Text(message)
+                            .font(.system(size: 13))
+                            .foregroundStyle(Color.primary.opacity(0.78))
+                            .lineSpacing(2)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+
+                HStack(spacing: 10) {
+                    Spacer()
+                    ConfirmationActionButton(
+                        title: cancelTitle,
+                        prominent: false,
+                        action: onCancel
+                    )
+                        .keyboardShortcut(.cancelAction)
+                    ConfirmationActionButton(
+                        title: confirmTitle,
+                        prominent: true,
+                        action: onConfirm
+                    )
+                        .keyboardShortcut(.defaultAction)
+                }
+            }
+            .padding(22)
+            .frame(width: 440)
+            .background(
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(Color(nsColor: .windowBackgroundColor))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .stroke(Color.primary.opacity(0.16), lineWidth: 1)
+            )
+            .shadow(color: .black.opacity(0.24), radius: 20, x: 0, y: 10)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+private struct ConfirmationActionButton: View {
+    let title: String
+    let prominent: Bool
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Text(title)
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(prominent ? Color.white : Color.primary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.86)
+                .frame(minWidth: 82, minHeight: 32)
+                .padding(.horizontal, 10)
+                .background(
+                    RoundedRectangle(cornerRadius: 7, style: .continuous)
+                        .fill(prominent ? Color.accentColor : Color(nsColor: .controlBackgroundColor))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 7, style: .continuous)
+                        .stroke(
+                            prominent ? Color.accentColor.opacity(0.40) : Color.primary.opacity(0.16),
+                            lineWidth: 1
+                        )
+                )
+        }
+        .buttonStyle(.plain)
+        .contentShape(RoundedRectangle(cornerRadius: 7, style: .continuous))
     }
 }
 

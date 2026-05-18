@@ -14,10 +14,10 @@ struct AppGridItem: View {
     var onEditNote: ((AppInfo, CGRect) -> Void)? = nil
     var bubbleDisabled: Bool = false
     var itemID: String
+    var dragResetToken: Int = 0
     @Binding var hoveredAppItemID: String?
     let onSelect: () -> Void
 
-    @State private var wiggle = false
     @State private var interactionFrame: CGRect = .zero
     @AppStorage("showUncommonAppBubbles") private var showUncommonAppBubbles = AppDefaults.showUncommonAppBubbles
 
@@ -96,15 +96,10 @@ struct AppGridItem: View {
                 onEditNote?(app, interactionFrame)
             }
         }
-        .rotationEffect(.degrees(dragModeActive ? (wiggle ? 2.0 : -2.0) : 0))
-        .animation(
-            dragModeActive
-                ? .easeInOut(duration: 0.12).repeatForever(autoreverses: true)
-                : .default,
-            value: wiggle
-        )
+        .opacity(dragModeActive ? 0.92 : 1)
+        .animation(.easeOut(duration: 0.08), value: dragModeActive)
+        .id(dragResetToken)
         .onChange(of: dragModeActive) { _, active in
-            wiggle = active
             if active {
                 setHoverState(false)
                 onBubbleHover?(app, interactionFrame, false)
