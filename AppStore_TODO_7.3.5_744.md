@@ -53,7 +53,7 @@ APP_STORE=1 CODESIGN_IDENTITY="Apple Distribution: Your Name (TEAMID)" bash buil
 - 退出旧版 TagLauncher，再启动新版。
 - 如果菜单栏图标不可见，检查 Thaw / Bartender / Ice / Hidden Bar / Dozer 等菜单栏管理工具是否隐藏了 TagLauncher。
 - 确认 `⌥⇧空格` 能呼出应用列表。
-- 确认主列表 Flat / Colored Grid / Container 模式均能显示。
+- 确认主列表 Flat / Colored Grid / Container / Grid 模式均能完整显示图标。
 - 确认设置按钮和编辑按钮都能从浮层右上角打开。
 - 确认设置页语言切换正常。
 - 确认标签拖拽排序、右侧标签点击切换、App 拖入标签、拖到未分类确认面板正常。

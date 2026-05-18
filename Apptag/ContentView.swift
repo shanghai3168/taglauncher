@@ -227,7 +227,7 @@ struct TagPill: View {
             .opacity(dragModeActive ? (isDragging ? 1.0 : 0.62) : 1.0)
             .animation(.easeOut(duration: 0.08), value: isDragging)
             .animation(.easeOut(duration: 0.08), value: dragModeActive)
-            .id(dragResetToken)
+            .id("\(name)|reset-\(dragResetToken)")
             .contentShape(RoundedRectangle(cornerRadius: 7))
             .onTapGesture {
                 action()
@@ -264,7 +264,7 @@ struct SideTagPill: View {
             .opacity(dragModeActive ? (isDragging ? 1.0 : 0.62) : 1.0)
             .animation(.easeOut(duration: 0.08), value: isDragging)
             .animation(.easeOut(duration: 0.08), value: dragModeActive)
-            .id(dragResetToken)
+            .id("\(name)|reset-\(dragResetToken)")
             .contentShape(RoundedRectangle(cornerRadius: 6))
             .onTapGesture {
                 action()

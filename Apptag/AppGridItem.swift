@@ -98,7 +98,7 @@ struct AppGridItem: View {
         }
         .opacity(dragModeActive ? 0.92 : 1)
         .animation(.easeOut(duration: 0.08), value: dragModeActive)
-        .id(dragResetToken)
+        .id("\(itemID)|reset-\(dragResetToken)")
         .onChange(of: dragModeActive) { _, active in
             if active {
                 setHoverState(false)
