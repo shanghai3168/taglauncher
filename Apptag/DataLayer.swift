@@ -220,12 +220,18 @@ enum AppIndexer {
         var seenAppIDsByGroup: [String: Set<URL>] = [:]
 
         for app in apps {
+            if app.isAppleApp {
+                appendGroupedApp(app, to: macCategory, groups: &dict, seenAppIDsByGroup: &seenAppIDsByGroup)
+            }
+
             if app.tags.isEmpty {
-                let bucket = app.isAppleApp ? macCategory : defaultGroupName
-                appendGroupedApp(app, to: bucket, groups: &dict, seenAppIDsByGroup: &seenAppIDsByGroup)
+                if !app.isAppleApp {
+                    appendGroupedApp(app, to: defaultGroupName, groups: &dict, seenAppIDsByGroup: &seenAppIDsByGroup)
+                }
             } else {
                 for tag in uniqueOrdered(app.tags) {
                     let displayName = nameOverrides[tag] ?? tag
+                    guard displayName != macCategory else { continue }
                     appendGroupedApp(app, to: displayName, groups: &dict, seenAppIDsByGroup: &seenAppIDsByGroup)
                 }
             }
@@ -1253,7 +1259,7 @@ enum TagEditor {
         }
 
         var current = store.appTags[path] ?? []
-        if !copy, !sourceTag.isEmpty {
+        if !copy, !sourceTag.isEmpty, sourceTag != "Mac自带", sourceTag != tr("group.appleBuiltIn") {
             current.removeAll { $0 == sourceTag }
         }
         if !current.contains(targetTag) {

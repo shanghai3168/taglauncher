@@ -12,9 +12,10 @@ struct AppGridItem: View {
     var onDragModeChange: ((Bool) -> Void)? = nil
     var onBubbleHover: ((AppInfo, CGRect, Bool) -> Void)? = nil
     var onEditNote: ((AppInfo, CGRect) -> Void)? = nil
+    var itemID: String
+    @Binding var hoveredAppItemID: String?
     let onSelect: () -> Void
 
-    @State private var isHovered = false
     @State private var wiggle = false
     @State private var interactionFrame: CGRect = .zero
     @AppStorage("showUncommonAppBubbles") private var showUncommonAppBubbles = AppDefaults.showUncommonAppBubbles
@@ -35,6 +36,7 @@ struct AppGridItem: View {
     private var iconSlotSize: CGFloat { iconSize * Self.hoverScale }
     private var labelWidth: CGFloat { iconSize + 20 }
     private var labelHeight: CGFloat { Self.labelHeight }
+    private var isHovered: Bool { hoveredAppItemID == itemID }
 
     var body: some View {
         VStack(spacing: 6) {
@@ -62,7 +64,7 @@ struct AppGridItem: View {
                 .lineLimit(1)
                 .truncationMode(.tail)
                 .frame(width: labelWidth, height: labelHeight)
-                .opacity(showName ? 1 : (isHovered ? 0.85 : 0))
+                .opacity(showName ? 1 : (shouldShowHoverName ? 0.85 : 0))
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 4)
@@ -70,12 +72,15 @@ struct AppGridItem: View {
         .background(
             AppGridItemHoverTracker { hovering, frame in
                 interactionFrame = frame
-                setHoverState(hovering)
                 if hovering {
+                    setHoverState(true)
                     guard shouldShowAppBubble else { return }
                     onBubbleHover?(app, frame, hovering)
-                } else {
+                } else if isHovered {
+                    setHoverState(false)
                     onBubbleHover?(app, frame, hovering)
+                } else {
+                    setHoverState(false)
                 }
             }
         )
@@ -95,16 +100,29 @@ struct AppGridItem: View {
         .onChange(of: dragModeActive) { _, active in
             wiggle = active
         }
+        .onDisappear {
+            if hoveredAppItemID == itemID {
+                hoveredAppItemID = nil
+                onBubbleHover?(app, interactionFrame, false)
+            }
+        }
     }
 
     private var shouldShowAppBubble: Bool {
         !showUncommonAppBubbles || app.isUncommon
     }
 
+    private var shouldShowHoverName: Bool {
+        !showName && !shouldShowAppBubble && isHovered
+    }
+
     private func setHoverState(_ hovering: Bool) {
-        guard isHovered != hovering else { return }
         withAnimation(hovering ? Self.hoverInAnimation : Self.hoverOutAnimation) {
-            isHovered = hovering
+            if hovering {
+                hoveredAppItemID = itemID
+            } else if hoveredAppItemID == itemID {
+                hoveredAppItemID = nil
+            }
         }
     }
 }

@@ -370,6 +370,7 @@ struct ContentView: View {
     @State private var refreshInProgress = false
     @State private var refreshAgainAfterCurrent = false
     @State private var refreshAgainForceLayout = false
+    @State private var hoveredAppItemID: String? = nil
     @State private var hoveredBubble: AppBubbleContext? = nil
     @State private var editingBubble: AppBubbleContext? = nil
     @State private var bubbleDraftNote = ""
@@ -825,6 +826,7 @@ struct ContentView: View {
                             onDragModeChange: { setAppDragMode($0) },
                             onBubbleHover: handleBubbleHover,
                             onEditNote: beginEditingBubbleNote,
+                            hoveredAppItemID: $hoveredAppItemID,
                             onDropApp: { path, source, copy in
                                 dropApp(path: path, sourceTag: source, targetTag: group.name, copy: copy)
                             }
@@ -927,6 +929,8 @@ struct ContentView: View {
                         onDragModeChange: { setAppDragMode($0) },
                         onBubbleHover: handleBubbleHover,
                         onEditNote: beginEditingBubbleNote,
+                        itemID: "\(group.name)|\(app.path.path)",
+                        hoveredAppItemID: $hoveredAppItemID,
                         onSelect: { openApp(app) }
                     )
                 }
@@ -1163,6 +1167,8 @@ struct ContentView: View {
                                 onDragModeChange: { setAppDragMode($0) },
                                 onBubbleHover: handleBubbleHover,
                                 onEditNote: beginEditingBubbleNote,
+                                itemID: "\(group.name)|\(app.path.path)",
+                                hoveredAppItemID: $hoveredAppItemID,
                                 onSelect: { openApp(app) }
                             )
                                 .frame(width: cellWidth)

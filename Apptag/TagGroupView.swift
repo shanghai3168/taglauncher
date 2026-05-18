@@ -13,6 +13,7 @@ struct TagGroupView: View {
     var onDragModeChange: ((Bool) -> Void)? = nil
     var onBubbleHover: ((AppInfo, CGRect, Bool) -> Void)? = nil
     var onEditNote: ((AppInfo, CGRect) -> Void)? = nil
+    @Binding var hoveredAppItemID: String?
     var onDropApp: ((String, String, Bool) -> Void)? = nil
 
     /// Adaptive columns — auto-fit based on icon size and available width.
@@ -57,6 +58,8 @@ struct TagGroupView: View {
                         onDragModeChange: onDragModeChange,
                         onBubbleHover: onBubbleHover,
                         onEditNote: onEditNote,
+                        itemID: "\(group.name)|\(app.path.path)",
+                        hoveredAppItemID: $hoveredAppItemID,
                         onSelect: { onSelectApp(app) }
                     )
                 }

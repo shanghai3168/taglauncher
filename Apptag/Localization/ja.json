@@ -139,5 +139,8 @@
   "settings.systemSchemeAppliedMessage": "%appCount% 個のアプリに %tagCount% 件のタグ割り当てを適用しました。",
   "settings.systemSchemeApplyFailed": "適用できるスマート分類結果がありませんでした。",
   "scheme.local": "ローカル分類スキーム",
-  "scheme.systemSmartStart": "システム初期スマート分類"
+  "scheme.systemSmartStart": "システム初期スマート分類",
+  "settings.bubbleDisplayScope": "吹き出しの表示対象：",
+  "settings.bubbleAllApps": "すべてのアプリ",
+  "settings.bubbleUncommonOnly": "あまり使わないアプリのみ"
 }

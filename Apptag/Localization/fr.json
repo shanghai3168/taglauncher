@@ -139,5 +139,8 @@
   "settings.systemSchemeAppliedMessage": "%tagCount% attributions de tags appliquées à %appCount% apps.",
   "settings.systemSchemeApplyFailed": "Aucun résultat de classification intelligente à appliquer.",
   "scheme.local": "Schéma local",
-  "scheme.systemSmartStart": "Schéma initial intelligent du système"
+  "scheme.systemSmartStart": "Schéma initial intelligent du système",
+  "settings.bubbleDisplayScope": "Bubble tips show for:",
+  "settings.bubbleAllApps": "All apps",
+  "settings.bubbleUncommonOnly": "Uncommon apps only"
 }

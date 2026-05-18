@@ -219,6 +219,25 @@ struct PreferencesView: View {
         return FileManager.default.fileExists(atPath: path)
     }
 
+    private func bubbleScopeOption(
+        _ title: String,
+        isSelected: Bool,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            HStack(spacing: 6) {
+                Image(systemName: isSelected ? "largecircle.fill.circle" : "circle")
+                    .font(.system(size: 13, weight: .medium))
+                    .frame(width: 16, height: 16)
+                Text(title)
+                    .font(.system(size: 13, weight: .medium))
+            }
+            .foregroundStyle(isSelected ? Color.accentColor : Color.primary)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+    }
+
     private func syncSelectedLanguage() {
         let code = L10n.currentCode
         guard selectedLanguage != code else { return }
@@ -580,15 +599,28 @@ struct PreferencesView: View {
 
                 Spacer(minLength: 22)
 
-                VStack(alignment: .leading, spacing: 5) {
-                    Toggle(tr("settings.uncommonBubble"), isOn: $showUncommonAppBubbles)
+                HStack(alignment: .center, spacing: 14) {
+                    Text(tr("settings.bubbleDisplayScope"))
                         .font(.system(size: 13, weight: .medium))
-                    Text(tr("settings.uncommonBubbleDesc"))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(width: 190, alignment: .trailing)
+
+                    HStack(spacing: 20) {
+                        bubbleScopeOption(
+                            tr("settings.bubbleAllApps"),
+                            isSelected: !showUncommonAppBubbles
+                        ) {
+                            showUncommonAppBubbles = false
+                        }
+                        bubbleScopeOption(
+                            tr("settings.bubbleUncommonOnly"),
+                            isSelected: showUncommonAppBubbles
+                        ) {
+                            showUncommonAppBubbles = true
+                        }
+                    }
+                    .frame(width: 300, alignment: .leading)
                 }
-                .frame(width: 420, alignment: .leading)
+                .frame(width: 520, alignment: .center)
 
                 Spacer(minLength: 18)
             }

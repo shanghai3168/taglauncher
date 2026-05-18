@@ -139,5 +139,8 @@
   "settings.systemSchemeAppliedMessage": "%appCount%개의 앱에 %tagCount%개의 태그 할당을 적용했습니다.",
   "settings.systemSchemeApplyFailed": "적용할 수 있는 스마트 분류 결과가 없습니다.",
   "scheme.local": "로컬 분류 방식",
-  "scheme.systemSmartStart": "시스템 스마트 초기 분류"
+  "scheme.systemSmartStart": "시스템 스마트 초기 분류",
+  "settings.bubbleDisplayScope": "말풍선 표시 대상:",
+  "settings.bubbleAllApps": "모든 앱",
+  "settings.bubbleUncommonOnly": "자주 쓰지 않는 앱만"
 }

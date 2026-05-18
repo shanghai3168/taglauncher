@@ -139,5 +139,8 @@
   "settings.systemSchemeAppliedMessage": "已為 %appCount% 個 App 套用 %tagCount% 個標籤分配。",
   "settings.systemSchemeApplyFailed": "沒有找到可套用的智慧分類結果。",
   "scheme.local": "本機分類方案",
-  "scheme.systemSmartStart": "系統智慧化初始分類"
+  "scheme.systemSmartStart": "系統智慧化初始分類",
+  "settings.bubbleDisplayScope": "氣泡提示框顯示位置：",
+  "settings.bubbleAllApps": "全部 App",
+  "settings.bubbleUncommonOnly": "僅不常用 App"
 }

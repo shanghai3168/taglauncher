@@ -139,5 +139,8 @@
   "settings.systemSchemeAppliedMessage": "%tagCount% tugasan tag digunakan pada %appCount% app.",
   "settings.systemSchemeApplyFailed": "Tiada hasil pengelasan pintar untuk digunakan.",
   "scheme.local": "Skema setempat",
-  "scheme.systemSmartStart": "Skema awal pintar sistem"
+  "scheme.systemSmartStart": "Skema awal pintar sistem",
+  "settings.bubbleDisplayScope": "Bubble tips show for:",
+  "settings.bubbleAllApps": "All apps",
+  "settings.bubbleUncommonOnly": "Uncommon apps only"
 }
