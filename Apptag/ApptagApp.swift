@@ -499,15 +499,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             NSMouseInRect(mousePoint, $0.frame, false)
         }) ?? NSScreen.main ?? NSScreen.screens.first else { return }
 
-        overlayWindow?.orderOut(nil)
-        overlayWindow = makeOverlayWindow(on: screen)
-        overlayWindow?.setFrame(screen.frame, display: true)
-        overlayWindow?.level = isEditingAppNote ? Self.overlayTextInputLevel : Self.overlayDefaultLevel
+        let window: NSWindow
+        if let existingWindow = overlayWindow {
+            window = existingWindow
+        } else {
+            window = makeOverlayWindow(on: screen)
+            overlayWindow = window
+        }
+
+        window.setFrame(screen.frame, display: true)
+        window.level = isEditingAppNote ? Self.overlayTextInputLevel : Self.overlayDefaultLevel
 
         installOverlayKeyMonitor()
 
-        overlayWindow?.makeKeyAndOrderFront(nil)
-        overlayWindow?.orderFrontRegardless()
+        window.makeKeyAndOrderFront(nil)
+        window.orderFrontRegardless()
+        NotificationCenter.default.post(name: .tagLauncherOverlayDidShow, object: nil)
     }
 
     private func installOverlayKeyMonitor() {

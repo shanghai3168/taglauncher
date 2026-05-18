@@ -9,6 +9,7 @@ extension Notification.Name {
     static let tagLauncherAppNoteEditingChanged = Notification.Name("TagLauncherAppNoteEditingChanged")
     static let tagLauncherDataDidChange = Notification.Name("TagLauncherDataDidChange")
     static let tagLauncherOpenPreferencesRequested = Notification.Name("TagLauncherOpenPreferencesRequested")
+    static let tagLauncherOverlayDidShow = Notification.Name("TagLauncherOverlayDidShow")
 }
 
 // MARK: - Edit Phase
@@ -483,14 +484,15 @@ struct ContentView: View {
             }
         }
         .onAppear {
-            let mousePoint = NSEvent.mouseLocation
-            let activeScreen = NSScreen.screens.first(where: {
-                NSMouseInRect(mousePoint, $0.frame, false)
-            }) ?? NSScreen.main
-            notchHeight = activeScreen?.safeAreaInsets.top ?? 0
+            refreshNotchHeight()
+            refreshApps()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .tagLauncherOverlayDidShow)) { _ in
+            refreshNotchHeight()
             refreshApps()
         }
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
+            guard allApps.isEmpty, !refreshInProgress else { return }
             refreshApps()
         }
         .onReceive(NotificationCenter.default.publisher(for: .tagLauncherDataDidChange)) { _ in
@@ -1853,6 +1855,14 @@ struct ContentView: View {
 
     // MARK: - Actions
 
+    private func refreshNotchHeight() {
+        let mousePoint = NSEvent.mouseLocation
+        let activeScreen = NSScreen.screens.first(where: {
+            NSMouseInRect(mousePoint, $0.frame, false)
+        }) ?? NSScreen.main
+        notchHeight = activeScreen?.safeAreaInsets.top ?? 0
+    }
+
     private func handleBubbleHover(app: AppInfo, frame: CGRect, hovering: Bool) {
         guard !appBubbleDisabled else {
             clearAppBubbleState()
@@ -2222,8 +2232,10 @@ struct ContentView: View {
 
     func refreshApps(forceLayoutRefresh: Bool = false) {
         guard !refreshInProgress else {
-            refreshAgainAfterCurrent = true
-            refreshAgainForceLayout = refreshAgainForceLayout || forceLayoutRefresh
+            if forceLayoutRefresh {
+                refreshAgainAfterCurrent = true
+                refreshAgainForceLayout = true
+            }
             return
         }
 

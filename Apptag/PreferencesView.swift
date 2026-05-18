@@ -140,7 +140,7 @@ struct PreferencesView: View {
         isApplyingSystemScheme = true
 
         DispatchQueue.global(qos: .userInitiated).async {
-            let scannedApps = AppIndexer.scan()
+            let scannedApps = AppIndexer.scan(useCache: false)
             let result = SmartStartService.applySystemInitialScheme(apps: scannedApps)
             let store = result.store
             let apps = TagEditor.annotate(apps: scannedApps, store: store)

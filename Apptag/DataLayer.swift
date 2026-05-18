@@ -51,6 +51,10 @@ enum TagColor {
 // MARK: - App Scanner
 
 enum AppIndexer {
+    private static let scanCacheLock = NSLock()
+    private static var cachedScanApps: [AppInfo]? = nil
+    private static var cachedScanAt: Date? = nil
+    private static let scanCacheTTL: TimeInterval = 1800
 
     static let searchPaths: [URL] = [
         URL(fileURLWithPath: "/Applications"),
@@ -72,7 +76,42 @@ enum AppIndexer {
     }
 
     /// Scan all standard locations. Tags are annotated from TagDatabase by the caller.
-    static func scan() -> [AppInfo] {
+    static func scan(useCache: Bool = true) -> [AppInfo] {
+        if useCache, let cached = cachedScanIfFresh() {
+            return cached
+        }
+
+        let apps = performScan()
+        updateScanCache(apps)
+        return apps
+    }
+
+    static func invalidateScanCache() {
+        scanCacheLock.lock()
+        cachedScanApps = nil
+        cachedScanAt = nil
+        scanCacheLock.unlock()
+    }
+
+    private static func cachedScanIfFresh() -> [AppInfo]? {
+        scanCacheLock.lock()
+        defer { scanCacheLock.unlock() }
+
+        guard let cachedScanApps,
+              let cachedScanAt,
+              Date().timeIntervalSince(cachedScanAt) < scanCacheTTL
+        else { return nil }
+        return cachedScanApps
+    }
+
+    private static func updateScanCache(_ apps: [AppInfo]) {
+        scanCacheLock.lock()
+        cachedScanApps = apps
+        cachedScanAt = Date()
+        scanCacheLock.unlock()
+    }
+
+    private static func performScan() -> [AppInfo] {
         var seenResolvedPaths = Set<String>()
         var apps: [AppInfo] = []
 
