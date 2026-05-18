@@ -11,7 +11,7 @@ struct TagGroupView: View {
     var showNames: Bool = true
     var dragModeActive: Bool = false
     var onDragModeChange: ((Bool) -> Void)? = nil
-    var onBubbleHover: ((AppInfo, CGRect, Bool) -> Void)? = nil
+    var onBubbleHover: ((AppInfo, CGRect, AppBubbleHoverEvent) -> Void)? = nil
     var onEditNote: ((AppInfo, CGRect) -> Void)? = nil
     var bubbleDisabled: Bool = false
     var dragResetToken: Int = 0

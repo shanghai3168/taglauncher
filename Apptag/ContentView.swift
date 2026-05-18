@@ -1873,15 +1873,21 @@ struct ContentView: View {
         notchHeight = activeScreen?.safeAreaInsets.top ?? 0
     }
 
-    private func handleBubbleHover(app: AppInfo, frame: CGRect, hovering: Bool) {
+    private func handleBubbleHover(app: AppInfo, frame: CGRect, event: AppBubbleHoverEvent) {
         guard !appBubbleDisabled else {
             clearAppBubbleState()
             return
         }
         guard editingBubble == nil else { return }
-        if hovering {
-            hoveredBubble = AppBubbleContext(app: app, frame: frame)
-        } else if hoveredBubble?.app.path == app.path {
+        switch event {
+        case .entered(let canShowBubble):
+            if canShowBubble {
+                hoveredBubble = AppBubbleContext(app: app, frame: frame)
+            } else {
+                hoveredBubble = nil
+            }
+        case .exited:
+            guard hoveredBubble?.app.path == app.path else { return }
             hoveredBubble = nil
         }
     }

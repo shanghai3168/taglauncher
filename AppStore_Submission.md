@@ -204,6 +204,7 @@ Apptag 7.3.5
 - Fixed the Smart Start apply confirmation in Settings so the warning stays above the Settings window with clearer readable controls
 - Fixed right-side tag navigation getting stuck in a dimmed drag visual state after a tag click
 - Fixed an icon grid rendering issue that could make many app icons disappear after drag-state resets
+- Fixed stale hover bubbles so app notes no longer remain pinned to the previous app while hovering another app
 - Version updated to 7.3.5, Build updated to 744
 ```
 

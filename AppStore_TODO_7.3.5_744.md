@@ -57,6 +57,7 @@ APP_STORE=1 CODESIGN_IDENTITY="Apple Distribution: Your Name (TEAMID)" bash buil
 - 确认设置按钮和编辑按钮都能从浮层右上角打开。
 - 确认设置页语言切换正常。
 - 确认标签拖拽排序、右侧标签点击切换、App 拖入标签、拖到未分类确认面板正常。
+- 确认快速滑过 App 图标时，用途气泡不会停留在上一个 App 上。
 - 确认数据页导出 / 导入分类与布局正常。
 - 确认 Smart Start 初始分类方案可应用、确认提示不被设置窗口遮挡、恢复和导出。
 - 确认 App Store 沙盒构建中 Launch at Login 控件隐藏。

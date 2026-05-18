@@ -10,7 +10,7 @@ struct AppGridItem: View {
     var sourceTag: String? = nil
     var dragModeActive: Bool = false
     var onDragModeChange: ((Bool) -> Void)? = nil
-    var onBubbleHover: ((AppInfo, CGRect, Bool) -> Void)? = nil
+    var onBubbleHover: ((AppInfo, CGRect, AppBubbleHoverEvent) -> Void)? = nil
     var onEditNote: ((AppInfo, CGRect) -> Void)? = nil
     var bubbleDisabled: Bool = false
     var itemID: String
@@ -75,16 +75,15 @@ struct AppGridItem: View {
                 interactionFrame = frame
                 if bubbleDisabled || dragModeActive {
                     setHoverState(false)
-                    onBubbleHover?(app, frame, false)
+                    onBubbleHover?(app, frame, .exited)
                     return
                 }
                 if hovering {
                     setHoverState(true)
-                    guard shouldShowAppBubble else { return }
-                    onBubbleHover?(app, frame, hovering)
+                    onBubbleHover?(app, frame, .entered(canShowBubble: shouldShowAppBubble))
                 } else if isHovered {
                     setHoverState(false)
-                    onBubbleHover?(app, frame, hovering)
+                    onBubbleHover?(app, frame, .exited)
                 } else {
                     setHoverState(false)
                 }
@@ -102,19 +101,19 @@ struct AppGridItem: View {
         .onChange(of: dragModeActive) { _, active in
             if active {
                 setHoverState(false)
-                onBubbleHover?(app, interactionFrame, false)
+                onBubbleHover?(app, interactionFrame, .exited)
             }
         }
         .onChange(of: bubbleDisabled) { _, disabled in
             if disabled {
                 setHoverState(false)
-                onBubbleHover?(app, interactionFrame, false)
+                onBubbleHover?(app, interactionFrame, .exited)
             }
         }
         .onDisappear {
             if hoveredAppItemID == itemID {
                 hoveredAppItemID = nil
-                onBubbleHover?(app, interactionFrame, false)
+                onBubbleHover?(app, interactionFrame, .exited)
             }
         }
     }
@@ -136,6 +135,11 @@ struct AppGridItem: View {
             }
         }
     }
+}
+
+enum AppBubbleHoverEvent {
+    case entered(canShowBubble: Bool)
+    case exited
 }
 
 private struct AppGridItemHoverTracker: NSViewRepresentable {
