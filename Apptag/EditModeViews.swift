@@ -310,3 +310,80 @@ struct EditActionFeedbackBubble: View {
         )
     }
 }
+
+struct UncategorizedDropConfirmBubble: View {
+    let title: String
+    let message: String
+    let cancelTitle: String
+    let confirmTitle: String
+    let onCancel: () -> Void
+    let onConfirm: () -> Void
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            HStack(alignment: .top, spacing: 12) {
+                Text(title)
+                    .font(.system(size: 22, weight: .bold))
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                Button(action: onCancel) {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(.white.opacity(0.82))
+                        .frame(width: 26, height: 26)
+                        .background(
+                            Circle()
+                                .fill(Color.white.opacity(0.12))
+                        )
+                }
+                .buttonStyle(.plain)
+            }
+
+            Text(message)
+                .font(.system(size: 15, weight: .medium))
+                .lineSpacing(4)
+                .foregroundStyle(.white.opacity(0.84))
+                .multilineTextAlignment(.leading)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            HStack(spacing: 12) {
+                Spacer(minLength: 0)
+
+                Button(action: onCancel) {
+                    Text(cancelTitle)
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(.white.opacity(0.86))
+                        .frame(width: 92, height: 32)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .fill(Color.white.opacity(0.13))
+                        )
+                }
+                .buttonStyle(.plain)
+
+                Button(action: onConfirm) {
+                    Text(confirmTitle)
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(.white)
+                        .frame(width: 92, height: 32)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .fill(Color.accentColor)
+                        )
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .padding(.horizontal, 24)
+        .padding(.vertical, 20)
+        .background(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .fill(Color.black.opacity(0.92))
+                .shadow(color: .black.opacity(0.34), radius: 24, y: 16)
+                .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
+        )
+        .onExitCommand(perform: onCancel)
+    }
+}

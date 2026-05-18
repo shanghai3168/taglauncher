@@ -324,6 +324,12 @@ private struct EditActionFeedback: Identifiable {
     let message: String
 }
 
+private struct PendingUncategorizedDrop: Identifiable {
+    let id = UUID()
+    let app: AppInfo
+    let assignedTags: [String]
+}
+
 private enum SmartStartNoticeMode {
     case autoApplied
     case suggestionOnly
@@ -373,6 +379,7 @@ struct ContentView: View {
     @State private var hoveredAppItemID: String? = nil
     @State private var hoveredBubble: AppBubbleContext? = nil
     @State private var editingBubble: AppBubbleContext? = nil
+    @State private var pendingUncategorizedDrop: PendingUncategorizedDrop? = nil
     @State private var bubbleDraftNote = ""
     @FocusState private var bubbleNoteFocused: Bool
 
@@ -435,6 +442,7 @@ struct ContentView: View {
             uncommonAppBubbleOverlay
             smartStartNoticeOverlay
             editActionFeedbackOverlay
+            uncategorizedDropConfirmOverlay
 
             if let message = dropWarningToast {
                 Text(message)
@@ -1562,6 +1570,32 @@ struct ContentView: View {
         .allowsHitTesting(editActionFeedback != nil)
     }
 
+    private var uncategorizedDropConfirmOverlay: some View {
+        GeometryReader { proxy in
+            if let pendingDrop = pendingUncategorizedDrop {
+                ZStack {
+                    Color.black.opacity(0.14)
+                        .ignoresSafeArea()
+
+                    UncategorizedDropConfirmBubble(
+                        title: tr("drop.uncategorizedConfirmTitle"),
+                        message: uncategorizedConfirmMessage(for: pendingDrop),
+                        cancelTitle: tr("tag.cancel"),
+                        confirmTitle: tr("edit.confirm"),
+                        onCancel: dismissUncategorizedDropConfirm,
+                        onConfirm: confirmPendingUncategorizedDrop
+                    )
+                    .frame(width: min(540, max(340, proxy.size.width - 120)))
+                    .position(x: proxy.size.width / 2, y: proxy.size.height / 2)
+                    .transition(.scale(scale: 0.94).combined(with: .opacity))
+                }
+                .zIndex(710)
+            }
+        }
+        .ignoresSafeArea()
+        .allowsHitTesting(pendingUncategorizedDrop != nil)
+    }
+
     private func buildEditActionFeedback(for selectedApps: [AppInfo], tags: [String]) -> EditActionFeedback {
         let appNames = selectedApps.map(\.name)
             .joined(separator: localizedListSeparator)
@@ -2054,11 +2088,10 @@ struct ContentView: View {
         guard let app = allApps.first(where: { $0.path.path == path }) else { return }
         let assignedTags = assignedRegularDisplayTags(for: app)
         guard !assignedTags.isEmpty else { return }
-        guard confirmUncategorizedDrop(appName: app.name, assignedTags: assignedTags) else { return }
 
-        TagEditor.removeTags(app.tags, from: [path])
-        showDropRefresh()
-        refreshApps(forceLayoutRefresh: true)
+        withAnimation(.spring(response: 0.24, dampingFraction: 0.84)) {
+            pendingUncategorizedDrop = PendingUncategorizedDrop(app: app, assignedTags: assignedTags)
+        }
     }
 
     private func assignedRegularDisplayTags(for app: AppInfo) -> [String] {
@@ -2072,21 +2105,33 @@ struct ContentView: View {
         return result
     }
 
-    private func confirmUncategorizedDrop(appName: String, assignedTags: [String]) -> Bool {
-        let alert = NSAlert()
-        alert.alertStyle = .warning
-        alert.messageText = tr("drop.uncategorizedConfirmTitle")
-        alert.informativeText = formattedFeedbackMessage(
+    private func uncategorizedConfirmMessage(for pendingDrop: PendingUncategorizedDrop) -> String {
+        formattedFeedbackMessage(
             forKey: "drop.uncategorizedConfirmMessage",
             replacements: [
-                "%appName%": appName,
-                "%tagCount%": "\(assignedTags.count)",
-                "%tagNames%": assignedTags.joined(separator: localizedListSeparator)
+                "%appName%": pendingDrop.app.name,
+                "%tagCount%": "\(pendingDrop.assignedTags.count)",
+                "%tagNames%": pendingDrop.assignedTags.joined(separator: localizedListSeparator)
             ]
         )
-        alert.addButton(withTitle: tr("edit.confirm"))
-        alert.addButton(withTitle: tr("tag.cancel"))
-        return alert.runModal() == .alertFirstButtonReturn
+    }
+
+    private func dismissUncategorizedDropConfirm() {
+        withAnimation(.easeOut(duration: 0.18)) {
+            pendingUncategorizedDrop = nil
+        }
+    }
+
+    private func confirmPendingUncategorizedDrop() {
+        guard let pendingDrop = pendingUncategorizedDrop else { return }
+        let path = pendingDrop.app.path.path
+        let tags = pendingDrop.app.tags
+        withAnimation(.easeOut(duration: 0.16)) {
+            pendingUncategorizedDrop = nil
+        }
+        TagEditor.removeTags(tags, from: [path])
+        showDropRefresh()
+        refreshApps(forceLayoutRefresh: true)
     }
 
     private func isUncategorizedDropTarget(_ targetTag: String) -> Bool {
