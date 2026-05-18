@@ -13,15 +13,15 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.apptag.launcher</string>
 	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
+	<string>7.0</string>
 	<key>CFBundleName</key>
 	<string>TagLauncher</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>6.0.5</string>
+	<string>7.2.0</string>
 	<key>CFBundleVersion</key>
-	<string>610</string>
+	<string>738</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>15.0</string>
 	<key>NSHighResolutionCapable</key>

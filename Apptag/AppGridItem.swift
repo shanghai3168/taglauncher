@@ -16,11 +16,13 @@ struct AppGridItem: View {
 
     @State private var isHovered = false
     @State private var wiggle = false
-    @State private var globalFrame: CGRect = .zero
-    @AppStorage("showUncommonAppBubbles") private var showUncommonAppBubbles = true
+    @State private var interactionFrame: CGRect = .zero
+    @AppStorage("showUncommonAppBubbles") private var showUncommonAppBubbles = AppDefaults.showUncommonAppBubbles
 
     static let hoverScale: CGFloat = 1.22
     static let labelHeight: CGFloat = 14
+    private static let hoverInAnimation = Animation.easeOut(duration: 0.07)
+    private static let hoverOutAnimation = Animation.easeOut(duration: 0.045)
 
     static func stableWidth(iconSize: CGFloat) -> CGFloat {
         iconSize * hoverScale + 8
@@ -52,7 +54,6 @@ struct AppGridItem: View {
                     radius: isHovered ? 14 : 0,
                     y: isHovered ? 8 : 0
                 )
-                .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isHovered)
             }
             .frame(width: iconSlotSize, height: iconSlotSize)
 
@@ -67,26 +68,21 @@ struct AppGridItem: View {
         .padding(.horizontal, 4)
         .frame(width: Self.stableWidth(iconSize: iconSize), height: Self.stableHeight(iconSize: iconSize))
         .background(
-            GeometryReader { proxy in
-                Color.clear
-                    .onAppear { globalFrame = proxy.frame(in: .global) }
-                    .onChange(of: proxy.frame(in: .global)) { _, newFrame in
-                        globalFrame = newFrame
-                    }
+            AppGridItemHoverTracker { hovering, frame in
+                interactionFrame = frame
+                setHoverState(hovering)
+                if hovering {
+                    guard shouldShowAppBubble else { return }
+                    onBubbleHover?(app, frame, hovering)
+                } else {
+                    onBubbleHover?(app, frame, hovering)
+                }
             }
         )
         .contentShape(Rectangle())
-        .onHover { hovering in
-            isHovered = hovering
-            if showUncommonAppBubbles && app.isUncommon {
-                onBubbleHover?(app, globalFrame, hovering)
-            }
-        }
         .contextMenu {
-            if app.isUncommon {
-                Button(tr("appNote.edit")) {
-                    onEditNote?(app, globalFrame)
-                }
+            Button(tr("appNote.edit")) {
+                onEditNote?(app, interactionFrame)
             }
         }
         .rotationEffect(.degrees(dragModeActive ? (wiggle ? 2.0 : -2.0) : 0))
@@ -100,6 +96,74 @@ struct AppGridItem: View {
             wiggle = active
         }
     }
+
+    private var shouldShowAppBubble: Bool {
+        !showUncommonAppBubbles || app.isUncommon
+    }
+
+    private func setHoverState(_ hovering: Bool) {
+        guard isHovered != hovering else { return }
+        withAnimation(hovering ? Self.hoverInAnimation : Self.hoverOutAnimation) {
+            isHovered = hovering
+        }
+    }
+}
+
+private struct AppGridItemHoverTracker: NSViewRepresentable {
+    let onHover: (Bool, CGRect) -> Void
+
+    func makeNSView(context: Context) -> HoverTrackingNSView {
+        let view = HoverTrackingNSView()
+        view.onHover = onHover
+        return view
+    }
+
+    func updateNSView(_ view: HoverTrackingNSView, context: Context) {
+        view.onHover = onHover
+    }
+}
+
+private final class HoverTrackingNSView: NSView {
+    var onHover: ((Bool, CGRect) -> Void)?
+
+    override func updateTrackingAreas() {
+        super.updateTrackingAreas()
+        trackingAreas.forEach(removeTrackingArea)
+        addTrackingArea(
+            NSTrackingArea(
+                rect: .zero,
+                options: [.mouseEnteredAndExited, .activeAlways, .inVisibleRect],
+                owner: self,
+                userInfo: nil
+            )
+        )
+    }
+
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        nil
+    }
+
+    override func mouseEntered(with event: NSEvent) {
+        onHover?(true, rootLocalFrame())
+    }
+
+    override func mouseExited(with event: NSEvent) {
+        onHover?(false, rootLocalFrame())
+    }
+
+    private func rootLocalFrame() -> CGRect {
+        guard let contentView = window?.contentView else { return .zero }
+        let rectInContent = contentView.convert(bounds, from: self)
+        let y = contentView.isFlipped
+            ? rectInContent.minY
+            : contentView.bounds.height - rectInContent.maxY
+        return CGRect(
+            x: rectInContent.minX,
+            y: y,
+            width: rectInContent.width,
+            height: rectInContent.height
+        )
+    }
 }
 
 enum BubblePlacement {
@@ -112,6 +176,7 @@ struct AppNameBubble: View {
     let note: String?
     let isEditing: Bool
     let placement: BubblePlacement
+    let arrowOffset: CGFloat
     @Binding var draftNote: String
     var noteFocused: FocusState<Bool>.Binding
     let onCommit: () -> Void
@@ -172,6 +237,12 @@ struct AppNameBubble: View {
                 .shadow(color: .black.opacity(0.34), radius: 24, y: 16)
                 .shadow(color: .black.opacity(0.18), radius: 8, y: 3)
         )
+        .overlay(alignment: placement == .above ? .bottom : .top) {
+            BubbleArrow(placement: placement)
+                .fill(Color.black.opacity(0.92))
+                .frame(width: 18, height: 9)
+                .offset(x: arrowOffset, y: placement == .above ? 8 : -8)
+        }
     }
 
     private var limitedDraft: Binding<String> {
@@ -179,6 +250,26 @@ struct AppNameBubble: View {
             get: { draftNote },
             set: { draftNote = String($0.prefix(TagDatabase.maxAppNoteLength)) }
         )
+    }
+}
+
+private struct BubbleArrow: Shape {
+    let placement: BubblePlacement
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        switch placement {
+        case .above:
+            path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.midX, y: rect.maxY))
+        case .below:
+            path.move(to: CGPoint(x: rect.minX, y: rect.maxY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+            path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
+        }
+        path.closeSubpath()
+        return path
     }
 }
 

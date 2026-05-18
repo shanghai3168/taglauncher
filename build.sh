@@ -8,9 +8,19 @@ APP_BUNDLE="$BUILD_DIR/$APP_NAME.app"
 MACOS_DIR="$APP_BUNDLE/Contents/MacOS"
 RESOURCES_DIR="$APP_BUNDLE/Contents/Resources"
 SWIFT_DIR="$PROJECT_DIR/Apptag"
+INFO_PLIST="$SWIFT_DIR/Info.plist"
 
 SDK_PATH=$(xcrun --sdk macosx --show-sdk-path)
 TARGET="arm64-apple-macosx15.0"
+
+APP_VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$INFO_PLIST")
+APP_BUILD=$(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "$INFO_PLIST")
+if [ -z "$APP_VERSION" ] || ! [[ "$APP_BUILD" =~ ^[0-9]+$ ]]; then
+    echo "❌ Invalid version metadata in $INFO_PLIST: version='$APP_VERSION' build='$APP_BUILD'"
+    exit 1
+fi
+
+echo "==> Packaging $APP_NAME $APP_VERSION ($APP_BUILD)"
 
 # --- Optional: App Store / Sandbox signing ---
 # Set CODESIGN_IDENTITY to your "Apple Distribution" or "Mac Developer" cert name.
@@ -38,6 +48,10 @@ mkdir -p "$MACOS_DIR"
 mkdir -p "$RESOURCES_DIR"
 
 echo "==> Compiling Swift files..."
+SWIFT_FILES=()
+while IFS= read -r file; do
+    SWIFT_FILES+=("$file")
+done < <(find "$SWIFT_DIR" -name '*.swift' -print | sort)
 swiftc \
     -o "$MACOS_DIR/$APP_NAME" \
     -framework AppKit \
@@ -46,10 +60,10 @@ swiftc \
     -sdk "$SDK_PATH" \
     -target "$TARGET" \
     -Osize \
-    "$SWIFT_DIR"/*.swift
+    "${SWIFT_FILES[@]}"
 
 echo "==> Copying Info.plist..."
-cp "$SWIFT_DIR/Info.plist" "$APP_BUNDLE/Contents/Info.plist"
+cp "$INFO_PLIST" "$APP_BUNDLE/Contents/Info.plist"
 
 echo "==> Copying AppIcon.icns..."
 if [ -f "$PROJECT_DIR/icon-icns.icns" ]; then
@@ -58,8 +72,24 @@ elif [ -f "$SWIFT_DIR/AppIcon.iconset/icon_512x512@2x.png" ]; then
     iconutil -c icns "$SWIFT_DIR/AppIcon.iconset" -o "$RESOURCES_DIR/AppIcon.icns" 2>/dev/null
 fi
 
+echo "==> Copying menu bar icon..."
+if [ -f "$PROJECT_DIR/Research/logo/TagLauncherMenuBarIcon_v2_light.svg" ]; then
+    cp "$PROJECT_DIR/Research/logo/TagLauncherMenuBarIcon_v2_light.svg" "$RESOURCES_DIR/TagLauncherMenuBarIcon.svg"
+fi
+
 echo "==> Copying Localization files..."
 cp -r "$SWIFT_DIR/Localization" "$RESOURCES_DIR/Localization"
+
+echo "==> Copying Smart Start catalog..."
+if [ -f "$PROJECT_DIR/Research/SmartStart/UltimateDefaultCatalog/SmartStart_UltimateDefaultCatalog.json" ]; then
+    cp "$PROJECT_DIR/Research/SmartStart/UltimateDefaultCatalog/SmartStart_UltimateDefaultCatalog.json" "$RESOURCES_DIR/SmartStartUltimateDefaultCatalog.json"
+fi
+if [ -f "$PROJECT_DIR/Research/SmartStart/UltimateDefaultCatalog/SmartStart_UltimateDefaultCatalog.csv" ]; then
+    cp "$PROJECT_DIR/Research/SmartStart/UltimateDefaultCatalog/SmartStart_UltimateDefaultCatalog.csv" "$RESOURCES_DIR/SmartStartUltimateDefaultCatalog.csv"
+fi
+if [ -f "$PROJECT_DIR/Research/SmartStart/AppDefaultTags_Review.csv" ]; then
+    cp "$PROJECT_DIR/Research/SmartStart/AppDefaultTags_Review.csv" "$RESOURCES_DIR/SmartStartAppDefaultTags.csv"
+fi
 
 echo "==> Embedding PkgInfo..."
 echo -n "APPL????" > "$APP_BUNDLE/Contents/PkgInfo"
@@ -69,6 +99,9 @@ chmod +x "$MACOS_DIR/$APP_NAME"
 
 echo "==> Stripping debug symbols..."
 strip -x "$MACOS_DIR/$APP_NAME"
+
+echo "==> Clearing extended attributes..."
+xattr -cr "$APP_BUNDLE" 2>/dev/null || true
 
 # --- Signing ---
 if [ "$APP_STORE_MODE" = true ] || [ -n "$CODESIGN_IDENTITY" ]; then

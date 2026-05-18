@@ -31,6 +31,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private static let showDockIconKey = "showDockIcon"
     private static let showAppListMenuItemIdentifier = NSUserInterfaceItemIdentifier("TagLauncherShowAppListMenuItem")
     private static let showAppListShortcutGlyphs = "⌥⇧␣"
+    private static let overlayDefaultLevel = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.maximumWindow)))
+    private static let overlayTextInputLevel = NSWindow.Level.modalPanel
 
     private var statusItem: NSStatusItem?
     private var overlayWindow: NSWindow?
@@ -38,6 +40,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var settingsWindow: NSWindow?    // Track Settings window to keep it above overlay
     private var hotkeyRef: EventHotKeyRef?
     private var isInEditMode = false  // Suppress auto-dismiss during editing
+    private var isEditingAppNote = false
     private var isConfiguringApplicationMenu = false
     private var lastShowDockIcon: Bool?
 
@@ -45,7 +48,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         (NSApp.delegate as? AppDelegate)?.syncChromeSettings(force: true)
     }
 
+    static func openPreferencesWindow() {
+        (NSApp.delegate as? AppDelegate)?.openPreferences()
+    }
+
     func applicationDidFinishLaunching(_ notification: Notification) {
+        AppDefaults.register()
         L10n.setup()
         migrateDefaultGroupName()
         TagDatabase.seedDefaultTags()
@@ -54,6 +62,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         observeOtherWindows()
         observeSettingsClose()
         observeEditMode()
+        observeAppNoteEditing()
+        observePreferencesRequests()
         observeApplicationMenuChanges()
         observeChromeSettings()
         observeLanguageChanges()
@@ -65,6 +75,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         showOverlay()
         return false  // Suppress default "unhide all windows" behavior
+    }
+
+    func applicationWillTerminate(_ notification: Notification) {
+        TagDatabase.flushPendingCategorySchemeBackupBatch()
     }
 
     /// Ensure defaultGroupName is always the language-neutral key "Other".
@@ -170,8 +184,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
         let key = "launchAtLogin"
-        if UserDefaults.standard.object(forKey: key) == nil {
-            UserDefaults.standard.set(true, forKey: key)
+        if !AppDefaults.hasStoredValue(for: key) && UserDefaults.standard.bool(forKey: key) {
             Self.enableLaunchAtLogin()
         }
     }
@@ -220,6 +233,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             action: #selector(openPreferences),
             keyEquivalent: ","
         )
+        prefsItem.target = self
         prefsItem.keyEquivalentModifierMask = .command
         menu.addItem(prefsItem)
         menu.addItem(.separator())
@@ -249,23 +263,59 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func makeMenuBarIcon() -> NSImage {
-        let image = NSImage(size: NSSize(width: 18, height: 18))
+        let menuBarIconSize = NSSize(width: 19, height: 19)
+        if let url = Bundle.main.url(forResource: "TagLauncherMenuBarIcon", withExtension: "svg"),
+           let image = NSImage(contentsOf: url) {
+            image.size = menuBarIconSize
+            image.isTemplate = true
+            image.accessibilityDescription = "TagLauncher"
+            return image
+        }
+
+        let image = NSImage(size: menuBarIconSize)
         image.lockFocus()
         defer { image.unlockFocus() }
 
-        NSColor.black.setFill()
+        NSGraphicsContext.current?.shouldAntialias = true
+        NSColor.black.withAlphaComponent(0.88).setStroke()
+        NSColor.black.withAlphaComponent(0.88).setFill()
 
-        let tagBody = NSBezierPath()
-        tagBody.move(to: NSPoint(x: 5.0, y: 2.2))
-        tagBody.line(to: NSPoint(x: 15.6, y: 5.0))
-        tagBody.line(to: NSPoint(x: 12.8, y: 15.8))
-        tagBody.line(to: NSPoint(x: 2.2, y: 13.0))
-        tagBody.close()
-        tagBody.fill()
+        let scale = image.size.width / 220.0
+        func rectFromSVG(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat) -> NSRect {
+            NSRect(
+                x: x * scale,
+                y: (220.0 - y - height) * scale,
+                width: width * scale,
+                height: height * scale
+            )
+        }
 
-        NSGraphicsContext.current?.compositingOperation = .clear
-        NSBezierPath(ovalIn: NSRect(x: 10.9, y: 11.2, width: 3.2, height: 3.2)).fill()
-        NSGraphicsContext.current?.compositingOperation = .sourceOver
+        let outline = NSBezierPath(
+            roundedRect: rectFromSVG(x: 15, y: 15, width: 190, height: 190),
+            xRadius: 44 * scale,
+            yRadius: 44 * scale
+        )
+        outline.lineWidth = 11 * scale
+        outline.stroke()
+
+        for rect in [
+            rectFromSVG(x: 49, y: 134, width: 27, height: 27),
+            rectFromSVG(x: 92, y: 134, width: 27, height: 27),
+            rectFromSVG(x: 49, y: 91, width: 27, height: 27),
+            rectFromSVG(x: 92, y: 91, width: 27, height: 27),
+            rectFromSVG(x: 49, y: 48, width: 27, height: 27),
+            rectFromSVG(x: 92, y: 48, width: 27, height: 27)
+        ] {
+            NSBezierPath(roundedRect: rect, xRadius: 8 * scale, yRadius: 8 * scale).fill()
+        }
+
+        for rect in [
+            rectFromSVG(x: 132, y: 133, width: 47, height: 28),
+            rectFromSVG(x: 132, y: 90.5, width: 47, height: 28),
+            rectFromSVG(x: 132, y: 48, width: 47, height: 28)
+        ] {
+            NSBezierPath(roundedRect: rect, xRadius: 12 * scale, yRadius: 12 * scale).fill()
+        }
 
         image.isTemplate = true
         image.accessibilityDescription = "TagLauncher"
@@ -322,6 +372,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         defer { isConfiguringApplicationMenu = false }
 
         removeUnusedDefaultItems(from: appMenu)
+        configurePreferencesMenuItem(in: appMenu)
         upsertShowAppListItem(in: appMenu)
         normalizeSeparators(in: appMenu)
     }
@@ -378,6 +429,27 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         item.isEnabled = true
     }
 
+    private func configurePreferencesMenuItem(in menu: NSMenu) {
+        let item: NSMenuItem
+        if let existingItem = menu.items.first(where: { isSettingsMenuItem($0) }) {
+            item = existingItem
+        } else {
+            item = NSMenuItem()
+            if let firstSeparatorIndex = menu.items.firstIndex(where: { $0.isSeparatorItem }) {
+                menu.insertItem(item, at: firstSeparatorIndex)
+            } else {
+                menu.addItem(item)
+            }
+        }
+
+        item.title = tr("menu.preferences")
+        item.action = #selector(openPreferences)
+        item.target = self
+        item.keyEquivalent = ","
+        item.keyEquivalentModifierMask = .command
+        item.isEnabled = true
+    }
+
     private func isSettingsMenuItem(_ item: NSMenuItem) -> Bool {
         item.action == Selector(("showSettingsWindow:"))
             || item.action == #selector(openPreferences)
@@ -430,7 +502,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         overlayWindow?.orderOut(nil)
         overlayWindow = makeOverlayWindow(on: screen)
         overlayWindow?.setFrame(screen.frame, display: true)
-        overlayWindow?.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.maximumWindow)))
+        overlayWindow?.level = isEditingAppNote ? Self.overlayTextInputLevel : Self.overlayDefaultLevel
 
         installOverlayKeyMonitor()
 
@@ -491,6 +563,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func hideOverlay(force: Bool = false) {
         guard force || !isInEditMode else { return }
+        TagDatabase.flushPendingCategorySchemeBackupBatch()
         if let settingsWindow, settingsWindow.parent == overlayWindow {
             detachSettingsWindow(settingsWindow)
         }
@@ -676,27 +749,64 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    /// Lower the overlay while editing app notes so IME candidate windows are not hidden behind it.
+    private func observeAppNoteEditing() {
+        NotificationCenter.default.addObserver(
+            forName: .tagLauncherAppNoteEditingChanged,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            guard let self else { return }
+            self.isEditingAppNote = (notification.userInfo?["active"] as? Bool) ?? false
+            self.updateOverlayLevelForTextInput()
+        }
+    }
+
+    private func updateOverlayLevelForTextInput() {
+        guard let overlayWindow else { return }
+        overlayWindow.level = isEditingAppNote ? Self.overlayTextInputLevel : Self.overlayDefaultLevel
+        if let settingsWindow, settingsWindow.parent == overlayWindow {
+            settingsWindow.level = overlayWindow.level
+        }
+    }
+
+    /// The overlay buttons live inside SwiftUI; use an app-level notification like edit mode does.
+    private func observePreferencesRequests() {
+        NotificationCenter.default.addObserver(
+            forName: .tagLauncherOpenPreferencesRequested,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.openPreferences()
+        }
+    }
+
     @objc private func openPreferences() {
+        TagDatabase.flushPendingCategorySchemeBackupBatch()
         // Don't hide overlay — keep it visible for real-time setting preview.
         if let overlayWindow, overlayWindow.isVisible {
             overlayWindow.makeKeyAndOrderFront(nil)
             overlayWindow.orderFrontRegardless()
         }
-        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-        prepareSettingsWindowWhenAvailable(retries: 10)
-    }
+        NSApp.activate(ignoringOtherApps: true)
 
-    private func prepareSettingsWindowWhenAvailable(retries: Int) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) { [weak self] in
-            guard let self else { return }
-            let candidates = NSApp.windows.filter { window in
-                self.isSettingsWindowCandidate(window)
-            }
-            candidates.forEach { self.prepareSettingsWindow($0) }
-            if candidates.isEmpty && retries > 0 {
-                self.prepareSettingsWindowWhenAvailable(retries: retries - 1)
-            }
+        if let settingsWindow {
+            prepareSettingsWindow(settingsWindow)
+            return
         }
+
+        let settingsSize = NSSize(width: 880, height: 460)
+        let window = NSWindow(
+            contentRect: NSRect(origin: .zero, size: settingsSize),
+            styleMask: [.titled, .closable],
+            backing: .buffered,
+            defer: false
+        )
+        window.title = tr("menu.preferences").replacingOccurrences(of: "…", with: "")
+        window.contentView = NSHostingView(rootView: PreferencesView())
+        window.isReleasedWhenClosed = false
+        settingsWindow = window
+        prepareSettingsWindow(window)
     }
 
     @objc private func switchLanguage(_ sender: NSMenuItem) {
@@ -733,6 +843,10 @@ final class DismissibleHostingView<Content: View>: NSHostingView<Content> {
             onBackdropTap()
             return
         }
+        if let floatingButton = findFloatingIconButton(at: event.locationInWindow, in: self) {
+            floatingButton.mouseDown(with: event)
+            return
+        }
         // Recursively search hit subtree for TextFieldContainer or NSTextField.
         // NSHostingView.hitTest may return a SwiftUI-internal wrapper — the
         // actual AppKit subview may be nested deeper.
@@ -743,11 +857,6 @@ final class DismissibleHostingView<Content: View>: NSHostingView<Content> {
         if let tf = findNSTextField(in: hit) {
             tf.window?.makeFirstResponder(tf)
             tf.mouseDown(with: event)
-            return
-        }
-        // Forward to any other NSControl we find
-        if let control = findNSControl(in: hit) {
-            control.mouseDown(with: event)
             return
         }
         super.mouseDown(with: event)
@@ -769,562 +878,18 @@ final class DismissibleHostingView<Content: View>: NSHostingView<Content> {
         return nil
     }
 
-    private func findNSControl(in view: NSView) -> NSControl? {
-        if let control = view as? NSControl { return control }
-        for sub in view.subviews {
-            if let found = findNSControl(in: sub) { return found }
+    private func findFloatingIconButton(at windowPoint: NSPoint, in view: NSView) -> FloatingIconButtonView? {
+        for subview in view.subviews.reversed() where !subview.isHidden {
+            if let found = findFloatingIconButton(at: windowPoint, in: subview) {
+                return found
+            }
+        }
+        guard let floatingButton = view as? FloatingIconButtonView else { return nil }
+        let localPoint = floatingButton.convert(windowPoint, from: nil)
+        if floatingButton.bounds.contains(localPoint) {
+            return floatingButton
         }
         return nil
     }
-}
 
-// MARK: - Preferences View
-
-struct PreferencesView: View {
-    private let settingsWindowWidth: CGFloat = 880
-    private let settingsContentWidth: CGFloat = 820
-    private let generalContentWidth: CGFloat = 720
-    private let generalLabelWidth: CGFloat = 190
-    private let generalControlWidth: CGFloat = 500
-    private let compactPickerWidth: CGFloat = 320
-
-    @AppStorage("tagFontSize") private var tagFontSize: Double = 18
-    @AppStorage("iconSize") private var iconSize: Double = 56
-    @AppStorage("tagPosition") private var tagPosition = "left"
-    @AppStorage("defaultGroupName") private var defaultGroupName = "Other"
-    @AppStorage("displayMode") private var displayMode = "flat"
-    @AppStorage("hideAppNames") private var hideAppNames = false
-    @AppStorage("showDockIcon") private var showDockIcon = false
-    @AppStorage("launchAtLogin") private var launchAtLogin = true
-    @AppStorage("showUncommonAppBubbles") private var showUncommonAppBubbles = true
-    @State private var selectedLanguage = L10n.currentCode
-    @State private var isRefreshingLanguage = false
-    @State private var allApps: [AppInfo] = []
-    @State private var tagColors: [String: Int] = [:]
-
-    private func scanApps() {
-        DispatchQueue.global(qos: .userInitiated).async {
-            var apps = AppIndexer.scan()
-            let store = TagDatabase.load()
-            apps = TagEditor.annotate(apps: apps)
-            let colors = store.tags.mapValues { $0.color }
-            DispatchQueue.main.async {
-                allApps = apps
-                tagColors = colors
-            }
-        }
-    }
-
-    private func exportTags() {
-        let panel = NSSavePanel()
-        panel.title = tr("settings.export")
-        panel.nameFieldStringValue = "TagLauncher-tags.json"
-        panel.allowedContentTypes = [.json]
-        panel.begin { response in
-            guard response == .OK, let url = panel.url else { return }
-            do {
-                try TagDatabase.exportTo(url)
-            } catch {
-                fputs("[TagLauncher] Export failed: \(error)\n", stderr)
-                showDataAlert(title: tr("settings.exportFailed"), message: error.localizedDescription)
-            }
-        }
-    }
-
-    private func importTags() {
-        let panel = NSOpenPanel()
-        panel.title = tr("settings.import")
-        panel.allowedContentTypes = [.json]
-        panel.allowsMultipleSelection = false
-        panel.begin { response in
-            guard response == .OK, let url = panel.url else { return }
-            do {
-                _ = try TagDatabase.importFrom(url)
-                scanApps()
-            } catch {
-                fputs("[TagLauncher] Import failed: \(error)\n", stderr)
-                showDataAlert(title: tr("settings.importFailed"), message: error.localizedDescription)
-            }
-        }
-    }
-
-    private func showDataAlert(title: String, message: String) {
-        let alert = NSAlert()
-        alert.messageText = title
-        alert.informativeText = message
-        alert.alertStyle = .warning
-        alert.runModal()
-    }
-
-    private var appVersion: String {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?"
-    }
-    private var buildVersion: String {
-        Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "?"
-    }
-    private var languageColumns: [GridItem] {
-        [
-            GridItem(.flexible(minimum: 220), spacing: 18, alignment: .top),
-            GridItem(.flexible(minimum: 220), spacing: 18, alignment: .top),
-        ]
-    }
-    private var displayModeColumns: [GridItem] {
-        [
-            GridItem(.flexible(minimum: 220), spacing: 10, alignment: .top),
-            GridItem(.flexible(minimum: 220), spacing: 10, alignment: .top),
-        ]
-    }
-    private var displayModeOptions: [(id: String, title: String)] {
-        [
-            ("flat", tr("settings.flat")),
-            ("container", tr("settings.container")),
-            ("coloredContainer", tr("settings.coloredContainer")),
-            ("gridContainer", tr("settings.gridContainer")),
-            ("coloredGridContainer", tr("settings.coloredGridContainer")),
-        ]
-    }
-    private var containerDisplayModeOptions: [(id: String, title: String)] {
-        Array(displayModeOptions.dropFirst())
-    }
-
-    private func generalSettingRow<Control: View>(
-        _ label: String,
-        description: String,
-        @ViewBuilder control: () -> Control
-    ) -> some View {
-        HStack(alignment: .top, spacing: 16) {
-            Text(label)
-                .font(.system(size: 14, weight: .semibold))
-                .multilineTextAlignment(.trailing)
-                .lineLimit(2)
-                .minimumScaleFactor(0.86)
-                .frame(width: generalLabelWidth, alignment: .trailing)
-                .padding(.top, 5)
-
-            VStack(alignment: .leading, spacing: 6) {
-                control()
-                    .frame(width: generalControlWidth, alignment: .leading)
-                Text(description)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.leading)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .frame(width: generalControlWidth, alignment: .leading)
-            }
-        }
-        .frame(width: generalContentWidth, alignment: .leading)
-    }
-
-    var body: some View {
-        ZStack {
-            TabView {
-                // Tab 1: Language
-                VStack(alignment: .leading, spacing: 10) {
-                    Text(tr("settings.language"))
-                        .font(.headline)
-                    Text(tr("settings.languageDesc"))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-
-                    ScrollView {
-                        LazyVGrid(columns: languageColumns, alignment: .leading, spacing: 6) {
-                            ForEach(L10n.supported, id: \.code) { language in
-                                Button {
-                                    selectedLanguage = language.code
-                                } label: {
-                                    HStack(spacing: 8) {
-                                        Image(systemName: selectedLanguage == language.code ? "checkmark" : "circle")
-                                            .font(.system(size: 12, weight: .semibold))
-                                            .foregroundStyle(selectedLanguage == language.code ? Color.accentColor : Color.secondary.opacity(0.28))
-                                            .frame(width: 16)
-                                        Text(language.name)
-                                            .foregroundStyle(.primary)
-                                            .lineLimit(1)
-                                            .truncationMode(.tail)
-                                        Spacer(minLength: 0)
-                                    }
-                                    .padding(.horizontal, 8)
-                                    .padding(.vertical, 5)
-                                    .contentShape(Rectangle())
-                                }
-                                .buttonStyle(.plain)
-                                .accessibilityLabel("\(tr("settings.languagePicker")) \(language.name)")
-                            }
-                        }
-                        .padding(.vertical, 4)
-                    }
-                    .frame(maxHeight: 250)
-
-                    Spacer(minLength: 0)
-                    ShortcutHintView()
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.bottom, 2)
-                }
-                .frame(maxWidth: settingsContentWidth, alignment: .leading)
-                .tabItem { Label(tr("settings.language"), systemImage: "globe") }
-                .padding()
-
-                // Tab 2: General
-            VStack(alignment: .leading, spacing: 0) {
-                // Toggle row — centered as a rectangular block
-                HStack(spacing: 20) {
-                    if AppDelegate.supportsLaunchAtLogin {
-                        Toggle(tr("settings.launchAtLogin"), isOn: $launchAtLogin)
-                            .onChange(of: launchAtLogin) { _, enabled in
-                                if enabled {
-                                    AppDelegate.enableLaunchAtLogin()
-                                } else {
-                                    AppDelegate.disableLaunchAtLogin()
-                                }
-                            }
-                    }
-                    Toggle(tr("settings.showInDock"), isOn: $showDockIcon)
-                        .onChange(of: showDockIcon) { _, _ in
-                            AppDelegate.refreshChromeSettings()
-                        }
-                    Toggle(tr("settings.hideAppNames"), isOn: $hideAppNames)
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                .padding(.bottom, 16)
-
-                Divider()
-                    .padding(.bottom, 16)
-
-                VStack(spacing: 18) {
-                    generalSettingRow(tr("settings.appListStyle"), description: tr("settings.flatDesc")) {
-                        VStack(spacing: 8) {
-                            DisplayModeOptionButton(
-                                mode: "flat",
-                                title: tr("settings.flat"),
-                                isSelected: displayMode == "flat"
-                            ) {
-                                displayMode = "flat"
-                            }
-
-                            LazyVGrid(columns: displayModeColumns, alignment: .leading, spacing: 8) {
-                                ForEach(containerDisplayModeOptions, id: \.id) { option in
-                                    DisplayModeOptionButton(
-                                        mode: option.id,
-                                        title: option.title,
-                                        isSelected: displayMode == option.id
-                                    ) {
-                                        displayMode = option.id
-                                    }
-                                }
-                            }
-                        }
-                        .frame(width: generalControlWidth, alignment: .leading)
-                    }
-
-                    generalSettingRow(tr("settings.tagPosition"), description: tr("settings.tagPosDesc")) {
-                        Picker("", selection: $tagPosition) {
-                            Text(tr("settings.left")).tag("left")
-                            Text(tr("settings.right")).tag("right")
-                            Text(tr("settings.top")).tag("top")
-                        }
-                        .pickerStyle(.segmented)
-                        .frame(width: compactPickerWidth, alignment: .leading)
-                    }
-
-                    generalSettingRow(tr("settings.tagFontSize"), description: tr("settings.tagFontDesc")) {
-                        Picker("", selection: $tagFontSize) {
-                            ForEach([16.0, 18.0, 20.0, 22.0, 24.0, 26.0], id: \.self) { size in
-                                Text("\(Int(size))").tag(size)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-                        .frame(width: compactPickerWidth, alignment: .leading)
-                    }
-
-                    generalSettingRow(tr("settings.iconSize"), description: tr("settings.iconSizeDesc")) {
-                        Picker("", selection: $iconSize) {
-                            ForEach([40.0, 48.0, 56.0, 64.0, 72.0, 80.0], id: \.self) { size in
-                                Text("\(Int(size))").tag(size)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-                        .frame(width: compactPickerWidth, alignment: .leading)
-                    }
-                }
-            }
-            .frame(maxWidth: generalContentWidth, alignment: .center)
-            .padding()
-            .tabItem { Label(tr("settings.general"), systemImage: "gearshape") }
-
-            // Tab 3: Tags
-            VStack(spacing: 0) {
-                TagEditorView(
-                    tagColors: $tagColors,
-                    excludedTagNames: ["Mac自带", defaultGroupName],
-                    onRefresh: { scanApps() }
-                )
-            }
-            .padding(.leading, 16)
-            .tabItem { Label(tr("settings.tags"), systemImage: "tag.fill") }
-            .onAppear { scanApps() }
-
-            // Tab 4: Data
-            VStack(spacing: 0) {
-                Spacer(minLength: 54)
-
-                VStack(alignment: .leading, spacing: 5) {
-                    Toggle(tr("settings.uncommonBubble"), isOn: $showUncommonAppBubbles)
-                        .font(.system(size: 13, weight: .medium))
-                    Text(tr("settings.uncommonBubbleDesc"))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                .frame(width: 420, alignment: .leading)
-
-                Spacer(minLength: 28)
-
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(tr("settings.backup"))
-                        .font(.headline)
-                    HStack(spacing: 12) {
-                        Button(tr("settings.export")) { exportTags() }
-                            .buttonStyle(.bordered)
-                        Button(tr("settings.import")) { importTags() }
-                            .buttonStyle(.bordered)
-                    }
-                    Text(tr("settings.backupDesc"))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-                .frame(width: 420, alignment: .leading)
-
-                Spacer(minLength: 42)
-                ShortcutHintView()
-                    .frame(maxWidth: .infinity, alignment: .center)
-                Spacer(minLength: 18)
-            }
-            .tabItem { Label(tr("settings.data"), systemImage: "externaldrive.fill") }
-            .padding()
-
-            // Tab 5: About
-            VStack(spacing: 0) {
-                Spacer(minLength: 72)
-
-                HStack {
-                    if let icon = NSImage(named: NSImage.applicationIconName) {
-                        Image(nsImage: icon)
-                            .resizable()
-                            .frame(width: 128, height: 128)
-                    }
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("TagLauncher")
-                            .font(.title2)
-                            .fontWeight(.semibold)
-                        Text(tr("app.description"))
-                            .font(.body)
-                            .foregroundStyle(.secondary)
-                        Text("\(tr("app.version")) \(appVersion) (\(tr("app.build")) \(buildVersion))")
-                            .font(.callout)
-                            .foregroundStyle(.tertiary)
-
-                        Divider()
-                            .padding(.vertical, 4)
-
-                        Text("万物之中，希望最美")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        Text("永桔@2026-18602102518")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                .frame(width: 560, alignment: .leading)
-
-                Spacer(minLength: 30)
-                ShortcutHintView()
-                    .frame(maxWidth: .infinity, alignment: .center)
-                Spacer(minLength: 18)
-            }
-            .tabItem { Label(tr("settings.about"), systemImage: "info.circle") }
-            .padding()
-            }
-            .onChange(of: selectedLanguage) { _, code in
-                L10n.switchTo(code)
-            }
-            .onReceive(NotificationCenter.default.publisher(for: .appLanguageDidChange)) { notification in
-                if let code = notification.userInfo?["code"] as? String {
-                    selectedLanguage = code
-                }
-                showLanguageRefresh()
-            }
-
-            if isRefreshingLanguage {
-                ZStack {
-                    Color(nsColor: .windowBackgroundColor)
-                        .opacity(0.84)
-                    Image(systemName: "arrow.clockwise")
-                        .font(.system(size: 30, weight: .regular))
-                        .symbolRenderingMode(.hierarchical)
-                        .foregroundStyle(.secondary)
-                }
-                .transition(.opacity)
-            }
-        }
-        .frame(width: settingsWindowWidth, height: 460)
-    }
-
-    private func showLanguageRefresh() {
-        isRefreshingLanguage = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
-            withAnimation(.easeOut(duration: 0.18)) {
-                isRefreshingLanguage = false
-            }
-        }
-    }
-}
-
-private struct DisplayModeOptionButton: View {
-    let mode: String
-    let title: String
-    let isSelected: Bool
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            HStack(spacing: 7) {
-                DisplayModeGlyph(mode: mode, isSelected: isSelected)
-                    .frame(width: 24, height: 18)
-                Text(title)
-                    .font(.system(size: 13, weight: .semibold))
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.82)
-                    .foregroundStyle(isSelected ? Color.white : Color.primary)
-                    .frame(maxWidth: .infinity)
-            }
-            .frame(maxWidth: .infinity, minHeight: 34)
-            .padding(.horizontal, 9)
-            .padding(.vertical, 2)
-            .background(
-                RoundedRectangle(cornerRadius: 7, style: .continuous)
-                    .fill(isSelected ? Color.accentColor : Color(nsColor: .controlBackgroundColor))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 7, style: .continuous)
-                    .stroke(isSelected ? Color.accentColor : Color.secondary.opacity(0.18), lineWidth: 1)
-            )
-            .contentShape(RoundedRectangle(cornerRadius: 7, style: .continuous))
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel(title)
-    }
-}
-
-private struct DisplayModeGlyph: View {
-    let mode: String
-    let isSelected: Bool
-
-    var body: some View {
-        switch mode {
-        case "flat":
-            HStack(spacing: 2) {
-                cell(index: 0, width: 5, height: 5, colored: false)
-                cell(index: 1, width: 5, height: 5, colored: false)
-                cell(index: 2, width: 5, height: 5, colored: false)
-            }
-        case "gridContainer", "coloredGridContainer":
-            let colored = mode == "coloredGridContainer"
-            VStack(spacing: 2) {
-                HStack(spacing: 2) {
-                    cell(index: 0, width: 7, height: 6, colored: colored)
-                    cell(index: 1, width: 7, height: 6, colored: colored)
-                }
-                HStack(spacing: 2) {
-                    cell(index: 2, width: 7, height: 6, colored: colored)
-                    cell(index: 3, width: 7, height: 6, colored: colored)
-                }
-            }
-        default:
-            let colored = mode == "coloredContainer"
-            HStack(alignment: .bottom, spacing: 2) {
-                cell(index: 0, width: 5, height: 8, colored: colored)
-                cell(index: 1, width: 5, height: 14, colored: colored)
-                cell(index: 2, width: 5, height: 10, colored: colored)
-            }
-        }
-    }
-
-    private func cell(index: Int, width: CGFloat, height: CGFloat, colored: Bool) -> some View {
-        let fill = fillColor(index: index, colored: colored)
-        let stroke = isSelected ? Color.white.opacity(0.95) : Color.secondary.opacity(0.35)
-        return RoundedRectangle(cornerRadius: 1.8, style: .continuous)
-            .fill(fill)
-            .overlay(
-                RoundedRectangle(cornerRadius: 1.8, style: .continuous)
-                    .stroke(stroke, lineWidth: 0.8)
-            )
-            .frame(width: width, height: height)
-    }
-
-    private func fillColor(index: Int, colored: Bool) -> Color {
-        if isSelected {
-            return Color.white.opacity(colored ? 0.9 : 0.18)
-        }
-        guard colored else {
-            return Color.secondary.opacity(0.12)
-        }
-        let palette: [Color] = [.green, .purple, .blue, .orange]
-        return palette[index % palette.count].opacity(0.78)
-    }
-}
-
-private struct ShortcutHintView: View {
-    var body: some View {
-        HStack(spacing: 12) {
-            ShortcutKeycap(symbol: "⌥")
-            Text("+")
-                .font(.system(size: 22, weight: .semibold))
-                .foregroundStyle(.tertiary)
-            ShortcutKeycap(symbol: "⇧")
-            Text("+")
-                .font(.system(size: 22, weight: .semibold))
-                .foregroundStyle(.tertiary)
-            SpacebarKeycap()
-        }
-        .accessibilityLabel("⌥ ⇧ Space")
-        .allowsHitTesting(false)
-    }
-}
-
-private struct ShortcutKeycap: View {
-    let symbol: String
-
-    var body: some View {
-        Text(symbol)
-            .font(.system(size: 36, weight: .medium))
-            .foregroundStyle(.secondary)
-            .frame(width: 74, height: 58)
-            .background(KeycapBackground())
-    }
-}
-
-private struct SpacebarKeycap: View {
-    var body: some View {
-        ZStack {
-            KeycapBackground()
-            Capsule()
-                .fill(Color.secondary.opacity(0.38))
-                .frame(width: 72, height: 3)
-                .offset(y: 13)
-        }
-        .frame(width: 190, height: 58)
-    }
-}
-
-private struct KeycapBackground: View {
-    var body: some View {
-        RoundedRectangle(cornerRadius: 10, style: .continuous)
-            .fill(Color(nsColor: .controlBackgroundColor))
-            .overlay(
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .stroke(Color.primary.opacity(0.12), lineWidth: 1)
-            )
-            .shadow(color: .black.opacity(0.10), radius: 8, x: 0, y: 3)
-    }
 }

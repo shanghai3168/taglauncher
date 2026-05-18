@@ -100,131 +100,274 @@ That is only the first visible blocker; more availability issues would appear af
 - Add availability guards for file panels, screen safe areas, app launching, and drag/drop type identifiers.
 - Maintain a compatibility test checklist on an actual macOS 10.15 Intel machine or VM.
 
-## AI-Assisted App Categorization
+## Smart App Categorization For 7.0
 
 ### Product Goal
 
-Help users create a useful TagLauncher category layout with very low effort. The user should be able to describe the desired tag names in natural language, then receive a proposed tag/category layout for the apps installed on their Mac.
+The biggest first-run pain is not launching apps; it is creating tags and assigning apps from scratch.
 
-### Version Plan
+Apptag 7.0 should make the first experience feel intelligent: after the first scan, most common apps should already be placed into useful categories, with a clear way to review, undo, and improve the result.
 
-#### TagLauncher 6.0.0: Local Category Creator
+Target user-facing promise:
 
-Ship a local-only version first. This version does not use a server and does not perform intelligent app assignment.
+> Open Apptag, wait briefly while it scans, then see most of your everyday apps already organized.
 
-Goal:
+### Updated 7.0 Decision
 
-- let the user speak or type desired category/tag names
-- parse the input into short tag chips
-- create those tags locally
-- append them to `tagOrder`
-- leave app assignment to the existing manual/editing workflow
+The previous plan treated local category creation as a possible 6.0 feature and server-backed AI as a later feature. For 7.0, replace that with a hybrid `Smart Start` system:
 
-Why this belongs in 6.0.0:
+1. Local bundled categorization handles common apps immediately.
+2. Local heuristic rules handle obvious apps not in the bundled table.
+3. Optional cloud AI improves the draft only after explicit user consent.
 
-- no backend dependency
-- no LLM cost
-- no upload/privacy review burden
-- validates the entry point, wording, parsing, and user workflow before adding AI
-- gives users immediate value even before intelligent classification exists
+This gives the best balance of product experience, privacy, cost, and implementation risk.
 
-Suggested interaction:
+### Why Not Pure Local Or Pure Cloud
 
-1. User opens "Create Categories" from Preferences > Tags.
-2. User types or dictates a messy list such as "工作 设计 写作 娱乐 系统工具".
-3. The app parses it into chips.
-4. The user can rename/delete/reorder chips.
-5. The app creates missing tags locally and preserves existing tags.
-6. The app shows a short success state and points the user back to edit mode for app assignment.
+#### Pure Local Table
 
-Implementation notes:
+Pros:
 
-- Use macOS dictation into a regular text field; no custom audio handling in 6.0.0.
-- Accept separators such as newline, comma, Chinese comma, semicolon, slash, bullet, and spaces for short CJK phrases.
-- Trim whitespace and punctuation.
-- Reject empty labels and duplicates.
-- Warn when labels are too long.
-- Do not delete or overwrite existing tags.
-- Assign colors by cycling through `TagColor.allIndices`.
-- Save through the existing `TagDatabase.save` path.
+- instant first-run value
+- no backend
+- no model cost
+- no network dependency
+- minimal privacy/App Store complexity
+- works offline
 
-#### Later Version: AI Categorization Draft
+Cons:
 
-After 6.0.0 proves the local category-creation flow, add the server-backed AI draft feature.
+- requires an app-category catalog
+- misses long-tail apps
+- categories may not match every user's mental model
 
-### Recommended AI Version
+Conclusion:
 
-Do not make the first version fully automatic. Use a trust-building flow:
+Use this as the first and default layer. It is the highest-ROI foundation.
 
-1. User opens an "AI Categorize" entry from Preferences > Tags or the overlay edit mode.
-2. App shows a compact dialog with:
-   - a text input for category names or natural-language intent
-   - suggested starter chips such as Work, Design, Writing, Development, Study, Entertainment, Utilities
-   - a clear privacy note explaining that app names, paths, bundle identifiers, and the user's requested category names will be uploaded only after confirmation
-3. User confirms upload.
-4. Server returns a draft JSON plan.
-5. App displays a preview:
-   - new tags
-   - tag order
-   - each app's proposed tag assignment
-   - conflicts and uncertain apps
-6. User can apply, edit, or cancel.
-7. Applying the plan writes through `TagDatabase.save`, after creating a local backup snapshot so the change can be undone.
+#### Pure Cloud AI
 
-### Client Data To Send
+Pros:
 
-Send only the minimum needed for classification:
+- better long-tail coverage
+- can adapt to user intent, language, and preferred tag style
+- can produce a complete categorization draft for unusual app libraries
+
+Cons:
+
+- requires backend/API operations
+- adds privacy copy and App Store privacy work
+- can fail when offline or rate-limited
+- has recurring cost and abuse risk
+- should not silently overwrite local user data
+
+Conclusion:
+
+Use this only as an opt-in enhancement, not as the default first-run path.
+
+### Recommended 7.0 Product Flow: Smart Start
+
+First-run flow for a new user:
+
+1. App scans installed applications.
+2. A progress screen says it is organizing apps locally.
+3. The local catalog matches known apps by `bundleIdentifier`.
+4. Local heuristics match obvious cases by app name, path, and metadata.
+5. Apptag generates a local categorization draft.
+6. If the user has no existing tag setup, apply high-confidence results automatically.
+7. Show a result summary:
+   - apps organized
+   - tags created
+   - apps left uncategorized
+   - option to undo
+   - option to edit manually
+   - option to use AI Improve
+
+For existing users:
+
+1. Never overwrite their layout silently.
+2. Show Smart Start as a preview/draft.
+3. Let the user apply only missing assignments, replace selected categories, or cancel.
+4. Always create a backup snapshot before applying.
+
+### Local Catalog Strategy
+
+Add a bundled catalog file:
+
+```text
+Apptag/SmartCategorization/SmartCategoryCatalog.json
+```
+
+Primary key:
+
+- `bundleIdentifier`
+
+Fallback keys:
+
+- normalized app name
+- executable/app bundle name
+- install path category such as `/Applications`, `/System/Applications`, `~/Applications`
+
+Suggested catalog entry shape:
+
+```json
+{
+  "bundleIdentifier": "com.figma.Desktop",
+  "names": ["Figma"],
+  "category": "Design",
+  "confidence": 0.98,
+  "source": "bundled"
+}
+```
+
+Initial categories should be broad, short, and understandable:
+
+- Browser
+- Communication
+- Productivity
+- Development
+- Design
+- Writing
+- Media
+- Utilities
+- System
+- Entertainment
+- Finance
+- Education
+- AI Tools
+- Security
+- Other
+
+For Chinese UI, display localized names, but keep internal category IDs stable.
+
+### How To Build The Initial Catalog
+
+Do not wait for a perfect dataset.
+
+Recommended first version:
+
+1. Start with 300-800 common Mac apps.
+2. Generate a draft list semi-automatically from known popular Mac apps.
+3. Review it manually for category quality.
+4. Store stable identifiers and category IDs, not only display names.
+5. Expand the table in later releases.
+
+Good sources of first-pass coverage:
+
+- Apple system apps
+- browsers
+- office/productivity apps
+- design apps
+- development tools
+- communication apps
+- media apps
+- utilities
+- common Chinese-market apps
+- common global apps
+- designer icon packs and macOS icon libraries, because apps that designers repeatedly draw replacement icons for are often high-visibility apps in real Mac workflows
+
+Optional later enhancement:
+
+- remotely update a signed JSON ruleset, so the app can improve common-app coverage without a full app release.
+
+### Local Heuristic Rules
+
+After exact catalog matches, use simple local rules for obvious cases:
+
+- apps under `/System/Applications` -> System
+- app names containing Terminal, Console, Activity Monitor -> Utilities/System
+- app names containing Code, Xcode, Studio, Git -> Development
+- app names containing Player, Music, Video -> Media
+- app names containing Browser, Chrome, Firefox, Safari, Edge -> Browser
+
+Rules should produce lower confidence than exact bundle matches.
+
+Never use low-confidence local rules to overwrite existing user choices.
+
+### AI Improve: Optional Cloud Enhancement
+
+Add `AI Improve` only after the local Smart Start foundation works.
+
+The cloud feature should produce a draft, not a final overwrite:
+
+1. User clicks `AI Improve`.
+2. App explains exactly what will be uploaded.
+3. User confirms.
+4. Client sends a minimal app list.
+5. Server returns a structured categorization draft.
+6. App shows preview.
+7. User applies, edits, or cancels.
+8. Applying creates a backup first and supports undo.
+
+### Client Data To Send For AI Improve
+
+Send only the minimum needed:
 
 - app display name
 - bundle identifier
-- install path category, for example `/Applications`, `/System/Applications`, `~/Applications`
+- install path category, not full unnecessary user data
 - current tags, if any
-- user-provided desired category names or intent
+- user's desired categories or natural-language intent, if provided
 - current app language
 
-Avoid uploading icons, full user paths beyond the app path already needed for local mapping, unrelated files, or usage history.
+Do not upload:
 
-### Server Strategy
+- icons
+- usage history
+- unrelated file paths
+- local notes
+- private documents
 
-The backend does not need a heavy agent. It can be a small stateless API:
+### Server Strategy For AI Improve
+
+The backend can be a small stateless API:
 
 - `POST /v1/categorization-plans`
-- validates input
-- normalizes category names
-- calls one lightweight LLM with a strict JSON schema
-- validates the returned JSON
-- returns a draft plan with confidence and reasons
+- validate request size and schema
+- normalize category names
+- apply server-side known-app cache by bundle identifier
+- call a lightweight model for the remaining uncertain apps
+- require structured JSON output
+- validate the returned plan
+- return confidence, warnings, and unassigned apps
 
-Use a provider-adapter layer so the app is not locked to one model vendor. For the first version, the model should output only structured JSON; no tool use, no browsing, no remote code execution.
+Do not use a heavy multi-agent system for this. It is a single-turn classification task.
+
+Use a provider-adapter layer so the app is not locked to one model vendor.
 
 ### Cost Strategy
 
-This is a low-token, single-turn classification problem. A typical request can stay small by sending app names, bundle IDs, and 5-15 desired categories. The cost-effective path is:
+This is a low-token classification task.
 
-- start with a cheap mini/flash/lite model
-- use strict JSON schema output
+Recommended approach:
+
+- classify known bundle IDs locally or from cache first
+- send only unknown/uncertain apps to the model
+- use a cheap mini/nano/flash/lite model first
+- require structured JSON schema output
 - retry once with a stronger model only if validation fails or confidence is low
-- cache common app classification hints server-side by bundle identifier
-- optionally pre-classify well-known bundle IDs locally before calling the model
+- cache common model results server-side by bundle identifier
 
 ### Output Plan Shape
 
-The server should return a draft, not a final overwrite:
+Both local Smart Start and cloud AI Improve should produce the same draft shape:
 
 ```json
 {
   "version": 1,
+  "source": "local-smart-start",
   "tags": [
-    { "name": "Design", "color": 1 }
+    { "id": "design", "name": "Design", "color": 1 }
   ],
-  "tagOrder": ["Design"],
+  "tagOrder": ["design"],
   "assignments": [
     {
       "path": "/Applications/Figma.app",
+      "bundleIdentifier": "com.figma.Desktop",
       "appName": "Figma",
-      "tags": ["Design"],
-      "confidence": 0.95,
-      "reason": "Design/prototyping tool"
+      "tagIDs": ["design"],
+      "confidence": 0.98,
+      "reason": "Known design/prototyping app"
     }
   ],
   "unassigned": [],
@@ -232,31 +375,70 @@ The server should return a draft, not a final overwrite:
 }
 ```
 
-The local app converts this draft into the existing `TagDatabase.Store` format:
+The app then converts this draft into the current `TagDatabase.Store` format until the store schema is upgraded.
 
-- `tags`: tag name to color
-- `tagOrder`: ordered category list
-- `appTags`: app path to tag-name array
+### Data Safety Requirements
 
-### Interaction Notes
+Before applying any generated categorization:
 
-- Best entry point: Preferences > Tags, plus a small "AI Categorize" button in overlay edit mode.
-- Keep the first dialog small and discoverable, not a big chatbot.
-- Let users paste messy text; parse it into chips before upload.
-- Limit category names to short labels and warn on overly long names.
-- Never silently replace the user's existing layout. Show a before/after preview.
-- Add a one-click undo after applying.
+- preserve existing user tags
+- do not delete tags silently
+- do not overwrite existing assignments unless user explicitly chooses replace
+- create a backup snapshot
+- show a one-click undo
+- keep a list of unassigned/uncertain apps
 
-### Privacy And App Store Notes
+### Architecture Tasks
 
-- Explicit upload confirmation is required.
-- The privacy copy should say exactly what is uploaded.
-- Add a local-only fallback: if the user declines upload, the app can still create empty tags from the typed list.
-- Update App Store privacy answers if the server feature ships.
+Recommended implementation modules:
 
-### Future Enhancements
+```text
+SmartCategoryCatalog.json
+SmartCategoryCatalog.swift
+SmartCategorizationDraft.swift
+SmartCategorizer.swift
+SmartStartView.swift
+AICategorizationClient.swift
+CategorizationPlanPreviewView.swift
+TagBackupService.swift
+```
 
-- Built-in local rules for common apps by bundle identifier.
-- User style presets: by work type, by life area, by frequency, by project, by app category.
-- Voice input using macOS dictation into the same text field, so the app does not need to handle audio processing in v1.
-- A later on-device model experiment if privacy becomes a key selling point, but this should not block the server-based MVP.
+### 7.0 Implementation Phases
+
+#### Phase 1: Local Smart Start Foundation
+
+- define stable category IDs
+- add bundled catalog format
+- implement exact bundle ID matching
+- implement basic heuristic rules
+- generate a draft plan
+- apply only high-confidence results for new users
+
+#### Phase 2: Preview, Undo, And Backup
+
+- add categorization preview UI
+- add backup before apply
+- add one-click undo
+- support existing-user merge behavior
+
+#### Phase 3: Catalog Expansion
+
+- build the first 300-800 app catalog
+- add common Chinese and global apps
+- localize category display names
+- add catalog QA checklist
+
+#### Phase 4: Optional AI Improve
+
+- add opt-in upload confirmation
+- build stateless categorization API
+- return structured JSON draft
+- validate, preview, backup, and apply locally
+
+### Non-Goals For First 7.0 Iteration
+
+- no automatic cloud upload on first launch
+- no silent replacement of existing user layouts
+- no chatbot-style categorization interface
+- no model call for apps already covered locally
+- no use of app icons, usage history, or user notes for cloud classification

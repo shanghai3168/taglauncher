@@ -52,8 +52,12 @@ enum L10n {
         guard supported.contains(where: { $0.code == code }) else { return }
         guard code != currentCode else { return }
         load(code)
+        let relocalizedTags = TagDatabase.relocalizeSystemTagsForCurrentLanguage()
         UserDefaults.standard.set(code, forKey: "appLanguage")
         NotificationCenter.default.post(name: .appLanguageDidChange, object: nil, userInfo: ["code": currentCode])
+        if relocalizedTags {
+            NotificationCenter.default.post(name: .tagLauncherDataDidChange, object: nil)
+        }
     }
 
     /// Load a specific key's translation for a given language code without switching.
