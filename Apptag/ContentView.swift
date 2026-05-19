@@ -337,6 +337,7 @@ private struct SmartStartNotice: Identifiable {
 
 struct ContentView: View {
     let hideOverlay: () -> Void
+    private let initialQuickSearchSource: String?
 
     @State private var allApps: [AppInfo] = []
     @State private var tagColors: [String: Int] = [:]
@@ -377,6 +378,27 @@ struct ContentView: View {
     @State private var bubbleDraftNote = ""
     @FocusState private var bubbleNoteFocused: Bool
 
+    // Quick Search
+    @State private var quickSearchVisible = false
+    @State private var quickSearchQuery = ""
+    @State private var quickSearchDocuments: [QuickSearchDocument] = []
+    @State private var quickSearchResults: [QuickSearchResult] = []
+    @State private var quickSearchSelectedID: URL? = nil
+    @State private var quickSearchManualSelection = false
+    @State private var quickSearchFocusToken = 0
+    @State private var quickSearchCloseHidesOverlay = false
+    @State private var quickSearchErrorMessage: String? = nil
+    @State private var initialQuickSearchConsumed = false
+
+    init(hideOverlay: @escaping () -> Void, initialQuickSearchSource: String? = nil) {
+        self.hideOverlay = hideOverlay
+        self.initialQuickSearchSource = initialQuickSearchSource
+        let startsInQuickSearch = initialQuickSearchSource != nil
+        _quickSearchVisible = State(initialValue: startsInQuickSearch)
+        _quickSearchCloseHidesOverlay = State(initialValue: initialQuickSearchSource == QuickSearchOpenSource.globalHidden)
+        _quickSearchFocusToken = State(initialValue: startsInQuickSearch ? 1 : 0)
+    }
+
     // Configurable defaults
     @AppStorage("defaultGroupName") private var defaultGroupName = "Other"
     @AppStorage("tagFontSize") private var tagFontSize: Double = AppDefaults.tagFontSize
@@ -411,37 +433,47 @@ struct ContentView: View {
         displayMode == "coloredContainer" || displayMode == "coloredGridContainer"
     }
 
+    private var quickSearchOnlyMode: Bool {
+        quickSearchVisible && quickSearchCloseHidesOverlay
+    }
+
     var body: some View {
         ZStack {
-            VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
-                .ignoresSafeArea()
-                .allowsHitTesting(false)
+            if !quickSearchOnlyMode {
+                VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
+            }
 
-            if notchHeight > 0 {
-                VStack {
-                    Rectangle().fill(.black)
-                        .frame(height: notchHeight)
-                        .ignoresSafeArea(edges: .top)
-                    Spacer()
+            if !quickSearchOnlyMode {
+                if notchHeight > 0 {
+                    VStack {
+                        Rectangle().fill(.black)
+                            .frame(height: notchHeight)
+                            .ignoresSafeArea(edges: .top)
+                        Spacer()
+                    }
+                    .allowsHitTesting(false)
                 }
-                .allowsHitTesting(false)
+
+                switch editPhase {
+                case .none:
+                    normalContent
+                case .editingTags:
+                    editTagsView
+                case .editingApps:
+                    editAppsView
+                }
+
+                uncommonAppBubbleOverlay
+                smartStartNoticeOverlay
+                editActionFeedbackOverlay
+                uncategorizedDropConfirmOverlay
             }
 
-            switch editPhase {
-            case .none:
-                normalContent
-            case .editingTags:
-                editTagsView
-            case .editingApps:
-                editAppsView
-            }
+            quickSearchOverlay
 
-            uncommonAppBubbleOverlay
-            smartStartNoticeOverlay
-            editActionFeedbackOverlay
-            uncategorizedDropConfirmOverlay
-
-            if let message = dropWarningToast {
+            if !quickSearchOnlyMode, let message = dropWarningToast {
                 Text(message)
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundStyle(.primary)
@@ -456,7 +488,7 @@ struct ContentView: View {
                     .allowsHitTesting(false)
             }
 
-            if dropRefreshVisible {
+            if !quickSearchOnlyMode && dropRefreshVisible {
                 Color.black.opacity(0.08)
                     .ignoresSafeArea()
                     .transition(.opacity)
@@ -479,6 +511,17 @@ struct ContentView: View {
         .onAppear {
             refreshNotchHeight()
             refreshApps()
+            if let initialQuickSearchSource, !initialQuickSearchConsumed {
+                initialQuickSearchConsumed = true
+                quickSearchCloseHidesOverlay = initialQuickSearchSource == QuickSearchOpenSource.globalHidden
+                quickSearchVisible = true
+                quickSearchFocusToken &+= 1
+                NotificationCenter.default.post(
+                    name: .tagLauncherQuickSearchVisibilityChanged,
+                    object: nil,
+                    userInfo: ["active": true]
+                )
+            }
         }
         .onReceive(NotificationCenter.default.publisher(for: .tagLauncherOverlayDidShow)) { _ in
             resetTransientDragState()
@@ -487,6 +530,14 @@ struct ContentView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: .tagLauncherOverlayDidHide)) { _ in
             resetTransientDragState()
+            closeQuickSearch(notify: true, hideOverlayIfNeeded: false)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .tagLauncherQuickSearchRequested)) { notification in
+            let source = notification.userInfo?["source"] as? String ?? QuickSearchOpenSource.mainOverlay
+            openQuickSearch(source: source)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .tagLauncherQuickSearchDismissRequested)) { _ in
+            closeQuickSearch()
         }
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
             guard allApps.isEmpty, !refreshInProgress else { return }
@@ -517,6 +568,10 @@ struct ContentView: View {
             if editingBubble != nil && !focused {
                 commitBubbleNote()
             }
+        }
+        .onChange(of: quickSearchQuery) { _, _ in
+            quickSearchErrorMessage = nil
+            refreshQuickSearchResults()
         }
         .onChange(of: pendingUncategorizedDrop != nil) { _, active in
             NotificationCenter.default.post(
@@ -551,6 +606,179 @@ struct ContentView: View {
                 NotificationCenter.default.post(name: .tagLauncherEditModeChanged, object: nil, userInfo: ["active": false])
             }
         }
+    }
+
+    // MARK: - Quick Search
+
+    private var quickSearchOverlay: some View {
+        GeometryReader { proxy in
+            if quickSearchVisible {
+                QuickSearchBackdropClickView {
+                    closeQuickSearch()
+                }
+                    .frame(width: proxy.size.width, height: proxy.size.height)
+                    .ignoresSafeArea()
+                    .zIndex(899)
+
+                QuickSearchOverlayView(
+                    query: $quickSearchQuery,
+                    results: quickSearchResults,
+                    selectedID: quickSearchSelectedID,
+                    focusToken: quickSearchFocusToken,
+                    isLoading: quickSearchDocuments.isEmpty && refreshInProgress,
+                    maxVisibleRows: quickSearchMaxVisibleRows(in: proxy.size),
+                    errorMessage: quickSearchErrorMessage,
+                    onCommand: handleQuickSearchCommand,
+                    onHover: selectQuickSearchResult,
+                    onLaunch: launchQuickSearchResult
+                )
+                .position(
+                    x: proxy.size.width / 2,
+                    y: quickSearchPanelCenterY(in: proxy.size)
+                )
+                .transition(.scale(scale: 0.98).combined(with: .opacity))
+                .zIndex(900)
+            }
+        }
+        .ignoresSafeArea()
+        .animation(.easeOut(duration: 0.12), value: quickSearchVisible)
+    }
+
+    private func quickSearchPanelCenterY(in size: CGSize) -> CGFloat {
+        let visibleRows = max(1, min(quickSearchResults.isEmpty ? 1 : quickSearchResults.count, quickSearchMaxVisibleRows(in: size)))
+        let estimatedPanelHeight = CGFloat(visibleRows) * 76 + 122
+        return quickSearchPanelTopY(in: size) + estimatedPanelHeight / 2
+    }
+
+    private func quickSearchPanelTopY(in size: CGSize) -> CGFloat {
+        max(notchHeight + 54, min(112, size.height * 0.12))
+    }
+
+    private func quickSearchMaxVisibleRows(in size: CGSize) -> Int {
+        let bottomClearance: CGFloat = 84
+        let chromeHeight: CGFloat = 122
+        let rowHeightWithSpacing: CGFloat = 76
+        let availableHeight = max(0, size.height - quickSearchPanelTopY(in: size) - bottomClearance - chromeHeight)
+        return max(1, min(8, Int(floor(availableHeight / rowHeightWithSpacing))))
+    }
+
+    private func openQuickSearch(source: String) {
+        guard canOpenQuickSearch else { return }
+        dismissAppBubble()
+        quickSearchCloseHidesOverlay = source == QuickSearchOpenSource.globalHidden
+        quickSearchVisible = true
+        quickSearchQuery = ""
+        quickSearchManualSelection = false
+        quickSearchErrorMessage = nil
+        quickSearchFocusToken &+= 1
+        refreshQuickSearchResults()
+        NotificationCenter.default.post(
+            name: .tagLauncherQuickSearchVisibilityChanged,
+            object: nil,
+            userInfo: ["active": true]
+        )
+    }
+
+    private var canOpenQuickSearch: Bool {
+        editPhase == .none
+            && pendingUncategorizedDrop == nil
+            && smartStartNotice == nil
+            && !dropRefreshVisible
+            && !quickSearchVisible
+    }
+
+    private func closeQuickSearch(notify: Bool = true, hideOverlayIfNeeded: Bool = true) {
+        let shouldHideOverlay = quickSearchVisible && quickSearchCloseHidesOverlay && hideOverlayIfNeeded
+        guard quickSearchVisible else { return }
+        quickSearchVisible = false
+        quickSearchQuery = ""
+        quickSearchResults = []
+        quickSearchSelectedID = nil
+        quickSearchManualSelection = false
+        quickSearchErrorMessage = nil
+        quickSearchCloseHidesOverlay = false
+        if notify {
+            NotificationCenter.default.post(
+                name: .tagLauncherQuickSearchVisibilityChanged,
+                object: nil,
+                userInfo: ["active": false]
+            )
+        }
+        if shouldHideOverlay {
+            hideOverlay()
+        }
+    }
+
+    private func refreshQuickSearchResults() {
+        let previousSelection = quickSearchSelectedID
+        quickSearchResults = QuickSearchEngine.search(quickSearchQuery, documents: quickSearchDocuments)
+
+        if quickSearchResults.isEmpty {
+            quickSearchSelectedID = nil
+            quickSearchManualSelection = false
+            return
+        }
+
+        if quickSearchManualSelection,
+           let previousSelection,
+           quickSearchResults.contains(where: { $0.id == previousSelection }) {
+            quickSearchSelectedID = previousSelection
+        } else {
+            quickSearchSelectedID = quickSearchResults.first?.id
+            quickSearchManualSelection = false
+        }
+    }
+
+    private func handleQuickSearchCommand(_ command: QuickSearchCommand) {
+        switch command {
+        case .moveUp:
+            moveQuickSearchSelection(by: -1)
+        case .moveDown:
+            moveQuickSearchSelection(by: 1)
+        case .submit:
+            guard let selected = selectedQuickSearchResult else { return }
+            launchQuickSearchResult(selected)
+        case .dismiss:
+            closeQuickSearch()
+        }
+    }
+
+    private var selectedQuickSearchResult: QuickSearchResult? {
+        guard let quickSearchSelectedID else { return nil }
+        return quickSearchResults.first { $0.id == quickSearchSelectedID }
+    }
+
+    private func moveQuickSearchSelection(by delta: Int) {
+        guard !quickSearchResults.isEmpty else { return }
+        let currentIndex = quickSearchSelectedID.flatMap { id in
+            quickSearchResults.firstIndex { $0.id == id }
+        } ?? 0
+        let nextIndex = min(max(currentIndex + delta, 0), quickSearchResults.count - 1)
+        quickSearchSelectedID = quickSearchResults[nextIndex].id
+        quickSearchManualSelection = true
+    }
+
+    private func selectQuickSearchResult(_ result: QuickSearchResult) {
+        quickSearchSelectedID = result.id
+        quickSearchManualSelection = true
+    }
+
+    private func launchQuickSearchResult(_ result: QuickSearchResult) {
+        quickSearchErrorMessage = nil
+        launchApp(
+            result.app,
+            closeQuickSearchOnSuccess: true,
+            closeOverlayOnSuccess: true,
+            onFailure: {
+                quickSearchErrorMessage = tr("quickSearch.launchFailed")
+                quickSearchFocusToken &+= 1
+                NSAccessibility.post(
+                    element: NSApp.mainWindow as Any,
+                    notification: .announcementRequested,
+                    userInfo: [.announcement: tr("quickSearch.launchFailed")]
+                )
+            }
+        )
     }
 
     // MARK: - Normal Content
@@ -2304,12 +2532,17 @@ struct ContentView: View {
             )
             let store = smartStartResult.store
             let apps = TagEditor.annotate(apps: scannedApps, store: store)
+            let quickSearchDocs = QuickSearchEngine.makeDocuments(apps: apps, store: store)
             let colors = store.tags.mapValues { $0.color }
             let order = TagEditor.orderedTagNames()
             DispatchQueue.main.async {
                 allApps = apps
+                quickSearchDocuments = quickSearchDocs
                 tagColors = colors
                 draggedTagNames = order
+                if quickSearchVisible {
+                    refreshQuickSearchResults()
+                }
                 handleSmartStartRunResult(smartStartResult)
                 if forceLayoutRefresh {
                     finishDropRefreshAfterMinimumDuration()
@@ -2325,15 +2558,37 @@ struct ContentView: View {
         }
     }
 
-    func openApp(_ app: AppInfo) {
+    private func launchApp(
+        _ app: AppInfo,
+        closeQuickSearchOnSuccess: Bool = false,
+        closeOverlayOnSuccess: Bool = true,
+        onFailure: (() -> Void)? = nil
+    ) {
         appDragModeActive = false
         endTagNavReorder()
-        hideOverlay()
-        DispatchQueue.global(qos: .utility).async {
-            TagEditor.recordLauncherOpen(for: app.path.path)
-        }
         let configuration = NSWorkspace.OpenConfiguration()
-        NSWorkspace.shared.openApplication(at: app.path, configuration: configuration)
+        NSWorkspace.shared.openApplication(at: app.path, configuration: configuration) { _, error in
+            DispatchQueue.main.async {
+                guard error == nil else {
+                    onFailure?()
+                    return
+                }
+
+                DispatchQueue.global(qos: .utility).async {
+                    TagEditor.recordLauncherOpen(for: app.path.path)
+                }
+                if closeQuickSearchOnSuccess {
+                    closeQuickSearch(hideOverlayIfNeeded: false)
+                }
+                if closeOverlayOnSuccess {
+                    hideOverlay()
+                }
+            }
+        }
+    }
+
+    func openApp(_ app: AppInfo) {
+        launchApp(app)
     }
 }
 

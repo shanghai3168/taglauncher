@@ -31,6 +31,9 @@ struct PreferencesView: View {
     @State private var categoryScheme = TagDatabase.CategorySchemeState()
     @State private var isApplyingSystemScheme = false
     @State private var showApplySystemSchemeConfirmation = false
+    @State private var recordingHotkeyKind: LauncherHotkeyKind? = nil
+    @State private var hotkeyCaptureMonitor: Any? = nil
+    @State private var hotkeyRefreshToken = 0
 
     private func scanApps() {
         DispatchQueue.global(qos: .userInitiated).async {
@@ -339,6 +342,130 @@ struct PreferencesView: View {
         .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
     }
 
+    private func applyHotkey(_ hotkey: LauncherHotkey?, for kind: LauncherHotkeyKind) {
+        (NSApp.delegate as? AppDelegate)?.applyHotkey(hotkey, for: kind)
+        hotkeyRefreshToken &+= 1
+    }
+
+    private func retryHotkey(_ kind: LauncherHotkeyKind) {
+        (NSApp.delegate as? AppDelegate)?.retryHotkeyRegistration(for: kind)
+        hotkeyRefreshToken &+= 1
+    }
+
+    private func openKeyboardShortcutsSettings() {
+        let urls = [
+            URL(string: "x-apple.systempreferences:com.apple.Keyboard-Settings.extension?Shortcuts"),
+            URL(string: "x-apple.systempreferences:com.apple.preference.keyboard?shortcuts")
+        ].compactMap { $0 }
+        guard let url = urls.first else { return }
+        NSWorkspace.shared.open(url)
+    }
+
+    private func hotkeySettingsPanel() -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text(tr("quickSearch.hotkeys"))
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                Spacer()
+                Button(action: openKeyboardShortcutsSettings) {
+                    Label(tr("quickSearch.openKeyboardSettings"), systemImage: "keyboard")
+                        .font(.system(size: 13, weight: .semibold))
+                        .lineLimit(1)
+                }
+                .buttonStyle(.bordered)
+                .help(tr("quickSearch.openKeyboardSettings"))
+                .accessibilityLabel(tr("quickSearch.openKeyboardSettings"))
+            }
+
+            HotkeySettingRow(
+                title: tr("quickSearch.mainHotkey"),
+                description: tr("quickSearch.mainHotkeyDesc"),
+                kind: .main,
+                isRecording: recordingHotkeyKind == .main,
+                allowsEditing: false,
+                refreshToken: hotkeyRefreshToken,
+                onBeginRecording: { },
+                onRestoreDefault: nil,
+                onRetry: { },
+                onCancelRecording: cancelHotkeyRecording
+            )
+
+            StaticHotkeyInfoRow(
+                title: tr("quickSearch.internalHotkey"),
+                description: tr("quickSearch.internalHotkeyDesc"),
+                displayText: tr("quickSearch.spaceDisplay"),
+                statusText: tr("quickSearch.internalHotkeyStatus")
+            )
+
+            HotkeySettingRow(
+                title: tr("quickSearch.globalHotkey"),
+                description: tr("quickSearch.globalHotkeyDesc"),
+                kind: .quickSearch,
+                isRecording: recordingHotkeyKind == .quickSearch,
+                allowsEditing: true,
+                refreshToken: hotkeyRefreshToken,
+                onBeginRecording: { beginHotkeyRecording(.quickSearch) },
+                onRestoreDefault: { applyHotkey(.defaultQuickSearch, for: .quickSearch) },
+                onRetry: { retryHotkey(.quickSearch) },
+                onCancelRecording: cancelHotkeyRecording
+            )
+        }
+        .id(hotkeyRefreshToken)
+    }
+
+    private func beginHotkeyRecording(_ kind: LauncherHotkeyKind) {
+        removeHotkeyCaptureMonitor()
+        recordingHotkeyKind = kind
+        postHotkeyRecordingState(active: true)
+        hotkeyCaptureMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+            handleCapturedHotkeyEvent(event, for: kind)
+        }
+    }
+
+    private func handleCapturedHotkeyEvent(_ event: NSEvent, for kind: LauncherHotkeyKind) -> NSEvent? {
+        if event.keyCode == UInt16(kVK_Escape) {
+            cancelHotkeyRecording()
+            return nil
+        }
+        guard let hotkey = LauncherHotkey.from(event: event) else {
+            NSSound.beep()
+            return nil
+        }
+        finishHotkeyRecording()
+        applyHotkey(hotkey, for: kind)
+        return nil
+    }
+
+    private func cancelHotkeyRecording() {
+        finishHotkeyRecording()
+    }
+
+    private func finishHotkeyRecording() {
+        guard recordingHotkeyKind != nil || hotkeyCaptureMonitor != nil else { return }
+        recordingHotkeyKind = nil
+        removeHotkeyCaptureMonitor()
+        postHotkeyRecordingState(active: false)
+    }
+
+    private func removeHotkeyCaptureMonitor() {
+        if let hotkeyCaptureMonitor {
+            NSEvent.removeMonitor(hotkeyCaptureMonitor)
+            self.hotkeyCaptureMonitor = nil
+        }
+    }
+
+    private func postHotkeyRecordingState(active: Bool) {
+        NotificationCenter.default.post(
+            name: .tagLauncherModalInteractionChanged,
+            object: nil,
+            userInfo: [
+                "active": active,
+                "source": "hotkeyRecording"
+            ]
+        )
+    }
+
     var body: some View {
         ZStack {
             TabView {
@@ -380,102 +507,112 @@ struct PreferencesView: View {
                     .frame(maxHeight: 250)
 
                     Spacer(minLength: 0)
-                    ShortcutHintView()
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.bottom, 2)
                 }
                 .frame(maxWidth: settingsContentWidth, alignment: .leading)
                 .tabItem { Label(tr("settings.language"), systemImage: "globe") }
                 .padding()
 
                 // Tab 2: General
-            VStack(alignment: .leading, spacing: 0) {
-                // Toggle row — centered as a rectangular block
-                HStack(spacing: 20) {
-                    if AppDelegate.supportsLaunchAtLogin {
-                        Toggle(tr("settings.launchAtLogin"), isOn: $launchAtLogin)
-                            .onChange(of: launchAtLogin) { _, enabled in
-                                if enabled {
-                                    AppDelegate.enableLaunchAtLogin()
-                                } else {
-                                    AppDelegate.disableLaunchAtLogin()
+                ScrollView(.vertical, showsIndicators: true) {
+                    VStack(alignment: .leading, spacing: 0) {
+                        // Toggle row — centered as a rectangular block
+                        HStack(spacing: 20) {
+                            if AppDelegate.supportsLaunchAtLogin {
+                                Toggle(tr("settings.launchAtLogin"), isOn: $launchAtLogin)
+                                    .onChange(of: launchAtLogin) { _, enabled in
+                                        if enabled {
+                                            AppDelegate.enableLaunchAtLogin()
+                                        } else {
+                                            AppDelegate.disableLaunchAtLogin()
+                                        }
+                                    }
+                            }
+                            Toggle(tr("settings.showInDock"), isOn: $showDockIcon)
+                                .onChange(of: showDockIcon) { _, _ in
+                                    AppDelegate.refreshChromeSettings()
                                 }
-                            }
-                    }
-                    Toggle(tr("settings.showInDock"), isOn: $showDockIcon)
-                        .onChange(of: showDockIcon) { _, _ in
-                            AppDelegate.refreshChromeSettings()
+                            Toggle(tr("settings.hideAppNames"), isOn: $hideAppNames)
                         }
-                    Toggle(tr("settings.hideAppNames"), isOn: $hideAppNames)
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                .padding(.bottom, 16)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.bottom, 16)
 
-                Divider()
-                    .padding(.bottom, 16)
+                        Divider()
+                            .padding(.bottom, 16)
 
-                VStack(spacing: 18) {
-                    generalSettingRow(tr("settings.appListStyle"), description: tr("settings.flatDesc")) {
-                        VStack(spacing: 8) {
-                            DisplayModeOptionButton(
-                                mode: "flat",
-                                title: tr("settings.flat"),
-                                isSelected: displayMode == "flat"
-                            ) {
-                                displayMode = "flat"
-                            }
-
-                            LazyVGrid(columns: displayModeColumns, alignment: .leading, spacing: 8) {
-                                ForEach(containerDisplayModeOptions, id: \.id) { option in
+                        VStack(spacing: 18) {
+                            generalSettingRow(tr("settings.appListStyle"), description: tr("settings.flatDesc")) {
+                                VStack(spacing: 8) {
                                     DisplayModeOptionButton(
-                                        mode: option.id,
-                                        title: option.title,
-                                        isSelected: displayMode == option.id
+                                        mode: "flat",
+                                        title: tr("settings.flat"),
+                                        isSelected: displayMode == "flat"
                                     ) {
-                                        displayMode = option.id
+                                        displayMode = "flat"
+                                    }
+
+                                    LazyVGrid(columns: displayModeColumns, alignment: .leading, spacing: 8) {
+                                        ForEach(containerDisplayModeOptions, id: \.id) { option in
+                                            DisplayModeOptionButton(
+                                                mode: option.id,
+                                                title: option.title,
+                                                isSelected: displayMode == option.id
+                                            ) {
+                                                displayMode = option.id
+                                            }
+                                        }
                                     }
                                 }
+                                .frame(width: generalControlWidth, alignment: .leading)
+                            }
+
+                            generalSettingRow(tr("settings.tagPosition"), description: tr("settings.tagPosDesc")) {
+                                Picker("", selection: $tagPosition) {
+                                    Text(tr("settings.left")).tag("left")
+                                    Text(tr("settings.right")).tag("right")
+                                    Text(tr("settings.top")).tag("top")
+                                }
+                                .pickerStyle(.segmented)
+                                .frame(width: compactPickerWidth, alignment: .leading)
+                            }
+
+                            generalSettingRow(tr("settings.tagFontSize"), description: tr("settings.tagFontDesc")) {
+                                Picker("", selection: $tagFontSize) {
+                                    ForEach([16.0, 18.0, 20.0, 22.0, 24.0, 26.0], id: \.self) { size in
+                                        Text("\(Int(size))").tag(size)
+                                    }
+                                }
+                                .pickerStyle(.segmented)
+                                .frame(width: compactPickerWidth, alignment: .leading)
+                            }
+
+                            generalSettingRow(tr("settings.iconSize"), description: tr("settings.iconSizeDesc")) {
+                                Picker("", selection: $iconSize) {
+                                    ForEach([40.0, 48.0, 56.0, 64.0, 72.0, 80.0], id: \.self) { size in
+                                        Text("\(Int(size))").tag(size)
+                                    }
+                                }
+                                .pickerStyle(.segmented)
+                                .frame(width: compactPickerWidth, alignment: .leading)
                             }
                         }
-                        .frame(width: generalControlWidth, alignment: .leading)
                     }
-
-                    generalSettingRow(tr("settings.tagPosition"), description: tr("settings.tagPosDesc")) {
-                        Picker("", selection: $tagPosition) {
-                            Text(tr("settings.left")).tag("left")
-                            Text(tr("settings.right")).tag("right")
-                            Text(tr("settings.top")).tag("top")
-                        }
-                        .pickerStyle(.segmented)
-                        .frame(width: compactPickerWidth, alignment: .leading)
-                    }
-
-                    generalSettingRow(tr("settings.tagFontSize"), description: tr("settings.tagFontDesc")) {
-                        Picker("", selection: $tagFontSize) {
-                            ForEach([16.0, 18.0, 20.0, 22.0, 24.0, 26.0], id: \.self) { size in
-                                Text("\(Int(size))").tag(size)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-                        .frame(width: compactPickerWidth, alignment: .leading)
-                    }
-
-                    generalSettingRow(tr("settings.iconSize"), description: tr("settings.iconSizeDesc")) {
-                        Picker("", selection: $iconSize) {
-                            ForEach([40.0, 48.0, 56.0, 64.0, 72.0, 80.0], id: \.self) { size in
-                                Text("\(Int(size))").tag(size)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-                        .frame(width: compactPickerWidth, alignment: .leading)
-                    }
+                    .frame(maxWidth: generalContentWidth, alignment: .center)
+                    .padding()
                 }
-            }
-            .frame(maxWidth: generalContentWidth, alignment: .center)
-            .padding()
-            .tabItem { Label(tr("settings.general"), systemImage: "gearshape") }
+                .tabItem { Label(tr("settings.general"), systemImage: "gearshape") }
 
-            // Tab 3: Tags
+            // Tab 3: Hotkeys
+            ScrollView(.vertical, showsIndicators: true) {
+                VStack(alignment: .leading, spacing: 16) {
+                    hotkeySettingsPanel()
+                        .frame(width: generalContentWidth, alignment: .leading)
+                }
+                .frame(maxWidth: generalContentWidth, alignment: .center)
+                .padding()
+            }
+            .tabItem { Label(tr("quickSearch.hotkeys"), systemImage: "keyboard") }
+
+            // Tab 4: Tags
             VStack(spacing: 0) {
                 TagEditorView(
                     tagColors: $tagColors,
@@ -486,7 +623,7 @@ struct PreferencesView: View {
             .tabItem { Label(tr("settings.tags"), systemImage: "tag.fill") }
             .onAppear { scanApps() }
 
-            // Tab 4: Data
+            // Tab 5: Data
             VStack(spacing: 0) {
                 Spacer(minLength: 32)
 
@@ -626,7 +763,7 @@ struct PreferencesView: View {
             .padding()
             .onAppear { refreshDataState() }
 
-            // Tab 5: About
+            // Tab 6: About
             VStack(spacing: 0) {
                 Spacer(minLength: 72)
 
@@ -661,8 +798,6 @@ struct PreferencesView: View {
                 .frame(width: 560, alignment: .leading)
 
                 Spacer(minLength: 30)
-                ShortcutHintView()
-                    .frame(maxWidth: .infinity, alignment: .center)
                 Spacer(minLength: 18)
             }
             .tabItem { Label(tr("settings.about"), systemImage: "info.circle") }
@@ -683,6 +818,9 @@ struct PreferencesView: View {
             }
             .onReceive(NotificationCenter.default.publisher(for: .tagLauncherDataDidChange)) { _ in
                 refreshDataState()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .tagLauncherHotkeysChanged)) { _ in
+                hotkeyRefreshToken &+= 1
             }
 
             if isRefreshingLanguage {
@@ -718,6 +856,9 @@ struct PreferencesView: View {
         .onAppear {
             syncSelectedLanguage()
         }
+        .onDisappear {
+            finishHotkeyRecording()
+        }
     }
 
     private func showLanguageRefresh() {
@@ -727,6 +868,250 @@ struct PreferencesView: View {
                 isRefreshingLanguage = false
             }
         }
+    }
+}
+
+private struct StaticHotkeyInfoRow: View {
+    let title: String
+    let description: String
+    let displayText: String
+    let statusText: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .top, spacing: 12) {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(title)
+                        .font(.system(size: 13, weight: .semibold))
+                    Text(description)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(displayText)
+                        .font(.system(size: 15, weight: .semibold))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                    Text(statusText)
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(Color.secondary)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(Capsule().fill(Color.secondary.opacity(0.13)))
+                }
+                .frame(width: 180, alignment: .leading)
+            }
+        }
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .fill(Color(nsColor: .controlBackgroundColor))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .stroke(Color.secondary.opacity(0.14), lineWidth: 1)
+        )
+    }
+}
+
+private struct HotkeySettingRow: View {
+    let title: String
+    let description: String
+    let kind: LauncherHotkeyKind
+    let isRecording: Bool
+    let allowsEditing: Bool
+    let refreshToken: Int
+    let onBeginRecording: () -> Void
+    let onRestoreDefault: (() -> Void)?
+    let onRetry: () -> Void
+    let onCancelRecording: () -> Void
+
+    private var activeHotkey: LauncherHotkey? {
+        _ = refreshToken
+        return LauncherHotkeyStore.hotkey(for: kind)
+    }
+
+    private var pendingHotkey: LauncherHotkey? {
+        _ = refreshToken
+        return LauncherHotkeyStore.pendingHotkey(for: kind)
+    }
+
+    private var status: LauncherHotkeyStatus {
+        _ = refreshToken
+        return LauncherHotkeyStore.status(for: kind)
+    }
+
+    private var conflictMessage: String {
+        _ = refreshToken
+        return LauncherHotkeyStore.conflictMessage(for: kind)
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .top, spacing: 12) {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(title)
+                        .font(.system(size: 13, weight: .semibold))
+                    Text(description)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(displayText)
+                        .font(.system(size: 15, weight: .semibold))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                    statusLabel
+                }
+                .frame(width: 180, alignment: .leading)
+            }
+
+            if allowsEditing {
+                HStack(spacing: 8) {
+                    hotkeyButton(
+                        isRecording ? tr("quickSearch.recording") : tr("quickSearch.record"),
+                        systemImage: isRecording ? "keyboard.badge.ellipsis" : "keyboard",
+                        prominent: true,
+                        action: onBeginRecording
+                    )
+                    if let onRestoreDefault {
+                        hotkeyButton(
+                            tr("quickSearch.restoreDefault"),
+                            systemImage: "arrow.counterclockwise",
+                            prominent: false,
+                            action: onRestoreDefault
+                        )
+                    }
+                    if status == .conflict {
+                        hotkeyButton(
+                            tr("quickSearch.retry"),
+                            systemImage: "arrow.clockwise",
+                            prominent: false,
+                            action: onRetry
+                        )
+                    }
+                    Spacer(minLength: 0)
+                }
+            }
+
+            if allowsEditing && isRecording {
+                HStack(spacing: 8) {
+                    Image(systemName: "keyboard")
+                    Text(tr("quickSearch.recordingHint"))
+                    Spacer(minLength: 0)
+                    Button(tr("settings.cancel"), action: onCancelRecording)
+                        .buttonStyle(.borderless)
+                }
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(Color.accentColor)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 10)
+                .background(RoundedRectangle(cornerRadius: 7).fill(Color.accentColor.opacity(0.10)))
+            }
+
+            if status == .conflict && !conflictMessage.isEmpty {
+                HotkeyConflictNotice(text: conflictDetailText)
+            }
+        }
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .fill(Color(nsColor: .controlBackgroundColor))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .stroke(Color.secondary.opacity(0.14), lineWidth: 1)
+        )
+    }
+
+    private var displayText: String {
+        if status == .conflict, let pendingHotkey {
+            return "\(pendingHotkey.displayString) · \(tr("quickSearch.blocked"))"
+        }
+        return activeHotkey?.displayString ?? tr("quickSearch.disabled")
+    }
+
+    private var conflictDetailText: String {
+        if let activeHotkey {
+            return "\(conflictMessage) \(tr("quickSearch.previousStillActive")) \(activeHotkey.displayString)"
+        }
+        return conflictMessage
+    }
+
+    private var statusLabel: some View {
+        Text(tr("quickSearch.status.\(status.rawValue)"))
+            .font(.system(size: 11, weight: .semibold))
+            .foregroundStyle(statusColor)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 3)
+            .background(Capsule().fill(statusColor.opacity(0.13)))
+    }
+
+    private var statusColor: Color {
+        switch status {
+        case .active: return .green
+        case .conflict: return .orange
+        case .disabled: return .secondary
+        }
+    }
+
+    private func hotkeyButton(
+        _ title: String,
+        systemImage: String,
+        prominent: Bool,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            Label(title, systemImage: systemImage)
+                .font(.system(size: 13, weight: .semibold))
+                .lineLimit(1)
+                .minimumScaleFactor(0.88)
+                .foregroundStyle(prominent ? Color.white : Color.primary)
+                .padding(.horizontal, 10)
+                .frame(height: 30)
+                .background(
+                    RoundedRectangle(cornerRadius: 7, style: .continuous)
+                        .fill(prominent ? Color.accentColor : Color(nsColor: .controlBackgroundColor))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 7, style: .continuous)
+                        .stroke(prominent ? Color.accentColor.opacity(0.24) : Color.secondary.opacity(0.22), lineWidth: 1)
+                )
+        }
+        .buttonStyle(.plain)
+        .help(title)
+        .accessibilityLabel(title)
+    }
+}
+
+private struct HotkeyConflictNotice: View {
+    let text: String
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 8) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(Color.white.opacity(0.94))
+                .padding(.top, 1)
+            Text(text)
+                .font(.system(size: 12, weight: .medium))
+                .foregroundStyle(Color.white)
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 9)
+        .background(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .fill(Color.black.opacity(0.92))
+        )
+        .shadow(color: .black.opacity(0.24), radius: 16, y: 8)
     }
 }
 
@@ -924,60 +1309,5 @@ private struct DisplayModeGlyph: View {
         }
         let palette: [Color] = [.green, .purple, .blue, .orange]
         return palette[index % palette.count].opacity(0.78)
-    }
-}
-
-private struct ShortcutHintView: View {
-    var body: some View {
-        HStack(spacing: 12) {
-            ShortcutKeycap(symbol: "⌥")
-            Text("+")
-                .font(.system(size: 22, weight: .semibold))
-                .foregroundStyle(.tertiary)
-            ShortcutKeycap(symbol: "⇧")
-            Text("+")
-                .font(.system(size: 22, weight: .semibold))
-                .foregroundStyle(.tertiary)
-            SpacebarKeycap()
-        }
-        .accessibilityLabel("⌥ ⇧ Space")
-        .allowsHitTesting(false)
-    }
-}
-
-private struct ShortcutKeycap: View {
-    let symbol: String
-
-    var body: some View {
-        Text(symbol)
-            .font(.system(size: 36, weight: .medium))
-            .foregroundStyle(.secondary)
-            .frame(width: 74, height: 58)
-            .background(KeycapBackground())
-    }
-}
-
-private struct SpacebarKeycap: View {
-    var body: some View {
-        ZStack {
-            KeycapBackground()
-            Capsule()
-                .fill(Color.secondary.opacity(0.38))
-                .frame(width: 72, height: 3)
-                .offset(y: 13)
-        }
-        .frame(width: 190, height: 58)
-    }
-}
-
-private struct KeycapBackground: View {
-    var body: some View {
-        RoundedRectangle(cornerRadius: 10, style: .continuous)
-            .fill(Color(nsColor: .controlBackgroundColor))
-            .overlay(
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .stroke(Color.primary.opacity(0.12), lineWidth: 1)
-            )
-            .shadow(color: .black.opacity(0.10), radius: 8, x: 0, y: 3)
     }
 }

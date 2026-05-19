@@ -339,6 +339,7 @@ enum TagDatabase {
         var uncommonAppPaths: [String] = []  // special marker; does not affect normal groups
         var uncommonSources: [String: UncommonSource] = [:]  // current uncommon source: auto/manual
         var appOpenCounts: [String: Int] = [:]  // launches opened from TagLauncher
+        var appLastOpenedAt: [String: Date] = [:]  // successful launches opened from TagLauncher
         var knownAppPaths: [String] = []  // baseline set to detect newly installed apps
         var appNotes: [String: String] = [:]  // path → user note; retained even if marker is removed
         var disabledSystemCategoryIDs: [SmartCategoryID] = []  // system categories the user deleted
@@ -353,6 +354,7 @@ enum TagDatabase {
             case uncommonAppPaths
             case uncommonSources
             case appOpenCounts
+            case appLastOpenedAt
             case knownAppPaths
             case appNotes
             case disabledSystemCategoryIDs
@@ -371,6 +373,7 @@ enum TagDatabase {
             uncommonAppPaths = try container.decodeIfPresent([String].self, forKey: .uncommonAppPaths) ?? []
             uncommonSources = try container.decodeIfPresent([String: UncommonSource].self, forKey: .uncommonSources) ?? [:]
             appOpenCounts = try container.decodeIfPresent([String: Int].self, forKey: .appOpenCounts) ?? [:]
+            appLastOpenedAt = try container.decodeIfPresent([String: Date].self, forKey: .appLastOpenedAt) ?? [:]
             knownAppPaths = try container.decodeIfPresent([String].self, forKey: .knownAppPaths) ?? []
             appNotes = try container.decodeIfPresent([String: String].self, forKey: .appNotes) ?? [:]
             disabledSystemCategoryIDs = try container.decodeIfPresent(
@@ -1181,7 +1184,21 @@ enum TagEditor {
         }
 
         let newPaths = scannedPaths.subtracting(knownPaths)
-        guard !newPaths.isEmpty else { return store }
+        let removedPaths = knownPaths.subtracting(scannedPaths)
+        if !removedPaths.isEmpty {
+            for path in removedPaths {
+                store.appOpenCounts.removeValue(forKey: path)
+                store.appLastOpenedAt.removeValue(forKey: path)
+            }
+            store.knownAppPaths = knownPaths.subtracting(removedPaths).sorted()
+        }
+
+        guard !newPaths.isEmpty else {
+            if !removedPaths.isEmpty {
+                TagDatabase.save(store)
+            }
+            return store
+        }
 
         var uncommonPaths = Set(store.uncommonAppPaths)
         let appsByPath = Dictionary(uniqueKeysWithValues: apps.map { ($0.path.path, $0) })
@@ -1201,7 +1218,7 @@ enum TagEditor {
         let newApps = apps.filter { newPaths.contains($0.path.path) }
         _ = seedDefaultAppleAppNotes(for: newApps, in: &store)
         store.uncommonAppPaths = uncommonPaths.sorted()
-        store.knownAppPaths = knownPaths.union(newPaths).sorted()
+        store.knownAppPaths = Set(store.knownAppPaths).union(newPaths).sorted()
         TagDatabase.save(store)
         return store
     }
@@ -1253,6 +1270,7 @@ enum TagEditor {
     static func recordLauncherOpen(for path: String) {
         var store = TagDatabase.load()
         store.appOpenCounts[path] = (store.appOpenCounts[path] ?? 0) + 1
+        store.appLastOpenedAt[path] = Date()
 
         if store.uncommonSources[path] == .auto,
            store.appOpenCounts[path, default: 0] >= TagDatabase.autoUncommonOpenThreshold {

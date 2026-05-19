@@ -33,7 +33,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private static let statusItemButtonIdentifier = NSUserInterfaceItemIdentifier("TagLauncherStatusItemButton")
     private static let statusItemAccessibilityLabel = "TagLauncher"
     private static let showAppListMenuItemIdentifier = NSUserInterfaceItemIdentifier("TagLauncherShowAppListMenuItem")
-    private static let showAppListShortcutGlyphs = "⌥⇧␣"
     private static let overlayDefaultLevel = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.maximumWindow)))
     private static let overlayTextInputLevel = NSWindow.Level.modalPanel
 
@@ -41,7 +40,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var overlayWindow: NSWindow?
     private var overlayKeyMonitor: Any?
     private var settingsWindow: NSWindow?    // Track Settings window to keep it above overlay
-    private var hotkeyRef: EventHotKeyRef?
+    private var mainHotkeyRef: EventHotKeyRef?
+    private var quickSearchHotkeyRef: EventHotKeyRef?
+    private var hotkeyEventHandlerInstalled = false
+    private var isQuickSearchOpen = false
+    private var isModalInteractionActive = false
+    private var areHotkeysPausedForCapture = false
     private var isInEditMode = false  // Suppress auto-dismiss during editing
     private var isEditingAppNote = false
     private var isConfiguringApplicationMenu = false
@@ -61,11 +65,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         migrateDefaultGroupName()
         TagDatabase.seedDefaultTags()
         syncChromeSettings(force: true)
-        registerHotkey()
+        registerConfiguredHotkeys()
         observeOtherWindows()
         observeSettingsClose()
         observeEditMode()
         observeAppNoteEditing()
+        observeQuickSearch()
         observePreferencesRequests()
         observeApplicationMenuChanges()
         observeChromeSettings()
@@ -333,7 +338,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private var showAppListMenuTitle: String {
-        "\(tr("menu.showAppList"))  \(Self.showAppListShortcutGlyphs)"
+        if let hotkey = LauncherHotkeyStore.hotkey(for: .main) {
+            return "\(tr("menu.showAppList"))  \(hotkey.displayString)"
+        }
+        return tr("menu.showAppList")
     }
 
     private func observeApplicationMenuChanges() {
@@ -502,7 +510,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    private func showOverlay() {
+    private func showOverlay(initialQuickSearchSource: String? = nil) {
         // Use the screen under the mouse cursor — works in fullscreen spaces
         let mousePoint = NSEvent.mouseLocation
         guard let screen = NSScreen.screens.first(where: {
@@ -513,7 +521,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if let existingWindow = overlayWindow {
             window = existingWindow
         } else {
-            window = makeOverlayWindow(on: screen)
+            window = makeOverlayWindow(on: screen, initialQuickSearchSource: initialQuickSearchSource)
             overlayWindow = window
         }
 
@@ -521,6 +529,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         window.level = isEditingAppNote ? Self.overlayTextInputLevel : Self.overlayDefaultLevel
 
         installOverlayKeyMonitor()
+
+        if let initialQuickSearchSource {
+            NotificationCenter.default.post(
+                name: .tagLauncherQuickSearchRequested,
+                object: nil,
+                userInfo: ["source": initialQuickSearchSource]
+            )
+        }
 
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
@@ -530,12 +546,58 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func installOverlayKeyMonitor() {
         guard overlayKeyMonitor == nil else { return }
         overlayKeyMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
+            guard let self else { return event }
             if event.keyCode == 53 { // Escape
-                self?.hideOverlay()
+                if self.isQuickSearchOpen {
+                    NotificationCenter.default.post(name: .tagLauncherQuickSearchDismissRequested, object: nil)
+                    return nil
+                }
+                self.hideOverlay()
+                return nil
+            }
+            if self.shouldOpenQuickSearch(for: event) {
+                NotificationCenter.default.post(
+                    name: .tagLauncherQuickSearchRequested,
+                    object: nil,
+                    userInfo: ["source": QuickSearchOpenSource.mainOverlay]
+                )
                 return nil
             }
             return event
         }
+    }
+
+    private func shouldOpenQuickSearch(for event: NSEvent) -> Bool {
+        guard event.keyCode == UInt16(kVK_Space),
+              !event.isARepeat,
+              event.modifierFlags.intersection(.deviceIndependentFlagsMask).isEmpty,
+              overlayWindow?.isVisible == true,
+              !isQuickSearchOpen,
+              !isInEditMode,
+              !isEditingAppNote,
+              !isModalInteractionActive
+        else { return false }
+
+        guard let firstResponder = overlayWindow?.firstResponder else { return true }
+        if firstResponder is NSText || firstResponder is NSTextField {
+            return false
+        }
+        if let responderView = firstResponder as? NSView,
+           viewOrAncestorHandlesSpace(responderView) {
+            return false
+        }
+        return true
+    }
+
+    private func viewOrAncestorHandlesSpace(_ view: NSView) -> Bool {
+        var current: NSView? = view
+        while let candidate = current {
+            if candidate is NSButton || candidate is NSSegmentedControl || candidate is NSSlider {
+                return true
+            }
+            current = candidate.superview
+        }
+        return false
     }
 
     private func removeOverlayKeyMonitor() {
@@ -545,7 +607,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    private func makeOverlayWindow(on screen: NSScreen) -> NSWindow {
+    private func makeOverlayWindow(on screen: NSScreen, initialQuickSearchSource: String? = nil) -> NSWindow {
         let panel = OverlayPanel(
             contentRect: screen.frame,
             styleMask: [.borderless, .fullSizeContentView, .nonactivatingPanel],
@@ -568,9 +630,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         panel.titleVisibility = .hidden
         panel.isReleasedWhenClosed = false
         panel.contentView = DismissibleHostingView(
-            rootView: ContentView(hideOverlay: { [weak self] in
-                self?.hideOverlay(force: true)
-            }),
+            rootView: ContentView(
+                hideOverlay: { [weak self] in
+                    self?.hideOverlay(force: true)
+                },
+                initialQuickSearchSource: initialQuickSearchSource
+            ),
             onBackdropTap: { [weak self] in
                 self?.hideOverlay()
             }
@@ -592,48 +657,106 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    // MARK: - Global Hotkey (Shift+Option+Space)
+    // MARK: - Global Hotkeys
 
-    /// Carbon RegisterEventHotKey. If it fails (sandbox, etc.), falls back to menu bar only.
-    private func registerHotkey() {
+    private func registerConfiguredHotkeys() {
+        installHotkeyEventHandlerIfNeeded()
+        registerStoredHotkey(.main)
+        registerStoredHotkey(.quickSearch)
+    }
+
+    @discardableResult
+    func applyHotkey(_ hotkey: LauncherHotkey?, for kind: LauncherHotkeyKind) -> Bool {
+        installHotkeyEventHandlerIfNeeded()
+
+        if hotkey == nil {
+            unregisterHotkey(for: kind)
+            LauncherHotkeyStore.save(nil, for: kind)
+            LauncherHotkeyStore.setStatus(.disabled, message: nil, for: kind)
+            return true
+        }
+
+        guard let hotkey else { return false }
+        let previousRef = hotkeyRef(for: kind)
+        if previousRef != nil, LauncherHotkeyStore.hotkey(for: kind) == hotkey {
+            LauncherHotkeyStore.setStatus(.active, message: nil, for: kind)
+            return true
+        }
+        setHotkeyRef(nil, for: kind)
+
         var hotkeyID = EventHotKeyID()
         hotkeyID.signature = OSType(0x41505447) // 'APTG'
-        hotkeyID.id = 1
+        hotkeyID.id = kind.eventID
 
-        let modifiers = UInt32(shiftKey | optionKey)
-
-        var ref: EventHotKeyRef?
+        var newRef: EventHotKeyRef?
         let status = RegisterEventHotKey(
-            UInt32(kVK_Space),
-            modifiers,
+            hotkey.keyCode,
+            hotkey.modifiers,
             hotkeyID,
             GetApplicationEventTarget(),
             0,
-            &ref
+            &newRef
         )
-        hotkeyRef = ref
 
-        if status != noErr {
-            print("[TagLauncher] Hotkey registration failed: \(status). Falling back to menu bar only.")
-            return
+        if status == noErr, let newRef {
+            if let previousRef { UnregisterEventHotKey(previousRef) }
+            setHotkeyRef(newRef, for: kind)
+            LauncherHotkeyStore.save(hotkey, for: kind)
+            LauncherHotkeyStore.setStatus(.active, message: nil, for: kind)
+            return true
         }
+
+        setHotkeyRef(previousRef, for: kind)
+        let message = LauncherHotkeyStore.knownConflictMessage(for: hotkey, status: status)
+            ?? tr("quickSearch.hotkeyConflict.generic")
+        LauncherHotkeyStore.savePending(hotkey, for: kind)
+        LauncherHotkeyStore.setStatus(.conflict, message: message, for: kind)
+        print("[TagLauncher] Hotkey registration failed for \(kind.rawValue): \(status)")
+        return false
+    }
+
+    func retryHotkeyRegistration(for kind: LauncherHotkeyKind) {
+        _ = applyHotkey(
+            LauncherHotkeyStore.pendingHotkey(for: kind) ?? LauncherHotkeyStore.hotkey(for: kind),
+            for: kind
+        )
+    }
+
+    private func registerStoredHotkey(_ kind: LauncherHotkeyKind) {
+        _ = applyHotkey(LauncherHotkeyStore.hotkey(for: kind), for: kind)
+    }
+
+    private func installHotkeyEventHandlerIfNeeded() {
+        guard !hotkeyEventHandlerInstalled else { return }
+        hotkeyEventHandlerInstalled = true
 
         var eventSpec = EventTypeSpec(
             eventClass: OSType(kEventClassKeyboard),
             eventKind: UInt32(kEventHotKeyPressed)
         )
-
         let selfPtr = Unmanaged.passUnretained(self).toOpaque()
 
         InstallEventHandler(
             GetApplicationEventTarget(),
-            { (_, _, userData) -> OSStatus in
-                guard let userData else { return noErr }
+            { (_, event, userData) -> OSStatus in
+                guard let event, let userData else { return noErr }
+                var hotkeyID = EventHotKeyID()
+                let status = GetEventParameter(
+                    event,
+                    EventParamName(kEventParamDirectObject),
+                    EventParamType(typeEventHotKeyID),
+                    nil,
+                    MemoryLayout<EventHotKeyID>.size,
+                    nil,
+                    &hotkeyID
+                )
+                guard status == noErr else { return noErr }
+
                 let delegate = Unmanaged<AppDelegate>
                     .fromOpaque(userData)
                     .takeUnretainedValue()
                 DispatchQueue.main.async {
-                    delegate.toggleOverlay()
+                    delegate.handleHotkeyEvent(id: hotkeyID.id)
                 }
                 return noErr
             },
@@ -642,6 +765,40 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             selfPtr,
             nil
         )
+    }
+
+    private func handleHotkeyEvent(id: UInt32) {
+        if id == LauncherHotkeyKind.quickSearch.eventID {
+            showQuickSearchFromGlobalHotkey()
+        } else {
+            toggleOverlay()
+        }
+    }
+
+    private func showQuickSearchFromGlobalHotkey() {
+        guard overlayWindow?.isVisible != true else { return }
+        showOverlay(initialQuickSearchSource: QuickSearchOpenSource.globalHidden)
+    }
+
+    private func hotkeyRef(for kind: LauncherHotkeyKind) -> EventHotKeyRef? {
+        switch kind {
+        case .main: return mainHotkeyRef
+        case .quickSearch: return quickSearchHotkeyRef
+        }
+    }
+
+    private func setHotkeyRef(_ ref: EventHotKeyRef?, for kind: LauncherHotkeyKind) {
+        switch kind {
+        case .main: mainHotkeyRef = ref
+        case .quickSearch: quickSearchHotkeyRef = ref
+        }
+    }
+
+    private func unregisterHotkey(for kind: LauncherHotkeyKind) {
+        if let ref = hotkeyRef(for: kind) {
+            UnregisterEventHotKey(ref)
+            setHotkeyRef(nil, for: kind)
+        }
     }
 
     // MARK: - Preferences
@@ -780,11 +937,54 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    private func observeQuickSearch() {
+        NotificationCenter.default.addObserver(
+            forName: .tagLauncherQuickSearchVisibilityChanged,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            self?.isQuickSearchOpen = (notification.userInfo?["active"] as? Bool) ?? false
+        }
+
+        NotificationCenter.default.addObserver(
+            forName: .tagLauncherModalInteractionChanged,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            guard let self else { return }
+            let active = (notification.userInfo?["active"] as? Bool) ?? false
+            self.isModalInteractionActive = active
+            if (notification.userInfo?["source"] as? String) == "hotkeyRecording" {
+                self.setHotkeysPausedForCapture(active)
+            }
+        }
+
+        NotificationCenter.default.addObserver(
+            forName: .tagLauncherHotkeysChanged,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.setupMenuBar()
+            self?.configureApplicationMenuWhenAvailable(retries: 2)
+        }
+    }
+
     private func updateOverlayLevelForTextInput() {
         guard let overlayWindow else { return }
         overlayWindow.level = isEditingAppNote ? Self.overlayTextInputLevel : Self.overlayDefaultLevel
         if let settingsWindow, settingsWindow.parent == overlayWindow {
             settingsWindow.level = overlayWindow.level
+        }
+    }
+
+    private func setHotkeysPausedForCapture(_ paused: Bool) {
+        guard areHotkeysPausedForCapture != paused else { return }
+        areHotkeysPausedForCapture = paused
+        if paused {
+            unregisterHotkey(for: .main)
+            unregisterHotkey(for: .quickSearch)
+        } else {
+            registerConfiguredHotkeys()
         }
     }
 
