@@ -315,6 +315,10 @@ enum SmartStartService {
                 continue
             }
             if let result = TagDatabase.ensureSystemTag(for: categoryID, in: &store) {
+                if var tagDef = store.tags[result.name] {
+                    tagDef.color = categoryID.defaultColorIndex
+                    store.tags[result.name] = tagDef
+                }
                 if result.created {
                     createdTagCount += 1
                 }

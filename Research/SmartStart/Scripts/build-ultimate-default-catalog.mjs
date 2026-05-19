@@ -10,10 +10,7 @@ const projectDir = path.resolve(researchDir, "../..");
 const outputDir = path.join(researchDir, "UltimateDefaultCatalog");
 
 const sources = {
-  master5000: path.join(researchDir, "MacCommonApps_CandidateTop5000_Master.csv"),
-  persona: path.join(researchDir, "PersonaTopApps", "MacPersonaTopApps_Unique.csv"),
-  game: path.join(researchDir, "game.csv"),
-  top1000: path.join(researchDir, "AppDefaultTags_Review.csv"),
+  curatedCatalog: path.join(outputDir, "SmartStart_UltimateDefaultCatalog.csv"),
   appleNotes: path.join(projectDir, "Apptag", "AppleDefaultAppNotes.swift"),
   localizationDir: path.join(projectDir, "Apptag", "Localization"),
 };
@@ -53,98 +50,46 @@ const stableTagOrder = [
 const stableTags = new Set(stableTagOrder);
 const noteLimit = 80;
 
-const sourcePriority = {
-  apple: 100,
-  persona: 90,
-  top1000: 80,
-  game: 70,
-  master5000: 60,
-};
-
-const tagOverridesByNormalizedName = new Map(Object.entries({
-  "android-ndk": ["development", "utilities"],
-  "codeql": ["development", "security"],
-  "prince": ["writing", "development", "utilities"],
-  "qlstephen": ["utilities", "system-enhancement"],
-  "kotlin-lsp": ["development"],
-  "ghdl": ["development"],
-  "android-sdk-platform-tools": ["development", "utilities"],
-  "android-sdk-command-line-tools": ["development", "utilities"],
-}));
-
-const appleCatalogMetadata = new Map(Object.entries({
-  "com.apple.activitymonitor": { name: "Activity Monitor", tags: ["system", "utilities", "system-enhancement"] },
-  "com.apple.airport.airportutility": { name: "AirPort Utility", tags: ["system", "utilities"] },
-  "com.apple.appstore": { name: "App Store", tags: ["system", "utilities"] },
-  "com.apple.apps.launcher": { name: "Apps", tags: ["system", "utilities"] },
-  "com.apple.audio.audiomidisetup": { name: "Audio MIDI Setup", tags: ["audio", "system", "utilities"] },
-  "com.apple.automator": { name: "Automator", tags: ["system-enhancement", "utilities"] },
-  "com.apple.bluetoothfileexchange": { name: "Bluetooth File Exchange", tags: ["transfer", "system", "utilities"] },
-  "com.apple.ibooksx": { name: "Books", tags: ["writing", "education", "entertainment"] },
-  "com.apple.bootcampassistant": { name: "Boot Camp Assistant", tags: ["system", "utilities"] },
-  "com.apple.calculator": { name: "Calculator", tags: ["utilities"] },
-  "com.apple.ical": { name: "Calendar", tags: ["productivity"] },
-  "com.apple.chess": { name: "Chess", tags: ["game", "entertainment"] },
-  "com.apple.clock": { name: "Clock", tags: ["productivity", "utilities"] },
-  "com.apple.colorsyncutility": { name: "ColorSync Utility", tags: ["design", "picture-photo", "system", "utilities"] },
-  "com.apple.console": { name: "Console", tags: ["system", "utilities"] },
-  "com.apple.addressbook": { name: "Contacts", tags: ["communication", "productivity"] },
-  "com.apple.dictionary": { name: "Dictionary", tags: ["writing", "education", "utilities"] },
-  "com.apple.digitalcolormeter": { name: "Digital Color Meter", tags: ["design", "picture-photo", "utilities"] },
-  "com.apple.diskutility": { name: "Disk Utility", tags: ["system", "utilities"] },
-  "com.apple.facetime": { name: "FaceTime", tags: ["communication", "video"] },
-  "com.apple.findmy": { name: "Find My", tags: ["system", "utilities"] },
-  "com.apple.fontbook": { name: "Font Book", tags: ["design", "utilities"] },
-  "com.apple.freeform": { name: "Freeform", tags: ["productivity", "design"] },
-  "com.apple.games": { name: "Games", tags: ["game", "entertainment"] },
-  "com.apple.grapher": { name: "Grapher", tags: ["education", "utilities"] },
-  "com.apple.home": { name: "Home", tags: ["system", "utilities"] },
-  "com.apple.image_capture": { name: "Image Capture", tags: ["picture-photo", "transfer", "utilities"] },
-  "com.apple.generativeplaygroundapp": { name: "Image Playground", tags: ["ai-tools", "picture-photo", "design"] },
-  "com.apple.imovieapp": { name: "iMovie", tags: ["video", "media"] },
-  "com.apple.screencontinuity": { name: "iPhone Mirroring", tags: ["system-enhancement", "utilities"] },
-  "com.apple.journal": { name: "Journal", tags: ["writing", "productivity"] },
-  "com.apple.iwork.keynote": { name: "Keynote", tags: ["productivity", "writing"] },
-  "com.apple.magnifier": { name: "Magnifier", tags: ["system", "utilities"] },
-  "com.apple.mail": { name: "Mail", tags: ["communication"] },
-  "com.apple.maps": { name: "Maps", tags: ["productivity", "utilities"] },
-  "com.apple.mobilesms": { name: "Messages", tags: ["communication"] },
-  "com.apple.migrateassistant": { name: "Migration Assistant", tags: ["transfer", "system", "utilities"] },
-  "com.apple.exposelauncher": { name: "Mission Control", tags: ["system", "system-enhancement"] },
-  "com.apple.music": { name: "Music", tags: ["audio", "media", "entertainment"] },
-  "com.apple.news": { name: "News", tags: ["media", "writing"] },
-  "com.apple.notes": { name: "Notes", tags: ["writing", "productivity"] },
-  "com.apple.iwork.numbers": { name: "Numbers", tags: ["productivity"] },
-  "com.apple.iwork.pages": { name: "Pages", tags: ["writing"] },
-  "com.apple.passwords": { name: "Passwords", tags: ["security", "utilities"] },
-  "com.apple.mobilephone": { name: "Phone", tags: ["communication"] },
-  "com.apple.photobooth": { name: "Photo Booth", tags: ["picture-photo", "media", "entertainment"] },
-  "com.apple.photos": { name: "Photos", tags: ["picture-photo", "media"] },
-  "com.apple.podcasts": { name: "Podcasts", tags: ["audio", "media", "entertainment"] },
-  "com.apple.preview": { name: "Preview", tags: ["picture-photo", "writing", "utilities"] },
-  "com.apple.printcenter": { name: "Print Center", tags: ["system", "utilities"] },
-  "com.apple.quicktimeplayerx": { name: "QuickTime Player", tags: ["video", "audio", "media"] },
-  "com.apple.reminders": { name: "Reminders", tags: ["productivity"] },
-  "com.apple.safari": { name: "Safari", tags: ["browser"] },
-  "com.apple.screensharing": { name: "Screen Sharing", tags: ["system", "communication", "utilities"] },
-  "com.apple.screenshot.launcher": { name: "Screenshot", tags: ["picture-photo", "video", "utilities"] },
-  "com.apple.scripteditor2": { name: "Script Editor", tags: ["development", "system-enhancement", "utilities"] },
-  "com.apple.sfsymbols": { name: "SF Symbols", tags: ["design", "development"] },
-  "com.apple.shortcuts": { name: "Shortcuts", tags: ["system-enhancement", "productivity", "utilities"] },
-  "com.apple.siri.launcher": { name: "Siri", tags: ["system", "utilities"] },
-  "com.apple.stickies": { name: "Stickies", tags: ["writing", "productivity"] },
-  "com.apple.stocks": { name: "Stocks", tags: ["finance"] },
-  "com.apple.systemprofiler": { name: "System Information", tags: ["system", "utilities"] },
-  "com.apple.systempreferences": { name: "System Settings", tags: ["system", "utilities"] },
-  "com.apple.terminal": { name: "Terminal", tags: ["development", "system", "utilities"] },
-  "com.apple.textedit": { name: "TextEdit", tags: ["writing"] },
-  "com.apple.backup.launcher": { name: "Time Machine", tags: ["system", "utilities"] },
-  "com.apple.helpviewer": { name: "Tips", tags: ["education", "utilities"] },
-  "com.apple.tv": { name: "TV", tags: ["video", "media", "entertainment"] },
-  "com.apple.voicememos": { name: "Voice Memos", tags: ["audio", "media"] },
-  "com.apple.voiceoverutility": { name: "VoiceOver Utility", tags: ["system", "utilities"] },
-  "com.apple.weather": { name: "Weather", tags: ["utilities"] },
-  "com.apple.dt.xcode": { name: "Xcode", tags: ["development"] },
+const tagerToStableTags = new Map(Object.entries({
+  "3d-cad": ["design"],
+  "Automation": ["productivity", "system-enhancement"],
+  "Font": ["design", "utilities"],
+  "GTD": ["productivity"],
+  "Meeting": ["communication", "productivity"],
+  "Notes": ["productivity", "writing"],
+  "PDF": ["writing", "utilities"],
+  "ai-tools": ["ai-tools"],
+  "api-tools": ["development"],
+  "audio": ["media", "audio"],
+  "browser": ["browser"],
+  "communication": ["communication"],
+  "database-tools": ["development"],
+  "design": ["design"],
+  "device-management": ["utilities", "system-enhancement"],
+  "devops": ["development"],
+  "diagramming": ["design"],
+  "education": ["education"],
+  "entertainment": ["entertainment"],
+  "file-management": ["file-management", "utilities"],
+  "finance": ["finance"],
+  "game": ["entertainment", "game"],
+  "ide": ["development"],
+  "input-tools": ["utilities", "system-enhancement"],
+  "media": ["media"],
+  "network-tools": ["utilities"],
+  "office": ["productivity", "writing"],
+  "picture-photo": ["media", "picture-photo"],
+  "runtime-sdk": ["development"],
+  "security": ["security"],
+  "system": ["system", "utilities"],
+  "system-maintenance": ["utilities", "system-enhancement"],
+  "terminal-tools": ["development"],
+  "transfer": ["transfer", "utilities"],
+  "ui-prototyping": ["design"],
+  "utilities": ["utilities"],
+  "video": ["media", "video"],
+  "window-management": ["utilities", "system-enhancement"],
+  "writing": ["writing"],
 }));
 
 function parseCSV(text) {
@@ -258,15 +203,19 @@ function charLength(value) {
   return Array.from(String(value ?? "")).length;
 }
 
+function stripTerminalPunctuation(value) {
+  return String(value ?? "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/[。．\.!！\?？;；:：,，、]+$/u, "")
+    .trim();
+}
+
 function truncateNote(value) {
-  const clean = String(value ?? "").replace(/\s+/g, " ").trim();
+  const clean = stripTerminalPunctuation(value);
   if (charLength(clean) <= noteLimit) return clean;
   let sliced = Array.from(clean).slice(0, noteLimit).join("");
-  sliced = sliced.replace(/[，、；：,.!！?？]$/, "");
-  if (!/[。.!！?？]$/.test(sliced)) {
-    sliced = `${Array.from(sliced).slice(0, noteLimit - 1).join("")}。`;
-  }
-  return sliced;
+  return stripTerminalPunctuation(sliced);
 }
 
 function loadCategoryTranslations() {
@@ -291,11 +240,10 @@ function localizedGeneratedNote(name, tags, code, translations) {
   const labels = shownTags.map((tag) => categoryMap[tag] ?? tag);
   const joiner = ["ar", "ar-Najdi"].includes(code) ? "، " : ["zh-Hans", "zh-Hant", "ja"].includes(code) ? "、" : ", ";
   const separator = ["zh-Hans", "zh-Hant", "ja"].includes(code) ? "：" : ": ";
-  const end = ["zh-Hans", "zh-Hant", "ja"].includes(code) ? "。" : ".";
-  const full = `${name}${separator}${labels.join(joiner)}${end}`;
+  const full = `${name}${separator}${labels.join(joiner)}`;
   if (charLength(full) <= noteLimit) return full;
 
-  const compact = `${name}${separator}${labels[0] ?? "App"}${end}`;
+  const compact = `${name}${separator}${labels[0] ?? "App"}`;
   if (charLength(compact) <= noteLimit) return compact;
 
   return truncateNote(compact);
@@ -391,198 +339,94 @@ function mergeInto(target, incoming, stats) {
   stats.mergedRows += 1;
 }
 
+function mapCuratedTags(value) {
+  const tags = [];
+  const unknownTokens = [];
+  for (const token of splitTags(value)) {
+    const mapped = tagerToStableTags.get(token);
+    if (!mapped) {
+      unknownTokens.push(token);
+      continue;
+    }
+    tags.push(...mapped);
+  }
+
+  return {
+    tags: orderedTags(tags.length > 0 ? tags : ["other"]),
+    unknownTokens,
+  };
+}
+
 function build() {
   fs.mkdirSync(outputDir, { recursive: true });
   const translations = loadCategoryTranslations();
   const appleNotes = parseAppleNotes();
-  const entries = [];
-  const byBundle = new Map();
-  const byName = new Map();
-  const ambiguous = [];
-  const mergedGroups = [];
+  const previousRuntimeEntries = fs.existsSync(outputs.runtimeJSON)
+    ? new Map(
+        (JSON.parse(fs.readFileSync(outputs.runtimeJSON, "utf8")).entries ?? []).map((entry) => [entry.normalizedName, entry]),
+      )
+    : new Map();
+  const curatedRows = readCSVObjects(sources.curatedCatalog);
+  const unknownTagerTokens = new Set();
   const stats = {
-    sourceRows: {},
-    mergedRows: 0,
+    curatedRows: curatedRows.length,
+    rowsWithSourceNotes: 0,
     appleNotesAttached: 0,
-    appleNotesSwiftOnly: 0,
+    tagChangedVsPrevious: 0,
+    zhNoteChangedVsPrevious: 0,
+    bundleChangedVsPrevious: 0,
+    missingLocalizedNotes: 0,
   };
+  const finalRows = curatedRows.map((row, index) => {
+    const name = String(row.Name ?? "").trim();
+    const normalizedName = String(row.normalizedName ?? "").trim() || normalizeName(name);
+    const bundleIdentifier = normalizeBundle(row.bundleIdentifier);
+    const legacyTags = orderedTags(splitTags(row.defaultTag));
+    const mapping = mapCuratedTags(row.tager);
+    for (const token of mapping.unknownTokens) unknownTagerTokens.add(token);
 
-  function addEntry(incoming) {
-    if (!incoming.name || incoming.tags.length === 0) return;
+    let noteZH = truncateNote(row["defaultNote-ZH"]);
+    let usedAppleFallback = false;
+    if (!noteZH) {
+      const bundleNote = bundleIdentifier ? appleNotes.byBundle.get(bundleIdentifier.toLowerCase()) : null;
+      const nameNote = appleNotes.byName.get(name);
+      if (bundleNote || nameNote) {
+        noteZH = truncateNote(bundleNote ?? nameNote);
+        usedAppleFallback = true;
+        stats.appleNotesAttached += 1;
+      }
+    } else {
+      stats.rowsWithSourceNotes += 1;
+    }
 
-    const bundleKey = incoming.bundleIdentifier?.toLowerCase() ?? null;
-    let existing = bundleKey ? byBundle.get(bundleKey) : null;
-
-    if (!existing) {
-      const normalizedExisting = byName.get(incoming.normalizedName);
-      if (normalizedExisting) {
-        const existingBundle = normalizedExisting.bundleIdentifier?.toLowerCase() ?? null;
-        if (bundleKey && existingBundle && bundleKey !== existingBundle) {
-          ambiguous.push({
-            kind: "same_normalized_different_bundle",
-            identity: incoming.normalizedName,
-            names: [normalizedExisting.name, incoming.name].join(" | "),
-            bundles: [normalizedExisting.bundleIdentifier, incoming.bundleIdentifier].join(" | "),
-            sources: [[...normalizedExisting.sources].join("|"), incoming.source].join(" | "),
-            decision: "kept_separate_for_review",
-          });
-        } else {
-          existing = normalizedExisting;
-        }
+    const notes = buildLocalizedNotes(name, mapping.tags, noteZH, translations);
+    const previous = previousRuntimeEntries.get(normalizedName);
+    if (previous) {
+      if (JSON.stringify(previous.defaultTag ?? []) !== JSON.stringify(mapping.tags)) {
+        stats.tagChangedVsPrevious += 1;
+      }
+      if (((previous.notes ?? {})["zh-Hans"] ?? "") !== (noteZH ?? "")) {
+        stats.zhNoteChangedVsPrevious += 1;
+      }
+      if ((previous.bundleIdentifier ?? null) !== bundleIdentifier) {
+        stats.bundleChangedVsPrevious += 1;
       }
     }
 
-    if (!existing) {
-      const entry = {
-        name: incoming.name,
-        normalizedName: incoming.normalizedName,
-        bundleIdentifier: incoming.bundleIdentifier,
-        tags: incoming.tags,
-        noteZH: incoming.noteZH,
-        rank: incoming.rank,
-        sourceEvidence: new Set([...incoming.evidence, incoming.source].filter(Boolean)),
-        sources: new Set([incoming.source]),
-        namePriority: incoming.priority,
-        notePriority: incoming.noteZH ? incoming.priority : -1,
-      };
-      entries.push(entry);
-      byName.set(entry.normalizedName, entry);
-      if (bundleKey) byBundle.set(bundleKey, entry);
-      return;
-    }
-
-    const beforeSources = new Set(existing.sources);
-    mergeInto(existing, incoming, stats);
-    if (incoming.bundleIdentifier) byBundle.set(incoming.bundleIdentifier.toLowerCase(), existing);
-    byName.set(existing.normalizedName, existing);
-    mergedGroups.push({
-      identity: bundleKey ? `bundle:${bundleKey}` : `name:${incoming.normalizedName}`,
-      sourcesBefore: [...beforeSources].join("|"),
-      mergedSource: incoming.source,
-      finalName: existing.name,
-    });
-  }
-
-  const masterRows = readCSVObjects(sources.master5000);
-  stats.sourceRows.master5000 = masterRows.length;
-  for (const row of masterRows) {
-    addEntry(rawEntry({
-      source: "master5000",
-      name: row.name,
-      normalizedName: row.normalizedName,
-      bundleIdentifier: row.bundleIdentifier,
-      tags: splitTags(row.defaultTagIDs),
-      rank: row.rank,
-      evidence: splitTags(row.sourceEvidence),
-    }));
-  }
-
-  const topRows = readCSVObjects(sources.top1000);
-  stats.sourceRows.top1000 = topRows.length;
-  for (const row of topRows) {
-    addEntry(rawEntry({
-      source: "top1000",
-      name: row.name,
-      normalizedName: row.normalizedName,
-      bundleIdentifier: row.bundleIdentifier,
-      tags: splitTags(row.defaultTagIDs),
-      rank: row.rank,
-      evidence: splitTags(row.sourceEvidence),
-    }));
-  }
-
-  const gameRows = readCSVObjects(sources.game);
-  stats.sourceRows.game = gameRows.length;
-  for (const row of gameRows) {
-    addEntry(rawEntry({
-      source: "game",
-      name: row.name,
-      normalizedName: normalizeName(row.name),
-      bundleIdentifier: row.bundleIdentifier,
-      tags: orderedTags([...splitTags(row.defaultTagIDs), "entertainment"]),
-      rank: row.rank,
-      evidence: ["game_seed"],
-    }));
-  }
-
-  const personaRows = readCSVObjects(sources.persona);
-  stats.sourceRows.persona = personaRows.length;
-  for (const row of personaRows) {
-    addEntry(rawEntry({
-      source: "persona",
-      name: row.appName,
-      normalizedName: row.normalizedName,
-      bundleIdentifier: row.bundleIdentifier,
-      tags: splitTags(row.defaultTagIDs),
-      noteZH: row.defaultNoteZH,
-      rank: row.masterRank || row.bestPersonaRank,
-      evidence: ["persona_top_apps", ...(row.personaIDs ? [`personas:${row.personaIDs}`] : [])],
-    }));
-  }
-
-  stats.sourceRows.apple = appleNotes.byBundle.size;
-  for (const [bundleIdentifier, note] of appleNotes.byBundle.entries()) {
-    const metadata = appleCatalogMetadata.get(bundleIdentifier);
-    if (!metadata) continue;
-    addEntry(rawEntry({
-      source: "apple",
-      name: metadata.name,
-      normalizedName: normalizeName(metadata.name),
+    return {
+      rank: index + 1,
+      name,
+      normalizedName,
       bundleIdentifier,
-      tags: metadata.tags,
-      noteZH: note,
-      rank: 50,
-      evidence: ["apple_default_notes"],
-    }));
-  }
-
-  for (const entry of entries) {
-    const bundleNote = entry.bundleIdentifier
-      ? appleNotes.byBundle.get(entry.bundleIdentifier.toLowerCase())
-      : null;
-    const nameNote = appleNotes.byName.get(entry.name);
-    const note = bundleNote ?? nameNote;
-    if (note) {
-      entry.noteZH = truncateNote(note);
-      entry.notePriority = sourcePriority.apple;
-      entry.sources.add("apple");
-      entry.sourceEvidence.add("apple_default_notes");
-      stats.appleNotesAttached += 1;
-    }
-  }
-
-  for (const bundle of appleNotes.byBundle.keys()) {
-    if (!byBundle.has(bundle)) stats.appleNotesSwiftOnly += 1;
-  }
-
-  const finalRows = entries
-    .map((entry) => {
-      entry.tags = orderedTags(entry.tags);
-      if (entry.tags.length === 1 && entry.tags[0] === "other") {
-        const overrideTags = tagOverridesByNormalizedName.get(entry.normalizedName);
-        if (overrideTags) {
-          entry.tags = orderedTags(overrideTags);
-          entry.sourceEvidence.add("manual_other_reduction");
-        }
-      }
-      const notes = buildLocalizedNotes(entry.name, entry.tags, entry.noteZH, translations);
-      return {
-        name: entry.name,
-        normalizedName: entry.normalizedName || normalizeName(entry.name),
-        bundleIdentifier: entry.bundleIdentifier,
-        tags: entry.tags,
-        noteZH: entry.noteZH,
-        notes,
-        rank: entry.rank,
-        sourceEvidence: [...entry.sourceEvidence].sort(),
-        sources: [...entry.sources].sort(),
-      };
-    })
-    .sort((left, right) => {
-      const rankDiff = left.rank - right.rank;
-      if (rankDiff !== 0) return rankDiff;
-      return left.name.localeCompare(right.name);
-    });
+      tags: mapping.tags,
+      legacyTags,
+      noteZH,
+      notes,
+      sourceEvidence: usedAppleFallback
+        ? ["curated_tager_catalog", "apple_default_notes"]
+        : ["curated_tager_catalog"],
+    };
+  });
 
   const invalidTagRows = finalRows.filter((row) => row.tags.some((tag) => !stableTags.has(tag)));
   const emptyNormalizedRows = finalRows.filter((row) => !row.normalizedName);
@@ -595,32 +439,35 @@ function build() {
       const note = row.notes[code];
       if (!note) {
         localizedNoteIssues.push({ name: row.name, code, issue: "missing" });
+        stats.missingLocalizedNotes += 1;
       } else if (charLength(note) > noteLimit) {
         localizedNoteIssues.push({ name: row.name, code, issue: `over_limit:${charLength(note)}` });
+      } else if (stripTerminalPunctuation(note) != note) {
+        localizedNoteIssues.push({ name: row.name, code, issue: "trailing_punctuation" });
       }
     }
   }
 
-  const reviewHeader = ["Name", "normalizedName", "defaultTag", "bundleIdentifier", "defaultNote-ZH"];
-  const reviewRows = [
-    reviewHeader,
-    ...finalRows.map((row) => [
-      row.name,
-      row.normalizedName,
-      row.tags.join("|"),
-      row.bundleIdentifier ?? "null",
-      row.noteZH ?? "",
+  const cleanedCuratedRows = [
+    ["Name", "normalizedName", "defaultTag", "tager", "bundleIdentifier", "defaultNote-ZH"],
+    ...curatedRows.map((row) => [
+      String(row.Name ?? "").trim(),
+      String(row.normalizedName ?? "").trim() || normalizeName(row.Name ?? ""),
+      String(row.defaultTag ?? "").trim(),
+      String(row.tager ?? "").trim(),
+      normalizeBundle(row.bundleIdentifier) ?? "null",
+      truncateNote(row["defaultNote-ZH"]),
     ]),
   ];
-  fs.writeFileSync(outputs.reviewCSV, `${stringifyCSV(reviewRows)}\n`);
+  fs.writeFileSync(outputs.reviewCSV, `${stringifyCSV(cleanedCuratedRows)}\n`);
 
   const runtime = {
     version: 2,
     generatedAt: new Date().toISOString(),
     noteLimit,
     supportedLanguages: [...translations.keys()].sort(),
-    entries: finalRows.map((row, index) => ({
-      rank: index + 1,
+    entries: finalRows.map((row) => ({
+      rank: row.rank,
       name: row.name,
       normalizedName: row.normalizedName,
       bundleIdentifier: row.bundleIdentifier,
@@ -632,14 +479,26 @@ function build() {
   fs.writeFileSync(outputs.runtimeJSON, `${JSON.stringify(runtime, null, 2)}\n`);
 
   const duplicateRows = [
-    ["kind", "identity", "names", "bundles", "sources", "decision"],
-    ...ambiguous.map((row) => [row.kind, row.identity, row.names, row.bundles, row.sources, row.decision]),
+    ["name", "normalizedName", "tager", "legacyDefaultTag", "runtimeDefaultTag", "bundleIdentifier", "defaultNote-ZH"],
+    ...finalRows
+      .filter((row) => row.legacyTags.join("|") !== row.tags.join("|"))
+      .map((row) => [
+        row.name,
+        row.normalizedName,
+        (curatedRows[row.rank - 1]?.tager ?? ""),
+        row.legacyTags.join("|"),
+        row.tags.join("|"),
+        row.bundleIdentifier ?? "null",
+        row.noteZH ?? "",
+      ]),
   ];
   fs.writeFileSync(outputs.duplicateReview, `${stringifyCSV(duplicateRows)}\n`);
 
-  const sourceLines = Object.entries(stats.sourceRows)
-    .map(([source, count]) => `- ${source}: ${count}`)
-    .join("\n");
+  const sourceLines = [
+    "- curated CSV: `Research/SmartStart/UltimateDefaultCatalog/SmartStart_UltimateDefaultCatalog.csv`",
+    `- curated rows: ${stats.curatedRows}`,
+    `- unknown tager tokens: ${unknownTagerTokens.size}`,
+  ].join("\n");
   const topTagLines = stableTagOrder
     .map((tag) => [tag, finalRows.filter((row) => row.tags.includes(tag)).length])
     .filter(([, count]) => count > 0)
@@ -664,14 +523,16 @@ ${sourceLines}
 
 - Final rows: ${finalRows.length}
 - Rows with Chinese default notes: ${noteRows.length}
-- Merged source rows: ${stats.mergedRows}
-- Ambiguous duplicate candidates: ${ambiguous.length}
+- Rows with source Chinese notes from curated CSV: ${stats.rowsWithSourceNotes}
+- Rows with Apple note fallback attached: ${stats.appleNotesAttached}
 - Invalid tag rows: ${invalidTagRows.length}
 - Empty normalizedName rows: ${emptyNormalizedRows.length}
 - Exact \`other\` rows: ${exactOtherRows.length}
 - Mixed \`other\` rows after cleanup: ${mixedOtherRows.length}
-- Apple notes attached to catalog rows: ${stats.appleNotesAttached}
-- Apple notes still handled by Swift-only fallback: ${stats.appleNotesSwiftOnly}
+- Tag changes vs previous runtime JSON: ${stats.tagChangedVsPrevious}
+- Chinese note changes vs previous runtime JSON: ${stats.zhNoteChangedVsPrevious}
+- Bundle identifier changes vs previous runtime JSON: ${stats.bundleChangedVsPrevious}
+- Unknown tager tokens: ${unknownTagerTokens.size}
 - Localized note issues: ${localizedNoteIssues.length}
 
 ## Tag Distribution
@@ -680,7 +541,7 @@ ${topTagLines}
 
 ## Notes
 
-- \`other\` is removed whenever a row has at least one meaningful tag.
+- Runtime tags are generated from the curated CSV \`tager\` column, not the legacy \`defaultTag\` column.
 - Runtime notes are generated for all supported localization files when a Chinese source note exists.
 - Non-Chinese localized notes currently use localized tag-summary copy generated from existing category translations; high-traffic languages can be manually polished later.
 `;
@@ -707,12 +568,13 @@ ${localizedNoteIssues.slice(0, 50).map((issue) => `- ${issue.name} / ${issue.cod
   return {
     finalRows: finalRows.length,
     noteRows: noteRows.length,
-    ambiguousDuplicates: ambiguous.length,
+    changedVsPrevious: stats.tagChangedVsPrevious,
     invalidTagRows: invalidTagRows.length,
     emptyNormalizedRows: emptyNormalizedRows.length,
     exactOtherRows: exactOtherRows.length,
     mixedOtherRows: mixedOtherRows.length,
     localizedNoteIssues: localizedNoteIssues.length,
+    unknownTagerTokens: [...unknownTagerTokens].sort(),
     outputDir,
   };
 }

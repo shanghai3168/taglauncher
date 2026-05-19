@@ -1,6 +1,6 @@
 # Apptag — Mac App Store 提审资料
 
-> 版本: 7.3.5 | Build: 744 | Bundle ID: com.apptag.launcher | 更新日期: 2026-05-18
+> 版本: 7.3.5 | Build: 744 | Bundle ID: com.apptag.launcher | 更新日期: 2026-05-19
 
 ---
 
@@ -198,6 +198,7 @@ Apptag 7.3.5
 - Fixed Safari and other modern macOS system apps being missed when they live behind Cryptex system paths
 - Improved settings and edit controls, including more stable settings access from the overlay and better multilingual layout behavior
 - Improved menu bar item stability with a persistent status item identity so macOS and menu bar managers can recognize it consistently
+- Refreshed the Smart Start initialization catalog from the latest curated data, with richer default app notes and cleaner first-run organization
 - Fixed localized default notes for Apple apps during first launch in non-Chinese languages
 - Fixed Uncategorized drag-and-drop confirmation so cancel/confirm no longer leaves icon drag state stuck
 - Improved tag-list reordering feedback by replacing persistent wiggle animation with clearer opacity-based drag state
@@ -205,6 +206,7 @@ Apptag 7.3.5
 - Fixed right-side tag navigation getting stuck in a dimmed drag visual state after a tag click
 - Fixed an icon grid rendering issue that could make many app icons disappear after drag-state resets
 - Fixed stale hover bubbles so app notes no longer remain pinned to the previous app while hovering another app
+- Removed trailing punctuation from bundled default app notes so first-run app remarks read more naturally
 - Version updated to 7.3.5, Build updated to 744
 ```
 

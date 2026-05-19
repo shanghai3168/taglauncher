@@ -100,43 +100,43 @@ enum SmartCategoryID: String, CaseIterable, Codable, Hashable, Identifiable {
         case .browser:
             return 4
         case .communication:
-            return 3
+            return 4
         case .productivity:
             return 2
         case .fileManagement:
-            return 5
-        case .transfer:
-            return 2
-        case .development:
             return 4
-        case .design:
+        case .transfer:
+            return 4
+        case .development:
             return 3
+        case .design:
+            return 7
         case .writing:
-            return 1
+            return 2
         case .media:
             return 7
         case .video:
             return 7
         case .audio:
-            return 3
+            return 7
         case .picturePhoto:
-            return 4
+            return 7
         case .utilities:
             return 5
         case .system:
             return 0
         case .systemEnhancement:
-            return 6
+            return 0
         case .entertainment:
-            return 6
+            return 7
         case .game:
             return 6
         case .finance:
             return 2
         case .education:
-            return 5
+            return 2
         case .aiTools:
-            return 6
+            return 3
         case .security:
             return 1
         case .other:
