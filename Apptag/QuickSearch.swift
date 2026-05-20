@@ -202,6 +202,62 @@ enum LauncherHotkeyRegistrationStore {
 
 // MARK: - Search Documents
 
+private enum QuickSearchFieldKind: Int {
+    case name = 0
+    case tag = 1
+    case note = 2
+    case bundleIdentifier = 3
+    case internalBundleName = 4
+
+    var weight: Double {
+        switch self {
+        case .name: return 100
+        case .tag: return 70
+        case .note: return 45
+        case .internalBundleName: return 30
+        case .bundleIdentifier: return 20
+        }
+    }
+}
+
+private enum QuickSearchMatchKind {
+    case exact
+    case prefix
+    case substring
+    case acronym
+    case fuzzy
+
+    var weight: Double {
+        switch self {
+        case .exact: return 100
+        case .prefix: return 80
+        case .substring: return 60
+        case .acronym: return 55
+        case .fuzzy: return 35
+        }
+    }
+}
+
+private struct QuickSearchIndexedField {
+    let kind: QuickSearchFieldKind
+    let text: String
+    let normalized: String
+    let acronym: String
+    let pinyinCandidates: [String]
+}
+
+private struct QuickSearchMatchOptions {
+    let allowSubstring: Bool
+    let allowFuzzySubsequence: Bool
+}
+
+private struct QuickSearchTokenMatch {
+    let score: Double
+    let fieldRank: Int
+    let fieldKind: QuickSearchFieldKind
+    let originalText: String
+}
+
 struct QuickSearchDocument: Identifiable {
     var id: URL { app.id }
     let app: AppInfo
@@ -212,6 +268,7 @@ struct QuickSearchDocument: Identifiable {
     let bundleIdentifier: String
     let lastOpenedAt: Date?
     let openCount: Int
+    fileprivate let searchableFields: [QuickSearchIndexedField]
 }
 
 struct QuickSearchResult: Identifiable {
@@ -227,73 +284,30 @@ struct QuickSearchResult: Identifiable {
 }
 
 enum QuickSearchEngine {
-    private enum FieldKind: Int {
-        case name = 0
-        case tag = 1
-        case note = 2
-        case bundleIdentifier = 3
-        case internalBundleName = 4
-
-        var weight: Double {
-            switch self {
-            case .name: return 100
-            case .tag: return 70
-            case .note: return 45
-            case .internalBundleName: return 30
-            case .bundleIdentifier: return 20
-            }
-        }
-    }
-
-    private enum MatchKind {
-        case exact
-        case prefix
-        case substring
-        case acronym
-        case fuzzy
-
-        var weight: Double {
-            switch self {
-            case .exact: return 100
-            case .prefix: return 80
-            case .substring: return 60
-            case .acronym: return 55
-            case .fuzzy: return 35
-            }
-        }
-    }
-
-    private struct Field {
-        let kind: FieldKind
-        let text: String
-        let normalized: String
-        let acronym: String
-        let pinyinCandidates: [String]
-    }
-
-    private struct MatchOptions {
-        let allowSubstring: Bool
-        let allowFuzzySubsequence: Bool
-    }
-
-    private struct TokenMatch {
-        let score: Double
-        let fieldRank: Int
-        let fieldKind: FieldKind
-        let originalText: String
-    }
-
     static func makeDocuments(apps: [AppInfo], store: TagDatabase.Store) -> [QuickSearchDocument] {
         apps.map { app in
-            QuickSearchDocument(
-                app: app,
-                localizedNames: localizedNames(for: app),
-                internalBundleNames: internalBundleNames(for: app),
+            let localizedNames = localizedNames(for: app)
+            let internalBundleNames = internalBundleNames(for: app)
+            let note = store.appNotes[app.path.path] ?? app.note ?? ""
+            let bundleIdentifier = app.bundleIdentifier ?? ""
+            let searchableFields = makeSearchableFields(
+                appName: app.name,
+                localizedNames: localizedNames,
+                internalBundleNames: internalBundleNames,
                 tagNames: app.tags,
-                note: store.appNotes[app.path.path] ?? app.note ?? "",
-                bundleIdentifier: app.bundleIdentifier ?? "",
+                note: note,
+                bundleIdentifier: bundleIdentifier
+            )
+            return QuickSearchDocument(
+                app: app,
+                localizedNames: localizedNames,
+                internalBundleNames: internalBundleNames,
+                tagNames: app.tags,
+                note: note,
+                bundleIdentifier: bundleIdentifier,
                 lastOpenedAt: store.appLastOpenedAt[app.path.path],
-                openCount: store.appOpenCounts[app.path.path] ?? 0
+                openCount: store.appOpenCounts[app.path.path] ?? 0,
+                searchableFields: searchableFields
             )
         }
     }
@@ -320,7 +334,7 @@ enum QuickSearchEngine {
     }
 
     private static func result(for document: QuickSearchDocument, tokens: [String]) -> QuickSearchResult? {
-        let fields = searchableFields(for: document)
+        let fields = document.searchableFields
         var textScore: Double = 0
         var bestFieldRank = Int.max
         var matchedTagName: String?
@@ -353,10 +367,17 @@ enum QuickSearchEngine {
         )
     }
 
-    private static func searchableFields(for document: QuickSearchDocument) -> [Field] {
-        let names = uniqueOrdered([document.app.name] + document.localizedNames)
+    private static func makeSearchableFields(
+        appName: String,
+        localizedNames: [String],
+        internalBundleNames: [String],
+        tagNames: [String],
+        note: String,
+        bundleIdentifier: String
+    ) -> [QuickSearchIndexedField] {
+        let names = uniqueOrdered([appName] + localizedNames)
         let nameFields = names.map {
-            Field(
+            QuickSearchIndexedField(
                 kind: .name,
                 text: $0,
                 normalized: normalizeField($0),
@@ -364,8 +385,8 @@ enum QuickSearchEngine {
                 pinyinCandidates: pinyinCandidates(for: $0)
             )
         }
-        let tagFields = document.tagNames.map {
-            Field(
+        let tagFields = tagNames.map {
+            QuickSearchIndexedField(
                 kind: .tag,
                 text: $0,
                 normalized: normalizeField($0),
@@ -373,26 +394,26 @@ enum QuickSearchEngine {
                 pinyinCandidates: pinyinCandidates(for: $0)
             )
         }
-        let noteFields = document.note.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? [] : [
-            Field(
+        let noteFields = note.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? [] : [
+            QuickSearchIndexedField(
                 kind: .note,
-                text: document.note,
-                normalized: normalizeField(document.note),
+                text: note,
+                normalized: normalizeField(note),
                 acronym: "",
-                pinyinCandidates: pinyinCandidates(for: document.note)
+                pinyinCandidates: pinyinCandidates(for: note)
             )
         ]
-        let bundleFields = document.bundleIdentifier.isEmpty ? [] : [
-            Field(
+        let bundleFields = bundleIdentifier.isEmpty ? [] : [
+            QuickSearchIndexedField(
                 kind: .bundleIdentifier,
-                text: document.bundleIdentifier,
-                normalized: normalizeField(document.bundleIdentifier),
+                text: bundleIdentifier,
+                normalized: normalizeField(bundleIdentifier),
                 acronym: "",
                 pinyinCandidates: []
             )
         ]
-        let internalBundleNameFields = document.internalBundleNames.map {
-            Field(
+        let internalBundleNameFields = internalBundleNames.map {
+            QuickSearchIndexedField(
                 kind: .internalBundleName,
                 text: $0,
                 normalized: normalizeField($0),
@@ -403,11 +424,11 @@ enum QuickSearchEngine {
         return nameFields + tagFields + noteFields + bundleFields + internalBundleNameFields
     }
 
-    private static func match(token: String, field: Field) -> TokenMatch? {
+    private static func match(token: String, field: QuickSearchIndexedField) -> QuickSearchTokenMatch? {
         guard let candidate = bestMatchCandidate(token: token, field: field) else { return nil }
         let positionBoost = candidate.0 == .exact ? 0 : max(0, 10 - min(candidate.1, 10))
         let score = field.kind.weight + candidate.0.weight + Double(positionBoost)
-        return TokenMatch(
+        return QuickSearchTokenMatch(
             score: score,
             fieldRank: field.kind.rawValue,
             fieldKind: field.kind,
@@ -415,8 +436,8 @@ enum QuickSearchEngine {
         )
     }
 
-    private static func bestMatchCandidate(token: String, field: Field) -> (MatchKind, Int)? {
-        var candidates: [(MatchKind, Int)] = []
+    private static func bestMatchCandidate(token: String, field: QuickSearchIndexedField) -> (QuickSearchMatchKind, Int)? {
+        var candidates: [(QuickSearchMatchKind, Int)] = []
 
         if let textCandidate = matchCandidate(
             token: token,
@@ -444,24 +465,24 @@ enum QuickSearchEngine {
         }
     }
 
-    private static func matchOptions(for fieldKind: FieldKind) -> MatchOptions {
+    private static func matchOptions(for fieldKind: QuickSearchFieldKind) -> QuickSearchMatchOptions {
         switch fieldKind {
         case .name:
-            return MatchOptions(allowSubstring: true, allowFuzzySubsequence: true)
+            return QuickSearchMatchOptions(allowSubstring: true, allowFuzzySubsequence: true)
         case .tag:
-            return MatchOptions(allowSubstring: true, allowFuzzySubsequence: true)
+            return QuickSearchMatchOptions(allowSubstring: true, allowFuzzySubsequence: true)
         case .note:
-            return MatchOptions(allowSubstring: true, allowFuzzySubsequence: true)
+            return QuickSearchMatchOptions(allowSubstring: true, allowFuzzySubsequence: true)
         case .bundleIdentifier, .internalBundleName:
-            return MatchOptions(allowSubstring: false, allowFuzzySubsequence: false)
+            return QuickSearchMatchOptions(allowSubstring: false, allowFuzzySubsequence: false)
         }
     }
 
     private static func matchCandidate(
         token: String,
         normalized: String,
-        options: MatchOptions
-    ) -> (MatchKind, Int)? {
+        options: QuickSearchMatchOptions
+    ) -> (QuickSearchMatchKind, Int)? {
         guard !normalized.isEmpty else { return nil }
         if normalized == token {
             return (.exact, 0)
@@ -482,7 +503,7 @@ enum QuickSearchEngine {
         token: String,
         normalized: String,
         allowSubstring: Bool = false
-    ) -> (MatchKind, Int)? {
+    ) -> (QuickSearchMatchKind, Int)? {
         guard !normalized.isEmpty else { return nil }
         if normalized == token {
             return (.exact, 0)

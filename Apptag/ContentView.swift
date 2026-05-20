@@ -340,8 +340,13 @@ struct ContentView: View {
     private let initialQuickSearchSource: String?
 
     @State private var allApps: [AppInfo] = []
+    @State private var displayGroups: [TagGroup] = []
     @State private var tagColors: [String: Int] = [:]
     @State private var scrollProxy: ScrollViewProxy? = nil
+    @StateObject private var scrollInteractionState = AppGridScrollInteractionState()
+    @State private var groupLayoutVersion = 0
+    @State private var cachedGridContainerRowsKey: GridContainerRowsKey? = nil
+    @State private var cachedGridContainerRows: [GridContainerLayoutRow] = []
 
     // Edit mode
     @State private var editPhase: EditPhase = .none
@@ -413,7 +418,7 @@ struct ContentView: View {
     private let floatingControlsTrailingInset: CGFloat = 20
     private let floatingControlsReservedWidth: CGFloat = 120
     private var appBubbleDisabled: Bool {
-        appDragModeActive || pendingUncategorizedDrop != nil
+        appDragModeActive || pendingUncategorizedDrop != nil || scrollInteractionState.isFrozen
     }
     private let rightSidebarFloatingClearance: CGFloat = 44
 
@@ -510,7 +515,7 @@ struct ContentView: View {
         }
         .onAppear {
             refreshNotchHeight()
-            refreshApps()
+            refreshAppsIfNeeded()
             if let initialQuickSearchSource, !initialQuickSearchConsumed {
                 initialQuickSearchConsumed = true
                 quickSearchCloseHidesOverlay = initialQuickSearchSource == QuickSearchOpenSource.globalHidden
@@ -526,7 +531,11 @@ struct ContentView: View {
         .onReceive(NotificationCenter.default.publisher(for: .tagLauncherOverlayDidShow)) { _ in
             resetTransientDragState()
             refreshNotchHeight()
-            refreshApps()
+            if quickSearchVisible {
+                refreshAppsIfNeeded()
+            } else {
+                refreshApps()
+            }
         }
         .onReceive(NotificationCenter.default.publisher(for: .tagLauncherOverlayDidHide)) { _ in
             resetTransientDragState()
@@ -568,6 +577,12 @@ struct ContentView: View {
             if editingBubble != nil && !focused {
                 commitBubbleNote()
             }
+        }
+        .onChange(of: draggedTagNames) { _, newOrder in
+            rebuildDisplayGroups(apps: allApps, tagOrder: newOrder)
+        }
+        .onChange(of: defaultGroupName) { _, _ in
+            rebuildDisplayGroups(apps: allApps, tagOrder: draggedTagNames)
         }
         .onChange(of: quickSearchQuery) { _, _ in
             quickSearchErrorMessage = nil
@@ -1065,7 +1080,7 @@ struct ContentView: View {
         ScrollViewReader { proxy in
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 24) {
-                    ForEach(groups) { group in
+                    ForEach(displayGroups) { group in
                         TagGroupView(
                             group: group,
                             onSelectApp: { app in openApp(app) },
@@ -1084,7 +1099,9 @@ struct ContentView: View {
                             }
                         ).id(group.id)
                     }
-                }.padding(20)
+                }
+                .padding(20)
+                .background(AppGridScrollActivityObserver(onScroll: handleAppGridScrollActivity))
             }
             .id(displayMode)  // force rebuild on mode switch
             .onAppear { scrollProxy = proxy }
@@ -1100,7 +1117,7 @@ struct ContentView: View {
             let colCount = max(1, Int((available + gap) / (colW + gap)))
             let actualColW = (available - gap * CGFloat(colCount - 1)) / CGFloat(colCount)
 
-            let columns = distributeToColumns(groups: groups, colCount: colCount, colWidth: actualColW)
+            let columns = distributeToColumns(groups: displayGroups, colCount: colCount, colWidth: actualColW)
 
             ScrollViewReader { proxy in
                 ScrollView {
@@ -1115,6 +1132,7 @@ struct ContentView: View {
                         }
                     }
                     .padding(outerPad)
+                    .background(AppGridScrollActivityObserver(onScroll: handleAppGridScrollActivity))
                 }
                 .id(displayMode)  // force rebuild on mode switch
                 .onAppear { scrollProxy = proxy }
@@ -1217,6 +1235,12 @@ struct ContentView: View {
         .animation(.easeOut(duration: 0.045), value: isHovered)
         .animation(.easeOut(duration: 0.08), value: isColorlessFilled)
         .onHover { hovering in
+            guard !scrollInteractionState.isFrozen else {
+                if !hovering && hoveredContainer == group.name {
+                    hoveredContainer = nil
+                }
+                return
+            }
             if isColored || isColorless {
                 hoveredContainer = hovering ? group.name : nil
             }
@@ -1238,11 +1262,23 @@ struct ContentView: View {
             let gap: CGFloat = 16
             let available = geo.size.width - outerPad * 2
             let preferredCount = preferredGridContainersPerRow(availableWidth: available)
-            let rows = gridContainerRows(groups: groups, trackCount: preferredCount, availableWidth: available, gap: gap)
+            let rowsKey = GridContainerRowsKey(
+                groupLayoutVersion: groupLayoutVersion,
+                trackCount: preferredCount,
+                availableWidth: Int(available.rounded()),
+                iconSize: Int(iconSize.rounded())
+            )
+            let rows = gridContainerRowsForRender(
+                key: rowsKey,
+                groups: displayGroups,
+                trackCount: preferredCount,
+                availableWidth: available,
+                gap: gap
+            )
 
             ScrollViewReader { proxy in
                 ScrollView {
-                    VStack(alignment: .leading, spacing: gap) {
+                    LazyVStack(alignment: .leading, spacing: gap) {
                         ForEach(Array(rows.indices), id: \.self) { rowIndex in
                             let row = rows[rowIndex]
 
@@ -1257,9 +1293,28 @@ struct ContentView: View {
                     }
                     .padding(outerPad)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
+                    .background(AppGridScrollActivityObserver(onScroll: handleAppGridScrollActivity))
                 }
                 .id(displayMode)
                 .onAppear { scrollProxy = proxy }
+                .onAppear {
+                    updateCachedGridContainerRows(
+                        key: rowsKey,
+                        groups: displayGroups,
+                        trackCount: preferredCount,
+                        availableWidth: available,
+                        gap: gap
+                    )
+                }
+                .onChange(of: rowsKey) { _, newKey in
+                    updateCachedGridContainerRows(
+                        key: newKey,
+                        groups: displayGroups,
+                        trackCount: preferredCount,
+                        availableWidth: available,
+                        gap: gap
+                    )
+                }
             }
         }
     }
@@ -1281,10 +1336,52 @@ struct ContentView: View {
         let fixedRows: Int
     }
 
+    private struct GridContainerRowsKey: Equatable {
+        let groupLayoutVersion: Int
+        let trackCount: Int
+        let availableWidth: Int
+        let iconSize: Int
+    }
+
     private struct GridContainerCandidate {
         let spans: [Int]
         let rows: Int
         let cost: CGFloat
+    }
+
+    private func gridContainerRowsForRender(
+        key: GridContainerRowsKey,
+        groups: [TagGroup],
+        trackCount: Int,
+        availableWidth: CGFloat,
+        gap: CGFloat
+    ) -> [GridContainerLayoutRow] {
+        if cachedGridContainerRowsKey == key {
+            return cachedGridContainerRows
+        }
+        return gridContainerRows(
+            groups: groups,
+            trackCount: trackCount,
+            availableWidth: availableWidth,
+            gap: gap
+        )
+    }
+
+    private func updateCachedGridContainerRows(
+        key: GridContainerRowsKey,
+        groups: [TagGroup],
+        trackCount: Int,
+        availableWidth: CGFloat,
+        gap: CGFloat
+    ) {
+        guard cachedGridContainerRowsKey != key else { return }
+        cachedGridContainerRows = gridContainerRows(
+            groups: groups,
+            trackCount: trackCount,
+            availableWidth: availableWidth,
+            gap: gap
+        )
+        cachedGridContainerRowsKey = key
     }
 
     private func gridContainerRows(groups: [TagGroup], trackCount: Int, availableWidth: CGFloat, gap: CGFloat) -> [GridContainerLayoutRow] {
@@ -1469,6 +1566,12 @@ struct ContentView: View {
         .animation(.easeOut(duration: 0.045), value: isHovered)
         .animation(.easeOut(duration: 0.08), value: isColorlessFilled)
         .onHover { hovering in
+            guard !scrollInteractionState.isFrozen else {
+                if !hovering && hoveredContainer == group.name {
+                    hoveredContainer = nil
+                }
+                return
+            }
             if isColored || isColorlessGrid {
                 hoveredContainer = hovering ? group.name : nil
             } else if hovering {
@@ -1995,14 +2098,20 @@ struct ContentView: View {
             let result = SmartStartService.applySuggestion(draft)
             let store = result.store
             let apps = TagEditor.annotate(apps: scannedApps, store: store)
+            let quickSearchDocs = QuickSearchEngine.makeDocuments(apps: apps, store: store)
             let colors = store.tags.mapValues { $0.color }
             let order = TagEditor.orderedTagNames()
 
             DispatchQueue.main.async {
                 pendingSmartStartDraft = nil
                 allApps = apps
+                quickSearchDocuments = quickSearchDocs
                 tagColors = colors
                 draggedTagNames = order
+                rebuildDisplayGroups(apps: apps, tagOrder: order)
+                if quickSearchVisible {
+                    refreshQuickSearchResults()
+                }
                 if let summary = result.summary {
                     showSmartStartNotice(mode: .manuallyApplied, summary: summary)
                 } else {
@@ -2061,17 +2170,10 @@ struct ContentView: View {
         tagName == TagDatabase.uncommonTagKey ? tr("group.uncommon") : tagName
     }
 
-    private var tagLabels: [TagLabel] {
-        groups.map { TagLabel(name: $0.name, colorIndex: tagColors[$0.name] ?? 0) }
-    }
-
-    private var groups: [TagGroup] {
-        let order = draggedTagNames.isEmpty
-            ? TagEditor.orderedTagNames()
-            : draggedTagNames
-        let raw = AppIndexer.group(apps: allApps, defaultGroupName: defaultGroupName, tagOrder: order)
-        // Translate stable keys for display
-        return raw.map { group in
+    private func makeDisplayGroups(apps: [AppInfo], tagOrder: [String]) -> [TagGroup] {
+        let order = tagOrder.isEmpty ? TagEditor.orderedTagNames() : tagOrder
+        let rawGroups = AppIndexer.group(apps: apps, defaultGroupName: defaultGroupName, tagOrder: order)
+        return rawGroups.map { group in
             if group.name == defaultGroupName {
                 return TagGroup(name: tr("group.uncategorized"), apps: group.apps)
             }
@@ -2082,8 +2184,18 @@ struct ContentView: View {
         }
     }
 
+    private func rebuildDisplayGroups(apps: [AppInfo], tagOrder: [String]) {
+        displayGroups = makeDisplayGroups(apps: apps, tagOrder: tagOrder)
+        groupLayoutVersion &+= 1
+        cachedGridContainerRowsKey = nil
+    }
+
+    private var tagLabels: [TagLabel] {
+        displayGroups.map { TagLabel(name: $0.name, colorIndex: tagColors[$0.name] ?? 0) }
+    }
+
     private var editGroups: [TagGroup] {
-        groups + [
+        displayGroups + [
             TagGroup(
                 name: tr("group.uncommon"),
                 apps: allApps.filter(\.isUncommon).sorted {
@@ -2095,12 +2207,26 @@ struct ContentView: View {
 
     // MARK: - Actions
 
+    private func refreshAppsIfNeeded() {
+        guard allApps.isEmpty, !refreshInProgress else { return }
+        refreshApps()
+    }
+
     private func refreshNotchHeight() {
         let mousePoint = NSEvent.mouseLocation
         let activeScreen = NSScreen.screens.first(where: {
             NSMouseInRect(mousePoint, $0.frame, false)
         }) ?? NSScreen.main
         notchHeight = activeScreen?.safeAreaInsets.top ?? 0
+    }
+
+    private func handleAppGridScrollActivity() {
+        if !scrollInteractionState.isFrozen {
+            hoveredAppItemID = nil
+            hoveredBubble = nil
+            hoveredContainer = nil
+        }
+        scrollInteractionState.noteScroll()
     }
 
     private func handleBubbleHover(app: AppInfo, frame: CGRect, event: AppBubbleHoverEvent) {
@@ -2500,6 +2626,7 @@ struct ContentView: View {
 
     private func resetTransientDragState(keepingPendingUncategorizedDrop: Bool = false) {
         AppDragCoordinator.shared.cancelDrag()
+        scrollInteractionState.reset()
         appDragModeActive = false
         appDragResetToken &+= 1
         tagNavDragModeActive = false
@@ -2542,6 +2669,7 @@ struct ContentView: View {
                 quickSearchDocuments = quickSearchDocs
                 tagColors = colors
                 draggedTagNames = order
+                rebuildDisplayGroups(apps: apps, tagOrder: order)
                 if quickSearchVisible {
                     refreshQuickSearchResults()
                 }
@@ -2591,6 +2719,107 @@ struct ContentView: View {
 
     func openApp(_ app: AppInfo) {
         launchApp(app)
+    }
+}
+
+private final class AppGridScrollInteractionState: ObservableObject {
+    @Published var isFrozen = false
+    private var unfreezeWorkItem: DispatchWorkItem?
+
+    func noteScroll() {
+        if !isFrozen {
+            isFrozen = true
+        }
+        unfreezeWorkItem?.cancel()
+        let workItem = DispatchWorkItem { [weak self] in
+            self?.isFrozen = false
+        }
+        unfreezeWorkItem = workItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.18, execute: workItem)
+    }
+
+    func reset() {
+        unfreezeWorkItem?.cancel()
+        unfreezeWorkItem = nil
+        isFrozen = false
+    }
+}
+
+private struct AppGridScrollActivityObserver: NSViewRepresentable {
+    let onScroll: () -> Void
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(onScroll: onScroll)
+    }
+
+    func makeNSView(context: Context) -> ScrollActivityNSView {
+        let view = ScrollActivityNSView()
+        view.coordinator = context.coordinator
+        return view
+    }
+
+    func updateNSView(_ view: ScrollActivityNSView, context: Context) {
+        context.coordinator.onScroll = onScroll
+        view.coordinator = context.coordinator
+        view.installObserverIfPossible()
+    }
+
+    final class Coordinator {
+        var onScroll: () -> Void
+        private weak var observedClipView: NSClipView?
+        private var observer: NSObjectProtocol?
+
+        init(onScroll: @escaping () -> Void) {
+            self.onScroll = onScroll
+        }
+
+        func install(from view: NSView) {
+            guard let clipView = view.enclosingScrollView?.contentView else { return }
+            guard observedClipView !== clipView else { return }
+            removeObserver()
+            observedClipView = clipView
+            clipView.postsBoundsChangedNotifications = true
+            observer = NotificationCenter.default.addObserver(
+                forName: NSView.boundsDidChangeNotification,
+                object: clipView,
+                queue: .main
+            ) { [weak self] _ in
+                self?.onScroll()
+            }
+        }
+
+        private func removeObserver() {
+            if let observer {
+                NotificationCenter.default.removeObserver(observer)
+            }
+            observer = nil
+            observedClipView = nil
+        }
+
+        deinit {
+            removeObserver()
+        }
+    }
+
+    final class ScrollActivityNSView: NSView {
+        weak var coordinator: Coordinator?
+
+        override func viewDidMoveToWindow() {
+            super.viewDidMoveToWindow()
+            installObserverIfPossible()
+        }
+
+        override func viewDidMoveToSuperview() {
+            super.viewDidMoveToSuperview()
+            installObserverIfPossible()
+        }
+
+        func installObserverIfPossible() {
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                coordinator?.install(from: self)
+            }
+        }
     }
 }
 

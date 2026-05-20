@@ -326,13 +326,17 @@ private struct DraggableAppIconView: NSViewRepresentable {
     }
 
     func updateNSView(_ view: DragIconNSView, context: Context) {
+        let imageChanged = view.image !== icon
+        let sizeChanged = view.iconSize != iconSize
         view.image = icon
         view.iconSize = iconSize
         view.payload = payload
         view.onLongPress = onLongPress
         view.onDragEnd = onDragEnd
         view.onClick = onClick
-        view.needsDisplay = true
+        if imageChanged || sizeChanged {
+            view.needsDisplay = true
+        }
     }
 }
 
