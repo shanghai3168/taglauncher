@@ -5,6 +5,7 @@ APP_NAME="TagLauncher"
 PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 BUILD_DIR="$PROJECT_DIR/build"
 APP_BUNDLE="$BUILD_DIR/$APP_NAME.app"
+APP_INFO_PLIST="$APP_BUNDLE/Contents/Info.plist"
 MACOS_DIR="$APP_BUNDLE/Contents/MacOS"
 RESOURCES_DIR="$APP_BUNDLE/Contents/Resources"
 SWIFT_DIR="$PROJECT_DIR/Apptag"
@@ -14,8 +15,9 @@ SDK_PATH=$(xcrun --sdk macosx --show-sdk-path)
 TARGET="arm64-apple-macosx15.0"
 
 APP_VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$INFO_PLIST")
-APP_BUILD=$(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "$INFO_PLIST")
-if [ -z "$APP_VERSION" ] || ! [[ "$APP_BUILD" =~ ^[0-9]+$ ]]; then
+APP_BUILD="${APP_BUILD:-$(date '+%Y%m%d.%H%M')}"
+SOURCE_INFO_PLIST_HASH_BEFORE=$(shasum -a 256 "$INFO_PLIST" | awk '{print $1}')
+if [ -z "$APP_VERSION" ] || ! [[ "$APP_BUILD" =~ ^[0-9]{8}\.[0-9]{4}$ ]]; then
     echo "❌ Invalid version metadata in $INFO_PLIST: version='$APP_VERSION' build='$APP_BUILD'"
     exit 1
 fi
@@ -63,7 +65,8 @@ swiftc \
     "${SWIFT_FILES[@]}"
 
 echo "==> Copying Info.plist..."
-cp "$INFO_PLIST" "$APP_BUNDLE/Contents/Info.plist"
+cp "$INFO_PLIST" "$APP_INFO_PLIST"
+/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $APP_BUILD" "$APP_INFO_PLIST"
 
 echo "==> Copying AppIcon.icns..."
 if [ -f "$PROJECT_DIR/icon-icns.icns" ]; then
@@ -123,6 +126,13 @@ else
     # Default: ad-hoc sign without entitlements (local dev)
     echo "==> Ad-hoc signing..."
     codesign --force --deep --sign - "$APP_BUNDLE"
+fi
+
+echo "==> Verifying source Info.plist was not modified..."
+SOURCE_INFO_PLIST_HASH_AFTER=$(shasum -a 256 "$INFO_PLIST" | awk '{print $1}')
+if [ "$SOURCE_INFO_PLIST_HASH_BEFORE" != "$SOURCE_INFO_PLIST_HASH_AFTER" ]; then
+    echo "❌ Build mutated tracked source file: $INFO_PLIST"
+    exit 1
 fi
 
 echo ""

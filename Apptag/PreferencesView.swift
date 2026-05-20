@@ -1,6 +1,5 @@
 import SwiftUI
 import AppKit
-import Carbon
 
 // MARK: - Preferences View
 
@@ -24,6 +23,8 @@ struct PreferencesView: View {
     @AppStorage("showDockIcon") private var showDockIcon = AppDefaults.showDockIcon
     @AppStorage("launchAtLogin") private var launchAtLogin = AppDefaults.launchAtLogin
     @AppStorage("showUncommonAppBubbles") private var showUncommonAppBubbles = AppDefaults.showUncommonAppBubbles
+    @AppStorage("mainHotkeyRegistrationState") private var mainHotkeyRegistrationState = LauncherHotkeyRegistrationState.active.rawValue
+    @AppStorage("quickSearchHotkeyRegistrationState") private var quickSearchHotkeyRegistrationState = LauncherHotkeyRegistrationState.active.rawValue
     @State private var selectedLanguage = L10n.currentCode
     @State private var isRefreshingLanguage = false
     @State private var allApps: [AppInfo] = []
@@ -31,9 +32,8 @@ struct PreferencesView: View {
     @State private var categoryScheme = TagDatabase.CategorySchemeState()
     @State private var isApplyingSystemScheme = false
     @State private var showApplySystemSchemeConfirmation = false
-    @State private var recordingHotkeyKind: LauncherHotkeyKind? = nil
-    @State private var hotkeyCaptureMonitor: Any? = nil
-    @State private var hotkeyRefreshToken = 0
+    @State private var hotkeyStatusToast: String? = nil
+    @State private var hotkeyStatusToastToken: UUID? = nil
 
     private func scanApps() {
         DispatchQueue.global(qos: .userInitiated).async {
@@ -120,6 +120,75 @@ struct PreferencesView: View {
             alert.beginSheetModal(for: window)
         } else {
             alert.runModal()
+        }
+    }
+
+    private var mainHotkeyState: LauncherHotkeyRegistrationState {
+        LauncherHotkeyRegistrationState(rawValue: mainHotkeyRegistrationState) ?? .active
+    }
+
+    private var quickSearchHotkeyState: LauncherHotkeyRegistrationState {
+        LauncherHotkeyRegistrationState(rawValue: quickSearchHotkeyRegistrationState) ?? .active
+    }
+
+    private func hotkeyStatusText(for kind: LauncherHotkeyKind) -> String {
+        switch kind {
+        case .main:
+            return mainHotkeyState == .failed
+                ? tr("quickSearch.status.registrationFailed")
+                : tr("quickSearch.status.Active")
+        case .quickSearch:
+            return quickSearchHotkeyState == .failed
+                ? tr("quickSearch.status.unavailable")
+                : tr("quickSearch.status.Active")
+        }
+    }
+
+    private func hotkeyStatusTone(for kind: LauncherHotkeyKind) -> HotkeyStatusTone {
+        switch kind {
+        case .main:
+            return mainHotkeyState == .failed ? .warning : .active
+        case .quickSearch:
+            return quickSearchHotkeyState == .failed ? .warning : .active
+        }
+    }
+
+    private func showPendingHotkeyWarningIfNeeded() {
+        var messages: [String] = []
+        if LauncherHotkeyRegistrationStore.consumeNeedsAttention(for: .main),
+           LauncherHotkeyRegistrationStore.state(for: .main) == .failed {
+            messages.append(hotkeyFailureMessage(for: .main))
+        }
+        if LauncherHotkeyRegistrationStore.consumeNeedsAttention(for: .quickSearch),
+           LauncherHotkeyRegistrationStore.state(for: .quickSearch) == .failed {
+            messages.append(hotkeyFailureMessage(for: .quickSearch))
+        }
+        guard !messages.isEmpty else { return }
+        showHotkeyStatusToast(messages.joined(separator: "\n\n"))
+    }
+
+    private func hotkeyFailureMessage(for kind: LauncherHotkeyKind) -> String {
+        let key = kind == .main
+            ? "quickSearch.mainHotkeyUnavailableMessage"
+            : "quickSearch.globalHotkeyUnavailableMessage"
+        let status = LauncherHotkeyRegistrationStore.failureCode(for: kind)
+            .map(String.init) ?? "-"
+        return tr(key)
+            .replacingOccurrences(of: "%shortcut%", with: kind.hotkey.displayString)
+            .replacingOccurrences(of: "%status%", with: status)
+    }
+
+    private func showHotkeyStatusToast(_ message: String) {
+        let token = UUID()
+        hotkeyStatusToastToken = token
+        withAnimation(.easeOut(duration: 0.16)) {
+            hotkeyStatusToast = message
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+            guard hotkeyStatusToastToken == token else { return }
+            withAnimation(.easeOut(duration: 0.18)) {
+                hotkeyStatusToast = nil
+            }
         }
     }
 
@@ -342,128 +411,36 @@ struct PreferencesView: View {
         .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
     }
 
-    private func applyHotkey(_ hotkey: LauncherHotkey?, for kind: LauncherHotkeyKind) {
-        (NSApp.delegate as? AppDelegate)?.applyHotkey(hotkey, for: kind)
-        hotkeyRefreshToken &+= 1
-    }
-
-    private func retryHotkey(_ kind: LauncherHotkeyKind) {
-        (NSApp.delegate as? AppDelegate)?.retryHotkeyRegistration(for: kind)
-        hotkeyRefreshToken &+= 1
-    }
-
-    private func openKeyboardShortcutsSettings() {
-        let urls = [
-            URL(string: "x-apple.systempreferences:com.apple.Keyboard-Settings.extension?Shortcuts"),
-            URL(string: "x-apple.systempreferences:com.apple.preference.keyboard?shortcuts")
-        ].compactMap { $0 }
-        guard let url = urls.first else { return }
-        NSWorkspace.shared.open(url)
-    }
-
     private func hotkeySettingsPanel() -> some View {
         VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                Text(tr("quickSearch.hotkeys"))
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(.secondary)
-                Spacer()
-                Button(action: openKeyboardShortcutsSettings) {
-                    Label(tr("quickSearch.openKeyboardSettings"), systemImage: "keyboard")
-                        .font(.system(size: 13, weight: .semibold))
-                        .lineLimit(1)
-                }
-                .buttonStyle(.bordered)
-                .help(tr("quickSearch.openKeyboardSettings"))
-                .accessibilityLabel(tr("quickSearch.openKeyboardSettings"))
-            }
+            Text(tr("quickSearch.hotkeys"))
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(.secondary)
 
-            HotkeySettingRow(
+            StaticHotkeyInfoRow(
                 title: tr("quickSearch.mainHotkey"),
                 description: tr("quickSearch.mainHotkeyDesc"),
-                kind: .main,
-                isRecording: recordingHotkeyKind == .main,
-                allowsEditing: false,
-                refreshToken: hotkeyRefreshToken,
-                onBeginRecording: { },
-                onRestoreDefault: nil,
-                onRetry: { },
-                onCancelRecording: cancelHotkeyRecording
+                displayText: LauncherHotkey.main.displayString,
+                statusText: hotkeyStatusText(for: .main),
+                statusTone: hotkeyStatusTone(for: .main)
             )
 
             StaticHotkeyInfoRow(
                 title: tr("quickSearch.internalHotkey"),
                 description: tr("quickSearch.internalHotkeyDesc"),
                 displayText: tr("quickSearch.spaceDisplay"),
-                statusText: tr("quickSearch.internalHotkeyStatus")
+                statusText: tr("quickSearch.internalHotkeyStatus"),
+                statusTone: .neutral
             )
 
-            HotkeySettingRow(
+            StaticHotkeyInfoRow(
                 title: tr("quickSearch.globalHotkey"),
                 description: tr("quickSearch.globalHotkeyDesc"),
-                kind: .quickSearch,
-                isRecording: recordingHotkeyKind == .quickSearch,
-                allowsEditing: true,
-                refreshToken: hotkeyRefreshToken,
-                onBeginRecording: { beginHotkeyRecording(.quickSearch) },
-                onRestoreDefault: { applyHotkey(.defaultQuickSearch, for: .quickSearch) },
-                onRetry: { retryHotkey(.quickSearch) },
-                onCancelRecording: cancelHotkeyRecording
+                displayText: LauncherHotkey.quickSearch.displayString,
+                statusText: hotkeyStatusText(for: .quickSearch),
+                statusTone: hotkeyStatusTone(for: .quickSearch)
             )
         }
-        .id(hotkeyRefreshToken)
-    }
-
-    private func beginHotkeyRecording(_ kind: LauncherHotkeyKind) {
-        removeHotkeyCaptureMonitor()
-        recordingHotkeyKind = kind
-        postHotkeyRecordingState(active: true)
-        hotkeyCaptureMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
-            handleCapturedHotkeyEvent(event, for: kind)
-        }
-    }
-
-    private func handleCapturedHotkeyEvent(_ event: NSEvent, for kind: LauncherHotkeyKind) -> NSEvent? {
-        if event.keyCode == UInt16(kVK_Escape) {
-            cancelHotkeyRecording()
-            return nil
-        }
-        guard let hotkey = LauncherHotkey.from(event: event) else {
-            NSSound.beep()
-            return nil
-        }
-        finishHotkeyRecording()
-        applyHotkey(hotkey, for: kind)
-        return nil
-    }
-
-    private func cancelHotkeyRecording() {
-        finishHotkeyRecording()
-    }
-
-    private func finishHotkeyRecording() {
-        guard recordingHotkeyKind != nil || hotkeyCaptureMonitor != nil else { return }
-        recordingHotkeyKind = nil
-        removeHotkeyCaptureMonitor()
-        postHotkeyRecordingState(active: false)
-    }
-
-    private func removeHotkeyCaptureMonitor() {
-        if let hotkeyCaptureMonitor {
-            NSEvent.removeMonitor(hotkeyCaptureMonitor)
-            self.hotkeyCaptureMonitor = nil
-        }
-    }
-
-    private func postHotkeyRecordingState(active: Bool) {
-        NotificationCenter.default.post(
-            name: .tagLauncherModalInteractionChanged,
-            object: nil,
-            userInfo: [
-                "active": active,
-                "source": "hotkeyRecording"
-            ]
-        )
     }
 
     var body: some View {
@@ -819,9 +796,6 @@ struct PreferencesView: View {
             .onReceive(NotificationCenter.default.publisher(for: .tagLauncherDataDidChange)) { _ in
                 refreshDataState()
             }
-            .onReceive(NotificationCenter.default.publisher(for: .tagLauncherHotkeysChanged)) { _ in
-                hotkeyRefreshToken &+= 1
-            }
 
             if isRefreshingLanguage {
                 ZStack {
@@ -851,13 +825,36 @@ struct PreferencesView: View {
                 .zIndex(3)
                 .transition(.opacity)
             }
+
+            if let hotkeyStatusToast {
+                VStack {
+                    Spacer()
+                    Text(hotkeyStatusToast)
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(.white)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(2)
+                        .padding(.horizontal, 18)
+                        .padding(.vertical, 12)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .fill(Color.black.opacity(0.92))
+                        )
+                        .shadow(color: .black.opacity(0.28), radius: 18, y: 10)
+                        .frame(maxWidth: 620)
+                        .padding(.bottom, 22)
+                }
+                .zIndex(4)
+                .transition(.opacity.combined(with: .move(edge: .bottom)))
+            }
         }
         .frame(width: settingsWindowWidth, height: 460)
         .onAppear {
             syncSelectedLanguage()
+            showPendingHotkeyWarningIfNeeded()
         }
-        .onDisappear {
-            finishHotkeyRecording()
+        .onReceive(NotificationCenter.default.publisher(for: .tagLauncherHotkeyRegistrationChanged)) { _ in
+            showPendingHotkeyWarningIfNeeded()
         }
     }
 
@@ -871,11 +868,30 @@ struct PreferencesView: View {
     }
 }
 
+private enum HotkeyStatusTone {
+    case active
+    case warning
+    case neutral
+
+    var foreground: Color {
+        switch self {
+        case .active: return Color.green
+        case .warning: return Color.orange
+        case .neutral: return Color.secondary
+        }
+    }
+
+    var background: Color {
+        foreground.opacity(0.13)
+    }
+}
+
 private struct StaticHotkeyInfoRow: View {
     let title: String
     let description: String
     let displayText: String
     let statusText: String
+    let statusTone: HotkeyStatusTone
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -897,10 +913,10 @@ private struct StaticHotkeyInfoRow: View {
                         .minimumScaleFactor(0.85)
                     Text(statusText)
                         .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(Color.secondary)
+                        .foregroundStyle(statusTone.foreground)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 3)
-                        .background(Capsule().fill(Color.secondary.opacity(0.13)))
+                        .background(Capsule().fill(statusTone.background))
                 }
                 .frame(width: 180, alignment: .leading)
             }
@@ -914,204 +930,6 @@ private struct StaticHotkeyInfoRow: View {
             RoundedRectangle(cornerRadius: 8, style: .continuous)
                 .stroke(Color.secondary.opacity(0.14), lineWidth: 1)
         )
-    }
-}
-
-private struct HotkeySettingRow: View {
-    let title: String
-    let description: String
-    let kind: LauncherHotkeyKind
-    let isRecording: Bool
-    let allowsEditing: Bool
-    let refreshToken: Int
-    let onBeginRecording: () -> Void
-    let onRestoreDefault: (() -> Void)?
-    let onRetry: () -> Void
-    let onCancelRecording: () -> Void
-
-    private var activeHotkey: LauncherHotkey? {
-        _ = refreshToken
-        return LauncherHotkeyStore.hotkey(for: kind)
-    }
-
-    private var pendingHotkey: LauncherHotkey? {
-        _ = refreshToken
-        return LauncherHotkeyStore.pendingHotkey(for: kind)
-    }
-
-    private var status: LauncherHotkeyStatus {
-        _ = refreshToken
-        return LauncherHotkeyStore.status(for: kind)
-    }
-
-    private var conflictMessage: String {
-        _ = refreshToken
-        return LauncherHotkeyStore.conflictMessage(for: kind)
-    }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack(alignment: .top, spacing: 12) {
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(title)
-                        .font(.system(size: 13, weight: .semibold))
-                    Text(description)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(displayText)
-                        .font(.system(size: 15, weight: .semibold))
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
-                    statusLabel
-                }
-                .frame(width: 180, alignment: .leading)
-            }
-
-            if allowsEditing {
-                HStack(spacing: 8) {
-                    hotkeyButton(
-                        isRecording ? tr("quickSearch.recording") : tr("quickSearch.record"),
-                        systemImage: isRecording ? "keyboard.badge.ellipsis" : "keyboard",
-                        prominent: true,
-                        action: onBeginRecording
-                    )
-                    if let onRestoreDefault {
-                        hotkeyButton(
-                            tr("quickSearch.restoreDefault"),
-                            systemImage: "arrow.counterclockwise",
-                            prominent: false,
-                            action: onRestoreDefault
-                        )
-                    }
-                    if status == .conflict {
-                        hotkeyButton(
-                            tr("quickSearch.retry"),
-                            systemImage: "arrow.clockwise",
-                            prominent: false,
-                            action: onRetry
-                        )
-                    }
-                    Spacer(minLength: 0)
-                }
-            }
-
-            if allowsEditing && isRecording {
-                HStack(spacing: 8) {
-                    Image(systemName: "keyboard")
-                    Text(tr("quickSearch.recordingHint"))
-                    Spacer(minLength: 0)
-                    Button(tr("settings.cancel"), action: onCancelRecording)
-                        .buttonStyle(.borderless)
-                }
-                .font(.system(size: 13, weight: .semibold))
-                .foregroundStyle(Color.accentColor)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 10)
-                .background(RoundedRectangle(cornerRadius: 7).fill(Color.accentColor.opacity(0.10)))
-            }
-
-            if status == .conflict && !conflictMessage.isEmpty {
-                HotkeyConflictNotice(text: conflictDetailText)
-            }
-        }
-        .padding(12)
-        .background(
-            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .fill(Color(nsColor: .controlBackgroundColor))
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .stroke(Color.secondary.opacity(0.14), lineWidth: 1)
-        )
-    }
-
-    private var displayText: String {
-        if status == .conflict, let pendingHotkey {
-            return "\(pendingHotkey.displayString) · \(tr("quickSearch.blocked"))"
-        }
-        return activeHotkey?.displayString ?? tr("quickSearch.disabled")
-    }
-
-    private var conflictDetailText: String {
-        if let activeHotkey {
-            return "\(conflictMessage) \(tr("quickSearch.previousStillActive")) \(activeHotkey.displayString)"
-        }
-        return conflictMessage
-    }
-
-    private var statusLabel: some View {
-        Text(tr("quickSearch.status.\(status.rawValue)"))
-            .font(.system(size: 11, weight: .semibold))
-            .foregroundStyle(statusColor)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 3)
-            .background(Capsule().fill(statusColor.opacity(0.13)))
-    }
-
-    private var statusColor: Color {
-        switch status {
-        case .active: return .green
-        case .conflict: return .orange
-        case .disabled: return .secondary
-        }
-    }
-
-    private func hotkeyButton(
-        _ title: String,
-        systemImage: String,
-        prominent: Bool,
-        action: @escaping () -> Void
-    ) -> some View {
-        Button(action: action) {
-            Label(title, systemImage: systemImage)
-                .font(.system(size: 13, weight: .semibold))
-                .lineLimit(1)
-                .minimumScaleFactor(0.88)
-                .foregroundStyle(prominent ? Color.white : Color.primary)
-                .padding(.horizontal, 10)
-                .frame(height: 30)
-                .background(
-                    RoundedRectangle(cornerRadius: 7, style: .continuous)
-                        .fill(prominent ? Color.accentColor : Color(nsColor: .controlBackgroundColor))
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 7, style: .continuous)
-                        .stroke(prominent ? Color.accentColor.opacity(0.24) : Color.secondary.opacity(0.22), lineWidth: 1)
-                )
-        }
-        .buttonStyle(.plain)
-        .help(title)
-        .accessibilityLabel(title)
-    }
-}
-
-private struct HotkeyConflictNotice: View {
-    let text: String
-
-    var body: some View {
-        HStack(alignment: .top, spacing: 8) {
-            Image(systemName: "exclamationmark.triangle.fill")
-                .font(.system(size: 13, weight: .semibold))
-                .foregroundStyle(Color.white.opacity(0.94))
-                .padding(.top, 1)
-            Text(text)
-                .font(.system(size: 12, weight: .medium))
-                .foregroundStyle(Color.white)
-                .fixedSize(horizontal: false, vertical: true)
-            Spacer(minLength: 0)
-        }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 9)
-        .background(
-            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .fill(Color.black.opacity(0.92))
-        )
-        .shadow(color: .black.opacity(0.24), radius: 16, y: 8)
     }
 }
 

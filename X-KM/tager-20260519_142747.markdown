@@ -1,0 +1,91 @@
+# APP 标签与备注规则沉淀
+
+更新时间：2026-05-19 14:27:47
+
+## 总原则
+
+- 标签描述 APP 的核心用途，不描述品牌、热度、平台来源或运营感觉。
+- 一个 APP 通常给 1 到 4 个标签；宁可少而准，不堆砌。
+- 优先使用大众、清晰、可复用的词；避免生僻词、内部黑话和过度抽象词。
+- 不确定用途时先查资料；仍不确定就保守处理，不强行补标签或备注。
+- 标签服务于用户筛选场景：看到标签后，应能判断“它大概是干什么的”。
+
+## 标签判断
+
+- 先判断主功能，再判断高频使用场景，最后才考虑技术实现。
+- APP 同时覆盖多个稳定场景时可以多标签；只是附带能力时不要加。
+- 标签应贴近用户心智，而不是开发者实现细节。
+- 同一类 APP 使用同一套标签，不因名称差异制造新词。
+- 新标签只有在能覆盖一批 APP、且比旧标签更有辨识度时才值得新增。
+
+## 泛标签处理
+
+- `utilities` 太宽泛，应尽量拆到具体用途。
+- `system-enhancement` 类泛标签，应拆成 `window-management`、`device-management`、`Automation`、`system-maintenance`、`input-tools` 等。
+- `productivity` 应拆成 `PDF`、`GTD`、`Notes`、`Meeting`、`office`、`Automation`。
+- `design` 应拆成 `Font`、`ui-prototyping`、`3d-cad`、`diagramming`。
+- `development` 应拆成 `database-tools`、`terminal-tools`、`devops`、`api-tools`、`ide`、`runtime-sdk`。
+- `media` 不应单独承载大类意义；已有 `audio`、`video`、`picture-photo` 时去掉 `media`。
+
+## 父子标签去重
+
+- 已有更具体标签时，删除更上一级的泛标签。
+- `game` 已足够明确，不再保留 `entertainment`。
+- `audio`、`video`、`picture-photo` 已足够明确，不再保留 `media`。
+- `Meeting` 已足够明确，不再保留 `communication`。
+- `Notes`、`PDF`、`ide` 已足够明确时，不再保留 `writing`。
+- `input-tools` 已足够明确时，不再保留 `device-management`。
+- `database-tools`、`api-tools` 已足够明确时，不再保留 `ide`。
+- `transfer` 明确表达传输场景时，不再保留泛化的 `file-management`。
+- `system` 只用于系统原生入口；已有具体系统功能标签时应删除。
+
+## 互补标签保留
+
+- 不是所有多标签都要删；只有明确父子关系才去重。
+- `security|browser` 是互补关系，可以保留。
+- `ai-tools|ide` 是互补关系，可以保留。
+- `communication|entertainment` 是互补关系，可以保留。
+- `game|ide` 可用于游戏引擎等创作工具，可以保留。
+- `file-management|system-maintenance` 可能分别表达文件清理和系统维护，可以保留。
+
+## 典型拆分口径
+
+- 启动器、快捷键、脚本、工作流、剪贴板增强：`Automation`。
+- 窗口排列、显示器、分屏、桌面空间：`window-management`。
+- 鼠标、键盘、触控板、外设、设备同步：`device-management`。
+- 输入法、键盘布局、文本扩展：`input-tools`。
+- 菜单栏监控、清理、电池、风扇、进程、日志：`system-maintenance`。
+- 终端、Shell、CLI 工作台：`terminal-tools`。
+- 容器、云、部署、虚拟机、Git 工作流：`devops`。
+- API 调试、接口测试、Webhook、GraphQL、代理调试：`api-tools`。
+- 代码编辑器和集成开发环境：`ide`。
+- SDK、运行时、编译器、语言环境、包管理：`runtime-sdk`。
+- 数据库连接、查询、建模、管理：`database-tools`。
+
+## 备注写法
+
+- `defaultNote-ZH` 是一句话说明，不是介绍文章。
+- 备注要极简，中文不超过 80 字；其他语种也按同等长度控制。
+- 不重复 APP 名称，尤其不要以 APP 名称开头。
+- 句子直接说明“做什么、适合什么场景”。
+- 避免空泛模板，如“功能强大的工具”“适合日常使用”。
+- 避免照搬官网营销话术，改成用户能理解的实际用途。
+- 不了解 APP 时宁可留空，不编造。
+
+## 备注质量标准
+
+- 好备注：能让用户在 3 秒内知道用途。
+- 好备注：不用软件名也成立。
+- 好备注：短、具体、可验证。
+- 坏备注：只是翻译软件名。
+- 坏备注：重复标签名，没有新增信息。
+- 坏备注：过长、堆功能、像官网宣传语。
+
+## 执行校验
+
+- 每次批量改表后检查是否只改了目标列。
+- 检查是否存在空标签、重复标签、超过 4 个标签。
+- 检查旧泛标签是否真正清零。
+- 抽样查看头部、长尾和边界 APP，防止规则误伤。
+- 对自动规则产生的结果，要看样例；样例不合理就收紧规则。
+- 保存修改前备份，便于发现误伤后回滚重做。

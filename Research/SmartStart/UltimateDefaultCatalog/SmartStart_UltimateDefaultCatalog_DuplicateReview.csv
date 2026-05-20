@@ -1,0 +1,1417 @@
+name,normalizedName,tager,legacyDefaultTag,runtimeDefaultTag,bundleIdentifier,defaultNote-ZH
+,docker-desktop,devops,development|utilities|system-enhancement,development,com.docker.docker,在 Mac 上运行容器和微服务，本地开发环境更容易复现
+,brave-browser,browser|security,browser,browser|security,com.brave.Browser,主打隐私和广告拦截的 Chromium 浏览器
+,finder,file-management,file-management|utilities|system,file-management|utilities,com.apple.finder,macOS 系统自带工具，适合完成对应的系统管理或日常操作
+,slack,communication,communication|productivity,communication,com.tinyspeck.slackmacgap,团队聊天和工作流入口，项目沟通不必埋在邮件里
+,libreoffice,office,productivity,productivity|writing,null,开源 Office 套件，文档、表格和演示都能编辑
+,1password-cli,security|terminal-tools,utilities|security,development|security,null,账号安全工具，适合管理密码、验证码和通行密钥
+,claude,ai-tools,productivity|ai-tools,ai-tools,com.anthropic.claudefordesktop,桌面入口，适合长文阅读、写作和思考辅助
+,cc-switch,ai-tools,development|ai-tools,ai-tools,null,把 AI 带进开发流程，适合写代码、调试和自动化
+,orbstack,devops,development|utilities|system-enhancement,development,null,轻量容器和 Linux 环境，替代 Docker Desktop 很顺手
+,chromedriver,browser|api-tools,browser|utilities,browser|development,null,Chrome WebDriver 工具，适合自动化测试网页应用
+,zoom,Meeting,communication|productivity|media|video,communication|productivity,us.zoom.xos,视频会议常用入口，远程沟通和线上课程都离不开
+,warp,ai-tools|terminal-tools,development,development|ai-tools,null,现代终端，把命令行、搜索和 AI 辅助结合起来
+,tencent-meeting,Meeting,communication|productivity|media|video,communication|productivity,com.tencent.meeting,腾讯会议入口，中文办公和远程协作很常见
+,minecraft,game,productivity|entertainment|game,entertainment|game,com.mojang.minecraftlauncher,开放世界沙盒游戏，建造、探索和模组玩法都很丰富
+,macfuse,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,raycast,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,com.raycast.macos,键盘驱动的效率入口，启动 App、脚本和搜索都很快
+,facetime,communication|video,communication|video,communication|media|video,com.apple.FaceTime,苹果生态里的音视频通话入口
+,maccy,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,剪贴板历史工具，复制过的内容随时找回来
+,telegram,communication|security,communication|utilities|security,communication|security,ru.keepcoder.Telegram,即时通讯工具，主打速度和安全
+,spotify,audio,media|audio|entertainment,media|audio,com.spotify.client,流媒体音乐播放器，工作和放松都能配一首歌
+,blackhole-2ch,audio|device-management,media|audio|utilities,media|audio|utilities|system-enhancement,null,虚拟音频驱动，适合录屏、直播和音频路由
+,xquartz,runtime-sdk,development|utilities,development,null,开发相关工具，适合编程、调试或管理开发环境
+,ollama,ai-tools,development|ai-tools,ai-tools,com.electron.ollama,把 AI 带进开发流程，适合写代码、调试和自动化
+,signal,communication|security,communication|utilities|security,communication|security,org.whispersystems.signal-desktop,重视隐私的加密聊天工具
+,baidu-netdisk,transfer,file-management|transfer|utilities,transfer|utilities,com.baidu.netdisk,百度网盘客户端，适合云端备份、同步和分享文件
+,chatgpt,ai-tools|Notes,communication|productivity|ai-tools,productivity|writing|ai-tools,com.openai.chat,把 AI 助手放到桌面，写作、学习和头脑风暴随手就来
+,sublime-text,ide,development|writing,development,null,轻快的代码与文本编辑器，写代码、改配置和记草稿都顺手
+,wps-office,office,productivity,productivity|writing,com.kingsoft.wpsoffice.mac,办公套件，适合编辑文档、表格和演示稿
+,adobe-acrobat-reader,PDF,design|writing,writing|utilities,null,PDF 阅读和批注工具，合同、论文和表单都能处理
+,1password,security,utilities|security,security,com.1password.1password,密码和密钥管理器，账号安全的核心保险箱
+,figma,ui-prototyping,productivity|design,design,com.figma.Desktop,在线协作设计工具，界面、原型和设计系统都能做
+,netease-cloud-music,audio,media|audio|entertainment,media|audio,com.netease.163music,网易云音乐桌面端，听歌、歌单和中文音乐社区都方便
+,music,audio,media|audio|entertainment,media|audio,com.apple.Music,本地和流媒体音乐播放器
+,terminal,terminal-tools,development|utilities|system,development,com.apple.Terminal,命令行入口，Mac 的隐藏驾驶舱
+,utm,devops,development|utilities,development,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+,lm-studio,ai-tools,development|utilities|ai-tools,ai-tools,ai.lmstudio.app,本地大模型运行工具，适合下载、测试和调用开源模型
+,qq-music,audio,communication|media|audio|entertainment,media|audio,com.tencent.QQMusicMac,音乐播放器，适合听歌、管理歌单和使用腾讯音乐服务
+,activity-monitor,system-maintenance,utilities|system|system-enhancement,utilities|system-enhancement,com.apple.ActivityMonitor,Mac 的仪表盘，专看谁在耗电、吃内存、拖慢电脑
+,audio-midi-setup,audio|device-management,audio|utilities|system,media|audio|utilities|system-enhancement,com.apple.audio.audiomidisetup,管音频设备和 MIDI 路由，音乐人和调试党很常用
+,automator,Automation,utilities|system-enhancement,productivity|system-enhancement,com.apple.automator,不写代码也能串起一串 Mac 自动化动作
+,bluetooth-file-exchange,transfer|device-management,transfer|utilities|system,transfer|utilities|system-enhancement,com.apple.bluetoothfileexchange,用蓝牙收发文件，古早但关键时能救急
+,clock,GTD,productivity|utilities,productivity,com.apple.clock,闹钟、计时器、秒表和世界时钟的统一入口
+,cmux,ai-tools,development|ai-tools,ai-tools,null,适合整理媒体元数据、命名或封装文件
+,colorsync-utility,picture-photo,design|picture-photo|utilities|system,media|picture-photo,com.apple.colorsyncutility,查看和修复色彩配置文件，处理显示和打印色差
+,console,system-maintenance,utilities|system,utilities|system-enhancement,com.apple.console,看系统日志的窗口，排查异常时很有用
+,contacts,communication,communication|productivity,communication,com.apple.addressbook,通讯录中枢，邮件、信息和 FaceTime 都会用到它
+,dictionary,writing|education,writing|utilities|education,writing|education,com.apple.dictionary,离线词典和同义词库，写作查词不用开浏览器
+,digital-color-meter,picture-photo,design|picture-photo|utilities,media|picture-photo,com.apple.digitalcolormeter,屏幕取色器，设计师临时取色的小神器
+,disk-utility,system-maintenance,utilities|system,utilities|system-enhancement,com.apple.DiskUtility,管磁盘、分区、格式化和急救，别乱点但很重要
+,freeform,Notes,productivity|design,productivity|writing,com.apple.freeform,无限白板，适合头脑风暴、草图和乱七八糟的想法
+,grapher,education,utilities|education,education,com.apple.grapher,把方程画成图，数学可视化的隐藏工具
+,image-capture,picture-photo|transfer|device-management,transfer|picture-photo|utilities,transfer|media|picture-photo|utilities|system-enhancement,com.apple.image_capture,从相机或扫描仪导入图片，朴素但稳定
+,image-playground,ai-tools|picture-photo,design|picture-photo|ai-tools,media|picture-photo|ai-tools,com.apple.generativeplaygroundapp,用 Apple 智能生成图像，适合快速玩创意草稿
+,maps,GTD,productivity|utilities,productivity,com.apple.Maps,查路线、看城市，也能把目的地推给 iPhone
+,migration-assistant,transfer,transfer|utilities|system,transfer|utilities,com.apple.migrateassistant,换新 Mac 时搬家，把旧资料迁到新机器
+,mission-control,system,system|system-enhancement,utilities|system,com.apple.exposelauncher,窗口和桌面的空中俯视图，乱了就看它
+,numbers,office,productivity,productivity|writing,com.apple.iWork.Numbers,苹果表格工具，轻量报表比 Excel 更清爽
+,pages,writing|office,writing,productivity|writing,com.apple.iWork.Pages,苹果文字处理器，写文档和排版都好看
+,passwords,security,utilities|security,security,com.apple.passwords,系统密码管家，账号、验证码和通行密钥集中管
+,photo-booth,picture-photo,media|picture-photo|entertainment,media|picture-photo,com.apple.photobooth,摄像头自拍和小特效，测试摄像头也方便
+,podcasts,audio,media|audio|entertainment,media|audio,com.apple.podcasts,听播客的官方入口，通勤和学习都能用
+,preview,picture-photo|PDF,writing|media|picture-photo|utilities|system,writing|media|picture-photo|utilities,com.apple.Preview,Mac 最被低估的工具：看图、批注 PDF、简单编辑全能
+,screen-sharing,communication|network-tools,communication|utilities|system,communication|utilities,com.apple.screensharing,远程控制另一台 Mac，帮人修电脑很方便
+,screenshot,video|picture-photo,video|picture-photo|utilities,media|video|picture-photo,com.apple.screenshot.launcher,截图和录屏入口，Shift-Command-5 的背后就是它
+,script-editor,Automation,development|utilities|system-enhancement,productivity|system-enhancement,com.apple.scripteditor2,写和运行 AppleScript，控制老派 Mac 自动化
+,sf-symbols,ui-prototyping,development|design|utilities,design,com.apple.sfsymbols,Apple 官方符号库，做原生界面必备
+,shortcuts,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,com.apple.shortcuts,把多个动作串成一键流程，是现代版 Automator
+,system-information,device-management,utilities|system,utilities|system-enhancement,com.apple.systemprofiler,查看硬件、软件和设备详情，查配置最准确
+,tips,education,utilities|education,education,com.apple.helpviewer,苹果官方小技巧，偶尔能发现你没用过的功能
+,tv,video,media|video|entertainment,media|video,com.apple.TV,影视内容播放和管理入口
+,db-browser-for-sqlite,database-tools,browser|development,development,null,数据库工具，适合连接、查询和管理数据库
+,tencent-video,video,media|video|entertainment,media|video,com.tencent.tenvideo,腾讯视频客户端，适合观看影视、综艺和在线视频内容
+,bitwarden,security,utilities|security,security,null,开源密码管理器，跨平台保存账号和验证码
+,hammerspoon,Automation|runtime-sdk,productivity|development|utilities|system-enhancement,productivity|development|system-enhancement,null,用 Lua 自动化 Mac，键盘、窗口和脚本都能接管
+,iqiyi,video,media|video|entertainment,media|video,com.iqiyi.player,爱奇艺视频客户端，适合观看影视、综艺和在线视频内容
+,youku,video,media|video|entertainment,media|video,com.youku.mac,视频工具，适合播放、录制、剪辑或转换视频
+,obs,video,media|video|entertainment,media|video,null,直播和录屏工具，课程、演示和游戏录制都很常用
+,bilibili,video,media|video|entertainment,media|video,com.bilibili.bilibili,视频工具，适合播放、录制、剪辑或转换视频
+,pearcleaner,system-maintenance,browser|utilities,utilities|system-enhancement,null,macOS 应用卸载工具，适合删除 App 并清理残留文件
+,gimp,picture-photo,design|media|picture-photo,media|picture-photo,null,开源图像编辑器，修图和简单设计不必上重型套件
+,ximalaya,audio,media|audio|entertainment,media|audio,com.ximalaya.ting,音频工具，适合播放、制作、编辑或管理声音内容
+,google-cloud-cli,terminal-tools|devops,utilities,development,null,Google Cloud 命令行工具，适合管理云资源和部署应用
+,keka,file-management,utilities,file-management|utilities,null,压缩解压工具，处理 ZIP、7z 和 RAR 很方便
+,linearmouse,device-management,productivity|utilities|system-enhancement,utilities|system-enhancement,null,鼠标和触控板调校工具，滚动、加速度和按键更顺手
+,sketch,ui-prototyping,productivity|development|design,design,com.bohemiancoding.sketch3,经典 Mac 界面设计工具，适合 UI 和图标设计
+,dockdoor,Automation,utilities|system-enhancement,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,google-drive,transfer,productivity|transfer|utilities,transfer|utilities,com.google.drivefs,云端文件同步和协作入口，跨设备找资料很省心
+,photoshop,picture-photo,design|media|picture-photo,media|picture-photo,null,专业图像编辑工具，修图、合成和设计都绕不开
+,adobe-photoshop,picture-photo,design|media|picture-photo,media|picture-photo,com.adobe.Photoshop,专业图像编辑工具，修图、合成和商业设计都很强
+,tencent-lemon-cleaner,file-management|system-maintenance,utilities,file-management|utilities|system-enhancement,com.tencent.Lemon,Mac 清理工具，适合清理垃圾文件和管理存储空间
+,adobe-lightroom,picture-photo,design|media|picture-photo,media|picture-photo,com.adobe.Lightroom,照片管理和调色工具，处理 RAW 与批量照片很顺
+,cyberduck,transfer|network-tools,browser|file-management|transfer|utilities,transfer|utilities,null,FTP/SFTP 和云存储客户端，传文件很方便
+,gemini,file-management|system-maintenance,productivity|ai-tools,file-management|utilities|system-enhancement,null,重复和相似文件查找工具，可帮助释放磁盘空间
+,puremac,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,journey,game,utilities|entertainment|game,entertainment|game,null,游戏，适合休闲娱乐和沉浸式体验
+,keepassxc,security,utilities|security,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+,canva,picture-photo|office,productivity|design,productivity|writing|media|picture-photo,com.canva.CanvaDesktop,模板化设计工具，海报、社媒图和演示稿都能快速出图
+,shottr,picture-photo,media|picture-photo|utilities,media|picture-photo,null,截图和标注工具，做产品反馈和视觉说明很利索
+,alfred,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,com.runningwithcrayons.Alfred,老牌效率启动器，搜索、工作流和剪贴板都很强
+,the-unarchiver,file-management,utilities,file-management|utilities,null,轻量解压工具，打开各种压缩包很省事
+,fuse-t,file-management,utilities,file-management|utilities,null,FUSE 文件系统组件，适合让 macOS 挂载和访问扩展文件系统
+,microsoft-word,writing|office,writing,productivity|writing,com.microsoft.Word,经典文字处理器，正式文档和审阅协作都很稳
+,swiftbar,Automation|runtime-sdk,development|utilities|system-enhancement,productivity|development|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,microsoft-excel,office,productivity,productivity|writing,com.microsoft.Excel,表格和数据分析老将，财务、运营和模型都靠它
+,tor-browser,browser|security,browser|utilities|security,browser|security,null,安全工具，适合保护隐私、控制访问或加密数据
+,background-music,audio|Automation,media|audio|utilities|entertainment,productivity|media|audio|system-enhancement,null,按 App 调节音量，还能把系统声音录进工作流
+,kiro-cli,ai-tools|terminal-tools|ide,productivity|development|ai-tools,development|ai-tools,null,把 AI 带进开发流程，适合写代码、调试和自动化
+,microsoft-powerpoint,office,productivity,productivity|writing,com.microsoft.Powerpoint,经典演示工具，商务汇报和课程课件都常用
+,coteditor,ide,development|writing,development,null,针对 macOS 开发的轻量级代码编辑器
+,microsoft-office,office,productivity,productivity|writing,null,办公套件，适合处理文档、表格和演示稿
+,finetune,ai-tools|audio,productivity|media|audio|ai-tools,media|audio|ai-tools,null,AI 音频工具，适合整理、转写或优化声音内容
+,dropbox,transfer,productivity|file-management|transfer|utilities,transfer|utilities,com.getdropbox.dropbox,老牌云同步工具，跨设备和团队共享文件很稳定
+,openmtp,transfer|device-management,file-management|transfer|utilities,transfer|utilities|system-enhancement,null,文件管理工具，适合整理、传输、清理或备份文件
+,raspberry-pi-imager,picture-photo,media|picture-photo|utilities,media|picture-photo,null,树莓派系统写盘工具，制作启动卡很省事
+,font-jetbrains-mono-nerd-font,Font,development|utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,vivaldi,browser,browser|communication,browser,null,邮件客户端，适合集中收发和管理邮箱
+,lulu,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,comfyui,ai-tools|picture-photo,development|media|picture-photo|ai-tools,media|picture-photo|ai-tools,null,节点式 AI 绘图工作流，适合精细控制生成过程
+,epic-games-launcher,game,productivity|entertainment|game,entertainment|game,com.epicgames.EpicGamesLauncher,Epic 游戏启动器，领取、下载和更新游戏都靠它
+,gcc-arm-embedded,device-management,utilities,utilities|system-enhancement,null,ARM 嵌入式开发工具链，适合交叉编译固件
+,perplexity,ai-tools,productivity|entertainment|ai-tools,ai-tools,ai.perplexity.mac,AI 搜索和问答入口，适合快速查资料和追来源
+,libreoffice-language-pack,office,productivity,productivity|writing,null,学习工具，适合查词、学习、参考或教育场景
+,bettertouchtool,device-management|Automation,utilities|system-enhancement,productivity|utilities|system-enhancement,null,macOS 输入增强工具，适合自定义触控板、鼠标和快捷操作
+,helium,utilities,browser,utilities,null,Chromium 内核网页浏览器
+,termius,network-tools|terminal-tools,utilities,development|utilities,null,SSH 客户端，适合管理服务器连接和远程终端会话
+,onyx,system-maintenance,utilities,utilities|system-enhancement,null,macOS 维护工具，适合清理缓存、调整系统选项和排查问题
+,ollama-app,ai-tools,development|ai-tools,ai-tools,null,学习工具，适合查词、学习、参考或教育场景
+,skim,PDF,writing,writing|utilities,null,PDF 阅读和批注工具，适合看论文和做研究标注
+,grandperspective,file-management|system-maintenance,utilities,file-management|utilities|system-enhancement,null,文件管理工具，适合整理、传输、清理或备份文件
+,font-meslo-lg-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,rstudio,ide|runtime-sdk,utilities,development,null,R 语言 IDE，统计分析和数据可视化常用
+,android-file-transfer,transfer|device-management,file-management|transfer|utilities,transfer|utilities|system-enhancement,null,文件管理工具，适合整理、传输或清理文件
+,kicad,3d-cad,productivity|design|utilities|system-enhancement,design,null,开源电路设计工具，画原理图和 PCB 很专业
+,onedrive,transfer,productivity|file-management|transfer|utilities,transfer|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,blackhole-16ch,audio|device-management,media|audio|utilities,media|audio|utilities|system-enhancement,null,多通道虚拟音频驱动，适合复杂录音和直播
+,clipy,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,t3-code,ai-tools,development|ai-tools,ai-tools,null,把 AI 带进开发流程，适合写代码、调试和自动化
+,font-fira-code-nerd-font,Font,development|utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,espanso,Automation,utilities,productivity|system-enhancement,null,文本扩展工具，适合用缩写快速输入常用短语
+,chatgpt-atlas,browser|ai-tools,browser|communication|productivity|ai-tools,browser|ai-tools,null,带 AI 助手的浏览器，边看网页边提问、整理和行动
+,font-hack-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,darktable,picture-photo,productivity|development|media|picture-photo,media|picture-photo,null,开源 RAW 照片处理工具，适合摄影后期
+,font-jetbrains-mono,Font,development|utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,telegram-desktop,communication|security,communication|utilities|security,communication|security,null,沟通工具，适合聊天、邮件、通话或团队交流
+,handy,Automation,utilities,productivity|system-enhancement,null,语音转文字工具，可通过快捷键听写并自动输入文本
+,affinity,picture-photo,design|media|picture-photo,media|picture-photo,null,设计套件入口，适合替代订阅制设计工具
+,unnaturalscrollwheels,device-management,utilities,utilities|system-enhancement,null,鼠标滚轮方向反转工具
+,appcleaner,file-management|system-maintenance,utilities,file-management|utilities|system-enhancement,null,文件管理工具，适合整理、传输、清理或备份文件
+,google-gemini,ai-tools,productivity|ai-tools,ai-tools,null,效率工具，适合文档、记录或日常工作流
+,rar,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,codexbar,ai-tools|Automation|terminal-tools,development|utilities|system-enhancement|ai-tools,productivity|development|system-enhancement|ai-tools,null,菜单栏 AI 编码助手入口，把开发提示放到手边
+,battery,system-maintenance|terminal-tools,utilities,development|utilities|system-enhancement,null,开发者工具，适合命令行、构建、调试或工程管理
+,bambu-studio,Font|ui-prototyping|3d-cad,utilities,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,anythingllm,ai-tools|communication,development|ai-tools,communication|ai-tools,null,把文档和知识库接入 AI 问答，适合私有资料助手
+,cleanshot,picture-photo|system-maintenance,media|picture-photo|utilities,media|picture-photo|utilities|system-enhancement,null,截图、录屏和标注工具，做反馈和教程很利索
+,aionui,ai-tools|terminal-tools,ai-tools,development|ai-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+,keyclu,Automation,utilities|system-enhancement,productivity|system-enhancement,null,专为macOS设计的免费工具，其主要功能是显示当前运行软件的快捷键
+,font-symbols-only-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,coconutbattery,device-management|system-maintenance,utilities,utilities|system-enhancement,null,电池监控工具，适合查看 Mac 和 iOS 设备电池健康
+,adobe-creative-cloud,video|picture-photo,design|media|video|picture-photo,media|video|picture-photo,null,Adobe 全家桶管理器，装插件和更新设计工具都靠它
+,gitkraken,devops,productivity|development,development,null,开发相关工具，适合编程、调试或管理开发环境
+,yubico-authenticator,security,utilities|security,security,null,安全相关工具，适合隐私保护、访问控制或账号防护
+,daisydisk,file-management|system-maintenance,utilities,file-management|utilities|system-enhancement,null,文件管理工具，适合整理、传输、清理或备份文件
+,librecad,Font|ui-prototyping|3d-cad,utilities,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,hiddenbar,system-maintenance,utilities,utilities|system-enhancement,null,编程开发工具，适合编写、阅读和维护代码
+,latest,system-maintenance,utilities,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,snipaste,picture-photo,media|picture-photo|utilities,media|picture-photo,null,截图加贴图工具，适合把参考内容固定在屏幕上
+,capcut,video|audio,design|media|video|picture-photo,media|video|audio,null,轻量视频剪辑工具，做短视频和社媒内容很顺手
+,bbedit,ide,development|writing,development,null,开发相关工具，适合编程、调试或管理开发环境
+,little-snitch,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,charles,network-tools|security,utilities,utilities|security,null,网页抓包代理，调试接口、证书和网络请求很清楚
+,gpg-suite,communication|security,communication|utilities|security,communication|security,null,邮件客户端，适合集中收发和管理邮箱
+,omnidisksweeper,system-maintenance,utilities,utilities|system-enhancement,null,磁盘空间清理工具，适合找出并删除大文件
+,docker-tap-sbx,devops|runtime-sdk,development|utilities|system-enhancement,development,null,容器开发辅助工具，适合本地环境管理
+,font-fira-code,Font,development|utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,kap,video,media|video|utilities,media|video,null,开源录屏工具，快速录制屏幕并导出 GIF 或视频
+,conductor,ai-tools,development|ai-tools,ai-tools,null,把 AI 带进开发流程，适合写代码、调试和自动化
+,zen,browser,browser|utilities|security,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+,mockoon,api-tools,utilities,development,null,API 调试工具，适合测试接口、请求和开发流程
+,proton-mail,communication,communication|productivity,communication,null,重视隐私的邮件客户端，适合安全收发邮件
+,bunch,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,memo,writing,development|writing,writing,null,开发相关工具，适合编程、调试或管理开发环境
+,proton-pass,security,utilities,security,null,密码管理器，适合保存账号、密码和验证码
+,visualvm,system-maintenance|runtime-sdk,utilities,development|utilities|system-enhancement,null,Java 性能分析工具，适合监控、分析和调试 JVM 应用
+,font-source-code-pro,Font,development|utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,devtoys,ide,productivity|development|design|utilities,development,null,开发者小工具箱，编码转换、哈希和格式化一站解决
+,duckduckgo,browser|security,browser|utilities|security,browser|security,null,安全工具，适合保护隐私、控制访问或加密数据
+,plex,video,media|video|entertainment,media|video,null,家庭媒体库中心，把电影、剧集和音乐整理后跨设备播放
+,ubersicht,Automation,utilities|system-enhancement,productivity|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,textmate,ide,development|writing,development,null,著名的文本编辑器，主要用于编写代码和脚本
+,font-sauce-code-pro-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-blex-mono-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,knockknock,security,utilities,security,null,macOS 安全检查工具，适合发现持久化启动项和可疑组件
+,virtualbox,devops,development|utilities,development,null,由德国Innotek公司开发的免费开源虚拟机软件，现由Oracle公司维护
+,salesforce-cli,terminal-tools|devops,utilities,development,null,开发者工具，适合命令行、构建、调试或工程管理
+,font-maple-mono-nf-cn,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,proton-drive,transfer,utilities,transfer|utilities,null,加密云盘客户端，适合同步和保存隐私文件
+,downie,video|transfer,transfer|development|media|video|utilities,transfer|media|video|utilities,null,在线视频下载工具，适合保存课程、演讲和公开素材
+,font-0xproto-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,jd-gui,terminal-tools,utilities,development,null,开发者工具，适合命令行、构建、调试或工程管理
+,finicky,browser,browser|utilities,browser,null,macOS应用程序，能够让用户根据特定规则决定每个网址打开的浏览器
+,webex,Meeting,communication|productivity|media|video,communication|productivity,null,企业级视频会议工具，适合正式远程沟通
+,barrier,device-management,utilities,utilities|system-enhancement,null,键鼠共享工具，适合在多台电脑间共用键盘和鼠标
+,copyq,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,deskflow-tap-deskflow,device-management,utilities,utilities|system-enhancement,null,键鼠共享工具，适合在多台电脑之间共用键盘和鼠标
+,youtube-downloader,video|transfer,transfer|media|video|utilities|system-enhancement|entertainment,transfer|media|video|utilities,null,轻量视频下载工具，适合把在线素材保存到本地
+,font-caskaydia-mono-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,react-native-debugger,api-tools,utilities,development,null,React Native 调试工具，适合检查应用状态和网络请求
+,forklift,transfer,file-management|transfer|utilities,transfer|utilities,null,传输工具，适合下载、同步或在设备间传文件
+,font-droid-sans-mono-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-ubuntu-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,mullvad-browser,browser|security,browser|utilities|security,browser|security,null,安全工具，适合保护隐私、控制访问或加密数据
+,font-go-mono-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,platypus,terminal-tools,utilities,development,null,开发者工具，适合命令行、构建、调试或工程管理
+,claudebar,ai-tools,development|utilities|system-enhancement|ai-tools,ai-tools,null,菜单栏 Claude 入口，随手提问和处理文本更快
+,cryptomator,security|finance,utilities|finance|security,finance|security,null,给云盘文件加密，敏感资料同步前先锁起来
+,reactotron,api-tools,utilities,development,null,应用调试工具，适合调试 React Native 和相关开发流程
+,claude-devtools,ai-tools|api-tools,productivity|development|ai-tools,development|ai-tools,null,把 AI 带进开发流程，适合写代码、调试和自动化
+,font-comic-shanns-mono-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,adguard,security,utilities,security,null,广告拦截和隐私保护工具，适合过滤网页广告和追踪器
+,veracrypt,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,open-webui,ai-tools,development|ai-tools,ai-tools,null,本地 AI 模型网页界面，适合统一管理聊天和模型
+,font-inter,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,lidanglesensor,audio|device-management|Automation,media|audio|utilities|system-enhancement,productivity|media|audio|utilities|system-enhancement,null,读取笔记本开合角度的小工具，适合自动化和硬件实验
+,cleanmymac,system-maintenance,utilities,utilities|system-enhancement,null,Mac 清理维护工具，适合清理垃圾、卸载应用和优化系统
+,repobar,ide,development|utilities|system-enhancement,development,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,zed-preview,ide,development|media|picture-photo|utilities|system,development,null,高性能协作代码编辑器，适合尝鲜新版 Zed 功能
+,mattermost,communication,communication|productivity,communication,null,自部署团队聊天工具，适合重视数据控制的团队
+,kdiff3,devops,development|utilities,development,null,开发相关工具，适合编程、调试或管理开发环境
+,linear,ide,productivity|development,development,null,面向产品和研发团队的问题追踪工具
+,copyclip,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,轻量剪贴板历史工具，常驻菜单栏保存复制记录
+,blackhole-64ch,audio|device-management,media|audio|utilities,media|audio|utilities|system-enhancement,null,高通道虚拟音频驱动，适合专业音频路由
+,rectangle-pro,window-management|Automation,utilities|system-enhancement,productivity|utilities|system-enhancement,null,窗口管理工具，适合用快捷键和布局快速整理窗口
+,flycut,Automation,productivity|development|utilities|system-enhancement,productivity|system-enhancement,null,开源剪贴板历史工具，复制过的文字随时找回来
+,transmit,transfer|network-tools,file-management|transfer|utilities,transfer|utilities,null,经典文件传输客户端，FTP、SFTP 和云端文件管理都很稳
+,miro,Notes,productivity,productivity|writing,null,在线白板，适合头脑风暴、流程图和远程共创
+,jellyfin-media-player,video,media|video|entertainment,media|video,null,媒体工具，适合处理图片、音频或视频内容
+,macos-fuse-t-cask-fuse-t,file-management,utilities,file-management|utilities,null,FUSE 文件系统组件，适合让 macOS 挂载和访问扩展文件系统
+,jan,ai-tools|communication,communication|productivity|ai-tools,communication|ai-tools,null,本地 AI 聊天工具，把模型运行在自己的电脑上
+,wave,terminal-tools,utilities,development,null,终端模拟器，适合命令行开发和日常 Shell 工作
+,microsoft-onenote,Notes,productivity|development|writing,productivity|writing,null,微软笔记本，适合课堂记录、项目资料和手写内容
+,plex-media-server,video,media|video|entertainment,media|video,null,媒体工具，适合处理图片、音频或视频内容
+,mqttx,api-tools,utilities,development,null,MQTT 客户端，适合调试、测试和管理 MQTT 消息连接
+,logitech-g-hub,device-management|devops,development|utilities,development|utilities|system-enhancement,null,开发相关工具，适合编程、调试或管理开发环境
+,rio,terminal-tools,development|utilities,development,null,开发者工具，适合命令行、构建、调试或工程管理
+,geekbench,system-maintenance,utilities,utilities|system-enhancement,null,跨平台基准测试工具，可测试处理器和内存性能
+,apache-directory-studio,database-tools,browser,development,null,开发相关工具，适合编程、调试或管理开发环境
+,pdf-expert,PDF,writing,writing|utilities,null,PDF 阅读、批注和编辑工具，处理合同论文都方便
+,hamed-elfayome-claude-usage-claude-usage-tracker,ai-tools,productivity|ai-tools,ai-tools,null,Claude 相关工具，适合 AI 辅助开发或内容处理
+,yaak,network-tools|Automation,utilities,productivity|utilities|system-enhancement,null,API 客户端，适合调试 HTTP 请求和管理接口工作流
+,openemu,game,media|video|entertainment|game,entertainment|game,null,复古游戏模拟器，把多平台游戏库统一管理起来
+,block-goose,ai-tools,utilities,ai-tools,null,AI 桌面助手，适合在桌面上获得轻量陪伴和提醒
+,powershell-preview,terminal-tools,development|media|picture-photo|utilities|system,development,null,跨平台脚本和命令行管理工具预览版
+,xbar,Automation,utilities|system-enhancement,productivity|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,xmind,Notes,productivity,productivity|writing,null,适合画流程图、结构图或头脑风暴草图
+,draw-things,ai-tools|picture-photo,productivity|development|media|picture-photo|ai-tools,media|picture-photo|ai-tools,null,本地 AI 绘图工具，直接在 Mac 上跑图像生成
+,imazing,device-management,utilities,utilities|system-enhancement,null,iPhone 管理工具，适合备份、传输和管理 iOS 设备数据
+,burp-suite,security,utilities,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,qmk-toolbox,device-management,utilities,utilities|system-enhancement,null,机械键盘固件工具，适合刷写和调试 QMK 固件
+,smcfancontrol,device-management|system-maintenance,utilities,utilities|system-enhancement,null,电池或硬件状态工具，适合查看设备状态并辅助维护
+,zenmap,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,prismlauncher,game,productivity,entertainment|game,null,游戏，适合休闲娱乐和沉浸式体验
+,anytype,security|writing,writing|utilities|security,writing|security,null,本地优先的知识库和资料管理工具，强调隐私和结构化
+,font-d2coding,Font,development|utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,ilspy,terminal-tools,utilities,development,null,开发者工具，适合命令行、构建、调试或工程管理
+,font-caskaydia-cove-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,suspicious-package,Automation,utilities,productivity|system-enhancement,null,安装包检查工具，适合查看 pkg 安装内容和脚本
+,winbox,network-tools|device-management,utilities,utilities|system-enhancement,null,MikroTik 路由器管理工具，适合配置和维护 RouterOS 设备
+,cardinal-search,file-management,browser,file-management|utilities,null,文件管理工具，适合整理、传输或清理文件
+,electerm,transfer|terminal-tools,file-management|transfer|development|utilities,transfer|development|utilities,null,传输工具，适合下载、同步或在设备间传文件
+,gcenx-wine-game-porting-toolkit,game,utilities|entertainment|game,entertainment|game,null,游戏，适合休闲娱乐和沉浸式体验
+,gitbutler,Automation|devops,productivity|development,productivity|development|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,elgato-stream-deck,device-management|Automation,utilities,productivity|utilities|system-enhancement,null,快捷控制面板工具，适合直播、剪辑和自动化操作
+,firefox-developer-edition,browser,browser|development,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+,cameracontroller,device-management,utilities,utilities|system-enhancement,null,图片工具，适合浏览、编辑、转换或管理图片
+,blip,transfer,utilities,transfer|utilities,null,跨设备文件传输工具
+,hyperkey,Automation,utilities,productivity|system-enhancement,null,快捷键增强工具，适合把 Caps Lock 改造成组合修饰键
+,macos-fuse-t-cask-fuse-t-sshfs,file-management,utilities,file-management|utilities,null,FUSE 文件系统组件，适合让 macOS 挂载和访问扩展文件系统
+,disk-drill,system-maintenance,utilities,utilities|system-enhancement,null,数据恢复工具，适合扫描和恢复误删文件
+,font-monaspace,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,sioyek,education|PDF,design|education,writing|utilities|education,null,办公文档工具，适合阅读、编辑或管理文档资料
+,flashspace,window-management,utilities,utilities|system-enhancement,null,虚拟工作区管理工具
+,google-earth-pro,education,utilities|education,education,null,学习工具，适合教育、参考或知识整理
+,istat-menus,system-maintenance,utilities,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,synology-drive,transfer|device-management,transfer|utilities,transfer|utilities|system-enhancement,null,文件管理工具，适合整理、传输、清理或备份文件
+,font-sarasa-gothic,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,sol,Font|ui-prototyping|3d-cad,productivity,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,betterzip,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,coderabbit,ai-tools,development|ai-tools,ai-tools,null,把 AI 带进开发流程，适合写代码、调试和自动化
+,popclip,Automation,utilities,productivity|system-enhancement,null,划词快捷操作工具，可对选中文本快速执行搜索、复制、翻译等动作
+,font-maple-mono-nf,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,reaper,audio,development|media|audio,media|audio,null,专业数字音频工作站，录音、剪辑、编曲和混音都很灵活
+,meshlab,system-maintenance,utilities,utilities|system-enhancement,null,3D 网格处理工具，适合查看、清理和处理三维模型
+,tidal,video|audio,media|video|audio|entertainment,media|video|audio,null,高音质流媒体音乐服务，适合认真听歌的人
+,marta,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,silicon-labs-vcp-driver,device-management,utilities,utilities|system-enhancement,null,
+,cool-retro-term,terminal-tools,development|utilities|system-enhancement,development,null,开发者工具，适合命令行、构建、调试或工程管理
+,openlp,office,productivity,productivity|writing,null,办公文档工具，适合阅读、编辑或管理文档资料
+,slack-cli,communication,communication|productivity,communication,null,用命令行操作 Slack，适合把团队消息接进脚本流程
+,font-iosevka-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,android-ndk,runtime-sdk,development|utilities,development,null,开发相关工具，适合编程、调试或管理开发环境
+,font-maple-mono,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,home-assistant,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,viber,communication|security,communication|utilities|security,communication|security,null,沟通工具，适合聊天、邮件、通话或团队交流
+,jdk-mission-control,window-management|runtime-sdk,utilities|system-enhancement,development|utilities|system-enhancement,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,paseo,ai-tools,development|ai-tools,ai-tools,null,AI 辅助开发工具，适合把模型接进代码工作流
+,dot,communication,communication|productivity|utilities|system-enhancement,communication,null,菜单栏小工具入口，适合把常用动作收得更近
+,dupeguru,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,font-ibm-plex-mono,Font,media|video|utilities|entertainment,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,retroarch,game,browser|media|video|entertainment|game,entertainment|game,null,统一模拟器前端，把复古游戏、核心和手柄配置收一起
+,keyboard-maestro,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,postgres-app,database-tools,utilities,development,null,数据库工具，适合连接、查询和管理数据库
+,hazel,Automation,utilities|system-enhancement,productivity|system-enhancement,null,为 Mac 设计的自动化文件组织工具
+,mediainfo,video|audio,media|video|audio|utilities|system-enhancement,media|video|audio,null,查看媒体文件编码、码率和轨道信息的工具
+,font-iosevka,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,macdroid,device-management|transfer,utilities,transfer|utilities|system-enhancement,null,Android 与 Mac 文件传输工具
+,shortcutdetective,Automation,utilities|system-enhancement,productivity|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,wch-ch34x-usb-serial-driver,device-management,utilities,utilities|system-enhancement,null,
+,gram,ai-tools,development|ai-tools,ai-tools,null,AI 开发工具，适合把智能能力嵌进产品和流程
+,launchcontrol,devops,utilities,development,null,launchd 管理工具，适合创建、编辑和调试启动任务
+,font-cascadia-code,Font|3d-cad,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,lyricsx,audio,media|audio|entertainment,media|audio,null,桌面歌词工具，听歌时同步显示歌词很舒服
+,font-iosevka-term-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,dynamodb-local,database-tools|devops,utilities,development,null,本地 DynamoDB 环境，适合开发和测试 AWS 数据库应用
+,neovide-app,ide,utilities,development,null,编程开发工具，适合编写、阅读和维护代码
+,libreoffice-still,office,productivity,productivity|writing,null,办公文档工具，适合阅读、编辑或管理文档资料
+,font-fira-mono-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,prince,writing,development|writing|utilities,writing,null,办公文档工具，适合阅读、编辑或管理文档资料
+,font-monaspice-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,nrfutil,terminal-tools|runtime-sdk,utilities,development,null,开发者工具，适合命令行、构建、调试或工程管理
+,oracle-jdk,runtime-sdk,utilities,development,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,wpsoffice-cn,office,productivity,productivity|writing,null,效率工具，适合文档、记录或日常工作流
+,font-dejavu,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-d2coding-nerd-font,Font,development|utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-roboto,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,wizcli,terminal-tools,utilities,development,null,开发者工具，适合命令行、构建、调试或工程管理
+,parallels,devops,development|utilities,development,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+,font-geist-mono-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,wpsoffice,office,productivity,productivity|writing,null,办公文档工具，适合阅读、编辑或管理文档资料
+,font-sf-pro,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,longbridge-tap-longbridge-terminal,terminal-tools,development|utilities|system,development,null,
+,font-hackgen-nerd,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,microsoft-openjdk-17,runtime-sdk,utilities,development,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,autodesk-fusion,Font|ui-prototyping|3d-cad,utilities,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,font-noto-sans-cjk-sc,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,xld,audio,utilities,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,malwarebytes,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,font-sf-mono-nerd-font-ligaturized,Font,development|utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-noto-sans-cjk,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-noto-sans,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-ubuntu-mono-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-roboto-mono-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,oracle-jdk-25,runtime-sdk,utilities,development,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,font-geist-mono,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-victor-mono-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,0-ad,game,utilities,entertainment|game,null,游戏，适合休闲娱乐和沉浸式体验
+,font-montserrat,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-inconsolata-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-sf-mono,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-dejavu-sans-mono-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-hack,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-source-sans-3,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-roboto-mono,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,floorp,browser|security,browser,browser|security,null,安全工具，适合保护隐私、控制访问或加密数据
+,1password-cli-beta,security,utilities|security,security,null,命令行密钥和凭据管理工具测试版
+,pluk-inc-tap-markdown-preview,writing,writing|media|picture-photo|utilities|system,writing,null,
+,font-code-new-roman-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-eb-garamond,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,notepadexe,ide,writing,development,null,轻量代码编辑器，适合编写和修改代码
+,ytmdesktop-youtube-music,video|audio,media|video|audio|entertainment,media|video|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,qqmusic,audio,media|audio|entertainment,media|audio,null,视频工具，适合播放、录制、剪辑或转换视频
+,font-zed-mono-nerd-font,Font,development|utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-3270-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-meslo-for-powerlevel10k,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-agave-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,openai-tools-openai,ai-tools|terminal-tools,utilities,development|ai-tools,null,命令行开发工具，适合调用和管理 AI 服务
+,font-pretendard,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-mononoki-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-noto-sans-cjk-kr,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,edouard-claude-tap-snip,ai-tools,productivity|ai-tools,ai-tools,null,Claude 相关工具，适合 AI 辅助开发或内容处理
+,microsoft-openjdk-25,runtime-sdk,utilities,development,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,font-lxgw-wenkai,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,ublue-os-tap-antigravity-linux,ai-tools,development|ai-tools,ai-tools,null,
+,azure-azure-cli-azure-cli-preview,Automation|terminal-tools|devops,media|picture-photo|utilities|system,productivity|development|system-enhancement,null,云资源命令行管理和自动化部署工具预览版
+,font-commit-mono-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-open-sans,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,google-cloud-sdk,terminal-tools|devops|runtime-sdk,utilities,development,null,Google Cloud 命令行工具集，适合管理云资源和部署应用
+,gureumkim,input-tools,utilities,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,font-ibm-plex-sans,Font,media|video|utilities|entertainment,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,1password-tap-1password-cli,security,utilities|security,security,null,
+,font-terminess-ttf-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-space-mono-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-hackgen,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-noto-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-lilex-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-anonymice-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-source-serif-4,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-noto-sans-cjk-jp,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-lato,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-gohufont-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,fontforge-app,Font|ui-prototyping|3d-cad,utilities,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,font-adwaita-mono-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-cousine-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,microsoft-openjdk-21,runtime-sdk,utilities,development,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,mhaeuser-mhaeuser-battery-toolkit,device-management|system-maintenance,utilities,utilities|system-enhancement,null,电池或硬件状态工具，适合查看设备状态并辅助维护
+,app-cleaner,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,font-fontawesome,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-hasklug-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-bigblue-terminal-nerd-font,Font,development|utilities|system,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,oracle-jdk-21,runtime-sdk,utilities,development,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,font-fantasque-sans-mono-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-noto-color-emoji,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,shortcat,device-management,utilities,utilities|system-enhancement,null,设计工具，适合图形、界面、字体或建模相关工作
+,font-inconsolata,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-powerline-symbols,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-opendyslexic-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-hurmit-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,godot-mono,diagramming,development|entertainment|game,design,null,带 C# 支持的 Godot 版本，适合用 .NET 开发游戏
+,font-bitstream-vera-sans-mono-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,font-monofur-nerd-font,Font,utilities,design|utilities,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+,android-sdk-platform-tools,device-management|runtime-sdk,development|utilities,development|utilities|system-enhancement,null,Android 开发工具，适合 adb 调试和设备管理
+,flutter-sdk,runtime-sdk,utilities,development,null,跨平台应用开发工具包，适合构建移动、桌面和 Web 应用
+,android-sdk-command-line-tools,terminal-tools|runtime-sdk,development|utilities,development,null,Android 命令行开发工具，适合构建和调试应用
+,eclipse-temurin-21,terminal-tools|ide|runtime-sdk,utilities,development,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,brave,browser|security,browser|utilities|security,browser|security,null,网页调试和浏览工具，适合开发者检查页面细节
+,eclipse-temurin-8,terminal-tools|ide|runtime-sdk,utilities,development,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,telegram-for-macos,communication|security,communication|utilities|security,communication|security,null,
+,freemacsoft-appcleaner,system-maintenance|ide,development|utilities,development|utilities|system-enhancement,null,应用卸载工具
+,etcher,picture-photo,media|picture-photo|utilities,media|picture-photo,null,系统镜像写盘工具，制作启动 U 盘直观可靠
+,microsoft-build-of-openjdk,runtime-sdk,utilities,development,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,emacs,ide,development|writing,development,null,文本编辑器，适合编辑纯文本、配置和轻量写作
+,eclipse-temurin-11,terminal-tools|ide|runtime-sdk,utilities,development,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,eclipse-temurin-25,terminal-tools|ide|runtime-sdk,utilities,development,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,aws-corretto-jdk,devops|runtime-sdk,utilities,development,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,mozilla-firefox-developer-edition,browser,browser|development,browser,null,面向开发者的 Firefox，网页调试功能更前沿
+,burp-suite-community-edition,security,utilities|security,security,null,Web 安全测试工具包
+,prism-launcher,game,productivity|writing|entertainment|game,entertainment|game,null,Minecraft 启动器，管理模组和多个游戏实例很方便
+,zed-attack-proxy,api-tools,development|utilities,development,null,
+,wch-usb-serial-driver-for-ch340-ch341-ch342-ch343-ch344-ch9101-ch9102-ch9103-ch9143,device-management,utilities,utilities|system-enhancement,null,
+,amazon-corretto-jdk,runtime-sdk,utilities,development,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,macvim,ide,development|writing,development,null,文本编辑器，适合编辑纯文本、配置和轻量写作
+,teleport-tsh,communication,communication|productivity,communication,null,Teleport 命令行入口，适合安全登录服务器和集群
+,malwarebytes-for-mac,security,utilities|security,security,null,
+,floorp-browser,browser,browser|utilities|security,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+,youtube-music-desktop-app,audio,media|audio|entertainment,media|audio,null,YouTube Music 桌面封装，听歌时不用一直开浏览器
+,opensc,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,sproutcube-shortcat,Automation|device-management,utilities|system-enhancement,productivity|utilities|system-enhancement,null,无需鼠标的界面操作工具
+,heroic-games-launcher,game,productivity|entertainment|game,entertainment|game,null,GOG、Epic 等游戏库的开源启动器，跨平台管理更轻
+,nektony-app-cleaner-and-uninstaller,file-management|system-maintenance,utilities,file-management|utilities|system-enhancement,null,应用卸载和清理助手
+,freetube,security|entertainment,utilities|entertainment|security,entertainment|security,null,安全工具，适合保护隐私、控制访问或加密数据
+,eclipse-memory-analyzer,system-maintenance,utilities,utilities|system-enhancement,null,Java 堆内存分析工具
+,adobe-acrobat-pro-dc,writing,design|writing,writing,null,
+,gpg-suite-without-gpg-mail,communication|security,communication|utilities|security,communication|security,null,
+,bleunlock,device-management,utilities,utilities|system-enhancement,null,通过蓝牙低功耗设备距离锁定或解锁 Mac 的工具
+,segger-j-link-command-line-tools,writing|terminal-tools,writing,development|writing,null,
+,qutebrowser,browser,browser|development|utilities|system-enhancement,browser,null,键盘驱动的浏览器，适合喜欢 Vim 操作的人
+,jumpcut,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,剪贴板管理器，适合保存和找回复制历史
+,netron,ai-tools,education,ai-tools,null,学习工具，适合查词、学习、参考或教育场景
+,notepad-exe,ide,development|writing,development,null,轻量级代码编辑器
+,wifiman-desktop,network-tools,utilities|system-enhancement,utilities,null,
+,disk-inventory-x,file-management|system-maintenance,utilities,file-management|utilities|system-enhancement,null,磁盘空间分析工具，适合查看和清理空间占用
+,ollamac,ai-tools,development|ai-tools,ai-tools,null,Ollama 的 Mac 客户端，管理本地模型和聊天更直观
+,neohtop,system-maintenance,utilities,utilities|system-enhancement,null,高级系统监控工具
+,dash,writing|api-tools,browser|writing,development|writing,null,API 调试工具，适合测试接口、请求和开发流程
+,topnotch,window-management|system-maintenance|ide,utilities|system-enhancement,development|utilities|system-enhancement,null,编程开发工具，适合编写、阅读和维护代码
+,moom,communication|window-management,communication|productivity|utilities|system-enhancement,communication|utilities|system-enhancement,null,窗口管理工具，快速排列和保存窗口布局
+,mountain-duck,transfer,file-management|transfer|utilities,transfer|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,tower,devops,productivity|development,development,null,开发相关工具，适合编程、调试或管理开发环境
+,folo,writing,browser,writing,null,效率工具，适合文档、记录或日常工作流
+,iterm2-browser-plugin,browser,browser|development,browser,null,网页调试和浏览工具，适合开发者检查页面细节
+,ente-auth,security,utilities,security,null,双因素验证码桌面客户端
+,ukelele,input-tools,design|utilities|system-enhancement,utilities|system-enhancement,null,键盘布局编辑器，适合自定义输入法和键位
+,vimr,ide,development|writing,development,null,编程开发工具，适合编写、阅读和维护代码
+,keystore-explorer,terminal-tools,utilities,development,null,开发者工具，适合命令行、构建、调试或工程管理
+,plexamp,audio,media|audio|entertainment,media|audio,null,Plex 音乐播放器，适合管理和播放自己的音乐库
+,chrome-remote-desktop,network-tools,browser|utilities,utilities,null,通过 Chrome 远程访问其他电脑的工具
+,logisim-evolution,Font|ui-prototyping|3d-cad|diagramming,development|design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,logitune,communication|device-management,communication|productivity|development|media|video|utilities|system-enhancement,communication|utilities|system-enhancement,null,管理罗技摄像头和耳机，开会前调设备很方便
+,klogg,system-maintenance,utilities,utilities|system-enhancement,null,快速高级日志查看工具
+,klayout,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,microsoft-office-businesspro,office,productivity,productivity|writing,null,办公套件，适合处理文档、表格和演示稿
+,notion-mail,communication|Notes,productivity|writing,communication|productivity|writing,null,Notion 风格邮件工具，适合把邮件变成可整理的信息流
+,gitify,devops,development|utilities|system-enhancement,development,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,clop,video|picture-photo,productivity|media|video|picture-photo|utilities|system-enhancement,media|video|picture-photo,null,自动压缩图片、视频和 PDF，拖进去就能瘦身文件
+,weasis,picture-photo,media|picture-photo|utilities|system-enhancement,media|picture-photo,null,医学影像 DICOM 查看器，适合浏览和分析医疗影像
+,asset-catalog-tinkerer,picture-photo,media|picture-photo|utilities,media|picture-photo,null,查看和导出 Xcode 资源目录，处理 App 素材很方便
+,keybase,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,digikam,picture-photo,development|media|picture-photo,media|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+,affinity-photo-2,picture-photo,design|media|picture-photo,media|picture-photo,null,专业修图工具，适合照片编辑、合成和精细调色
+,maczip,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,soulseek,transfer,utilities,transfer|utilities,null,文件分享网络客户端
+,keka-external-helper,file-management,utilities,file-management|utilities,null,Keka 压缩工具辅助应用
+,timemachineeditor,transfer,transfer|utilities|system,transfer|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,teleport-connect,ide,browser|development,development,null,网页调试和浏览工具，适合开发者检查页面细节
+,youtube-music,audio,media|audio|entertainment,media|audio,null,YouTube 音乐客户端，适合听歌、歌单和音乐视频
+,macpass,security,utilities|security,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+,apache-openoffice,office,productivity,productivity|writing,null,
+,steermouse,device-management,development|utilities|system-enhancement,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,msty,ai-tools,utilities|ai-tools,ai-tools,null,多模型 AI 客户端，适合统一管理本地和云端模型
+,batfi,system-maintenance,utilities,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,nodebox,Font|ui-prototyping|3d-cad|diagramming,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,playonmac,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,glance,picture-photo,media|picture-photo|utilities,media|picture-photo,null,Quick Look 扩展，让代码、图片和文档预览更好用
+,wifi-explorer,network-tools,utilities|system-enhancement,utilities,null,Wi-Fi 扫描、监控和排障工具
+,cinebench,device-management|system-maintenance,utilities,utilities|system-enhancement,null,硬件基准测试工具
+,veracrypt-fuse-t,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,datadog-agent,security,utilities|system-enhancement|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,easyfind,file-management,utilities,file-management|utilities,null,文件、文件夹和全文搜索工具
+,fuse-studio,file-management,utilities,file-management|utilities,null,FUSE 文件系统组件，适合让 macOS 挂载和访问扩展文件系统
+,qflipper,device-management,utilities,utilities|system-enhancement,null,Flipper Zero 配套应用
+,windterm,transfer|terminal-tools,file-management|transfer|development|utilities,transfer|development|utilities,null,开发者工具，适合命令行、构建、调试或工程管理
+,camunda-modeler,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,awa,audio,media|audio|entertainment,media|audio,null,日本流媒体音乐服务，适合听歌和发现日系音乐
+,pdfsam-basic,PDF,development|writing|utilities,writing|utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+,teleport,communication,communication|productivity,communication,null,沟通工具，适合消息、邮件、通话或团队交流
+,vysor,network-tools|device-management,utilities,utilities|system-enhancement,null,手机投屏和控制工具
+,freeplane,Notes,productivity,productivity|writing,null,效率工具，适合文档、记录或日常工作流
+,uninstallpkg,system-maintenance,utilities,utilities|system-enhancement,null,PKG 软件包卸载工具
+,clipgrab,video|transfer,transfer|media|video|audio|utilities,transfer|media|video|utilities,null,在线视频下载工具，适合保存公开视频素材
+,keeper-password-manager,security,development|utilities|security,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+,opcode,ai-tools,development|ai-tools,ai-tools,null,设计工具，适合图形、界面、字体或建模相关工作
+,macsyzones,window-management,utilities,utilities|system-enhancement,null,窗口管理工具
+,adobe-digital-editions,devops,development|design,development,null,办公文档工具，适合阅读、编辑或管理文档资料
+,brave-nightly,browser|security,browser|utilities|security,browser|security,null,网页浏览器，适合日常上网和访问 Web 服务
+,brave-beta,browser|security,browser|utilities|security,browser|security,null,网页浏览器，适合日常上网和访问 Web 服务
+,openchamber,ai-tools,development|ai-tools,ai-tools,null,开发相关工具，适合编程、调试或管理开发环境
+,androidtool,device-management,utilities,utilities|system-enhancement,null,iOS 和 Android 设备录屏与应用安装工具
+,notesnook,security|writing,writing|utilities|security,writing|security,null,适合写作、记录和处理文档
+,yandex-cloud-cli,terminal-tools|devops,utilities,development,null,开发者工具，适合命令行、构建、调试或工程管理
+,opera-gx,browser|entertainment,browser|entertainment|game,browser|entertainment,null,网页浏览器，适合日常上网和访问 Web 服务
+,vibetunnel,terminal-tools,browser|development,development,null,把本地开发服务安全暴露出去，方便远程预览和调试
+,lastpass,security,utilities|security,security,null,密码管理器，适合保存账号、密码和敏感信息
+,luanti,game,media|audio|entertainment|game,entertainment|game,null,开源方块沙盒游戏平台，适合玩和制作类 Minecraft 世界
+,electrum,security|finance,utilities|finance|security,finance|security,null,轻量比特币钱包，适合管理和签署 BTC 交易
+,paste,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,box-drive,transfer,file-management|transfer|utilities,transfer|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,projectlibre,GTD,browser,productivity,null,效率工具，适合文档、记录或日常工作流
+,wacom-tablet,device-management,utilities,utilities|system-enhancement,null,
+,devcleaner,ide,development|utilities,development,null,开发相关工具，适合编程、调试或管理开发环境
+,cavalry,Font|ui-prototyping|3d-cad|diagramming,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,nrf-command-line-tools,terminal-tools,utilities,development,null,
+,caido,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,standard-notes,security|writing,writing|utilities|security,writing|security,null,端到端加密笔记工具，适合保存私密文字和资料
+,mediahuman-youtube-to-mp3-converter,audio|transfer,transfer|media|audio|utilities|entertainment,transfer|media|audio|utilities,null,把在线视频转成 MP3，适合保存音乐和播客音频
+,modrinth-app,game,writing|entertainment|game,entertainment|game,null,游戏，适合休闲娱乐和沉浸式体验
+,bluetility,device-management,browser,utilities|system-enhancement,null,蓝牙低功耗设备浏览工具
+,stash,security,utilities|security,security,null,安全相关工具，适合隐私保护、访问控制或账号防护
+,ace-link,video,media|video|utilities|system-enhancement,media|video,null,视频工具，适合播放、录制、剪辑或转换视频
+,vanilla,window-management|system-maintenance|ide,utilities|system-enhancement,development|utilities|system-enhancement,null,编程开发工具，适合编写、阅读和维护代码
+,strawberry,audio,browser|media|picture-photo|ai-tools,media|audio,null,网页浏览器，适合日常上网和访问 Web 服务
+,utools,Automation,productivity,productivity|system-enhancement,null,高效的工作助手，结合了人工智能技术，为用户提供一个多功能的入口
+,spacedrive,file-management,utilities,file-management|utilities,null,开源跨平台文件管理器
+,pdf-squeezer,PDF,utilities,writing|utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+,qobuz,audio,transfer|media|audio|utilities|entertainment,media|audio,null,高解析音乐服务，适合认真听歌和管理高音质曲库
+,rustcast,Automation,productivity|utilities,productivity|system-enhancement,null,效率工具，适合文档、记录或日常工作流
+,kubecontext,Automation|devops,development|utilities|system-enhancement,productivity|development|system-enhancement,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+,swiftdialog,communication|terminal-tools|runtime-sdk,communication|development|utilities,communication|development,null,开发者工具，适合命令行、构建、调试或工程管理
+,spotmenu,audio|system-maintenance,media|audio|utilities|system-enhancement|entertainment,media|audio|utilities|system-enhancement,null,菜单栏 Spotify 控制器，当前播放和切歌都更顺手
+,textsniper,writing|picture-photo,development|writing|media|picture-photo|utilities,writing|media|picture-photo,null,截图识别文字工具，屏幕上的文字可以一键复制
+,megacmd,terminal-tools,utilities,development,null,开发者工具，适合命令行、构建、调试或工程管理
+,burp-suite-professional,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,prolific-usb-to-serial-cable-driver,device-management,utilities,utilities|system-enhancement,null,
+,webviewscreensaver,writing,writing|utilities|system-enhancement,writing,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,ea-app,game,productivity|entertainment|game,entertainment|game,null,游戏，适合休闲娱乐和沉浸式体验
+,rwts-pdfwriter,PDF|Notes,writing|utilities,productivity|writing|utilities,null,写作和笔记工具，适合记录、编辑和整理文本内容
+,open-video-downloader,video|transfer,transfer|media|video|utilities|entertainment,transfer|media|video|utilities,null,开源视频下载器，适合保存公开视频素材
+,macpacker,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,keepassx,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,notchi,ai-tools|window-management|system-maintenance,development|utilities|system-enhancement|ai-tools,utilities|system-enhancement|ai-tools,null,刘海区域美化工具，让菜单栏视觉更有趣
+,vuescan,device-management,utilities,utilities|system-enhancement,null,扫描仪驱动和扫描软件，常用于支持旧款扫描仪
+,finalshell,terminal-tools|devops,development|utilities,development,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+,processing,education,design|education,education,null,学习工具，适合查词、学习、参考或教育场景
+,music-presence,video|audio,communication|media|video|audio,media|video|audio,null,把正在播放的音乐同步到状态，适合展示听歌动态
+,synology-assistant,device-management,utilities,utilities|system-enhancement,null,局域网 Synology NAS 管理工具
+,devonthink,PDF|Notes,writing,productivity|writing|utilities,null,个人知识资料库，适合收纳 PDF、网页和研究材料
+,elgato-wave-link,device-management,utilities,utilities|system-enhancement,null,面向内容创作的音频控制软件
+,katrain,game,entertainment|game|ai-tools,entertainment|game,null,游戏，适合休闲娱乐和沉浸式体验
+,xca,security,utilities,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,graphql-playground,api-tools,productivity|development,development,null,编程开发工具，适合编写、阅读和维护代码
+,insta360-link-controller,device-management,utilities,utilities|system-enhancement,null,视频工具，适合播放、录制、剪辑或转换视频
+,safari-technology-preview,browser,browser|media|picture-photo,browser,null,网页浏览器，适合日常上网、访问网页和使用 Web 服务
+,nordpass,security,utilities|security,security,null,密码管理器，适合保存账号、密码和敏感信息
+,zoom-for-it-admins,Meeting,communication|productivity|media|video,communication|productivity,null,给 IT 管理员部署 Zoom，批量配置会议客户端更方便
+,ftdi-vcp-driver,device-management,utilities,utilities|system-enhancement,null,
+,connectmenow,file-management,utilities,file-management|utilities,null,快速挂载网络共享的工具
+,enpass,security,utilities|security,security,null,安全相关工具，适合隐私保护、访问控制或账号防护
+,heynote,writing,development|writing,writing,null,开发相关工具，适合编程、调试或管理开发环境
+,transnomino,file-management,utilities,file-management|utilities,null,批量重命名工具
+,bose-device-updater,device-management,utilities,utilities|system-enhancement,null,Bose 产品固件更新工具
+,doxygen,ide|runtime-sdk,development|writing,development,null,编程开发工具，适合编写、阅读和维护代码
+,elgato-control-center,device-management,utilities,utilities|system-enhancement,null,Elgato 灯光控制工具
+,sunlogin-client,network-tools,utilities|system-enhancement,utilities,null,远程桌面控制和监控工具
+,desktoppr,picture-photo|terminal-tools,media|picture-photo,development|media|picture-photo,null,开发者工具，适合命令行、构建、调试或工程管理
+,tabula,GTD,utilities,productivity,null,编程开发工具，适合编写、阅读和维护代码
+,piclist,transfer,file-management|transfer|utilities,transfer|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,miktex,system,system,utilities|system,null,TeX 发行版管理工具
+,a-better-finder-rename,file-management,file-management|media|audio|picture-photo|utilities,file-management|utilities,null,批量重命名工具，整理照片和文件特别省时间
+,updf,PDF,utilities,writing|utilities,null,PDF 编辑工具，适合编辑、标注和处理 PDF 文档
+,clipbook,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,clockify,GTD,utilities,productivity,null,效率管理工具，适合安排任务、日程或跟踪时间
+,hp-easy-start,device-management,utilities,utilities|system-enhancement,null,HP 打印机设置工具
+,launchie,Automation,utilities,productivity|system-enhancement,null,快速高效的应用启动器，专为macOS用户设计，旨在提升工作流程的效率
+,actual,finance,utilities|finance,finance,null,本地优先的预算记账工具，适合认真管理个人现金流
+,json-viewer,ide,utilities,development,null,JSON 数据可视化、校验和格式化工具
+,shapr3d,Font|ui-prototyping|3d-cad,utilities,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,dropzone,Automation,productivity,productivity|system-enhancement,null,效率工具，适合文档、记录或日常工作流
+,plistedit-pro,ide,utilities,development,null,plist 和 JSON 编辑器
+,winzip,file-management,utilities,file-management|utilities,null,文件压缩归档工具
+,trezor-suite,finance|device-management,utilities|finance,utilities|system-enhancement|finance,null,Trezor 硬件钱包管理器，安全查看和签署交易
+,aliyundrive,transfer,file-management|transfer|utilities,transfer|utilities,null,智能云存储客户端
+,pocket-casts,audio,media|audio|entertainment,media|audio,null,播客客户端，订阅、收听和同步节目都很顺
+,kando,Automation,utilities,productivity|system-enhancement,null,开源环形菜单启动器，用于快速执行应用和系统操作
+,min,browser|security,browser|utilities|security,browser|security,null,安全工具，适合保护隐私、控制访问或加密数据
+,qqlive,video,media|video|entertainment,media|video,null,视频工具，适合播放、录制、剪辑或转换视频
+,t3-code-nightly,ai-tools,development|ai-tools,ai-tools,null,AI 代码智能体轻量图形界面
+,contexts,window-management,utilities,utilities|system-enhancement,null,应用窗口切换工具
+,whatsize,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,derivative-touchdesigner,ide,development|design,development,null,动态数字艺术创作工具
+,vibe-island,ai-tools,utilities|ai-tools,ai-tools,null,动态岛 AI 智能体工具
+,elgato-camera-hub,device-management,utilities,utilities|system-enhancement,null,
+,pieces,picture-photo,productivity|media|picture-photo,media|picture-photo,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,quicksilver,Automation,productivity,productivity|system-enhancement,null,效率工具，适合文档、记录或日常工作流
+,enjoyable,device-management,utilities|system-enhancement|entertainment|game,utilities|system-enhancement,null,手柄映射工具，把游戏控制器变成键盘鼠标输入
+,tuxera-ntfs,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,nutstore,transfer,file-management|transfer|utilities,transfer|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,nuclear,audio,media|audio|entertainment,media|audio,null,开源音乐播放器，从多个在线来源聚合音乐
+,wox,Automation,productivity,productivity|system-enhancement,null,效率工具，适合文档、记录或日常工作流
+,fontbase,Font,utilities,design|utilities,null,适合管理字体、预览字形和整理设计字库
+,istat-server,file-management|system-maintenance,file-management|utilities,file-management|utilities|system-enhancement,null,文件管理工具，适合整理、传输或清理文件
+,mythic,game,productivity|entertainment|game,entertainment|game,null,游戏，适合休闲娱乐和沉浸式体验
+,yubiswitch,security,utilities,security,null,Yubikey Nano 开关菜单栏工具
+,auto-claude,ai-tools,development|ai-tools,ai-tools,null,开发相关工具，适合编程、调试或管理开发环境
+,lyric-fever,audio,media|audio|entertainment,media|audio,null,动态歌词显示工具，让听歌时的歌词更醒目
+,djview,picture-photo,browser,media|picture-photo,null,媒体工具，适合处理图片、音频或视频内容
+,silentknight,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,nvidia-nsight-systems,ide,utilities,development,null,编程开发工具，适合编写、阅读和维护代码
+,shichizip,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,stay,window-management,utilities,utilities|system-enhancement,null,
+,classicftp,transfer,file-management|transfer|utilities,transfer|utilities,null,传输工具，适合下载、同步或在设备间传文件
+,macx-youtube-downloader,video|transfer,transfer|media|video|utilities|entertainment,transfer|media|video|utilities,null,YouTube 视频下载工具，适合保存公开视频素材
+,xcodepilot,ide,productivity|development,development,null,开发相关工具，适合编程、调试或管理开发环境
+,polypane,browser,browser|development,browser,null,网页调试和浏览工具，适合开发者检查页面细节
+,launchbar,Automation,productivity,productivity|system-enhancement,null,效率工具，适合文档、记录或日常工作流
+,etrecheck,system-maintenance,utilities,utilities|system-enhancement,null,系统问题检测和修复工具
+,fvim,ide,development|writing,development,null,编程开发工具，适合编写、阅读和维护代码
+,yandex-disk,transfer,file-management|transfer|utilities,transfer|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,netiquette,network-tools,utilities|system-enhancement,utilities,null,网络监控工具，适合查看连接状态和排查网络问题
+,exifcleaner,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,4k-youtube-to-mp3,audio,entertainment,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,music-decoy,audio|Automation,media|audio|utilities,productivity|media|audio|system-enhancement,null,音乐占位工具，适合配合媒体键和播放状态工作流
+,clibor-for-mac,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,
+,1clipboard,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,langflow-desktop,ai-tools|GTD,productivity|development|ai-tools,productivity|ai-tools,null,可视化搭建 AI 工作流，把模型、工具和数据连起来
+,crosspaste,Automation,utilities,productivity|system-enhancement,null,跨设备通用剪贴板工具
+,avg-antivirus-for-mac,security,utilities,security,null,
+,eltima-cloudmounter,transfer,file-management|transfer|utilities,transfer|utilities,null,将云存储挂载为本地磁盘的工具
+,jupyter-notebook-viewer,writing,writing|utilities,writing,null,办公文档工具，适合阅读、编辑或管理文档资料
+,butler,Automation,productivity,productivity|system-enhancement,null,效率工具，适合文档、记录或日常工作流
+,mumble,communication,communication|entertainment|game,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+,yattee,security|entertainment,utilities|entertainment|security,entertainment|security,null,安全工具，适合保护隐私、控制访问或加密数据
+,agentsview,ai-tools,development|ai-tools,ai-tools,null,开发相关工具，适合编程、调试或管理开发环境
+,mac-media-key-forwarder,audio,media|audio|entertainment,media|audio,null,把媒体键转发给指定播放器，控制音乐更稳定
+,nimbalyst,ai-tools,development|ai-tools,ai-tools,null,开发相关工具，适合编程、调试或管理开发环境
+,framer,communication|ui-prototyping,communication|productivity|design,communication|design,null,交互原型和网站设计工具，适合把想法快速做成可体验页面
+,lunarbar,communication|window-management,communication|productivity|utilities|system-enhancement,communication|utilities|system-enhancement,null,菜单栏月相工具，适合快速查看月亮状态和天文节律
+,hapigo,Automation,productivity,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,master-pdf-editor,PDF,utilities,writing|utilities,null,PDF 编辑工具，适合编辑、标注和处理 PDF 文档
+,atuin-desktop,terminal-tools,productivity|development,development,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,rive,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,wirecast,video,media|video|entertainment,media|video,null,视频工具，适合播放、录制、剪辑或转换视频
+,salt,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,au-lab,audio,development|media|audio,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,idevice-pair,device-management,utilities,utilities|system-enhancement,null,iOS 设备配对记录生成工具
+,maintenance,system-maintenance,utilities,utilities|system-enhancement,null,系统维护和清理工具
+,namechanger,file-management,utilities,file-management|utilities,null,批量文件重命名工具
+,snes9x,game,media|video|system|entertainment|game,entertainment|game,null,Super Nintendo 模拟器，适合重温经典主机游戏
+,nordlayer,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,qt-design-studio,Font|ui-prototyping|3d-cad,development|design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,stability-matrix,ai-tools|communication,communication|development|ai-tools,communication|ai-tools,null,设计工具，适合图形、界面、字体或建模相关工作
+,blockbench,Font|ui-prototyping|3d-cad,utilities,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,siliconmotion-instantview,device-management,utilities,utilities|system-enhancement,null,SM76x 驱动和图形界面
+,filen,file-management,utilities,file-management|utilities,null,云存储桌面客户端
+,8bitdo-ultimate-software,device-management,utilities,utilities|system-enhancement,null,游戏手柄配置工具
+,network-radar,network-tools,utilities|system-enhancement,utilities,null,网络扫描和监控工具
+,appvolume,audio,utilities,media|audio,null,媒体工具，适合处理图片、音频或视频内容
+,ubiquiti-unifi-network-controller,device-management,utilities,utilities|system-enhancement,null,
+,manus,ai-tools,productivity|ai-tools,ai-tools,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,transfer,transfer,file-management|transfer|utilities,transfer|utilities,null,为Mac设计的多协议文件服务器，现代且可靠
+,ubar,window-management,productivity|utilities|system-enhancement,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,browserstack-local-testing,browser|devops|api-tools,browser,browser|development,null,网页浏览器，适合日常上网和访问 Web 服务
+,forecast,audio,media|audio|entertainment,media|audio,null,播客章节编辑工具，给音频节目加章节和元数据
+,figma-agent,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,pacifist,picture-photo,media|picture-photo|utilities,media|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+,lunacy,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,foxit-pdf-editor,PDF,utilities,writing|utilities,null,PDF 编辑器，适合修改、批注、签署和整理 PDF
+,pdfify,PDF,utilities,writing|utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+,focusrite-control,device-management,utilities,utilities|system-enhancement,null,第四代及更新 Focusrite 声卡控制工具
+,replacicon,picture-photo,media|picture-photo|utilities,media|picture-photo,null,针对macOS的应用程序，旨在帮助用户轻松找到和更换Mac应用图标
+,avast-security,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,qnap-qfinder-pro,file-management|device-management,file-management|utilities,file-management|utilities|system-enhancement,null,NAS 管理工具
+,uefitool,picture-photo,media|picture-photo|utilities,media|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+,menial-base,database-tools,development|design,development,null,SQLite 3 数据库创建、设计和浏览工具
+,imazing-profile-editor,device-management,utilities,utilities|system-enhancement,null,Apple 设备配置描述文件编辑器
+,netflix,video,browser|entertainment,media|video,null,影音流媒体桌面客户端
+,textexpander,Automation,utilities,productivity|system-enhancement,null,文本片段扩展工具
+,k6-studio,Automation,utilities,productivity|system-enhancement,null,k6 测试脚本生成工具
+,cleanmymac-x-chinese,system-maintenance,utilities,utilities|system-enhancement,null,磁盘垃圾清理工具中文版
+,dadroit-json-viewer,ide,utilities,development,null,JSON 查看器
+,threema,communication|security,communication|utilities|security,communication|security,null,端到端加密即时通讯工具，适合安全聊天
+,airdroid,device-management,utilities,utilities|system-enhancement,null,移动设备管理套件
+,signal-beta,communication|security,communication|utilities|security,communication|security,null,注重安全的即时通讯应用
+,lunar-client,game,writing|entertainment|game,entertainment|game,null,游戏，适合休闲娱乐和沉浸式体验
+,hovrly,ide,development|utilities|system-enhancement,development,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,brew-services-menubar,window-management|system-maintenance,utilities,utilities|system-enhancement,null,
+,clamxav,security,utilities,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,container-ps,Automation|devops,development|media|picture-photo|utilities|system-enhancement,productivity|development|system-enhancement,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+,nook,GTD,browser|design,productivity,null,专注式浏览器工作区，适合把网页资料按项目整理
+,prettyclean,system-maintenance,utilities,utilities|system-enhancement,null,易用磁盘清理工具
+,apptamer,system-maintenance,utilities,utilities|system-enhancement,null,CPU 资源管理工具
+,thor,Automation,utilities,productivity|system-enhancement,null,应用快速切换工具
+,livebook,writing,development|writing,writing,null,办公文档工具，适合阅读、编辑或管理文档资料
+,adobe-creative-cloud-cleaner-tool,file-management,design|utilities,file-management|utilities,null,清理 Adobe 安装残留，修复 Creative Cloud 玄学问题
+,fleet,ide,development|writing,development,null,编程开发工具，适合编写、阅读和维护代码
+,fldigi,audio,development|media|audio,media|audio,null,开发相关工具，适合编程、调试或管理开发环境
+,fathom,ai-tools|Meeting,communication|productivity|media|video,communication|productivity|ai-tools,null,AI 会议记录工具，自动生成纪要和行动项
+,keycue,Automation|device-management,utilities|system-enhancement,productivity|utilities|system-enhancement,null,用于macOS的实用软件，它可以帮助用户更轻松地找到和使用键盘快捷键
+,rode-central,device-management,utilities,utilities|system-enhancement,null,RØDE 设备配套应用
+,tikzit,Font|ui-prototyping|3d-cad|diagramming,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,qtpass,security,utilities|security,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+,pdf-images,picture-photo|PDF,media|picture-photo,writing|media|picture-photo|utilities,null,
+,gaphor,ui-prototyping|diagramming,utilities,design,null,设计工具，适合图形、界面或视觉创作
+,activedock,window-management,productivity|utilities|system-enhancement,utilities|system-enhancement,null,Dock 替代工具，提供窗口预览和应用管理增强
+,gpgfrontend,security|finance,utilities|finance|security,finance|security,null,GPG 图形界面，适合加密、签名和管理密钥
+,fontgoggles,Font|ui-prototyping|3d-cad,utilities,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,restic-browser,browser|security,browser|transfer|utilities,browser|security,null,设计工具，适合图形、界面、字体或建模相关工作
+,mountmate,system-maintenance,utilities,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,stoplight-studio,writing,design|writing,writing,null,API 调试工具，适合测试接口、请求和开发流程
+,mission-control-plus,window-management,utilities,utilities|system-enhancement,null,Mission Control 窗口管理工具
+,sonobus,audio,media|audio|entertainment,media|audio,null,低延迟网络音频工具，远程合奏和实时传声很实用
+,yubikey-manager,security,utilities|security,security,null,
+,fx-cast-bridge,video,browser,media|video,null,媒体工具，适合处理图片、音频或视频内容
+,izip,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,ibm-semeru-runtime-jdk-8-open-edition,runtime-sdk,utilities,development,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,oka-unarchiver,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,ios-app-signer,security,utilities,security,null,iOS 应用重签名和打包工具
+,scrapp,picture-photo|transfer,file-management|transfer|media|picture-photo|utilities,transfer|media|picture-photo|utilities,null,适合截图、标注、识别文字或制作视觉反馈
+,mousepose,device-management,development|utilities|system-enhancement,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,viz,video|picture-photo,media|video|picture-photo|utilities,media|video|picture-photo,null,轻量图像查看工具，适合快速翻看图片素材
+,airtable,ide,productivity|development,development,null,沟通工具，适合聊天、邮件、通话或团队交流
+,mochi-diffusion,ai-tools,development|ai-tools,ai-tools,null,开发相关工具，适合编程、调试或管理开发环境
+,realm-studio,ai-tools|database-tools,development|utilities|ai-tools,development|ai-tools,null,Realm 数据库查看工具，适合调试移动端本地数据
+,protopie,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,surge-xt,security,utilities|security,security,null,安全相关工具，适合隐私保护、访问控制或账号防护
+,vibeproxy,ai-tools|Automation,development|utilities|system-enhancement|ai-tools,productivity|system-enhancement|ai-tools,null,AI 开发代理工具，适合把模型接进本地工作流
+,serverbox,transfer|network-tools|devops,file-management|transfer|development|utilities|system-enhancement,transfer|development|utilities,null,带 SSH、SFTP 和容器管理的服务器监控工具
+,wakatime,GTD,utilities,productivity,null,效率管理工具，适合安排任务、日程或跟踪时间
+,systhist,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,focusrite-control-2,device-management,utilities,utilities|system-enhancement,null,
+,memory-cleaner,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输或清理文件
+,garmin-connect-iq-sdk,runtime-sdk,utilities,development,null,可穿戴设备应用开发工具
+,paletro,diagramming,utilities,design,null,macOS 应用，提供快速访问当前使用应用菜单命令的功能
+,sidekick,browser,browser|design,browser,null,工作流浏览器，适合把常用 SaaS 和网页应用放一起
+,tabtab,transfer,utilities,transfer|utilities,null,专为Mac设计的强大窗口和标签页管理工具，旨在提升用户生产力
+,dangerzone,PDF,productivity|writing,writing|utilities,null,把可疑文档转成安全 PDF，适合处理不可信附件
+,canon-eos-utility,device-management,utilities,utilities|system-enhancement,null,沟通工具，适合聊天、邮件、通话或团队交流
+,machoview,ide,browser|file-management|utilities,development,null,开发相关工具，适合编程、调试或管理开发环境
+,webex-meetings,Meeting,communication|productivity|media|video,communication|productivity,null,Webex 会议客户端，适合企业远程会议和线上沟通
+,weka,ai-tools|education,productivity|education,education|ai-tools,null,机器学习教学和实验工具，拖拽就能做数据挖掘
+,ff-works,video,development|media|video,media|video,null,开发相关工具，适合编程、调试或管理开发环境
+,vieb,browser,browser|development,browser,null,Vim 风格浏览器，键盘浏览和网页操作效率很高
+,neat,ide,productivity|development|utilities|system-enhancement,development,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,cd-to,file-management,file-management|development|utilities,file-management|utilities,null,开发相关工具，适合编程、调试或管理开发环境
+,phoenix,window-management|Automation,utilities,productivity|utilities|system-enhancement,null,可用 JavaScript 脚本化的窗口和应用管理器
+,atext,Automation,utilities,productivity|system-enhancement,null,功能强大的文本工具，集文本模板、文本快捷方式、文本宏以及文本自动化于一身
+,superkey,Automation,utilities,productivity|system-enhancement,null,屏幕文字搜索和点击工具
+,lando,Automation|devops,development|utilities|system-enhancement,productivity|development|system-enhancement,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+,xee3,picture-photo|file-management,browser|file-management|media|picture-photo|utilities,file-management|media|picture-photo|utilities,null,
+,ibm-semeru-runtime-jdk-21-open-edition,runtime-sdk,utilities,development,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,aloha-browser,browser|security,browser|utilities|security,browser|security,null,安全工具，适合保护隐私、控制访问或加密数据
+,cpu-info,device-management|system-maintenance,utilities,utilities|system-enhancement,null,设备硬件和软件信息查看工具
+,beaver-notes,security|writing,writing|utilities|security,writing|security,null,适合写作、记录和处理文档
+,ok-json,Automation,utilities,productivity|system-enhancement,null,可脚本化 JSON 格式化和编辑工具
+,zipic,picture-photo,media|picture-photo|utilities,media|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+,franz,communication,communication|productivity,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+,inkstitch,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,pareto-security,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,comprehensive-kerbal-archive-network,file-management,utilities,file-management|utilities,null,
+,hush,browser|security,browser|utilities|security,browser|security,null,安全工具，适合保护隐私、控制访问或加密数据
+,lingon-x,system,system,utilities|system,null,强大的工具，允许用户完全控制系统中程序的自动启动
+,structured-log-viewer,system-maintenance,utilities,utilities|system-enhancement,null,MSBuild 结构化日志查看器
+,davmail,communication,communication|productivity,communication,null,把 Exchange 服务转成标准协议，方便老客户端接入
+,pingplotter,network-tools,utilities|system-enhancement,utilities,null,网络监控工具
+,disk-expert,file-management|system-maintenance,utilities,file-management|utilities|system-enhancement,null,文件管理工具，适合整理、传输、清理或备份文件
+,yakit,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,oss-browser,browser|security,browser,browser|security,null,网页浏览器，适合日常上网和访问 Web 服务
+,yippy,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,mediahuman-youtube-downloader,video|transfer,transfer|media|video|utilities|entertainment,transfer|media|video|utilities,null,传输工具，适合下载、同步或在设备间传文件
+,meta,audio,development|media|audio,media|audio,null,专为macOS设计的智能音乐标签编辑器，旨在简化音频元数据的编辑过程
+,dmenu-mac,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,wire,security,utilities|security,security,null,沟通工具，适合聊天、邮件、通话或团队交流
+,freepdf,PDF|Notes,writing,productivity|writing|utilities,null,写作和笔记工具，适合记录、编辑和整理文本内容
+,box-tools,file-management,browser,file-management|utilities,null,网页浏览器，适合日常上网和访问 Web 服务
+,vivaldi-snapshot,browser,browser|communication,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+,freeze,transfer,file-management|transfer|utilities,transfer|utilities,null,传输工具，适合下载、同步或在设备间传文件
+,scoot,ide,development|utilities|system-enhancement,development,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,vibe-notch,ai-tools|window-management|system-maintenance,development|utilities|system-enhancement|ai-tools,utilities|system-enhancement|ai-tools,null,把 Mac 刘海变成动态状态区，给桌面加一点趣味
+,cad-assistant,Font|ui-prototyping|3d-cad,utilities,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,usb-overdrive,device-management,utilities,utilities|system-enhancement,null,USB 和蓝牙设备驱动工具
+,mindwtr,Notes,productivity,productivity|writing,null,效率工具，适合文档、记录或日常工作流
+,wiso-steuer-2026,finance,utilities,finance,null,财务工具，适合记账、发票、资产或交易管理
+,zspace,device-management,utilities,utilities|system-enhancement,null,NAS 客户端
+,backuploupe,transfer,transfer|utilities|system,transfer|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,keyguard,security,utilities|security,security,null,安全相关工具，适合隐私保护、访问控制或账号防护
+,nvidia-sync,transfer|Automation|devops,transfer|development|utilities,productivity|transfer|development|utilities|system-enhancement,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+,qnap-qsync,transfer|device-management,transfer|utilities,transfer|utilities|system-enhancement,null,自动文件同步工具
+,combine-pdfs,PDF,utilities,writing|utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+,customshortcuts,Automation,utilities|system-enhancement,productivity|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,timemachinestatus,system-maintenance,utilities|system|system-enhancement,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,kdrive,transfer,file-management|transfer|utilities,transfer|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,pikpak,transfer,file-management|transfer|utilities,transfer|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,1password-nightly,security,utilities|security,security,null,密码管理器
+,expandrive,transfer,browser|file-management|transfer|utilities,transfer|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,pastebot,Automation,productivity,productivity|system-enhancement,null,针对频繁使用复制粘贴功能的用户设计的提高工作效率的必备工具
+,voov-meeting,Meeting,communication|productivity|media|video,communication|productivity,null,腾讯会议国际版，适合跨地区视频会议和协作
+,psst,audio,media|audio|entertainment,media|audio,null,媒体工具，适合处理图片、音频或视频内容
+,houdahspot,file-management,utilities,file-management|utilities,null,文件搜索工具
+,diskspace,file-management|system-maintenance,utilities,file-management|utilities|system-enhancement,null,文件管理工具，适合整理、传输、清理或备份文件
+,pdf-reader-pro,picture-photo|PDF,utilities,writing|media|picture-photo|utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+,chromium-gost,browser|security,browser|finance,browser|security,null,带 GOST 加密支持的 Chromium，适合特定合规浏览需求
+,hidock,window-management,development|utilities|system-enhancement,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,zappy,picture-photo|communication,communication|productivity|media|picture-photo,communication|media|picture-photo,null,视频工具，适合播放、录制、剪辑或转换视频
+,easyeda,Font|ui-prototyping|3d-cad|diagramming,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,hive,ai-tools,development|ai-tools,ai-tools,null,跨项目并行编码 AI 智能体编排工具
+,icanhazshortcut,Automation,utilities|system-enhancement,productivity|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,keeweb,security,utilities|security,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+,unpkg,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,radio-silence,security,media|audio|utilities|system-enhancement|security,security,null,出站防火墙工具，阻止 App 悄悄联网
+,streamlink-twitch-gui,video,browser|entertainment,media|video,null,媒体工具，适合处理图片、音频或视频内容
+,anybar,Automation,utilities|system-enhancement,productivity|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,bitwig-studio,audio,development|media|audio,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,the-time-machine-mechanic,system,system,utilities|system,null,Time Machine 日志和状态检查工具
+,sonixd,audio,media|audio|entertainment,media|audio,null,Subsonic 音乐客户端，适合播放自建音乐库
+,bitbar,Automation,utilities|system-enhancement,productivity|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,appzapper,system-maintenance,utilities,utilities|system-enhancement,null,
+,pastenow,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,Mac剪贴板管理工具，支持多设备数据同步和历史数据的重复使用
+,tickeys,audio,media|audio|utilities,media|audio,null,给键盘输入加打字音效，让敲字更有仪式感
+,reflex,audio,media|audio|entertainment,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,pdf-toolbox,PDF,utilities,writing|utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+,tag-editor,audio,productivity|media|audio,media|audio,null,电子表格式音频标签编辑器
+,multi-mc,game,productivity|writing|entertainment|game,entertainment|game,null,Minecraft 多实例启动器，模组管理更清楚
+,jami,communication|transfer,file-management|transfer|utilities,communication|transfer|utilities,null,传输工具，适合下载、同步或在设备间传文件
+,cmd,ai-tools,development|ai-tools,ai-tools,null,开发相关工具，适合编程、调试或管理开发环境
+,telegram-a,communication|security,communication|utilities|security,communication|security,null,沟通工具，适合聊天、邮件、通话或团队交流
+,sizeup,window-management,utilities,utilities|system-enhancement,null,窗口缩放和定位工具
+,drata-agent,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,orka-desktop,picture-photo,media|picture-photo|utilities,media|picture-photo,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+,aquamacs,ide,development|writing,development,null,写作和笔记工具，适合记录、编辑和整理文本内容
+,landrop,transfer,utilities,transfer|utilities,null,局域网跨设备文件传输工具
+,sculptor,ai-tools,development|ai-tools,ai-tools,null,设计工具，适合图形、界面、字体或建模相关工作
+,softmaker-freeoffice,office,productivity,productivity|writing,null,办公套件，适合处理文档、表格和演示稿
+,silicon,system-maintenance,utilities,utilities|system-enhancement,null,Intel-only 应用识别工具
+,simplemind,Notes,productivity,productivity|writing,null,效率工具，适合文档、记录或日常工作流
+,murus-firewall,security,utilities|security,security,null,防火墙工具
+,abbyy-finereader-pdf,picture-photo|PDF,writing,writing|media|picture-photo|utilities,null,写作和笔记工具，适合记录、编辑和整理文本内容
+,gamemaker,game,development|entertainment|game,entertainment|game,null,2D 游戏制作工具，适合快速做原型和发布小游戏
+,advanced-renamer,file-management,utilities,file-management|utilities,null,批量文件重命名工具
+,ibm-semeru-runtime-jdk-17-open-edition,runtime-sdk,utilities,development,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,bluej,Font|ui-prototyping|3d-cad|ide,development|design,development|design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,calendar-366-ii,communication|GTD,communication|productivity|utilities|system-enhancement,communication|productivity,null,菜单栏日历和日程工具，适合快速查看安排
+,sony-imaging-edge-desktop,picture-photo,browser|media|picture-photo,media|picture-photo,null,
+,osxfuse,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,neofinder,file-management,file-management|development|utilities,file-management|utilities,null,开发相关工具，适合编程、调试或管理开发环境
+,gpodder,audio,media|audio|entertainment,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,eez-studio,Automation,productivity|development|utilities|system-enhancement,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,name-mangler,file-management,utilities,file-management|utilities,null,批量文件重命名工具
+,assinador-serpro,writing,development|writing,writing,null,安全工具，适合保护隐私、控制访问或加密数据
+,defold,game,development|entertainment|game,entertainment|game,null,轻量游戏引擎，适合跨平台 2D 游戏开发
+,fido2-1-security-key-management-tool,security,utilities|security,security,null,
+,propresenter,office,productivity,productivity|writing,null,跨平台（Mac和Windows）的演示软件和现场活动制作应用程序
+,anypoint-studio,terminal-tools|ide|runtime-sdk,development|design,development,null,用于设计和测试 Mule 应用的 Eclipse IDE
+,epic-privacy-browser,browser|security,browser|utilities|security,browser|security,null,网页浏览器，适合日常上网和访问 Web 服务
+,wifi-explorer-pro,network-tools,utilities|system-enhancement,utilities,null,
+,exifrenamer,file-management|picture-photo,development|media|video|audio|picture-photo,file-management|media|picture-photo|utilities,null,按 EXIF 信息批量重命名照片和视频，整理素材更快
+,paranoia-file-and-text-encryption,security|finance,utilities|finance|security,finance|security,null,文件和文本加密工具，适合临时保护敏感内容
+,protokol,audio,media|audio|utilities|system-enhancement,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,shureplus-motiv,device-management,utilities,utilities|system-enhancement,null,Shure MV7 和 MV88+ 麦克风控制工具
+,autodesk-eagle,3d-cad,productivity|file-management|design|utilities|system-enhancement,design,null,电路设计工具，适合画原理图和 PCB
+,hp-easy-admin,transfer|device-management,transfer|utilities,transfer|utilities|system-enhancement,null,传输工具，适合下载、同步或共享文件
+,xprocheck,security,utilities,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,rockbox-utility,audio,development|media|audio|utilities,media|audio,null,
+,dungeon-crawl-stone-soup,game,media|picture-photo|system|entertainment|game,entertainment|game,null,硬核 Roguelike 地牢游戏，适合喜欢策略探索的人
+,solvespace,Font|ui-prototyping|3d-cad,utilities,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,profind,file-management,utilities,file-management|utilities,null,文件搜索应用
+,tresorit,transfer,file-management|transfer|utilities,transfer|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,yggdrasil,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,jbrowse,education,browser,education,null,学习工具，适合教育、参考或知识整理
+,macwinzipper,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,pokemon-trading-card-game-live,game,entertainment|game|finance,entertainment|game,null,游戏，适合休闲娱乐和沉浸式体验
+,spline,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,mcedit-unified,game,writing|entertainment|game,entertainment|game,null,游戏，适合休闲娱乐和沉浸式体验
+,presentify,communication|office,communication|productivity|development,communication|productivity|writing,null,开发相关工具，适合编程、调试或管理开发环境
+,script-kit,Automation,utilities,productivity|system-enhancement,null,脚本创建和运行工具
+,xmenu,Automation,utilities|system-enhancement,productivity|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,glkvm,device-management,utilities,utilities|system-enhancement,null,GL.iNet KVM 设备控制工具
+,sherlock,terminal-tools,utilities,development,null,开发者工具，适合命令行、构建、调试或工程管理
+,melodics,education,utilities,education,null,学习工具，适合教育、参考或知识整理
+,ibm-semeru-runtime-jdk-25-open-edition,runtime-sdk,utilities,development,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,loupdeck,system,system,utilities|system,null,
+,aide,ai-tools,development|ai-tools,ai-tools,null,
+,sigdigger,communication,communication|development,communication,null,开发相关工具，适合编程、调试或管理开发环境
+,tartelet,devops,development|utilities,development,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+,silhouette-studio,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,charmstone,Automation,productivity,productivity|system-enhancement,null,小而强大的生产力工具，能够显著提升用户的工作效率
+,label-live,diagramming,design|utilities,design,null,标签设计和打印工具，适合电商、仓储和物流贴纸
+,diskcatalogmaker,system-maintenance,utilities,utilities|system-enhancement,null,磁盘管理工具
+,sejda-pdf-desktop,PDF,utilities,writing|utilities,null,PDF 编辑器
+,spacelauncher,Automation,productivity,productivity|system-enhancement,null,效率工具，适合文档、记录或日常工作流
+,mutedeck,Meeting,communication|productivity|media|video,communication|productivity,null,菜单栏会议控制器，静音和摄像头状态一眼可见
+,gotomeeting,Meeting,communication|productivity|media|video,communication|productivity,null,在线会议工具，适合远程沟通和商务演示
+,fastscripts,Automation,utilities,productivity|system-enhancement,null,快捷脚本运行工具
+,visual,education,utilities,education,null,学习工具，适合查词、学习、参考或教育场景
+,flykey,Automation,utilities|system-enhancement,productivity|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,canon-ufr-ii-ufrii-lt-lipslx-carps2-printer-driver,picture-photo|device-management,productivity|media|picture-photo|utilities,media|picture-photo|utilities|system-enhancement,null,佳能打印驱动包，保证办公打印机在 Mac 上正常工作
+,dante-controller,device-management,utilities,utilities|system-enhancement,null,
+,birdfont,Font,utilities,design|utilities,null,字体编辑工具，适合设计、修改和检查字体
+,gpg-suite-pinentry,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,eset-cyber-security,communication|security,communication|utilities|security,communication|security,null,邮件客户端，适合集中收发和管理邮箱
+,ringcentral,Meeting,communication|productivity|media|video,communication|productivity,null,企业通信平台，电话、消息和视频会议集中处理
+,radar,system-maintenance,utilities,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,rode-connect,audio,media|audio|entertainment,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,commandpost,video,productivity|media|video,media|video,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,digital,devops,development|design,development,null,沟通工具，适合聊天、邮件、通话或团队交流
+,atlauncher,game,productivity|writing|entertainment|game,entertainment|game,null,Minecraft 启动器，管理整合包、模组和多个实例
+,plasticity,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,freeshow,office,productivity,productivity|writing,null,演示工具，适合制作展示内容或现场演示
+,riverside-studio,video|audio,media|video|audio|entertainment,media|video|audio,null,远程录音录像工具，适合播客、访谈和视频节目
+,get-iplayer-automator,transfer,transfer|utilities|system,transfer|utilities,null,传输工具，适合下载、同步或共享文件
+,nitro-pdf-pro,PDF,utilities,writing|utilities,null,允许用户轻松编辑PDF文件
+,typeface,Font,utilities,design|utilities,null,适合管理字体、预览字形和整理设计字库
+,opera-developer,browser,browser|development,browser,null,网页调试和浏览工具，适合开发者检查页面细节
+,rightfont,picture-photo|transfer|Font,transfer|media|picture-photo|utilities,transfer|design|media|picture-photo|utilities,null,字体管理工具，设计时找字、启用字都更快
+,shell360,transfer|terminal-tools,file-management|transfer|development|utilities,transfer|development|utilities,null,传输工具，适合下载、同步或在设备间传文件
+,glyphs,Font,utilities,design|utilities,null,字体编辑工具，适合设计、修改和检查字体
+,crypter,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,pdf-converter-master,PDF|Notes,writing,productivity|writing|utilities,null,写作和笔记工具，适合记录、编辑和整理文本内容
+,font-smoothing-adjuster,Font|ui-prototyping|3d-cad,utilities,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,novabench,system-maintenance,utilities,utilities|system-enhancement,null,电脑性能快速基准测试工具
+,jottacloud,transfer,file-management|transfer|utilities,transfer|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,sipgate,communication,file-management|transfer|media|picture-photo|utilities,communication,null,VoIP 电话服务客户端，适合网络电话和商务通信
+,plex-htpc,video,media|video|entertainment,media|video,null,视频工具，适合播放、录制、剪辑或转换视频
+,notesollama,ai-tools|writing,development|writing|ai-tools,writing|ai-tools,null,写作和笔记工具，适合记录、编辑和整理文本内容
+,accessmenubarapps,Automation|window-management,utilities,productivity|utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,wiso-steuer-2025,finance,utilities,finance,null,财务工具，适合记账、发票、资产或交易管理
+,egnyte,transfer,file-management|transfer|utilities,transfer|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,pdfpen,PDF,utilities,writing|utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+,pitch,office,productivity,productivity|writing,null,办公文档工具，适合阅读、编辑或管理文档资料
+,cadreader,picture-photo|3d-cad,media|picture-photo,design|media|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+,gimp-development-version,picture-photo,development|media|picture-photo,media|picture-photo,null,免费开源图像编辑器
+,roam,Notes,productivity,productivity|writing,null,效率工具，适合文档、记录或日常工作流
+,termius-beta,network-tools|terminal-tools,utilities,development|utilities,null,终端或 SSH 客户端
+,pia,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,soundanchor,audio,media|audio|utilities,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,versatility,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,kui,terminal-tools,utilities,development,null,开发者工具，适合命令行、构建、调试或工程管理
+,logdna-cli,terminal-tools|devops,utilities,development,null,开发者工具，适合命令行、构建、调试或工程管理
+,swiftplantumlapp,diagramming|runtime-sdk,file-management|transfer|development|design|utilities,development|design,null,适合画流程图、结构图或头脑风暴草图
+,guitar-pro,audio,media|audio|utilities|system-enhancement,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,archiver,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,boostnote-next,writing,development|writing,writing,null,
+,keysmith,Automation,utilities|system-enhancement,productivity|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,skint,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,pxplay,system,system,utilities|system,null,PlayStation 主机第三方远程游玩客户端
+,db-browser-for-sqlcipher-nightly,database-tools,browser|development,development,null,SQLCipher 数据库浏览器，适合查看加密 SQLite 数据
+,lazycat,device-management,utilities,utilities|system-enhancement,null,硬件设备客户端
+,fuse-for-mac-os-x,file-management,utilities,file-management|utilities,null,FUSE 文件系统组件，适合让 macOS 挂载和访问扩展文件系统
+,miniwol,network-tools,utilities|system-enhancement,utilities,null,网络调试工具，适合抓包、代理和排查连接问题
+,filomail,ai-tools|communication,communication|design|ai-tools,communication|ai-tools,null,邮件工具，适合集中处理收件箱和通信
+,creative,device-management,utilities,utilities|system-enhancement,null,声卡和音频设备控制面板
+,iexplorer,transfer,file-management|transfer|utilities,transfer|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,pinwheel,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,securityspy,security,utilities|security,security,null,图片工具，适合浏览、编辑、转换或管理图片
+,ueli,Automation,productivity,productivity|system-enhancement,null,效率工具，适合文档、记录或日常工作流
+,endless-sky,game,entertainment|game|finance,entertainment|game,null,游戏，适合休闲娱乐和沉浸式体验
+,yellow-dot,security,utilities|security,security,null,隐藏隐私指示点的工具
+,ishare,picture-photo,media|picture-photo|utilities,media|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+,sequential,picture-photo,media|picture-photo|utilities|system-enhancement,media|picture-photo,null,办公文档工具，适合阅读、编辑或管理文档资料
+,unblocked,ai-tools,development|ai-tools,ai-tools,null,沟通工具，适合聊天、邮件、通话或团队交流
+,colorwell,Font|ui-prototyping|3d-cad,utilities,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,adobe-air,game,development|design|entertainment|game,entertainment|game,null,运行 AIR 应用的运行时，常见于旧游戏和跨平台桌面工具
+,autogram,security,utilities,security,null,电子签名应用
+,specter,finance|device-management|Automation,utilities|finance,productivity|utilities|system-enhancement|finance,null,比特币钱包管理工具，适合多签和硬件钱包工作流
+,ulaa-browser,browser,browser|utilities|security,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+,tourbox-console,system,system,utilities|system,null,TourBox 设备配置工具
+,ibm-semeru-runtime-jdk-11-open-edition,runtime-sdk,utilities,development,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,padloc,security,utilities|security,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+,doughnut,audio,media|audio|entertainment,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,epson-print-layout,picture-photo|device-management,design|media|picture-photo|utilities,media|picture-photo|utilities|system-enhancement,null,爱普生照片打印排版工具，适合控制纸张和色彩输出
+,visual-paradigm,ui-prototyping|diagramming,utilities,design,null,设计工具，适合图形、界面或视觉创作
+,ibm-semeru-runtime-jdk-open-edition,runtime-sdk,utilities,development,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+,musaicfm-screensaver,audio,media|audio|utilities|system-enhancement|entertainment,media|audio,null,把音乐信息做成屏保，闲置时也能展示正在播放
+,mindforger,ide,development|writing,development,null,编程开发工具，适合编写、阅读和维护代码
+,power-manager,Automation,productivity|utilities,productivity|system-enhancement,null,效率工具，适合文档、记录或日常工作流
+,4k-image-compressor,picture-photo,media|picture-photo|utilities,media|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+,lunatask,security|GTD|Notes,productivity|writing|utilities|security,productivity|writing|security,null,把任务、习惯和笔记放一起的个人效率系统
+,file-juicer,picture-photo,productivity|media|picture-photo|utilities,media|picture-photo,null,办公文档工具，适合阅读、编辑或管理文档资料
+,sipgate-softphone,communication,file-management|transfer|media|picture-photo|utilities,communication,null,软电话客户端，直接在 Mac 上拨打和接听 VoIP
+,touch-portal,network-tools|Automation,utilities,productivity|utilities|system-enhancement,null,宏命令远程控制工具
+,slidepilot,office,productivity,productivity|writing,null,办公文档工具，适合阅读、编辑或管理文档资料
+,trimmy,file-management,productivity|development|utilities|system-enhancement,file-management|utilities,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,dropdmg,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,elgato-capture-device-utility,device-management,utilities,utilities|system-enhancement,null,Elgato 采集设备更新和配置工具
+,synthesia,writing|education,writing,writing|education,null,写作和笔记工具，适合记录、编辑和整理文本内容
+,direqual,file-management,utilities,file-management|utilities,null,目录比较工具
+,renamer,file-management,utilities,file-management|utilities,null,批量文件重命名工具
+,avtouchbar,audio,media|audio|utilities|system-enhancement,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,disk-diet,file-management|system-maintenance,utilities,file-management|utilities|system-enhancement,null,macOS上最初的磁盘清理应用程序，首次发布于2011年，并不断进行改进
+,gpg-suite-nightly,communication|security,communication|utilities|security,communication|security,null,邮件和文件加密保护工具
+,yubihsm-2-sdk,runtime-sdk,utilities,development,null,
+,showmeyourhotkeys,Automation|system-maintenance,utilities|system-enhancement,productivity|utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,captain,Automation|devops,development|utilities|system-enhancement,productivity|development|system-enhancement,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+,manico,Automation,productivity,productivity|system-enhancement,null,效率工具，适合文档、记录或日常工作流
+,nostalgiapp,game,productivity|entertainment|game,entertainment|game,null,游戏，适合休闲娱乐和沉浸式体验
+,usage,system-maintenance,utilities,utilities|system-enhancement,null,应用使用情况追踪工具
+,spundle,file-management,utilities,file-management|utilities,null,稀疏包创建、调整和压缩工具
+,electrum-ltc,security|finance,utilities|finance|security,finance|security,null,莱特币轻钱包，适合管理和签署 LTC 交易
+,scrolla,device-management,development|utilities|system-enhancement,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,blisk-browser,browser,browser|development,browser,null,网页调试和浏览工具，适合开发者检查页面细节
+,doxie,device-management,utilities,utilities|system-enhancement,null,扫描仪硬件配套应用
+,cisdem-data-recovery,system-maintenance,utilities,utilities|system-enhancement,null,数据恢复工具
+,pdfshaver,PDF,utilities,writing|utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+,retroarch-metal-nightly,game,media|video|entertainment|game,entertainment|game,null,RetroArch 的 Metal 测试版，适合尝鲜复古模拟性能
+,swisscom-mycloud-desktop,transfer,file-management|transfer|utilities,transfer|utilities,null,Swisscom myCloud 桌面客户端
+,rocket-typist,Automation,utilities,productivity|system-enhancement,null,常用短语文本扩展工具
+,xtool-studio,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,google-web-designer,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,jumpcloud-password-manager,security,utilities|security,security,null,安全相关工具，适合隐私保护、访问控制或账号防护
+,mater,system-maintenance,utilities,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,q-light-controller,device-management,utilities,utilities|system-enhancement,null,DMX 和模拟灯光控制工具
+,logitech-presentation,devops,productivity|development,development,null,演示工具，适合制作展示内容或现场演示
+,parallels-virtualization-sdk,devops|runtime-sdk,development|utilities,development,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+,gitee,devops,development|utilities,development,null,开发相关工具，适合编程、调试或管理开发环境
+,change-vision-astah-uml,Notes|diagramming,productivity|design,productivity|design|writing,null,适合画流程图、结构图或头脑风暴草图
+,mcreator,game,writing|entertainment|game,entertainment|game,null,游戏，适合休闲娱乐和沉浸式体验
+,rodecaster-app,device-management,utilities,utilities|system-enhancement,null,
+,leocad,Font|ui-prototyping|3d-cad,utilities,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,the-archive,file-management|writing,writing|utilities,file-management|writing|utilities,null,文件管理工具，适合整理、传输或清理文件
+,zoo-design-studio,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,crushftp,transfer,file-management|transfer|utilities,transfer|utilities,null,传输工具，适合下载、同步或在设备间传文件
+,hdrmerge,picture-photo,development|media|picture-photo,media|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+,steinberg-library-manager,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,anka-virtualization,terminal-tools|devops,utilities,development,null,开发者工具，适合命令行、构建、调试或工程管理
+,treesheets,Notes,productivity,productivity|writing,null,办公文档工具，适合阅读、编辑或管理文档资料
+,gdevelop,game,design|entertainment|game,entertainment|game,null,无代码游戏制作工具，适合快速做 2D 游戏原型
+,batteries,device-management|system-maintenance,utilities,utilities|system-enhancement,null,多设备电量追踪工具
+,elgato-game-capture-hd,game,media|video|entertainment|game,entertainment|game,null,游戏采集工具，录制和直播主机画面很方便
+,swiftpm-catalog,transfer,file-management|transfer|utilities,transfer|utilities,null,文件管理工具，适合整理、传输或清理文件
+,actual-odbc-driver-pack,finance|device-management,utilities|finance,utilities|system-enhancement|finance,null,Actual 的 ODBC 驱动包，方便旧数据库接入 Mac 应用
+,findergo,file-management,file-management|development|utilities,file-management|utilities,null,开发相关工具，适合编程、调试或管理开发环境
+,macro-recorder,Automation,utilities|system-enhancement,productivity|system-enhancement,null,鼠标和键盘操作录制工具
+,archiveweb-page,writing,writing|utilities,writing,null,网页浏览时手动归档为 WARC 或 WACZ 的工具
+,roboform,security,utilities|security,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+,katalon-studio,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,nanoleaf-desktop,device-management,utilities,utilities|system-enhancement,null,Nanoleaf 灯光控制工具
+,synology-surveillance-station-client,device-management,utilities,utilities|system-enhancement,null,Synology 监控站桌面客户端
+,ulbow,ide,browser,development,null,开发相关工具，适合编程、调试或管理开发环境
+,lyn,picture-photo,browser,media|picture-photo,null,轻量媒体浏览器，适合摄影和设计素材查看
+,pdf-over,PDF,development,writing|utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+,gitdock,devops,development|utilities|system-enhancement,development,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,password-gorilla,security|database-tools,development|utilities|security,development|security,null,数据库工具，适合连接、查询和管理数据库
+,unraid-usb-creator,picture-photo,media|picture-photo|utilities,media|picture-photo,null,媒体工具，适合处理图片、音频或视频内容
+,browser-actions,browser,browser|utilities|system-enhancement,browser,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,bcut,video,media|video|entertainment,media|video,null,媒体工具，适合处理图片、音频或视频内容
+,intiface-central,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,elgato-studio,device-management,utilities,utilities|system-enhancement,null,内容创作设备采集和管理工具
+,godspeed,GTD,productivity|utilities|system-enhancement,productivity,null,效率管理工具，适合安排任务、日程或跟踪时间
+,spotify-now-playing,audio,media|audio|entertainment,media|audio,null,
+,chatgpt-for-mac,ai-tools|communication,communication|utilities|system-enhancement|ai-tools,communication|ai-tools,null,
+,clipaste,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,filepane,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,go64,system-maintenance,utilities,utilities|system-enhancement,null,32 位应用扫描工具
+,flying-carpet,transfer,file-management|transfer|utilities,transfer|utilities,null,传输工具，适合下载、同步或在设备间传文件
+,airy,video|transfer,transfer|media|video|utilities|entertainment,transfer|media|video|utilities,null,音频工具，适合播放、制作、编辑或管理声音内容
+,coverload,video|audio,transfer|media|video|audio|utilities,media|video|audio,null,媒体封面下载工具，适合整理影视和音乐资料
+,react-proto,Font|ui-prototyping|3d-cad,development|design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,post-haste,GTD,productivity|development,productivity,null,效率管理工具，适合安排任务、日程或跟踪时间
+,trojanx,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,polyphone,audio,design|media|audio,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,wordservice,Automation,utilities,productivity|system-enhancement,null,选中文本处理命令工具
+,appgrid,window-management,development|utilities|system-enhancement,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,onyx-beta,system-maintenance,utilities,utilities|system-enhancement,null,系统文件结构验证和维护工具
+,seam,window-management,productivity|utilities|system-enhancement,utilities|system-enhancement,null,刘海屏动态岛效率工具
+,audius,audio,media|audio|entertainment,media|audio,null,视频工具，适合播放、录制、剪辑或转换视频
+,clock-signal,communication|security,communication|utilities|security,communication|security,null,安全相关工具，适合隐私保护、访问控制或账号防护
+,finbar,Automation,utilities|system-enhancement,productivity|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,motu-m-series,audio,media|audio|utilities,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,bankid-security-application-sweden,security|finance|education,utilities|finance|education|security,finance|education|security,null,瑞典 BankID 安全组件，用来完成银行和身份认证
+,bookletcreator,PDF,utilities,writing|utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+,moneydance,security|finance,utilities|finance|security,finance|security,null,适合管理钱包、资产或安全相关的金融操作
+,letter-opener,communication,communication|utilities|system-enhancement,communication,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,x32-edit,audio,media|audio|system,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,live-home-3d,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,muse,audio,media|audio|entertainment,media|audio,null,思维画布应用，适合整理灵感和团队协作
+,webplotdigitizer,picture-photo|devops,development|media|picture-photo|utilities,development|media|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+,macgamestore,game,transfer|utilities|entertainment|game,entertainment|game,null,游戏，适合休闲娱乐和沉浸式体验
+,db-browser-for-sqlite-nightly,database-tools,browser|development,development,null,SQLite 数据库浏览器测试版，适合查看和编辑本地库
+,headset,audio,media|audio|entertainment,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,wasabi-wallet,security|finance|Automation,utilities|finance|security,productivity|system-enhancement|finance|security,null,重视隐私的比特币钱包，适合 CoinJoin 工作流
+,ifunbox,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,cisdem-pdf-converter-ocr,picture-photo|PDF,utilities,writing|media|picture-photo|utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+,imagealpha,picture-photo,media|picture-photo|utilities,media|picture-photo,null,媒体工具，适合处理图片、音频或视频内容
+,cleaneronepro,file-management|system-maintenance,utilities,file-management|utilities|system-enhancement,null,文件管理工具，适合整理、传输、清理或备份文件
+,heaven-benchmark,device-management|system-maintenance,utilities,utilities|system-enhancement,null,硬件性能和稳定性测试工具
+,avast-secure-browser,browser|security,browser|utilities|security,browser|security,null,安全工具，适合保护隐私、控制访问或加密数据
+,badlion-client,game,productivity|writing|entertainment|game,entertainment|game,null,Minecraft PvP 客户端，内置性能优化和竞技辅助
+,edrawmind,picture-photo|Notes,productivity|media|picture-photo,productivity|writing|media|picture-photo,null,媒体工具，适合处理图片、音频或视频内容
+,goldenpassport,security,utilities|security,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+,sony-imaging-edge-webcam,video,browser,media|video,null,
+,cerebro,Automation,productivity,productivity|system-enhancement,null,效率工具，适合文档、记录或日常工作流
+,subtools,transfer,utilities,transfer|utilities,null,
+,flirc,device-management,utilities,utilities|system-enhancement,null,红外 USB 接收器配置工具
+,vallum,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,disk-arbitrator,system-maintenance,utilities,utilities|system-enhancement,null,
+,swifty,security,utilities|security,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+,quo,communication,communication|productivity,communication,null,沟通工具，适合消息、邮件、通话或团队交流
+,sena-bluetooth-device-manager,device-management,utilities,utilities|system-enhancement,null,SENA 设备管理工具
+,aware,system-maintenance,utilities,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,sakuralauncher,Automation,productivity,productivity|system-enhancement,null,SakuraFrp 启动器
+,spaceradar,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,teensy,device-management,utilities,utilities|system-enhancement,null,固件刷写工具
+,adobe-connect,Meeting,communication|productivity|design,communication|productivity,null,企业线上会议和课堂工具，适合培训、会议和网络研讨会
+,lyrics-finder,transfer,file-management|transfer|utilities,transfer|utilities,null,歌词查找和下载工具
+,thumbsup,picture-photo,media|picture-photo|utilities,media|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+,dcp-o-matic,video|audio,development|design|media|video|audio,media|video|audio,null,把影片、字幕和音频打包成影院放映用的 DCP
+,kiwi-for-gmail,communication,communication|productivity,communication,null,沟通工具，适合消息、邮件、通话或团队交流
+,mcloud,file-management,utilities,file-management|utilities,null,中国移动云盘客户端
+,robofont,Font,utilities,design|utilities,null,字体编辑工具，适合设计、修改和检查字体
+,origami-studio,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,energiza-pro,system-maintenance,utilities,utilities|system-enhancement,null,用于控制MacBook电池充电的应用程序
+,kameleo,browser|security,browser,browser|security,null,网页浏览器，适合日常上网和访问 Web 服务
+,connect-fonts,Font|ui-prototyping|3d-cad,utilities,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,simsim,file-management,file-management|development|utilities,file-management|utilities,null,开发相关工具，适合编程、调试或管理开发环境
+,wd-security,security,development|utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,ultdata,system-maintenance,utilities,utilities|system-enhancement,null,iPhone 数据恢复工具
+,volume-control,audio,media|audio|utilities|system-enhancement|entertainment,media|audio,null,音量控制工具，适合更细地管理系统声音输出
+,eclipse-modeling-tools,device-management,utilities,utilities|system-enhancement,null,模型驱动应用开发工具和运行时
+,odrive,security|transfer,file-management|transfer|utilities|security,transfer|utilities|security,null,安全工具，适合保护隐私、控制访问或加密数据
+,enclave,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,lock-rattler,security,utilities|security,security,null,系统安全检查工具
+,fake,browser,browser|productivity|utilities|system-enhancement,browser,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,textgrabber2,picture-photo,media|picture-photo|utilities|system-enhancement,media|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+,multifirefox,browser,browser|productivity|utilities,browser,null,编程开发工具，适合编写、阅读和维护代码
+,bria,communication|transfer,file-management|transfer|utilities,communication|transfer|utilities,null,传输工具，适合下载、同步或在设备间传文件
+,psi,communication,communication|design,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+,vram-pro,system-maintenance,utilities,utilities|system-enhancement,null,统一内存 VRAM 分配控制工具
+,spacesaver,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,trackerzapper,system-maintenance,utilities,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,diagnostics,system-maintenance,utilities,utilities|system-enhancement,null,崩溃诊断报告查看器
+,nethlink,ide,utilities,development,null,编程开发工具，适合编写、阅读和维护代码
+,the-archive-browser,browser,browser|utilities,browser,null,文件管理工具，适合整理、传输、清理或备份文件
+,exactscan,writing|device-management,writing|utilities,writing|utilities|system-enhancement,null,支持多种专业文档扫描仪的现代扫描解决方案，能够帮助用户实现无纸化办公
+,adobe-photoshop-patterns-quicklook-plugin,picture-photo,design|media|picture-photo,media|picture-photo,null,给 Photoshop 图案文件加预览，找素材更快
+,bitbox,finance|device-management,utilities|finance,utilities|system-enhancement|finance,null,硬件钱包套件，适合安全管理加密资产
+,gopass-ui,communication|security,communication|productivity|utilities|security,communication|security,null,gopass 密码库图形界面，适合安全管理团队密钥
+,keycombiner,Automation,utilities|system-enhancement,productivity|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,poi,utilities,browser,utilities,null,
+,caldigit-thunderbolt-station-usb-charging-and-superdrive-support-driver,device-management|devops,development|utilities,development|utilities|system-enhancement,null,Apple 设备支持驱动
+,cloudnet-for-mac-client,security,utilities|security,security,null,
+,tiddlywiki,Notes,browser,productivity|writing,null,
+,m32-edit,audio,media|audio|system,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,xiaomi-cloud,picture-photo|transfer,communication|transfer|media|picture-photo|utilities,transfer|media|picture-photo|utilities,null,小米云服务入口，适合同步和管理小米生态资料
+,cuda-z,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,ripcord,communication,communication|productivity,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+,todotxtmac,GTD,productivity|utilities|system-enhancement,productivity,null,
+,canon-pixma-driver,device-management,utilities,utilities|system-enhancement,null,
+,dmg-canvas,picture-photo,design|media|picture-photo,media|picture-photo,null,DMG 安装包设计工具，适合做漂亮的 Mac 分发镜像
+,universal-password-manager,security,utilities|security,security,null,
+,4k-video-to-mp3,video|audio,media|video,media|video|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,fetch,transfer,file-management|transfer|utilities,transfer|utilities,null,传输工具，适合下载、同步或在设备间传文件
+,arctic,video,media|video|utilities|system-enhancement,media|video,null,文件管理工具，适合整理、传输、清理或备份文件
+,ipa-palette,diagramming,utilities,design,null,
+,juice,system-maintenance,utilities,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,beardie,writing,writing|media|video|utilities|system-enhancement,writing,null,视频工具，适合播放、录制、剪辑或转换视频
+,playdate-mirror,game|video,media|video|audio|entertainment|game,media|video|entertainment|game,null,把 Playdate 掌机画面镜像到 Mac，录制演示更方便
+,blocs,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,clickcharts,Font|ui-prototyping|3d-cad|diagramming,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,deadbolt,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,pages-data-merge,writing|communication,communication|development|writing,communication|writing,null,开发相关工具，适合编程、调试或管理开发环境
+,apptivate,Automation,utilities|system-enhancement,productivity|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,feed-the-beast,game,transfer|writing|utilities|entertainment|game,entertainment|game,null,游戏，适合休闲娱乐和沉浸式体验
+,replayweb-page,file-management,utilities,file-management|utilities,null,WARC 和 WACZ 网页归档查看器
+,affinity-photo,picture-photo,design|media|picture-photo,media|picture-photo,null,一次性买断的专业修图工具，照片编辑和合成都很强
+,mindmanager,Notes,productivity,productivity|writing,null,思维导图工具
+,tyme,GTD,utilities,productivity,null,效率管理工具，适合安排任务、日程或跟踪时间
+,brisync,transfer,transfer|utilities|system-enhancement,transfer|utilities,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,textbuddy,Automation,utilities,productivity|system-enhancement,null,文本转换、过滤、排序和处理工具
+,gauntlet,Automation,productivity,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,recents,Automation,productivity,productivity|system-enhancement,null,效率工具，适合文档、记录或日常工作流
+,kunkun,Automation,productivity,productivity|system-enhancement,null,效率工具，适合文档、记录或日常工作流
+,paparazzi,picture-photo|writing,writing|media|picture-photo|utilities,writing|media|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+,polymail,communication,communication|productivity,communication,null,邮件客户端，适合集中收发和管理邮箱
+,alfaview,video|audio,communication|media|video|audio,media|video|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,idagio,audio,media|audio|entertainment,media|audio,null,视频工具，适合播放、录制、剪辑或转换视频
+,bathyscaphe,communication,browser,communication,null,沟通工具，适合消息、邮件、通话或团队交流
+,musictube,audio,media|audio|entertainment,media|audio,null,视频工具，适合播放、录制、剪辑或转换视频
+,nexon-plug,game,productivity|entertainment|game,entertainment|game,null,游戏，适合休闲娱乐和沉浸式体验
+,keymanager,security,utilities,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,lofi,audio,media|audio|entertainment,media|audio,null,媒体工具，适合处理图片、音频或视频内容
+,audiocupcake,audio,media|audio|entertainment,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,fabfilter-pro-mb,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,gdlauncher,game,productivity|writing|entertainment|game,entertainment|game,null,Minecraft 启动器，安装和切换模组包很方便
+,id3-editor,audio,utilities,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,objektiv,picture-photo,browser|utilities,media|picture-photo,null,媒体工具，适合处理图片、音频或视频内容
+,pdf-pals,ai-tools|communication|PDF,communication|ai-tools,communication|writing|utilities|ai-tools,null,沟通工具，适合聊天、邮件、通话或团队交流
+,jdiskreport,file-management|system-maintenance,utilities,file-management|utilities|system-enhancement,null,磁盘空间分析工具，适合查看和清理空间占用
+,lightproxy,security,browser,security,null,网络调试工具，适合抓包、代理和排查连接问题
+,olive,video,productivity|media|video,media|video,null,视频工具，适合播放、录制、剪辑或转换视频
+,ua-midi-control,audio,media|audio|system,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,buildsettingextractor,ide,development|utilities,development,null,开发相关工具，适合编程、调试或管理开发环境
+,signet,security,utilities,security,null,应用签名扫描和检查工具
+,bobhelper,Font|ui-prototyping|3d-cad,design|utilities|system-enhancement,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,ecamm-live,video,media|video|entertainment,media|video,null,视频工具，适合播放、录制、剪辑或转换视频
+,lehreroffice,education|office,productivity|education,productivity|writing|education,null,教师办公工具，适合管理班级、成绩和教学资料
+,spotify4bigsur,audio,media|audio|entertainment,media|audio,null,媒体工具，适合处理图片、音频或视频内容
+,textbar,Automation,utilities|system-enhancement,productivity|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,lockdown,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,openpht,video,media|video|entertainment,media|video,null,媒体工具，适合处理图片、音频或视频内容
+,space-capsule,window-management,utilities,utilities|system-enhancement,null,桌面空间管理工具
+,zoho-workdrive,transfer,file-management|transfer|utilities,transfer|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,fabfilter-pro-c,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,codeexpander,writing|input-tools,productivity|media|picture-photo|utilities|system-enhancement,writing|utilities|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,wacom-inkspace,device-management,utilities,utilities|system-enhancement,null,
+,coin-wallet,finance,development|finance,finance,null,财务工具，适合记账、发票、资产或交易管理
+,pile,Notes,development|writing,productivity|writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+,monofocus,GTD,productivity|utilities|system-enhancement,productivity,null,效率管理工具，适合安排任务、日程或跟踪时间
+,flame,ide,browser,development,null,开发相关工具，适合编程、调试或管理开发环境
+,xact,audio,media|audio|utilities,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,cumulus,audio,media|audio|utilities|system-enhancement,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,elpass,security,utilities|security,security,null,密码管理器，适合保存账号、密码和敏感信息
+,mmhmm-desktop,video|Meeting,productivity|media|video,communication|productivity|media|video,null,
+,silnite,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,snapmotion,video|picture-photo,media|video|picture-photo|utilities,media|video|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+,mimecast-for-mac,communication,communication|utilities,communication,null,
+,olympus,game,media|video|entertainment|game,entertainment|game,null,游戏模组管理工具，适合管理 Celeste 等游戏内容
+,nkoda,audio,development|media|audio,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,novation-components,device-management,utilities,utilities|system-enhancement,null,Novation 硬件管理和更新工具
+,powder-player,video,transfer|media|video|utilities|entertainment,media|video,null,视频工具，适合播放、录制、剪辑或转换视频
+,ballast,audio,media|audio|utilities,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,iridium-browser,browser,browser|utilities|security,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+,anka-build-cloud-controller,device-management|devops|api-tools,utilities,development|utilities|system-enhancement,null,API 调试工具，适合测试接口、请求和开发流程
+,overflow,GTD|Automation,productivity,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,semulov,system-maintenance,utilities,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,loading,network-tools|system-maintenance,utilities|system|system-enhancement,utilities|system-enhancement,null,菜单栏网络监控工具，可显示正在使用网络的应用
+,brightness-sync,transfer,transfer|utilities|system-enhancement,transfer|utilities,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,amadine,Font|ui-prototyping|3d-cad|diagramming,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,gitkraken-serverless,devops,productivity|development,development,null,高效 Git 客户端
+,hp-prime,device-management,utilities,utilities|system-enhancement,null,
+,skyfonts,Font|ui-prototyping|3d-cad,utilities,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,turbotax-2024,finance,utilities,finance,null,财务工具，适合记账、发票、资产或交易管理
+,feem,transfer,file-management|transfer|utilities,transfer|utilities,null,完整功能的多平台共享软件，可以在多手机多电脑之间直接传送文本和文件
+,postbox,communication|security,communication|utilities|security,communication|security,null,邮件客户端，适合集中收发和管理邮箱
+,astro-command-center,device-management,utilities,utilities|system-enhancement,null,ASTRO 设备设置配置工具
+,cernbox-client,transfer,file-management|transfer|utilities,transfer|utilities,null,
+,softorino-youtube-converter,video|transfer,transfer|utilities|entertainment,transfer|media|video|utilities,null,传输工具，适合下载、同步或在设备间传文件
+,yoda,video|transfer,transfer|media|video|utilities|entertainment,transfer|media|video|utilities,null,媒体工具，适合处理图片、音频或视频内容
+,opensong,office,productivity,productivity|writing,null,演示工具，适合制作展示内容或现场演示
+,overbridge,audio|device-management,media|audio|utilities,media|audio|utilities|system-enhancement,null,Elektron 硬件与音乐软件集成工具
+,deep-hiarcs-chess-explorer,game,development|entertainment|game,entertainment|game,null,国际象棋数据库和分析工具，适合研究棋局与开局
+,flic,device-management,utilities,utilities|system-enhancement,null,蓝牙按钮驱动工具
+,locu,GTD,utilities,productivity,null,效率管理工具，适合安排任务、日程或跟踪时间
+,prizmo,picture-photo,utilities,media|picture-photo,null,媒体工具，适合处理图片、音频或视频内容
+,wiso-steuer-2024,finance,utilities,finance,null,财务工具，适合记账、发票、资产或交易管理
+,cmdtap,Automation,productivity,productivity|system-enhancement,null,效率工具，适合文档、记录或日常工作流
+,konica-minolta-bizhub-c750i-c650i-c360i-c287i-c286i-c4050i-c4000i-c3320i-printer-driver,device-management,utilities,utilities|system-enhancement,null,
+,weektodo,security|GTD,productivity|utilities|security,productivity|security,null,安全工具，适合保护隐私、控制访问或加密数据
+,apptrap,system-maintenance,utilities,utilities|system-enhancement,null,应用卸载辅助工具，会在删除应用时提示清理相关偏好和残留文件
+,flanders-ip-remote-utility,device-management,utilities,utilities|system-enhancement,null,Flanders Scientific 硬件管理工具
+,nitroshare,transfer,file-management|transfer|utilities,transfer|utilities,null,传输工具，适合下载、同步或在设备间传文件
+,sysdig-inspect,security|devops,development|utilities|security,development|security,null,安全工具，适合保护隐私、控制访问或加密数据
+,toptracker,finance|GTD,utilities,productivity|finance,null,效率管理工具，适合安排任务、日程或跟踪时间
+,msgfiler,communication,communication|utilities|system-enhancement,communication,null,邮件客户端，适合集中收发和管理邮箱
+,securesafe,security,utilities|security,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+,anchor-wallet,security|finance,utilities|finance|security,finance|security,null,EOS 系钱包客户端，适合管理账号和签署交易
+,dcp-o-matic-player,video,development|design,media|video,null,开发相关工具，适合编程、调试或管理开发环境
+,font-finagler,Font|ui-prototyping|3d-cad,utilities,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,logic-sniffer,device-management,utilities,utilities|system-enhancement,null,
+,nuclino,writing,utilities,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+,safeincloud-password-manager,security,utilities|security,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+,pdfkey-pro,security,utilities|security,security,null,办公文档工具，适合阅读、编辑或管理文档资料
+,fastmarks,browser|Automation,browser,browser|productivity|system-enhancement,null,网页浏览器，适合日常上网和访问 Web 服务
+,white-rabbit,picture-photo,media|picture-photo|utilities,media|picture-photo,null,媒体工具，适合处理图片、音频或视频内容
+,wiso-steuer-2022,finance,utilities,finance,null,财务工具，适合记账、发票、资产或交易管理
+,vocaster-hub,device-management,utilities,utilities|system-enhancement,null,Focusrite Vocaster 声卡控制工具
+,ppduck,picture-photo,media|picture-photo|utilities,media|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+,taccy,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,boxcryptor,security|file-management,file-management|transfer|utilities|finance|security,file-management|utilities|security,null,云盘文件加密工具，同步前先给敏感资料上锁
+,clion-eap,terminal-tools|ide,utilities,development,null,CLion 早期访问版 IDE
+,pdfpenpro,PDF,utilities,writing|utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+,preferencecleaner,GTD,productivity|utilities,productivity,null,学习工具，适合查词、学习、参考或教育场景
+,dcp-o-matic-kdm-creator,video|audio,development|design|media|video|audio,media|video|audio,null,为 DCP 生成影院密钥，适合数字电影发行流程
+,ithoughtsx,Notes,productivity,productivity|writing,null,效率工具，适合文档、记录或日常工作流
+,loginputmac,device-management,utilities,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,parsehub,api-tools,utilities,development,null,API 调试工具，适合测试接口、请求和开发流程
+,thebrain,Notes,productivity,productivity|writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+,attachecase,security,utilities|security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+,hp-printer-drivers,device-management,utilities,utilities|system-enhancement,null,
+,mindmaster,Notes,productivity,productivity|writing,null,思维导图软件
+,cloud189,transfer,file-management|transfer|utilities,transfer|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,carbide-create,Font|ui-prototyping|3d-cad,utilities,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,ankama-launcher,game,productivity|media|video|entertainment|game,entertainment|game,null,Ankama 游戏启动器，管理 Dofus 等游戏和账号
+,valley-benchmark,system-maintenance,utilities,utilities|system-enhancement,null,
+,honer,picture-photo,media|picture-photo|utilities,media|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+,katana,picture-photo,media|picture-photo|utilities,media|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+,vimy,devops,development|utilities,development,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+,volt,communication,communication|productivity,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+,wintertime,system-maintenance,utilities,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,bestres,window-management,utilities,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,halion-sonic,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,northern-softworks-cache-cleaner,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输或清理文件
+,now-tv-player,video,media|video|entertainment,media|video,null,视频工具，适合播放、录制、剪辑或转换视频
+,roaringapps,system-maintenance,utilities,utilities|system-enhancement,null,已安装应用兼容性查看工具
+,bfxr,game,media|audio|entertainment|game,entertainment|game,null,复古游戏音效生成器，快速做 8-bit 风格声音
+,mjolnir,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,worldpainter,game,writing|entertainment|game,entertainment|game,null,游戏，适合休闲娱乐和沉浸式体验
+,fontlab,Font|ui-prototyping|3d-cad,utilities,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,i1profiler,picture-photo,productivity|design|media|picture-photo|utilities|system-enhancement,media|picture-photo,null,显示器和打印色彩校准工具，适合严肃影像工作流
+,kogiqa,Automation,productivity|utilities|system-enhancement,productivity|system-enhancement,null,效率增强工具，适合快速启动、自动化或管理常用操作
+,tdr-molotok,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,airtrash,transfer,file-management|transfer|utilities,transfer|utilities,null,传输工具，适合下载、同步或在设备间传文件
+,command-pad,terminal-tools,utilities|system-enhancement,development,null,开发者工具，适合命令行、构建、调试或工程管理
+,fontra-pak,Font|ui-prototyping|3d-cad,browser,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,kkbox,audio,media|audio|entertainment,media|audio,null,视频工具，适合播放、录制、剪辑或转换视频
+,labymod-launcher,game,productivity|writing|entertainment|game,entertainment|game,null,LabyMod 启动器，管理 Minecraft 模组和服务器体验
+,space-saver,transfer,transfer|utilities|system,transfer|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,btcpayserver-vault,finance|device-management|transfer,utilities|finance,transfer|utilities|system-enhancement|finance,null,BTCPay 硬件钱包桥接工具，帮助安全签署付款
+,fontcreator,Font,utilities,design|utilities,null,字体编辑工具，适合设计、修改和检查字体
+,niftyman,writing,writing|utilities|system-enhancement,writing,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,crypto-native-app-ng,security|finance,browser|utilities|finance|security,finance|security,null,加密资产工具入口，适合处理钱包和链上操作
+,dcp-o-matic-disk-writer,video,development|design|media|video|audio,media|video,null,把 DCP 写入放映介质，适合影院交付前检查
+,express-scribe-transcription-software,audio,development|media|audio,media|audio,null,脚踏控制的转录音频播放器
+,nault,finance,utilities|finance,finance,null,Nano 钱包客户端，适合管理和发送 Nano 资产
+,droidid,device-management,utilities,utilities|system-enhancement,null,用 Android 设备指纹解锁 Mac 的工具
+,moose,transfer,utilities,transfer|utilities,null,开源的 bT 下载客户端，支持 macOS 与 Linux 系统
+,nimblenote,writing,writing|utilities|system-enhancement,writing,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,pynsource,diagramming|ide,development,development|design,null,编程开发工具，适合编写、阅读和维护代码
+,ripx,audio,media|audio|utilities,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,toshiba-colormfp-drivers,device-management,utilities,utilities|system-enhancement,null,
+,hides,ide,utilities,development,null,编程开发工具，适合编写、阅读和维护代码
+,wrkspace,Automation|devops,development|utilities|system-enhancement,productivity|development|system-enhancement,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+,preference-manager,system-maintenance,transfer|writing|media|video|utilities,utilities|system-enhancement,null,视频工具，适合播放、录制、剪辑或转换视频
+,apple-store-time-machine,ide,development|system,development,null,Apple Store 开业日 3D 重建浏览工具
+,timeular,GTD,utilities,productivity,null,效率管理工具，适合安排任务、日程或跟踪时间
+,warsaw,security|finance|education,utilities|finance|education|security,finance|education|security,null,银行安全组件，常见于巴西网银登录和交易保护
+,wiso-steuer-2023,finance,utilities,finance,null,财务工具，适合记账、发票、资产或交易管理
+,yealink-meeting,Meeting,communication|productivity|media|video,communication|productivity,null,亿联会议客户端，适合连接会议室设备和远程会议
+,desktoputility,Automation,productivity|utilities,productivity|system-enhancement,null,效率工具，适合文档、记录或日常工作流
+,keypad-layout,ui-prototyping,design|utilities,design,null,设计工具，适合图形、界面或视觉创作
+,sizzy,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,baritone,audio,media|audio|utilities|system-enhancement|entertainment,media|audio,null,Minecraft 自动寻路工具，适合研究和辅助复杂移动
+,brightauthor-connected,device-management,utilities,utilities|system-enhancement,null,BrightSign 设备配置和管理工具
+,livebook-nightly,writing,development|writing,writing,null,Elixir 开发者代码笔记本
+,trezor-bridge,security,browser,security,null,沟通工具，适合聊天、邮件、通话或团队交流
+,dcp-o-matic-playlist-editor,video,development|design|media|video|audio,media|video,null,编辑 DCP 放映列表，整理影院播放顺序更清楚
+,icon-shelf,picture-photo,development|media|picture-photo,media|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+,netxms-management-console,system-maintenance,utilities|system|system-enhancement,utilities|system-enhancement,null,网络和基础设施监控管理系统
+,autumn,ide,development|utilities|system-enhancement,development,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,dcp-o-matic-batch-converter,video|audio,development|design|media|video|audio,media|video|audio,null,批量转换影片到 DCP，处理多条片源时很省事
+,dcp-o-matic-encode-server,video|audio,development|design|media|video|audio,media|video|audio,null,分担 DCP 编码任务，让电影打包速度更快
+,rode-virtual-channels,device-management,utilities,utilities|system-enhancement,null,
+,threema-work,communication|security,communication|utilities|security,communication|security,null,端到端加密即时通讯工具，适合安全聊天
+,poker-copilot,finance,finance|ai-tools,finance,null,财务工具，适合账务、预算或资产相关管理
+,vimcal,communication|GTD,communication|productivity|development,communication|productivity,null,效率管理工具，适合安排任务、日程或跟踪时间
+,f-bar,system-maintenance,utilities,utilities|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,ivideon-client,video|security,browser|media|video,media|video|security,null,Ivideon 账号监控视频查看工具
+,kactus,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,uncrustifyx,runtime-sdk,browser|writing|utilities,development,null,写作和笔记工具，适合记录、编辑和整理文本内容
+,vimediamanager,video,development|media|video,media|video,null,视频工具，适合播放、录制、剪辑或转换视频
+,cisco-proximity,Meeting,communication|productivity|media|video,communication|productivity,null,连接会议室设备共享屏幕，适合企业会议和演示
+,dcp-o-matic-combiner,video,development|design|media|video|audio,media|video,null,视频工具，适合播放、录制、剪辑或转换视频
+,free-podcast-transcription,audio,media|audio|entertainment,media|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,trivial,transfer,file-management|transfer|utilities,transfer|utilities,null,传输工具，适合下载、同步或在设备间传文件
+,agisoft-metashape-standard-edition,picture-photo,development|media|picture-photo,media|picture-photo,null,数字图像处理和 3D 空间数据生成工具
+,batchoutput-pdf,PDF,utilities,writing|utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+,bonita-studio-community-edition,GTD,productivity|utilities|system-enhancement,productivity,null,
+,ipepresenter,office,productivity,productivity|writing,null,办公文档工具，适合阅读、编辑或管理文档资料
+,mozregression-gui,ide,browser|file-management|utilities,development,null,开发相关工具，适合编程、调试或管理开发环境
+,pdfelement-express,PDF,utilities,writing|utilities,null,PDF 编辑工具，适合编辑、标注和处理 PDF 文档
+,podcastmenu,audio|system-maintenance,media|audio|utilities|system-enhancement|entertainment,media|audio|utilities|system-enhancement,null,菜单栏播客工具，不打开主应用也能收听节目
+,ringcentral-meetings,Meeting,communication|productivity|media|video,communication|productivity,null,RingCentral 会议客户端，适合远程视频沟通
+,genesys-cloud-for-macos,Meeting,browser,communication|productivity,null,
+,mockuuups-studio,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,paragon-camptune,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,provideoplayer,video,productivity|media|video,media|video,null,演示工具，适合制作展示内容或现场演示
+,focusrite-saffire-mixcontrol,device-management,utilities,utilities|system-enhancement,null,
+,wing-personal,ide,development|design,development,null,编程开发工具，适合编写、阅读和维护代码
+,output-factory,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,splitshow,office,productivity,productivity|writing,null,办公文档工具，适合阅读、编辑或管理文档资料
+,utterly,video|audio,communication|media|video|audio,media|video|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+,wiso-steuer-2021,finance,utilities,finance,null,财务工具，适合记账、发票、资产或交易管理
+,qnap-qudedup-extract-tool,device-management,utilities,utilities|system-enhancement,null,
+,tune-instructor,audio,media|audio|utilities|system-enhancement,media|audio,null,Apple Music 菜单栏控制工具
+,shortcutor,Automation,utilities|system-enhancement,productivity|system-enhancement,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
+,wiso-steuer-2020,finance,utilities,finance,null,财务工具，适合记账、发票、资产或交易管理
+,convert3dgui,picture-photo|terminal-tools,media|picture-photo,development|media|picture-photo,null,开发者工具，适合命令行、构建、调试或工程管理
+,ethui,finance,development|finance,finance,null,财务工具，适合记账、发票、资产或交易管理
+,mockplus,Font|ui-prototyping|3d-cad,design,design|utilities,null,设计工具，适合图形、界面、字体或建模相关工作
+,mmhmm-studio,video|Meeting,productivity|media|video,communication|productivity|media|video,null,办公文档工具，适合阅读、编辑或管理文档资料
+,photozoom-pro,picture-photo,development|media|picture-photo,media|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+,screenfocus,window-management,utilities,utilities|system-enhancement,null,多屏幕管理工具
+,shearwater-cloud,system-maintenance,utilities,utilities|system-enhancement,null,潜水日志查看、编辑和分享工具
+,arkiwi,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,betwixt,security,browser,security,null,网络调试工具，适合抓包、代理和排查连接问题
+,cashnotify,finance|system-maintenance,utilities|finance,utilities|system-enhancement|finance,null,菜单栏收款提醒工具，适合关注支付和收入动态
+,iit-certification-signature,security,browser,security,null,乌克兰税务电子签名浏览器组件
+,machacha,file-management,utilities,file-management|utilities,null,文件管理工具，适合整理、传输、清理或备份文件
+,xliff-editor,system-maintenance,utilities,utilities|system-enhancement,null,加载迅速、使用简便且内存占用低的编辑工具，专为处理XLIFF文件而设计
+,criptext,communication|security,communication|utilities|security,communication|security,null,邮件客户端，适合集中收发和管理邮箱

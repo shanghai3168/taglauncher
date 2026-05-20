@@ -613,11 +613,13 @@ struct ContentView: View {
     private var quickSearchOverlay: some View {
         GeometryReader { proxy in
             if quickSearchVisible {
-                QuickSearchBackdropClickView {
-                    closeQuickSearch()
-                }
+                Color.black.opacity(0.001)
                     .frame(width: proxy.size.width, height: proxy.size.height)
                     .ignoresSafeArea()
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        closeQuickSearch()
+                    }
                     .zIndex(899)
 
                 QuickSearchOverlayView(

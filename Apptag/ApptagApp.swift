@@ -39,13 +39,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem?
     private var overlayWindow: NSWindow?
     private var overlayKeyMonitor: Any?
+    private var quickSearchExternalMouseMonitor: Any?
     private var settingsWindow: NSWindow?    // Track Settings window to keep it above overlay
     private var mainHotkeyRef: EventHotKeyRef?
     private var quickSearchHotkeyRef: EventHotKeyRef?
     private var hotkeyEventHandlerInstalled = false
     private var isQuickSearchOpen = false
     private var isModalInteractionActive = false
-    private var areHotkeysPausedForCapture = false
     private var isInEditMode = false  // Suppress auto-dismiss during editing
     private var isEditingAppNote = false
     private var isConfiguringApplicationMenu = false
@@ -65,6 +65,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         migrateDefaultGroupName()
         TagDatabase.seedDefaultTags()
         syncChromeSettings(force: true)
+        observeHotkeyStatusChanges()
         registerConfiguredHotkeys()
         observeOtherWindows()
         observeSettingsClose()
@@ -87,6 +88,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ notification: Notification) {
         TagDatabase.flushPendingCategorySchemeBackupBatch()
+        removeQuickSearchExternalMouseMonitor()
     }
 
     /// Ensure defaultGroupName is always the language-neutral key "Other".
@@ -338,10 +340,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private var showAppListMenuTitle: String {
-        if let hotkey = LauncherHotkeyStore.hotkey(for: .main) {
-            return "\(tr("menu.showAppList"))  \(hotkey.displayString)"
+        if LauncherHotkeyRegistrationStore.state(for: .main) == .failed {
+            return tr("menu.showShortcutUnavailable")
         }
-        return tr("menu.showAppList")
+        return "\(tr("menu.showAppList"))  \(LauncherHotkey.main.displayString)"
     }
 
     private func observeApplicationMenuChanges() {
@@ -651,6 +653,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         overlayWindow?.orderOut(nil)
         removeOverlayKeyMonitor()
+        removeQuickSearchExternalMouseMonitor()
         NotificationCenter.default.post(name: .tagLauncherOverlayDidHide, object: nil)
         if force {
             overlayWindow = nil
@@ -661,28 +664,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func registerConfiguredHotkeys() {
         installHotkeyEventHandlerIfNeeded()
-        registerStoredHotkey(.main)
-        registerStoredHotkey(.quickSearch)
+        registerFixedHotkey(.main)
+        registerFixedHotkey(.quickSearch)
     }
 
-    @discardableResult
-    func applyHotkey(_ hotkey: LauncherHotkey?, for kind: LauncherHotkeyKind) -> Bool {
-        installHotkeyEventHandlerIfNeeded()
-
-        if hotkey == nil {
-            unregisterHotkey(for: kind)
-            LauncherHotkeyStore.save(nil, for: kind)
-            LauncherHotkeyStore.setStatus(.disabled, message: nil, for: kind)
-            return true
-        }
-
-        guard let hotkey else { return false }
-        let previousRef = hotkeyRef(for: kind)
-        if previousRef != nil, LauncherHotkeyStore.hotkey(for: kind) == hotkey {
-            LauncherHotkeyStore.setStatus(.active, message: nil, for: kind)
-            return true
-        }
-        setHotkeyRef(nil, for: kind)
+    private func registerFixedHotkey(_ kind: LauncherHotkeyKind) {
+        unregisterHotkey(for: kind)
+        let hotkey = kind.hotkey
 
         var hotkeyID = EventHotKeyID()
         hotkeyID.signature = OSType(0x41505447) // 'APTG'
@@ -699,31 +687,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         )
 
         if status == noErr, let newRef {
-            if let previousRef { UnregisterEventHotKey(previousRef) }
             setHotkeyRef(newRef, for: kind)
-            LauncherHotkeyStore.save(hotkey, for: kind)
-            LauncherHotkeyStore.setStatus(.active, message: nil, for: kind)
-            return true
+            LauncherHotkeyRegistrationStore.setActive(for: kind)
+        } else {
+            setHotkeyRef(nil, for: kind)
+            LauncherHotkeyRegistrationStore.setFailed(status, for: kind)
+            print("[TagLauncher] Fixed hotkey registration failed for \(kind.rawValue): \(status)")
         }
-
-        setHotkeyRef(previousRef, for: kind)
-        let message = LauncherHotkeyStore.knownConflictMessage(for: hotkey, status: status)
-            ?? tr("quickSearch.hotkeyConflict.generic")
-        LauncherHotkeyStore.savePending(hotkey, for: kind)
-        LauncherHotkeyStore.setStatus(.conflict, message: message, for: kind)
-        print("[TagLauncher] Hotkey registration failed for \(kind.rawValue): \(status)")
-        return false
     }
 
-    func retryHotkeyRegistration(for kind: LauncherHotkeyKind) {
-        _ = applyHotkey(
-            LauncherHotkeyStore.pendingHotkey(for: kind) ?? LauncherHotkeyStore.hotkey(for: kind),
-            for: kind
-        )
-    }
-
-    private func registerStoredHotkey(_ kind: LauncherHotkeyKind) {
-        _ = applyHotkey(LauncherHotkeyStore.hotkey(for: kind), for: kind)
+    private func observeHotkeyStatusChanges() {
+        NotificationCenter.default.addObserver(
+            forName: .tagLauncherHotkeyRegistrationChanged,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.setupMenuBar()
+            self?.configureApplicationMenuWhenAvailable(retries: 2)
+        }
     }
 
     private func installHotkeyEventHandlerIfNeeded() {
@@ -943,7 +924,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             object: nil,
             queue: .main
         ) { [weak self] notification in
-            self?.isQuickSearchOpen = (notification.userInfo?["active"] as? Bool) ?? false
+            guard let self else { return }
+            self.isQuickSearchOpen = (notification.userInfo?["active"] as? Bool) ?? false
+            if self.isQuickSearchOpen {
+                self.installQuickSearchExternalMouseMonitor()
+            } else {
+                self.removeQuickSearchExternalMouseMonitor()
+            }
         }
 
         NotificationCenter.default.addObserver(
@@ -951,21 +938,35 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             object: nil,
             queue: .main
         ) { [weak self] notification in
-            guard let self else { return }
-            let active = (notification.userInfo?["active"] as? Bool) ?? false
-            self.isModalInteractionActive = active
-            if (notification.userInfo?["source"] as? String) == "hotkeyRecording" {
-                self.setHotkeysPausedForCapture(active)
-            }
+            self?.isModalInteractionActive = (notification.userInfo?["active"] as? Bool) ?? false
         }
 
         NotificationCenter.default.addObserver(
-            forName: .tagLauncherHotkeysChanged,
-            object: nil,
+            forName: NSApplication.didResignActiveNotification,
+            object: NSApp,
             queue: .main
         ) { [weak self] _ in
-            self?.setupMenuBar()
-            self?.configureApplicationMenuWhenAvailable(retries: 2)
+            guard self?.isQuickSearchOpen == true else { return }
+            NotificationCenter.default.post(name: .tagLauncherQuickSearchDismissRequested, object: nil)
+        }
+    }
+
+    private func installQuickSearchExternalMouseMonitor() {
+        guard quickSearchExternalMouseMonitor == nil else { return }
+        quickSearchExternalMouseMonitor = NSEvent.addGlobalMonitorForEvents(
+            matching: [.leftMouseDown, .rightMouseDown, .otherMouseDown]
+        ) { [weak self] _ in
+            DispatchQueue.main.async {
+                guard self?.isQuickSearchOpen == true else { return }
+                NotificationCenter.default.post(name: .tagLauncherQuickSearchDismissRequested, object: nil)
+            }
+        }
+    }
+
+    private func removeQuickSearchExternalMouseMonitor() {
+        if let quickSearchExternalMouseMonitor {
+            NSEvent.removeMonitor(quickSearchExternalMouseMonitor)
+            self.quickSearchExternalMouseMonitor = nil
         }
     }
 
@@ -974,17 +975,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         overlayWindow.level = isEditingAppNote ? Self.overlayTextInputLevel : Self.overlayDefaultLevel
         if let settingsWindow, settingsWindow.parent == overlayWindow {
             settingsWindow.level = overlayWindow.level
-        }
-    }
-
-    private func setHotkeysPausedForCapture(_ paused: Bool) {
-        guard areHotkeysPausedForCapture != paused else { return }
-        areHotkeysPausedForCapture = paused
-        if paused {
-            unregisterHotkey(for: .main)
-            unregisterHotkey(for: .quickSearch)
-        } else {
-            registerConfiguredHotkeys()
         }
     }
 

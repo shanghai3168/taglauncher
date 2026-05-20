@@ -6,7 +6,7 @@ extension Notification.Name {
     static let tagLauncherQuickSearchRequested = Notification.Name("TagLauncherQuickSearchRequested")
     static let tagLauncherQuickSearchDismissRequested = Notification.Name("TagLauncherQuickSearchDismissRequested")
     static let tagLauncherQuickSearchVisibilityChanged = Notification.Name("TagLauncherQuickSearchVisibilityChanged")
-    static let tagLauncherHotkeysChanged = Notification.Name("TagLauncherHotkeysChanged")
+    static let tagLauncherHotkeyRegistrationChanged = Notification.Name("TagLauncherHotkeyRegistrationChanged")
 }
 
 enum QuickSearchOpenSource {
@@ -20,10 +20,6 @@ enum QuickSearchOpenSource {
 struct LauncherHotkey: Equatable {
     let keyCode: UInt32
     let modifiers: UInt32
-
-    var serialized: String {
-        "\(keyCode):\(modifiers)"
-    }
 
     var displayString: String {
         let ordered: [(UInt32, String)] = [
@@ -40,37 +36,12 @@ struct LauncherHotkey: Equatable {
         return modifierGlyphs + LauncherHotkey.keyDisplayName(for: keyCode)
     }
 
-    static var defaultMain: LauncherHotkey {
+    static var main: LauncherHotkey {
         LauncherHotkey(keyCode: UInt32(kVK_Space), modifiers: UInt32(shiftKey | optionKey))
     }
 
-    static var defaultQuickSearch: LauncherHotkey {
+    static var quickSearch: LauncherHotkey {
         LauncherHotkey(keyCode: UInt32(kVK_Space), modifiers: UInt32(kEventKeyModifierFnMask))
-    }
-
-    static func deserialize(_ value: String?) -> LauncherHotkey? {
-        guard let value, !value.isEmpty else { return nil }
-        let parts = value.split(separator: ":")
-        guard parts.count == 2,
-              let keyCode = UInt32(parts[0]),
-              let modifiers = UInt32(parts[1])
-        else { return nil }
-        return LauncherHotkey(keyCode: keyCode, modifiers: modifiers)
-    }
-
-    static func from(event: NSEvent) -> LauncherHotkey? {
-        let ignoredKeyCodes: Set<UInt16> = [54, 55, 56, 57, 58, 59, 60, 61, 62, 63]
-        guard !ignoredKeyCodes.contains(event.keyCode) else { return nil }
-
-        var carbonModifiers: UInt32 = 0
-        if event.modifierFlags.contains(.shift) { carbonModifiers |= UInt32(shiftKey) }
-        if event.modifierFlags.contains(.option) { carbonModifiers |= UInt32(optionKey) }
-        if event.modifierFlags.contains(.control) { carbonModifiers |= UInt32(controlKey) }
-        if event.modifierFlags.contains(.command) { carbonModifiers |= UInt32(cmdKey) }
-        if event.modifierFlags.contains(.function) { carbonModifiers |= UInt32(kEventKeyModifierFnMask) }
-        guard carbonModifiers != 0 else { return nil }
-
-        return LauncherHotkey(keyCode: UInt32(event.keyCode), modifiers: carbonModifiers)
     }
 
     static func keyDisplayName(for keyCode: UInt32) -> String {
@@ -121,31 +92,31 @@ enum LauncherHotkeyKind: String {
     case main
     case quickSearch
 
-    var storageKey: String {
+    var stateKey: String {
         switch self {
-        case .main: return "mainHotkey"
-        case .quickSearch: return "quickSearchHotkey"
+        case .main: return LauncherHotkeyRegistrationStore.mainStateKey
+        case .quickSearch: return LauncherHotkeyRegistrationStore.quickSearchStateKey
         }
     }
 
-    var statusKey: String {
+    var failureCodeKey: String {
         switch self {
-        case .main: return "mainHotkeyStatus"
-        case .quickSearch: return "quickSearchHotkeyStatus"
+        case .main: return LauncherHotkeyRegistrationStore.mainFailureCodeKey
+        case .quickSearch: return LauncherHotkeyRegistrationStore.quickSearchFailureCodeKey
         }
     }
 
-    var conflictMessageKey: String {
+    var attentionKey: String {
         switch self {
-        case .main: return "mainHotkeyConflictMessage"
-        case .quickSearch: return "quickSearchHotkeyConflictMessage"
+        case .main: return LauncherHotkeyRegistrationStore.mainNeedsAttentionKey
+        case .quickSearch: return LauncherHotkeyRegistrationStore.quickSearchNeedsAttentionKey
         }
     }
 
-    var pendingStorageKey: String {
+    var hotkey: LauncherHotkey {
         switch self {
-        case .main: return "mainHotkeyPending"
-        case .quickSearch: return "quickSearchHotkeyPending"
+        case .main: return .main
+        case .quickSearch: return .quickSearch
         }
     }
 
@@ -157,73 +128,75 @@ enum LauncherHotkeyKind: String {
     }
 }
 
-enum LauncherHotkeyStatus: String {
-    case active = "Active"
-    case conflict = "Conflict"
-    case disabled = "Disabled"
+enum LauncherHotkeyRegistrationState: String {
+    case active
+    case failed
 }
 
-enum LauncherHotkeyStore {
-    static func hotkey(for kind: LauncherHotkeyKind) -> LauncherHotkey? {
-        if kind == .main {
-            return .defaultMain
-        }
-        if kind == .quickSearch && !AppDefaults.hasStoredValue(for: kind.storageKey) {
-            return .defaultQuickSearch
-        }
-        return LauncherHotkey.deserialize(UserDefaults.standard.string(forKey: kind.storageKey))
+enum LauncherHotkeyRegistrationStore {
+    static let mainStateKey = "mainHotkeyRegistrationState"
+    static let quickSearchStateKey = "quickSearchHotkeyRegistrationState"
+    static let mainFailureCodeKey = "mainHotkeyRegistrationFailureCode"
+    static let quickSearchFailureCodeKey = "quickSearchHotkeyRegistrationFailureCode"
+    static let mainNeedsAttentionKey = "mainHotkeyRegistrationNeedsAttention"
+    static let quickSearchNeedsAttentionKey = "quickSearchHotkeyRegistrationNeedsAttention"
+
+    static func state(for kind: LauncherHotkeyKind) -> LauncherHotkeyRegistrationState {
+        let rawValue = UserDefaults.standard.string(forKey: kind.stateKey)
+        return LauncherHotkeyRegistrationState(rawValue: rawValue ?? "") ?? .active
     }
 
-    static func save(_ hotkey: LauncherHotkey?, for kind: LauncherHotkeyKind) {
-        UserDefaults.standard.set(hotkey?.serialized ?? "", forKey: kind.storageKey)
-        UserDefaults.standard.removeObject(forKey: kind.pendingStorageKey)
+    static func failureCode(for kind: LauncherHotkeyKind) -> Int? {
+        let defaults = UserDefaults.standard
+        guard defaults.object(forKey: kind.failureCodeKey) != nil else { return nil }
+        return defaults.integer(forKey: kind.failureCodeKey)
     }
 
-    static func savePending(_ hotkey: LauncherHotkey, for kind: LauncherHotkeyKind) {
-        UserDefaults.standard.set(hotkey.serialized, forKey: kind.pendingStorageKey)
+    static func setActive(for kind: LauncherHotkeyKind) {
+        setState(.active, failureCode: nil, for: kind)
     }
 
-    static func pendingHotkey(for kind: LauncherHotkeyKind) -> LauncherHotkey? {
-        LauncherHotkey.deserialize(UserDefaults.standard.string(forKey: kind.pendingStorageKey))
+    static func setFailed(_ failureCode: OSStatus, for kind: LauncherHotkeyKind) {
+        setState(.failed, failureCode: Int(failureCode), for: kind)
     }
 
-    static func status(for kind: LauncherHotkeyKind) -> LauncherHotkeyStatus {
-        let raw = UserDefaults.standard.string(forKey: kind.statusKey)
-        return LauncherHotkeyStatus(rawValue: raw ?? "") ?? (hotkey(for: kind) == nil ? .disabled : .active)
+    static func consumeNeedsAttention(for kind: LauncherHotkeyKind) -> Bool {
+        let defaults = UserDefaults.standard
+        let needsAttention = defaults.bool(forKey: kind.attentionKey)
+        defaults.set(false, forKey: kind.attentionKey)
+        return needsAttention
     }
 
-    static func setStatus(_ status: LauncherHotkeyStatus, message: String?, for kind: LauncherHotkeyKind) {
-        UserDefaults.standard.set(status.rawValue, forKey: kind.statusKey)
-        if let message, !message.isEmpty {
-            UserDefaults.standard.set(message, forKey: kind.conflictMessageKey)
+    private static func setState(
+        _ state: LauncherHotkeyRegistrationState,
+        failureCode: Int?,
+        for kind: LauncherHotkeyKind
+    ) {
+        let defaults = UserDefaults.standard
+        let previousState = defaults.string(forKey: kind.stateKey)
+        let previousFailureCode = defaults.object(forKey: kind.failureCodeKey) == nil
+            ? nil
+            : defaults.integer(forKey: kind.failureCodeKey)
+        let stateChanged = previousState != state.rawValue || previousFailureCode != failureCode
+
+        defaults.set(state.rawValue, forKey: kind.stateKey)
+        if let failureCode {
+            defaults.set(failureCode, forKey: kind.failureCodeKey)
         } else {
-            UserDefaults.standard.removeObject(forKey: kind.conflictMessageKey)
+            defaults.removeObject(forKey: kind.failureCodeKey)
         }
-        NotificationCenter.default.post(name: .tagLauncherHotkeysChanged, object: nil)
-    }
 
-    static func conflictMessage(for kind: LauncherHotkeyKind) -> String {
-        UserDefaults.standard.string(forKey: kind.conflictMessageKey) ?? ""
-    }
-
-    static func knownConflictMessage(for hotkey: LauncherHotkey, status: OSStatus) -> String? {
-        guard status != noErr else { return nil }
-        switch (hotkey.keyCode, hotkey.modifiers) {
-        case (UInt32(kVK_Space), UInt32(cmdKey)):
-            return tr("quickSearch.hotkeyConflict.spotlight")
-        case (UInt32(kVK_Space), UInt32(optionKey | cmdKey)):
-            return tr("quickSearch.hotkeyConflict.finderSearch")
-        case (UInt32(kVK_Space), UInt32(controlKey)):
-            return tr("quickSearch.hotkeyConflict.previousInput")
-        case (UInt32(kVK_Space), UInt32(controlKey | optionKey)):
-            return tr("quickSearch.hotkeyConflict.nextInput")
-        case (UInt32(kVK_Space), UInt32(controlKey | cmdKey)):
-            return tr("quickSearch.hotkeyConflict.emoji")
-        case (UInt32(kVK_Space), UInt32(kEventKeyModifierFnMask)):
-            return tr("quickSearch.hotkeyConflict.fnSpace")
-        default:
-            return nil
+        if state == .active {
+            defaults.set(false, forKey: kind.attentionKey)
+        } else if stateChanged {
+            defaults.set(true, forKey: kind.attentionKey)
         }
+
+        NotificationCenter.default.post(
+            name: .tagLauncherHotkeyRegistrationChanged,
+            object: nil,
+            userInfo: ["kind": kind.rawValue]
+        )
     }
 }
 
@@ -456,7 +429,11 @@ enum QuickSearchEngine {
             candidates.append((.acronym, 0))
         }
         for pinyin in field.pinyinCandidates {
-            if let pinyinCandidate = matchPinyinCandidate(token: token, normalized: pinyin) {
+            if let pinyinCandidate = matchPinyinCandidate(
+                token: token,
+                normalized: pinyin,
+                allowSubstring: field.kind == .note
+            ) {
                 candidates.append(pinyinCandidate)
             }
         }
@@ -474,7 +451,7 @@ enum QuickSearchEngine {
         case .tag:
             return MatchOptions(allowSubstring: true, allowFuzzySubsequence: true)
         case .note:
-            return MatchOptions(allowSubstring: true, allowFuzzySubsequence: false)
+            return MatchOptions(allowSubstring: true, allowFuzzySubsequence: true)
         case .bundleIdentifier, .internalBundleName:
             return MatchOptions(allowSubstring: false, allowFuzzySubsequence: false)
         }
@@ -501,13 +478,20 @@ enum QuickSearchEngine {
         return nil
     }
 
-    private static func matchPinyinCandidate(token: String, normalized: String) -> (MatchKind, Int)? {
+    private static func matchPinyinCandidate(
+        token: String,
+        normalized: String,
+        allowSubstring: Bool = false
+    ) -> (MatchKind, Int)? {
         guard !normalized.isEmpty else { return nil }
         if normalized == token {
             return (.exact, 0)
         }
         if normalized.hasPrefix(token) {
             return (.prefix, 0)
+        }
+        if allowSubstring, let range = normalized.range(of: token) {
+            return (.substring, normalized.distance(from: normalized.startIndex, to: range.lowerBound))
         }
         return nil
     }
@@ -972,109 +956,6 @@ private final class QuickSearchNativeTextField: NSTextField {
             onCommand?(.dismiss)
         default:
             super.keyDown(with: event)
-        }
-    }
-}
-
-struct QuickSearchBackdropClickView: NSViewRepresentable {
-    let onClick: () -> Void
-
-    func makeNSView(context: Context) -> QuickSearchBackdropNSView {
-        let view = QuickSearchBackdropNSView()
-        view.onClick = onClick
-        return view
-    }
-
-    func updateNSView(_ view: QuickSearchBackdropNSView, context: Context) {
-        view.onClick = onClick
-    }
-}
-
-final class QuickSearchBackdropNSView: NSView {
-    var onClick: (() -> Void)?
-
-    override func hitTest(_ point: NSPoint) -> NSView? {
-        bounds.contains(point) ? self : nil
-    }
-
-    override func mouseDown(with event: NSEvent) {
-        onClick?()
-    }
-}
-
-// MARK: - Hotkey Capture UI
-
-struct HotkeyCaptureView: NSViewRepresentable {
-    let isActive: Bool
-    let onCapture: (LauncherHotkey) -> Void
-    let onCancel: () -> Void
-
-    func makeNSView(context: Context) -> HotkeyCaptureNSView {
-        let view = HotkeyCaptureNSView()
-        view.onCapture = onCapture
-        view.onCancel = onCancel
-        return view
-    }
-
-    func updateNSView(_ view: HotkeyCaptureNSView, context: Context) {
-        view.onCapture = onCapture
-        view.onCancel = onCancel
-        view.setActive(isActive)
-    }
-}
-
-final class HotkeyCaptureNSView: NSView {
-    var onCapture: ((LauncherHotkey) -> Void)?
-    var onCancel: (() -> Void)?
-    private var keyMonitor: Any?
-
-    override var acceptsFirstResponder: Bool { true }
-
-    deinit {
-        removeKeyMonitor()
-    }
-
-    func setActive(_ active: Bool) {
-        if active {
-            installKeyMonitorIfNeeded()
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
-                self.window?.makeFirstResponder(self)
-            }
-        } else {
-            removeKeyMonitor()
-        }
-    }
-
-    override func keyDown(with event: NSEvent) {
-        handle(event)
-    }
-
-    private func installKeyMonitorIfNeeded() {
-        guard keyMonitor == nil else { return }
-        keyMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
-            guard let self else { return event }
-            self.handle(event)
-            return nil
-        }
-    }
-
-    private func removeKeyMonitor() {
-        if let keyMonitor {
-            NSEvent.removeMonitor(keyMonitor)
-            self.keyMonitor = nil
-        }
-    }
-
-    private func handle(_ event: NSEvent) {
-        if event.keyCode == UInt16(kVK_Escape) {
-            onCancel?()
-            return
-        }
-        if let hotkey = LauncherHotkey.from(event: event) {
-            onCapture?(hotkey)
-        } else {
-            NSSound.beep()
         }
     }
 }

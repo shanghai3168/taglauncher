@@ -2,7 +2,7 @@ import Foundation
 
 enum AppDefaults {
     static let schemaVersionKey = "initialDefaultsSchemaVersion"
-    static let currentSchemaVersion = 2
+    static let currentSchemaVersion = 3
 
     static let tagFontSize: Double = 22
     static let iconSize: Double = 80
@@ -22,9 +22,11 @@ enum AppDefaults {
             "hideAppNames": hideAppNames,
             "showDockIcon": showDockIcon,
             "launchAtLogin": launchAtLogin,
-            "showUncommonAppBubbles": showUncommonAppBubbles
+            "showUncommonAppBubbles": showUncommonAppBubbles,
+            LauncherHotkeyRegistrationStore.mainStateKey: LauncherHotkeyRegistrationState.active.rawValue,
+            LauncherHotkeyRegistrationStore.quickSearchStateKey: LauncherHotkeyRegistrationState.active.rawValue
         ])
-        migrateShortcutDefaultsIfNeeded()
+        removeShortcutCustomizationDefaults()
     }
 
     static func hasStoredValue(for key: String) -> Bool {
@@ -32,24 +34,18 @@ enum AppDefaults {
         return UserDefaults.standard.persistentDomain(forName: domain)?[key] != nil
     }
 
-    private static func migrateShortcutDefaultsIfNeeded() {
+    private static func removeShortcutCustomizationDefaults() {
         let defaults = UserDefaults.standard
-        guard defaults.integer(forKey: schemaVersionKey) < currentSchemaVersion else { return }
-
-        defaults.set(LauncherHotkey.defaultMain.serialized, forKey: LauncherHotkeyKind.main.storageKey)
-        defaults.removeObject(forKey: LauncherHotkeyKind.main.pendingStorageKey)
-        defaults.removeObject(forKey: LauncherHotkeyKind.main.statusKey)
-        defaults.removeObject(forKey: LauncherHotkeyKind.main.conflictMessageKey)
-
-        let quickSearchKey = LauncherHotkeyKind.quickSearch.storageKey
-        let storedQuickSearch = defaults.string(forKey: quickSearchKey) ?? ""
-        if storedQuickSearch.isEmpty {
-            defaults.set(LauncherHotkey.defaultQuickSearch.serialized, forKey: quickSearchKey)
-            defaults.removeObject(forKey: LauncherHotkeyKind.quickSearch.pendingStorageKey)
-            defaults.removeObject(forKey: LauncherHotkeyKind.quickSearch.statusKey)
-            defaults.removeObject(forKey: LauncherHotkeyKind.quickSearch.conflictMessageKey)
-        }
-
+        [
+            "mainHotkey",
+            "quickSearchHotkey",
+            "mainHotkeyPending",
+            "quickSearchHotkeyPending",
+            "mainHotkeyStatus",
+            "quickSearchHotkeyStatus",
+            "mainHotkeyConflictMessage",
+            "quickSearchHotkeyConflictMessage"
+        ].forEach { defaults.removeObject(forKey: $0) }
         defaults.set(currentSchemaVersion, forKey: schemaVersionKey)
     }
 }

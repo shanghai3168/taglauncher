@@ -373,7 +373,6 @@ Name,normalizedName,defaultTag,tager,bundleIdentifier,defaultNote-ZH
 ,high-on-life,entertainment|game,game,null,游戏，适合休闲娱乐和沉浸式体验
 ,markedit,writing,writing,null,Markdown 编辑器，适合写作、整理文档和发布内容
 ,anydesk,utilities,network-tools,null,远程桌面工具，适合远程访问和协助操作电脑
-,tailscale-app,utilities|security,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
 ,the-outer-worlds,entertainment|game,game,null,游戏，适合休闲娱乐和沉浸式体验
 ,raspberry-pi-imager,media|picture-photo|utilities,picture-photo,null,树莓派系统写盘工具，制作启动卡很省事
 ,starfield,entertainment|game,game,null,游戏，适合休闲娱乐和沉浸式体验
@@ -549,7 +548,6 @@ Name,normalizedName,defaultTag,tager,bundleIdentifier,defaultNote-ZH
 ,google-gemini,productivity|ai-tools,ai-tools,null,效率工具，适合文档、记录或日常工作流
 ,wailbrew,utilities,utilities,null,Homebrew 图形界面工具，适合查看和管理本机软件包
 ,opera,browser,browser,null,网页浏览器，适合日常上网、访问网页和使用 Web 服务
-,wireshark-app,utilities,network-tools,null,网络协议分析工具，适合抓包、排查和分析网络问题
 ,wispr-flow,ai-tools,ai-tools,null,AI 语音输入工具，适合用语音快速转写和输入文本
 ,macwhisper,utilities,utilities,null,语音转文字工具，适合本地转录音频和整理文字稿
 ,beekeeper-studio,development,database-tools,null,数据库工具，适合连接、查询和管理数据库
@@ -681,7 +679,6 @@ Name,normalizedName,defaultTag,tager,bundleIdentifier,defaultNote-ZH
 ,loom,media|video,video,null,媒体工具，适合处理图片、音频或视频内容
 ,jd-gui,utilities,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
 ,finicky,browser|utilities,browser,null,macOS应用程序，能够让用户根据特定规则决定每个网址打开的浏览器
-,xcodes-app,development,ide,null,开发相关工具，适合编程、调试或管理开发环境
 ,granola,communication|productivity|writing|ai-tools,ai-tools|writing|Meeting,null,自动记录会议重点，把对话变成可追踪的行动项
 ,webex,communication|productivity|media|video,Meeting,null,企业级视频会议工具，适合正式远程沟通
 ,barrier,utilities,device-management,null,键鼠共享工具，适合在多台电脑间共用键盘和鼠标
@@ -726,7 +723,6 @@ Name,normalizedName,defaultTag,tager,bundleIdentifier,defaultNote-ZH
 ,font-inter,utilities,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
 ,pika,utilities,utilities,null,取色工具，适合从屏幕上拾取和管理颜色
 ,lidanglesensor,media|audio|utilities|system-enhancement,audio|device-management|Automation,null,读取笔记本开合角度的小工具，适合自动化和硬件实验
-,syncthing-app,transfer|utilities,transfer,null,传输工具，适合下载、同步或共享文件
 ,cleanmymac,utilities,system-maintenance,null,Mac 清理维护工具，适合清理垃圾、卸载应用和优化系统
 ,gqrx,media|audio,audio,null,媒体工具，适合处理图片、音频或视频内容
 ,postico,development,database-tools,null,数据库工具，适合连接、查询和管理数据库
@@ -779,7 +775,6 @@ Name,normalizedName,defaultTag,tager,bundleIdentifier,defaultNote-ZH
 ,geekbench,utilities,system-maintenance,null,跨平台基准测试工具，可测试处理器和内存性能
 ,cork,utilities,utilities,null,设计工具，适合图形、界面、字体或建模相关工作
 ,dosbox,utilities,utilities,null,兼容运行环境，适合运行部分 Windows 或经典 DOS 应用
-,r-app,utilities,utilities,null,设计工具，适合图形、界面、字体或建模相关工作
 ,apache-directory-studio,browser,database-tools,null,开发相关工具，适合编程、调试或管理开发环境
 ,pdf-expert,writing,PDF,null,PDF 阅读、批注和编辑工具，处理合同论文都方便
 ,mysql-shell,development,database-tools|terminal-tools,null,数据库工具，适合连接、查询和管理数据库
@@ -878,7 +873,6 @@ Name,normalizedName,defaultTag,tager,bundleIdentifier,defaultNote-ZH
 ,local,development,ide,null,开发相关工具，适合编程、调试或管理开发环境
 ,muxy-app-tap-muxy,utilities,utilities,null,
 ,prusaslicer,utilities,utilities,null,设计工具，适合图形、界面、字体或建模相关工作
-,squirrel-app,utilities,utilities,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
 ,superset,development,ide,null,开发相关工具，适合编程、调试或管理开发环境
 ,google-chrome-beta,browser,browser,null,网页浏览器，适合日常上网和访问 Web 服务
 ,orion,browser,browser,null,网页浏览器，适合日常上网和访问 Web 服务
@@ -930,7 +924,7 @@ Name,normalizedName,defaultTag,tager,bundleIdentifier,defaultNote-ZH
 ,remote-desktop-manager,utilities,network-tools,null,远程连接管理工具，适合集中管理服务器和远程桌面
 ,home-assistant,productivity|utilities|system-enhancement,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
 ,homerow,utilities|system-enhancement,system-maintenance,null,系统增强工具，适合优化窗口、菜单栏、输入或设备状态
-,dotnet-runtime,utilities,utilities,null,.NET 应用运行时
+,dotnet-runtime,utilities,utilities,null,Microsoft .NET 应用运行时
 ,viber,communication|utilities|security,communication|security,null,沟通工具，适合聊天、邮件、通话或团队交流
 ,fedora-media-writer,writing|media|picture-photo,picture-photo|writing,null,图片工具，适合浏览、编辑、转换或管理图片
 ,jdk-mission-control,utilities|system-enhancement,window-management|runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
@@ -1113,7 +1107,6 @@ Name,normalizedName,defaultTag,tager,bundleIdentifier,defaultNote-ZH
 ,heroic,entertainment|game,game,null,游戏，适合休闲娱乐和沉浸式体验
 ,battle-net,entertainment|game,game,null,暴雪游戏启动器，管理战网游戏和更新
 ,phpstorm,development,ide|runtime-sdk,null,编程开发工具，适合编写、阅读和维护代码
-,mkvtoolnix-app,media|video,video,null,媒体工具，适合处理图片、音频或视频内容
 ,qqmusic,media|audio|entertainment,audio,null,视频工具，适合播放、录制、剪辑或转换视频
 ,siddharthvaddem-openscreen-openscreen,utilities,utilities,null,
 ,font-zed-mono-nerd-font,development|utilities,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
@@ -1142,7 +1135,6 @@ Name,normalizedName,defaultTag,tager,bundleIdentifier,defaultNote-ZH
 ,r-lib-rig-rig,utilities,utilities,null,
 ,font-ibm-plex-sans,media|video|utilities|entertainment,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
 ,1password-tap-1password-cli,utilities|security,security,null,
-,opensc-app,utilities,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
 ,dynatrace-oss-tap-dtctl,utilities,utilities,null,
 ,font-terminess-ttf-nerd-font,utilities,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
 ,font-space-mono-nerd-font,utilities,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
@@ -1210,7 +1202,7 @@ Name,normalizedName,defaultTag,tager,bundleIdentifier,defaultNote-ZH
 ,winehq-stable,utilities,utilities,null,兼容运行环境，适合运行部分 Windows 或经典 DOS 应用
 ,gstreamer-runtime-package,utilities,utilities,null,
 ,vlc-media-player,media|video,video,null,多格式媒体播放器，适合播放本地视频和音频文件
-,net-sdk,development,runtime-sdk,null,.NET 开发工具包，适合构建、运行和发布 .NET 应用
+,net-sdk,development,runtime-sdk,null,Microsoft .NET 开发工具包，适合构建、运行和发布 .NET 应用
 ,session-manager-plugin-for-the-aws-cli,utilities,utilities,null,
 ,brave,browser|utilities|security,browser|security,null,网页调试和浏览工具，适合开发者检查页面细节
 ,azul-zulu-java-standard-edition-development-kit,development,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
@@ -1288,7 +1280,7 @@ Name,normalizedName,defaultTag,tager,bundleIdentifier,defaultNote-ZH
 ,amazon-corretto-jdk,utilities,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
 ,winehq-devel,utilities,utilities,null,兼容运行环境，适合运行部分 Windows 或经典 DOS 应用
 ,aws-client-vpn,utilities|security,security|network-tools,null,
-,jetbrains-rider,development,ide,null,.NET 集成开发环境
+,jetbrains-rider,development,ide,null,Microsoft .NET 集成开发环境
 ,macvim,development|writing,ide,null,文本编辑器，适合编辑纯文本、配置和轻量写作
 ,teleport-tsh,communication|productivity,communication,null,Teleport 命令行入口，适合安全登录服务器和集群
 ,cmake,utilities,utilities,null,跨平台工程配置和构建工具

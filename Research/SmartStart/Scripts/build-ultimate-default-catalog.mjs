@@ -211,8 +211,22 @@ function stripTerminalPunctuation(value) {
     .trim();
 }
 
+function stripLeadingPunctuation(value) {
+  const clean = String(value ?? "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (clean.startsWith(".NET")) {
+    return `Microsoft .NET${clean.slice(".NET".length)}`.trim();
+  }
+
+  return clean
+    .replace(/^[\p{P}\s]+/u, "")
+    .trim();
+}
+
 function truncateNote(value) {
-  const clean = stripTerminalPunctuation(value);
+  const clean = stripTerminalPunctuation(stripLeadingPunctuation(value));
   if (charLength(clean) <= noteLimit) return clean;
   let sliced = Array.from(clean).slice(0, noteLimit).join("");
   return stripTerminalPunctuation(sliced);
@@ -233,33 +247,18 @@ function loadCategoryTranslations() {
   return translations;
 }
 
-function localizedGeneratedNote(name, tags, code, translations) {
-  const categoryMap = translations.get(code) ?? translations.get("en") ?? {};
-  const meaningfulTags = tags.filter((tag) => tag !== "other").slice(0, 2);
-  const shownTags = meaningfulTags.length > 0 ? meaningfulTags : tags.slice(0, 1);
-  const labels = shownTags.map((tag) => categoryMap[tag] ?? tag);
-  const joiner = ["ar", "ar-Najdi"].includes(code) ? "، " : ["zh-Hans", "zh-Hant", "ja"].includes(code) ? "、" : ", ";
-  const separator = ["zh-Hans", "zh-Hant", "ja"].includes(code) ? "：" : ": ";
-  const full = `${name}${separator}${labels.join(joiner)}`;
-  if (charLength(full) <= noteLimit) return full;
-
-  const compact = `${name}${separator}${labels[0] ?? "App"}`;
-  if (charLength(compact) <= noteLimit) return compact;
-
-  return truncateNote(compact);
+function inferSourceNoteLanguage(note) {
+  const value = String(note ?? "");
+  if (/[\u3040-\u30ff]/u.test(value)) return "ja";
+  if (/[\uac00-\ud7af]/u.test(value)) return "ko";
+  return "zh-Hans";
 }
 
-function buildLocalizedNotes(name, tags, noteZH, translations) {
+function buildLocalizedNotes(noteZH) {
   if (!noteZH) return {};
-  const notes = {};
-  for (const code of translations.keys()) {
-    if (code === "zh-Hans") {
-      notes[code] = truncateNote(noteZH);
-    } else {
-      notes[code] = localizedGeneratedNote(name, tags, code, translations);
-    }
-  }
-  return notes;
+  return {
+    [inferSourceNoteLanguage(noteZH)]: truncateNote(noteZH),
+  };
 }
 
 function parseAppleNotes() {
@@ -357,6 +356,50 @@ function mapCuratedTags(value) {
   };
 }
 
+const duplicateAliasSuffixes = ["-app", "-desktop", "-mac", "-macos"];
+
+function duplicateAliasBase(normalizedName) {
+  const clean = String(normalizedName ?? "").trim();
+  for (const suffix of duplicateAliasSuffixes) {
+    if (clean.endsWith(suffix)) {
+      return clean.slice(0, -suffix.length);
+    }
+  }
+  return clean;
+}
+
+function duplicateComparable(row) {
+  return JSON.stringify({
+    defaultTag: String(row.defaultTag ?? "").trim(),
+    tager: String(row.tager ?? "").trim(),
+    bundleIdentifier: normalizeBundle(row.bundleIdentifier),
+    noteZH: truncateNote(row["defaultNote-ZH"]),
+  });
+}
+
+function dedupeCuratedRows(rows, stats) {
+  const byNormalized = new Map();
+  for (const row of rows) {
+    const normalizedName = String(row.normalizedName ?? "").trim() || normalizeName(row.Name ?? "");
+    if (normalizedName && !byNormalized.has(normalizedName)) {
+      byNormalized.set(normalizedName, row);
+    }
+  }
+
+  const filtered = [];
+  for (const row of rows) {
+    const normalizedName = String(row.normalizedName ?? "").trim() || normalizeName(row.Name ?? "");
+    const aliasBase = duplicateAliasBase(normalizedName);
+    const baseRow = aliasBase === normalizedName ? null : byNormalized.get(aliasBase);
+    if (baseRow && duplicateComparable(row) === duplicateComparable(baseRow)) {
+      stats.aliasDuplicatesRemoved += 1;
+      continue;
+    }
+    filtered.push(row);
+  }
+  return filtered;
+}
+
 function build() {
   fs.mkdirSync(outputDir, { recursive: true });
   const translations = loadCategoryTranslations();
@@ -366,10 +409,11 @@ function build() {
         (JSON.parse(fs.readFileSync(outputs.runtimeJSON, "utf8")).entries ?? []).map((entry) => [entry.normalizedName, entry]),
       )
     : new Map();
-  const curatedRows = readCSVObjects(sources.curatedCatalog);
+  const rawCuratedRows = readCSVObjects(sources.curatedCatalog);
   const unknownTagerTokens = new Set();
   const stats = {
-    curatedRows: curatedRows.length,
+    curatedRows: rawCuratedRows.length,
+    aliasDuplicatesRemoved: 0,
     rowsWithSourceNotes: 0,
     appleNotesAttached: 0,
     tagChangedVsPrevious: 0,
@@ -377,6 +421,7 @@ function build() {
     bundleChangedVsPrevious: 0,
     missingLocalizedNotes: 0,
   };
+  const curatedRows = dedupeCuratedRows(rawCuratedRows, stats);
   const finalRows = curatedRows.map((row, index) => {
     const name = String(row.Name ?? "").trim();
     const normalizedName = String(row.normalizedName ?? "").trim() || normalizeName(name);
@@ -399,7 +444,7 @@ function build() {
       stats.rowsWithSourceNotes += 1;
     }
 
-    const notes = buildLocalizedNotes(name, mapping.tags, noteZH, translations);
+    const notes = buildLocalizedNotes(noteZH);
     const previous = previousRuntimeEntries.get(normalizedName);
     if (previous) {
       if (JSON.stringify(previous.defaultTag ?? []) !== JSON.stringify(mapping.tags)) {
@@ -433,17 +478,15 @@ function build() {
   const exactOtherRows = finalRows.filter((row) => row.tags.length === 1 && row.tags[0] === "other");
   const mixedOtherRows = finalRows.filter((row) => row.tags.length > 1 && row.tags.includes("other"));
   const noteRows = finalRows.filter((row) => row.noteZH);
-  const localizedNoteIssues = [];
+  const noteQualityIssues = [];
   for (const row of noteRows) {
-    for (const code of translations.keys()) {
-      const note = row.notes[code];
-      if (!note) {
-        localizedNoteIssues.push({ name: row.name, code, issue: "missing" });
-        stats.missingLocalizedNotes += 1;
-      } else if (charLength(note) > noteLimit) {
-        localizedNoteIssues.push({ name: row.name, code, issue: `over_limit:${charLength(note)}` });
+    for (const [code, note] of Object.entries(row.notes)) {
+      if (charLength(note) > noteLimit) {
+        noteQualityIssues.push({ name: row.name, code, issue: `over_limit:${charLength(note)}` });
       } else if (stripTerminalPunctuation(note) != note) {
-        localizedNoteIssues.push({ name: row.name, code, issue: "trailing_punctuation" });
+        noteQualityIssues.push({ name: row.name, code, issue: "trailing_punctuation" });
+      } else if (stripLeadingPunctuation(note) != note) {
+        noteQualityIssues.push({ name: row.name, code, issue: "leading_punctuation" });
       }
     }
   }
@@ -497,6 +540,8 @@ function build() {
   const sourceLines = [
     "- curated CSV: `Research/SmartStart/UltimateDefaultCatalog/SmartStart_UltimateDefaultCatalog.csv`",
     `- curated rows: ${stats.curatedRows}`,
+    `- curated rows after alias dedupe: ${curatedRows.length}`,
+    `- alias duplicates removed: ${stats.aliasDuplicatesRemoved}`,
     `- unknown tager tokens: ${unknownTagerTokens.size}`,
   ].join("\n");
   const topTagLines = stableTagOrder
@@ -533,7 +578,7 @@ ${sourceLines}
 - Chinese note changes vs previous runtime JSON: ${stats.zhNoteChangedVsPrevious}
 - Bundle identifier changes vs previous runtime JSON: ${stats.bundleChangedVsPrevious}
 - Unknown tager tokens: ${unknownTagerTokens.size}
-- Localized note issues: ${localizedNoteIssues.length}
+- Note quality issues: ${noteQualityIssues.length}
 
 ## Tag Distribution
 
@@ -542,8 +587,8 @@ ${topTagLines}
 ## Notes
 
 - Runtime tags are generated from the curated CSV \`tager\` column, not the legacy \`defaultTag\` column.
-- Runtime notes are generated for all supported localization files when a Chinese source note exists.
-- Non-Chinese localized notes currently use localized tag-summary copy generated from existing category translations; high-traffic languages can be manually polished later.
+- Runtime notes are generated only from real source notes. The generator must not synthesize notes from app names or category labels.
+- Missing translations are intentionally omitted until a real translation pipeline or reviewed translation table provides them.
 `;
   fs.writeFileSync(outputs.report, report);
 
@@ -555,13 +600,15 @@ Generated: ${runtime.generatedAt}
 
 - Supported languages: ${runtime.supportedLanguages.length}
 - Rows with source Chinese notes: ${noteRows.length}
-- Required localized notes: ${noteRows.length * runtime.supportedLanguages.length}
-- Issues: ${localizedNoteIssues.length}
+- Source notes: ${noteRows.length}
+- Required machine/reviewed translations: ${noteRows.length * (runtime.supportedLanguages.length - 1)}
+- Generated placeholder translations: 0
+- Note quality issues: ${noteQualityIssues.length}
 - Note limit: ${noteLimit}
 
 ## Issue Sample
 
-${localizedNoteIssues.slice(0, 50).map((issue) => `- ${issue.name} / ${issue.code}: ${issue.issue}`).join("\n") || "- None"}
+${noteQualityIssues.slice(0, 50).map((issue) => `- ${issue.name} / ${issue.code}: ${issue.issue}`).join("\n") || "- None"}
 `;
   fs.writeFileSync(outputs.translationQA, translationReport);
 
@@ -573,7 +620,7 @@ ${localizedNoteIssues.slice(0, 50).map((issue) => `- ${issue.name} / ${issue.cod
     emptyNormalizedRows: emptyNormalizedRows.length,
     exactOtherRows: exactOtherRows.length,
     mixedOtherRows: mixedOtherRows.length,
-    localizedNoteIssues: localizedNoteIssues.length,
+    noteQualityIssues: noteQualityIssues.length,
     unknownTagerTokens: [...unknownTagerTokens].sort(),
     outputDir,
   };
