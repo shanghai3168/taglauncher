@@ -767,7 +767,7 @@ struct PreferencesView: View {
                         Text("万物之中，希望最美")
                             .font(.caption)
                             .foregroundStyle(.secondary)
-                        Text("永桔@2026-18602102518")
+                        Text("永桔@shanghai3168@gmail.com")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }

@@ -44,6 +44,13 @@ struct SmartCategorizationDraft: Codable, Hashable {
     }
 }
 
+struct SmartDefaultNoteProvenance: Codable, Hashable {
+    let entryID: String
+    let languageCode: String
+    let notesVersion: Int
+    let noteFingerprint: String
+}
+
 struct SmartAppCategorizationAssignment: Codable, Hashable, Identifiable {
     let appName: String
     let bundleIdentifier: String?
@@ -55,6 +62,7 @@ struct SmartAppCategorizationAssignment: Codable, Hashable, Identifiable {
     let provenance: [String]
     let defaultNote: String?
     let defaultNoteCandidates: [String]
+    let defaultNoteProvenance: SmartDefaultNoteProvenance?
 
     var id: String {
         if let bundleIdentifier, !bundleIdentifier.isEmpty {
@@ -80,7 +88,8 @@ struct SmartAppCategorizationAssignment: Codable, Hashable, Identifiable {
         reason: String,
         provenance: [String] = [],
         defaultNote: String? = nil,
-        defaultNoteCandidates: [String] = []
+        defaultNoteCandidates: [String] = [],
+        defaultNoteProvenance: SmartDefaultNoteProvenance? = nil
     ) {
         self.appName = appName
         self.bundleIdentifier = bundleIdentifier
@@ -92,6 +101,7 @@ struct SmartAppCategorizationAssignment: Codable, Hashable, Identifiable {
         self.provenance = provenance
         self.defaultNote = defaultNote
         self.defaultNoteCandidates = defaultNoteCandidates
+        self.defaultNoteProvenance = defaultNoteProvenance
     }
 
     private static func uniqueOrdered(_ ids: [SmartCategoryID]) -> [SmartCategoryID] {

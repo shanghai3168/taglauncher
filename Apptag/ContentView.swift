@@ -201,7 +201,6 @@ struct TagPill: View {
     let colorIndex: Int
     var dragModeActive: Bool = false
     var isDragging: Bool = false
-    var dragResetToken: Int = 0
     let action: () -> Void
 
     private var bgColor: Color {
@@ -227,7 +226,6 @@ struct TagPill: View {
             .opacity(dragModeActive ? (isDragging ? 1.0 : 0.62) : 1.0)
             .animation(.easeOut(duration: 0.08), value: isDragging)
             .animation(.easeOut(duration: 0.08), value: dragModeActive)
-            .id("\(name)|reset-\(dragResetToken)")
             .contentShape(RoundedRectangle(cornerRadius: 7))
             .onTapGesture {
                 action()
@@ -242,7 +240,6 @@ struct SideTagPill: View {
     let colorIndex: Int
     var dragModeActive: Bool = false
     var isDragging: Bool = false
-    var dragResetToken: Int = 0
     let action: () -> Void
 
     private var bgColor: Color {
@@ -264,7 +261,6 @@ struct SideTagPill: View {
             .opacity(dragModeActive ? (isDragging ? 1.0 : 0.62) : 1.0)
             .animation(.easeOut(duration: 0.08), value: isDragging)
             .animation(.easeOut(duration: 0.08), value: dragModeActive)
-            .id("\(name)|reset-\(dragResetToken)")
             .contentShape(RoundedRectangle(cornerRadius: 6))
             .onTapGesture {
                 action()
@@ -339,6 +335,7 @@ struct ContentView: View {
     let hideOverlay: () -> Void
     private let initialQuickSearchSource: String?
 
+    @Environment(\.colorScheme) private var colorScheme
     @State private var allApps: [AppInfo] = []
     @State private var displayGroups: [TagGroup] = []
     @State private var tagColors: [String: Int] = [:]
@@ -347,6 +344,8 @@ struct ContentView: View {
     @State private var groupLayoutVersion = 0
     @State private var cachedGridContainerRowsKey: GridContainerRowsKey? = nil
     @State private var cachedGridContainerRows: [GridContainerLayoutRow] = []
+    @State private var appGridScrollTargetID: String? = nil
+    @State private var appGridScrollRequestToken = 0
 
     // Edit mode
     @State private var editPhase: EditPhase = .none
@@ -360,7 +359,6 @@ struct ContentView: View {
     @State private var tagReorderFrames: [String: CGRect] = [:]
     @State private var tagNavDragModeActive = false
     @State private var tagNavDragItem: String? = nil
-    @State private var tagNavDragResetToken = 0
     @State private var tagNavReorderFrames: [String: CGRect] = [:]
     @State private var tagNavReorderDidMove = false
     @State private var hoveredContainer: String? = nil  // colored container lift
@@ -375,7 +373,6 @@ struct ContentView: View {
     @State private var refreshInProgress = false
     @State private var refreshAgainAfterCurrent = false
     @State private var refreshAgainForceLayout = false
-    @State private var hoveredAppItemID: String? = nil
     @State private var hoveredBubble: AppBubbleContext? = nil
     @State private var editingBubble: AppBubbleContext? = nil
     @State private var pendingUncategorizedDrop: PendingUncategorizedDrop? = nil
@@ -391,6 +388,7 @@ struct ContentView: View {
     @State private var quickSearchSelectedID: URL? = nil
     @State private var quickSearchManualSelection = false
     @State private var quickSearchFocusToken = 0
+    @State private var quickSearchSelectionScrollToken = 0
     @State private var quickSearchCloseHidesOverlay = false
     @State private var quickSearchErrorMessage: String? = nil
     @State private var initialQuickSearchConsumed = false
@@ -412,6 +410,7 @@ struct ContentView: View {
     @State private var notchHeight: CGFloat = 0
     @AppStorage("displayMode") private var displayMode = AppDefaults.displayMode
     @AppStorage("hideAppNames") private var hideAppNames = AppDefaults.hideAppNames
+    @AppStorage("showUncommonAppBubbles") private var showUncommonAppBubbles = AppDefaults.showUncommonAppBubbles
 
     private let editSidebarWidth: CGFloat = 188
     private let editSidebarHorizontalInset: CGFloat = 12
@@ -421,6 +420,18 @@ struct ContentView: View {
         appDragModeActive || pendingUncategorizedDrop != nil || scrollInteractionState.isFrozen
     }
     private let rightSidebarFloatingClearance: CGFloat = 44
+
+    private var cardSurfaceColor: Color {
+        colorScheme == .dark
+            ? Color.white.opacity(0.055)
+            : Color.white.opacity(0.62)
+    }
+
+    private var floatingButtonSurfaceColor: Color {
+        colorScheme == .dark
+            ? Color.white.opacity(0.10)
+            : Color.white.opacity(0.78)
+    }
 
     private var isSideLayout: Bool {
         tagPosition == "left" || tagPosition == "right"
@@ -438,19 +449,19 @@ struct ContentView: View {
         displayMode == "coloredContainer" || displayMode == "coloredGridContainer"
     }
 
-    private var quickSearchOnlyMode: Bool {
-        quickSearchVisible && quickSearchCloseHidesOverlay
+    private var usesAppKitContainerGrid: Bool {
+        displayMode == "gridContainer" || displayMode == "coloredGridContainer"
     }
 
     var body: some View {
         ZStack {
-            if !quickSearchOnlyMode {
+            if !quickSearchVisible {
                 VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
                     .ignoresSafeArea()
                     .allowsHitTesting(false)
             }
 
-            if !quickSearchOnlyMode {
+            if !quickSearchVisible {
                 if notchHeight > 0 {
                     VStack {
                         Rectangle().fill(.black)
@@ -478,7 +489,7 @@ struct ContentView: View {
 
             quickSearchOverlay
 
-            if !quickSearchOnlyMode, let message = dropWarningToast {
+            if !quickSearchVisible, let message = dropWarningToast {
                 Text(message)
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundStyle(.primary)
@@ -493,7 +504,7 @@ struct ContentView: View {
                     .allowsHitTesting(false)
             }
 
-            if !quickSearchOnlyMode && dropRefreshVisible {
+            if !quickSearchVisible && dropRefreshVisible {
                 Color.black.opacity(0.08)
                     .ignoresSafeArea()
                     .transition(.opacity)
@@ -519,8 +530,11 @@ struct ContentView: View {
             if let initialQuickSearchSource, !initialQuickSearchConsumed {
                 initialQuickSearchConsumed = true
                 quickSearchCloseHidesOverlay = initialQuickSearchSource == QuickSearchOpenSource.globalHidden
-                quickSearchVisible = true
-                quickSearchFocusToken &+= 1
+                if !quickSearchVisible {
+                    quickSearchVisible = true
+                    quickSearchFocusToken &+= 1
+                }
+                refreshQuickSearchResults()
                 NotificationCenter.default.post(
                     name: .tagLauncherQuickSearchVisibilityChanged,
                     object: nil,
@@ -531,11 +545,7 @@ struct ContentView: View {
         .onReceive(NotificationCenter.default.publisher(for: .tagLauncherOverlayDidShow)) { _ in
             resetTransientDragState()
             refreshNotchHeight()
-            if quickSearchVisible {
-                refreshAppsIfNeeded()
-            } else {
-                refreshApps()
-            }
+            refreshAppsIfNeeded()
         }
         .onReceive(NotificationCenter.default.publisher(for: .tagLauncherOverlayDidHide)) { _ in
             resetTransientDragState()
@@ -642,6 +652,7 @@ struct ContentView: View {
                     results: quickSearchResults,
                     selectedID: quickSearchSelectedID,
                     focusToken: quickSearchFocusToken,
+                    selectionScrollToken: quickSearchSelectionScrollToken,
                     isLoading: quickSearchDocuments.isEmpty && refreshInProgress,
                     maxVisibleRows: quickSearchMaxVisibleRows(in: proxy.size),
                     errorMessage: quickSearchErrorMessage,
@@ -773,9 +784,11 @@ struct ContentView: View {
         let nextIndex = min(max(currentIndex + delta, 0), quickSearchResults.count - 1)
         quickSearchSelectedID = quickSearchResults[nextIndex].id
         quickSearchManualSelection = true
+        quickSearchSelectionScrollToken &+= 1
     }
 
     private func selectQuickSearchResult(_ result: QuickSearchResult) {
+        guard quickSearchSelectedID != result.id || !quickSearchManualSelection else { return }
         quickSearchSelectedID = result.id
         quickSearchManualSelection = true
     }
@@ -836,7 +849,7 @@ struct ContentView: View {
     ) -> some View {
         NativeFloatingIconButton(systemImage: systemImage, action: action)
             .frame(width: 36, height: 36)
-            .background(Circle().fill(.ultraThinMaterial))
+            .background(Circle().fill(floatingButtonSurfaceColor))
     }
 
     // MARK: - Top / Side Layouts
@@ -869,7 +882,6 @@ struct ContentView: View {
                     TagPill(name: tag.name, colorIndex: tag.colorIndex,
                             dragModeActive: tagNavDragModeActive && canReorderTag(tag.name),
                             isDragging: tagNavDragItem == tag.name,
-                            dragResetToken: tagNavDragResetToken,
                             action: {
                         activateTagNavigation(tag.id)
                     })
@@ -911,7 +923,6 @@ struct ContentView: View {
                     SideTagPill(name: tag.name, colorIndex: tag.colorIndex,
                                 dragModeActive: tagNavDragModeActive && canReorderTag(tag.name),
                                 isDragging: tagNavDragItem == tag.name,
-                                dragResetToken: tagNavDragResetToken,
                                 action: {
                         activateTagNavigation(tag.id)
                     })
@@ -944,8 +955,33 @@ struct ContentView: View {
                 Spacer()
                 ProgressView().scaleEffect(0.8)
                 Spacer()
-            } else if displayMode == "gridContainer" || displayMode == "coloredGridContainer" {
-                gridContainerGrid
+            } else if usesAppKitContainerGrid {
+                AppGridCollectionView(
+                    groups: displayGroups,
+                    tagColors: tagColors,
+                    displayMode: displayMode,
+                    iconSize: iconSize,
+                    showNames: !hideAppNames,
+                    bubbleDisabled: appBubbleDisabled,
+                    showUncommonAppBubbles: showUncommonAppBubbles,
+                    highlightedGroupName: filledColorlessContainer,
+                    contentRevision: groupLayoutVersion,
+                    scrollTargetID: appGridScrollTargetID,
+                    scrollRequestToken: appGridScrollRequestToken,
+                    onSelectApp: { app in openApp(app) },
+                    onBubbleHover: handleBubbleHover,
+                    onEditNote: beginEditingBubbleNote,
+                    onDropApp: { path, source, target, copy in
+                        dropApp(path: path, sourceTag: source, targetTag: target, copy: copy)
+                    },
+                    onGroupActivate: { groupName in
+                        if displayMode == "gridContainer" {
+                            toggleColorlessFill(groupName)
+                        }
+                    },
+                    onScrollActivity: handleAppGridScrollActivity,
+                    onDragModeChange: { setAppDragMode($0) }
+                )
             } else if displayMode == "container" || displayMode == "coloredContainer" {
                 containerGrid
             } else {
@@ -1092,8 +1128,8 @@ struct ContentView: View {
                             onBubbleHover: handleBubbleHover,
                             onEditNote: beginEditingBubbleNote,
                             bubbleDisabled: appBubbleDisabled,
+                            showUncommonAppBubbles: showUncommonAppBubbles,
                             dragResetToken: appDragResetToken,
-                            hoveredAppItemID: $hoveredAppItemID,
                             onDropApp: { path, source, copy in
                                 dropApp(path: path, sourceTag: source, targetTag: group.name, copy: copy)
                             }
@@ -1200,9 +1236,9 @@ struct ContentView: View {
                         onBubbleHover: handleBubbleHover,
                         onEditNote: beginEditingBubbleNote,
                         bubbleDisabled: appBubbleDisabled,
+                        showUncommonAppBubbles: showUncommonAppBubbles,
                         itemID: "\(group.name)|\(app.path.path)",
                         dragResetToken: appDragResetToken,
-                        hoveredAppItemID: $hoveredAppItemID,
                         onSelect: { openApp(app) }
                     )
                 }
@@ -1215,7 +1251,7 @@ struct ContentView: View {
                 .fill((isColored || isColorlessActive) ? tagColor.opacity(0.30) : Color.clear)
                 .background(
                     RoundedRectangle(cornerRadius: 14)
-                        .fill(.ultraThinMaterial)
+                        .fill(cardSurfaceColor)
                 )
         )
         .overlay(
@@ -1223,10 +1259,12 @@ struct ContentView: View {
                 .stroke(Color.primary.opacity(0.08), lineWidth: 1)
         )
         .overlay {
-            AppDropTargetView(targetTag: group.name) { path, source, copy in
-                dropApp(path: path, sourceTag: source, targetTag: group.name, copy: copy)
+            if appDragModeActive {
+                AppDropTargetView(targetTag: group.name) { path, source, copy in
+                    dropApp(path: path, sourceTag: source, targetTag: group.name, copy: copy)
+                }
+                .allowsHitTesting(false)
             }
-            .allowsHitTesting(false)
         }
         .shadow(color: .black.opacity((isColored && isHovered) || isColorlessActive ? 0.22 : 0),
                 radius: (isColored && isHovered) || isColorlessActive ? 8 : 0,
@@ -1234,7 +1272,7 @@ struct ContentView: View {
         .zIndex(isHovered ? 50 : 0)
         .animation(.easeOut(duration: 0.045), value: isHovered)
         .animation(.easeOut(duration: 0.08), value: isColorlessFilled)
-        .onHover { hovering in
+        .background(AppHoverTrackingView { hovering, _ in
             guard !scrollInteractionState.isFrozen else {
                 if !hovering && hoveredContainer == group.name {
                     hoveredContainer = nil
@@ -1244,7 +1282,7 @@ struct ContentView: View {
             if isColored || isColorless {
                 hoveredContainer = hovering ? group.name : nil
             }
-        }
+        })
         .contentShape(RoundedRectangle(cornerRadius: 14))
         .onTapGesture {
             if isColorless {
@@ -1519,9 +1557,9 @@ struct ContentView: View {
                                 onBubbleHover: handleBubbleHover,
                                 onEditNote: beginEditingBubbleNote,
                                 bubbleDisabled: appBubbleDisabled,
+                                showUncommonAppBubbles: showUncommonAppBubbles,
                                 itemID: "\(group.name)|\(app.path.path)",
                                 dragResetToken: appDragResetToken,
-                                hoveredAppItemID: $hoveredAppItemID,
                                 onSelect: { openApp(app) }
                             )
                                 .frame(width: cellWidth)
@@ -1546,7 +1584,7 @@ struct ContentView: View {
                 .fill((isColored || isColorlessGridActive) ? tagColor.opacity(0.30) : Color.clear)
                 .background(
                     RoundedRectangle(cornerRadius: 14)
-                        .fill(.ultraThinMaterial)
+                        .fill(cardSurfaceColor)
                 )
         )
         .overlay(
@@ -1554,10 +1592,12 @@ struct ContentView: View {
                 .stroke(Color.primary.opacity(0.08), lineWidth: 1)
         )
         .overlay {
-            AppDropTargetView(targetTag: group.name) { path, source, copy in
-                dropApp(path: path, sourceTag: source, targetTag: group.name, copy: copy)
+            if appDragModeActive {
+                AppDropTargetView(targetTag: group.name) { path, source, copy in
+                    dropApp(path: path, sourceTag: source, targetTag: group.name, copy: copy)
+                }
+                .allowsHitTesting(false)
             }
-            .allowsHitTesting(false)
         }
         .shadow(color: .black.opacity((isColored && isHovered) || isColorlessGridActive ? 0.22 : 0),
                 radius: (isColored && isHovered) || isColorlessGridActive ? 8 : 0,
@@ -1565,7 +1605,7 @@ struct ContentView: View {
         .zIndex(isHovered ? 50 : 0)
         .animation(.easeOut(duration: 0.045), value: isHovered)
         .animation(.easeOut(duration: 0.08), value: isColorlessFilled)
-        .onHover { hovering in
+        .background(AppHoverTrackingView { hovering, _ in
             guard !scrollInteractionState.isFrozen else {
                 if !hovering && hoveredContainer == group.name {
                     hoveredContainer = nil
@@ -1577,7 +1617,7 @@ struct ContentView: View {
             } else if hovering {
                 fillColorlessContainer(group.name)
             }
-        }
+        })
         .contentShape(RoundedRectangle(cornerRadius: 14))
         .onTapGesture {
             if isColorlessGrid {
@@ -2222,7 +2262,6 @@ struct ContentView: View {
 
     private func handleAppGridScrollActivity() {
         if !scrollInteractionState.isFrozen {
-            hoveredAppItemID = nil
             hoveredBubble = nil
             hoveredContainer = nil
         }
@@ -2284,13 +2323,16 @@ struct ContentView: View {
     }
 
     private func clearAppBubbleState() {
-        hoveredAppItemID = nil
-        hoveredBubble = nil
+        if hoveredBubble != nil {
+            hoveredBubble = nil
+        }
         if editingBubble != nil {
             notifyAppNoteEditing(active: false)
+            editingBubble = nil
         }
-        editingBubble = nil
-        bubbleNoteFocused = false
+        if bubbleNoteFocused {
+            bubbleNoteFocused = false
+        }
     }
 
     private func notifyAppNoteEditing(active: Bool) {
@@ -2354,7 +2396,12 @@ struct ContentView: View {
     }
 
     func scrollTo(_ id: String) {
-        withAnimation(.easeInOut(duration: 0.25)) { scrollProxy?.scrollTo(id, anchor: .top) }
+        if usesAppKitContainerGrid {
+            appGridScrollTargetID = id
+            appGridScrollRequestToken &+= 1
+        } else {
+            withAnimation(.easeInOut(duration: 0.25)) { scrollProxy?.scrollTo(id, anchor: .top) }
+        }
     }
 
     private func activateTagNavigation(_ id: String) {
@@ -2425,13 +2472,14 @@ struct ContentView: View {
     }
 
     private func endTagNavReorder() {
+        let hadDragState = tagNavDragModeActive || tagNavDragItem != nil
+        guard hadDragState else { return }
         if tagNavDragModeActive && tagNavReorderDidMove {
             TagEditor.reorderTags(draggedTagNames)
         }
         tagNavDragModeActive = false
         tagNavDragItem = nil
         tagNavReorderDidMove = false
-        tagNavDragResetToken &+= 1
     }
 
     private func cancelTagNavReorderVisualState() {
@@ -2439,7 +2487,6 @@ struct ContentView: View {
         tagNavDragModeActive = false
         tagNavDragItem = nil
         tagNavReorderDidMove = false
-        tagNavDragResetToken &+= 1
     }
 
     private func reorderTagNavItem(at location: CGPoint) {
@@ -2610,6 +2657,7 @@ struct ContentView: View {
     }
 
     private func setAppDragMode(_ active: Bool) {
+        guard appDragModeActive != active else { return }
         if active {
             endTagNavReorder()
             clearAppBubbleState()
@@ -2617,7 +2665,7 @@ struct ContentView: View {
         appDragModeActive = active
         if active {
             DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
-                if appDragModeActive {
+                if appDragModeActive && !AppDragCoordinator.shared.hasActiveDrag {
                     appDragModeActive = false
                 }
             }
@@ -2625,19 +2673,32 @@ struct ContentView: View {
     }
 
     private func resetTransientDragState(keepingPendingUncategorizedDrop: Bool = false) {
+        let hadAppDragState = appDragModeActive
         AppDragCoordinator.shared.cancelDrag()
         scrollInteractionState.reset()
-        appDragModeActive = false
-        appDragResetToken &+= 1
-        tagNavDragModeActive = false
-        tagNavDragItem = nil
-        tagNavReorderDidMove = false
-        tagNavDragResetToken &+= 1
-        dragItem = nil
-        hoveredAppItemID = nil
-        hoveredContainer = nil
+        if appDragModeActive {
+            appDragModeActive = false
+        }
+        if hadAppDragState {
+            appDragResetToken &+= 1
+        }
+        if tagNavDragModeActive {
+            tagNavDragModeActive = false
+        }
+        if tagNavDragItem != nil {
+            tagNavDragItem = nil
+        }
+        if tagNavReorderDidMove {
+            tagNavReorderDidMove = false
+        }
+        if dragItem != nil {
+            dragItem = nil
+        }
+        if hoveredContainer != nil {
+            hoveredContainer = nil
+        }
         clearAppBubbleState()
-        if !keepingPendingUncategorizedDrop {
+        if !keepingPendingUncategorizedDrop, pendingUncategorizedDrop != nil {
             pendingUncategorizedDrop = nil
         }
     }
@@ -2732,7 +2793,8 @@ private final class AppGridScrollInteractionState: ObservableObject {
         }
         unfreezeWorkItem?.cancel()
         let workItem = DispatchWorkItem { [weak self] in
-            self?.isFrozen = false
+            guard let self, self.isFrozen else { return }
+            self.isFrozen = false
         }
         unfreezeWorkItem = workItem
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.18, execute: workItem)
@@ -2741,7 +2803,9 @@ private final class AppGridScrollInteractionState: ObservableObject {
     func reset() {
         unfreezeWorkItem?.cancel()
         unfreezeWorkItem = nil
-        isFrozen = false
+        if isFrozen {
+            isFrozen = false
+        }
     }
 }
 
@@ -2761,13 +2825,13 @@ private struct AppGridScrollActivityObserver: NSViewRepresentable {
     func updateNSView(_ view: ScrollActivityNSView, context: Context) {
         context.coordinator.onScroll = onScroll
         view.coordinator = context.coordinator
-        view.installObserverIfPossible()
     }
 
     final class Coordinator {
         var onScroll: () -> Void
         private weak var observedClipView: NSClipView?
         private var observer: NSObjectProtocol?
+        private var lastReportedBoundsOrigin: NSPoint?
 
         init(onScroll: @escaping () -> Void) {
             self.onScroll = onScroll
@@ -2778,13 +2842,18 @@ private struct AppGridScrollActivityObserver: NSViewRepresentable {
             guard observedClipView !== clipView else { return }
             removeObserver()
             observedClipView = clipView
+            lastReportedBoundsOrigin = clipView.bounds.origin
             clipView.postsBoundsChangedNotifications = true
             observer = NotificationCenter.default.addObserver(
                 forName: NSView.boundsDidChangeNotification,
                 object: clipView,
                 queue: .main
-            ) { [weak self] _ in
-                self?.onScroll()
+            ) { [weak self, weak clipView] _ in
+                guard let self,
+                      let clipView,
+                      self.recordScrollIfNeeded(from: clipView)
+                else { return }
+                self.onScroll()
             }
         }
 
@@ -2794,6 +2863,21 @@ private struct AppGridScrollActivityObserver: NSViewRepresentable {
             }
             observer = nil
             observedClipView = nil
+            lastReportedBoundsOrigin = nil
+        }
+
+        private func recordScrollIfNeeded(from clipView: NSClipView) -> Bool {
+            let origin = clipView.bounds.origin
+            guard let last = lastReportedBoundsOrigin else {
+                lastReportedBoundsOrigin = origin
+                return false
+            }
+            let didScroll = abs(origin.x - last.x) > 0.5
+                || abs(origin.y - last.y) > 0.5
+            if didScroll {
+                lastReportedBoundsOrigin = origin
+            }
+            return didScroll
         }
 
         deinit {
@@ -2803,6 +2887,7 @@ private struct AppGridScrollActivityObserver: NSViewRepresentable {
 
     final class ScrollActivityNSView: NSView {
         weak var coordinator: Coordinator?
+        private var installScheduled = false
 
         override func viewDidMoveToWindow() {
             super.viewDidMoveToWindow()
@@ -2815,8 +2900,11 @@ private struct AppGridScrollActivityObserver: NSViewRepresentable {
         }
 
         func installObserverIfPossible() {
+            guard !installScheduled else { return }
+            installScheduled = true
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
+                installScheduled = false
                 coordinator?.install(from: self)
             }
         }

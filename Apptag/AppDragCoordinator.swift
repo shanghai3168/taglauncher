@@ -6,9 +6,8 @@ final class AppDragCoordinator {
     static let shared = AppDragCoordinator()
 
     struct DropTarget {
-        weak var view: NSView?
+        weak var view: AppDropTargetReceivingView?
         var tag: String
-        var onDrop: (String, String, Bool) -> Void
     }
 
     private var targets: [UUID: DropTarget] = [:]
@@ -24,8 +23,18 @@ final class AppDragCoordinator {
 
     private init() {}
 
-    func register(id: UUID, view: NSView, tag: String, onDrop: @escaping (String, String, Bool) -> Void) {
-        targets[id] = DropTarget(view: view, tag: tag, onDrop: onDrop)
+    var hasActiveDrag: Bool {
+        dragLayer != nil || dragWindow != nil || !activePayload.isEmpty
+    }
+
+    func register(id: UUID, view: AppDropTargetReceivingView, tag: String) {
+        if let existing = targets[id], existing.view === view, existing.tag == tag {
+            return
+        }
+        if targets.count > 256 {
+            pruneDeadTargets()
+        }
+        targets[id] = DropTarget(view: view, tag: tag)
     }
 
     func unregister(id: UUID) {
@@ -58,7 +67,7 @@ final class AppDragCoordinator {
             panel.isFloatingPanel = true
             panel.hidesOnDeactivate = false
             panel.ignoresMouseEvents = true
-            panel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.maximumWindow)))
+            panel.level = .normal
             panel.collectionBehavior = [.moveToActiveSpace, .fullScreenAuxiliary, .stationary, .transient, .ignoresCycle]
             panel.isReleasedWhenClosed = false
             let contentView = NSView(frame: NSRect(origin: .zero, size: image.size))
@@ -120,16 +129,20 @@ final class AppDragCoordinator {
         let parts = activePayload.components(separatedBy: "\n")
         guard let path = parts.first, !path.isEmpty else { return }
         let source = parts.dropFirst().first ?? ""
+        pruneDeadTargets()
 
         let hitTarget = targets.values
-            .compactMap { target -> (DropTarget, CGFloat)? in
-                guard let frame = target.view?.screenFrame(), frame.contains(screenPoint) else { return nil }
-                return (target, frame.width * frame.height)
+            .compactMap { target -> (AppDropTargetReceivingView, CGFloat)? in
+                guard let view = target.view,
+                      let frame = view.screenFrame(),
+                      frame.contains(screenPoint)
+                else { return nil }
+                return (view, frame.width * frame.height)
             }
             .sorted { $0.1 < $1.1 }
             .first?.0
 
-        hitTarget?.onDrop(path, source, copy)
+        hitTarget?.performDrop(path: path, source: source, copy: copy)
     }
 
     func cancelDrag() {
@@ -157,6 +170,10 @@ final class AppDragCoordinator {
         dragWindow = nil
         activePayload = ""
         dragImageSize = .zero
+    }
+
+    private func pruneDeadTargets() {
+        targets = targets.filter { $0.value.view != nil }
     }
 
     private static func cgImage(from image: NSImage) -> CGImage? {
@@ -209,7 +226,12 @@ final class AppDragCoordinator {
     }
 }
 
-private extension NSView {
+protocol AppDropTargetReceivingView: AnyObject {
+    func screenFrame() -> NSRect?
+    func performDrop(path: String, source: String, copy: Bool)
+}
+
+extension AppDropTargetReceivingView where Self: NSView {
     func screenFrame() -> NSRect? {
         guard let window else { return nil }
         let rectInWindow = convert(bounds, to: nil)
@@ -223,39 +245,53 @@ struct AppDropTargetView: NSViewRepresentable {
 
     func makeNSView(context: Context) -> AppDropTargetNSView {
         let view = AppDropTargetNSView()
-        view.targetTag = targetTag
-        view.onDropApp = onDropApp
+        view.configure(targetTag: targetTag, onDropApp: onDropApp)
         return view
     }
 
     func updateNSView(_ view: AppDropTargetNSView, context: Context) {
-        view.targetTag = targetTag
-        view.onDropApp = onDropApp
-        view.registerTarget()
+        view.configure(targetTag: targetTag, onDropApp: onDropApp)
     }
 
     static func dismantleNSView(_ view: AppDropTargetNSView, coordinator: ()) {
+        view.onDropApp = nil
         AppDragCoordinator.shared.unregister(id: view.id)
     }
 }
 
-final class AppDropTargetNSView: NSView {
+final class AppDropTargetNSView: NSView, AppDropTargetReceivingView {
     let id = UUID()
     var targetTag = ""
     var onDropApp: ((String, String, Bool) -> Void)?
 
-    override func viewDidMoveToWindow() {
-        super.viewDidMoveToWindow()
-        registerTarget()
+    func configure(targetTag: String, onDropApp: @escaping (String, String, Bool) -> Void) {
+        let tagChanged = self.targetTag != targetTag
+        self.targetTag = targetTag
+        self.onDropApp = onDropApp
+        if tagChanged {
+            registerTarget()
+        }
     }
 
-    override func layout() {
-        super.layout()
-        registerTarget()
+    override func viewDidMoveToWindow() {
+        super.viewDidMoveToWindow()
+        if window == nil {
+            AppDragCoordinator.shared.unregister(id: id)
+        } else {
+            registerTarget()
+        }
     }
 
     func registerTarget() {
-        guard window != nil, let onDropApp else { return }
-        AppDragCoordinator.shared.register(id: id, view: self, tag: targetTag, onDrop: onDropApp)
+        guard window != nil else { return }
+        AppDragCoordinator.shared.register(id: id, view: self, tag: targetTag)
+    }
+
+    func performDrop(path: String, source: String, copy: Bool) {
+        onDropApp?(path, source, copy)
+    }
+
+    deinit {
+        AppDragCoordinator.shared.unregister(id: id)
     }
 }

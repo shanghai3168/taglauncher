@@ -1,5 +1,6 @@
 import Foundation
 import AppKit
+import CoreServices
 
 // MARK: - Data Models
 
@@ -9,6 +10,7 @@ struct AppInfo: Identifiable, Hashable {
     let path: URL
     let tags: [String]
     let bundleIdentifier: String?
+    let localizedNames: [String]
     let icon: NSImage  // Pre-loaded during background scan
     var isUncommon: Bool = false
     var note: String? = nil
@@ -176,16 +178,72 @@ enum AppIndexer {
         let icon = NSWorkspace.shared.icon(forFile: displayURL.path)
         icon.size = NSSize(width: 96, height: 96)
 
-        let bundleId = Bundle(url: displayURL)?.bundleIdentifier
-            ?? Bundle(url: resolvedURL)?.bundleIdentifier
+        let bundle = Bundle(url: displayURL) ?? Bundle(url: resolvedURL)
+        let bundleId = bundle?.bundleIdentifier
+        let localizedNames = localizedAppNames(
+            for: displayURL,
+            bundle: bundle,
+            fallbackName: name
+        )
 
         apps.append(AppInfo(
             name: name,
             path: displayURL,
             tags: [],
             bundleIdentifier: bundleId,
+            localizedNames: localizedNames,
             icon: icon
         ))
+    }
+
+    private static func localizedAppNames(
+        for appURL: URL,
+        bundle: Bundle?,
+        fallbackName: String
+    ) -> [String] {
+        var values: [String?] = []
+        values.append(bundle?.localizedInfoDictionary?["CFBundleDisplayName"] as? String)
+        values.append(bundle?.localizedInfoDictionary?["CFBundleName"] as? String)
+        values.append(bundle?.infoDictionary?["CFBundleDisplayName"] as? String)
+        values.append(bundle?.infoDictionary?["CFBundleName"] as? String)
+        values.append(spotlightDisplayName(for: appURL))
+        values.append(FileManager.default.displayName(atPath: appURL.path).replacingOccurrences(of: ".app", with: ""))
+
+        return uniqueLocalizedNames(values, excluding: fallbackName)
+    }
+
+    private static func spotlightDisplayName(for appURL: URL) -> String? {
+        guard let item = MDItemCreate(nil, appURL.path as CFString),
+              let value = MDItemCopyAttribute(item, kMDItemDisplayName) as? String
+        else { return nil }
+
+        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? nil : trimmed
+    }
+
+    private static func uniqueLocalizedNames(_ values: [String?], excluding excludedValue: String) -> [String] {
+        let normalizedExcluded = normalizedLocalizedName(excludedValue)
+        var seen = Set<String>()
+        var result: [String] = []
+
+        for value in values {
+            guard let value else { continue }
+            let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+            let normalized = normalizedLocalizedName(trimmed)
+            guard !trimmed.isEmpty,
+                  normalized != normalizedExcluded,
+                  seen.insert(normalized).inserted
+            else { continue }
+            result.append(trimmed)
+        }
+        return result
+    }
+
+    private static func normalizedLocalizedName(_ value: String) -> String {
+        value
+            .folding(options: [.diacriticInsensitive, .caseInsensitive], locale: .current)
+            .lowercased()
+            .trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     private static func isNestedInsideAppBundle(_ url: URL) -> Bool {
@@ -324,6 +382,18 @@ enum TagDatabase {
         case manual
     }
 
+    enum AppNoteOrigin: String, Codable {
+        case catalogDefault
+        case appleDefault
+        case manual
+    }
+
+    struct AppNoteMetadata: Codable, Equatable {
+        var origin: AppNoteOrigin
+        var catalog: SmartDefaultNoteProvenance? = nil
+        var noteFingerprint: String
+    }
+
     // MARK: Storage types
 
     struct TagDef: Codable, Equatable {
@@ -342,6 +412,7 @@ enum TagDatabase {
         var appLastOpenedAt: [String: Date] = [:]  // successful launches opened from TagLauncher
         var knownAppPaths: [String] = []  // baseline set to detect newly installed apps
         var appNotes: [String: String] = [:]  // path → user note; retained even if marker is removed
+        var appNoteMetadata: [String: AppNoteMetadata] = [:]  // path → note source and edit protection
         var disabledSystemCategoryIDs: [SmartCategoryID] = []  // system categories the user deleted
         var smartStart: SmartStartState = SmartStartState()
         var categoryScheme: CategorySchemeState = CategorySchemeState()
@@ -357,6 +428,7 @@ enum TagDatabase {
             case appLastOpenedAt
             case knownAppPaths
             case appNotes
+            case appNoteMetadata
             case disabledSystemCategoryIDs
             case smartStart
             case categoryScheme
@@ -376,6 +448,10 @@ enum TagDatabase {
             appLastOpenedAt = try container.decodeIfPresent([String: Date].self, forKey: .appLastOpenedAt) ?? [:]
             knownAppPaths = try container.decodeIfPresent([String].self, forKey: .knownAppPaths) ?? []
             appNotes = try container.decodeIfPresent([String: String].self, forKey: .appNotes) ?? [:]
+            appNoteMetadata = try container.decodeIfPresent(
+                [String: AppNoteMetadata].self,
+                forKey: .appNoteMetadata
+            ) ?? [:]
             disabledSystemCategoryIDs = try container.decodeIfPresent(
                 [SmartCategoryID].self,
                 forKey: .disabledSystemCategoryIDs
@@ -416,8 +492,7 @@ enum TagDatabase {
     // MARK: Paths
 
     private static var storeDir: URL {
-        let dir = FileManager.default.homeDirectoryForCurrentUser
-            .appendingPathComponent("Library/Application Support/Apptag")
+        let dir = AppIdentity.applicationSupportDirectory
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         return dir
     }
@@ -436,25 +511,9 @@ enum TagDatabase {
         return dir
     }
 
-    private static var legacyStoreURL: URL? {
-        guard ProcessInfo.processInfo.environment["APP_SANDBOX_CONTAINER_ID"] != nil else {
-            return nil
-        }
-
-        let home = FileManager.default.homeDirectoryForCurrentUser
-        let bundleID = Bundle.main.bundleIdentifier ?? "com.apptag.launcher"
-        let marker = "/Library/Containers/\(bundleID)/Data"
-        guard let range = home.path.range(of: marker) else { return nil }
-
-        let realHomePath = String(home.path[..<range.lowerBound])
-        return URL(fileURLWithPath: realHomePath)
-            .appendingPathComponent("Library/Application Support/Apptag/tags.json")
-    }
-
     // MARK: Load / Save
 
     static func load() -> Store {
-        migrateLegacyStoreIfNeeded()
         guard let data = try? Data(contentsOf: storeURL),
               let store = try? JSONDecoder().decode(Store.self, from: data)
         else { return Store() }
@@ -474,6 +533,16 @@ enum TagDatabase {
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         guard let data = try? encoder.encode(store) else { return }
         try? data.write(to: storeURL, options: .atomic)
+    }
+
+    static func noteFingerprint(_ value: String) -> String {
+        let normalized = String(value.trimmingCharacters(in: .whitespacesAndNewlines).prefix(maxAppNoteLength))
+        var hash: UInt64 = 0xcbf29ce484222325
+        for byte in normalized.utf8 {
+            hash ^= UInt64(byte)
+            hash &*= 0x100000001b3
+        }
+        return String(format: "%016llx", hash)
     }
 
     static func backup(_ store: Store, reason: String, in directory: URL? = nil) -> URL? {
@@ -511,7 +580,7 @@ enum TagDatabase {
 
     private static let categorySchemeBatchDebounceSeconds: TimeInterval = 90
     private static let categorySchemeRetentionSeconds: TimeInterval = 30 * 24 * 60 * 60
-    private static let categorySchemeBatchQueue = DispatchQueue(label: "com.apptag.category-scheme-batch")
+    private static let categorySchemeBatchQueue = DispatchQueue(label: AppIdentity.categorySchemeBatchQueueLabel)
     private static var categorySchemeBatchActive = false
     private static var categorySchemeBatchResetWorkItem: DispatchWorkItem?
 
@@ -653,33 +722,6 @@ enum TagDatabase {
         return true
     }
 
-    /// App Store sandbox builds read Application Support inside the app container.
-    /// Older non-sandbox builds stored the same database directly under ~/Library.
-    /// On first sandbox launch, migrate the richer legacy database before seeding defaults.
-    static func migrateLegacyStoreIfNeeded() {
-        let fm = FileManager.default
-        guard let legacyURL = legacyStoreURL,
-              fm.fileExists(atPath: legacyURL.path)
-        else { return }
-
-        guard let legacyData = try? Data(contentsOf: legacyURL),
-              let legacyStore = try? JSONDecoder().decode(Store.self, from: legacyData)
-        else { return }
-
-        if let currentData = try? Data(contentsOf: storeURL),
-           let currentStore = try? JSONDecoder().decode(Store.self, from: currentData),
-           storeScore(currentStore) >= storeScore(legacyStore) {
-            return
-        }
-
-        try? fm.createDirectory(at: storeDir, withIntermediateDirectories: true)
-        try? legacyData.write(to: storeURL, options: .atomic)
-    }
-
-    private static func storeScore(_ store: Store) -> Int {
-        store.appTags.count * 100 + store.tagOrder.count * 10 + store.tags.count
-    }
-
     // MARK: Localization
 
     @discardableResult
@@ -775,7 +817,6 @@ enum TagDatabase {
     // MARK: Export / Import
 
     static func exportTo(_ url: URL) throws {
-        migrateLegacyStoreIfNeeded()
         let store = loadWithEnsuredCategoryScheme()
         let data = try JSONEncoder().encode(store)
         try data.write(to: url, options: .atomic)
@@ -961,17 +1002,16 @@ enum TagDatabase {
     /// Seed starter system tags on first launch. Smart Start adds any additional
     /// system tags it needs after scanning the user's installed apps.
     static func seedDefaultTags() {
-        migrateLegacyStoreIfNeeded()
         guard !FileManager.default.fileExists(atPath: storeURL.path) else { return }
 
         let starterCategoryIDs: [SmartCategoryID] = [
-            .design,
-            .development,
+            .uiPrototyping,
+            .ide,
             .writing,
             .game,
             .entertainment,
             .system,
-            .productivity
+            .gtd
         ]
 
         var store = Store()
@@ -1039,7 +1079,9 @@ enum TagEditor {
             let appTags = store.appTags[app.path.path] ?? []
             return AppInfo(
                 name: app.name, path: app.path, tags: appTags,
-                bundleIdentifier: app.bundleIdentifier, icon: app.icon,
+                bundleIdentifier: app.bundleIdentifier,
+                localizedNames: app.localizedNames,
+                icon: app.icon,
                 isUncommon: uncommonPaths.contains(app.path.path),
                 note: store.appNotes[app.path.path]
             )
@@ -1236,7 +1278,12 @@ enum TagEditor {
             }
 
             guard let note = AppleDefaultAppNotes.note(for: app) else { continue }
-            store.appNotes[path] = String(note.prefix(TagDatabase.maxAppNoteLength))
+            let limited = String(note.prefix(TagDatabase.maxAppNoteLength))
+            store.appNotes[path] = limited
+            store.appNoteMetadata[path] = TagDatabase.AppNoteMetadata(
+                origin: .appleDefault,
+                noteFingerprint: TagDatabase.noteFingerprint(limited)
+            )
             changed = true
         }
 
@@ -1290,8 +1337,13 @@ enum TagEditor {
         let limited = String(trimmed.prefix(TagDatabase.maxAppNoteLength))
         if limited.isEmpty {
             store.appNotes.removeValue(forKey: path)
+            store.appNoteMetadata.removeValue(forKey: path)
         } else {
             store.appNotes[path] = limited
+            store.appNoteMetadata[path] = TagDatabase.AppNoteMetadata(
+                origin: .manual,
+                noteFingerprint: TagDatabase.noteFingerprint(limited)
+            )
             var uncommonPaths = Set(store.uncommonAppPaths)
             if uncommonPaths.insert(path).inserted {
                 store.uncommonAppPaths = uncommonPaths.sorted()

@@ -30,7 +30,7 @@ enum AppDefaults {
     }
 
     static func hasStoredValue(for key: String) -> Bool {
-        let domain = Bundle.main.bundleIdentifier ?? "com.apptag.launcher"
+        let domain = Bundle.main.bundleIdentifier ?? AppIdentity.bundleIdentifier
         return UserDefaults.standard.persistentDomain(forName: domain)?[key] != nil
     }
 

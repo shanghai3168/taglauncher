@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate Apptag app icon — two overlapping tags (red + blue) on macOS squircle."""
+"""Generate TagLauncher app icon — two overlapping tags (red + blue) on macOS squircle."""
 from PIL import Image, ImageDraw, ImageFilter
 import math, os, subprocess, tempfile
 

@@ -1,0 +1,225 @@
+{
+  "resourceFormatVersion": 1,
+  "catalogContentVersion": 2,
+  "notesVersion": 1,
+  "generatedAt": "2026-05-21T12:52:12.272Z",
+  "noteLimit": 80,
+  "supportedLanguages": [
+    "ar",
+    "ar-Najdi",
+    "cs",
+    "da",
+    "de",
+    "en",
+    "es",
+    "fr",
+    "id",
+    "it",
+    "ja",
+    "ko",
+    "ms",
+    "nb",
+    "nl",
+    "nn",
+    "no",
+    "pl",
+    "pt-BR",
+    "ro",
+    "ru",
+    "sr-Cyrl",
+    "sv",
+    "th",
+    "tr",
+    "uk",
+    "vi",
+    "zh-Hans",
+    "zh-Hant"
+  ],
+  "fallbackLanguages": [
+    "en",
+    "zh-Hans",
+    "zh-Hant"
+  ],
+  "baseResource": {
+    "file": "SmartStart_UltimateDefaultCatalog.base.json",
+    "sha256": "650dcfba5bbf35816aea987baf6c29cfcab827ce72313a53b1aeb592a02949da",
+    "bytes": 1025647,
+    "count": 3530
+  },
+  "notesResources": {
+    "ar": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.ar.json",
+      "sha256": "aa62181dfc8e7fa725a38697c3ff04e62afbd3db348c8dc2d29c792db4299c9e",
+      "bytes": 642963,
+      "count": 3530
+    },
+    "ar-Najdi": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.ar-Najdi.json",
+      "sha256": "2a179b7f3301d68ac11baf5b24ea4f352001854767e77c2a007a81c126215b4f",
+      "bytes": 642969,
+      "count": 3530
+    },
+    "cs": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.cs.json",
+      "sha256": "ee279e32fdf309a54de26f2a8e6020c73b6b8d622e21bc9ea338b980b68005cc",
+      "bytes": 526452,
+      "count": 3530
+    },
+    "da": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.da.json",
+      "sha256": "a49338d929a60eae3621ff6c3a5d1113588cbdd7c29abc71fb9dc236708e6ecb",
+      "bytes": 508571,
+      "count": 3530
+    },
+    "de": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.de.json",
+      "sha256": "651c9f73a184ae64fb4d48c33ab2957bbc9bc599bc4ebb7030d577adbb1e47f6",
+      "bytes": 507531,
+      "count": 3530
+    },
+    "en": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.en.json",
+      "sha256": "70066831bb47b3db8a128586ab3718002c33a67776b86df35ee40df9be8c1a03",
+      "bytes": 490288,
+      "count": 3530
+    },
+    "es": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.es.json",
+      "sha256": "2850d6155b85466f7ec7fe12043566f1e33a17c9a0b4a7fea42ff3d9e5eb75db",
+      "bytes": 520116,
+      "count": 3530
+    },
+    "fr": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.fr.json",
+      "sha256": "5f73f2825962be92ff8f9832a9ccb6e6be80f8e798e9e820edab84c894094bd3",
+      "bytes": 517955,
+      "count": 3530
+    },
+    "id": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.id.json",
+      "sha256": "e267035ac1bd3ff41f4527f8a095b6477a1d3b30ae2918ac778565590e9ec971",
+      "bytes": 498449,
+      "count": 3530
+    },
+    "it": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.it.json",
+      "sha256": "bc17e00af5b73e64735e6a3fe99f82378c70ece1d61b82443e3331b5a535b3a9",
+      "bytes": 514420,
+      "count": 3530
+    },
+    "ja": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.ja.json",
+      "sha256": "fe60e5986e5c71d2e0ab9c9e191b143caa5444e04b0c448c641921ec5a97b1b9",
+      "bytes": 593411,
+      "count": 3530
+    },
+    "ko": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.ko.json",
+      "sha256": "a33d9c6a38f2c6005e3d12cc856229d6f76a3cc48cf44ca3aeeb107c91d51baa",
+      "bytes": 530870,
+      "count": 3530
+    },
+    "ms": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.ms.json",
+      "sha256": "b52eb038e8824651f23687fde98776e3e972b6874c1708243e25c3fa1d43e8f4",
+      "bytes": 499338,
+      "count": 3530
+    },
+    "nb": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.nb.json",
+      "sha256": "e48d0f31ce453d73a3bb471738f1efaf37089e449054331983fc895dc3e87730",
+      "bytes": 503605,
+      "count": 3530
+    },
+    "nl": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.nl.json",
+      "sha256": "fceecd6c12f9192ba37ac5a2946389750d49c6bec5da225fb421878502c6ccf8",
+      "bytes": 501730,
+      "count": 3530
+    },
+    "nn": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.nn.json",
+      "sha256": "5f65ede5cbcfc257baf4e9fb216b0b9e777868d6e2b8f07bdff3b5cc4ae59f1f",
+      "bytes": 503605,
+      "count": 3530
+    },
+    "no": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.no.json",
+      "sha256": "643f2c80f8d81b351aaf43bf7d1fcea1004b38c8bd2b4e981ad6b685c59c1fc6",
+      "bytes": 503605,
+      "count": 3530
+    },
+    "pl": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.pl.json",
+      "sha256": "5e5dfd0e7bcae767cb7012983e703e8f78845291186849031e5a4005a3adeed8",
+      "bytes": 522662,
+      "count": 3530
+    },
+    "pt-BR": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.pt-BR.json",
+      "sha256": "92574cce7fd2c9f2b4ca557562c43f496fe7e1adf087aad30dc5d540197434af",
+      "bytes": 519826,
+      "count": 3530
+    },
+    "ro": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.ro.json",
+      "sha256": "33a7fba4c5173537b7728e31b999996354644bbc51b1e62946c7b7f59999b7a5",
+      "bytes": 521453,
+      "count": 3530
+    },
+    "ru": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.ru.json",
+      "sha256": "627ee961ab1a7a97b03dcaaba9f1d580007a60ea2485921b00f47cf38bd99588",
+      "bytes": 723763,
+      "count": 3530
+    },
+    "sr-Cyrl": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.sr-Cyrl.json",
+      "sha256": "8a29563ab8cef2544b39dadf43079d82b72bfdb07ccd2aeebe507dfb66345fd0",
+      "bytes": 702212,
+      "count": 3530
+    },
+    "sv": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.sv.json",
+      "sha256": "a2c45d3fe12c5624b90356cce76b2b8a6b12482c0619c2b7095c1409e6882ba0",
+      "bytes": 506811,
+      "count": 3530
+    },
+    "th": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.th.json",
+      "sha256": "938d00696a97e52c1d45bdcdd006ac281ce5bcb2d022b43f990e7cbb62c43bf4",
+      "bytes": 902458,
+      "count": 3530
+    },
+    "tr": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.tr.json",
+      "sha256": "2c9edd6f4720963e1b957fc2f2ab1135751420330b6aed3ee86dc750355b10da",
+      "bytes": 522673,
+      "count": 3530
+    },
+    "uk": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.uk.json",
+      "sha256": "b6dd043d1d3b0ce30c7b60a895426edcb6da2753f81210a14f3daddebef27c6f",
+      "bytes": 713776,
+      "count": 3530
+    },
+    "vi": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.vi.json",
+      "sha256": "ad93b020bd5815ee3da00cfa1003fb34f81d656c19125e122b2117b015405771",
+      "bytes": 569123,
+      "count": 3530
+    },
+    "zh-Hans": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.zh-Hans.json",
+      "sha256": "d4497072e0d45792da7aef44fa32a98eb98594d9c8833828d250981ab6832490",
+      "bytes": 456457,
+      "count": 3530
+    },
+    "zh-Hant": {
+      "file": "SmartStart_UltimateDefaultCatalog.notes.zh-Hant.json",
+      "sha256": "61c3e6e71382c1107259ff3746a99b35731f66df04a2bdaccb20d03adbadad9c",
+      "bytes": 456457,
+      "count": 3530
+    }
+  }
+}

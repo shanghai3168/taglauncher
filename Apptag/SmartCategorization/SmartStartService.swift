@@ -1,3 +1,4 @@
+import Compression
 import Foundation
 
 // MARK: - Smart Start Catalog Runtime
@@ -23,33 +24,84 @@ struct SmartStartRunResult {
 }
 
 private struct SmartStartCatalogEntry {
+    let entryID: String
     let rank: Int
     let name: String
     let normalizedName: String
     let bundleIdentifier: String?
     let categoryIDs: [SmartCategoryID]
-    let localizedNote: String?
-    let notes: [String: String]?
+    let localizedNote: SmartStartLocalizedNote?
     let sourceEvidence: [String]
 }
 
-private struct SmartStartRuntimeCatalog: Decodable {
-    let version: Int
-    let entries: [SmartStartRuntimeCatalogEntry]
+private struct SmartStartLocalizedNote {
+    let note: String
+    let languageCode: String
+    let provenance: SmartDefaultNoteProvenance
 }
 
-private struct SmartStartRuntimeCatalogEntry: Decodable {
+private struct SmartStartBaseCatalog: Decodable {
+    let resourceFormatVersion: Int
+    let catalogContentVersion: Int
+    let noteLimit: Int?
+    let supportedLanguages: [String]
+    let fallbackLanguages: [String]
+    let entries: [SmartStartBaseCatalogEntry]
+}
+
+private struct SmartStartBaseCatalogEntry: Decodable {
+    let entryID: String
     let rank: Int?
     let name: String
     let normalizedName: String?
     let bundleIdentifier: String?
     let defaultTag: [String]
-    let notes: [String: String]?
     let sourceEvidence: [String]?
+}
+
+private struct SmartStartNotesCatalog: Decodable {
+    let resourceFormatVersion: Int
+    let catalogContentVersion: Int
+    let notesVersion: Int
+    let language: String
+    let entries: [SmartStartNoteEntry]
+}
+
+private struct SmartStartNoteEntry: Decodable {
+    let entryID: String
+    let note: String
+}
+
+private struct SmartStartBaseSnapshot {
+    let catalogContentVersion: Int
+    let supportedLanguages: [String]
+    let fallbackLanguages: [String]
+    let entries: [SmartStartBaseCatalogEntry]
+    let bundleIndex: [String: SmartStartBaseCatalogEntry]
+    let nameIndex: [String: SmartStartBaseCatalogEntry]
+    let entryIndex: [String: SmartStartBaseCatalogEntry]
+}
+
+private struct SmartStartNotesSnapshot {
+    let languageCode: String
+    let notesVersion: Int
+    let notes: [String: String]
+}
+
+private struct SmartStartCatalogSnapshot {
+    let entries: [SmartStartCatalogEntry]
+    let bundleIndex: [String: SmartStartCatalogEntry]
+    let nameIndex: [String: SmartStartCatalogEntry]
+    let entryIndex: [String: SmartStartCatalogEntry]
 }
 
 enum SmartStartService {
     static let catalogVersion = 2
+    private static let catalogCacheLock = NSLock()
+    private static var cachedBaseSnapshot: SmartStartBaseSnapshot?
+    private static var cachedCatalogSnapshots: [String: SmartStartCatalogSnapshot] = [:]
+    private static var cachedNotesSnapshots: [String: SmartStartNotesSnapshot] = [:]
+
     static let systemInitialSchemeCreatedAt: Date = {
         var components = DateComponents()
         components.calendar = Calendar(identifier: .gregorian)
@@ -146,45 +198,30 @@ enum SmartStartService {
 
     @discardableResult
     static func relocalizeDefaultNotesForCurrentLanguage(apps: [AppInfo]) -> Bool {
-        let catalog = loadCatalog()
-        guard !catalog.isEmpty else { return false }
-
-        var bundleIndex: [String: SmartStartCatalogEntry] = [:]
-        for entry in catalog {
-            guard let bundleIdentifier = entry.bundleIdentifier?.lowercased(), !bundleIdentifier.isEmpty else {
-                continue
-            }
-            if let existing = bundleIndex[bundleIdentifier], existing.rank <= entry.rank {
-                continue
-            }
-            bundleIndex[bundleIdentifier] = entry
-        }
-
-        let nameIndex = Dictionary(
-            grouping: catalog,
-            by: { $0.normalizedName }
-        ).compactMapValues { entries in
-            entries.sorted { $0.rank < $1.rank }.first
-        }
+        let catalog = loadCatalogSnapshot()
+        guard !catalog.entries.isEmpty else { return false }
 
         var store = TagDatabase.load()
         var changed = false
+        let appPaths = Set(apps.map { $0.path.path })
 
-        for app in apps {
-            let path = app.path.path
+        for path in appPaths {
             guard let currentNote = normalizedNote(store.appNotes[path]) else { continue }
-            guard let matched = match(app: app, bundleIndex: bundleIndex, nameIndex: nameIndex),
-                  let notes = matched.notes,
-                  !notes.isEmpty
+            guard let metadata = store.appNoteMetadata[path],
+                  metadata.origin == .catalogDefault,
+                  let currentCatalog = metadata.catalog,
+                  currentCatalog.noteFingerprint == TagDatabase.noteFingerprint(currentNote),
+                  let matched = catalog.entryIndex[currentCatalog.entryID],
+                  let localizedNote = matched.localizedNote,
+                  localizedNote.note != currentNote
             else { continue }
 
-            let knownDefaultNotes = Set(notes.values.compactMap(normalizedNote))
-            guard knownDefaultNotes.contains(currentNote),
-                  let localizedNote = localizedNote(from: notes),
-                  localizedNote != currentNote
-            else { continue }
-
-            store.appNotes[path] = localizedNote
+            store.appNotes[path] = localizedNote.note
+            store.appNoteMetadata[path] = TagDatabase.AppNoteMetadata(
+                origin: .catalogDefault,
+                catalog: localizedNote.provenance,
+                noteFingerprint: localizedNote.provenance.noteFingerprint
+            )
             changed = true
         }
 
@@ -215,30 +252,18 @@ enum SmartStartService {
     }
 
     static func makeDraft(apps: [AppInfo]) -> SmartCategorizationDraft {
-        let catalog = loadCatalog()
-        var bundleIndex: [String: SmartStartCatalogEntry] = [:]
-        for entry in catalog {
-            guard let bundleIdentifier = entry.bundleIdentifier?.lowercased(), !bundleIdentifier.isEmpty else {
-                continue
-            }
-            if let existing = bundleIndex[bundleIdentifier], existing.rank <= entry.rank {
-                continue
-            }
-            bundleIndex[bundleIdentifier] = entry
-        }
-        let nameIndex = Dictionary(
-            grouping: catalog,
-            by: { $0.normalizedName }
-        ).compactMapValues { entries in
-            entries.sorted { $0.rank < $1.rank }.first
-        }
+        let catalog = loadCatalogSnapshot()
 
         var seenAssignments = Set<String>()
         var assignments: [SmartAppCategorizationAssignment] = []
         var unassigned: [SmartUnassignedApp] = []
 
         for app in apps {
-            let matched = match(app: app, bundleIndex: bundleIndex, nameIndex: nameIndex)
+            let matched = match(
+                app: app,
+                bundleIndex: catalog.bundleIndex,
+                nameIndex: catalog.nameIndex
+            )
             guard let matched else {
                 unassigned.append(SmartUnassignedApp(
                     appName: app.name,
@@ -261,8 +286,9 @@ enum SmartStartService {
                 source: .localCatalog,
                 reason: "Matched Smart Start catalog entry: \(matched.name)",
                 provenance: matched.sourceEvidence,
-                defaultNote: matched.localizedNote,
-                defaultNoteCandidates: matched.notes?.values.map { $0 } ?? []
+                defaultNote: matched.localizedNote?.note,
+                defaultNoteCandidates: matched.localizedNote.map { [$0.note] } ?? [],
+                defaultNoteProvenance: matched.localizedNote?.provenance
             ))
         }
 
@@ -355,13 +381,24 @@ enum SmartStartService {
             if let defaultNote = assignment.defaultNote?.trimmingCharacters(in: .whitespacesAndNewlines),
                !defaultNote.isEmpty {
                 let currentNote = store.appNotes[path]?.trimmingCharacters(in: .whitespacesAndNewlines)
-                let knownDefaultNotes = Set(assignment.defaultNoteCandidates.compactMap(normalizedNote))
                 let normalizedCurrentNote = normalizedNote(currentNote)
+                let existingMetadata = store.appNoteMetadata[path]
+                let currentMatchesCatalogDefault = existingMetadata?.origin == .catalogDefault
+                    && normalizedCurrentNote.map { TagDatabase.noteFingerprint($0) } == existingMetadata?.catalog?.noteFingerprint
+                let knownDefaultNotes = Set(assignment.defaultNoteCandidates.compactMap(normalizedNote))
                 let shouldSeedNote = currentNote?.isEmpty != false
+                    || currentMatchesCatalogDefault
                     || normalizedCurrentNote.map { knownDefaultNotes.contains($0) } == true
 
                 if shouldSeedNote {
                     store.appNotes[path] = String(defaultNote.prefix(TagDatabase.maxAppNoteLength))
+                    if let provenance = assignment.defaultNoteProvenance {
+                        store.appNoteMetadata[path] = TagDatabase.AppNoteMetadata(
+                            origin: .catalogDefault,
+                            catalog: provenance,
+                            noteFingerprint: provenance.noteFingerprint
+                        )
+                    }
                     if currentNote?.isEmpty != false {
                         uncommonPaths.insert(path)
                         if store.uncommonSources[path] == nil {
@@ -427,26 +464,45 @@ enum SmartStartService {
         return 0.68
     }
 
-    private static func loadCatalog() -> [SmartStartCatalogEntry] {
-        if let catalog = loadRuntimeCatalog() {
-            return catalog
+    private static func loadCatalogSnapshot() -> SmartStartCatalogSnapshot {
+        let languageCode = L10n.currentCode
+        catalogCacheLock.lock()
+        if let snapshot = cachedCatalogSnapshots[languageCode] {
+            catalogCacheLock.unlock()
+            return snapshot
         }
-        return loadLegacyCSVCatalog()
+        catalogCacheLock.unlock()
+
+        guard let base = loadBaseSnapshot() else {
+            return SmartStartCatalogSnapshot(entries: [], bundleIndex: [:], nameIndex: [:], entryIndex: [:])
+        }
+        let snapshot = makeCatalogSnapshot(base: base, languageCode: languageCode)
+
+        catalogCacheLock.lock()
+        if let cached = cachedCatalogSnapshots[languageCode] {
+            catalogCacheLock.unlock()
+            return cached
+        }
+        cachedCatalogSnapshots[languageCode] = snapshot
+        catalogCacheLock.unlock()
+        return snapshot
     }
 
-    private static func loadRuntimeCatalog() -> [SmartStartCatalogEntry]? {
-        guard let url = Bundle.main.url(forResource: "SmartStartUltimateDefaultCatalog", withExtension: "json"),
-              let data = try? Data(contentsOf: url),
-              let catalog = try? JSONDecoder().decode(SmartStartRuntimeCatalog.self, from: data)
-        else { return nil }
-
-        return catalog.entries.compactMap { entry in
+    private static func makeCatalogSnapshot(
+        base: SmartStartBaseSnapshot,
+        languageCode: String
+    ) -> SmartStartCatalogSnapshot {
+        let localizedNotes = loadLocalizedNotes(
+            for: languageFallbacks(preferredCode: languageCode, base: base)
+        )
+        let entries = base.entries.compactMap { entry -> SmartStartCatalogEntry? in
             let tagIDs = entry.defaultTag
                 .compactMap { SmartCategoryID(rawValue: $0) }
                 .filter { $0 != .other }
             guard !tagIDs.isEmpty else { return nil }
 
             return SmartStartCatalogEntry(
+                entryID: entry.entryID,
                 rank: entry.rank ?? Int.max,
                 name: entry.name,
                 normalizedName: entry.normalizedName.flatMap {
@@ -454,64 +510,230 @@ enum SmartStartService {
                 } ?? normalizedName(entry.name),
                 bundleIdentifier: normalizedBundleIdentifier(entry.bundleIdentifier),
                 categoryIDs: uniqueOrdered(tagIDs),
-                localizedNote: localizedNote(from: entry.notes),
-                notes: entry.notes,
+                localizedNote: localizedNotes[entry.entryID],
                 sourceEvidence: entry.sourceEvidence ?? []
             )
         }
-    }
 
-    private static func loadLegacyCSVCatalog() -> [SmartStartCatalogEntry] {
-        guard let url = Bundle.main.url(forResource: "SmartStartAppDefaultTags", withExtension: "csv"),
-              let csv = try? String(contentsOf: url, encoding: .utf8)
-        else { return [] }
+        var bundleIndex: [String: SmartStartCatalogEntry] = [:]
+        var nameIndex: [String: SmartStartCatalogEntry] = [:]
+        var entryIndex: [String: SmartStartCatalogEntry] = [:]
 
-        let rows = parseCSV(csv)
-        guard let header = rows.first else { return [] }
-        let dataRows = rows.dropFirst()
+        for entry in entries {
+            entryIndex[entry.entryID] = entry
+            if let bundleIdentifier = entry.bundleIdentifier?.lowercased(), !bundleIdentifier.isEmpty {
+                if bundleIndex[bundleIdentifier].map({ $0.rank <= entry.rank }) != true {
+                    bundleIndex[bundleIdentifier] = entry
+                }
+            }
 
-        return dataRows.compactMap { row in
-            let values = Dictionary(uniqueKeysWithValues: header.enumerated().map { index, key in
-                (key, index < row.count ? row[index] : "")
-            })
-            let tagIDs = splitPipe(values["defaultTagIDs"] ?? "")
-                .compactMap { SmartCategoryID(rawValue: $0) }
-                .filter { $0 != .other }
-            guard !tagIDs.isEmpty else { return nil }
-
-            return SmartStartCatalogEntry(
-                rank: Int(values["rank"] ?? "") ?? Int.max,
-                name: values["name"] ?? "",
-                normalizedName: values["normalizedName"].flatMap {
-                    $0.isEmpty ? nil : $0
-                } ?? normalizedName(values["name"] ?? ""),
-                bundleIdentifier: normalizedBundleIdentifier(values["bundleIdentifier"]),
-                categoryIDs: uniqueOrdered(tagIDs),
-                localizedNote: nil,
-                notes: nil,
-                sourceEvidence: splitPipe(values["sourceEvidence"] ?? "")
-            )
-        }
-    }
-
-    private static func localizedNote(from notes: [String: String]?, preferredCode: String = L10n.currentCode) -> String? {
-        guard let notes, !notes.isEmpty else { return nil }
-        let preferredCodes = [
-            preferredCode,
-            "en",
-            "zh-Hans",
-            "zh-Hant"
-        ]
-
-        for code in preferredCodes {
-            if let note = normalizedNote(notes[code]) {
-                return note
+            if nameIndex[entry.normalizedName].map({ $0.rank <= entry.rank }) != true {
+                nameIndex[entry.normalizedName] = entry
             }
         }
 
-        return notes.values
-            .compactMap(normalizedNote)
-            .first
+        return SmartStartCatalogSnapshot(
+            entries: entries,
+            bundleIndex: bundleIndex,
+            nameIndex: nameIndex,
+            entryIndex: entryIndex
+        )
+    }
+
+    private static func loadBaseSnapshot() -> SmartStartBaseSnapshot? {
+        catalogCacheLock.lock()
+        if let snapshot = cachedBaseSnapshot {
+            catalogCacheLock.unlock()
+            return snapshot
+        }
+        catalogCacheLock.unlock()
+
+        guard let url = Bundle.main.url(
+            forResource: "SmartStartUltimateDefaultCatalog.base",
+            withExtension: "json"
+        ),
+              let data = try? Data(contentsOf: url),
+              let catalog = try? JSONDecoder().decode(SmartStartBaseCatalog.self, from: data),
+              catalog.resourceFormatVersion == 1
+        else { return nil }
+
+        var bundleIndex: [String: SmartStartBaseCatalogEntry] = [:]
+        var nameIndex: [String: SmartStartBaseCatalogEntry] = [:]
+        var entryIndex: [String: SmartStartBaseCatalogEntry] = [:]
+        for entry in catalog.entries {
+            entryIndex[entry.entryID] = entry
+            if let bundleIdentifier = normalizedBundleIdentifier(entry.bundleIdentifier)?.lowercased(),
+               !bundleIdentifier.isEmpty,
+               bundleIndex[bundleIdentifier].map({ ($0.rank ?? Int.max) <= (entry.rank ?? Int.max) }) != true {
+                bundleIndex[bundleIdentifier] = entry
+            }
+            let name = entry.normalizedName.flatMap { $0.isEmpty ? nil : $0 } ?? normalizedName(entry.name)
+            if nameIndex[name].map({ ($0.rank ?? Int.max) <= (entry.rank ?? Int.max) }) != true {
+                nameIndex[name] = entry
+            }
+        }
+
+        let snapshot = SmartStartBaseSnapshot(
+            catalogContentVersion: catalog.catalogContentVersion,
+            supportedLanguages: catalog.supportedLanguages,
+            fallbackLanguages: catalog.fallbackLanguages,
+            entries: catalog.entries,
+            bundleIndex: bundleIndex,
+            nameIndex: nameIndex,
+            entryIndex: entryIndex
+        )
+
+        catalogCacheLock.lock()
+        if let cached = cachedBaseSnapshot {
+            catalogCacheLock.unlock()
+            return cached
+        }
+        cachedBaseSnapshot = snapshot
+        catalogCacheLock.unlock()
+        return snapshot
+    }
+
+    private static func loadLocalizedNotes(for languageCodes: [String]) -> [String: SmartStartLocalizedNote] {
+        var result: [String: SmartStartLocalizedNote] = [:]
+        for languageCode in languageCodes {
+            guard let notes = loadNotesSnapshot(languageCode: languageCode) else { continue }
+            for (entryID, note) in notes.notes where result[entryID] == nil {
+                let fingerprint = TagDatabase.noteFingerprint(note)
+                result[entryID] = SmartStartLocalizedNote(
+                    note: note,
+                    languageCode: notes.languageCode,
+                    provenance: SmartDefaultNoteProvenance(
+                        entryID: entryID,
+                        languageCode: notes.languageCode,
+                        notesVersion: notes.notesVersion,
+                        noteFingerprint: fingerprint
+                    )
+                )
+            }
+        }
+        return result
+    }
+
+    private static func loadNotesSnapshot(languageCode: String) -> SmartStartNotesSnapshot? {
+        catalogCacheLock.lock()
+        if let snapshot = cachedNotesSnapshots[languageCode] {
+            catalogCacheLock.unlock()
+            return snapshot
+        }
+        catalogCacheLock.unlock()
+
+        guard let data = loadNotesCatalogData(languageCode: languageCode),
+              let catalog = try? JSONDecoder().decode(SmartStartNotesCatalog.self, from: data),
+              catalog.resourceFormatVersion == 1
+        else { return nil }
+
+        let notes = Dictionary(uniqueKeysWithValues: catalog.entries.compactMap { entry in
+            normalizedNote(entry.note).map { (entry.entryID, $0) }
+        })
+        let snapshot = SmartStartNotesSnapshot(
+            languageCode: catalog.language,
+            notesVersion: catalog.notesVersion,
+            notes: notes
+        )
+
+        catalogCacheLock.lock()
+        if let cached = cachedNotesSnapshots[languageCode] {
+            catalogCacheLock.unlock()
+            return cached
+        }
+        cachedNotesSnapshots[languageCode] = snapshot
+        catalogCacheLock.unlock()
+        return snapshot
+    }
+
+    private static func loadNotesCatalogData(languageCode: String) -> Data? {
+        let resourceName = "SmartStartUltimateDefaultCatalog.notes.\(languageCode)"
+
+        if let url = Bundle.main.url(forResource: resourceName, withExtension: "json.deflate"),
+           let compressedData = try? Data(contentsOf: url),
+           let data = inflatedDeflateData(from: compressedData) {
+            return data
+        }
+
+        guard let url = Bundle.main.url(forResource: resourceName, withExtension: "json") else {
+            return nil
+        }
+        return try? Data(contentsOf: url)
+    }
+
+    private static func inflatedDeflateData(from compressedData: Data) -> Data? {
+        guard !compressedData.isEmpty else { return Data() }
+
+        let maxOutputSize = 16 * 1024 * 1024
+        var outputSize = max(compressedData.count * 8, 64 * 1024)
+
+        while outputSize <= maxOutputSize {
+            let decoded = compressedData.withUnsafeBytes { sourceBuffer -> Data? in
+                guard let sourcePointer = sourceBuffer.bindMemory(to: UInt8.self).baseAddress else {
+                    return nil
+                }
+
+                let destinationPointer = UnsafeMutablePointer<UInt8>.allocate(capacity: outputSize)
+                defer { destinationPointer.deallocate() }
+
+                let decodedCount = compression_decode_buffer(
+                    destinationPointer,
+                    outputSize,
+                    sourcePointer,
+                    compressedData.count,
+                    nil,
+                    COMPRESSION_ZLIB
+                )
+
+                guard decodedCount > 0 else { return nil }
+                return Data(bytes: destinationPointer, count: decodedCount)
+            }
+
+            if let decoded {
+                return decoded
+            }
+            outputSize *= 2
+        }
+
+        return nil
+    }
+
+    private static func languageFallbacks(
+        preferredCode: String,
+        base: SmartStartBaseSnapshot
+    ) -> [String] {
+        var codes: [String] = []
+        func append(_ code: String) {
+            guard !code.isEmpty,
+                  base.supportedLanguages.contains(code),
+                  !codes.contains(code)
+            else { return }
+            codes.append(code)
+        }
+
+        append(preferredCode)
+        switch preferredCode {
+        case "ar-Najdi":
+            append("ar")
+        case "nn":
+            append("nb")
+            append("no")
+        case "no":
+            append("nb")
+            append("nn")
+        case "nb":
+            append("no")
+            append("nn")
+        default:
+            break
+        }
+        for code in base.fallbackLanguages {
+            append(code)
+        }
+        append("en")
+        append("zh-Hans")
+        append("zh-Hant")
+        return codes
     }
 
     private static func normalizedNote(_ value: String?) -> String? {

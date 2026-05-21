@@ -59,6 +59,8 @@ swiftc \
     -framework AppKit \
     -framework SwiftUI \
     -framework Carbon \
+    -framework CoreServices \
+    -lcompression \
     -sdk "$SDK_PATH" \
     -target "$TARGET" \
     -Osize \
@@ -84,14 +86,70 @@ echo "==> Copying Localization files..."
 cp -r "$SWIFT_DIR/Localization" "$RESOURCES_DIR/Localization"
 
 echo "==> Copying Smart Start catalog..."
-if [ -f "$PROJECT_DIR/Research/SmartStart/UltimateDefaultCatalog/SmartStart_UltimateDefaultCatalog.json" ]; then
-    cp "$PROJECT_DIR/Research/SmartStart/UltimateDefaultCatalog/SmartStart_UltimateDefaultCatalog.json" "$RESOURCES_DIR/SmartStartUltimateDefaultCatalog.json"
-fi
-if [ -f "$PROJECT_DIR/Research/SmartStart/UltimateDefaultCatalog/SmartStart_UltimateDefaultCatalog.csv" ]; then
-    cp "$PROJECT_DIR/Research/SmartStart/UltimateDefaultCatalog/SmartStart_UltimateDefaultCatalog.csv" "$RESOURCES_DIR/SmartStartUltimateDefaultCatalog.csv"
-fi
-if [ -f "$PROJECT_DIR/Research/SmartStart/AppDefaultTags_Review.csv" ]; then
-    cp "$PROJECT_DIR/Research/SmartStart/AppDefaultTags_Review.csv" "$RESOURCES_DIR/SmartStartAppDefaultTags.csv"
+SMARTSTART_SOURCE_DIR="$PROJECT_DIR/Research/SmartStart/UltimateDefaultCatalog"
+for required in \
+    "SmartStart_UltimateDefaultCatalog.base.json" \
+    "SmartStart_UltimateDefaultCatalog.manifest.json" \
+    "SmartStart_UltimateDefaultCatalog.notes.en.json" \
+    "SmartStart_UltimateDefaultCatalog.notes.zh-Hans.json"; do
+    if [ ! -f "$SMARTSTART_SOURCE_DIR/$required" ]; then
+        echo "❌ Missing Smart Start split resource: $required"
+        echo "   Run: node Research/SmartStart/Scripts/build-ultimate-default-catalog.mjs"
+        exit 1
+    fi
+done
+python3 - "$SMARTSTART_SOURCE_DIR/SmartStart_UltimateDefaultCatalog.base.json" "$RESOURCES_DIR/SmartStartUltimateDefaultCatalog.base.json" <<'PY'
+import json
+import sys
+source, destination = sys.argv[1], sys.argv[2]
+with open(source, "r", encoding="utf-8") as f:
+    data = json.load(f)
+with open(destination, "w", encoding="utf-8") as f:
+    json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
+PY
+python3 - "$SMARTSTART_SOURCE_DIR/SmartStart_UltimateDefaultCatalog.manifest.json" "$RESOURCES_DIR/SmartStartUltimateDefaultCatalog.manifest.json" <<'PY'
+import json
+import sys
+source, destination = sys.argv[1], sys.argv[2]
+with open(source, "r", encoding="utf-8") as f:
+    data = json.load(f)
+with open(destination, "w", encoding="utf-8") as f:
+    json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
+PY
+for notes_file in "$SMARTSTART_SOURCE_DIR"/SmartStart_UltimateDefaultCatalog.notes.*.json; do
+    [ -e "$notes_file" ] || continue
+    output_name="$(basename "$notes_file" | sed 's/SmartStart_UltimateDefaultCatalog/SmartStartUltimateDefaultCatalog/').deflate"
+    python3 - "$notes_file" "$RESOURCES_DIR/$output_name" <<'PY'
+import json
+import sys
+import zlib
+source, destination = sys.argv[1], sys.argv[2]
+with open(source, "r", encoding="utf-8") as f:
+    data = json.load(f)
+payload = json.dumps(data, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+compressor = zlib.compressobj(level=9, wbits=-15)
+compressed = compressor.compress(payload) + compressor.flush()
+with open(destination, "wb") as f:
+    f.write(compressed)
+PY
+done
+
+if find "$RESOURCES_DIR" -maxdepth 1 -type f \( \
+    -name '*TranslationCache*' -o \
+    -name '*invalid*' -o \
+    -name 'SmartStartUltimateDefaultCatalog.json' -o \
+    -name 'SmartStartUltimateDefaultCatalog.csv' -o \
+    -name 'SmartStartUltimateDefaultCatalog.notes.*.json' \
+    \) | grep -q .; then
+    echo "❌ Forbidden Smart Start artifact copied into app bundle"
+    find "$RESOURCES_DIR" -maxdepth 1 -type f \( \
+        -name '*TranslationCache*' -o \
+        -name '*invalid*' -o \
+        -name 'SmartStartUltimateDefaultCatalog.json' -o \
+        -name 'SmartStartUltimateDefaultCatalog.csv' -o \
+        -name 'SmartStartUltimateDefaultCatalog.notes.*.json' \
+        \) -print
+    exit 1
 fi
 
 echo "==> Embedding PkgInfo..."

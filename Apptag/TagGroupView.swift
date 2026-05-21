@@ -14,8 +14,8 @@ struct TagGroupView: View {
     var onBubbleHover: ((AppInfo, CGRect, AppBubbleHoverEvent) -> Void)? = nil
     var onEditNote: ((AppInfo, CGRect) -> Void)? = nil
     var bubbleDisabled: Bool = false
+    var showUncommonAppBubbles: Bool = AppDefaults.showUncommonAppBubbles
     var dragResetToken: Int = 0
-    @Binding var hoveredAppItemID: String?
     var onDropApp: ((String, String, Bool) -> Void)? = nil
 
     /// Adaptive columns — auto-fit based on icon size and available width.
@@ -61,9 +61,9 @@ struct TagGroupView: View {
                         onBubbleHover: onBubbleHover,
                         onEditNote: onEditNote,
                         bubbleDisabled: bubbleDisabled,
+                        showUncommonAppBubbles: showUncommonAppBubbles,
                         itemID: "\(group.name)|\(app.path.path)",
                         dragResetToken: dragResetToken,
-                        hoveredAppItemID: $hoveredAppItemID,
                         onSelect: { onSelectApp(app) }
                     )
                 }
@@ -71,10 +71,12 @@ struct TagGroupView: View {
         }
         .contentShape(Rectangle())
         .overlay {
-            AppDropTargetView(targetTag: group.name) { path, source, copy in
-                onDropApp?(path, source, copy)
+            if dragModeActive {
+                AppDropTargetView(targetTag: group.name) { path, source, copy in
+                    onDropApp?(path, source, copy)
+                }
+                .allowsHitTesting(false)
             }
-            .allowsHitTesting(false)
         }
         .onDrop(of: [UTType.plainText], isTargeted: nil) { providers in
             handleDrop(providers)

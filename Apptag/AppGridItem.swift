@@ -13,13 +13,13 @@ struct AppGridItem: View {
     var onBubbleHover: ((AppInfo, CGRect, AppBubbleHoverEvent) -> Void)? = nil
     var onEditNote: ((AppInfo, CGRect) -> Void)? = nil
     var bubbleDisabled: Bool = false
+    var showUncommonAppBubbles: Bool = AppDefaults.showUncommonAppBubbles
     var itemID: String
     var dragResetToken: Int = 0
-    @Binding var hoveredAppItemID: String?
     let onSelect: () -> Void
 
     @State private var interactionFrame: CGRect = .zero
-    @AppStorage("showUncommonAppBubbles") private var showUncommonAppBubbles = AppDefaults.showUncommonAppBubbles
+    @State private var isHovered = false
 
     static let hoverScale: CGFloat = 1.22
     static let labelHeight: CGFloat = 14
@@ -37,7 +37,6 @@ struct AppGridItem: View {
     private var iconSlotSize: CGFloat { iconSize * Self.hoverScale }
     private var labelWidth: CGFloat { iconSize + 20 }
     private var labelHeight: CGFloat { Self.labelHeight }
-    private var isHovered: Bool { hoveredAppItemID == itemID }
 
     var body: some View {
         VStack(spacing: 6) {
@@ -46,6 +45,7 @@ struct AppGridItem: View {
                     icon: app.icon,
                     iconSize: iconSize,
                     payload: "\(app.path.path)\n\(sourceTag ?? "")",
+                    resetToken: dragResetToken,
                     onLongPress: { onDragModeChange?(true) },
                     onDragEnd: { onDragModeChange?(false) },
                     onClick: onSelect
@@ -71,7 +71,7 @@ struct AppGridItem: View {
         .padding(.horizontal, 4)
         .frame(width: Self.stableWidth(iconSize: iconSize), height: Self.stableHeight(iconSize: iconSize))
         .background(
-            AppGridItemHoverTracker { hovering, frame in
+            AppHoverTrackingView { hovering, frame in
                 interactionFrame = frame
                 if bubbleDisabled || dragModeActive {
                     setHoverState(false)
@@ -97,7 +97,6 @@ struct AppGridItem: View {
         }
         .opacity(dragModeActive ? 0.92 : 1)
         .animation(.easeOut(duration: 0.08), value: dragModeActive)
-        .id("\(itemID)|reset-\(dragResetToken)")
         .onChange(of: dragModeActive) { _, active in
             if active {
                 setHoverState(false)
@@ -111,8 +110,8 @@ struct AppGridItem: View {
             }
         }
         .onDisappear {
-            if hoveredAppItemID == itemID {
-                hoveredAppItemID = nil
+            if isHovered {
+                isHovered = false
                 onBubbleHover?(app, interactionFrame, .exited)
             }
         }
@@ -127,12 +126,9 @@ struct AppGridItem: View {
     }
 
     private func setHoverState(_ hovering: Bool) {
+        guard isHovered != hovering else { return }
         withAnimation(hovering ? Self.hoverInAnimation : Self.hoverOutAnimation) {
-            if hovering {
-                hoveredAppItemID = itemID
-            } else if hoveredAppItemID == itemID {
-                hoveredAppItemID = nil
-            }
+            isHovered = hovering
         }
     }
 }
@@ -142,21 +138,21 @@ enum AppBubbleHoverEvent {
     case exited
 }
 
-private struct AppGridItemHoverTracker: NSViewRepresentable {
+struct AppHoverTrackingView: NSViewRepresentable {
     let onHover: (Bool, CGRect) -> Void
 
-    func makeNSView(context: Context) -> HoverTrackingNSView {
-        let view = HoverTrackingNSView()
+    func makeNSView(context: Context) -> AppHoverTrackingNSView {
+        let view = AppHoverTrackingNSView()
         view.onHover = onHover
         return view
     }
 
-    func updateNSView(_ view: HoverTrackingNSView, context: Context) {
+    func updateNSView(_ view: AppHoverTrackingNSView, context: Context) {
         view.onHover = onHover
     }
 }
 
-private final class HoverTrackingNSView: NSView {
+final class AppHoverTrackingNSView: NSView {
     var onHover: ((Bool, CGRect) -> Void)?
 
     override func updateTrackingAreas() {
@@ -310,6 +306,7 @@ private struct DraggableAppIconView: NSViewRepresentable {
     let icon: NSImage
     let iconSize: CGFloat
     let payload: String
+    let resetToken: Int
     let onLongPress: () -> Void
     let onDragEnd: () -> Void
     let onClick: () -> Void
@@ -319,6 +316,7 @@ private struct DraggableAppIconView: NSViewRepresentable {
         view.image = icon
         view.iconSize = iconSize
         view.payload = payload
+        view.resetToken = resetToken
         view.onLongPress = onLongPress
         view.onDragEnd = onDragEnd
         view.onClick = onClick
@@ -331,6 +329,10 @@ private struct DraggableAppIconView: NSViewRepresentable {
         view.image = icon
         view.iconSize = iconSize
         view.payload = payload
+        if view.resetToken != resetToken {
+            view.resetToken = resetToken
+            view.resetInteractionState()
+        }
         view.onLongPress = onLongPress
         view.onDragEnd = onDragEnd
         view.onClick = onClick
@@ -344,6 +346,7 @@ private final class DragIconNSView: NSView {
     var image: NSImage = NSImage()
     var iconSize: CGFloat = 56
     var payload: String = ""
+    var resetToken = 0
     var onLongPress: (() -> Void)?
     var onDragEnd: (() -> Void)?
     var onClick: (() -> Void)?
@@ -353,6 +356,14 @@ private final class DragIconNSView: NSView {
     private var isLongPressActive = false
     private var longPressWorkItem: DispatchWorkItem?
     override var isFlipped: Bool { true }
+
+    func resetInteractionState() {
+        longPressWorkItem?.cancel()
+        longPressWorkItem = nil
+        mouseDownEvent = nil
+        didStartDrag = false
+        isLongPressActive = false
+    }
 
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
@@ -419,6 +430,7 @@ private final class DragIconNSView: NSView {
         didStartDrag = false
         isLongPressActive = false
         mouseDownEvent = nil
+        longPressWorkItem = nil
     }
 
     private func makeDragImage() -> NSImage {

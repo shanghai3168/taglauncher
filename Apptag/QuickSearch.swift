@@ -244,6 +244,8 @@ private struct QuickSearchIndexedField {
     let normalized: String
     let acronym: String
     let pinyinCandidates: [String]
+    let allowPinyinSubstring: Bool
+    let allowPinyinFuzzySubsequence: Bool
 }
 
 private struct QuickSearchMatchOptions {
@@ -286,7 +288,7 @@ struct QuickSearchResult: Identifiable {
 enum QuickSearchEngine {
     static func makeDocuments(apps: [AppInfo], store: TagDatabase.Store) -> [QuickSearchDocument] {
         apps.map { app in
-            let localizedNames = localizedNames(for: app)
+            let localizedNames = uniqueOrdered(app.localizedNames)
             let internalBundleNames = internalBundleNames(for: app)
             let note = store.appNotes[app.path.path] ?? app.note ?? ""
             let bundleIdentifier = app.bundleIdentifier ?? ""
@@ -377,12 +379,15 @@ enum QuickSearchEngine {
     ) -> [QuickSearchIndexedField] {
         let names = uniqueOrdered([appName] + localizedNames)
         let nameFields = names.map {
-            QuickSearchIndexedField(
+            let allowsRomanizedFuzzy = containsNonLatinLetter($0)
+            return QuickSearchIndexedField(
                 kind: .name,
                 text: $0,
                 normalized: normalizeField($0),
                 acronym: acronym(for: $0),
-                pinyinCandidates: pinyinCandidates(for: $0)
+                pinyinCandidates: pinyinCandidates(for: $0),
+                allowPinyinSubstring: allowsRomanizedFuzzy,
+                allowPinyinFuzzySubsequence: allowsRomanizedFuzzy
             )
         }
         let tagFields = tagNames.map {
@@ -391,7 +396,9 @@ enum QuickSearchEngine {
                 text: $0,
                 normalized: normalizeField($0),
                 acronym: "",
-                pinyinCandidates: pinyinCandidates(for: $0)
+                pinyinCandidates: pinyinCandidates(for: $0),
+                allowPinyinSubstring: false,
+                allowPinyinFuzzySubsequence: false
             )
         }
         let noteFields = note.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? [] : [
@@ -400,7 +407,9 @@ enum QuickSearchEngine {
                 text: note,
                 normalized: normalizeField(note),
                 acronym: "",
-                pinyinCandidates: pinyinCandidates(for: note)
+                pinyinCandidates: pinyinCandidates(for: note),
+                allowPinyinSubstring: true,
+                allowPinyinFuzzySubsequence: false
             )
         ]
         let bundleFields = bundleIdentifier.isEmpty ? [] : [
@@ -409,7 +418,9 @@ enum QuickSearchEngine {
                 text: bundleIdentifier,
                 normalized: normalizeField(bundleIdentifier),
                 acronym: "",
-                pinyinCandidates: []
+                pinyinCandidates: [],
+                allowPinyinSubstring: false,
+                allowPinyinFuzzySubsequence: false
             )
         ]
         let internalBundleNameFields = internalBundleNames.map {
@@ -418,7 +429,9 @@ enum QuickSearchEngine {
                 text: $0,
                 normalized: normalizeField($0),
                 acronym: "",
-                pinyinCandidates: []
+                pinyinCandidates: [],
+                allowPinyinSubstring: false,
+                allowPinyinFuzzySubsequence: false
             )
         }
         return nameFields + tagFields + noteFields + bundleFields + internalBundleNameFields
@@ -453,7 +466,8 @@ enum QuickSearchEngine {
             if let pinyinCandidate = matchPinyinCandidate(
                 token: token,
                 normalized: pinyin,
-                allowSubstring: field.kind == .note
+                allowSubstring: field.allowPinyinSubstring,
+                allowFuzzySubsequence: field.allowPinyinFuzzySubsequence
             ) {
                 candidates.append(pinyinCandidate)
             }
@@ -502,7 +516,8 @@ enum QuickSearchEngine {
     private static func matchPinyinCandidate(
         token: String,
         normalized: String,
-        allowSubstring: Bool = false
+        allowSubstring: Bool = false,
+        allowFuzzySubsequence: Bool = false
     ) -> (QuickSearchMatchKind, Int)? {
         guard !normalized.isEmpty else { return nil }
         if normalized == token {
@@ -513,6 +528,9 @@ enum QuickSearchEngine {
         }
         if allowSubstring, let range = normalized.range(of: token) {
             return (.substring, normalized.distance(from: normalized.startIndex, to: range.lowerBound))
+        }
+        if allowFuzzySubsequence, token.count >= 3, isSubsequence(token, of: normalized) {
+            return (.fuzzy, 10)
         }
         return nil
     }
@@ -588,7 +606,7 @@ enum QuickSearchEngine {
     }
 
     private static func pinyinCandidates(for value: String) -> [String] {
-        guard value.range(of: #"\p{Han}"#, options: .regularExpression) != nil else { return [] }
+        guard containsNonLatinLetter(value) else { return [] }
         let mutable = NSMutableString(string: value)
         CFStringTransform(mutable, nil, kCFStringTransformToLatin, false)
         CFStringTransform(mutable, nil, kCFStringTransformStripCombiningMarks, false)
@@ -606,6 +624,31 @@ enum QuickSearchEngine {
             .map(String.init)
             .joined()
         return uniqueOrdered([spaced, compact, initials].filter { !$0.isEmpty })
+    }
+
+    private static func containsNonLatinLetter(_ value: String) -> Bool {
+        value.unicodeScalars.contains { scalar in
+            CharacterSet.letters.contains(scalar) && !isLatinScriptLetter(scalar)
+        }
+    }
+
+    private static func isLatinScriptLetter(_ scalar: UnicodeScalar) -> Bool {
+        switch scalar.value {
+        case 0x0041...0x005A, // Basic Latin uppercase
+             0x0061...0x007A, // Basic Latin lowercase
+             0x00AA,
+             0x00BA,
+             0x00C0...0x024F, // Latin-1 Supplement, Extended-A/B
+             0x1E00...0x1EFF, // Latin Extended Additional
+             0x2C60...0x2C7F, // Latin Extended-C
+             0xA720...0xA7FF, // Latin Extended-D
+             0xAB30...0xAB6F, // Latin Extended-E
+             0xFF21...0xFF3A, // Fullwidth Latin uppercase
+             0xFF41...0xFF5A: // Fullwidth Latin lowercase
+            return true
+        default:
+            return false
+        }
     }
 
     private static func isSubsequence(_ token: String, of value: String) -> Bool {
@@ -692,6 +735,7 @@ struct QuickSearchOverlayView: View {
     let results: [QuickSearchResult]
     let selectedID: URL?
     let focusToken: Int
+    let selectionScrollToken: Int
     let isLoading: Bool
     let maxVisibleRows: Int
     let errorMessage: String?
@@ -699,8 +743,16 @@ struct QuickSearchOverlayView: View {
     let onHover: (QuickSearchResult) -> Void
     let onLaunch: (QuickSearchResult) -> Void
 
+    @Environment(\.colorScheme) private var colorScheme
+
     private let panelWidth: CGFloat = 760
     private let rowHeight: CGFloat = 74
+
+    private var panelBackgroundColor: Color {
+        colorScheme == .dark
+            ? Color(red: 0.105, green: 0.110, blue: 0.125).opacity(0.97)
+            : Color.white.opacity(0.97)
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -725,17 +777,11 @@ struct QuickSearchOverlayView: View {
             Divider().opacity(0.35)
 
             if isLoading {
-                HStack(spacing: 10) {
-                    ProgressView()
-                        .controlSize(.small)
-                    Text(tr("quickSearch.loading"))
-                        .font(.system(size: 15, weight: .medium))
-                        .foregroundStyle(.secondary)
-                    Spacer(minLength: 0)
-                }
-                .padding(.horizontal, 28)
-                .padding(.vertical, 24)
-                .frame(minHeight: 86)
+                QuickSearchMessageRow(
+                    systemImage: "hourglass",
+                    message: tr("quickSearch.loading"),
+                    tint: .secondary
+                )
             } else if let errorMessage {
                 QuickSearchMessageRow(
                     systemImage: "exclamationmark.triangle.fill",
@@ -774,8 +820,8 @@ struct QuickSearchOverlayView: View {
                         .padding(.vertical, 10)
                     }
                     .frame(height: CGFloat(min(results.count, maxVisibleRows)) * (rowHeight + 2) + 20)
-                    .onChange(of: selectedID) { _, id in
-                        guard let id else { return }
+                    .onChange(of: selectionScrollToken) { _, _ in
+                        guard let id = selectedID else { return }
                         withAnimation(.easeOut(duration: 0.08)) {
                             scrollProxy.scrollTo(id, anchor: .center)
                         }
@@ -786,7 +832,7 @@ struct QuickSearchOverlayView: View {
         .frame(width: panelWidth)
         .background(
             RoundedRectangle(cornerRadius: 34, style: .continuous)
-                .fill(.regularMaterial)
+                .fill(panelBackgroundColor)
                 .shadow(color: .black.opacity(0.18), radius: 36, y: 18)
         )
         .overlay(
@@ -922,9 +968,7 @@ private struct QuickSearchTextField: NSViewRepresentable {
         field.onCommand = onCommand
         field.setAccessibilityLabel(tr("quickSearch.inputAccessibility"))
         context.coordinator.field = field
-        DispatchQueue.main.async {
-            field.window?.makeFirstResponder(field)
-        }
+        requestFocus(field)
         return field
     }
 
@@ -936,9 +980,16 @@ private struct QuickSearchTextField: NSViewRepresentable {
         field.onCommand = onCommand
         if context.coordinator.lastFocusToken != focusToken {
             context.coordinator.lastFocusToken = focusToken
-            DispatchQueue.main.async {
-                field.window?.makeFirstResponder(field)
-            }
+            requestFocus(field)
+        }
+    }
+
+    private func requestFocus(_ field: QuickSearchNativeTextField) {
+        DispatchQueue.main.async { [weak field] in
+            guard let field,
+                  field.window?.firstResponder !== field
+            else { return }
+            field.window?.makeFirstResponder(field)
         }
     }
 

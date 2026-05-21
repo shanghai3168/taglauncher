@@ -1,14 +1,27 @@
-# Apptag Changelog
+# TagLauncher Changelog
 
 ## [7.6.0] — 2026-05-20
 
+- 重写默认 App 网格主路径：`coloredGridContainer` / `gridContainer` 改为 AppKit-backed 主网格，使用 `NSCollectionView` 管理分组卡片、滚动、图标 hover 和拖拽 drop，默认路径不再依赖 SwiftUI `LazyVStack` / `LazyVGrid` 布局事务
+- 修复 AppKit-backed 网格容器对齐：用自定义 `NSCollectionViewLayout` 复刻原来的行/span 规则，同一行卡片顶边一致，并按该行最高图标行数统一容器高度
+- 针对假死报告中的 SwiftUI `AttributeGraph` / Lazy layout 栈，新增主网格热键开关与打开后等待采样验证，20 次 overlay 开关后 CPU 回到空闲水平且采样未再出现 `LazyLayoutViewCache`、`LazyStack`、`ForEachState`
+- 统一运行时品牌标识：本地数据目录改为 `~/Library/Application Support/TagLauncher`，Bundle ID、LaunchAgent、状态栏 autosave 名和 Smart Start 内置目录中的 TagLauncher 自身条目同步改为 TagLauncher 命名空间，并移除不再需要的旧路径沙盒临时例外
+- 优化 Smart Start 包体：App bundle 只打包 base/manifest 与按语言独立压缩的 notes 资源，构建时拒绝旧单体 JSON、CSV、translation cache、invalid cache 和未压缩 notes 混入包内
+- 扩展 Smart Start 运行时分类体系，支持新版终极目录中的 GTD、笔记、会议、Office、PDF、API、数据库、DevOps、IDE、终端、窗口管理等更细分类
+- Smart Start 运行时资源改为 base catalog + 29 个按语言拆分的 notes 文件，正常路径只加载当前语言和必要 fallback，不再长期持有 29 种语言 notes
+- Smart Start 资源生成器新增 Swift runtime 分类兼容门禁、稳定 `entryID`、manifest 和 split resource 输出，避免未知分类被静默丢弃
+- Smart Start 默认用途备注新增来源 metadata，系统默认备注可随语言切换更新，用户手写备注不会被语言切换覆盖
+- 打包脚本改为只复制 split Smart Start 资源到 App bundle，不再把旧单体 runtime JSON/CSV 作为首发运行时资源
+- 移除 Smart Start 终极默认目录中错误的 `thunder` 条目，避免将 Thunder 错分为 VPN/安全网络工具并写入错误用途备注
 - 优化主界面滚动性能：网格容器改为懒加载，并在滚动期间临时冻结 App hover 放大、用途气泡和容器 hover 高亮
 - 将主界面的分组结果与网格容器行布局改为缓存状态，避免鼠标 hover、搜索输入等轻量状态变化反复触发分组和布局计算
 - 优化 Quick Search：打开浮层时复用已加载 App 数据，不再每次打开都触发全量刷新；搜索字段在索引阶段预计算，输入时避免重复规格化、首字母和拼音候选生成
+- Quick Search 增加 App 本地化显示名索引：读取所有语言 `InfoPlist.strings` 显示名，并用 Spotlight display name 兜底，让 AweSun 这类英文文件名 App 可通过“贝锐向日葵/向日葵”搜索命中
+- 对含非拉丁文字的 App 显示名启用拉丁化/转写候选，支持 `xiangrikui`、`beirui`、`xrk` 等连续片段和非连续缩写命中；该规则仅限 App 显示名，不扩散到 Bundle ID 或纯拉丁 App 名
 - 减少 App 图标重绘：只有图标对象或尺寸变化时才触发 `NSView` 重绘
 - 将当前满意版标记为 `7.6.0`，作为后续性能优化前的稳定归档基线
 - 保留 7.5.1 的 Quick Search、快捷键状态、Smart Start 目录和文档沉淀成果，不引入新的功能变更
-- 版本号更新为 `7.6.0`，基线 Build 为 `20260520.1250`；本次性能优化验证 Build 为 `20260520.1400`
+- 版本号更新为 `7.6.0`，基线 Build 为 `20260520.1250`；本次本地化显示名搜索验证 Build 为 `20260520.1452`
 
 ## [7.5.1] — 2026-05-19
 
@@ -392,7 +405,7 @@
 
 ## [3.1.35] — 2026-05-10
 
-- 修复 overlay 显示时打开设置窗口不可见的问题：设置窗口会强制浮动在 Apptag 列表之上，确保用户能实时预览设置效果
+- 修复 overlay 显示时打开设置窗口不可见的问题：设置窗口会强制浮动在 TagLauncher 列表之上，确保用户能实时预览设置效果
 
 ## [3.1.34] — 2026-05-10
 
@@ -420,7 +433,7 @@
 
 ## [3.1.28] — 2026-05-10
 
-- 修复全屏 Space 下 Shift+Option+Space 唤出 Apptag 后 overlay 被全屏应用遮挡的问题：显示时刷新当前屏幕 frame，提升窗口层级并强制前置
+- 修复全屏 Space 下 Shift+Option+Space 唤出 TagLauncher 后 overlay 被全屏应用遮挡的问题：显示时刷新当前屏幕 frame，提升窗口层级并强制前置
 
 ## [3.1.27] — 2026-05-07
 
@@ -477,7 +490,7 @@
 ## [3.1.13] — 2026-05-06
 
 - 新增全局快捷键设置（Data 页签）：点击按钮后按下新快捷键即可更改，支持任意组合键
-- 菜单栏「Show Apptag」右侧显示当前快捷键
+- 菜单栏「Show TagLauncher」右侧显示当前快捷键
 - HotkeyHelper：Carbon keycode → 人类可读字符串（⇧⌥Space, ⌘A, F1 等）
 
 ## [3.1.12] — 2026-05-06
@@ -488,7 +501,7 @@
 ## [3.1.11] — 2026-05-06
 
 - General 标签页：改用 Grid 布局替代固定 frame，标签列按内容宽度自动右对齐
-- 点击 Dock 图标现在等同于菜单栏 "Show Apptag"，直接全屏显示 APP 列表
+- 点击 Dock 图标现在等同于菜单栏 "Show TagLauncher"，直接全屏显示 APP 列表
 
 ## [3.1.10] — 2026-05-06
 
@@ -602,7 +615,7 @@
 
 ## [2.0] — 2026-05-06
 
-- **架构级变更**：标签完全脱离 Finder，独立存储在本地 JSON 数据库 `~/Library/Application Support/Apptag/tags.json`
+- **架构级变更**：标签完全脱离 Finder，独立存储在本地 JSON 数据库 `~/Library/Application Support/TagLauncher/tags.json`
 - 首次启动一次性导入 Finder 存量标签（含"Mac自带"），之后不再触碰 Finder xattr
 - 所有 CRUD（assign/rename/delete/setColor）写入本地 DB
 - Preferences → Data 标签页：Export / Import JSON 备份恢复
