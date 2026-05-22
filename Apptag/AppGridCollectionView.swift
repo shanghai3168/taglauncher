@@ -1,6 +1,34 @@
 import SwiftUI
 import AppKit
 
+fileprivate enum AppGridCollectionDisplayMode: Equatable {
+    case flat
+    case masonryContainer
+    case gridContainer
+
+    init(_ rawValue: String) {
+        switch rawValue {
+        case "container", "coloredContainer":
+            self = .masonryContainer
+        case "gridContainer", "coloredGridContainer":
+            self = .gridContainer
+        default:
+            self = .flat
+        }
+    }
+
+    var usesCardSurface: Bool {
+        self != .flat
+    }
+}
+
+fileprivate struct AppGridBubbleSuppressionReasons: OptionSet {
+    let rawValue: Int
+
+    static let externalInteraction = AppGridBubbleSuppressionReasons(rawValue: 1 << 0)
+    static let scroll = AppGridBubbleSuppressionReasons(rawValue: 1 << 1)
+}
+
 struct AppGridCollectionView: NSViewRepresentable {
     let groups: [TagGroup]
     let tagColors: [String: Int]
@@ -61,7 +89,8 @@ struct AppGridCollectionView: NSViewRepresentable {
         var displayMode = AppDefaults.displayMode
         var iconSize: CGFloat = AppDefaults.iconSize
         var showNames = true
-        var bubbleDisabled = false
+        private var externalBubbleDisabled = false
+        private var scrollBubbleDisabled = false
         var showUncommonAppBubbles = AppDefaults.showUncommonAppBubbles
         var highlightedGroupName: String?
         var contentRevision = 0
@@ -104,7 +133,7 @@ struct AppGridCollectionView: NSViewRepresentable {
             self.displayMode = displayMode
             self.iconSize = iconSize
             self.showNames = showNames
-            self.bubbleDisabled = bubbleDisabled
+            self.externalBubbleDisabled = bubbleDisabled
             self.showUncommonAppBubbles = showUncommonAppBubbles
             self.highlightedGroupName = highlightedGroupName
             self.contentRevision = contentRevision
@@ -161,6 +190,40 @@ struct AppGridCollectionView: NSViewRepresentable {
             groups.firstIndex { $0.id == tagID || $0.name == tagID }
         }
 
+        fileprivate var displayStyle: AppGridCollectionDisplayMode {
+            AppGridCollectionDisplayMode(displayMode)
+        }
+
+        var isColoredContainerMode: Bool {
+            displayMode == "coloredContainer" || displayMode == "coloredGridContainer"
+        }
+
+        var isColorlessContainerMode: Bool {
+            displayMode == "container" || displayMode == "gridContainer"
+        }
+
+        fileprivate var bubbleSuppressionReasons: AppGridBubbleSuppressionReasons {
+            var reasons: AppGridBubbleSuppressionReasons = []
+            if externalBubbleDisabled {
+                reasons.insert(.externalInteraction)
+            }
+            if scrollBubbleDisabled {
+                reasons.insert(.scroll)
+            }
+            return reasons
+        }
+
+        var bubbleDisabled: Bool {
+            !bubbleSuppressionReasons.isEmpty
+        }
+
+        @discardableResult
+        func setScrollBubbleDisabled(_ disabled: Bool) -> Bool {
+            guard scrollBubbleDisabled != disabled else { return false }
+            scrollBubbleDisabled = disabled
+            return true
+        }
+
         private static func signature(
             tagColors: [String: Int],
             displayMode: String,
@@ -195,6 +258,7 @@ final class AppGridCollectionHostView: NSView {
     private var scrollObserver: NSObjectProtocol?
     private var lastLayoutSize: NSSize = .zero
     private var lastReportedBoundsOrigin: NSPoint?
+    private var scrollUnfreezeWorkItem: DispatchWorkItem?
 
     override var isFlipped: Bool { true }
 
@@ -212,6 +276,7 @@ final class AppGridCollectionHostView: NSView {
         if let scrollObserver {
             NotificationCenter.default.removeObserver(scrollObserver)
         }
+        scrollUnfreezeWorkItem?.cancel()
     }
 
     func configure(coordinator: AppGridCollectionView.Coordinator) {
@@ -228,9 +293,7 @@ final class AppGridCollectionHostView: NSView {
             collectionView.reloadData()
             gridLayout.invalidateLayout()
         } else {
-            collectionView.visibleItems().forEach { item in
-                (item as? AppGridGroupCollectionItem)?.refreshRuntimeState()
-            }
+            refreshVisibleRuntimeState()
         }
 
         if coordinator.scrollRequestToken != coordinator.lastHandledScrollRequestToken {
@@ -285,7 +348,39 @@ final class AppGridCollectionHostView: NSView {
             guard let self,
                   self.recordScrollIfNeeded()
             else { return }
-            self.coordinator?.onScrollActivity()
+            self.handleScrollActivity()
+        }
+    }
+
+    private func handleScrollActivity() {
+        if coordinator?.setScrollBubbleDisabled(true) == true {
+            refreshVisibleRuntimeState()
+        }
+        coordinator?.onScrollActivity()
+
+        scrollUnfreezeWorkItem?.cancel()
+        let workItem = DispatchWorkItem { [weak self] in
+            guard let self else { return }
+            self.replayPointerHover()
+            if self.coordinator?.setScrollBubbleDisabled(false) == true {
+                self.refreshVisibleRuntimeState()
+            }
+        }
+        scrollUnfreezeWorkItem = workItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.18, execute: workItem)
+    }
+
+    private func refreshVisibleRuntimeState() {
+        collectionView.visibleItems().forEach { item in
+            (item as? AppGridGroupCollectionItem)?.refreshRuntimeState()
+        }
+    }
+
+    private func replayPointerHover() {
+        guard let window else { return }
+        let windowPoint = window.convertPoint(fromScreen: NSEvent.mouseLocation)
+        collectionView.visibleItems().forEach { item in
+            (item as? AppGridGroupCollectionItem)?.replayPointerHover(windowPoint: windowPoint)
         }
     }
 
@@ -328,7 +423,8 @@ private final class AppGridContainerCollectionLayout: NSCollectionViewLayout {
         let plan = Self.makePlan(
             groups: visibleGroups,
             contentWidth: collectionView.bounds.width,
-            iconSize: iconSize
+            iconSize: iconSize,
+            displayMode: coordinator?.displayMode ?? AppDefaults.displayMode
         )
 
         var nextAttributes: [IndexPath: NSCollectionViewLayoutAttributes] = [:]
@@ -373,6 +469,22 @@ private final class AppGridContainerCollectionLayout: NSCollectionViewLayout {
     private static func makePlan(
         groups: [TagGroup],
         contentWidth: CGFloat,
+        iconSize: CGFloat,
+        displayMode: String
+    ) -> LayoutPlan {
+        switch AppGridCollectionDisplayMode(displayMode) {
+        case .flat:
+            return makeFlatPlan(groups: groups, contentWidth: contentWidth, iconSize: iconSize)
+        case .masonryContainer:
+            return makeMasonryPlan(groups: groups, contentWidth: contentWidth, iconSize: iconSize)
+        case .gridContainer:
+            return makeGridPlan(groups: groups, contentWidth: contentWidth, iconSize: iconSize)
+        }
+    }
+
+    private static func makeGridPlan(
+        groups: [TagGroup],
+        contentWidth: CGFloat,
         iconSize: CGFloat
     ) -> LayoutPlan {
         let boundedContentWidth = max(1, contentWidth)
@@ -404,6 +516,79 @@ private final class AppGridContainerCollectionLayout: NSCollectionViewLayout {
         }
 
         let contentHeight = rows.isEmpty ? outerPadding * 2 : y - gap + outerPadding
+        return LayoutPlan(
+            items: items,
+            contentSize: NSSize(width: boundedContentWidth, height: max(1, contentHeight))
+        )
+    }
+
+    private static func makeFlatPlan(
+        groups: [TagGroup],
+        contentWidth: CGFloat,
+        iconSize: CGFloat
+    ) -> LayoutPlan {
+        let boundedContentWidth = max(1, contentWidth)
+        let outerPadding = AppGridCollectionMetrics.outerPadding
+        let availableWidth = max(1, boundedContentWidth - outerPadding * 2)
+        var y = outerPadding
+        var items: [LayoutItem] = []
+
+        for (index, group) in groups.enumerated() {
+            let height = AppGridCollectionMetrics.flatGroupHeight(
+                appCount: group.apps.count,
+                width: availableWidth,
+                iconSize: iconSize
+            )
+            items.append(
+                LayoutItem(
+                    index: index,
+                    frame: NSRect(x: outerPadding, y: y, width: availableWidth, height: height)
+                )
+            )
+            y += height + AppGridCollectionMetrics.flatGroupGap
+        }
+
+        let contentHeight = groups.isEmpty ? outerPadding * 2 : y - AppGridCollectionMetrics.flatGroupGap + outerPadding
+        return LayoutPlan(
+            items: items,
+            contentSize: NSSize(width: boundedContentWidth, height: max(1, contentHeight))
+        )
+    }
+
+    private static func makeMasonryPlan(
+        groups: [TagGroup],
+        contentWidth: CGFloat,
+        iconSize: CGFloat
+    ) -> LayoutPlan {
+        let boundedContentWidth = max(1, contentWidth)
+        let outerPadding = AppGridCollectionMetrics.outerPadding
+        let gap = AppGridCollectionMetrics.cardGap
+        let availableWidth = max(1, boundedContentWidth - outerPadding * 2)
+        let columnCount = preferredMasonryColumnCount(availableWidth: availableWidth)
+        let columnWidth = floor((availableWidth - gap * CGFloat(columnCount - 1)) / CGFloat(columnCount))
+        var columnHeights = Array(repeating: outerPadding, count: columnCount)
+        var items: [LayoutItem] = []
+
+        for (index, group) in groups.enumerated() {
+            let columnIndex = columnHeights.indices.min { columnHeights[$0] < columnHeights[$1] } ?? 0
+            let x = outerPadding + CGFloat(columnIndex) * (columnWidth + gap)
+            let y = columnHeights[columnIndex]
+            let height = AppGridCollectionMetrics.cardHeight(
+                appCount: group.apps.count,
+                width: columnWidth,
+                iconSize: iconSize
+            )
+            items.append(
+                LayoutItem(
+                    index: index,
+                    frame: NSRect(x: x, y: y, width: columnWidth, height: height)
+                )
+            )
+            columnHeights[columnIndex] = y + height + gap
+        }
+
+        let tallest = columnHeights.max() ?? outerPadding
+        let contentHeight = groups.isEmpty ? outerPadding * 2 : tallest - gap + outerPadding
         return LayoutPlan(
             items: items,
             contentSize: NSSize(width: boundedContentWidth, height: max(1, contentHeight))
@@ -505,6 +690,14 @@ private final class AppGridContainerCollectionLayout: NSCollectionViewLayout {
         return 1
     }
 
+    private static func preferredMasonryColumnCount(availableWidth: CGFloat) -> Int {
+        let preferredColumnWidth: CGFloat = 280
+        return max(
+            1,
+            Int((availableWidth + AppGridCollectionMetrics.cardGap) / (preferredColumnWidth + AppGridCollectionMetrics.cardGap))
+        )
+    }
+
     private static func spanPatterns(trackCount: Int) -> [[Int]] {
         switch trackCount {
         case 3:
@@ -525,6 +718,7 @@ private final class AppGridContainerCollectionLayout: NSCollectionViewLayout {
 private enum AppGridCollectionMetrics {
     static let outerPadding: CGFloat = 20
     static let cardGap: CGFloat = 16
+    static let flatGroupGap: CGFloat = 24
     static let cardPadding: CGFloat = 16
     static let headerHeight: CGFloat = 28
     static let headerBottomGap: CGFloat = 6
@@ -541,10 +735,14 @@ private enum AppGridCollectionMetrics {
         iconSize * hoverScale + labelHeight + 22
     }
 
-    static func columns(width: CGFloat, iconSize: CGFloat) -> Int {
-        let inner = max(1, width - cardPadding * 2)
+    static func columnsForIconArea(width: CGFloat, iconSize: CGFloat) -> Int {
+        let inner = max(1, width)
         let itemW = iconCellWidth(iconSize: iconSize)
         return max(1, Int((inner + iconColumnGap) / (itemW + iconColumnGap)))
+    }
+
+    static func columns(width: CGFloat, iconSize: CGFloat) -> Int {
+        columnsForIconArea(width: width - cardPadding * 2, iconSize: iconSize)
     }
 
     static func cardHeight(appCount: Int, width: CGFloat, iconSize: CGFloat) -> CGFloat {
@@ -563,6 +761,15 @@ private enum AppGridCollectionMetrics {
     static func iconRows(appCount: Int, width: CGFloat, iconSize: CGFloat) -> Int {
         let cols = columns(width: width, iconSize: iconSize)
         return max(1, (appCount + cols - 1) / cols)
+    }
+
+    static func flatGroupHeight(appCount: Int, width: CGFloat, iconSize: CGFloat) -> CGFloat {
+        let cols = columnsForIconArea(width: width, iconSize: iconSize)
+        let rows = max(1, (appCount + cols - 1) / cols)
+        return headerHeight
+            + headerBottomGap
+            + CGFloat(rows) * iconCellHeight(iconSize: iconSize)
+            + CGFloat(max(0, rows - 1)) * iconRowGap
     }
 }
 
@@ -585,6 +792,10 @@ private final class AppGridGroupCollectionItem: NSCollectionViewItem {
         cardView.refreshRuntimeState()
     }
 
+    func replayPointerHover(windowPoint: NSPoint) {
+        cardView.replayPointerHover(windowPoint: windowPoint)
+    }
+
     override func prepareForReuse() {
         super.prepareForReuse()
         cardView.prepareForReuse()
@@ -596,6 +807,7 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
     private weak var coordinator: AppGridCollectionView.Coordinator?
     private var group: TagGroup?
     private var iconViews: [AppGridIconNSView] = []
+    private var isMouseInside = false
     private var isHovered = false
     private var trackingAreaRef: NSTrackingArea?
 
@@ -629,6 +841,9 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
         AppDragCoordinator.shared.unregister(id: dropTargetID)
         group = nil
         coordinator = nil
+        isMouseInside = false
+        isHovered = false
+        layer?.shadowOpacity = 0
         iconViews.forEach {
             $0.prepareForReuse()
             $0.removeFromSuperview()
@@ -638,10 +853,11 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
 
     func refreshRuntimeState() {
         let runtime = AppGridIconRuntimeState(
-            bubbleDisabled: coordinator?.bubbleDisabled ?? false,
+            bubbleSuppressionReasons: coordinator?.bubbleSuppressionReasons ?? [],
             showUncommonAppBubbles: coordinator?.showUncommonAppBubbles ?? AppDefaults.showUncommonAppBubbles
         )
         iconViews.forEach { $0.runtimeState = runtime }
+        updateHoverPresentation()
         needsDisplay = true
     }
 
@@ -670,13 +886,11 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
     }
 
     override func mouseEntered(with event: NSEvent) {
-        isHovered = true
-        needsDisplay = true
+        setPointerInside(true)
     }
 
     override func mouseExited(with event: NSEvent) {
-        isHovered = false
-        needsDisplay = true
+        setPointerInside(false)
     }
 
     override func mouseUp(with event: NSEvent) {
@@ -689,48 +903,47 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
     override func layout() {
         super.layout()
         guard let coordinator, let group else { return }
-        let cols = AppGridCollectionMetrics.columns(width: bounds.width, iconSize: coordinator.iconSize)
-        let innerWidth = max(1, bounds.width - AppGridCollectionMetrics.cardPadding * 2)
+        let contentRect = iconContentRect(displayStyle: coordinator.displayStyle)
+        let cols = AppGridCollectionMetrics.columnsForIconArea(width: contentRect.width, iconSize: coordinator.iconSize)
         let cellWidth = max(
             1,
-            (innerWidth - AppGridCollectionMetrics.iconColumnGap * CGFloat(cols - 1)) / CGFloat(cols)
+            (contentRect.width - AppGridCollectionMetrics.iconColumnGap * CGFloat(cols - 1)) / CGFloat(cols)
         )
         let cellHeight = AppGridCollectionMetrics.iconCellHeight(iconSize: coordinator.iconSize)
-        let startY = AppGridCollectionMetrics.cardPadding
-            + AppGridCollectionMetrics.headerHeight
-            + AppGridCollectionMetrics.headerBottomGap
 
         for index in group.apps.indices {
             guard index < iconViews.count else { continue }
             let row = index / cols
             let col = index % cols
-            let x = AppGridCollectionMetrics.cardPadding
+            let x = contentRect.minX
                 + CGFloat(col) * (cellWidth + AppGridCollectionMetrics.iconColumnGap)
-            let y = startY + CGFloat(row) * (cellHeight + AppGridCollectionMetrics.iconRowGap)
+            let y = contentRect.minY + CGFloat(row) * (cellHeight + AppGridCollectionMetrics.iconRowGap)
             iconViews[index].frame = NSRect(x: x, y: y, width: cellWidth, height: cellHeight)
         }
     }
 
     override func draw(_ dirtyRect: NSRect) {
         guard let coordinator, let group else { return }
-        let rect = bounds.insetBy(dx: 0.5, dy: 0.5)
-        let path = NSBezierPath(roundedRect: rect, xRadius: 14, yRadius: 14)
+        let displayStyle = coordinator.displayStyle
         let tagColor = TagColor.nsColor(for: coordinator.tagColors[group.name] ?? 0)
-        let isColored = coordinator.displayMode == "coloredGridContainer"
-        let isColorlessActive = coordinator.displayMode == "gridContainer"
+        let isColorlessActive = coordinator.isColorlessContainerMode
             && (isHovered || coordinator.highlightedGroupName == group.name)
 
-        cardSurfaceColor().setFill()
-        path.fill()
-        if isColored || isColorlessActive {
-            tagColor.withAlphaComponent(0.30).setFill()
+        if displayStyle.usesCardSurface {
+            let rect = bounds.insetBy(dx: 0.5, dy: 0.5)
+            let path = NSBezierPath(roundedRect: rect, xRadius: 14, yRadius: 14)
+            cardSurfaceColor().setFill()
             path.fill()
+            if coordinator.isColoredContainerMode || isColorlessActive {
+                tagColor.withAlphaComponent(0.30).setFill()
+                path.fill()
+            }
+            NSColor.labelColor.withAlphaComponent(0.08).setStroke()
+            path.lineWidth = 1
+            path.stroke()
         }
-        NSColor.labelColor.withAlphaComponent(0.08).setStroke()
-        path.lineWidth = 1
-        path.stroke()
 
-        drawHeader(title: group.name)
+        drawHeader(title: group.name, displayStyle: displayStyle)
     }
 
     func performDrop(path: String, source: String, copy: Bool) {
@@ -739,6 +952,11 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
         if source != group.name || copy {
             coordinator?.onDragModeChange(false)
         }
+    }
+
+    func replayPointerHover(windowPoint: NSPoint) {
+        setPointerInside(bounds.contains(convert(windowPoint, from: nil)))
+        iconViews.forEach { $0.replayPointerHover(windowPoint: windowPoint) }
     }
 
     private func rebuildIconViews() {
@@ -769,6 +987,59 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
         AppDragCoordinator.shared.register(id: dropTargetID, view: self, tag: group.name)
     }
 
+    private func setPointerInside(_ inside: Bool) {
+        isMouseInside = inside
+        updateHoverPresentation()
+    }
+
+    private func updateHoverPresentation() {
+        guard let coordinator else { return }
+        let shouldHover = coordinator.displayStyle.usesCardSurface
+            && isMouseInside
+            && !coordinator.bubbleDisabled
+        guard isHovered != shouldHover else {
+            updateCardShadow()
+            return
+        }
+        isHovered = shouldHover
+        updateCardShadow()
+        needsDisplay = true
+    }
+
+    private func updateCardShadow() {
+        guard let coordinator else { return }
+        let isColorlessActive = coordinator.isColorlessContainerMode
+            && (isHovered || coordinator.highlightedGroupName == group?.name)
+        let shouldShadow = coordinator.displayStyle.usesCardSurface
+            && ((coordinator.isColoredContainerMode && isHovered) || isColorlessActive)
+        layer?.shadowColor = NSColor.black.cgColor
+        layer?.shadowOpacity = shouldShadow ? 0.22 : 0
+        layer?.shadowRadius = shouldShadow ? 8 : 0
+        layer?.shadowOffset = NSSize(width: 0, height: -3)
+    }
+
+    private func iconContentRect(displayStyle: AppGridCollectionDisplayMode) -> NSRect {
+        switch displayStyle {
+        case .flat:
+            return NSRect(
+                x: 0,
+                y: AppGridCollectionMetrics.headerHeight + AppGridCollectionMetrics.headerBottomGap,
+                width: bounds.width,
+                height: max(1, bounds.height - AppGridCollectionMetrics.headerHeight - AppGridCollectionMetrics.headerBottomGap)
+            )
+        case .masonryContainer, .gridContainer:
+            let startY = AppGridCollectionMetrics.cardPadding
+                + AppGridCollectionMetrics.headerHeight
+                + AppGridCollectionMetrics.headerBottomGap
+            return NSRect(
+                x: AppGridCollectionMetrics.cardPadding,
+                y: startY,
+                width: max(1, bounds.width - AppGridCollectionMetrics.cardPadding * 2),
+                height: max(1, bounds.height - startY - AppGridCollectionMetrics.cardPadding)
+            )
+        }
+    }
+
     private func cardSurfaceColor() -> NSColor {
         if effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua {
             return NSColor.white.withAlphaComponent(0.055)
@@ -776,11 +1047,13 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
         return NSColor.white.withAlphaComponent(0.62)
     }
 
-    private func drawHeader(title: String) {
+    private func drawHeader(title: String, displayStyle: AppGridCollectionDisplayMode) {
+        let horizontalInset = displayStyle.usesCardSurface ? AppGridCollectionMetrics.cardPadding : 0
+        let verticalInset = displayStyle.usesCardSurface ? AppGridCollectionMetrics.cardPadding : 0
         let headerRect = NSRect(
-            x: AppGridCollectionMetrics.cardPadding,
-            y: AppGridCollectionMetrics.cardPadding,
-            width: max(1, bounds.width - AppGridCollectionMetrics.cardPadding * 2),
+            x: horizontalInset,
+            y: verticalInset,
+            width: max(1, bounds.width - horizontalInset * 2),
             height: AppGridCollectionMetrics.headerHeight
         )
         let attributes: [NSAttributedString.Key: Any] = [
@@ -818,8 +1091,12 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
 }
 
 private struct AppGridIconRuntimeState {
-    var bubbleDisabled: Bool
+    var bubbleSuppressionReasons: AppGridBubbleSuppressionReasons
     var showUncommonAppBubbles: Bool
+
+    var bubbleDisabled: Bool {
+        !bubbleSuppressionReasons.isEmpty
+    }
 }
 
 private final class AppGridIconNSView: NSView {
@@ -828,6 +1105,7 @@ private final class AppGridIconNSView: NSView {
     private var sourceTag = ""
     private var iconSize: CGFloat = AppDefaults.iconSize
     private var showName = true
+    private var isMouseInside = false
     private var isHovered = false
     private var trackingAreaRef: NSTrackingArea?
     private var mouseDownEvent: NSEvent?
@@ -836,13 +1114,11 @@ private final class AppGridIconNSView: NSView {
     private var longPressWorkItem: DispatchWorkItem?
 
     var runtimeState = AppGridIconRuntimeState(
-        bubbleDisabled: false,
+        bubbleSuppressionReasons: [],
         showUncommonAppBubbles: AppDefaults.showUncommonAppBubbles
     ) {
         didSet {
-            if runtimeState.bubbleDisabled {
-                setHover(false, notify: true)
-            }
+            updateHoverPresentation(notify: true)
         }
     }
 
@@ -861,7 +1137,7 @@ private final class AppGridIconNSView: NSView {
         self.showName = showName
         self.coordinator = coordinator
         runtimeState = AppGridIconRuntimeState(
-            bubbleDisabled: coordinator.bubbleDisabled,
+            bubbleSuppressionReasons: coordinator.bubbleSuppressionReasons,
             showUncommonAppBubbles: coordinator.showUncommonAppBubbles
         )
         needsDisplay = true
@@ -872,6 +1148,7 @@ private final class AppGridIconNSView: NSView {
         if isHovered {
             setHover(false, notify: true)
         }
+        isMouseInside = false
         mouseDownEvent = nil
         didStartDrag = false
         isLongPressActive = false
@@ -935,17 +1212,16 @@ private final class AppGridIconNSView: NSView {
                 .foregroundColor: NSColor.labelColor.withAlphaComponent(alpha),
                 .paragraphStyle: paragraph
             ]
-            app.name.draw(with: labelRect, options: [.usesLineFragmentOrigin], attributes: attributes)
+            app.displayName.draw(with: labelRect, options: [.usesLineFragmentOrigin], attributes: attributes)
         }
     }
 
     override func mouseEntered(with event: NSEvent) {
-        guard !runtimeState.bubbleDisabled else { return }
-        setHover(true, notify: true)
+        setPointerInside(true, notify: true)
     }
 
     override func mouseExited(with event: NSEvent) {
-        setHover(false, notify: true)
+        setPointerInside(false, notify: true)
     }
 
     override func mouseDown(with event: NSEvent) {
@@ -956,7 +1232,7 @@ private final class AppGridIconNSView: NSView {
             guard let self, self.mouseDownEvent != nil else { return }
             self.isLongPressActive = true
             self.coordinator?.onDragModeChange(true)
-            self.setHover(false, notify: true)
+            self.updateHoverPresentation(notify: true, forceHidden: true)
         }
         longPressWorkItem = workItem
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: workItem)
@@ -1007,11 +1283,12 @@ private final class AppGridIconNSView: NSView {
     }
 
     override func rightMouseDown(with event: NSEvent) {
-        guard let app else { return }
+        guard !runtimeState.bubbleDisabled, let app else { return }
         coordinator?.onEditNote(app, rootLocalFrame())
     }
 
     override func menu(for event: NSEvent) -> NSMenu? {
+        guard !runtimeState.bubbleDisabled else { return nil }
         let menu = NSMenu()
         let item = NSMenuItem(title: tr("appNote.edit"), action: #selector(editNoteFromMenu), keyEquivalent: "")
         item.target = self
@@ -1020,8 +1297,12 @@ private final class AppGridIconNSView: NSView {
     }
 
     @objc private func editNoteFromMenu() {
-        guard let app else { return }
+        guard !runtimeState.bubbleDisabled, let app else { return }
         coordinator?.onEditNote(app, rootLocalFrame())
+    }
+
+    func replayPointerHover(windowPoint: NSPoint) {
+        setPointerInside(bounds.contains(convert(windowPoint, from: nil)), notify: true)
     }
 
     private var shouldShowAppBubble: Bool {
@@ -1048,6 +1329,16 @@ private final class AppGridIconNSView: NSView {
         } else {
             coordinator?.onBubbleHover(app, rootLocalFrame(), .exited)
         }
+    }
+
+    private func setPointerInside(_ inside: Bool, notify: Bool) {
+        isMouseInside = inside
+        updateHoverPresentation(notify: notify)
+    }
+
+    private func updateHoverPresentation(notify: Bool, forceHidden: Bool = false) {
+        let shouldHover = isMouseInside && !runtimeState.bubbleDisabled && !forceHidden
+        setHover(shouldHover, notify: notify)
     }
 
     private func makeDragImage() -> NSImage {

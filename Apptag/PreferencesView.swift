@@ -32,6 +32,7 @@ struct PreferencesView: View {
     @State private var categoryScheme = TagDatabase.CategorySchemeState()
     @State private var isApplyingSystemScheme = false
     @State private var showApplySystemSchemeConfirmation = false
+    @State private var isDataFilePanelPresented = false
     @State private var hotkeyStatusToast: String? = nil
     @State private var hotkeyStatusToastToken: UUID? = nil
 
@@ -54,48 +55,81 @@ struct PreferencesView: View {
     }
 
     private func exportTags() {
-        let panel = NSSavePanel()
-        panel.title = tr("settings.export")
-        TagDatabase.flushPendingCategorySchemeBackupBatch()
-        refreshDataState()
-        panel.nameFieldStringValue = TagDatabase.exportFileName(for: categoryScheme)
-        panel.allowedContentTypes = [.json]
-        beginFilePanel(panel) { response in
-            guard response == .OK, let url = panel.url else { return }
-            do {
-                try TagDatabase.exportTo(url)
-            } catch {
-                fputs("[TagLauncher] Export failed: \(error)\n", stderr)
-                showDataAlert(title: tr("settings.exportFailed"), message: error.localizedDescription)
+        guard prepareDataFilePanelPresentation() else { return }
+        DispatchQueue.main.async {
+            TagDatabase.flushPendingCategorySchemeBackupBatch()
+            let currentScheme = TagDatabase.loadWithEnsuredCategoryScheme().categoryScheme
+            categoryScheme = currentScheme
+
+            let panel = NSSavePanel()
+            panel.title = tr("settings.export")
+            panel.nameFieldStringValue = TagDatabase.exportFileName(for: currentScheme)
+            panel.allowedContentTypes = [.json]
+
+            beginFilePanel(panel) { response in
+                finishDataFilePanelPresentation()
+                guard response == .OK, let url = panel.url else { return }
+                do {
+                    try TagDatabase.exportTo(url)
+                } catch {
+                    fputs("[TagLauncher] Export failed: \(error)\n", stderr)
+                    showDataAlert(title: tr("settings.exportFailed"), message: error.localizedDescription)
+                }
             }
         }
     }
 
     private func importTags() {
-        let panel = NSOpenPanel()
-        panel.title = tr("settings.import")
-        panel.allowedContentTypes = [.json]
-        panel.allowsMultipleSelection = false
-        beginFilePanel(panel) { response in
-            guard response == .OK, let url = panel.url else { return }
-            do {
-                TagDatabase.flushPendingCategorySchemeBackupBatch()
-                _ = try TagDatabase.importFrom(url)
-                scanApps()
-                refreshDataState()
-                notifyDataChanged()
-            } catch {
-                fputs("[TagLauncher] Import failed: \(error)\n", stderr)
-                showDataAlert(title: tr("settings.importFailed"), message: error.localizedDescription)
+        guard prepareDataFilePanelPresentation() else { return }
+        DispatchQueue.main.async {
+            let panel = NSOpenPanel()
+            panel.title = tr("settings.import")
+            panel.allowedContentTypes = [.json]
+            panel.allowsMultipleSelection = false
+
+            beginFilePanel(panel) { response in
+                finishDataFilePanelPresentation()
+                guard response == .OK, let url = panel.url else { return }
+                do {
+                    TagDatabase.flushPendingCategorySchemeBackupBatch()
+                    _ = try TagDatabase.importFrom(url)
+                    scanApps()
+                    refreshDataState()
+                    notifyDataChanged()
+                } catch {
+                    fputs("[TagLauncher] Import failed: \(error)\n", stderr)
+                    showDataAlert(title: tr("settings.importFailed"), message: error.localizedDescription)
+                }
             }
         }
+    }
+
+    private func prepareDataFilePanelPresentation() -> Bool {
+        guard !isDataFilePanelPresented else { return false }
+        isDataFilePanelPresented = true
+        NotificationCenter.default.post(
+            name: .tagLauncherModalInteractionChanged,
+            object: nil,
+            userInfo: ["active": true]
+        )
+        NSApp.activate(ignoringOtherApps: true)
+        preferencesWindow?.makeKeyAndOrderFront(nil)
+        return true
+    }
+
+    private func finishDataFilePanelPresentation() {
+        isDataFilePanelPresented = false
+        NotificationCenter.default.post(
+            name: .tagLauncherModalInteractionChanged,
+            object: nil,
+            userInfo: ["active": false]
+        )
     }
 
     private func beginFilePanel(
         _ panel: NSSavePanel,
         completion: @escaping (NSApplication.ModalResponse) -> Void
     ) {
-        NSApp.activate(ignoringOtherApps: true)
         if let window = preferencesWindow {
             panel.beginSheetModal(for: window, completionHandler: completion)
         } else {
@@ -106,9 +140,25 @@ struct PreferencesView: View {
     }
 
     private var preferencesWindow: NSWindow? {
-        NSApp.windows.first {
+        if let taggedWindow = NSApp.windows.first(where: {
             $0.identifier?.rawValue == "TagLauncherPreferencesWindow" && $0.isVisible
-        } ?? NSApp.keyWindow ?? NSApp.mainWindow
+        }) {
+            return taggedWindow
+        }
+
+        return [NSApp.keyWindow, NSApp.mainWindow]
+            .compactMap { $0 }
+            .first(where: isPreferencesWindowFallback(_:))
+    }
+
+    private func isPreferencesWindowFallback(_ window: NSWindow) -> Bool {
+        guard window.isVisible,
+              !(window is NSPanel),
+              !(window is OverlayPanel)
+        else { return false }
+
+        let preferencesTitle = tr("menu.preferences").replacingOccurrences(of: "…", with: "")
+        return window.title == preferencesTitle
     }
 
     private func showDataAlert(title: String, message: String) {
@@ -683,8 +733,10 @@ struct PreferencesView: View {
                             HStack(spacing: 12) {
                                 Button(tr("settings.export")) { exportTags() }
                                     .buttonStyle(.bordered)
+                                    .disabled(isDataFilePanelPresented)
                                 Button(tr("settings.import")) { importTags() }
                                     .buttonStyle(.bordered)
+                                    .disabled(isDataFilePanelPresented)
                             }
                             Text(tr("settings.backupDesc"))
                                 .font(.caption)

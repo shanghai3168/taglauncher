@@ -82,7 +82,7 @@ apps,system,com.apple.apps.launcher,一个轻量应用入口，帮你从系统�
 audio-midi-setup,audio|device-management,com.apple.audio.audiomidisetup,管音频设备和 MIDI 路由，音乐人和调试党很常用
 automator,Automation,com.apple.automator,不写代码也能串起一串 Mac 自动化动作
 bluetooth-file-exchange,transfer|device-management,com.apple.bluetoothfileexchange,用蓝牙收发文件，古早但关键时能救急
-books,writing|education|entertainment,com.apple.iBooksX,阅读和管理电子书的入口，适合把 Mac 变成书桌
+books,writing|education,com.apple.iBooksX,阅读和管理电子书的入口，适合把 Mac 变成书桌
 boot-camp-assistant,system,com.apple.bootcampassistant,Intel Mac 安装 Windows 的官方向导
 calculator,utilities,com.apple.calculator,小计算器，单位换算和程序员模式也藏在里面
 chess,game,com.apple.chess,系统自带国际象棋，摸鱼时比刷网页更优雅

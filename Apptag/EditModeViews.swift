@@ -249,7 +249,7 @@ struct EditableAppSelectionItem: View {
                         .offset(x: 6, y: -6)
                 }
 
-                Text(app.name)
+                Text(app.displayName)
                     .font(.system(size: 11, weight: .medium))
                     .lineLimit(1)
                     .truncationMode(.tail)

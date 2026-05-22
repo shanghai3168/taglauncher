@@ -42,8 +42,8 @@
   ],
   "baseResource": {
     "file": "SmartStart_UltimateDefaultCatalog.base.json",
-    "sha256": "650dcfba5bbf35816aea987baf6c29cfcab827ce72313a53b1aeb592a02949da",
-    "bytes": 1025647,
+    "sha256": "ac7f3a7c4dfa412a3196181d5aa03b72f25d8776f368b6f15b30d30db69da8d0",
+    "bytes": 1025622,
     "count": 3530
   },
   "notesResources": {

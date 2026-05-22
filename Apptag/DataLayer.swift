@@ -11,9 +11,50 @@ struct AppInfo: Identifiable, Hashable {
     let tags: [String]
     let bundleIdentifier: String?
     let localizedNames: [String]
+    let localizedNamesByLanguage: [String: String]
     let icon: NSImage  // Pre-loaded during background scan
     var isUncommon: Bool = false
     var note: String? = nil
+
+    var displayName: String {
+        localizedDisplayName(for: L10n.currentCode)
+    }
+
+    func localizedDisplayName(for languageCode: String) -> String {
+        let candidates = AppInfo.displayLanguageFallbacks(for: languageCode)
+        for code in candidates {
+            if let localizedName = localizedNamesByLanguage[code],
+               !localizedName.isEmpty {
+                return localizedName
+            }
+        }
+        return name
+    }
+
+    private static func displayLanguageFallbacks(for languageCode: String) -> [String] {
+        var candidates = [languageCode]
+        switch languageCode {
+        case "zh-Hans":
+            candidates.append("zh-Hant")
+        case "zh-Hant":
+            candidates.append("zh-Hans")
+        case "nb":
+            candidates.append("no")
+        case "nn":
+            candidates.append("no")
+        case "no":
+            candidates.append(contentsOf: ["nb", "nn"])
+        default:
+            break
+        }
+        candidates.append("en")
+        return uniqueLanguageCodes(candidates)
+    }
+
+    fileprivate static func uniqueLanguageCodes(_ codes: [String]) -> [String] {
+        var seen = Set<String>()
+        return codes.filter { seen.insert($0).inserted }
+    }
 
     /// True if this is an Apple pre-installed app.
     var isAppleApp: Bool {
@@ -180,10 +221,14 @@ enum AppIndexer {
 
         let bundle = Bundle(url: displayURL) ?? Bundle(url: resolvedURL)
         let bundleId = bundle?.bundleIdentifier
-        let localizedNames = localizedAppNames(
-            for: displayURL,
+        let localizedNamesByLanguage = localizedAppNameMap(
             bundle: bundle,
             fallbackName: name
+        )
+        let localizedNames = localizedAppNames(
+            for: displayURL,
+            fallbackName: name,
+            localizedNamesByLanguage: localizedNamesByLanguage
         )
 
         apps.append(AppInfo(
@@ -192,24 +237,150 @@ enum AppIndexer {
             tags: [],
             bundleIdentifier: bundleId,
             localizedNames: localizedNames,
+            localizedNamesByLanguage: localizedNamesByLanguage,
             icon: icon
         ))
     }
 
-    private static func localizedAppNames(
-        for appURL: URL,
+    private static func localizedAppNameMap(
         bundle: Bundle?,
         fallbackName: String
+    ) -> [String: String] {
+        guard let bundle else { return [:] }
+        let loctable = infoPlistLoctable(in: bundle)
+        var result: [String: String] = [:]
+
+        for language in L10n.supported {
+            guard let localizedName = localizedAppName(
+                for: language.code,
+                bundle: bundle,
+                loctable: loctable,
+                fallbackName: fallbackName
+            ) else { continue }
+            result[language.code] = localizedName
+        }
+
+        return result
+    }
+
+    private static func localizedAppNames(
+        for appURL: URL,
+        fallbackName: String,
+        localizedNamesByLanguage: [String: String]
     ) -> [String] {
-        var values: [String?] = []
-        values.append(bundle?.localizedInfoDictionary?["CFBundleDisplayName"] as? String)
-        values.append(bundle?.localizedInfoDictionary?["CFBundleName"] as? String)
-        values.append(bundle?.infoDictionary?["CFBundleDisplayName"] as? String)
-        values.append(bundle?.infoDictionary?["CFBundleName"] as? String)
+        var values = L10n.supported.map { localizedNamesByLanguage[$0.code] }
         values.append(spotlightDisplayName(for: appURL))
         values.append(FileManager.default.displayName(atPath: appURL.path).replacingOccurrences(of: ".app", with: ""))
 
         return uniqueLocalizedNames(values, excluding: fallbackName)
+    }
+
+    private static func localizedAppName(
+        for languageCode: String,
+        bundle: Bundle,
+        loctable: [String: [String: Any]],
+        fallbackName: String
+    ) -> String? {
+        for localization in localizationCandidates(for: languageCode) {
+            if let table = loctable[localization],
+               let value = firstValidLocalizedName(
+                   [table["CFBundleDisplayName"], table["CFBundleName"]],
+                   excluding: fallbackName
+               ) {
+                return value
+            }
+
+            if let strings = infoPlistStrings(in: bundle, localization: localization),
+               let value = firstValidLocalizedName(
+                   [strings["CFBundleDisplayName"], strings["CFBundleName"]],
+                   excluding: fallbackName
+               ) {
+                return value
+            }
+        }
+
+        if languageCode == "en",
+           let value = firstValidLocalizedName(
+               [
+                   bundle.infoDictionary?["CFBundleDisplayName"],
+                   bundle.infoDictionary?["CFBundleName"]
+               ],
+               excluding: fallbackName
+           ) {
+            return value
+        }
+
+        return nil
+    }
+
+    private static func infoPlistLoctable(in bundle: Bundle) -> [String: [String: Any]] {
+        guard let url = bundle.url(forResource: "InfoPlist", withExtension: "loctable"),
+              let rawTable = NSDictionary(contentsOf: url) as? [String: Any]
+        else { return [:] }
+
+        var result: [String: [String: Any]] = [:]
+        for (key, value) in rawTable {
+            if let localizedTable = value as? [String: Any] {
+                result[key] = localizedTable
+            }
+        }
+        return result
+    }
+
+    private static func infoPlistStrings(
+        in bundle: Bundle,
+        localization: String
+    ) -> [String: Any]? {
+        guard let url = bundle.url(
+            forResource: "InfoPlist",
+            withExtension: "strings",
+            subdirectory: nil,
+            localization: localization
+        ) else { return nil }
+        return NSDictionary(contentsOf: url) as? [String: Any]
+    }
+
+    private static func localizationCandidates(for languageCode: String) -> [String] {
+        var candidates = [languageCode, languageCode.replacingOccurrences(of: "-", with: "_")]
+        switch languageCode {
+        case "zh-Hans":
+            candidates.append(contentsOf: ["zh_CN", "zh"])
+        case "zh-Hant":
+            candidates.append(contentsOf: ["zh_TW", "zh_HK", "zh"])
+        case "pt-BR":
+            candidates.append(contentsOf: ["pt_BR", "pt"])
+        case "sr-Cyrl":
+            candidates.append(contentsOf: ["sr_Cyrl", "sr"])
+        case "ar-Najdi":
+            candidates.append(contentsOf: ["ar_Najdi", "ar"])
+        case "nb":
+            candidates.append(contentsOf: ["nb", "no"])
+        case "nn":
+            candidates.append(contentsOf: ["nn", "no"])
+        case "no":
+            candidates.append(contentsOf: ["no", "nb", "nn"])
+        default:
+            if let base = languageCode.split(separator: "-").first.map(String.init) {
+                candidates.append(base)
+            }
+        }
+        return AppInfo.uniqueLanguageCodes(candidates)
+    }
+
+    private static func firstValidLocalizedName(
+        _ values: [Any?],
+        excluding excludedValue: String
+    ) -> String? {
+        let normalizedExcluded = normalizedLocalizedName(excludedValue)
+        for value in values {
+            guard let value = value as? String else { continue }
+            let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !trimmed.isEmpty,
+                  normalizedLocalizedName(trimmed) != normalizedExcluded
+            else { continue }
+            return trimmed
+        }
+        return nil
     }
 
     private static func spotlightDisplayName(for appURL: URL) -> String? {
@@ -1081,6 +1252,7 @@ enum TagEditor {
                 name: app.name, path: app.path, tags: appTags,
                 bundleIdentifier: app.bundleIdentifier,
                 localizedNames: app.localizedNames,
+                localizedNamesByLanguage: app.localizedNamesByLanguage,
                 icon: app.icon,
                 isUncommon: uncommonPaths.contains(app.path.path),
                 note: store.appNotes[app.path.path]

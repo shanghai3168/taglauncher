@@ -857,7 +857,7 @@ private struct QuickSearchResultRow: View {
                 .cornerRadius(10)
 
             VStack(alignment: .leading, spacing: 4) {
-                Text(result.app.name)
+                Text(result.app.displayName)
                     .font(.system(size: 20, weight: .semibold))
                     .foregroundStyle(.primary)
                     .lineLimit(1)
@@ -921,7 +921,7 @@ private struct QuickSearchResultRow: View {
     }
 
     private var accessibilityText: String {
-        [result.app.name, detailText].compactMap { $0 }.joined(separator: ", ")
+        [result.app.displayName, detailText].compactMap { $0 }.joined(separator: ", ")
     }
 }
 

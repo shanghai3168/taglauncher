@@ -25,16 +25,21 @@ struct TagLauncherApp: App {
 final class OverlayPanel: NSPanel {
     override var canBecomeKey: Bool { true }
     override var canBecomeMain: Bool { true }
+
+    override func constrainFrameRect(_ frameRect: NSRect, to screen: NSScreen?) -> NSRect {
+        frameRect
+    }
 }
 
-final class AppDelegate: NSObject, NSApplicationDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private static let showDockIconKey = "showDockIcon"
     private static let statusItemAutosaveName = AppIdentity.statusItemAutosaveName
     private static let statusItemButtonIdentifier = NSUserInterfaceItemIdentifier("TagLauncherStatusItemButton")
     private static let statusItemAccessibilityLabel = AppIdentity.displayName
     private static let showAppListMenuItemIdentifier = NSUserInterfaceItemIdentifier("TagLauncherShowAppListMenuItem")
-    private static let overlayDefaultLevel = NSWindow.Level.normal
-    private static let overlayTextInputLevel = NSWindow.Level.normal
+    private static let launcherOverlayLevel = NSWindow.Level(rawValue: NSWindow.Level.mainMenu.rawValue - 1)
+    private static let overlayDefaultLevel = launcherOverlayLevel
+    private static let overlayTextInputLevel = launcherOverlayLevel
 
     private var statusItem: NSStatusItem?
     private var overlayWindow: NSWindow?
@@ -50,6 +55,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var isEditingAppNote = false
     private var isConfiguringApplicationMenu = false
     private var lastShowDockIcon: Bool?
+    private var statusMenuScreenForNextOverlay: NSScreen?
+    private var overlayGeneration = 0
+    private var suppressReopenUntil = Date.distantPast
+
+    private struct OverlayPlacementContext {
+        let screen: NSScreen
+        let frame: NSRect
+    }
 
     private var isOverlayVisible: Bool {
         overlayWindow?.isVisible == true
@@ -103,11 +116,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         observeChromeSettings()
         observeLanguageChanges()
         setupLaunchAtLogin()
-        configureApplicationMenuWhenAvailable()
+        suppressReopenUntil = Date().addingTimeInterval(1.0)
+        configureApplicationMenuWhenAvailable(retries: 200)
+    }
+
+    func applicationDidBecomeActive(_ notification: Notification) {
+        configureApplicationMenuWhenAvailable(retries: 12)
     }
 
     /// Dock icon click → show overlay (same as menubar "Show TagLauncher")
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        guard Date() >= suppressReopenUntil else { return false }
         showOverlay()
         return false  // Suppress default "unhide all windows" behavior
     }
@@ -163,13 +182,61 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    private func beginLauncherForegroundOwnership(activate: Bool = true) {
+    private func beginLauncherForegroundOwnership(activate: Bool = true, keyWindow: NSWindow? = nil) {
         if NSApp.activationPolicy() != .regular {
             NSApp.setActivationPolicy(.regular)
         }
         if activate {
-            NSApp.activate(ignoringOtherApps: true)
-            configureApplicationMenuWhenAvailable(retries: 4)
+            claimLauncherForeground(keyWindow: keyWindow)
+        }
+    }
+
+    private func claimLauncherForeground(
+        keyWindow: NSWindow? = nil,
+        retries: Int = 0,
+        overlayGeneration expectedOverlayGeneration: Int? = nil
+    ) {
+        if NSApp.activationPolicy() != .regular {
+            NSApp.setActivationPolicy(.regular)
+        }
+
+        if isOverlayVisible && !NSApp.presentationOptions.contains(.hideDock) {
+            NSApp.presentationOptions = [.hideDock]
+        }
+
+        NSApp.unhide(nil)
+        NSApp.activate(ignoringOtherApps: true)
+
+        if let keyWindow, keyWindow.isVisible {
+            keyWindow.makeKeyAndOrderFront(nil)
+            keyWindow.makeMain()
+            keyWindow.orderFrontRegardless()
+        }
+        configureApplicationMenuWhenAvailable(retries: 4)
+
+        let overlayShouldYieldToSettings = keyWindow == overlayWindow && isSettingsVisible
+        let keyWindowStillNeedsFocus = !overlayShouldYieldToSettings
+            && keyWindow?.isVisible == true
+            && keyWindow?.isKeyWindow == false
+        let shouldRetry = !NSApp.isActive
+            || !NSApp.presentationOptions.contains(.hideDock)
+            || keyWindowStillNeedsFocus
+        guard retries > 0, isOverlayVisible else { return }
+        guard shouldRetry else { return }
+
+        let retryWindow = keyWindow
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) { [weak self] in
+            guard let self, self.isOverlayVisible else { return }
+            if let expectedOverlayGeneration,
+               expectedOverlayGeneration != self.overlayGeneration {
+                return
+            }
+            self.refreshLauncherChromeState()
+            self.claimLauncherForeground(
+                keyWindow: retryWindow,
+                retries: retries - 1,
+                overlayGeneration: expectedOverlayGeneration
+            )
         }
     }
 
@@ -190,8 +257,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         if activate && requiresForegroundOwnership {
-            NSApp.activate(ignoringOtherApps: true)
-            configureApplicationMenuWhenAvailable(retries: 4)
+            let keyWindow = isSettingsVisible ? settingsWindow : (isOverlayVisible ? overlayWindow : nil)
+            claimLauncherForeground(
+                keyWindow: keyWindow,
+                retries: isOverlayVisible && !isSettingsVisible ? 5 : 0,
+                overlayGeneration: isOverlayVisible ? overlayGeneration : nil
+            )
         }
     }
 
@@ -200,13 +271,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             NotificationCenter.default.post(name: .tagLauncherQuickSearchDismissRequested, object: nil)
         }
 
-        guard isOverlayVisible else {
-            refreshLauncherChromeState()
+        guard !isOverlayVisible else {
             return
         }
-
-        // Once another app takes the menu bar, don't leave the overlay stranded onscreen.
-        hideOverlay(force: true)
+        if !requiresForegroundOwnership {
+            refreshLauncherChromeState()
+        }
     }
 
     /// Keep app chrome in sync when language changes from any entry point.
@@ -295,14 +365,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             button.imageScaling = .scaleProportionallyDown
             button.imagePosition = .imageOnly
             button.toolTip = "TagLauncher — Tag-based app launcher"
-            button.action = #selector(toggleOverlay)
+            button.action = #selector(toggleOverlay(_:))
             button.target = self
         }
 
         let menu = NSMenu()
+        menu.delegate = self
         let showItem = NSMenuItem(
             title: showAppListMenuTitle,
-            action: #selector(toggleOverlay),
+            action: #selector(toggleOverlayFromStatusMenu(_:)),
             keyEquivalent: ""
         )
         showItem.target = self
@@ -323,7 +394,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(.separator())
         let prefsItem = NSMenuItem(
             title: tr("menu.preferences"),
-            action: #selector(openPreferences),
+            action: #selector(openPreferences(_:)),
             keyEquivalent: ","
         )
         prefsItem.target = self
@@ -353,6 +424,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             )
         )
         statusItem.menu = menu
+    }
+
+    func menuWillOpen(_ menu: NSMenu) {
+        statusMenuScreenForNextOverlay = screenContainingCurrentPointer()
+            ?? statusItem?.button?.window?.screen
+            ?? NSScreen.main
+            ?? NSScreen.screens.first
+    }
+
+    func menuDidClose(_ menu: NSMenu) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            self?.statusMenuScreenForNextOverlay = nil
+        }
     }
 
     private func makeMenuBarIcon() -> NSImage {
@@ -518,7 +602,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func configureShowAppListItem(_ item: NSMenuItem) {
         item.title = showAppListMenuTitle
-        item.action = #selector(toggleOverlay)
+        item.action = #selector(toggleOverlayFromStatusMenu(_:))
         item.target = self
         item.keyEquivalent = ""
         item.keyEquivalentModifierMask = []
@@ -539,7 +623,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         item.title = tr("menu.preferences")
-        item.action = #selector(openPreferences)
+        item.action = #selector(openPreferences(_:))
         item.target = self
         item.keyEquivalent = ","
         item.keyEquivalentModifierMask = .command
@@ -548,7 +632,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func isSettingsMenuItem(_ item: NSMenuItem) -> Bool {
         item.action == Selector(("showSettingsWindow:"))
-            || item.action == #selector(openPreferences)
+            || item.action == #selector(openPreferences(_:))
             || item.title == tr("menu.preferences")
     }
 
@@ -580,78 +664,106 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Overlay Window
 
-    @objc private func toggleOverlay() {
-        if overlayWindow?.isVisible == true {
-            hideOverlay(force: true)
-        } else {
-            showOverlay()
+    @objc func toggleOverlay(_ sender: Any) {
+        performToggleOverlay(preferredScreen: nil)
+    }
+
+    @objc func toggleOverlayFromStatusMenu(_ sender: Any) {
+        let preferredScreen = statusMenuScreenForNextOverlay
+        statusMenuScreenForNextOverlay = nil
+        DispatchQueue.main.async { [weak self] in
+            self?.performToggleOverlay(preferredScreen: preferredScreen)
         }
     }
 
-    private func showOverlay(initialQuickSearchSource: String? = nil) {
-        // Use the screen under the mouse cursor — works in fullscreen spaces
-        let mousePoint = NSEvent.mouseLocation
-        guard let screen = NSScreen.screens.first(where: {
-            NSMouseInRect(mousePoint, $0.frame, false)
-        }) ?? NSScreen.main ?? NSScreen.screens.first else { return }
-
-        let window: NSWindow
-        let createdWindow: Bool
-        if let existingWindow = overlayWindow {
-            window = existingWindow
-            createdWindow = false
+    private func performToggleOverlay(preferredScreen: NSScreen?) {
+        if overlayWindow?.isVisible == true {
+            hideOverlay(force: true)
         } else {
-            window = makeOverlayWindow(on: screen, initialQuickSearchSource: initialQuickSearchSource)
-            overlayWindow = window
-            createdWindow = true
+            showOverlay(preferredScreen: preferredScreen)
         }
+    }
 
-        installOverlayKeyMonitor()
-        beginLauncherForegroundOwnership()
+    private func showOverlay(
+        initialQuickSearchSource: String? = nil,
+        preferredScreen: NSScreen? = nil,
+        stagedForAllSpaces: Bool = false
+    ) {
+        guard let placement = overlayPlacementContextForNextOverlay(preferredScreen: preferredScreen) else { return }
 
-        let targetFrame = screen.frame
-        let targetLevel = overlayLevel(initialQuickSearchSource: initialQuickSearchSource)
-        let canReuseVisibleWindow = !createdWindow
-            && window.isVisible
-            && NSEqualRects(window.frame, targetFrame)
-            && window.level == targetLevel
-
-        if canReuseVisibleWindow {
-            if !window.isKeyWindow {
-                window.makeKeyAndOrderFront(nil)
+        if !stagedForAllSpaces && !isSettingsVisible && NSApp.isActive {
+            // Let the all-spaces panel attach to the pointer's display before the app reclaims focus.
+            if NSApp.activationPolicy() != .accessory {
+                NSApp.setActivationPolicy(.accessory)
             }
-            refreshLauncherChromeState(activate: true)
-            if let initialQuickSearchSource {
-                NotificationCenter.default.post(
-                    name: .tagLauncherQuickSearchRequested,
-                    object: nil,
-                    userInfo: ["source": initialQuickSearchSource]
+            NSApp.deactivate()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) { [weak self] in
+                self?.showOverlay(
+                    initialQuickSearchSource: initialQuickSearchSource,
+                    preferredScreen: placement.screen,
+                    stagedForAllSpaces: true
                 )
             }
             return
         }
 
-        window.setFrame(targetFrame, display: true)
-        window.level = targetLevel
-
-        if let initialQuickSearchSource, !createdWindow {
-            NotificationCenter.default.post(
-                name: .tagLauncherQuickSearchRequested,
-                object: nil,
-                userInfo: ["source": initialQuickSearchSource]
-            )
+        if overlayWindow?.isVisible == true {
+            hideOverlay(force: true)
+        } else if let existingWindow = overlayWindow {
+            existingWindow.orderOut(nil)
+            overlayWindow = nil
         }
+
+        let window = makeOverlayWindow(
+            on: placement.screen,
+            initialQuickSearchSource: initialQuickSearchSource
+        )
+        overlayGeneration &+= 1
+        overlayWindow = window
+        installOverlayKeyMonitor()
+        if !isSettingsVisible {
+            if NSApp.isActive {
+                NSApp.deactivate()
+            }
+            if NSApp.activationPolicy() != .accessory {
+                NSApp.setActivationPolicy(.accessory)
+            }
+        }
+
+        let targetLevel = overlayLevel(initialQuickSearchSource: initialQuickSearchSource)
+        window.setFrame(placement.frame, display: true)
+        window.level = targetLevel
 
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
-        refreshLauncherChromeState(activate: true)
-        NotificationCenter.default.post(name: .tagLauncherOverlayDidShow, object: nil)
+
+        let placementFrame = placement.frame
+        let finishForegroundClaim: () -> Void = { [weak self, weak window] in
+            guard let self, let window, self.overlayWindow === window else { return }
+            self.refreshLauncherChromeState(activate: true)
+            if window.frame != placementFrame {
+                window.setFrame(placementFrame, display: true)
+                window.makeKeyAndOrderFront(nil)
+                window.orderFrontRegardless()
+            }
+            if let settingsWindow = self.settingsWindow, settingsWindow.isVisible {
+                self.prepareSettingsWindow(settingsWindow)
+            }
+            NotificationCenter.default.post(name: .tagLauncherOverlayDidShow, object: nil)
+        }
+
+        if !isSettingsVisible && stagedForAllSpaces {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.12, execute: finishForegroundClaim)
+        } else {
+            finishForegroundClaim()
+        }
     }
 
     private func installOverlayKeyMonitor() {
         guard overlayKeyMonitor == nil else { return }
         overlayKeyMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
             guard let self else { return event }
+            guard self.shouldHandleOverlayKeyEvent(event) else { return event }
             if event.keyCode == 53 { // Escape
                 if self.isQuickSearchOpen {
                     NotificationCenter.default.post(name: .tagLauncherQuickSearchDismissRequested, object: nil)
@@ -670,6 +782,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             }
             return event
         }
+    }
+
+    private func shouldHandleOverlayKeyEvent(_ event: NSEvent) -> Bool {
+        guard overlayWindow?.isVisible == true else { return false }
+        if event.window == overlayWindow { return true }
+        return event.window == nil && NSApp.keyWindow == overlayWindow
     }
 
     private func shouldOpenQuickSearch(for event: NSEvent) -> Bool {
@@ -715,21 +833,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func makeOverlayWindow(on screen: NSScreen, initialQuickSearchSource: String? = nil) -> NSWindow {
         let panel = OverlayPanel(
             contentRect: screen.frame,
-            styleMask: [.borderless, .fullSizeContentView],
+            styleMask: [.borderless, .fullSizeContentView, .nonactivatingPanel],
             backing: .buffered,
             defer: false
         )
         panel.isFloatingPanel = true
         panel.hidesOnDeactivate = false
+        // This combination keeps the overlay on the pointer display, including fullscreen Spaces.
         panel.collectionBehavior = [
-            .moveToActiveSpace,
+            .canJoinAllSpaces,
             .fullScreenAuxiliary,
             .stationary,
             .transient,
             .ignoresCycle
         ]
         panel.isOpaque = false
-        panel.backgroundColor = .clear
+        panel.backgroundColor = NSColor.black.withAlphaComponent(0.001)
         panel.hasShadow = false
         panel.titlebarAppearsTransparent = true
         panel.titleVisibility = .hidden
@@ -750,6 +869,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func hideOverlay(force: Bool = false, discardWindow: Bool = false) {
         guard force || !isInEditMode else { return }
+        overlayGeneration &+= 1
         TagDatabase.flushPendingCategorySchemeBackupBatch()
         if let settingsWindow, settingsWindow.parent == overlayWindow {
             detachSettingsWindow(settingsWindow)
@@ -856,12 +976,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if id == LauncherHotkeyKind.quickSearch.eventID {
             showQuickSearchFromGlobalHotkey()
         } else {
-            toggleOverlay()
+            performToggleOverlay(preferredScreen: nil)
         }
     }
 
     private func showQuickSearchFromGlobalHotkey() {
-        guard overlayWindow?.isVisible != true else { return }
+        if overlayWindow?.isVisible == true {
+            guard !isSettingsVisible else { return }
+            refreshLauncherChromeState(activate: true)
+            NotificationCenter.default.post(
+                name: .tagLauncherQuickSearchRequested,
+                object: nil,
+                userInfo: ["source": QuickSearchOpenSource.globalVisible]
+            )
+            return
+        }
         showOverlay(initialQuickSearchSource: QuickSearchOpenSource.globalHidden)
     }
 
@@ -901,6 +1030,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                   keyWindow != self.overlayWindow,
                   !self.isInEditMode
             else { return }
+
+            if self.isSettingsOwnedPanel(keyWindow) {
+                return
+            }
 
             // Settings/Preferences window -> float it above overlay for real-time preview.
             if self.isSettingsWindowCandidate(keyWindow) {
@@ -967,6 +1100,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return true
     }
 
+    private func isSettingsOwnedPanel(_ window: NSWindow) -> Bool {
+        guard window is NSPanel else { return false }
+        if window is NSSavePanel { return true }
+        guard let settingsWindow else { return false }
+        return window.sheetParent == settingsWindow
+            || settingsWindow.attachedSheet == window
+            || window.parent == settingsWindow
+    }
+
     private func center(_ window: NSWindow, over rect: NSRect) {
         let frame = window.frame
         let origin = NSPoint(
@@ -977,10 +1119,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func screenUnderMouse() -> NSScreen? {
+        overlayPlacementContextForNextOverlay(preferredScreen: nil)?.screen
+    }
+
+    private func overlayPlacementContextForNextOverlay(preferredScreen: NSScreen?) -> OverlayPlacementContext? {
+        if let screen = preferredScreen {
+            return OverlayPlacementContext(screen: screen, frame: screen.frame)
+        }
+        guard let screen = screenContainingCurrentPointer() ?? NSScreen.main ?? NSScreen.screens.first else {
+            return nil
+        }
+        return OverlayPlacementContext(screen: screen, frame: screen.frame)
+    }
+
+    private func screenContainingCurrentPointer() -> NSScreen? {
         let mousePoint = NSEvent.mouseLocation
         return NSScreen.screens.first(where: {
             NSMouseInRect(mousePoint, $0.frame, false)
-        }) ?? NSScreen.main ?? NSScreen.screens.first
+        })
     }
 
     /// Clean up settingsWindow reference when the Settings window closes.
@@ -1011,7 +1167,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    /// Lower the overlay while text input is active so IME and cursor services are not hidden behind it.
+    /// Keep text-input overlays at the launcher level so Quick Search stays visible in fullscreen Spaces.
     private func observeAppNoteEditing() {
         NotificationCenter.default.addObserver(
             forName: .tagLauncherAppNoteEditingChanged,
@@ -1020,8 +1176,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         ) { [weak self] notification in
             guard let self else { return }
             self.isEditingAppNote = (notification.userInfo?["active"] as? Bool) ?? false
+            if self.isEditingAppNote {
+                self.promoteOverlayToForegroundInput()
+            }
             self.updateOverlayLevelForTextInput()
         }
+    }
+
+    private func promoteOverlayToForegroundInput() {
+        beginLauncherForegroundOwnership()
+        guard let overlayWindow else { return }
+        overlayWindow.makeKeyAndOrderFront(nil)
+        overlayWindow.orderFrontRegardless()
     }
 
     private func observeQuickSearch() {
@@ -1032,6 +1198,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         ) { [weak self] notification in
             guard let self else { return }
             self.isQuickSearchOpen = (notification.userInfo?["active"] as? Bool) ?? false
+            if self.isQuickSearchOpen {
+                self.promoteOverlayToForegroundInput()
+            }
             self.updateOverlayLevelForTextInput()
             if self.isQuickSearchOpen {
                 self.installQuickSearchExternalMouseMonitor()
@@ -1095,7 +1264,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    @objc private func openPreferences() {
+    @objc private func openPreferences(_ sender: Any? = nil) {
         TagDatabase.flushPendingCategorySchemeBackupBatch()
         beginLauncherForegroundOwnership()
         // Don't hide overlay — keep it visible for real-time setting preview.
@@ -1133,29 +1302,46 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
 final class DismissibleHostingView<Content: View>: NSHostingView<Content> {
     private let onBackdropTap: () -> Void
-    private var suppressBackdropDismiss = false
+    private var modalInteractionSuppressesBackdropDismiss = false
+    private var quickSearchSuppressesBackdropDismiss = false
     private var modalInteractionObserver: NSObjectProtocol?
+    private var quickSearchVisibilityObserver: NSObjectProtocol?
+
+    private var suppressBackdropDismiss: Bool {
+        modalInteractionSuppressesBackdropDismiss || quickSearchSuppressesBackdropDismiss
+    }
 
     @MainActor required init(rootView: Content) {
         self.onBackdropTap = {}
         super.init(rootView: rootView)
-        observeModalInteractionChanges()
+        installWindowServerAnchorLayer()
+        observeBackdropDismissSuppressionChanges()
     }
 
     init(rootView: Content, onBackdropTap: @escaping () -> Void) {
         self.onBackdropTap = onBackdropTap
         super.init(rootView: rootView)
-        observeModalInteractionChanges()
+        installWindowServerAnchorLayer()
+        observeBackdropDismissSuppressionChanges()
     }
 
     deinit {
         if let modalInteractionObserver {
             NotificationCenter.default.removeObserver(modalInteractionObserver)
         }
+        if let quickSearchVisibilityObserver {
+            NotificationCenter.default.removeObserver(quickSearchVisibilityObserver)
+        }
     }
 
     @available(*, unavailable)
     required init?(coder: NSCoder) { fatalError() }
+
+    private func installWindowServerAnchorLayer() {
+        wantsLayer = true
+        // A near-transparent backing pixel makes the WindowServer publish the panel immediately.
+        layer?.backgroundColor = NSColor.black.withAlphaComponent(0.001).cgColor
+    }
 
     override func mouseDown(with event: NSEvent) {
         let location = convert(event.locationInWindow, from: nil)
@@ -1164,6 +1350,10 @@ final class DismissibleHostingView<Content: View>: NSHostingView<Content> {
             return
         }
         if hit == self {
+            if quickSearchSuppressesBackdropDismiss {
+                NotificationCenter.default.post(name: .tagLauncherQuickSearchDismissRequested, object: nil)
+                return
+            }
             if suppressBackdropDismiss {
                 super.mouseDown(with: event)
                 return
@@ -1190,13 +1380,21 @@ final class DismissibleHostingView<Content: View>: NSHostingView<Content> {
         super.mouseDown(with: event)
     }
 
-    private func observeModalInteractionChanges() {
+    private func observeBackdropDismissSuppressionChanges() {
         modalInteractionObserver = NotificationCenter.default.addObserver(
             forName: .tagLauncherModalInteractionChanged,
             object: nil,
             queue: .main
         ) { [weak self] notification in
-            self?.suppressBackdropDismiss = (notification.userInfo?["active"] as? Bool) ?? false
+            self?.modalInteractionSuppressesBackdropDismiss = (notification.userInfo?["active"] as? Bool) ?? false
+        }
+
+        quickSearchVisibilityObserver = NotificationCenter.default.addObserver(
+            forName: .tagLauncherQuickSearchVisibilityChanged,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            self?.quickSearchSuppressesBackdropDismiss = (notification.userInfo?["active"] as? Bool) ?? false
         }
     }
 

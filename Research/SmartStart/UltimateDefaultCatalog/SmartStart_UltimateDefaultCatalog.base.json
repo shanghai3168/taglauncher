@@ -1145,8 +1145,7 @@
       "bundleIdentifier": "com.apple.iBooksX",
       "defaultTag": [
         "writing",
-        "education",
-        "entertainment"
+        "education"
       ],
       "sourceEvidence": [
         "curated_tager_catalog"

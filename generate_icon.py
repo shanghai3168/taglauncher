@@ -4,6 +4,7 @@ from PIL import Image, ImageDraw, ImageFilter
 import math, os, subprocess, tempfile
 
 SIZE = 1024
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def rounded_rectangle_mask(size, radius):
     mask = Image.new("L", (size, size), 0)
@@ -97,12 +98,12 @@ with tempfile.TemporaryDirectory() as tmpdir:
         print(f"  {name} ({size}x{size}): {os.path.getsize(path):,}B")
 
     # Generate .icns to project root
-    out_icns = "/Users/ar/Projects/Apptag/icon-icns.icns"
+    out_icns = os.path.join(PROJECT_DIR, "icon-icns.icns")
     subprocess.run(["iconutil", "-c", "icns", iconset, "-o", out_icns], check=True)
     icns_size = os.path.getsize(out_icns)
     print(f"\nGenerated: {out_icns} ({icns_size:,}B, {icns_size/1024:.0f}KB)")
 
 # Also save 1024x1024 preview
-preview_path = "/Users/ar/Projects/Apptag/icon_preview.png"
+preview_path = os.path.join(PROJECT_DIR, "icon_preview.png")
 img.save(preview_path, "PNG", optimize=True)
 print(f"Preview: {preview_path}")

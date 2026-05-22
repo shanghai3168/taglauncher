@@ -1,6 +1,5 @@
 import SwiftUI
 import AppKit
-import UniformTypeIdentifiers
 
 // MARK: - Notification for manual re-index
 
@@ -315,6 +314,7 @@ private struct PendingUncategorizedDrop: Identifiable {
     let id = UUID()
     let app: AppInfo
     let assignedTags: [String]
+    let removableTags: [String]
 }
 
 private enum SmartStartNoticeMode {
@@ -339,11 +339,7 @@ struct ContentView: View {
     @State private var allApps: [AppInfo] = []
     @State private var displayGroups: [TagGroup] = []
     @State private var tagColors: [String: Int] = [:]
-    @State private var scrollProxy: ScrollViewProxy? = nil
-    @StateObject private var scrollInteractionState = AppGridScrollInteractionState()
     @State private var groupLayoutVersion = 0
-    @State private var cachedGridContainerRowsKey: GridContainerRowsKey? = nil
-    @State private var cachedGridContainerRows: [GridContainerLayoutRow] = []
     @State private var appGridScrollTargetID: String? = nil
     @State private var appGridScrollRequestToken = 0
 
@@ -361,7 +357,6 @@ struct ContentView: View {
     @State private var tagNavDragItem: String? = nil
     @State private var tagNavReorderFrames: [String: CGRect] = [:]
     @State private var tagNavReorderDidMove = false
-    @State private var hoveredContainer: String? = nil  // colored container lift
     // Fixed interaction for "Colorless Container": hover fills persistently; click clears.
     @State private var filledColorlessContainer: String? = nil
     @State private var appDragModeActive = false
@@ -417,15 +412,9 @@ struct ContentView: View {
     private let floatingControlsTrailingInset: CGFloat = 20
     private let floatingControlsReservedWidth: CGFloat = 120
     private var appBubbleDisabled: Bool {
-        appDragModeActive || pendingUncategorizedDrop != nil || scrollInteractionState.isFrozen
+        appDragModeActive || pendingUncategorizedDrop != nil
     }
     private let rightSidebarFloatingClearance: CGFloat = 44
-
-    private var cardSurfaceColor: Color {
-        colorScheme == .dark
-            ? Color.white.opacity(0.055)
-            : Color.white.opacity(0.62)
-    }
 
     private var floatingButtonSurfaceColor: Color {
         colorScheme == .dark
@@ -445,23 +434,19 @@ struct ContentView: View {
         displayMode == "container" || displayMode == "gridContainer"
     }
 
-    private var isColoredContainerMode: Bool {
-        displayMode == "coloredContainer" || displayMode == "coloredGridContainer"
-    }
-
-    private var usesAppKitContainerGrid: Bool {
-        displayMode == "gridContainer" || displayMode == "coloredGridContainer"
+    private var shouldRenderAppGridBehindQuickSearch: Bool {
+        !quickSearchVisible || !quickSearchCloseHidesOverlay
     }
 
     var body: some View {
         ZStack {
-            if !quickSearchVisible {
+            if shouldRenderAppGridBehindQuickSearch {
                 VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
                     .ignoresSafeArea()
                     .allowsHitTesting(false)
             }
 
-            if !quickSearchVisible {
+            if shouldRenderAppGridBehindQuickSearch {
                 if notchHeight > 0 {
                     VStack {
                         Rectangle().fill(.black)
@@ -489,7 +474,7 @@ struct ContentView: View {
 
             quickSearchOverlay
 
-            if !quickSearchVisible, let message = dropWarningToast {
+            if shouldRenderAppGridBehindQuickSearch, let message = dropWarningToast {
                 Text(message)
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundStyle(.primary)
@@ -504,7 +489,7 @@ struct ContentView: View {
                     .allowsHitTesting(false)
             }
 
-            if !quickSearchVisible && dropRefreshVisible {
+            if shouldRenderAppGridBehindQuickSearch && dropRefreshVisible {
                 Color.black.opacity(0.08)
                     .ignoresSafeArea()
                     .transition(.opacity)
@@ -955,7 +940,7 @@ struct ContentView: View {
                 Spacer()
                 ProgressView().scaleEffect(0.8)
                 Spacer()
-            } else if usesAppKitContainerGrid {
+            } else {
                 AppGridCollectionView(
                     groups: displayGroups,
                     tagColors: tagColors,
@@ -975,17 +960,13 @@ struct ContentView: View {
                         dropApp(path: path, sourceTag: source, targetTag: target, copy: copy)
                     },
                     onGroupActivate: { groupName in
-                        if displayMode == "gridContainer" {
+                        if isColorlessContainerMode {
                             toggleColorlessFill(groupName)
                         }
                     },
                     onScrollActivity: handleAppGridScrollActivity,
                     onDragModeChange: { setAppDragMode($0) }
                 )
-            } else if displayMode == "container" || displayMode == "coloredContainer" {
-                containerGrid
-            } else {
-                flatGrid
             }
         }
     }
@@ -1007,7 +988,7 @@ struct ContentView: View {
                 )
 
                 AppNameBubble(
-                    appName: context.app.name,
+                    appName: context.app.displayName,
                     note: currentNote(for: context.app),
                     isEditing: editing,
                     placement: placement,
@@ -1112,538 +1093,6 @@ struct ContentView: View {
         .ignoresSafeArea()
         .allowsHitTesting(smartStartNotice != nil)
     }
-    private var flatGrid: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
-                LazyVStack(alignment: .leading, spacing: 24) {
-                    ForEach(displayGroups) { group in
-                        TagGroupView(
-                            group: group,
-                            onSelectApp: { app in openApp(app) },
-                            tagFontSize: tagFontSize,
-                            iconSize: iconSize,
-                            showNames: !hideAppNames,
-                            dragModeActive: appDragModeActive,
-                            onDragModeChange: { setAppDragMode($0) },
-                            onBubbleHover: handleBubbleHover,
-                            onEditNote: beginEditingBubbleNote,
-                            bubbleDisabled: appBubbleDisabled,
-                            showUncommonAppBubbles: showUncommonAppBubbles,
-                            dragResetToken: appDragResetToken,
-                            onDropApp: { path, source, copy in
-                                dropApp(path: path, sourceTag: source, targetTag: group.name, copy: copy)
-                            }
-                        ).id(group.id)
-                    }
-                }
-                .padding(20)
-                .background(AppGridScrollActivityObserver(onScroll: handleAppGridScrollActivity))
-            }
-            .id(displayMode)  // force rebuild on mode switch
-            .onAppear { scrollProxy = proxy }
-        }
-    }
-
-    private var containerGrid: some View {
-        GeometryReader { geo in
-            let outerPad: CGFloat = 20
-            let gap: CGFloat = 16
-            let available = geo.size.width - outerPad * 2
-            let colW: CGFloat = 280
-            let colCount = max(1, Int((available + gap) / (colW + gap)))
-            let actualColW = (available - gap * CGFloat(colCount - 1)) / CGFloat(colCount)
-
-            let columns = distributeToColumns(groups: displayGroups, colCount: colCount, colWidth: actualColW)
-
-            ScrollViewReader { proxy in
-                ScrollView {
-                    HStack(alignment: .top, spacing: gap) {
-                        ForEach(0..<colCount, id: \.self) { ci in
-                            LazyVStack(spacing: gap) {
-                                ForEach(columns[ci]) { group in
-                                    masonryCard(group, width: actualColW)
-                                        .id(group.id)
-                                }
-                            }
-                        }
-                    }
-                    .padding(outerPad)
-                    .background(AppGridScrollActivityObserver(onScroll: handleAppGridScrollActivity))
-                }
-                .id(displayMode)  // force rebuild on mode switch
-                .onAppear { scrollProxy = proxy }
-            }
-        }
-    }
-
-    /// Distribute groups to the shortest column.
-    private func distributeToColumns(groups: [TagGroup], colCount: Int, colWidth: CGFloat) -> [[TagGroup]] {
-        var cols = Array(repeating: [TagGroup](), count: colCount)
-        var h = Array(repeating: CGFloat(0), count: colCount)
-        for g in groups {
-            let est = estimatedCardHeight(g, width: colWidth)
-            let ci = h.firstIndex(of: h.min()!)!
-            cols[ci].append(g)
-            h[ci] += est + 16
-        }
-        return cols
-    }
-
-    private func estimatedCardHeight(_ group: TagGroup, width: CGFloat) -> CGFloat {
-        let inner = width - 32
-        let itemW = AppGridItem.stableWidth(iconSize: iconSize) + 6
-        let perRow = max(1, Int(inner / itemW))
-        let rows = (group.apps.count + perRow - 1) / perRow
-        return 32
-            + CGFloat(rows) * AppGridItem.stableHeight(iconSize: iconSize)
-            + CGFloat(max(0, rows - 1)) * 2
-    }
-
-    private func masonryCard(_ group: TagGroup, width: CGFloat) -> some View {
-        let isColored = displayMode == "coloredContainer"
-        let isColorless = isColorlessContainerMode
-        let isColorlessFilled = isColorless && filledColorlessContainer == group.name
-        let isHovered = hoveredContainer == group.name
-        let isColorlessActive = isColorless && (isColorlessFilled || isHovered)
-        let tagColor = Color(nsColor: TagColor.nsColor(for: tagColors[group.name] ?? 0))
-        return VStack(alignment: .leading, spacing: 6) {
-            HStack(spacing: 0) {
-                Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
-                    .layoutPriority(0)
-                Text(group.name)
-                    .font(.system(size: tagFontSize, weight: .semibold))
-                    .foregroundStyle(.secondary)
-                    .lineLimit(1)
-                    .truncationMode(.middle)
-                    .padding(.horizontal, 10)
-                    .layoutPriority(1)
-                Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
-                    .layoutPriority(0)
-            }
-            let itemSize = AppGridItem.stableWidth(iconSize: iconSize)
-            LazyVGrid(
-                columns: [GridItem(.adaptive(minimum: itemSize, maximum: itemSize + 36), spacing: 6)],
-                spacing: 2
-            ) {
-                ForEach(group.apps) { app in
-                    AppGridItem(
-                        app: app,
-                        iconSize: iconSize,
-                        showName: !hideAppNames,
-                        sourceTag: group.name,
-                        dragModeActive: appDragModeActive,
-                        onDragModeChange: { setAppDragMode($0) },
-                        onBubbleHover: handleBubbleHover,
-                        onEditNote: beginEditingBubbleNote,
-                        bubbleDisabled: appBubbleDisabled,
-                        showUncommonAppBubbles: showUncommonAppBubbles,
-                        itemID: "\(group.name)|\(app.path.path)",
-                        dragResetToken: appDragResetToken,
-                        onSelect: { openApp(app) }
-                    )
-                }
-            }
-        }
-        .frame(maxWidth: width)
-        .padding(16)
-        .background(
-            RoundedRectangle(cornerRadius: 14)
-                .fill((isColored || isColorlessActive) ? tagColor.opacity(0.30) : Color.clear)
-                .background(
-                    RoundedRectangle(cornerRadius: 14)
-                        .fill(cardSurfaceColor)
-                )
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 14)
-                .stroke(Color.primary.opacity(0.08), lineWidth: 1)
-        )
-        .overlay {
-            if appDragModeActive {
-                AppDropTargetView(targetTag: group.name) { path, source, copy in
-                    dropApp(path: path, sourceTag: source, targetTag: group.name, copy: copy)
-                }
-                .allowsHitTesting(false)
-            }
-        }
-        .shadow(color: .black.opacity((isColored && isHovered) || isColorlessActive ? 0.22 : 0),
-                radius: (isColored && isHovered) || isColorlessActive ? 8 : 0,
-                y: (isColored && isHovered) || isColorlessActive ? 3 : 0)
-        .zIndex(isHovered ? 50 : 0)
-        .animation(.easeOut(duration: 0.045), value: isHovered)
-        .animation(.easeOut(duration: 0.08), value: isColorlessFilled)
-        .background(AppHoverTrackingView { hovering, _ in
-            guard !scrollInteractionState.isFrozen else {
-                if !hovering && hoveredContainer == group.name {
-                    hoveredContainer = nil
-                }
-                return
-            }
-            if isColored || isColorless {
-                hoveredContainer = hovering ? group.name : nil
-            }
-        })
-        .contentShape(RoundedRectangle(cornerRadius: 14))
-        .onTapGesture {
-            if isColorless {
-                toggleColorlessFill(group.name)
-            }
-        }
-        .onDrop(of: [UTType.plainText], isTargeted: nil) { providers in
-            handleAppDrop(providers, targetTag: group.name)
-        }
-    }
-
-    private var gridContainerGrid: some View {
-        GeometryReader { geo in
-            let outerPad: CGFloat = 20
-            let gap: CGFloat = 16
-            let available = geo.size.width - outerPad * 2
-            let preferredCount = preferredGridContainersPerRow(availableWidth: available)
-            let rowsKey = GridContainerRowsKey(
-                groupLayoutVersion: groupLayoutVersion,
-                trackCount: preferredCount,
-                availableWidth: Int(available.rounded()),
-                iconSize: Int(iconSize.rounded())
-            )
-            let rows = gridContainerRowsForRender(
-                key: rowsKey,
-                groups: displayGroups,
-                trackCount: preferredCount,
-                availableWidth: available,
-                gap: gap
-            )
-
-            ScrollViewReader { proxy in
-                ScrollView {
-                    LazyVStack(alignment: .leading, spacing: gap) {
-                        ForEach(Array(rows.indices), id: \.self) { rowIndex in
-                            let row = rows[rowIndex]
-
-                            HStack(alignment: .top, spacing: gap) {
-                                ForEach(Array(row.items.indices), id: \.self) { itemIndex in
-                                    let item = row.items[itemIndex]
-                                    gridContainerCard(item.group, width: item.width, fixedRows: row.fixedRows)
-                                        .id(item.group.id)
-                                }
-                            }
-                        }
-                    }
-                    .padding(outerPad)
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
-                    .background(AppGridScrollActivityObserver(onScroll: handleAppGridScrollActivity))
-                }
-                .id(displayMode)
-                .onAppear { scrollProxy = proxy }
-                .onAppear {
-                    updateCachedGridContainerRows(
-                        key: rowsKey,
-                        groups: displayGroups,
-                        trackCount: preferredCount,
-                        availableWidth: available,
-                        gap: gap
-                    )
-                }
-                .onChange(of: rowsKey) { _, newKey in
-                    updateCachedGridContainerRows(
-                        key: newKey,
-                        groups: displayGroups,
-                        trackCount: preferredCount,
-                        availableWidth: available,
-                        gap: gap
-                    )
-                }
-            }
-        }
-    }
-
-    private func preferredGridContainersPerRow(availableWidth: CGFloat) -> Int {
-        let minCardWidth = max(260, AppGridItem.stableWidth(iconSize: iconSize) * 3 + 64)
-        if availableWidth >= minCardWidth * 3 + 32 { return 3 }
-        if availableWidth >= minCardWidth * 2 + 16 { return 2 }
-        return 1
-    }
-
-    private struct GridContainerLayoutItem {
-        let group: TagGroup
-        let width: CGFloat
-    }
-
-    private struct GridContainerLayoutRow {
-        let items: [GridContainerLayoutItem]
-        let fixedRows: Int
-    }
-
-    private struct GridContainerRowsKey: Equatable {
-        let groupLayoutVersion: Int
-        let trackCount: Int
-        let availableWidth: Int
-        let iconSize: Int
-    }
-
-    private struct GridContainerCandidate {
-        let spans: [Int]
-        let rows: Int
-        let cost: CGFloat
-    }
-
-    private func gridContainerRowsForRender(
-        key: GridContainerRowsKey,
-        groups: [TagGroup],
-        trackCount: Int,
-        availableWidth: CGFloat,
-        gap: CGFloat
-    ) -> [GridContainerLayoutRow] {
-        if cachedGridContainerRowsKey == key {
-            return cachedGridContainerRows
-        }
-        return gridContainerRows(
-            groups: groups,
-            trackCount: trackCount,
-            availableWidth: availableWidth,
-            gap: gap
-        )
-    }
-
-    private func updateCachedGridContainerRows(
-        key: GridContainerRowsKey,
-        groups: [TagGroup],
-        trackCount: Int,
-        availableWidth: CGFloat,
-        gap: CGFloat
-    ) {
-        guard cachedGridContainerRowsKey != key else { return }
-        cachedGridContainerRows = gridContainerRows(
-            groups: groups,
-            trackCount: trackCount,
-            availableWidth: availableWidth,
-            gap: gap
-        )
-        cachedGridContainerRowsKey = key
-    }
-
-    private func gridContainerRows(groups: [TagGroup], trackCount: Int, availableWidth: CGFloat, gap: CGFloat) -> [GridContainerLayoutRow] {
-        let trackCount = max(1, trackCount)
-        let trackWidth = (availableWidth - gap * CGFloat(trackCount - 1)) / CGFloat(trackCount)
-        let patterns = gridContainerSpanPatterns(trackCount: trackCount)
-        let n = groups.count
-        guard n > 0 else { return [] }
-
-        var bestCost = Array(repeating: CGFloat.greatestFiniteMagnitude, count: n + 1)
-        var bestPattern = Array(repeating: [Int](), count: n)
-        bestCost[n] = 0
-
-        for index in stride(from: n - 1, through: 0, by: -1) {
-            for pattern in patterns where index + pattern.count <= n {
-                let candidate = gridContainerCandidate(
-                    groups: groups,
-                    startIndex: index,
-                    spans: pattern,
-                    trackWidth: trackWidth,
-                    availableWidth: availableWidth,
-                    gap: gap
-                )
-                let totalCost = candidate.cost + bestCost[index + pattern.count]
-                if totalCost < bestCost[index] {
-                    bestCost[index] = totalCost
-                    bestPattern[index] = candidate.spans
-                }
-            }
-        }
-
-        var rows: [GridContainerLayoutRow] = []
-        var index = 0
-        while index < n {
-            let spans = bestPattern[index].isEmpty ? [trackCount] : bestPattern[index]
-            let widths = spans.map { gridContainerWidth(trackWidth: trackWidth, span: $0, gap: gap) }
-            let fixedRows = widths.indices.map {
-                iconRows(appCount: groups[index + $0].apps.count, width: widths[$0])
-            }.max() ?? 1
-            let items = widths.indices.map {
-                GridContainerLayoutItem(group: groups[index + $0], width: widths[$0])
-            }
-            rows.append(GridContainerLayoutRow(items: items, fixedRows: fixedRows))
-            index += spans.count
-        }
-        return rows
-    }
-
-    private func gridContainerSpanPatterns(trackCount: Int) -> [[Int]] {
-        switch trackCount {
-        case 3:
-            return [[1, 1, 1], [1, 2], [2, 1], [3]]
-        case 2:
-            return [[1, 1], [2]]
-        default:
-            return [[1]]
-        }
-    }
-
-    private func gridContainerCandidate(
-        groups: [TagGroup],
-        startIndex: Int,
-        spans: [Int],
-        trackWidth: CGFloat,
-        availableWidth: CGFloat,
-        gap: CGFloat
-    ) -> GridContainerCandidate {
-        let widths = spans.map { gridContainerWidth(trackWidth: trackWidth, span: $0, gap: gap) }
-        let rowCounts = widths.indices.map {
-            iconRows(appCount: groups[startIndex + $0].apps.count, width: widths[$0])
-        }
-        let fixedRows = rowCounts.max() ?? 1
-        let rowArea = CGFloat(fixedRows) * iconCellHeight() * availableWidth
-        let paddingCost = CGFloat(spans.count) * 0.001
-        return GridContainerCandidate(spans: spans, rows: fixedRows, cost: rowArea + paddingCost)
-    }
-
-    private func gridContainerWidth(trackWidth: CGFloat, span: Int, gap: CGFloat) -> CGFloat {
-        let span = max(1, span)
-        return trackWidth * CGFloat(span) + gap * CGFloat(span - 1)
-    }
-
-    private func iconColumns(width: CGFloat) -> Int {
-        let inner = width - 32
-        let itemW = AppGridItem.stableWidth(iconSize: iconSize) + 6
-        return max(1, Int((inner + 6) / itemW))
-    }
-
-    private func iconRows(appCount: Int, width: CGFloat) -> Int {
-        let cols = iconColumns(width: width)
-        return max(1, (appCount + cols - 1) / cols)
-    }
-
-    private func gridContainerCard(_ group: TagGroup, width: CGFloat, fixedRows: Int) -> some View {
-        let isColored = displayMode == "coloredGridContainer"
-        let isColorlessGrid = displayMode == "gridContainer"
-        let isColorless = isColorlessContainerMode
-        let isColorlessFilled = isColorless && filledColorlessContainer == group.name
-        let isHovered = hoveredContainer == group.name
-        let isColorlessGridActive = isColorlessGrid && (isColorlessFilled || isHovered)
-        let cols = iconColumns(width: width)
-        let contentWidth = max(1, width - 32)
-        let cellWidth = max(1, (contentWidth - 6 * CGFloat(cols - 1)) / CGFloat(cols))
-        let cellHeight = iconCellHeight()
-        let gridHeight = CGFloat(fixedRows) * cellHeight + CGFloat(max(0, fixedRows - 1)) * 2
-        let rows = appRows(group.apps, columns: cols, fixedRows: fixedRows)
-        let tagColor = Color(nsColor: TagColor.nsColor(for: tagColors[group.name] ?? 0))
-
-        return VStack(alignment: .leading, spacing: 6) {
-            HStack(spacing: 0) {
-                Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
-                    .layoutPriority(0)
-                Text(group.name)
-                    .font(.system(size: tagFontSize, weight: .semibold))
-                    .foregroundStyle(.secondary)
-                    .lineLimit(1)
-                    .truncationMode(.middle)
-                    .padding(.horizontal, 10)
-                    .layoutPriority(1)
-                Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
-                    .layoutPriority(0)
-            }
-
-            VStack(alignment: .leading, spacing: 2) {
-                ForEach(rows.indices, id: \.self) { rowIndex in
-                    HStack(alignment: .top, spacing: 6) {
-                        ForEach(rows[rowIndex]) { app in
-                            AppGridItem(
-                                app: app,
-                                iconSize: iconSize,
-                                showName: !hideAppNames,
-                                sourceTag: group.name,
-                                dragModeActive: appDragModeActive,
-                                onDragModeChange: { setAppDragMode($0) },
-                                onBubbleHover: handleBubbleHover,
-                                onEditNote: beginEditingBubbleNote,
-                                bubbleDisabled: appBubbleDisabled,
-                                showUncommonAppBubbles: showUncommonAppBubbles,
-                                itemID: "\(group.name)|\(app.path.path)",
-                                dragResetToken: appDragResetToken,
-                                onSelect: { openApp(app) }
-                            )
-                                .frame(width: cellWidth)
-                                .frame(height: cellHeight)
-                        }
-
-                        let emptyCells = max(0, cols - rows[rowIndex].count)
-                        ForEach(0..<emptyCells, id: \.self) { _ in
-                            Color.clear
-                                .frame(width: cellWidth, height: cellHeight)
-                        }
-                    }
-                    .frame(height: cellHeight)
-                }
-            }
-            .frame(height: gridHeight, alignment: .topLeading)
-        }
-        .frame(width: contentWidth)
-        .padding(16)
-        .background(
-            RoundedRectangle(cornerRadius: 14)
-                .fill((isColored || isColorlessGridActive) ? tagColor.opacity(0.30) : Color.clear)
-                .background(
-                    RoundedRectangle(cornerRadius: 14)
-                        .fill(cardSurfaceColor)
-                )
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 14)
-                .stroke(Color.primary.opacity(0.08), lineWidth: 1)
-        )
-        .overlay {
-            if appDragModeActive {
-                AppDropTargetView(targetTag: group.name) { path, source, copy in
-                    dropApp(path: path, sourceTag: source, targetTag: group.name, copy: copy)
-                }
-                .allowsHitTesting(false)
-            }
-        }
-        .shadow(color: .black.opacity((isColored && isHovered) || isColorlessGridActive ? 0.22 : 0),
-                radius: (isColored && isHovered) || isColorlessGridActive ? 8 : 0,
-                y: (isColored && isHovered) || isColorlessGridActive ? 3 : 0)
-        .zIndex(isHovered ? 50 : 0)
-        .animation(.easeOut(duration: 0.045), value: isHovered)
-        .animation(.easeOut(duration: 0.08), value: isColorlessFilled)
-        .background(AppHoverTrackingView { hovering, _ in
-            guard !scrollInteractionState.isFrozen else {
-                if !hovering && hoveredContainer == group.name {
-                    hoveredContainer = nil
-                }
-                return
-            }
-            if isColored || isColorlessGrid {
-                hoveredContainer = hovering ? group.name : nil
-            } else if hovering {
-                fillColorlessContainer(group.name)
-            }
-        })
-        .contentShape(RoundedRectangle(cornerRadius: 14))
-        .onTapGesture {
-            if isColorlessGrid {
-                toggleColorlessFill(group.name)
-            }
-        }
-        .onDrop(of: [UTType.plainText], isTargeted: nil) { providers in
-            handleAppDrop(providers, targetTag: group.name)
-        }
-    }
-
-    private func iconCellHeight() -> CGFloat {
-        AppGridItem.stableHeight(iconSize: iconSize)
-    }
-
-    private func appRows(_ apps: [AppInfo], columns: Int, fixedRows: Int) -> [[AppInfo]] {
-        let columns = max(1, columns)
-        let rowCount = max(1, fixedRows)
-        return (0..<rowCount).map { rowIndex in
-            let start = rowIndex * columns
-            guard start < apps.count else { return [] }
-            let end = min(start + columns, apps.count)
-            return Array(apps[start..<end])
-        }
-    }
-
     // MARK: - Edit Tags View
 
     private var editTagsView: some View {
@@ -1768,8 +1217,8 @@ struct ContentView: View {
                 columns: [
                     GridItem(
                         .adaptive(
-                            minimum: AppGridItem.stableWidth(iconSize: iconSize),
-                            maximum: AppGridItem.stableWidth(iconSize: iconSize) + 36
+                            minimum: AppGridItemMetrics.stableWidth(iconSize: iconSize),
+                            maximum: AppGridItemMetrics.stableWidth(iconSize: iconSize) + 36
                         ),
                         spacing: 6
                     )
@@ -2227,7 +1676,6 @@ struct ContentView: View {
     private func rebuildDisplayGroups(apps: [AppInfo], tagOrder: [String]) {
         displayGroups = makeDisplayGroups(apps: apps, tagOrder: tagOrder)
         groupLayoutVersion &+= 1
-        cachedGridContainerRowsKey = nil
     }
 
     private var tagLabels: [TagLabel] {
@@ -2261,11 +1709,7 @@ struct ContentView: View {
     }
 
     private func handleAppGridScrollActivity() {
-        if !scrollInteractionState.isFrozen {
-            hoveredBubble = nil
-            hoveredContainer = nil
-        }
-        scrollInteractionState.noteScroll()
+        hoveredBubble = nil
     }
 
     private func handleBubbleHover(app: AppInfo, frame: CGRect, event: AppBubbleHoverEvent) {
@@ -2396,12 +1840,8 @@ struct ContentView: View {
     }
 
     func scrollTo(_ id: String) {
-        if usesAppKitContainerGrid {
-            appGridScrollTargetID = id
-            appGridScrollRequestToken &+= 1
-        } else {
-            withAnimation(.easeInOut(duration: 0.25)) { scrollProxy?.scrollTo(id, anchor: .top) }
-        }
+        appGridScrollTargetID = id
+        appGridScrollRequestToken &+= 1
     }
 
     private func activateTagNavigation(_ id: String) {
@@ -2504,33 +1944,6 @@ struct ContentView: View {
         }
     }
 
-    private func handleAppDrop(_ providers: [NSItemProvider], targetTag: String) -> Bool {
-        guard let provider = providers.first(where: { $0.hasItemConformingToTypeIdentifier(UTType.plainText.identifier) }) else {
-            return false
-        }
-        provider.loadItem(forTypeIdentifier: UTType.plainText.identifier, options: nil) { item, _ in
-            let text: String?
-            if let data = item as? Data {
-                text = String(data: data, encoding: .utf8)
-            } else if let string = item as? String {
-                text = string
-            } else if let string = item as? NSString {
-                text = string as String
-            } else {
-                text = nil
-            }
-            guard let text else { return }
-            let parts = text.components(separatedBy: "\n")
-            guard let path = parts.first, !path.isEmpty else { return }
-            let source = parts.dropFirst().first ?? ""
-            let copy = NSEvent.modifierFlags.contains(.option)
-            DispatchQueue.main.async {
-                dropApp(path: path, sourceTag: source, targetTag: targetTag, copy: copy)
-            }
-        }
-        return true
-    }
-
     private func dropApp(path: String, sourceTag: String, targetTag: String, copy: Bool) {
         resetTransientDragState(keepingPendingUncategorizedDrop: true)
 
@@ -2559,18 +1972,34 @@ struct ContentView: View {
 
     private func confirmAndMoveAppToUncategorized(path: String) {
         guard let app = allApps.first(where: { $0.path.path == path }) else { return }
-        let assignedTags = assignedRegularDisplayTags(for: app)
-        guard !assignedTags.isEmpty else { return }
+        let removableTags = removableRegularTags(for: app)
+        guard !removableTags.isEmpty else { return }
+        let assignedTags = assignedRegularDisplayTags(for: removableTags)
 
         clearAppBubbleState()
         withAnimation(.spring(response: 0.24, dampingFraction: 0.84)) {
-            pendingUncategorizedDrop = PendingUncategorizedDrop(app: app, assignedTags: assignedTags)
+            pendingUncategorizedDrop = PendingUncategorizedDrop(
+                app: app,
+                assignedTags: assignedTags,
+                removableTags: removableTags
+            )
         }
     }
 
-    private func assignedRegularDisplayTags(for app: AppInfo) -> [String] {
+    private func removableRegularTags(for app: AppInfo) -> [String] {
         var result: [String] = []
         for tag in app.tags {
+            guard isRemovableRegularTag(tag) else { continue }
+            if !result.contains(tag) {
+                result.append(tag)
+            }
+        }
+        return result
+    }
+
+    private func assignedRegularDisplayTags(for tags: [String]) -> [String] {
+        var result: [String] = []
+        for tag in tags {
             let name = displayTagName(tag)
             if !result.contains(name) {
                 result.append(name)
@@ -2583,7 +2012,7 @@ struct ContentView: View {
         formattedFeedbackMessage(
             forKey: "drop.uncategorizedConfirmMessage",
             replacements: [
-                "%appName%": pendingDrop.app.name,
+                "%appName%": pendingDrop.app.displayName,
                 "%tagCount%": "\(pendingDrop.assignedTags.count)",
                 "%tagNames%": pendingDrop.assignedTags.joined(separator: localizedListSeparator)
             ]
@@ -2600,11 +2029,12 @@ struct ContentView: View {
     private func confirmPendingUncategorizedDrop() {
         guard let pendingDrop = pendingUncategorizedDrop else { return }
         let path = pendingDrop.app.path.path
-        let tags = pendingDrop.app.tags
+        let tags = pendingDrop.removableTags
         resetTransientDragState(keepingPendingUncategorizedDrop: true)
         withAnimation(.easeOut(duration: 0.16)) {
             pendingUncategorizedDrop = nil
         }
+        guard !tags.isEmpty else { return }
         TagEditor.removeTags(tags, from: [path])
         showDropRefresh()
         refreshApps(forceLayoutRefresh: true)
@@ -2624,6 +2054,18 @@ struct ContentView: View {
             tr("group.appleBuiltIn")
         ]
         return defaultNames.contains(targetTag)
+    }
+
+    private func isRemovableRegularTag(_ tag: String) -> Bool {
+        let protectedNames = [
+            "Mac自带",
+            tr("group.appleBuiltIn"),
+            defaultGroupName,
+            tr("group.uncategorized"),
+            TagDatabase.uncommonTagKey,
+            tr("group.uncommon")
+        ]
+        return !protectedNames.contains(tag) && tagColors[tag] != nil
     }
 
     private func showDropWarning() {
@@ -2675,7 +2117,6 @@ struct ContentView: View {
     private func resetTransientDragState(keepingPendingUncategorizedDrop: Bool = false) {
         let hadAppDragState = appDragModeActive
         AppDragCoordinator.shared.cancelDrag()
-        scrollInteractionState.reset()
         if appDragModeActive {
             appDragModeActive = false
         }
@@ -2693,9 +2134,6 @@ struct ContentView: View {
         }
         if dragItem != nil {
             dragItem = nil
-        }
-        if hoveredContainer != nil {
-            hoveredContainer = nil
         }
         clearAppBubbleState()
         if !keepingPendingUncategorizedDrop, pendingUncategorizedDrop != nil {
@@ -2779,135 +2217,8 @@ struct ContentView: View {
     }
 
     func openApp(_ app: AppInfo) {
-        launchApp(app)
-    }
-}
-
-private final class AppGridScrollInteractionState: ObservableObject {
-    @Published var isFrozen = false
-    private var unfreezeWorkItem: DispatchWorkItem?
-
-    func noteScroll() {
-        if !isFrozen {
-            isFrozen = true
-        }
-        unfreezeWorkItem?.cancel()
-        let workItem = DispatchWorkItem { [weak self] in
-            guard let self, self.isFrozen else { return }
-            self.isFrozen = false
-        }
-        unfreezeWorkItem = workItem
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.18, execute: workItem)
-    }
-
-    func reset() {
-        unfreezeWorkItem?.cancel()
-        unfreezeWorkItem = nil
-        if isFrozen {
-            isFrozen = false
-        }
-    }
-}
-
-private struct AppGridScrollActivityObserver: NSViewRepresentable {
-    let onScroll: () -> Void
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(onScroll: onScroll)
-    }
-
-    func makeNSView(context: Context) -> ScrollActivityNSView {
-        let view = ScrollActivityNSView()
-        view.coordinator = context.coordinator
-        return view
-    }
-
-    func updateNSView(_ view: ScrollActivityNSView, context: Context) {
-        context.coordinator.onScroll = onScroll
-        view.coordinator = context.coordinator
-    }
-
-    final class Coordinator {
-        var onScroll: () -> Void
-        private weak var observedClipView: NSClipView?
-        private var observer: NSObjectProtocol?
-        private var lastReportedBoundsOrigin: NSPoint?
-
-        init(onScroll: @escaping () -> Void) {
-            self.onScroll = onScroll
-        }
-
-        func install(from view: NSView) {
-            guard let clipView = view.enclosingScrollView?.contentView else { return }
-            guard observedClipView !== clipView else { return }
-            removeObserver()
-            observedClipView = clipView
-            lastReportedBoundsOrigin = clipView.bounds.origin
-            clipView.postsBoundsChangedNotifications = true
-            observer = NotificationCenter.default.addObserver(
-                forName: NSView.boundsDidChangeNotification,
-                object: clipView,
-                queue: .main
-            ) { [weak self, weak clipView] _ in
-                guard let self,
-                      let clipView,
-                      self.recordScrollIfNeeded(from: clipView)
-                else { return }
-                self.onScroll()
-            }
-        }
-
-        private func removeObserver() {
-            if let observer {
-                NotificationCenter.default.removeObserver(observer)
-            }
-            observer = nil
-            observedClipView = nil
-            lastReportedBoundsOrigin = nil
-        }
-
-        private func recordScrollIfNeeded(from clipView: NSClipView) -> Bool {
-            let origin = clipView.bounds.origin
-            guard let last = lastReportedBoundsOrigin else {
-                lastReportedBoundsOrigin = origin
-                return false
-            }
-            let didScroll = abs(origin.x - last.x) > 0.5
-                || abs(origin.y - last.y) > 0.5
-            if didScroll {
-                lastReportedBoundsOrigin = origin
-            }
-            return didScroll
-        }
-
-        deinit {
-            removeObserver()
-        }
-    }
-
-    final class ScrollActivityNSView: NSView {
-        weak var coordinator: Coordinator?
-        private var installScheduled = false
-
-        override func viewDidMoveToWindow() {
-            super.viewDidMoveToWindow()
-            installObserverIfPossible()
-        }
-
-        override func viewDidMoveToSuperview() {
-            super.viewDidMoveToSuperview()
-            installObserverIfPossible()
-        }
-
-        func installObserverIfPossible() {
-            guard !installScheduled else { return }
-            installScheduled = true
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
-                installScheduled = false
-                coordinator?.install(from: self)
-            }
-        }
+        hideOverlay()
+        launchApp(app, closeOverlayOnSuccess: false)
     }
 }
 
