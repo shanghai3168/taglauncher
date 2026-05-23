@@ -6,8 +6,15 @@ APP_BUNDLE="$ROOT_DIR/build/TagLauncher.app"
 APP_PROCESS="TagLauncher"
 LAUNCH_AGENT_LABEL="com.taglauncher.app"
 LAUNCH_AGENT_PLIST="$HOME/Library/LaunchAgents/$LAUNCH_AGENT_LABEL.plist"
+SAVED_STATE_DIR="$HOME/Library/Saved Application State/$LAUNCH_AGENT_LABEL.savedState"
 USER_GUI_DOMAIN="gui/$(id -u)"
 RESTORE_LAUNCH_AGENT=false
+LAUNCH_AGENT_PLIST_WAS_PRESENT=false
+LAUNCH_AGENT_BACKUP="$(mktemp -t taglauncher-launchagent.XXXXXX.plist)"
+DEFAULTS_DOMAIN="$LAUNCH_AGENT_LABEL"
+SHOW_DOCK_ICON_WAS_SET=false
+SHOW_DOCK_ICON_VALUE=""
+FULLSCREEN_QA_PID=""
 CLICK_TOOL="${CLICK_TOOL:-$(command -v cliclick || true)}"
 
 if [[ -z "$CLICK_TOOL" ]]; then
@@ -17,6 +24,46 @@ fi
 
 log() {
   printf '%s\n' "$*"
+}
+
+backup_user_defaults() {
+  local value
+  if value="$(defaults read "$DEFAULTS_DOMAIN" showDockIcon 2>/dev/null)"; then
+    SHOW_DOCK_ICON_WAS_SET=true
+    SHOW_DOCK_ICON_VALUE="$value"
+  fi
+}
+
+backup_launch_agent_plist() {
+  if [[ -f "$LAUNCH_AGENT_PLIST" ]]; then
+    LAUNCH_AGENT_PLIST_WAS_PRESENT=true
+    cp "$LAUNCH_AGENT_PLIST" "$LAUNCH_AGENT_BACKUP"
+  fi
+}
+
+restore_user_defaults() {
+  if [[ "$SHOW_DOCK_ICON_WAS_SET" == true ]]; then
+    if [[ "$SHOW_DOCK_ICON_VALUE" == "1" || "$SHOW_DOCK_ICON_VALUE" == "true" || "$SHOW_DOCK_ICON_VALUE" == "TRUE" ]]; then
+      defaults write "$DEFAULTS_DOMAIN" showDockIcon -bool true
+    else
+      defaults write "$DEFAULTS_DOMAIN" showDockIcon -bool false
+    fi
+  else
+    defaults delete "$DEFAULTS_DOMAIN" showDockIcon >/dev/null 2>&1 || true
+  fi
+}
+
+restore_launch_agent_plist() {
+  if [[ "$LAUNCH_AGENT_PLIST_WAS_PRESENT" == true ]]; then
+    mkdir -p "$(dirname "$LAUNCH_AGENT_PLIST")"
+    if [[ -f "$LAUNCH_AGENT_BACKUP" ]]; then
+      cp "$LAUNCH_AGENT_BACKUP" "$LAUNCH_AGENT_PLIST" || true
+    else
+      log "WARN: launch agent backup missing during cleanup"
+    fi
+  else
+    rm -f "$LAUNCH_AGENT_PLIST"
+  fi
 }
 
 send_keycode() {
@@ -39,6 +86,29 @@ send_cmd_comma() {
 
 send_cmd_w() {
   osascript -e 'tell application "System Events" to keystroke "w" using {command down}'
+}
+
+dismiss_reopen_dialog() {
+  osascript <<'OSA' >/dev/null 2>&1 || true
+tell application "System Events"
+  tell process "TagLauncher"
+    repeat 20 times
+      repeat with windowRef in windows
+        repeat with buttonRef in buttons of windowRef
+          try
+            set buttonName to name of buttonRef as text
+            if buttonName contains "Don't" or buttonName contains "Don’t" or buttonName contains "不" then
+              click buttonRef
+              return
+            end if
+          end try
+        end repeat
+      end repeat
+      delay 0.1
+    end repeat
+  end tell
+end tell
+OSA
 }
 
 show_overlay_from_app_menu() {
@@ -89,14 +159,25 @@ cleanup() {
   osascript -e 'tell application "System Events" to key code 53' >/dev/null 2>&1 || true
   sleep 0.2
   osascript -e 'tell application "System Events" to key code 53' >/dev/null 2>&1 || true
+  if [[ -n "${FULLSCREEN_QA_PID:-}" ]]; then
+    kill "$FULLSCREEN_QA_PID" >/dev/null 2>&1 || true
+    wait "$FULLSCREEN_QA_PID" >/dev/null 2>&1 || true
+    FULLSCREEN_QA_PID=""
+  fi
   kill_all_taglauncher_instances
+  restore_user_defaults
+  restore_launch_agent_plist
   if [[ "$RESTORE_LAUNCH_AGENT" == true && -f "$LAUNCH_AGENT_PLIST" ]]; then
     launchctl bootstrap "$USER_GUI_DOMAIN" "$LAUNCH_AGENT_PLIST" >/dev/null 2>&1 || true
   fi
 }
 trap cleanup EXIT
+backup_user_defaults
+backup_launch_agent_plist
 
 kill_all_taglauncher_instances() {
+  osascript -e 'tell application "TagLauncher" to quit' >/dev/null 2>&1 || true
+  sleep 0.8
   local pids
   pids="$(pgrep -f '/TagLauncher.app/Contents/MacOS/TagLauncher' || true)"
   if [[ -n "$pids" ]]; then
@@ -118,6 +199,57 @@ is_qa_app_only_running() {
   done <<<"$lines"
 }
 
+assert_single_qa_app_instance() {
+  local lines count
+  lines="$(pgrep -fl '/TagLauncher.app/Contents/MacOS/TagLauncher' || true)"
+  [[ -n "$lines" ]] || { echo "FAIL: no TagLauncher process is running" >&2; return 1; }
+  count="$(printf '%s\n' "$lines" | wc -l | tr -d ' ')"
+  if [[ "$count" != "1" || "$lines" != *"$APP_BUNDLE/Contents/MacOS/TagLauncher"* ]]; then
+    echo "FAIL: expected exactly one QA build TagLauncher instance" >&2
+    printf '%s\n' "$lines" >&2
+    return 1
+  fi
+}
+
+assert_single_dock_tile() {
+  local output count names
+  output="$(osascript <<'OSA'
+tell application "System Events"
+  tell process "Dock"
+    set tagCount to 0
+    set tagNames to {}
+    repeat with itemRef in UI elements of list 1
+      try
+        set itemName to name of itemRef as text
+        if itemName is "TagLauncher" then
+          set tagCount to tagCount + 1
+          set end of tagNames to itemName
+        end if
+      end try
+    end repeat
+    return (tagCount as text) & "|" & (tagNames as text)
+  end tell
+end tell
+OSA
+)"
+  count="${output%%|*}"
+  names="${output#*|}"
+  if [[ "$count" != "1" ]]; then
+    echo "FAIL: expected exactly one TagLauncher Dock tile, got $count ($names)" >&2
+    return 1
+  fi
+  log "PASS Dock tile count: $names"
+}
+
+assert_frontmost_taglauncher() {
+  local frontmost
+  frontmost="$(osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true')"
+  if [[ "$frontmost" != "TagLauncher" ]]; then
+    echo "FAIL: frontmost app is $frontmost, expected TagLauncher" >&2
+    return 1
+  fi
+}
+
 prepare_isolated_app_instance() {
   if launchctl print "$USER_GUI_DOMAIN/$LAUNCH_AGENT_LABEL" >/dev/null 2>&1; then
     RESTORE_LAUNCH_AGENT=true
@@ -125,20 +257,25 @@ prepare_isolated_app_instance() {
   fi
 
   kill_all_taglauncher_instances
+  rm -rf "$SAVED_STATE_DIR"
   open -n "$APP_BUNDLE"
-  sleep 2.5
+  sleep 1.0
+  dismiss_reopen_dialog
+  sleep 1.5
 
   if ! is_qa_app_only_running; then
     echo "FAIL: expected only QA build TagLauncher instance to be running" >&2
     pgrep -fl '/TagLauncher.app/Contents/MacOS/TagLauncher' >&2 || true
     exit 1
   fi
+  assert_single_qa_app_instance
 }
 
 assert_swift="$(mktemp -t taglauncher-window-assert.XXXXXX.swift)"
 coords_swift="$(mktemp -t taglauncher-window-coords.XXXXXX.swift)"
 screens_swift="$(mktemp -t taglauncher-screens.XXXXXX.swift)"
-trap 'rm -f "$assert_swift" "$coords_swift" "$screens_swift"; cleanup' EXIT
+fullscreen_swift="$(mktemp -t taglauncher-fullscreen-target.XXXXXX.swift)"
+trap 'cleanup; rm -f "$assert_swift" "$coords_swift" "$screens_swift" "$fullscreen_swift" "$LAUNCH_AGENT_BACKUP"' EXIT
 
 cat >"$assert_swift" <<'SWIFT'
 import AppKit
@@ -183,8 +320,26 @@ func fail(_ message: String) -> Never {
     exit(1)
 }
 
+func dimension(_ bounds: NSDictionary, _ key: String) -> CGFloat {
+    if let value = bounds[key] as? CGFloat {
+        return value
+    }
+    if let value = bounds[key] as? NSNumber {
+        return CGFloat(truncating: value)
+    }
+    return 0
+}
+
+func isTinyUntitledUtilityWindow(_ window: WindowInfo) -> Bool {
+    window.name.isEmpty
+        && dimension(window.bounds, "Width") < 160
+        && dimension(window.bounds, "Height") < 160
+}
+
 func tagWindows(_ windows: [WindowInfo]) -> [WindowInfo] {
-    windows.filter { $0.owner == "TagLauncher" }
+    windows.filter {
+        $0.owner == "TagLauncher" && !isTinyUntitledUtilityWindow($0)
+    }
 }
 
 func assertTagLayer(_ tag: [WindowInfo]) {
@@ -238,6 +393,34 @@ case "force-quit":
         fail("force quit layer \(forceQuit.layer) is not above overlay layer \(overlay.layer)")
     }
     print("PASS force quit above overlay: forceQuitLayer=\(forceQuit.layer) overlayLayer=\(overlay.layer)")
+
+case "fullscreen-target":
+    guard let target = windows.first(where: { $0.name == "TagLauncherFullscreenQATargetFullscreen" }) else {
+        fail("fullscreen QA target window not found")
+    }
+    guard let targetWidth = target.bounds["Width"] as? CGFloat,
+          let targetHeight = target.bounds["Height"] as? CGFloat else {
+        fail("fullscreen QA target has invalid bounds")
+    }
+    let frames = NSScreen.screens.map(\.frame)
+    let matchesScreen = frames.contains { frame in
+        abs(targetWidth - frame.width) <= 8 && targetHeight >= frame.height * 0.90
+    }
+    guard matchesScreen else {
+        fail("fullscreen QA target is visible but not fullscreen: \(target.bounds)")
+    }
+    print("PASS fullscreen target: layer=\(target.layer) bounds=\(target.bounds)")
+
+case "fullscreen-overlay":
+    guard tag.count == 1 else { fail("fullscreen overlay expected 1 TagLauncher window, got \(tag.count)") }
+    assertTagLayer(tag)
+    guard let target = windows.first(where: { $0.name == "TagLauncherFullscreenQATargetFullscreen" }) else {
+        fail("fullscreen target disappeared; TagLauncher likely switched to another Space")
+    }
+    guard tag[0].layer > target.layer else {
+        fail("TagLauncher layer \(tag[0].layer) is not above fullscreen target layer \(target.layer)")
+    }
+    print("PASS fullscreen overlay above target: overlayLayer=\(tag[0].layer) targetLayer=\(target.layer)")
 
 case "screen-count":
     print("INFO screens=\(NSScreen.screens.count) frames=\(NSScreen.screens.map { NSStringFromRect($0.frame) })")
@@ -301,6 +484,66 @@ for (index, screen) in NSScreen.screens.enumerated() {
 }
 SWIFT
 
+cat >"$fullscreen_swift" <<'SWIFT'
+import AppKit
+import Foundation
+
+final class FullscreenQATargetDelegate: NSObject, NSApplicationDelegate {
+    private var window: NSWindow?
+
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        NSApp.setActivationPolicy(.regular)
+        let screen = NSScreen.main ?? NSScreen.screens.first
+        let frame = screen?.visibleFrame ?? NSRect(x: 0, y: 0, width: 900, height: 600)
+        let initialFrame = NSRect(
+            x: frame.midX - 450,
+            y: frame.midY - 300,
+            width: 900,
+            height: 600
+        )
+        let window = NSWindow(
+            contentRect: initialFrame,
+            styleMask: [.titled, .closable, .resizable],
+            backing: .buffered,
+            defer: false
+        )
+        window.title = "TagLauncherFullscreenQATarget"
+        window.collectionBehavior = [.managed, .fullScreenPrimary]
+        let view = NSView(frame: initialFrame)
+        view.wantsLayer = true
+        view.layer?.backgroundColor = NSColor(calibratedRed: 0.08, green: 0.10, blue: 0.16, alpha: 1).cgColor
+        window.contentView = view
+        window.makeKeyAndOrderFront(nil)
+        self.window = window
+        NSApp.activate(ignoringOtherApps: true)
+        NotificationCenter.default.addObserver(
+            forName: NSWindow.didEnterFullScreenNotification,
+            object: window,
+            queue: .main
+        ) { _ in
+            window.title = "TagLauncherFullscreenQATargetFullscreen"
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+            if !window.styleMask.contains(.fullScreen) {
+                window.toggleFullScreen(nil)
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            if !window.styleMask.contains(.fullScreen) {
+                NSApp.activate(ignoringOtherApps: true)
+                window.makeKeyAndOrderFront(nil)
+                window.toggleFullScreen(nil)
+            }
+        }
+    }
+}
+
+let app = NSApplication.shared
+let delegate = FullscreenQATargetDelegate()
+app.delegate = delegate
+app.run()
+SWIFT
+
 swift_assert() {
   swift "$assert_swift" "$1"
 }
@@ -345,11 +588,78 @@ click_overlay_outside_quick_search() {
   click_xy "$x" "$y"
 }
 
+kill_fullscreen_qa_target() {
+  if [[ -n "${FULLSCREEN_QA_PID:-}" ]]; then
+    kill "$FULLSCREEN_QA_PID" >/dev/null 2>&1 || true
+    wait "$FULLSCREEN_QA_PID" >/dev/null 2>&1 || true
+    FULLSCREEN_QA_PID=""
+    sleep 1.0
+  fi
+}
+
+start_fullscreen_qa_target() {
+  kill_fullscreen_qa_target
+  local log_file
+  log_file="$(mktemp -t taglauncher-fullscreen-target.XXXXXX.log)"
+  swift "$fullscreen_swift" >"$log_file" 2>&1 &
+  FULLSCREEN_QA_PID=$!
+  local output=""
+  for _ in {1..36}; do
+    if output="$(swift "$assert_swift" fullscreen-target 2>&1)"; then
+      printf '%s\n' "$output"
+      rm -f "$log_file"
+      return 0
+    fi
+    sleep 0.5
+  done
+  printf '%s\n' "$output" >&2
+  cat "$log_file" >&2 || true
+  rm -f "$log_file"
+  return 1
+}
+
 log "==> Building app"
 bash "$ROOT_DIR/build.sh" >/dev/null
 
+log "==> Preparing QA defaults"
+defaults write "$DEFAULTS_DOMAIN" showDockIcon -bool true
+
 log "==> Starting clean app instance"
 prepare_isolated_app_instance
+
+log "==> QA duplicate guard: showDockIcon=true and repeated self-launch keep one Dock app instance"
+plist_multiple="$(/usr/libexec/PlistBuddy -c 'Print :LSMultipleInstancesProhibited' "$APP_BUNDLE/Contents/Info.plist" 2>/dev/null || true)"
+[[ "$plist_multiple" == "true" ]] || { echo "FAIL: LSMultipleInstancesProhibited is not true in built Info.plist" >&2; exit 1; }
+rg -Fq 'isTagLauncherBundle' "$ROOT_DIR/Apptag/DataLayer.swift"
+rg -Fq 'guard !isTagLauncherBundle(bundleId)' "$ROOT_DIR/Apptag/DataLayer.swift"
+for _ in {1..5}; do
+  open -n "$APP_BUNDLE"
+  sleep 0.35
+done
+sleep 1.5
+assert_single_qa_app_instance
+assert_single_dock_tile
+for _ in {1..3}; do
+  "$APP_BUNDLE/Contents/MacOS/TagLauncher" --hide >/dev/null 2>&1 &
+  sleep 0.25
+done
+sleep 2.0
+assert_single_qa_app_instance
+assert_single_dock_tile
+send_keycode 53
+sleep 0.4
+wait_swift_assert no-overlay
+
+log "==> QA fullscreen Space: overlay stays above the current fullscreen app"
+start_fullscreen_qa_target
+send_main_hotkey
+wait_swift_assert fullscreen-overlay
+frontmost="$(osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true')"
+[[ "$frontmost" == "TagLauncher" ]] || { echo "FAIL: fullscreen overlay frontmost app is $frontmost, expected TagLauncher" >&2; exit 1; }
+send_keycode 53
+sleep 0.4
+wait_swift_assert no-overlay
+kill_fullscreen_qa_target
 
 log "==> QA 1/7: overlay claims foreground, hides Dock, keeps menu bar visible"
 show_overlay
@@ -373,8 +683,9 @@ swift_assert file-panel
 send_keycode 53
 sleep 0.3
 send_cmd_w
-sleep 0.5
+sleep 0.9
 swift_assert overlay
+assert_frontmost_taglauncher
 
 log "==> QA 4/7 and 5/7: appgrid-space quick search and double-Esc behavior"
 send_keycode 49

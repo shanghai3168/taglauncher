@@ -6,6 +6,7 @@
   "menu.preferences": "偏好设置…",
   "menu.quit": "退出",
   "menu.language": "语言",
+  "menu.help": "帮助",
   "menu.version": "版本",
   "settings.language": "语言",
   "settings.languagePicker": "应用语言：",
@@ -187,5 +188,8 @@
   "smart.category.device-management": "设备管理",
   "smart.category.input-tools": "输入工具",
   "smart.category.Automation": "自动化",
-  "smart.category.network-tools": "网络工具"
+  "smart.category.network-tools": "网络工具",
+  "help.openPDF": "打开帮助文档",
+  "help.copyLink": "复制帮助文档链接",
+  "help.currentLanguage": "将按当前应用语言打开对应版本的在线 PDF。"
 }

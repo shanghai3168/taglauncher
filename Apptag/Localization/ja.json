@@ -6,6 +6,7 @@
   "menu.preferences": "設定…",
   "menu.quit": "終了",
   "menu.language": "言語",
+  "menu.help": "ヘルプ",
   "menu.version": "バージョン",
   "settings.language": "言語",
   "settings.languagePicker": "アプリの言語：",
@@ -187,5 +188,8 @@
   "smart.category.device-management": "Device Management",
   "smart.category.input-tools": "Input Tools",
   "smart.category.Automation": "Automation",
-  "smart.category.network-tools": "Network Tools"
+  "smart.category.network-tools": "Network Tools",
+  "help.openPDF": "ヘルプPDFを開く",
+  "help.copyLink": "ヘルプPDFのリンクをコピー",
+  "help.currentLanguage": "現在のアプリ言語に対応するオンラインPDFを開きます。"
 }

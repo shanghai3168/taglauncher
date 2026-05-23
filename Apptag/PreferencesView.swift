@@ -371,6 +371,21 @@ struct PreferencesView: View {
     private var buildVersion: String {
         Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "?"
     }
+    private var helpPDFLanguageCode: String {
+        switch L10n.currentCode {
+        case "zh-Hans": return "zh"
+        case "zh-Hant": return "zh-Hant"
+        case "en", "ar", "ar-Najdi", "cs", "da", "de", "es", "fr", "id",
+             "it", "ja", "ko", "ms", "nb", "nl", "nn", "no", "pl", "pt-BR",
+             "ro", "ru", "sr-Cyrl", "sv", "th", "tr", "uk", "vi":
+            return L10n.currentCode
+        default:
+            return "en"
+        }
+    }
+    private var helpPDFURL: URL {
+        URL(string: "https://github.com/shanghai3168/taglauncher/releases/download/v7.6.0/Taglauncher-help-\(helpPDFLanguageCode).pdf")!
+    }
     private var languageColumns: [GridItem] {
         [
             GridItem(.flexible(minimum: 220), spacing: 18, alignment: .top),
@@ -815,6 +830,31 @@ struct PreferencesView: View {
 
                         Divider()
                             .padding(.vertical, 4)
+
+                        HStack(spacing: 8) {
+                            Button {
+                                NSWorkspace.shared.open(helpPDFURL)
+                            } label: {
+                                Label(tr("help.openPDF"), systemImage: "questionmark.circle")
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .controlSize(.regular)
+
+                            Button {
+                                NSPasteboard.general.clearContents()
+                                NSPasteboard.general.setString(helpPDFURL.absoluteString, forType: .string)
+                            } label: {
+                                Image(systemName: "link")
+                            }
+                            .buttonStyle(.bordered)
+                            .controlSize(.regular)
+                            .help(tr("help.copyLink"))
+                        }
+
+                        Text(tr("help.currentLanguage"))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .padding(.bottom, 2)
 
                         Text("万物之中，希望最美")
                             .font(.caption)

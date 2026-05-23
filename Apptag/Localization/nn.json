@@ -6,6 +6,7 @@
   "menu.preferences": "Innstillingar…",
   "menu.quit": "Avslutt",
   "menu.language": "Språk",
+  "menu.help": "Hjelp",
   "menu.version": "Versjon",
   "settings.language": "Språk",
   "settings.languagePicker": "Appspråk:",
@@ -187,5 +188,8 @@
   "smart.category.device-management": "Device Management",
   "smart.category.input-tools": "Input Tools",
   "smart.category.Automation": "Automation",
-  "smart.category.network-tools": "Network Tools"
+  "smart.category.network-tools": "Network Tools",
+  "help.openPDF": "Open Help PDF",
+  "help.copyLink": "Copy Help PDF link",
+  "help.currentLanguage": "Opens the online PDF for the current app language."
 }

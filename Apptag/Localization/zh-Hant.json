@@ -6,6 +6,7 @@
   "menu.preferences": "偏好設定…",
   "menu.quit": "退出",
   "menu.language": "語言",
+  "menu.help": "說明",
   "menu.version": "版本",
   "settings.language": "語言",
   "settings.languagePicker": "應用程式語言：",
@@ -187,5 +188,8 @@
   "smart.category.device-management": "裝置管理",
   "smart.category.input-tools": "輸入工具",
   "smart.category.Automation": "自動化",
-  "smart.category.network-tools": "網路工具"
+  "smart.category.network-tools": "網路工具",
+  "help.openPDF": "打開說明文件",
+  "help.copyLink": "複製說明文件連結",
+  "help.currentLanguage": "將依目前應用程式語言開啟對應版本的線上 PDF。"
 }

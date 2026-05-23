@@ -215,12 +215,13 @@ enum AppIndexer {
         guard !isNestedInsideAppBundle(resolvedURL) else { return }
         guard seenResolvedPaths.insert(resolvedURL.path).inserted else { return }
 
+        let bundle = Bundle(url: displayURL) ?? Bundle(url: resolvedURL)
+        let bundleId = bundle?.bundleIdentifier
+        guard !isTagLauncherBundle(bundleId) else { return }
+
         let name = displayURL.deletingPathExtension().lastPathComponent
         let icon = NSWorkspace.shared.icon(forFile: displayURL.path)
         icon.size = NSSize(width: 96, height: 96)
-
-        let bundle = Bundle(url: displayURL) ?? Bundle(url: resolvedURL)
-        let bundleId = bundle?.bundleIdentifier
         let localizedNamesByLanguage = localizedAppNameMap(
             bundle: bundle,
             fallbackName: name
@@ -240,6 +241,10 @@ enum AppIndexer {
             localizedNamesByLanguage: localizedNamesByLanguage,
             icon: icon
         ))
+    }
+
+    private static func isTagLauncherBundle(_ bundleIdentifier: String?) -> Bool {
+        bundleIdentifier?.caseInsensitiveCompare(AppIdentity.bundleIdentifier) == .orderedSame
     }
 
     private static func localizedAppNameMap(

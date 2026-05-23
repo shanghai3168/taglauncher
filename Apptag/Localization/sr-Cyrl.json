@@ -6,6 +6,7 @@
   "menu.preferences": "Подешавања…",
   "menu.quit": "Изађи",
   "menu.language": "Језик",
+  "menu.help": "Помоћ",
   "menu.version": "Верзија",
   "settings.language": "Језик",
   "settings.languagePicker": "Језик апликације:",
@@ -187,5 +188,8 @@
   "smart.category.device-management": "Device Management",
   "smart.category.input-tools": "Input Tools",
   "smart.category.Automation": "Automation",
-  "smart.category.network-tools": "Network Tools"
+  "smart.category.network-tools": "Network Tools",
+  "help.openPDF": "Open Help PDF",
+  "help.copyLink": "Copy Help PDF link",
+  "help.currentLanguage": "Opens the online PDF for the current app language."
 }

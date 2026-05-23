@@ -6,6 +6,7 @@
   "menu.preferences": "Preferencias…",
   "menu.quit": "Salir",
   "menu.language": "Idioma",
+  "menu.help": "Ayuda",
   "menu.version": "Versión",
   "settings.language": "Idioma",
   "settings.languagePicker": "Idioma de la app:",
@@ -187,5 +188,8 @@
   "smart.category.device-management": "Device Management",
   "smart.category.input-tools": "Input Tools",
   "smart.category.Automation": "Automation",
-  "smart.category.network-tools": "Network Tools"
+  "smart.category.network-tools": "Network Tools",
+  "help.openPDF": "Abrir PDF de ayuda",
+  "help.copyLink": "Copiar enlace del PDF de ayuda",
+  "help.currentLanguage": "Abre el PDF en línea para el idioma actual de la app."
 }
