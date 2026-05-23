@@ -417,6 +417,17 @@ case "fullscreen-overlay":
     guard let target = windows.first(where: { $0.name == "TagLauncherFullscreenQATargetFullscreen" }) else {
         fail("fullscreen target disappeared; TagLauncher likely switched to another Space")
     }
+    let overlayWidth = dimension(tag[0].bounds, "Width")
+    let overlayHeight = dimension(tag[0].bounds, "Height")
+    let overlayMidX = dimension(tag[0].bounds, "X") + overlayWidth / 2
+    let targetWidth = dimension(target.bounds, "Width")
+    let targetHeight = dimension(target.bounds, "Height")
+    let targetMidX = dimension(target.bounds, "X") + targetWidth / 2
+    guard abs(overlayWidth - targetWidth) <= 12,
+          overlayHeight >= targetHeight * 0.88,
+          abs(overlayMidX - targetMidX) <= 12 else {
+        fail("fullscreen overlay is not on the target fullscreen display: overlay=\(tag[0].bounds) target=\(target.bounds)")
+    }
     guard tag[0].layer > target.layer else {
         fail("TagLauncher layer \(tag[0].layer) is not above fullscreen target layer \(target.layer)")
     }
@@ -562,6 +573,18 @@ wait_swift_assert() {
   return 1
 }
 
+assert_fullscreen_overlay_stable() {
+  local output=""
+  for _ in {1..20}; do
+    if ! output="$(swift "$assert_swift" fullscreen-overlay 2>&1)"; then
+      printf '%s\n' "$output" >&2
+      return 1
+    fi
+    sleep 0.1
+  done
+  printf '%s\n' "$output"
+}
+
 show_overlay() {
   send_main_hotkey
   if wait_swift_assert overlay >/dev/null 2>&1; then
@@ -650,16 +673,27 @@ send_keycode 53
 sleep 0.4
 wait_swift_assert no-overlay
 
-log "==> QA fullscreen Space: overlay stays above the current fullscreen app"
-start_fullscreen_qa_target
-send_main_hotkey
-wait_swift_assert fullscreen-overlay
-frontmost="$(osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true')"
-[[ "$frontmost" == "TagLauncher" ]] || { echo "FAIL: fullscreen overlay frontmost app is $frontmost, expected TagLauncher" >&2; exit 1; }
-send_keycode 53
-sleep 0.4
-wait_swift_assert no-overlay
-kill_fullscreen_qa_target
+run_fullscreen_space_case() {
+  local dock_value="$1"
+  log "==> QA fullscreen Space: overlay stays above the current fullscreen app (showDockIcon=$dock_value)"
+  defaults write "$DEFAULTS_DOMAIN" showDockIcon -bool "$dock_value"
+  prepare_isolated_app_instance
+  start_fullscreen_qa_target
+  send_main_hotkey
+  wait_swift_assert fullscreen-overlay
+  assert_fullscreen_overlay_stable
+  send_keycode 53
+  sleep 0.4
+  wait_swift_assert no-overlay
+  kill_fullscreen_qa_target
+}
+
+run_fullscreen_space_case true
+run_fullscreen_space_case false
+
+log "==> Restoring dock-visible QA app instance for remaining checks"
+defaults write "$DEFAULTS_DOMAIN" showDockIcon -bool true
+prepare_isolated_app_instance
 
 log "==> QA 1/7: overlay claims foreground, hides Dock, keeps menu bar visible"
 show_overlay

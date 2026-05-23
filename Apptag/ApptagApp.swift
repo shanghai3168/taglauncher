@@ -258,13 +258,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
 
-    private func refreshLauncherChromeState(activate: Bool = false) {
+    private func refreshLauncherChromeState(activate: Bool = false, avoidSpaceSwitch: Bool = false) {
         let showDock = UserDefaults.standard.bool(forKey: Self.showDockIconKey)
         lastShowDockIcon = showDock
 
-        let desiredPolicy: NSApplication.ActivationPolicy = requiresForegroundOwnership
+        let shouldStayAccessoryForCurrentFullscreenSpace = avoidSpaceSwitch
+            && isOverlayVisible
+            && !isSettingsVisible
+        let desiredPolicy: NSApplication.ActivationPolicy = shouldStayAccessoryForCurrentFullscreenSpace
+            ? .accessory
+            : (requiresForegroundOwnership
             ? .regular
-            : (showDock ? .regular : .accessory)
+            : (showDock ? .regular : .accessory))
         if NSApp.activationPolicy() != desiredPolicy {
             NSApp.setActivationPolicy(desiredPolicy)
         }
@@ -274,7 +279,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             NSApp.presentationOptions = desiredPresentation
         }
 
-        if activate && requiresForegroundOwnership {
+        if activate && requiresForegroundOwnership && !shouldStayAccessoryForCurrentFullscreenSpace {
             let keyWindow = isSettingsVisible ? settingsWindow : (isOverlayVisible ? overlayWindow : nil)
             claimLauncherForeground(
                 keyWindow: keyWindow,
@@ -749,10 +754,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     private func showOrFocusOverlay(preferredScreen: NSScreen? = nil) {
+        let placement = overlayPlacementContextForNextOverlay(preferredScreen: preferredScreen)
+        let shouldAvoidSpaceSwitch = placement.map { hasFullscreenWindowOnScreen($0.screen) } ?? false
         if let overlayWindow, overlayWindow.isVisible {
             moveOverlayToCurrentPlacement(preferredScreen: preferredScreen)
             overlayWindow.level = currentOverlayLevel
-            refreshLauncherChromeState(activate: true)
+            refreshLauncherChromeState(activate: !shouldAvoidSpaceSwitch, avoidSpaceSwitch: shouldAvoidSpaceSwitch)
             overlayWindow.makeKeyAndOrderFront(nil)
             overlayWindow.orderFrontRegardless()
             if let settingsWindow, settingsWindow.isVisible {
@@ -778,7 +785,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     ) {
         guard let placement = overlayPlacementContextForNextOverlay(preferredScreen: preferredScreen) else { return }
 
-        let shouldStageAsAccessory = shouldStageOverlayAsAccessory
+        let shouldAvoidSpaceSwitch = hasFullscreenWindowOnScreen(placement.screen)
+        let shouldStageAsAccessory = shouldStageOverlayAsAccessory || shouldAvoidSpaceSwitch
 
         if !stagedForAllSpaces && shouldStageAsAccessory {
             // Let the all-spaces panel attach to the pointer's display before the app reclaims focus.
@@ -831,7 +839,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let placementFrame = placement.frame
         let finishForegroundClaim: () -> Void = { [weak self, weak window] in
             guard let self, let window, self.overlayWindow === window else { return }
-            self.refreshLauncherChromeState(activate: true)
+            self.refreshLauncherChromeState(activate: !shouldAvoidSpaceSwitch, avoidSpaceSwitch: shouldAvoidSpaceSwitch)
             if window.frame != placementFrame {
                 window.setFrame(placementFrame, display: true)
                 window.makeKeyAndOrderFront(nil)
@@ -848,6 +856,42 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         } else {
             finishForegroundClaim()
         }
+    }
+
+    private func hasFullscreenWindowOnScreen(_ screen: NSScreen) -> Bool {
+        let screenFrame = screen.frame
+        let windows = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID) as? [[String: Any]] ?? []
+        return windows.contains { info in
+            guard let owner = info[kCGWindowOwnerName as String] as? String,
+                  owner != AppIdentity.displayName,
+                  owner != "Window Server",
+                  owner != "Dock",
+                  owner != "loginwindow",
+                  let layer = info[kCGWindowLayer as String] as? Int,
+                  layer == 0,
+                  let bounds = info[kCGWindowBounds as String] as? NSDictionary
+            else { return false }
+
+            let x = cgWindowDimension(bounds, "X")
+            let y = cgWindowDimension(bounds, "Y")
+            let width = cgWindowDimension(bounds, "Width")
+            let height = cgWindowDimension(bounds, "Height")
+            let windowFrame = NSRect(x: x, y: y, width: width, height: height)
+            let widthMatches = abs(windowFrame.width - screenFrame.width) <= 12
+            let heightMatches = windowFrame.height >= screenFrame.height * 0.88
+            let horizontallyAligned = abs(windowFrame.midX - screenFrame.midX) <= 12
+            return widthMatches && heightMatches && horizontallyAligned
+        }
+    }
+
+    private func cgWindowDimension(_ bounds: NSDictionary, _ key: String) -> CGFloat {
+        if let value = bounds[key] as? CGFloat {
+            return value
+        }
+        if let value = bounds[key] as? NSNumber {
+            return CGFloat(truncating: value)
+        }
+        return 0
     }
 
     private func installOverlayKeyMonitor() {
@@ -1119,6 +1163,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 return
             }
 
+            if self.isAppOwnedDocumentWindow(keyWindow) {
+                self.prepareSettingsWindow(keyWindow)
+                return
+            }
+
             // Settings/Preferences window -> float it above overlay for real-time preview.
             if self.isSettingsWindowCandidate(keyWindow) {
                 self.prepareSettingsWindow(keyWindow)
@@ -1176,12 +1225,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private func isSettingsWindowCandidate(_ window: NSWindow) -> Bool {
         if window == settingsWindow { return true }
         if window.identifier?.rawValue == "TagLauncherPreferencesWindow" { return true }
+        if isAppOwnedDocumentWindow(window) { return true }
         guard NSApp.windows.contains(window),
               window != overlayWindow,
               window.isVisible,
               !(window is NSPanel)
         else { return false }
         return settingsWindowTitleCandidates().contains(normalizedWindowTitle(window.title))
+    }
+
+    private func isAppOwnedDocumentWindow(_ window: NSWindow) -> Bool {
+        NSApp.windows.contains(window)
+            && window != overlayWindow
+            && window.isVisible
+            && !(window is NSPanel)
     }
 
     private func settingsWindowTitleCandidates() -> Set<String> {

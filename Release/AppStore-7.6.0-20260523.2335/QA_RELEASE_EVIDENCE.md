@@ -3,7 +3,7 @@
 ## Local Build
 
 - Version: `7.6.0`
-- Build: `20260523.1803`
+- Build: `20260523.2335`
 - App path: `/Users/ar/Projects/Taglauncher/build/TagLauncher.app`
 - DMG path: `/Users/ar/Projects/Taglauncher/build/TagLauncher.dmg`
 - App executable size: `1.4M`
@@ -12,8 +12,8 @@
 ## Hashes
 
 ```text
-c848f902a8219547b59767b172d5b26453748e7f34ee1ce7d10c421fc61005de  build/TagLauncher.dmg
-8a541e00734f0bd5f461b13881e194b29cb9c33b79fc0203cd59864680928d4e  build/TagLauncher.app/Contents/MacOS/TagLauncher
+370adb4ad671ec910cc0edf7e6f1ae3ebdd59cbd063f5d8439f2c7e8b05fd0e1  build/TagLauncher.dmg
+9f808b6fc81b587a1508aa31c261cdbe187a3b7727daf8bf163788ba49eb2333  build/TagLauncher.app/Contents/MacOS/TagLauncher
 ```
 
 ## Commands Run
@@ -40,6 +40,8 @@ Covered checks:
 - Repeated self-launch keeps exactly one process.
 - Repeated self-launch keeps exactly one Dock tile.
 - Fullscreen Space overlay appears above the current fullscreen app.
+- Fullscreen Space overlay is checked with `showDockIcon=true` and `showDockIcon=false`.
+- Fullscreen Space overlay bounds must match the fullscreen target display and remain stable across repeated samples.
 - App grid claims foreground, hides Dock, and keeps menu bar visible.
 - Settings floats above app grid.
 - File panel floats above Settings.
