@@ -949,8 +949,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         for startIndex in tallWindows.indices {
             var union = tallWindows[startIndex].frame
             var lastMaxX = union.maxX
-            var distinctOwners = Swift.Set<String>()
-            distinctOwners.insert(tallWindows[startIndex].owner)
 
             for window in tallWindows.dropFirst(startIndex + 1) {
                 let gap = window.frame.minX - lastMaxX
@@ -959,13 +957,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 }
                 union = union.union(window.frame)
                 lastMaxX = max(lastMaxX, window.frame.maxX)
-                distinctOwners.insert(window.owner)
 
                 let touchesLeft = abs(union.minX - screenFrame.minX) <= 32
                 let touchesRight = abs(union.maxX - screenFrame.maxX) <= 32
                 let coversWidth = union.width >= screenFrame.width * 0.92
                 let coversHeight = union.height >= screenFrame.height * 0.86
-                if distinctOwners.count >= 2 && touchesLeft && touchesRight && coversWidth && coversHeight {
+                if touchesLeft && touchesRight && coversWidth && coversHeight {
                     return true
                 }
             }
@@ -1432,7 +1429,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             let preferredScreen = self.overlayWindow?.screen
             self.detachSettingsWindow(closingWindow)
             self.settingsWindow = nil
-            self.refreshLauncherChromeState(activate: shouldRefocusOverlay)
+            self.refreshLauncherChromeState(
+                activate: shouldRefocusOverlay && !self.overlayAvoidsSpaceSwitch,
+                avoidSpaceSwitch: self.overlayAvoidsSpaceSwitch
+            )
             guard shouldRefocusOverlay else { return }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) { [weak self] in
                 self?.showOrFocusOverlay(preferredScreen: preferredScreen)

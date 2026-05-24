@@ -621,6 +621,17 @@ case "overlay-outside":
     let overlayX = dimension(overlayBounds, "X")
     let overlayY = dimension(overlayBounds, "Y")
     print("\(Int(round(overlayX + 120))) \(Int(round(overlayY + 160)))")
+case "fullscreen-target-center":
+    guard let target = raw.first(where: { ($0[kCGWindowName as String] as? String) == "TagLauncherFullscreenQATargetFullscreen" }),
+          let bounds = target[kCGWindowBounds as String] as? NSDictionary else {
+        fputs("FAIL: could not find fullscreen target bounds\n", stderr)
+        exit(1)
+    }
+    let x = dimension(bounds, "X")
+    let y = dimension(bounds, "Y")
+    let width = dimension(bounds, "Width")
+    let height = dimension(bounds, "Height")
+    print("\(Int(round(x + width / 2))) \(Int(round(y + height / 2)))")
 default:
     fputs("FAIL: unknown coords mode \(mode)\n", stderr)
     exit(1)
@@ -786,6 +797,14 @@ start_fullscreen_qa_target() {
   return 1
 }
 
+move_pointer_to_fullscreen_target() {
+  local coords
+  coords="$(swift "$coords_swift" fullscreen-target-center)"
+  read -r x y <<<"$coords"
+  move_xy "$x" "$y"
+  sleep 0.2
+}
+
 log "==> Building app"
 bash "$ROOT_DIR/build.sh" >/dev/null
 
@@ -828,6 +847,7 @@ run_fullscreen_space_case() {
   defaults write "$DEFAULTS_DOMAIN" showDockIcon -bool "$dock_value"
   prepare_isolated_app_instance
   start_fullscreen_qa_target
+  move_pointer_to_fullscreen_target
   send_main_hotkey
   wait_swift_assert fullscreen-overlay
   assert_fullscreen_overlay_stable
