@@ -74,6 +74,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let frame: NSRect
     }
 
+    private struct ForeignWindowFrame {
+        let owner: String
+        let frame: NSRect
+    }
+
     private var isOverlayVisible: Bool {
         overlayWindow?.isVisible == true
     }
@@ -882,8 +887,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     private func hasFullscreenWindowOnScreen(_ screen: NSScreen) -> Bool {
         let screenFrame = screen.frame
+        let windowFrames = foreignLayerZeroWindows(on: screenFrame)
+
+        if windowFrames.contains(where: { isSingleFullscreenWindow($0.frame, on: screenFrame) }) {
+            return true
+        }
+
+        return hasSplitViewFullscreenWindows(windowFrames, on: screenFrame)
+    }
+
+    private func foreignLayerZeroWindows(on screenFrame: NSRect) -> [ForeignWindowFrame] {
         let windows = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID) as? [[String: Any]] ?? []
-        return windows.contains { info in
+        return windows.compactMap { info in
             guard let owner = info[kCGWindowOwnerName as String] as? String,
                   owner != AppIdentity.displayName,
                   owner != "Window Server",
@@ -892,18 +907,69 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                   let layer = info[kCGWindowLayer as String] as? Int,
                   layer == 0,
                   let bounds = info[kCGWindowBounds as String] as? NSDictionary
-            else { return false }
+            else { return nil }
 
-            let x = cgWindowDimension(bounds, "X")
-            let y = cgWindowDimension(bounds, "Y")
-            let width = cgWindowDimension(bounds, "Width")
-            let height = cgWindowDimension(bounds, "Height")
-            let windowFrame = NSRect(x: x, y: y, width: width, height: height)
-            let widthMatches = abs(windowFrame.width - screenFrame.width) <= 12
-            let heightMatches = windowFrame.height >= screenFrame.height * 0.88
-            let horizontallyAligned = abs(windowFrame.midX - screenFrame.midX) <= 12
-            return widthMatches && heightMatches && horizontallyAligned
+            let frame = NSRect(
+                x: cgWindowDimension(bounds, "X"),
+                y: cgWindowDimension(bounds, "Y"),
+                width: cgWindowDimension(bounds, "Width"),
+                height: cgWindowDimension(bounds, "Height")
+            )
+            guard frame.intersects(screenFrame) else { return nil }
+            return ForeignWindowFrame(owner: owner, frame: frame)
         }
+    }
+
+    private func isSingleFullscreenWindow(_ windowFrame: NSRect, on screenFrame: NSRect) -> Bool {
+        let widthMatches = abs(windowFrame.width - screenFrame.width) <= 12
+        let heightMatches = windowFrame.height >= screenFrame.height * 0.88
+        let horizontallyAligned = abs(windowFrame.midX - screenFrame.midX) <= 12
+        let verticallyAligned = abs(windowFrame.maxY - screenFrame.maxY) <= 32
+        return widthMatches && heightMatches && horizontallyAligned && verticallyAligned
+    }
+
+    private func hasSplitViewFullscreenWindows(_ windows: [ForeignWindowFrame], on screenFrame: NSRect) -> Bool {
+        let clippedWindows = windows.map {
+            ForeignWindowFrame(owner: $0.owner, frame: $0.frame.intersection(screenFrame))
+        }
+        let tallWindows = clippedWindows
+            .filter { window in
+                let frame = window.frame
+                return frame.height >= screenFrame.height * 0.86
+                    && frame.width >= screenFrame.width * 0.20
+                    && frame.width <= screenFrame.width * 0.86
+                    && abs(frame.maxY - screenFrame.maxY) <= 32
+            }
+            .sorted { $0.frame.minX < $1.frame.minX }
+
+        guard tallWindows.count >= 2 else { return false }
+
+        for startIndex in tallWindows.indices {
+            var union = tallWindows[startIndex].frame
+            var lastMaxX = union.maxX
+            var distinctOwners = Swift.Set<String>()
+            distinctOwners.insert(tallWindows[startIndex].owner)
+
+            for window in tallWindows.dropFirst(startIndex + 1) {
+                let gap = window.frame.minX - lastMaxX
+                if gap < -32 || gap > 48 {
+                    break
+                }
+                union = union.union(window.frame)
+                lastMaxX = max(lastMaxX, window.frame.maxX)
+                distinctOwners.insert(window.owner)
+
+                let touchesLeft = abs(union.minX - screenFrame.minX) <= 32
+                let touchesRight = abs(union.maxX - screenFrame.maxX) <= 32
+                let coversWidth = union.width >= screenFrame.width * 0.92
+                let coversHeight = union.height >= screenFrame.height * 0.86
+                if distinctOwners.count >= 2 && touchesLeft && touchesRight && coversWidth && coversHeight {
+                    return true
+                }
+            }
+        }
+
+        return false
     }
 
     private func cgWindowDimension(_ bounds: NSDictionary, _ key: String) -> CGFloat {

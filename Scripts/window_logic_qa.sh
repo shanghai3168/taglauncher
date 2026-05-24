@@ -66,6 +66,11 @@ restore_launch_agent_plist() {
   fi
 }
 
+reset_dock_for_qa() {
+  killall Dock >/dev/null 2>&1 || true
+  sleep 1.5
+}
+
 send_keycode() {
   local keycode="$1"
   local modifiers="${2:-}"
@@ -434,6 +439,93 @@ case "fullscreen-overlay":
     }
     print("PASS fullscreen overlay above target: overlayLayer=\(tag[0].layer) targetLayer=\(target.layer)")
 
+case "split-geometry":
+    func isSingleFullscreenWindow(_ windowFrame: CGRect, on screenFrame: CGRect) -> Bool {
+        let widthMatches = abs(windowFrame.width - screenFrame.width) <= 12
+        let heightMatches = windowFrame.height >= screenFrame.height * 0.88
+        let horizontallyAligned = abs(windowFrame.midX - screenFrame.midX) <= 12
+        let verticallyAligned = abs(windowFrame.maxY - screenFrame.maxY) <= 32
+        return widthMatches && heightMatches && horizontallyAligned && verticallyAligned
+    }
+
+    func hasSplitViewFullscreenWindows(_ windows: [CGRect], on screenFrame: CGRect) -> Bool {
+        let clippedWindows = windows.map { $0.intersection(screenFrame) }
+        let tallWindows = clippedWindows
+            .filter { frame in
+                frame.height >= screenFrame.height * 0.86
+                    && frame.width >= screenFrame.width * 0.20
+                    && frame.width <= screenFrame.width * 0.86
+                    && abs(frame.maxY - screenFrame.maxY) <= 32
+            }
+            .sorted { $0.minX < $1.minX }
+
+        guard tallWindows.count >= 2 else { return false }
+
+        for startIndex in tallWindows.indices {
+            var union = tallWindows[startIndex]
+            var lastMaxX = union.maxX
+
+            for window in tallWindows.dropFirst(startIndex + 1) {
+                let gap = window.minX - lastMaxX
+                if gap < -32 || gap > 48 {
+                    break
+                }
+                union = union.union(window)
+                lastMaxX = max(lastMaxX, window.maxX)
+
+                let touchesLeft = abs(union.minX - screenFrame.minX) <= 32
+                let touchesRight = abs(union.maxX - screenFrame.maxX) <= 32
+                let coversWidth = union.width >= screenFrame.width * 0.92
+                let coversHeight = union.height >= screenFrame.height * 0.86
+                if touchesLeft && touchesRight && coversWidth && coversHeight {
+                    return true
+                }
+            }
+        }
+
+        return false
+    }
+
+    let screen = CGRect(x: 0, y: 0, width: 1710, height: 1112)
+    let single = CGRect(x: 0, y: 39, width: 1710, height: 1073)
+    let splitHalf = [
+        CGRect(x: 0, y: 39, width: 853, height: 1073),
+        CGRect(x: 857, y: 39, width: 853, height: 1073)
+    ]
+    let splitThird = [
+        CGRect(x: 0, y: 39, width: 568, height: 1073),
+        CGRect(x: 572, y: 39, width: 1138, height: 1073)
+    ]
+    let desktopTiledWithLargeGap = [
+        CGRect(x: 0, y: 90, width: 700, height: 900),
+        CGRect(x: 900, y: 90, width: 700, height: 900)
+    ]
+    let desktopSideBySideBelowDock = [
+        CGRect(x: 0, y: 39, width: 856, height: 983),
+        CGRect(x: 854, y: 39, width: 856, height: 983)
+    ]
+    let halfOnly = [CGRect(x: 0, y: 39, width: 853, height: 1073)]
+
+    guard isSingleFullscreenWindow(single, on: screen) else {
+        fail("split geometry expected single fullscreen window to match")
+    }
+    guard hasSplitViewFullscreenWindows(splitHalf, on: screen) else {
+        fail("split geometry expected 50/50 Split View to match")
+    }
+    guard hasSplitViewFullscreenWindows(splitThird, on: screen) else {
+        fail("split geometry expected 33/67 Split View to match")
+    }
+    guard !hasSplitViewFullscreenWindows(desktopTiledWithLargeGap, on: screen) else {
+        fail("split geometry should not match ordinary tiled desktop windows")
+    }
+    guard !hasSplitViewFullscreenWindows(desktopSideBySideBelowDock, on: screen) else {
+        fail("split geometry should not match side-by-side desktop windows below the Dock")
+    }
+    guard !hasSplitViewFullscreenWindows(halfOnly, on: screen) else {
+        fail("split geometry should not match a single half-width window")
+    }
+    print("PASS split fullscreen geometry detection")
+
 case "screen-count":
     print("INFO screens=\(NSScreen.screens.count) frames=\(NSScreen.screens.map { NSStringFromRect($0.frame) })")
 
@@ -665,6 +757,7 @@ bash "$ROOT_DIR/build.sh" >/dev/null
 
 log "==> Preparing QA defaults"
 defaults write "$DEFAULTS_DOMAIN" showDockIcon -bool true
+reset_dock_for_qa
 
 log "==> Starting clean app instance"
 prepare_isolated_app_instance
@@ -691,6 +784,9 @@ assert_single_dock_tile
 send_keycode 53
 sleep 0.4
 wait_swift_assert no-overlay
+
+log "==> QA split-view fullscreen geometry detection"
+swift_assert split-geometry
 
 run_fullscreen_space_case() {
   local dock_value="$1"

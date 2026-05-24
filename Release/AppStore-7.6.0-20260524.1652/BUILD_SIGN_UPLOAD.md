@@ -50,7 +50,7 @@ cd /Users/ar/Projects/Taglauncher
 
 APP_STORE=1 \
 CODESIGN_IDENTITY="3rd Party Mac Developer Application: <TEAM NAME> (<TEAMID>)" \
-APP_BUILD=20260523.2335 \
+APP_BUILD=20260524.1652 \
 bash build.sh
 
 productbuild \
