@@ -5,9 +5,9 @@ Use this as the working checklist when publishing TagLauncher from the Apple Dev
 Frozen release pack:
 
 - Version: `7.6.0`
-- Local QA build: `20260524.1849`
-- Source commit: `ba34712`
-- Release folder: `Release/AppStore-7.6.0-20260524.1849`
+- Local QA build: `20260525.0016`
+- Source commit: `0258b3e`
+- Release folder: `Release/AppStore-7.6.0-20260525.0016`
 
 ## 0. Before Touching App Store Connect
 
@@ -67,7 +67,7 @@ Frozen release pack:
 
 - [ ] Build the App Store-signed app using `BUILD_SIGN_UPLOAD.md`.
 - [ ] Verify `CFBundleShortVersionString = 7.6.0`.
-- [ ] Start from frozen local QA build `20260524.1849`; use a newer `CFBundleVersion` only if App Store upload retries require it.
+- [ ] Start from frozen local QA build `20260525.0016`; use a newer `CFBundleVersion` only if App Store upload retries require it.
 - [ ] Increment `CFBundleVersion` for every upload attempt.
 - [ ] Verify sandbox entitlements are present.
 - [ ] Run `Scripts/window_logic_qa.sh` against the signed build before uploading.

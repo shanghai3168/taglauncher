@@ -3,8 +3,8 @@
 ## Local Build
 
 - Version: `7.6.0`
-- Build: `20260524.1849`
-- Frozen source commit: `ba34712`
+- Build: `20260525.0016`
+- Frozen source commit: `0258b3e`
 - App path: `/Users/ar/Projects/Taglauncher/build/TagLauncher.app`
 - DMG path: `/Users/ar/Projects/Taglauncher/build/TagLauncher.dmg`
 - App executable size: `1.4M`
@@ -13,8 +13,8 @@
 ## Hashes
 
 ```text
-dc5bc9cf90b9e04a9e4fda155b757e6e0af681ff1b79bf109552ae0c3ce2a193  build/TagLauncher.dmg
-a59f08f214bd4ac667197f6b2f2672aaf4a57c1fdd9872ea385099e84f18fa57  build/TagLauncher.app/Contents/MacOS/TagLauncher
+4689856f4a976c394ef4737db5bb5eebcc5b5bb95eea81fe72f5b6c3e3ed4b23  build/TagLauncher.dmg
+01ace57df10061fd7d684fa8a5bd795f87f55ee2c713cbb1ab2d01f5f63ed404  build/TagLauncher.app/Contents/MacOS/TagLauncher
 ```
 
 ## Commands Run
@@ -36,7 +36,7 @@ Final QA result:
 ALL WINDOW LOGIC QA PASSED
 ```
 
-This is the frozen QA result for build `20260524.1849`. Earlier build `20260524.1652` should not be used for App Store prep because it did not include the final fullscreen/Split View Quick Search and Settings session fix.
+This is the frozen QA result for build `20260525.0016`. Earlier builds `20260524.1652` and `20260524.1849` should not be used for App Store prep because they did not include the final fullscreen/Split View Quick Search, Settings close/refocus, and same-app Split View fixes.
 
 Covered checks:
 
@@ -47,14 +47,16 @@ Covered checks:
 - Fullscreen Space overlay bounds must match the fullscreen target display and remain stable across repeated samples.
 - Fullscreen Space Quick Search opens from app grid without switching away from the current fullscreen app.
 - Fullscreen Space Settings opens from app grid without switching away from the current fullscreen app.
+- Closing Settings in a fullscreen/Split View overlay session does not reactivate TagLauncher into another Space.
 - Split View fullscreen geometry is checked for 50/50 and 33/67 split layouts, while ordinary side-by-side desktop windows are rejected.
+- Same-app two-window Split View geometry follows the same fullscreen Split View path as two-app Split View.
 - App grid claims foreground, hides Dock, and keeps menu bar visible.
 - Settings floats above app grid.
 - File panel floats above Settings.
 - Quick Search stays above app grid and supports two-Escape logic.
 - Clicking outside Quick Search closes search, not app grid.
 - System Force Quit window stays above TagLauncher.
-- Pointer-following logic was checked; this machine had one physical display, so the static single-display code path was verified.
+- Pointer-following logic was checked on two displays; AppGrid followed the pointer on each screen.
 
 ## Crash Check
 
@@ -80,7 +82,8 @@ hdiutil: verify: checksum of "/Users/ar/Projects/Taglauncher/build/TagLauncher.d
 
 ## Help PDF Verification
 
-- The broken macOS system Help menu entry was removed.
+- The broken macOS Help Book binding was removed.
+- The standard menu bar now has a localized Help menu with a single `Download Help PDF` item.
 - The About page includes an `Open Help PDF` button and a copy-link button.
 - The app binary contains the immutable GitHub Release Help PDF URL shape.
 - The app binary no longer contains the old `raw.githubusercontent` Help URL or `TagLauncherLocalizedHelpMenuItem`.

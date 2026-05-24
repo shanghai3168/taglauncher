@@ -8,18 +8,18 @@ This folder is the working release pack for the first Mac App Store submission o
 - Platform: macOS / Mac App Store
 - Bundle ID: `com.taglauncher.app`
 - Version: `7.6.0`
-- Local QA build: `20260524.1849`
-- Frozen source commit: `ba34712`
+- Local QA build: `20260525.0016`
+- Frozen source commit: `0258b3e`
 - Frozen source branch: `main`
-- Release folder: `Release/AppStore-7.6.0-20260524.1849`
-- DMG SHA-256: `dc5bc9cf90b9e04a9e4fda155b757e6e0af681ff1b79bf109552ae0c3ce2a193`
-- App binary SHA-256: `a59f08f214bd4ac667197f6b2f2672aaf4a57c1fdd9872ea385099e84f18fa57`
+- Release folder: `Release/AppStore-7.6.0-20260525.0016`
+- DMG SHA-256: `4689856f4a976c394ef4737db5bb5eebcc5b5bb95eea81fe72f5b6c3e3ed4b23`
+- App binary SHA-256: `01ace57df10061fd7d684fa8a5bd795f87f55ee2c713cbb1ab2d01f5f63ed404`
 
 ## Freeze Status
 
-This release pack is frozen on the locally QA-passed build `20260524.1849`. Use this folder, its hashes, and its metadata as the source of truth for the first Mac App Store submission prep.
+This release pack is frozen on the locally QA-passed build `20260525.0016`. Use this folder, its hashes, and its metadata as the source of truth for the first Mac App Store submission prep.
 
-Do not use earlier prep folders or builds such as `20260524.1652`; they predate the final fullscreen/Split View secondary-window fix.
+Do not use earlier prep folders or builds such as `20260524.1652` or `20260524.1849`; they predate the final fullscreen/Split View secondary-window close and same-app Split View fixes.
 
 ## What Changed For This Release
 
@@ -33,15 +33,26 @@ Do not use earlier prep folders or builds such as `20260524.1652`; they predate 
 - Hardened fullscreen Space presentation so the app grid stays above the current fullscreen app instead of moving to another Space.
 - Added Split View fullscreen detection so two apps sharing one fullscreen Space also keep the app grid on the current Space.
 - Kept Quick Search and Settings inside the same fullscreen/Split View Space session instead of activating TagLauncher and sliding to another Space.
+- Kept Settings close/refocus inside the same fullscreen/Split View Space session.
+- Treated same-app two-window Split View as fullscreen Split View, not only two different apps.
 - Expanded window QA to cover fullscreen Space behavior with Dock icon both enabled and disabled, including AppGrid, Quick Search, Settings, and stability checks.
 - Strengthened the window logic QA script to cover fullscreen Space, duplicate Dock tiles, repeated self-launch, force quit layering, Settings/file panel layering, Quick Search, and two-display pointer-following behavior.
 
 ## Folder Contents
 
+- `APP_STORE_ASSET_INVENTORY.md`: complete submission asset checklist and missing-item tracker.
 - `FIRST_TIME_MAC_APP_STORE_TODO.md`: step-by-step checklist for a first Mac App Store submission.
 - `APP_STORE_CONNECT_METADATA.md`: draft metadata, review notes, privacy answers, screenshot plan.
 - `BUILD_SIGN_UPLOAD.md`: exact build/sign/upload path and current signing blockers.
 - `QA_RELEASE_EVIDENCE.md`: local QA evidence and artifact hashes.
+- `Screenshots/`: screenshot shot list, raw screenshot staging, and App Store-ready screenshot folder.
+- `Legal/`: privacy policy drafts.
+- `Support/`: support page draft and GitHub Pages publication guide.
+- `Review/`: App Review notes draft.
+- `Assets/`: app icon copy and other static submission assets.
+- `Archive/`: local QA artifact archive.
+- `Upload/`: placeholder for App Store-signed upload artifacts.
+- `Submitted/`: placeholder for final submitted App Store Connect build records.
 
 ## Archived Old Release Pack
 

@@ -5,9 +5,9 @@ These are draft values for the first Mac App Store submission. Edit in App Store
 Frozen local QA source for this metadata:
 
 - Version: `7.6.0`
-- Build: `20260524.1849`
-- Source commit: `ba34712`
-- Release pack: `Release/AppStore-7.6.0-20260524.1849`
+- Build: `20260525.0016`
+- Source commit: `0258b3e`
+- Release pack: `Release/AppStore-7.6.0-20260525.0016`
 
 ## App Information
 
