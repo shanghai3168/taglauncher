@@ -191,5 +191,7 @@
   "smart.category.network-tools": "Network Tools",
   "help.openPDF": "도움말 PDF 열기",
   "help.copyLink": "도움말 PDF 링크 복사",
-  "help.currentLanguage": "현재 앱 언어에 맞는 온라인 PDF를 엽니다."
+  "help.currentLanguage": "현재 앱 언어에 맞는 온라인 PDF를 엽니다.",
+  "settings.language.auto": "자동",
+  "help.downloadPDF": "도움말 PDF 다운로드"
 }

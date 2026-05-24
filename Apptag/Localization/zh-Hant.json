@@ -191,5 +191,7 @@
   "smart.category.network-tools": "網路工具",
   "help.openPDF": "打開說明文件",
   "help.copyLink": "複製說明文件連結",
-  "help.currentLanguage": "將依目前應用程式語言開啟對應版本的線上 PDF。"
+  "help.currentLanguage": "將依目前應用程式語言開啟對應版本的線上 PDF。",
+  "settings.language.auto": "自動",
+  "help.downloadPDF": "下載說明文件"
 }

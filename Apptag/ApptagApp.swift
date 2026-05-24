@@ -43,6 +43,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private static let statusItemButtonIdentifier = NSUserInterfaceItemIdentifier("TagLauncherStatusItemButton")
     private static let statusItemAccessibilityLabel = AppIdentity.displayName
     private static let showAppListMenuItemIdentifier = NSUserInterfaceItemIdentifier("TagLauncherShowAppListMenuItem")
+    private static let helpMenuItemIdentifier = NSUserInterfaceItemIdentifier("TagLauncherHelpMenu")
+    private static let downloadHelpMenuItemIdentifier = NSUserInterfaceItemIdentifier("TagLauncherDownloadHelpMenuItem")
     private static let externalActivationNotification = Notification.Name("TagLauncherExternalActivationRequested")
     private static let externalActivationObject = AppIdentity.bundleIdentifier
     private static let launcherOverlayLevel = NSWindow.Level(rawValue: NSWindow.Level.mainMenu.rawValue - 1)
@@ -590,7 +592,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             }
 
             self.configureApplicationMenu()
-            self.removeHelpMenu()
+            self.configureHelpMenu()
             if retries > 0 && self.applicationMenuNeedsCleanup() {
                 self.configureApplicationMenuWhenAvailable(retries: retries - 1)
             }
@@ -709,12 +711,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
 
-    private func removeHelpMenu() {
+    private func configureHelpMenu() {
         guard let mainMenu = NSApp.mainMenu else { return }
         NSApp.helpMenu = nil
 
         for item in mainMenu.items.reversed() {
-            let isHelpMenu = item.submenu === NSApp.helpMenu
+            let isHelpMenu = item.identifier == Self.helpMenuItemIdentifier
                 || item.title.localizedCaseInsensitiveContains("help")
                 || item.title == tr("menu.help")
                 || item.submenu?.title.localizedCaseInsensitiveContains("help") == true
@@ -723,6 +725,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 mainMenu.removeItem(item)
             }
         }
+
+        let menuItem = NSMenuItem(title: tr("menu.help"), action: nil, keyEquivalent: "")
+        let helpMenu = NSMenu(title: tr("menu.help"))
+        menuItem.identifier = Self.helpMenuItemIdentifier
+        menuItem.submenu = helpMenu
+
+        let downloadItem = NSMenuItem()
+        downloadItem.identifier = Self.downloadHelpMenuItemIdentifier
+        downloadItem.title = tr("help.downloadPDF")
+        downloadItem.action = #selector(openLocalizedHelp(_:))
+        downloadItem.target = self
+        downloadItem.keyEquivalent = ""
+        downloadItem.keyEquivalentModifierMask = []
+        downloadItem.isEnabled = true
+        helpMenu.addItem(downloadItem)
+        mainMenu.addItem(menuItem)
+    }
+
+    @objc private func openLocalizedHelp(_ sender: Any? = nil) {
+        NSWorkspace.shared.open(HelpDocument.currentURL)
     }
 
     private func removeMenuBarItem() {
@@ -1163,8 +1185,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 return
             }
 
+            if self.isMenuTrackingWindow(keyWindow) {
+                return
+            }
+
             if self.isAppOwnedDocumentWindow(keyWindow) {
                 self.prepareSettingsWindow(keyWindow)
+                return
+            }
+
+            if NSApp.windows.contains(keyWindow) {
                 return
             }
 
@@ -1239,6 +1269,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             && window != overlayWindow
             && window.isVisible
             && !(window is NSPanel)
+            && !isMenuTrackingWindow(window)
+            && window.styleMask.contains(.titled)
+    }
+
+    private func isMenuTrackingWindow(_ window: NSWindow) -> Bool {
+        let className = NSStringFromClass(type(of: window))
+        return className.localizedCaseInsensitiveContains("Menu")
+            || className.localizedCaseInsensitiveContains("Popup")
     }
 
     private func settingsWindowTitleCandidates() -> Set<String> {

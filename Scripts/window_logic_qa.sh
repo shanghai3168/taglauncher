@@ -279,6 +279,7 @@ trap 'cleanup; rm -f "$assert_swift" "$coords_swift" "$screens_swift" "$fullscre
 
 cat >"$assert_swift" <<'SWIFT'
 import AppKit
+import AppKit
 import CoreGraphics
 import Foundation
 
@@ -442,12 +443,24 @@ default:
 SWIFT
 
 cat >"$coords_swift" <<'SWIFT'
+import AppKit
 import CoreGraphics
 import Foundation
 
 let raw = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID) as? [[String: Any]] ?? []
 let tag = raw.filter { ($0[kCGWindowOwnerName as String] as? String) == "TagLauncher" }
 let mode = CommandLine.arguments.dropFirst().first ?? ""
+
+func dimension(_ bounds: NSDictionary, _ key: String) -> CGFloat {
+    if let value = bounds[key] as? CGFloat {
+        return value
+    }
+    if let value = bounds[key] as? NSNumber {
+        return CGFloat(truncating: value)
+    }
+    return 0
+}
+
 switch mode {
 case "data-tab":
     guard let settings = tag.first(where: { (($0[kCGWindowName as String] as? String) ?? "").isEmpty == false }),
@@ -468,13 +481,19 @@ case "export":
     }
     print("\(Int(round(x + 375))) \(Int(round(y + 331)))")
 case "overlay-outside":
-    guard let overlay = tag.first(where: { (($0[kCGWindowName as String] as? String) ?? "").isEmpty }),
-          let overlayBounds = overlay[kCGWindowBounds as String] as? NSDictionary,
-          let overlayX = overlayBounds["X"] as? CGFloat,
-          let overlayY = overlayBounds["Y"] as? CGFloat else {
-        fputs("FAIL: could not find overlay window bounds\n", stderr)
-        exit(1)
+    guard let overlay = tag.max(by: { lhs, rhs in
+        let lhsBounds = lhs[kCGWindowBounds as String] as? NSDictionary ?? [:]
+        let rhsBounds = rhs[kCGWindowBounds as String] as? NSDictionary ?? [:]
+        let lhsArea = dimension(lhsBounds, "Width") * dimension(lhsBounds, "Height")
+        let rhsArea = dimension(rhsBounds, "Width") * dimension(rhsBounds, "Height")
+        return lhsArea < rhsArea
+    }), let overlayBounds = overlay[kCGWindowBounds as String] as? NSDictionary else {
+        let screen = NSScreen.screens.first?.frame ?? CGRect(x: 0, y: 0, width: 1200, height: 800)
+        print("\(Int(round(screen.minX + 120))) \(160)")
+        exit(0)
     }
+    let overlayX = dimension(overlayBounds, "X")
+    let overlayY = dimension(overlayBounds, "Y")
     print("\(Int(round(overlayX + 120))) \(Int(round(overlayY + 160)))")
 default:
     fputs("FAIL: unknown coords mode \(mode)\n", stderr)

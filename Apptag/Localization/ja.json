@@ -191,5 +191,7 @@
   "smart.category.network-tools": "Network Tools",
   "help.openPDF": "ヘルプPDFを開く",
   "help.copyLink": "ヘルプPDFのリンクをコピー",
-  "help.currentLanguage": "現在のアプリ言語に対応するオンラインPDFを開きます。"
+  "help.currentLanguage": "現在のアプリ言語に対応するオンラインPDFを開きます。",
+  "settings.language.auto": "自動",
+  "help.downloadPDF": "ヘルプPDFをダウンロード"
 }

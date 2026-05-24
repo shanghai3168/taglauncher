@@ -191,5 +191,7 @@
   "smart.category.network-tools": "Network Tools",
   "help.openPDF": "Открыть PDF справки",
   "help.copyLink": "Скопировать ссылку на PDF справки",
-  "help.currentLanguage": "Открывает онлайн-PDF для текущего языка приложения."
+  "help.currentLanguage": "Открывает онлайн-PDF для текущего языка приложения.",
+  "settings.language.auto": "Автоматически",
+  "help.downloadPDF": "Скачать PDF справки"
 }

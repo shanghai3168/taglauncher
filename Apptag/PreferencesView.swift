@@ -25,7 +25,7 @@ struct PreferencesView: View {
     @AppStorage("showUncommonAppBubbles") private var showUncommonAppBubbles = AppDefaults.showUncommonAppBubbles
     @AppStorage("mainHotkeyRegistrationState") private var mainHotkeyRegistrationState = LauncherHotkeyRegistrationState.active.rawValue
     @AppStorage("quickSearchHotkeyRegistrationState") private var quickSearchHotkeyRegistrationState = LauncherHotkeyRegistrationState.active.rawValue
-    @State private var selectedLanguage = L10n.currentCode
+    @State private var selectedLanguage = L10n.selectedLanguageCode
     @State private var isRefreshingLanguage = false
     @State private var allApps: [AppInfo] = []
     @State private var tagColors: [String: Int] = [:]
@@ -360,7 +360,7 @@ struct PreferencesView: View {
     }
 
     private func syncSelectedLanguage() {
-        let code = L10n.currentCode
+        let code = L10n.selectedLanguageCode
         guard selectedLanguage != code else { return }
         selectedLanguage = code
     }
@@ -371,20 +371,8 @@ struct PreferencesView: View {
     private var buildVersion: String {
         Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "?"
     }
-    private var helpPDFLanguageCode: String {
-        switch L10n.currentCode {
-        case "zh-Hans": return "zh"
-        case "zh-Hant": return "zh-Hant"
-        case "en", "ar", "ar-Najdi", "cs", "da", "de", "es", "fr", "id",
-             "it", "ja", "ko", "ms", "nb", "nl", "nn", "no", "pl", "pt-BR",
-             "ro", "ru", "sr-Cyrl", "sv", "th", "tr", "uk", "vi":
-            return L10n.currentCode
-        default:
-            return "en"
-        }
-    }
     private var helpPDFURL: URL {
-        URL(string: "https://github.com/shanghai3168/taglauncher/releases/download/v7.6.0/Taglauncher-help-\(helpPDFLanguageCode).pdf")!
+        HelpDocument.currentURL
     }
     private var languageColumns: [GridItem] {
         [
@@ -521,6 +509,30 @@ struct PreferencesView: View {
 
                     ScrollView {
                         LazyVGrid(columns: languageColumns, alignment: .leading, spacing: 6) {
+                            Button {
+                                selectedLanguage = L10n.automaticCode
+                            } label: {
+                                HStack(spacing: 8) {
+                                    Image(systemName: selectedLanguage == L10n.automaticCode ? "checkmark" : "circle")
+                                        .font(.system(size: 12, weight: .semibold))
+                                        .foregroundStyle(selectedLanguage == L10n.automaticCode ? Color.accentColor : Color.secondary.opacity(0.28))
+                                        .frame(width: 16)
+                                    Text(tr("settings.language.auto"))
+                                        .foregroundStyle(.primary)
+                                        .lineLimit(1)
+                                    Text("(\(L10n.supported.first(where: { $0.code == L10n.currentCode })?.name ?? "English"))")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                        .lineLimit(1)
+                                    Spacer(minLength: 0)
+                                }
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 5)
+                                .contentShape(Rectangle())
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityLabel("\(tr("settings.languagePicker")) \(tr("settings.language.auto"))")
+
                             ForEach(L10n.supported, id: \.code) { language in
                                 Button {
                                     selectedLanguage = language.code
@@ -873,7 +885,7 @@ struct PreferencesView: View {
             .padding()
             }
             .onChange(of: selectedLanguage) { _, code in
-                L10n.switchTo(code)
+                L10n.switchSelection(to: code)
             }
             .onReceive(NotificationCenter.default.publisher(for: .appLanguageDidChange)) { notification in
                 if let code = notification.userInfo?["code"] as? String {

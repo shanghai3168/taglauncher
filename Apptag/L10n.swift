@@ -7,6 +7,7 @@ extension Notification.Name {
 }
 
 enum L10n {
+    static let automaticCode = "auto"
     static var current: [String: String] = [:]
     private(set) static var currentCode = "en"
 
@@ -48,13 +49,52 @@ enum L10n {
         ("sv", "Svenska"),
     ]
 
+    static var selectedLanguageCode: String {
+        UserDefaults.standard.string(forKey: "appLanguage") ?? automaticCode
+    }
+
+    static var isAutomatic: Bool {
+        UserDefaults.standard.string(forKey: "appLanguage") == nil
+    }
+
+    static func switchSelection(to code: String) {
+        if code == automaticCode {
+            switchToAutomatic()
+        } else {
+            switchTo(code)
+        }
+    }
+
+    static func switchToAutomatic() {
+        let code = fallbackCode()
+        let previousCode = currentCode
+        load(code)
+        UserDefaults.standard.removeObject(forKey: "appLanguage")
+        let relocalizedTags = previousCode != currentCode
+            ? TagDatabase.relocalizeSystemTagsForCurrentLanguage()
+            : false
+        NotificationCenter.default.post(
+            name: .appLanguageDidChange,
+            object: nil,
+            userInfo: ["code": automaticCode, "effectiveCode": currentCode]
+        )
+        if relocalizedTags {
+            NotificationCenter.default.post(name: .tagLauncherDataDidChange, object: nil)
+        }
+    }
+
     static func switchTo(_ code: String) {
         guard supported.contains(where: { $0.code == code }) else { return }
-        guard code != currentCode else { return }
+        let previousSelection = selectedLanguageCode
+        guard code != currentCode || previousSelection == automaticCode else { return }
         load(code)
         let relocalizedTags = TagDatabase.relocalizeSystemTagsForCurrentLanguage()
         UserDefaults.standard.set(code, forKey: "appLanguage")
-        NotificationCenter.default.post(name: .appLanguageDidChange, object: nil, userInfo: ["code": currentCode])
+        NotificationCenter.default.post(
+            name: .appLanguageDidChange,
+            object: nil,
+            userInfo: ["code": currentCode, "effectiveCode": currentCode]
+        )
         if relocalizedTags {
             NotificationCenter.default.post(name: .tagLauncherDataDidChange, object: nil)
         }
@@ -87,7 +127,7 @@ enum L10n {
         currentCode = code
     }
 
-    private static func fallbackCode() -> String {
+    static func fallbackCode() -> String {
         let lang = Locale.preferredLanguages.first ?? "en"
         if lang.hasPrefix("zh-Hant") || lang.hasPrefix("zh-HK") || lang.hasPrefix("zh-TW") { return "zh-Hant" }
         if lang.hasPrefix("zh") { return "zh-Hans" }
@@ -123,4 +163,25 @@ enum L10n {
 /// Convenience function — use `tr("key")` everywhere.
 func tr(_ key: String) -> String {
     L10n.current[key] ?? key
+}
+
+enum HelpDocument {
+    private static let baseURL = "https://github.com/shanghai3168/taglauncher/releases/download/v7.6.0"
+
+    static var currentURL: URL {
+        URL(string: "\(baseURL)/Taglauncher-help-\(languageCode(for: L10n.currentCode)).pdf")!
+    }
+
+    private static func languageCode(for appLanguageCode: String) -> String {
+        switch appLanguageCode {
+        case "zh-Hans": return "zh"
+        case "zh-Hant": return "zh-Hant"
+        case "en", "ar", "ar-Najdi", "cs", "da", "de", "es", "fr", "id",
+             "it", "ja", "ko", "ms", "nb", "nl", "nn", "no", "pl", "pt-BR",
+             "ro", "ru", "sr-Cyrl", "sv", "th", "tr", "uk", "vi":
+            return appLanguageCode
+        default:
+            return "en"
+        }
+    }
 }

@@ -191,5 +191,7 @@
   "smart.category.network-tools": "Network Tools",
   "help.openPDF": "Open Help PDF",
   "help.copyLink": "Copy Help PDF link",
-  "help.currentLanguage": "Opens the online PDF for the current app language."
+  "help.currentLanguage": "Opens the online PDF for the current app language.",
+  "settings.language.auto": "Otomatik",
+  "help.downloadPDF": "Yardım PDF’sini indir"
 }

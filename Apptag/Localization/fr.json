@@ -191,5 +191,7 @@
   "smart.category.network-tools": "Network Tools",
   "help.openPDF": "Ouvrir le PDF d’aide",
   "help.copyLink": "Copier le lien du PDF d’aide",
-  "help.currentLanguage": "Ouvre le PDF en ligne correspondant à la langue actuelle de l’app."
+  "help.currentLanguage": "Ouvre le PDF en ligne correspondant à la langue actuelle de l’app.",
+  "settings.language.auto": "Automatique",
+  "help.downloadPDF": "Télécharger le PDF d’aide"
 }

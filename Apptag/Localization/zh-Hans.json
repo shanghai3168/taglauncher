@@ -191,5 +191,7 @@
   "smart.category.network-tools": "网络工具",
   "help.openPDF": "打开帮助文档",
   "help.copyLink": "复制帮助文档链接",
-  "help.currentLanguage": "将按当前应用语言打开对应版本的在线 PDF。"
+  "help.currentLanguage": "将按当前应用语言打开对应版本的在线 PDF。",
+  "settings.language.auto": "自动",
+  "help.downloadPDF": "下载帮助文档"
 }
