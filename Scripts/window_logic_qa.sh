@@ -93,6 +93,26 @@ send_cmd_w() {
   osascript -e 'tell application "System Events" to keystroke "w" using {command down}'
 }
 
+close_settings_window() {
+  osascript <<'OSA' >/dev/null 2>&1 || true
+tell application "System Events"
+  tell process "TagLauncher"
+    repeat 20 times
+      repeat with windowRef in windows
+        try
+          if (name of windowRef as text) is not "" then
+            click button 1 of windowRef
+            return
+          end if
+        end try
+      end repeat
+      delay 0.1
+    end repeat
+  end tell
+end tell
+OSA
+}
+
 dismiss_reopen_dialog() {
   osascript <<'OSA' >/dev/null 2>&1 || true
 tell application "System Events"
@@ -438,6 +458,20 @@ case "fullscreen-overlay":
         fail("TagLauncher layer \(tag[0].layer) is not above fullscreen target layer \(target.layer)")
     }
     print("PASS fullscreen overlay above target: overlayLayer=\(tag[0].layer) targetLayer=\(target.layer)")
+
+case "fullscreen-settings":
+    guard tag.count == 2 else { fail("fullscreen settings expected 2 TagLauncher windows, got \(tag.count)") }
+    assertTagLayer(tag)
+    guard let target = windows.first(where: { $0.name == "TagLauncherFullscreenQATargetFullscreen" }) else {
+        fail("fullscreen target disappeared after opening settings; TagLauncher likely switched to another Space")
+    }
+    guard !tag[0].name.isEmpty, tag[1].name.isEmpty else {
+        fail("fullscreen settings order wrong: \(tag.map(\.name))")
+    }
+    guard tag.allSatisfy({ $0.layer > target.layer }) else {
+        fail("TagLauncher settings stack is not above fullscreen target")
+    }
+    print("PASS fullscreen settings above target: tagLayers=\(tag.map(\.layer)) targetLayer=\(target.layer)")
 
 case "split-geometry":
     func isSingleFullscreenWindow(_ windowFrame: CGRect, on screenFrame: CGRect) -> Bool {
@@ -797,6 +831,20 @@ run_fullscreen_space_case() {
   send_main_hotkey
   wait_swift_assert fullscreen-overlay
   assert_fullscreen_overlay_stable
+  log "==> QA fullscreen Space: quick search from appgrid does not switch Space"
+  send_keycode 49
+  sleep 0.4
+  assert_fullscreen_overlay_stable
+  send_keycode 53
+  sleep 0.3
+  wait_swift_assert fullscreen-overlay
+  log "==> QA fullscreen Space: settings from appgrid does not switch Space"
+  send_cmd_comma
+  sleep 0.7
+  wait_swift_assert fullscreen-settings
+  close_settings_window
+  sleep 0.5
+  wait_swift_assert fullscreen-overlay
   send_keycode 53
   sleep 0.4
   wait_swift_assert no-overlay

@@ -8,9 +8,9 @@ This folder is the working release pack for the first Mac App Store submission o
 - Platform: macOS / Mac App Store
 - Bundle ID: `com.taglauncher.app`
 - Version: `7.6.0`
-- Local QA build: `20260524.1652`
+- Local QA build: `20260524.1849`
 - Source branch at preparation time: `main`
-- Release folder: `Release/AppStore-7.6.0-20260524.1652`
+- Release folder: `Release/AppStore-7.6.0-20260524.1849`
 
 ## What Changed For This Release
 
@@ -23,6 +23,7 @@ This folder is the working release pack for the first Mac App Store submission o
 - Added an About-page Help PDF button that opens the online PDF matching the current app language, plus a copy-link button.
 - Hardened fullscreen Space presentation so the app grid stays above the current fullscreen app instead of moving to another Space.
 - Added Split View fullscreen detection so two apps sharing one fullscreen Space also keep the app grid on the current Space.
+- Kept Quick Search and Settings inside the same fullscreen/Split View Space session instead of activating TagLauncher and sliding to another Space.
 - Expanded window QA to cover fullscreen Space behavior with Dock icon both enabled and disabled, including stability checks.
 - Strengthened the window logic QA script to cover fullscreen Space, duplicate Dock tiles, repeated self-launch, force quit layering, Settings/file panel layering, Quick Search, and two-display pointer-following behavior.
 

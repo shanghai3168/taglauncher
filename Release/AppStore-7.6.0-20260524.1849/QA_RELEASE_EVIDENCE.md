@@ -3,7 +3,7 @@
 ## Local Build
 
 - Version: `7.6.0`
-- Build: `20260524.1652`
+- Build: `20260524.1849`
 - App path: `/Users/ar/Projects/Taglauncher/build/TagLauncher.app`
 - DMG path: `/Users/ar/Projects/Taglauncher/build/TagLauncher.dmg`
 - App executable size: `1.4M`
@@ -12,8 +12,8 @@
 ## Hashes
 
 ```text
-1bf3e53410e18778038c310e1ed083cd89c27b781cc87942dd3dd9fb57d73cb2  build/TagLauncher.dmg
-13e74a774662dfec88e69b5f51e5c51c5c46e3e5f8884cbf8cbab5cd44c4442d  build/TagLauncher.app/Contents/MacOS/TagLauncher
+dc5bc9cf90b9e04a9e4fda155b757e6e0af681ff1b79bf109552ae0c3ce2a193  build/TagLauncher.dmg
+a59f08f214bd4ac667197f6b2f2672aaf4a57c1fdd9872ea385099e84f18fa57  build/TagLauncher.app/Contents/MacOS/TagLauncher
 ```
 
 ## Commands Run
@@ -42,6 +42,8 @@ Covered checks:
 - Fullscreen Space overlay appears above the current fullscreen app.
 - Fullscreen Space overlay is checked with `showDockIcon=true` and `showDockIcon=false`.
 - Fullscreen Space overlay bounds must match the fullscreen target display and remain stable across repeated samples.
+- Fullscreen Space Quick Search opens from app grid without switching away from the current fullscreen app.
+- Fullscreen Space Settings opens from app grid without switching away from the current fullscreen app.
 - Split View fullscreen geometry is checked for 50/50 and 33/67 split layouts, while ordinary side-by-side desktop windows are rejected.
 - App grid claims foreground, hides Dock, and keeps menu bar visible.
 - Settings floats above app grid.

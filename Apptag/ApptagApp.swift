@@ -67,6 +67,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var lastShowDockIcon: Bool?
     private var statusMenuScreenForNextOverlay: NSScreen?
     private var overlayGeneration = 0
+    private var overlayAvoidsSpaceSwitch = false
     private var suppressReopenUntil = Date.distantPast
 
     private struct OverlayPlacementContext {
@@ -269,9 +270,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let showDock = UserDefaults.standard.bool(forKey: Self.showDockIconKey)
         lastShowDockIcon = showDock
 
-        let shouldStayAccessoryForCurrentFullscreenSpace = avoidSpaceSwitch
-            && isOverlayVisible
-            && !isSettingsVisible
+        let shouldStayAccessoryForCurrentFullscreenSpace = isOverlayVisible
+            && (avoidSpaceSwitch || overlayAvoidsSpaceSwitch)
         let desiredPolicy: NSApplication.ActivationPolicy = shouldStayAccessoryForCurrentFullscreenSpace
             ? .accessory
             : (requiresForegroundOwnership
@@ -784,6 +784,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let placement = overlayPlacementContextForNextOverlay(preferredScreen: preferredScreen)
         let shouldAvoidSpaceSwitch = placement.map { hasFullscreenWindowOnScreen($0.screen) } ?? false
         if let overlayWindow, overlayWindow.isVisible {
+            overlayAvoidsSpaceSwitch = shouldAvoidSpaceSwitch
             moveOverlayToCurrentPlacement(preferredScreen: preferredScreen)
             overlayWindow.level = currentOverlayLevel
             refreshLauncherChromeState(activate: !shouldAvoidSpaceSwitch, avoidSpaceSwitch: shouldAvoidSpaceSwitch)
@@ -839,6 +840,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             existingWindow.orderOut(nil)
             overlayWindow = nil
         }
+        overlayAvoidsSpaceSwitch = shouldAvoidSpaceSwitch
 
         let window = makeOverlayWindow(
             on: placement.screen,
@@ -1098,6 +1100,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         overlayWindow?.orderOut(nil)
         removeOverlayKeyMonitor()
         removeQuickSearchExternalMouseMonitor()
+        overlayAvoidsSpaceSwitch = false
         refreshLauncherChromeState()
         NotificationCenter.default.post(name: .tagLauncherOverlayDidHide, object: nil)
         if discardWindow {
@@ -1203,7 +1206,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     private func showQuickSearchFromGlobalHotkey() {
         if overlayWindow?.isVisible == true {
-            refreshLauncherChromeState(activate: true)
+            refreshLauncherChromeState(
+                activate: !overlayAvoidsSpaceSwitch,
+                avoidSpaceSwitch: overlayAvoidsSpaceSwitch
+            )
             requestQuickSearch(source: QuickSearchOpenSource.globalVisible)
             return
         }
@@ -1299,12 +1305,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         var behavior = window.collectionBehavior
         behavior.remove(.canJoinAllSpaces)
-        behavior.formUnion([.fullScreenAuxiliary, .moveToActiveSpace])
+        if overlayAvoidsSpaceSwitch {
+            behavior.remove(.moveToActiveSpace)
+            behavior.formUnion([.fullScreenAuxiliary, .stationary, .transient, .ignoresCycle])
+        } else {
+            behavior.formUnion([.fullScreenAuxiliary, .moveToActiveSpace])
+        }
         window.collectionBehavior = behavior
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
         settingsWindow = window
-        refreshLauncherChromeState(activate: true)
+        refreshLauncherChromeState(
+            activate: !overlayAvoidsSpaceSwitch,
+            avoidSpaceSwitch: overlayAvoidsSpaceSwitch
+        )
     }
 
     private func attachSettingsWindow(_ window: NSWindow, to overlayWindow: NSWindow) {
@@ -1454,6 +1468,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     private func promoteOverlayToForegroundInput() {
+        if overlayAvoidsSpaceSwitch {
+            refreshLauncherChromeState(activate: false, avoidSpaceSwitch: true)
+            guard let overlayWindow else { return }
+            overlayWindow.makeKeyAndOrderFront(nil)
+            overlayWindow.orderFrontRegardless()
+            return
+        }
         beginLauncherForegroundOwnership()
         guard let overlayWindow else { return }
         overlayWindow.makeKeyAndOrderFront(nil)
@@ -1551,7 +1572,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     @objc private func openPreferences(_ sender: Any? = nil) {
         TagDatabase.flushPendingCategorySchemeBackupBatch()
-        beginLauncherForegroundOwnership()
+        if overlayAvoidsSpaceSwitch {
+            refreshLauncherChromeState(activate: false, avoidSpaceSwitch: true)
+        } else {
+            beginLauncherForegroundOwnership()
+        }
         // Don't hide overlay — keep it visible for real-time setting preview.
         if let overlayWindow, overlayWindow.isVisible {
             overlayWindow.makeKeyAndOrderFront(nil)
