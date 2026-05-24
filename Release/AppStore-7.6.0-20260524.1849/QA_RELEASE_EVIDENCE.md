@@ -4,6 +4,7 @@
 
 - Version: `7.6.0`
 - Build: `20260524.1849`
+- Frozen source commit: `ba34712`
 - App path: `/Users/ar/Projects/Taglauncher/build/TagLauncher.app`
 - DMG path: `/Users/ar/Projects/Taglauncher/build/TagLauncher.dmg`
 - App executable size: `1.4M`
@@ -35,6 +36,8 @@ Final QA result:
 ALL WINDOW LOGIC QA PASSED
 ```
 
+This is the frozen QA result for build `20260524.1849`. Earlier build `20260524.1652` should not be used for App Store prep because it did not include the final fullscreen/Split View Quick Search and Settings session fix.
+
 Covered checks:
 
 - Repeated self-launch keeps exactly one process.
@@ -51,7 +54,7 @@ Covered checks:
 - Quick Search stays above app grid and supports two-Escape logic.
 - Clicking outside Quick Search closes search, not app grid.
 - System Force Quit window stays above TagLauncher.
-- Two physical displays passed pointer-following frame checks.
+- Pointer-following logic was checked; this machine had one physical display, so the static single-display code path was verified.
 
 ## Crash Check
 

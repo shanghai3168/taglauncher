@@ -1,5 +1,13 @@
 # TagLauncher Changelog
 
+## [7.6.0 App Store Freeze] — 2026-05-24
+
+- 冻结首轮 Mac App Store 准备资料，以本地 QA 通过 Build `20260524.1849` 为准
+- 修复 Split View / 全屏 Space 中从 AppGrid 唤出 Quick Search 或 Settings 时触发 Space 滑动的问题，二级窗口现在继承同一次 overlay 会话的避让策略
+- AppGrid、Quick Search、Settings、文件面板、强制退出窗口、多屏跟随、Dock/菜单栏状态已通过 `Scripts/window_logic_qa.sh` 全量窗口 QA
+- 当前冻结 DMG SHA-256：`dc5bc9cf90b9e04a9e4fda155b757e6e0af681ff1b79bf109552ae0c3ce2a193`
+- App Store 上传仍需 Apple Developer 账号中的 Mac App Distribution / Mac Installer Distribution 证书和 `com.taglauncher.app` 的 Mac App Store provisioning profile
+
 ## [7.6.0] — 2026-05-20
 
 - 重写默认 App 网格主路径：`coloredGridContainer` / `gridContainer` 改为 AppKit-backed 主网格，使用 `NSCollectionView` 管理分组卡片、滚动、图标 hover 和拖拽 drop，默认路径不再依赖 SwiftUI `LazyVStack` / `LazyVGrid` 布局事务

@@ -2,6 +2,13 @@
 
 These are draft values for the first Mac App Store submission. Edit in App Store Connect before submission.
 
+Frozen local QA source for this metadata:
+
+- Version: `7.6.0`
+- Build: `20260524.1849`
+- Source commit: `ba34712`
+- Release pack: `Release/AppStore-7.6.0-20260524.1849`
+
 ## App Information
 
 - Name: `TagLauncher`
@@ -69,6 +76,7 @@ Simplified Chinese:
 Version 7.6.0:
 
 - Improved fullscreen Space behavior for the app grid.
+- Improved Split View behavior so the app grid, Quick Search, and Settings stay in the current fullscreen Space instead of sliding to another Space.
 - Fixed duplicate Dock icons when repeatedly showing TagLauncher.
 - Improved Dock and menu bar ownership while the app grid is visible.
 - Improved Settings, Quick Search, file panel, force quit, and multi-display window layering.
@@ -89,6 +97,7 @@ Primary review path:
 Expected behavior:
 
 - The app grid is intentionally displayed above normal and fullscreen app windows.
+- In Split View/fullscreen Spaces, Quick Search and Settings are expected to appear above the app grid without switching Spaces.
 - While the app grid is visible, TagLauncher becomes the foreground app so its menu bar is visible and the Dock is hidden.
 - The system Force Quit window remains above TagLauncher.
 - Import/export uses standard file panels.

@@ -4,6 +4,10 @@
 
 The local QA build is suitable for verification and direct local testing, but it is not an App Store upload artifact.
 
+- Frozen local QA build: `20260524.1849`
+- Frozen source commit: `ba34712`
+- Frozen DMG SHA-256: `dc5bc9cf90b9e04a9e4fda155b757e6e0af681ff1b79bf109552ae0c3ce2a193`
+- Frozen app binary SHA-256: `a59f08f214bd4ac667197f6b2f2672aaf4a57c1fdd9872ea385099e84f18fa57`
 - Local build command: `bash build.sh`
 - Local DMG command: `bash make_dmg.sh`
 - App path: `build/TagLauncher.app`
@@ -90,5 +94,5 @@ CLICK_TOOL=/opt/homebrew/bin/cliclick bash Scripts/window_logic_qa.sh
 - Sandbox behavior for launching apps via `NSWorkspace`.
 - Import/export file access with user-selected file entitlement.
 - Global hotkey behavior.
-- Fullscreen Space overlay behavior.
+- Fullscreen Space and Split View overlay behavior, including Quick Search and Settings opened from the app grid.
 - Login-at-launch setting: current code disables LaunchAgent support in sandboxed builds.

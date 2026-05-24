@@ -9,8 +9,17 @@ This folder is the working release pack for the first Mac App Store submission o
 - Bundle ID: `com.taglauncher.app`
 - Version: `7.6.0`
 - Local QA build: `20260524.1849`
-- Source branch at preparation time: `main`
+- Frozen source commit: `ba34712`
+- Frozen source branch: `main`
 - Release folder: `Release/AppStore-7.6.0-20260524.1849`
+- DMG SHA-256: `dc5bc9cf90b9e04a9e4fda155b757e6e0af681ff1b79bf109552ae0c3ce2a193`
+- App binary SHA-256: `a59f08f214bd4ac667197f6b2f2672aaf4a57c1fdd9872ea385099e84f18fa57`
+
+## Freeze Status
+
+This release pack is frozen on the locally QA-passed build `20260524.1849`. Use this folder, its hashes, and its metadata as the source of truth for the first Mac App Store submission prep.
+
+Do not use earlier prep folders or builds such as `20260524.1652`; they predate the final fullscreen/Split View secondary-window fix.
 
 ## What Changed For This Release
 
@@ -24,7 +33,7 @@ This folder is the working release pack for the first Mac App Store submission o
 - Hardened fullscreen Space presentation so the app grid stays above the current fullscreen app instead of moving to another Space.
 - Added Split View fullscreen detection so two apps sharing one fullscreen Space also keep the app grid on the current Space.
 - Kept Quick Search and Settings inside the same fullscreen/Split View Space session instead of activating TagLauncher and sliding to another Space.
-- Expanded window QA to cover fullscreen Space behavior with Dock icon both enabled and disabled, including stability checks.
+- Expanded window QA to cover fullscreen Space behavior with Dock icon both enabled and disabled, including AppGrid, Quick Search, Settings, and stability checks.
 - Strengthened the window logic QA script to cover fullscreen Space, duplicate Dock tiles, repeated self-launch, force quit layering, Settings/file panel layering, Quick Search, and two-display pointer-following behavior.
 
 ## Folder Contents
