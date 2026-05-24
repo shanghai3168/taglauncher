@@ -379,15 +379,14 @@ enum QuickSearchEngine {
     ) -> [QuickSearchIndexedField] {
         let names = uniqueOrdered([appName] + localizedNames)
         let nameFields = names.map {
-            let allowsRomanizedFuzzy = containsNonLatinLetter($0)
             return QuickSearchIndexedField(
                 kind: .name,
                 text: $0,
                 normalized: normalizeField($0),
                 acronym: acronym(for: $0),
-                pinyinCandidates: pinyinCandidates(for: $0),
-                allowPinyinSubstring: allowsRomanizedFuzzy,
-                allowPinyinFuzzySubsequence: allowsRomanizedFuzzy
+                pinyinCandidates: pinyinCandidates(for: $0, includeLatin: true),
+                allowPinyinSubstring: true,
+                allowPinyinFuzzySubsequence: true
             )
         }
         let tagFields = tagNames.map {
@@ -605,8 +604,8 @@ enum QuickSearchEngine {
             .lowercased()
     }
 
-    private static func pinyinCandidates(for value: String) -> [String] {
-        guard containsNonLatinLetter(value) else { return [] }
+    private static func pinyinCandidates(for value: String, includeLatin: Bool = false) -> [String] {
+        guard includeLatin || containsNonLatinLetter(value) else { return [] }
         let mutable = NSMutableString(string: value)
         CFStringTransform(mutable, nil, kCFStringTransformToLatin, false)
         CFStringTransform(mutable, nil, kCFStringTransformStripCombiningMarks, false)
