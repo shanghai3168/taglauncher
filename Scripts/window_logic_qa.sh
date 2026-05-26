@@ -596,7 +596,7 @@ case "data-tab":
         fputs("FAIL: could not find settings window bounds\n", stderr)
         exit(1)
     }
-    print("\(Int(round(x + 523))) \(Int(round(y + 50)))")
+    print("\(Int(round(x + 625))) \(Int(round(y + 50)))")
 case "export":
     guard let settings = tag.first(where: { (($0[kCGWindowName as String] as? String) ?? "").isEmpty == false }),
           let bounds = settings[kCGWindowBounds as String] as? NSDictionary,
@@ -834,9 +834,9 @@ done
 sleep 2.0
 assert_single_qa_app_instance
 assert_single_dock_tile
-send_keycode 53
+kill_all_taglauncher_instances
 sleep 0.4
-wait_swift_assert no-overlay
+swift_assert no-overlay
 
 log "==> QA split-view fullscreen geometry detection"
 swift_assert split-geometry

@@ -965,6 +965,7 @@ private struct QuickSearchTextField: NSViewRepresentable {
         field.placeholderString = placeholder
         field.delegate = context.coordinator
         field.onCommand = onCommand
+        context.coordinator.onCommand = onCommand
         field.setAccessibilityLabel(tr("quickSearch.inputAccessibility"))
         context.coordinator.field = field
         requestFocus(field)
@@ -977,6 +978,7 @@ private struct QuickSearchTextField: NSViewRepresentable {
         }
         field.placeholderString = placeholder
         field.onCommand = onCommand
+        context.coordinator.onCommand = onCommand
         if context.coordinator.lastFocusToken != focusToken {
             context.coordinator.lastFocusToken = focusToken
             requestFocus(field)
@@ -999,6 +1001,7 @@ private struct QuickSearchTextField: NSViewRepresentable {
     final class Coordinator: NSObject, NSTextFieldDelegate {
         var text: Binding<String>
         var lastFocusToken = 0
+        var onCommand: ((QuickSearchCommand) -> Void)?
         weak var field: NSTextField?
 
         init(text: Binding<String>) {
@@ -1008,6 +1011,28 @@ private struct QuickSearchTextField: NSViewRepresentable {
         func controlTextDidChange(_ obj: Notification) {
             guard let field = obj.object as? NSTextField else { return }
             text.wrappedValue = field.stringValue
+        }
+
+        func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+            switch commandSelector {
+            case #selector(NSResponder.moveUp(_:)):
+                onCommand?(.moveUp)
+                return true
+            case #selector(NSResponder.moveDown(_:)):
+                onCommand?(.moveDown)
+                return true
+            case #selector(NSResponder.insertNewline(_:)):
+                onCommand?(.submit)
+                return true
+            case #selector(NSResponder.insertNewlineIgnoringFieldEditor(_:)):
+                onCommand?(.submit)
+                return true
+            case #selector(NSResponder.cancelOperation(_:)):
+                onCommand?(.dismiss)
+                return true
+            default:
+                return false
+            }
         }
     }
 }
