@@ -13,11 +13,6 @@
 
 ## Todo
 
-- [2026-05-28] OverlayWindowController 收口。
-  - 目标: 把 `AppDelegate` 里的 overlay 显示、隐藏、层级、屏幕选择拆出去。
-  - 时机: Quick Search 窗口边界稳定后再做。
-  - 验收: 全屏、Split View、Settings、Force Quit、文件面板、Dock 图标重复问题。
-
 - [2026-05-28] AppLibraryController / 数据刷新管线整理。
   - 目标: 把扫描、reconcile、Smart Start、annotate、Quick Search documents 更新从 `ContentView` 中抽离。
   - 验收: 启动扫描、拖拽改标签、Quick Search 索引同步、新安装 App 后刷新。
@@ -27,6 +22,12 @@
   - 验收: 语言、通用、快捷键、标签、数据、关于页都保持现有行为。
 
 ## Done
+
+- [2026-05-29] OverlayWindowController 收口。
+  - 提交: 本次提交
+  - 结果: 新增 `OverlayWindowController`，将 overlay window 实例、generation、Space 避让、show/focus/hide 编排、panel 创建、屏幕选择、全屏/Split View 判定从 `AppDelegate` 中收口出去。
+  - 范围: AppDelegate 保留菜单、热键、Settings、Quick Search 和 app chrome 协调入口；窗口策略保持原行为。
+  - 验证: `bash build.sh`、`codesign --verify --deep --strict`、`Scripts/window_logic_qa.sh` 全部通过，覆盖全屏、Split View、Settings、Force Quit、文件面板、Dock 图标重复和屏幕跟随。
 
 - [2026-05-29] Quick Search 独立面板化。
   - 提交: 本次提交
