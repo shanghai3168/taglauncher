@@ -11,22 +11,17 @@
 
 ## In Progress
 
-- [2026-05-28] 第二批 AppKit 化第 1 项：清理 `ContentView` 的 App Grid 交互职责。
-  - 分支: `codex/post-freeze-new-requirement`
-  - 目标: 先做低风险状态收口，把 App Grid 的 bubble、drag、drop、refresh toast 等临时交互状态集中管理，降低后续标签栏 AppKit 化风险。
-  - 原则: 不改变用户可见 UI，不改变拖拽/hover/Quick Search/窗口行为。
-  - 验收: `bash build.sh`、`codesign --verify --deep --strict`、localization JSON 解析、App Grid 交互 targeted QA、必要时跑 `Scripts/window_logic_qa.sh`。
-  - QA: 自动化/半自动化 QA 已通过；待用户最终体验验收后移动到 `Done`。
-  - 结果: `ContentView` 中 App Grid 的 bubble、drag、drop、refresh toast 临时状态已收口到 `AppGridInteractionState`；窗口 8 逻辑 QA 已全部通过。
-
-## Todo
-
 - [2026-05-28] 第二批 AppKit 化第 2 项：标签栏 AppKit 化第一阶段，只读导航。
+  - 分支: `codex/post-freeze-new-requirement`
   - 目标: 抽 `TagNavItem` / callbacks 边界，新增可回滚的 AppKit 标签栏。
   - 范围: 顶部、左侧、右侧标签栏显示；点击标签滚动到对应分组。
   - 暂不做: 标签拖拽排序。
   - 回滚: 保留旧 SwiftUI 标签栏作为开关。
   - 验收: 三种标签位置、点击滚动、长标签、多语言、全屏和 Split View。
+  - QA: 构建、签名、本地化 JSON、三种位置屏幕点击复核、SwiftUI 回滚开关、窗口 8 逻辑 QA 已通过；待用户最终体验验收后移动到 `Done`。
+  - 结果: 默认启用 AppKit 标签导航，`useAppKitTagNavigation=false` 可回滚到旧 SwiftUI 标签栏。
+
+## Todo
 
 - [2026-05-28] 第二批 AppKit 化第 3 项：标签栏 AppKit 化第二阶段，hover 与容器高亮。
   - 目标: hover 标签时高亮对应容器，保留 colorless container 的填充/取消逻辑。
@@ -65,6 +60,11 @@
   - 验收: 语言、通用、快捷键、标签、数据、关于页都保持现有行为。
 
 ## Done
+
+- [2026-05-28] 第二批 AppKit 化第 1 项：清理 `ContentView` 的 App Grid 交互职责。
+  - 提交: `561541e`
+  - 结果: `ContentView` 中 App Grid 的 bubble、drag、drop、refresh toast 临时状态已收口到 `AppGridInteractionState`。
+  - 验证: `bash build.sh`、`codesign --verify --deep --strict`、localization JSON 解析、App Grid targeted QA、`Scripts/window_logic_qa.sh` 全部通过；用户已确认第 1 项 OK。
 
 - [2026-05-28] 冻结发布版本并从冻结 tag 拉出新需求分支。
   - 冻结 tag: `appstore-7.6.0-20260527.0124`

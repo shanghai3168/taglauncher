@@ -418,6 +418,7 @@ struct ContentView: View {
     @AppStorage("displayMode") private var displayMode = AppDefaults.displayMode
     @AppStorage("hideAppNames") private var hideAppNames = AppDefaults.hideAppNames
     @AppStorage("showUncommonAppBubbles") private var showUncommonAppBubbles = AppDefaults.showUncommonAppBubbles
+    @AppStorage("useAppKitTagNavigation") private var useAppKitTagNavigation = AppDefaults.useAppKitTagNavigation
     @AppStorage("skipTagRemovalDropConfirm") private var skipTagRemovalDropConfirm = false
 
     private let editSidebarWidth: CGFloat = 188
@@ -865,7 +866,7 @@ struct ContentView: View {
     private var topLayout: some View {
         VStack(spacing: 0) {
             Spacer().frame(height: notchHeight > 0 ? notchHeight + 14 : 28)
-            if !tagLabels.isEmpty { tagBar.padding(.bottom, 8) }
+            if !tagLabels.isEmpty { topTagNavigation.padding(.bottom, 8) }
             Divider().opacity(0.3)
             appGridContent
         }
@@ -876,14 +877,65 @@ struct ContentView: View {
             Spacer().frame(height: notchHeight > 0 ? notchHeight + 14 : 28)
             Divider().opacity(0.3)
             HStack(spacing: 0) {
-                if tagPosition == "left" { tagSidebar; sideDivider }
+                if tagPosition == "left" { leftTagSidebar; sideDivider }
                 appGridContent
                 if tagPosition == "right" { sideDivider; rightTagSidebar }
             }
         }
     }
 
-    private var tagBar: some View {
+    private var topTagNavigation: some View {
+        Group {
+            if useAppKitTagNavigation {
+                appKitTagNavigation(orientation: .horizontal)
+                    .frame(height: 34)
+            } else {
+                swiftUITopTagBar
+            }
+        }
+    }
+
+    private var leftTagSidebar: some View {
+        Group {
+            if useAppKitTagNavigation {
+                appKitTagNavigation(orientation: .vertical)
+            } else {
+                swiftUITagSidebarList
+            }
+        }
+        .frame(width: 135)
+    }
+
+    private var rightTagSidebar: some View {
+        Group {
+            if useAppKitTagNavigation {
+                appKitTagNavigation(orientation: .vertical)
+            } else {
+                swiftUITagSidebarList
+            }
+        }
+        .padding(.top, rightSidebarFloatingClearance)
+        .frame(width: 135)
+    }
+
+    private func appKitTagNavigation(orientation: TagNavigationView.Orientation) -> some View {
+        let isHorizontal = orientation == .horizontal
+        return TagNavigationView(
+            items: tagLabels,
+            orientation: orientation,
+            contentInsets: isHorizontal
+                ? NSEdgeInsets(top: 3, left: 24, bottom: 3, right: tagPosition == "top" ? floatingControlsReservedWidth : 24)
+                : NSEdgeInsets(top: 12, left: 12, bottom: 12, right: 12),
+            onActivate: { tagID in
+                activateTagNavigation(tagID)
+            },
+            onHover: { tagID in
+                handleTagNavigationHover(tagID)
+            }
+        )
+    }
+
+    private var swiftUITopTagBar: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
                 ForEach(tagLabels) { tag in
@@ -898,8 +950,7 @@ struct ContentView: View {
                     .highPriorityGesture(tagNavReorderGesture(for: tag.name))
                     .onHover { hovering in
                         if hovering {
-                            fillColorlessContainer(tag.id)
-                            scrollTo(tag.id)
+                            handleTagNavigationHover(tag.id)
                         }
                     }
                 }
@@ -913,18 +964,7 @@ struct ContentView: View {
         }
     }
 
-    private var tagSidebar: some View {
-        tagSidebarList
-            .frame(width: 135)
-    }
-
-    private var rightTagSidebar: some View {
-        tagSidebarList
-            .padding(.top, rightSidebarFloatingClearance)
-            .frame(width: 135)
-    }
-
-    private var tagSidebarList: some View {
+    private var swiftUITagSidebarList: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 6) {
                 ForEach(tagLabels) { tag in
@@ -939,8 +979,7 @@ struct ContentView: View {
                     .highPriorityGesture(tagNavReorderGesture(for: tag.name))
                     .onHover { hovering in
                         if hovering {
-                            fillColorlessContainer(tag.id)
-                            scrollTo(tag.id)
+                            handleTagNavigationHover(tag.id)
                         }
                     }
                 }
@@ -1732,8 +1771,8 @@ struct ContentView: View {
         groupLayoutVersion &+= 1
     }
 
-    private var tagLabels: [TagLabel] {
-        displayGroups.map { TagLabel(name: $0.name, colorIndex: tagColors[$0.name] ?? 0) }
+    private var tagLabels: [TagNavigationItem] {
+        displayGroups.map { TagNavigationItem(name: $0.name, colorIndex: tagColors[$0.name] ?? 0) }
     }
 
     private var editGroups: [TagGroup] {
@@ -1903,6 +1942,11 @@ struct ContentView: View {
         if isColorlessContainerMode {
             toggleColorlessFill(id)
         }
+        scrollTo(id)
+    }
+
+    private func handleTagNavigationHover(_ id: String) {
+        fillColorlessContainer(id)
         scrollTo(id)
     }
 
@@ -2360,12 +2404,6 @@ private struct TagNavReorderFramePreferenceKey: PreferenceKey {
     static func reduce(value: inout [String: CGRect], nextValue: () -> [String: CGRect]) {
         value.merge(nextValue(), uniquingKeysWith: { _, new in new })
     }
-}
-
-private struct TagLabel: Identifiable {
-    var id: String { name }
-    let name: String
-    let colorIndex: Int
 }
 
 // MARK: - NSVisualEffectView bridge

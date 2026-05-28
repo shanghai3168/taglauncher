@@ -12,6 +12,7 @@ enum AppDefaults {
     static let showDockIcon = true
     static let launchAtLogin = true
     static let showUncommonAppBubbles = false
+    static let useAppKitTagNavigation = true
 
     static func register() {
         UserDefaults.standard.register(defaults: [
@@ -23,6 +24,7 @@ enum AppDefaults {
             "showDockIcon": showDockIcon,
             "launchAtLogin": launchAtLogin,
             "showUncommonAppBubbles": showUncommonAppBubbles,
+            "useAppKitTagNavigation": useAppKitTagNavigation,
             "skipTagRemovalDropConfirm": false,
             LauncherHotkeyRegistrationStore.mainStateKey: LauncherHotkeyRegistrationState.active.rawValue,
             LauncherHotkeyRegistrationStore.quickSearchStateKey: LauncherHotkeyRegistrationState.active.rawValue
