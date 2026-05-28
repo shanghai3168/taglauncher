@@ -425,10 +425,11 @@ final class TagNavigationButton: NSButton {
         let background = TagColor.nsColor(for: item.colorIndex)
         layer?.backgroundColor = background.cgColor
         layer?.cornerRadius = orientation == .horizontal ? 7 : 6
-        layer?.shadowColor = NSColor.black.withAlphaComponent(0.20).cgColor
+        layer?.shadowColor = NSColor.black.withAlphaComponent(isDragging ? 0.38 : 0.20).cgColor
         layer?.shadowOpacity = 1
-        layer?.shadowRadius = isDragging ? 8 : 3
-        layer?.shadowOffset = NSSize(width: 0, height: isDragging ? -4 : -1)
+        layer?.shadowRadius = isDragging ? 14 : 3
+        layer?.shadowOffset = NSSize(width: 0, height: isDragging ? -7 : -1)
+        layer?.zPosition = isDragging ? 20 : 0
         alphaValue = dragModeActive ? (isDragging ? 1.0 : 0.62) : 1.0
 
         let textColor: NSColor = (item.colorIndex == 0 || item.colorIndex == 5) ? .labelColor : .white
