@@ -10,7 +10,12 @@ final class AppDragCoordinator {
         var tag: String
     }
 
+    struct EmptyDropTarget {
+        weak var view: AppEmptyDropReceivingView?
+    }
+
     private var targets: [UUID: DropTarget] = [:]
+    private var emptyTargets: [UUID: EmptyDropTarget] = [:]
     private weak var dragHostWindow: NSWindow?
     private weak var dragLayerHostView: NSView?
     private var dragLayer: CALayer?
@@ -39,6 +44,17 @@ final class AppDragCoordinator {
 
     func unregister(id: UUID) {
         targets.removeValue(forKey: id)
+    }
+
+    func registerEmptyDropTarget(id: UUID, view: AppEmptyDropReceivingView) {
+        if emptyTargets.count > 64 {
+            pruneDeadTargets()
+        }
+        emptyTargets[id] = EmptyDropTarget(view: view)
+    }
+
+    func unregisterEmptyDropTarget(id: UUID) {
+        emptyTargets.removeValue(forKey: id)
     }
 
     func beginDrag(image: NSImage, payload: String, at screenPoint: NSPoint, copy: Bool, in hostWindow: NSWindow?) {
@@ -142,7 +158,23 @@ final class AppDragCoordinator {
             .sorted { $0.1 < $1.1 }
             .first?.0
 
-        hitTarget?.performDrop(path: path, source: source, copy: copy)
+        if let hitTarget {
+            hitTarget.performDrop(path: path, source: source, copy: copy)
+            return
+        }
+
+        let emptyTarget = emptyTargets.values
+            .compactMap { target -> (AppEmptyDropReceivingView, CGFloat)? in
+                guard let view = target.view,
+                      let frame = view.screenFrame(),
+                      frame.contains(screenPoint)
+                else { return nil }
+                return (view, frame.width * frame.height)
+            }
+            .sorted { $0.1 < $1.1 }
+            .first?.0
+
+        emptyTarget?.performEmptyDrop(path: path, source: source, screenPoint: screenPoint, copy: copy)
     }
 
     func cancelDrag() {
@@ -174,6 +206,7 @@ final class AppDragCoordinator {
 
     private func pruneDeadTargets() {
         targets = targets.filter { $0.value.view != nil }
+        emptyTargets = emptyTargets.filter { $0.value.view != nil }
     }
 
     private static func cgImage(from image: NSImage) -> CGImage? {
@@ -231,7 +264,20 @@ protocol AppDropTargetReceivingView: AnyObject {
     func performDrop(path: String, source: String, copy: Bool)
 }
 
+protocol AppEmptyDropReceivingView: AnyObject {
+    func screenFrame() -> NSRect?
+    func performEmptyDrop(path: String, source: String, screenPoint: NSPoint, copy: Bool)
+}
+
 extension AppDropTargetReceivingView where Self: NSView {
+    func screenFrame() -> NSRect? {
+        guard let window else { return nil }
+        let rectInWindow = convert(bounds, to: nil)
+        return window.convertToScreen(rectInWindow)
+    }
+}
+
+extension AppEmptyDropReceivingView where Self: NSView {
     func screenFrame() -> NSRect? {
         guard let window else { return nil }
         let rectInWindow = convert(bounds, to: nil)

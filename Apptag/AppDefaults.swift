@@ -23,6 +23,7 @@ enum AppDefaults {
             "showDockIcon": showDockIcon,
             "launchAtLogin": launchAtLogin,
             "showUncommonAppBubbles": showUncommonAppBubbles,
+            "skipTagRemovalDropConfirm": false,
             LauncherHotkeyRegistrationStore.mainStateKey: LauncherHotkeyRegistrationState.active.rawValue,
             LauncherHotkeyRegistrationStore.quickSearchStateKey: LauncherHotkeyRegistrationState.active.rawValue
         ])

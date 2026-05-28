@@ -45,6 +45,7 @@ struct AppGridCollectionView: NSViewRepresentable {
     let onBubbleHover: (AppInfo, CGRect, AppBubbleHoverEvent) -> Void
     let onEditNote: (AppInfo, CGRect) -> Void
     let onDropApp: (String, String, String, Bool) -> Void
+    let onDropOutsideGroup: (String, String, Bool) -> Void
     let onGroupActivate: (String) -> Void
     let onScrollActivity: () -> Void
     let onDragModeChange: (Bool) -> Void
@@ -76,6 +77,7 @@ struct AppGridCollectionView: NSViewRepresentable {
             onBubbleHover: onBubbleHover,
             onEditNote: onEditNote,
             onDropApp: onDropApp,
+            onDropOutsideGroup: onDropOutsideGroup,
             onGroupActivate: onGroupActivate,
             onScrollActivity: onScrollActivity,
             onDragModeChange: onDragModeChange
@@ -104,6 +106,7 @@ struct AppGridCollectionView: NSViewRepresentable {
         var onBubbleHover: (AppInfo, CGRect, AppBubbleHoverEvent) -> Void = { _, _, _ in }
         var onEditNote: (AppInfo, CGRect) -> Void = { _, _ in }
         var onDropApp: (String, String, String, Bool) -> Void = { _, _, _, _ in }
+        var onDropOutsideGroup: (String, String, Bool) -> Void = { _, _, _ in }
         var onGroupActivate: (String) -> Void = { _ in }
         var onScrollActivity: () -> Void = {}
         var onDragModeChange: (Bool) -> Void = { _ in }
@@ -124,6 +127,7 @@ struct AppGridCollectionView: NSViewRepresentable {
             onBubbleHover: @escaping (AppInfo, CGRect, AppBubbleHoverEvent) -> Void,
             onEditNote: @escaping (AppInfo, CGRect) -> Void,
             onDropApp: @escaping (String, String, String, Bool) -> Void,
+            onDropOutsideGroup: @escaping (String, String, Bool) -> Void,
             onGroupActivate: @escaping (String) -> Void,
             onScrollActivity: @escaping () -> Void,
             onDragModeChange: @escaping (Bool) -> Void
@@ -143,6 +147,7 @@ struct AppGridCollectionView: NSViewRepresentable {
             self.onBubbleHover = onBubbleHover
             self.onEditNote = onEditNote
             self.onDropApp = onDropApp
+            self.onDropOutsideGroup = onDropOutsideGroup
             self.onGroupActivate = onGroupActivate
             self.onScrollActivity = onScrollActivity
             self.onDragModeChange = onDragModeChange
@@ -250,7 +255,8 @@ struct AppGridCollectionView: NSViewRepresentable {
     }
 }
 
-final class AppGridCollectionHostView: NSView {
+final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
+    private let emptyDropTargetID = UUID()
     private let scrollView = NSScrollView()
     private let collectionView = NSCollectionView()
     private let gridLayout = AppGridContainerCollectionLayout()
@@ -277,6 +283,7 @@ final class AppGridCollectionHostView: NSView {
             NotificationCenter.default.removeObserver(scrollObserver)
         }
         scrollUnfreezeWorkItem?.cancel()
+        AppDragCoordinator.shared.unregisterEmptyDropTarget(id: emptyDropTargetID)
     }
 
     func configure(coordinator: AppGridCollectionView.Coordinator) {
@@ -317,6 +324,22 @@ final class AppGridCollectionHostView: NSView {
             lastLayoutSize = bounds.size
             gridLayout.invalidateLayout()
         }
+    }
+
+    override func viewDidMoveToWindow() {
+        super.viewDidMoveToWindow()
+        if window == nil {
+            AppDragCoordinator.shared.unregisterEmptyDropTarget(id: emptyDropTargetID)
+        } else {
+            AppDragCoordinator.shared.registerEmptyDropTarget(id: emptyDropTargetID, view: self)
+        }
+    }
+
+    func performEmptyDrop(path: String, source: String, screenPoint: NSPoint, copy: Bool) {
+        guard let coordinator,
+              coordinator.displayStyle != .flat
+        else { return }
+        coordinator.onDropOutsideGroup(path, source, copy)
     }
 
     private func setup() {

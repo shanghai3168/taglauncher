@@ -317,6 +317,12 @@ private struct PendingUncategorizedDrop: Identifiable {
     let removableTags: [String]
 }
 
+private struct PendingTagRemovalDrop: Identifiable {
+    let id = UUID()
+    let app: AppInfo
+    let tagName: String
+}
+
 private enum SmartStartNoticeMode {
     case autoApplied
     case suggestionOnly
@@ -371,6 +377,8 @@ struct ContentView: View {
     @State private var hoveredBubble: AppBubbleContext? = nil
     @State private var editingBubble: AppBubbleContext? = nil
     @State private var pendingUncategorizedDrop: PendingUncategorizedDrop? = nil
+    @State private var pendingTagRemovalDrop: PendingTagRemovalDrop? = nil
+    @State private var tagRemovalDropSuppressFuturePrompt = false
     @State private var appDragResetToken = 0
     @State private var bubbleDraftNote = ""
     @FocusState private var bubbleNoteFocused: Bool
@@ -406,13 +414,14 @@ struct ContentView: View {
     @AppStorage("displayMode") private var displayMode = AppDefaults.displayMode
     @AppStorage("hideAppNames") private var hideAppNames = AppDefaults.hideAppNames
     @AppStorage("showUncommonAppBubbles") private var showUncommonAppBubbles = AppDefaults.showUncommonAppBubbles
+    @AppStorage("skipTagRemovalDropConfirm") private var skipTagRemovalDropConfirm = false
 
     private let editSidebarWidth: CGFloat = 188
     private let editSidebarHorizontalInset: CGFloat = 12
     private let floatingControlsTrailingInset: CGFloat = 20
     private let floatingControlsReservedWidth: CGFloat = 120
     private var appBubbleDisabled: Bool {
-        appDragModeActive || pendingUncategorizedDrop != nil
+        appDragModeActive || pendingUncategorizedDrop != nil || pendingTagRemovalDrop != nil
     }
     private let rightSidebarFloatingClearance: CGFloat = 44
 
@@ -470,6 +479,7 @@ struct ContentView: View {
                 smartStartNoticeOverlay
                 editActionFeedbackOverlay
                 uncategorizedDropConfirmOverlay
+                tagRemovalDropConfirmOverlay
             }
 
             quickSearchOverlay
@@ -959,6 +969,9 @@ struct ContentView: View {
                     onDropApp: { path, source, target, copy in
                         dropApp(path: path, sourceTag: source, targetTag: target, copy: copy)
                     },
+                    onDropOutsideGroup: { path, source, copy in
+                        dropAppOutsideGroup(path: path, sourceTag: source, copy: copy)
+                    },
                     onGroupActivate: { groupName in
                         if isColorlessContainerMode {
                             toggleColorlessFill(groupName)
@@ -1434,6 +1447,34 @@ struct ContentView: View {
         }
         .ignoresSafeArea()
         .allowsHitTesting(pendingUncategorizedDrop != nil)
+    }
+
+    private var tagRemovalDropConfirmOverlay: some View {
+        GeometryReader { proxy in
+            if let pendingDrop = pendingTagRemovalDrop {
+                ZStack {
+                    Color.black.opacity(0.14)
+                        .ignoresSafeArea()
+
+                    TagRemovalDropConfirmBubble(
+                        title: tr("drop.removeTagConfirmTitle"),
+                        message: tagRemovalConfirmMessage(for: pendingDrop),
+                        doNotRemindTitle: tr("drop.removeTagDoNotAskAgain"),
+                        doNotRemind: $tagRemovalDropSuppressFuturePrompt,
+                        cancelTitle: tr("drop.removeTagConfirmNo"),
+                        confirmTitle: tr("drop.removeTagConfirmYes"),
+                        onCancel: dismissTagRemovalDropConfirm,
+                        onConfirm: confirmPendingTagRemovalDrop
+                    )
+                    .frame(width: min(560, max(350, proxy.size.width - 120)))
+                    .position(x: proxy.size.width / 2, y: proxy.size.height / 2)
+                    .transition(.scale(scale: 0.94).combined(with: .opacity))
+                }
+                .zIndex(711)
+            }
+        }
+        .ignoresSafeArea()
+        .allowsHitTesting(pendingTagRemovalDrop != nil)
     }
 
     private func buildEditActionFeedback(for selectedApps: [AppInfo], tags: [String]) -> EditActionFeedback {
@@ -1970,6 +2011,25 @@ struct ContentView: View {
         refreshApps(forceLayoutRefresh: true)
     }
 
+    private func dropAppOutsideGroup(path: String, sourceTag: String, copy: Bool) {
+        resetTransientDragState(keepingPendingTagRemovalDrop: true)
+        guard isRemovableRegularTag(sourceTag) else { return }
+        guard let app = allApps.first(where: { $0.path.path == path }),
+              appHasTag(app, tagName: sourceTag)
+        else { return }
+
+        if skipTagRemovalDropConfirm {
+            removeTagFromDroppedApp(app: app, tagName: sourceTag)
+            return
+        }
+
+        clearAppBubbleState()
+        tagRemovalDropSuppressFuturePrompt = false
+        withAnimation(.spring(response: 0.24, dampingFraction: 0.84)) {
+            pendingTagRemovalDrop = PendingTagRemovalDrop(app: app, tagName: sourceTag)
+        }
+    }
+
     private func confirmAndMoveAppToUncategorized(path: String) {
         guard let app = allApps.first(where: { $0.path.path == path }) else { return }
         let removableTags = removableRegularTags(for: app)
@@ -2019,6 +2079,16 @@ struct ContentView: View {
         )
     }
 
+    private func tagRemovalConfirmMessage(for pendingDrop: PendingTagRemovalDrop) -> String {
+        formattedFeedbackMessage(
+            forKey: "drop.removeTagConfirmMessage",
+            replacements: [
+                "%appName%": pendingDrop.app.displayName,
+                "%tagName%": displayTagName(pendingDrop.tagName)
+            ]
+        )
+    }
+
     private func dismissUncategorizedDropConfirm() {
         resetTransientDragState(keepingPendingUncategorizedDrop: true)
         withAnimation(.easeOut(duration: 0.18)) {
@@ -2036,6 +2106,38 @@ struct ContentView: View {
         }
         guard !tags.isEmpty else { return }
         TagEditor.removeTags(tags, from: [path])
+        showDropRefresh()
+        refreshApps(forceLayoutRefresh: true)
+    }
+
+    private func dismissTagRemovalDropConfirm() {
+        resetTransientDragState(keepingPendingTagRemovalDrop: true)
+        tagRemovalDropSuppressFuturePrompt = false
+        withAnimation(.easeOut(duration: 0.18)) {
+            pendingTagRemovalDrop = nil
+        }
+    }
+
+    private func confirmPendingTagRemovalDrop() {
+        guard let pendingDrop = pendingTagRemovalDrop else { return }
+        let app = pendingDrop.app
+        let tagName = pendingDrop.tagName
+        if tagRemovalDropSuppressFuturePrompt {
+            skipTagRemovalDropConfirm = true
+        }
+        resetTransientDragState(keepingPendingTagRemovalDrop: true)
+        tagRemovalDropSuppressFuturePrompt = false
+        withAnimation(.easeOut(duration: 0.16)) {
+            pendingTagRemovalDrop = nil
+        }
+        removeTagFromDroppedApp(app: app, tagName: tagName)
+    }
+
+    private func removeTagFromDroppedApp(app: AppInfo, tagName: String) {
+        guard isRemovableRegularTag(tagName),
+              appHasTag(app, tagName: tagName)
+        else { return }
+        TagEditor.removeTags([tagName], from: [app.path.path])
         showDropRefresh()
         refreshApps(forceLayoutRefresh: true)
     }
@@ -2114,7 +2216,10 @@ struct ContentView: View {
         }
     }
 
-    private func resetTransientDragState(keepingPendingUncategorizedDrop: Bool = false) {
+    private func resetTransientDragState(
+        keepingPendingUncategorizedDrop: Bool = false,
+        keepingPendingTagRemovalDrop: Bool = false
+    ) {
         let hadAppDragState = appDragModeActive
         AppDragCoordinator.shared.cancelDrag()
         if appDragModeActive {
@@ -2138,6 +2243,9 @@ struct ContentView: View {
         clearAppBubbleState()
         if !keepingPendingUncategorizedDrop, pendingUncategorizedDrop != nil {
             pendingUncategorizedDrop = nil
+        }
+        if !keepingPendingTagRemovalDrop, pendingTagRemovalDrop != nil {
+            pendingTagRemovalDrop = nil
         }
     }
 
