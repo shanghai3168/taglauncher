@@ -14,6 +14,8 @@ LAUNCH_AGENT_BACKUP="$(mktemp -t taglauncher-launchagent.XXXXXX.plist)"
 DEFAULTS_DOMAIN="$LAUNCH_AGENT_LABEL"
 SHOW_DOCK_ICON_WAS_SET=false
 SHOW_DOCK_ICON_VALUE=""
+APP_LANGUAGE_WAS_SET=false
+APP_LANGUAGE_VALUE=""
 FULLSCREEN_QA_PID=""
 CLICK_TOOL="${CLICK_TOOL:-$(command -v cliclick || true)}"
 
@@ -31,6 +33,10 @@ backup_user_defaults() {
   if value="$(defaults read "$DEFAULTS_DOMAIN" showDockIcon 2>/dev/null)"; then
     SHOW_DOCK_ICON_WAS_SET=true
     SHOW_DOCK_ICON_VALUE="$value"
+  fi
+  if value="$(defaults read "$DEFAULTS_DOMAIN" appLanguage 2>/dev/null)"; then
+    APP_LANGUAGE_WAS_SET=true
+    APP_LANGUAGE_VALUE="$value"
   fi
 }
 
@@ -50,6 +56,12 @@ restore_user_defaults() {
     fi
   else
     defaults delete "$DEFAULTS_DOMAIN" showDockIcon >/dev/null 2>&1 || true
+  fi
+
+  if [[ "$APP_LANGUAGE_WAS_SET" == true ]]; then
+    defaults write "$DEFAULTS_DOMAIN" appLanguage -string "$APP_LANGUAGE_VALUE"
+  else
+    defaults delete "$DEFAULTS_DOMAIN" appLanguage >/dev/null 2>&1 || true
   fi
 }
 
@@ -298,9 +310,10 @@ prepare_isolated_app_instance() {
 
 assert_swift="$(mktemp -t taglauncher-window-assert.XXXXXX.swift)"
 coords_swift="$(mktemp -t taglauncher-window-coords.XXXXXX.swift)"
+settings_ax_swift="$(mktemp -t taglauncher-settings-ax.XXXXXX.swift)"
 screens_swift="$(mktemp -t taglauncher-screens.XXXXXX.swift)"
 fullscreen_swift="$(mktemp -t taglauncher-fullscreen-target.XXXXXX.swift)"
-trap 'cleanup; rm -f "$assert_swift" "$coords_swift" "$screens_swift" "$fullscreen_swift" "$LAUNCH_AGENT_BACKUP"' EXIT
+trap 'cleanup; rm -f "$assert_swift" "$coords_swift" "$settings_ax_swift" "$screens_swift" "$fullscreen_swift" "$LAUNCH_AGENT_BACKUP"' EXIT
 
 cat >"$assert_swift" <<'SWIFT'
 import AppKit
@@ -638,6 +651,111 @@ default:
 }
 SWIFT
 
+cat >"$settings_ax_swift" <<'SWIFT'
+import AppKit
+import ApplicationServices
+import Foundation
+
+let mode = CommandLine.arguments.dropFirst().first ?? ""
+let bundleID = "com.taglauncher.app"
+
+guard let app = NSRunningApplication.runningApplications(withBundleIdentifier: bundleID).first else {
+    fputs("FAIL: TagLauncher is not running\n", stderr)
+    exit(1)
+}
+
+let root = AXUIElementCreateApplication(app.processIdentifier)
+
+func copyAttribute(_ element: AXUIElement, _ attribute: CFString) -> CFTypeRef? {
+    var value: CFTypeRef?
+    let result = AXUIElementCopyAttributeValue(element, attribute, &value)
+    guard result == .success else { return nil }
+    return value
+}
+
+func stringAttribute(_ element: AXUIElement, _ attribute: CFString) -> String? {
+    copyAttribute(element, attribute) as? String
+}
+
+func titleCandidates(for element: AXUIElement) -> [String] {
+    [
+        stringAttribute(element, kAXTitleAttribute as CFString),
+        stringAttribute(element, kAXDescriptionAttribute as CFString),
+        stringAttribute(element, kAXValueAttribute as CFString),
+        stringAttribute(element, kAXHelpAttribute as CFString)
+    ].compactMap { $0 }.filter { !$0.isEmpty }
+}
+
+func children(of element: AXUIElement) -> [AXUIElement] {
+    if let values = copyAttribute(element, kAXChildrenAttribute as CFString) as? [AXUIElement] {
+        return values
+    }
+    return []
+}
+
+func matches(_ element: AXUIElement, candidates: [String]) -> Bool {
+    let role = stringAttribute(element, kAXRoleAttribute as CFString) ?? ""
+    let titles = titleCandidates(for: element)
+    guard !titles.isEmpty else { return false }
+    let interactiveRole = role == kAXButtonRole as String
+        || role == kAXRadioButtonRole as String
+        || role == kAXTabGroupRole as String
+        || role == kAXMenuItemRole as String
+    guard interactiveRole else { return false }
+    return titles.contains { title in
+        candidates.contains { candidate in
+            title == candidate || title.localizedCaseInsensitiveContains(candidate)
+        }
+    }
+}
+
+func findMatchingElement(
+    _ element: AXUIElement,
+    candidates: [String],
+    depth: Int,
+    visited: inout Set<CFHashCode>
+) -> AXUIElement? {
+    guard depth >= 0 else { return nil }
+    let hash = CFHash(element)
+    guard !visited.contains(hash) else { return nil }
+    visited.insert(hash)
+
+    if matches(element, candidates: candidates) {
+        return element
+    }
+
+    for child in children(of: element) {
+        if let match = findMatchingElement(child, candidates: candidates, depth: depth - 1, visited: &visited) {
+            return match
+        }
+    }
+    return nil
+}
+
+let candidates: [String]
+switch mode {
+case "data-tab":
+    candidates = ["Data"]
+case "export":
+    candidates = ["Export"]
+default:
+    fputs("FAIL: unknown settings action \(mode)\n", stderr)
+    exit(1)
+}
+
+var visited = Set<CFHashCode>()
+guard let element = findMatchingElement(root, candidates: candidates, depth: 12, visited: &visited) else {
+    fputs("FAIL: could not find settings control for \(mode)\n", stderr)
+    exit(1)
+}
+
+let result = AXUIElementPerformAction(element, kAXPressAction as CFString)
+guard result == .success else {
+    fputs("FAIL: could not press settings control for \(mode): \(result.rawValue)\n", stderr)
+    exit(1)
+}
+SWIFT
+
 cat >"$screens_swift" <<'SWIFT'
 import AppKit
 import Foundation
@@ -760,6 +878,14 @@ click_relative_to_settings() {
   click_xy "$x" "$y"
 }
 
+click_settings_control() {
+  local mode="$1"
+  if swift "$settings_ax_swift" "$mode" >/dev/null 2>&1; then
+    return 0
+  fi
+  click_relative_to_settings "$mode"
+}
+
 click_overlay_outside_quick_search() {
   local coords
   coords="$(swift "$coords_swift" overlay-outside)"
@@ -810,6 +936,7 @@ bash "$ROOT_DIR/build.sh" >/dev/null
 
 log "==> Preparing QA defaults"
 defaults write "$DEFAULTS_DOMAIN" showDockIcon -bool true
+defaults write "$DEFAULTS_DOMAIN" appLanguage -string en
 reset_dock_for_qa
 
 log "==> Starting clean app instance"
@@ -892,9 +1019,9 @@ sleep 0.7
 swift_assert settings
 
 log "==> QA 2/7: import/export file panel floats above settings"
-click_relative_to_settings data-tab
+click_settings_control data-tab
 sleep 0.3
-click_relative_to_settings export
+click_settings_control export
 sleep 0.7
 swift_assert file-panel
 send_keycode 53

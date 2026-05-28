@@ -304,6 +304,20 @@ private struct AppBubbleMetrics {
     let arrowOffset: CGFloat
 }
 
+private struct AppGridInteractionState {
+    var appDragModeActive = false
+    var dropWarningToast: String? = nil
+    var dropRefreshVisible = false
+    var dropRefreshStartedAt: Date? = nil
+    var hoveredBubble: AppBubbleContext? = nil
+    var editingBubble: AppBubbleContext? = nil
+    var pendingUncategorizedDrop: PendingUncategorizedDrop? = nil
+    var pendingTagRemovalDrop: PendingTagRemovalDrop? = nil
+    var tagRemovalDropSuppressFuturePrompt = false
+    var appDragResetToken = 0
+    var bubbleDraftNote = ""
+}
+
 private struct EditActionFeedback: Identifiable {
     let id = UUID()
     let title: String
@@ -365,22 +379,12 @@ struct ContentView: View {
     @State private var tagNavReorderDidMove = false
     // Fixed interaction for "Colorless Container": hover fills persistently; click clears.
     @State private var filledColorlessContainer: String? = nil
-    @State private var appDragModeActive = false
-    @State private var dropWarningToast: String? = nil
+    @State private var appGridInteraction = AppGridInteractionState()
     @State private var smartStartNotice: SmartStartNotice? = nil
     @State private var pendingSmartStartDraft: SmartCategorizationDraft? = nil
-    @State private var dropRefreshVisible = false
-    @State private var dropRefreshStartedAt: Date? = nil
     @State private var refreshInProgress = false
     @State private var refreshAgainAfterCurrent = false
     @State private var refreshAgainForceLayout = false
-    @State private var hoveredBubble: AppBubbleContext? = nil
-    @State private var editingBubble: AppBubbleContext? = nil
-    @State private var pendingUncategorizedDrop: PendingUncategorizedDrop? = nil
-    @State private var pendingTagRemovalDrop: PendingTagRemovalDrop? = nil
-    @State private var tagRemovalDropSuppressFuturePrompt = false
-    @State private var appDragResetToken = 0
-    @State private var bubbleDraftNote = ""
     @FocusState private var bubbleNoteFocused: Bool
 
     // Quick Search
@@ -421,7 +425,9 @@ struct ContentView: View {
     private let floatingControlsTrailingInset: CGFloat = 20
     private let floatingControlsReservedWidth: CGFloat = 120
     private var appBubbleDisabled: Bool {
-        appDragModeActive || pendingUncategorizedDrop != nil || pendingTagRemovalDrop != nil
+        appGridInteraction.appDragModeActive
+            || appGridInteraction.pendingUncategorizedDrop != nil
+            || appGridInteraction.pendingTagRemovalDrop != nil
     }
     private let rightSidebarFloatingClearance: CGFloat = 44
 
@@ -484,7 +490,7 @@ struct ContentView: View {
 
             quickSearchOverlay
 
-            if shouldRenderAppGridBehindQuickSearch, let message = dropWarningToast {
+            if shouldRenderAppGridBehindQuickSearch, let message = appGridInteraction.dropWarningToast {
                 Text(message)
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundStyle(.primary)
@@ -499,7 +505,7 @@ struct ContentView: View {
                     .allowsHitTesting(false)
             }
 
-            if shouldRenderAppGridBehindQuickSearch && dropRefreshVisible {
+            if shouldRenderAppGridBehindQuickSearch && appGridInteraction.dropRefreshVisible {
                 Color.black.opacity(0.08)
                     .ignoresSafeArea()
                     .transition(.opacity)
@@ -579,7 +585,7 @@ struct ContentView: View {
             )
         }
         .onChange(of: bubbleNoteFocused) { _, focused in
-            if editingBubble != nil && !focused {
+            if appGridInteraction.editingBubble != nil && !focused {
                 commitBubbleNote()
             }
         }
@@ -593,10 +599,10 @@ struct ContentView: View {
             quickSearchErrorMessage = nil
             refreshQuickSearchResults()
         }
-        .onChange(of: pendingUncategorizedDrop != nil) { _, _ in
+        .onChange(of: appGridInteraction.pendingUncategorizedDrop != nil) { _, _ in
             publishModalInteractionState()
         }
-        .onChange(of: pendingTagRemovalDrop != nil) { _, _ in
+        .onChange(of: appGridInteraction.pendingTagRemovalDrop != nil) { _, _ in
             publishModalInteractionState()
         }
         .onDisappear {
@@ -612,7 +618,7 @@ struct ContentView: View {
         NotificationCenter.default.post(
             name: .tagLauncherModalInteractionChanged,
             object: nil,
-            userInfo: ["active": pendingUncategorizedDrop != nil || pendingTagRemovalDrop != nil]
+            userInfo: ["active": appGridInteraction.pendingUncategorizedDrop != nil || appGridInteraction.pendingTagRemovalDrop != nil]
         )
     }
 
@@ -711,9 +717,9 @@ struct ContentView: View {
 
     private var canOpenQuickSearch: Bool {
         editPhase == .none
-            && pendingUncategorizedDrop == nil
+            && appGridInteraction.pendingUncategorizedDrop == nil
             && smartStartNotice == nil
-            && !dropRefreshVisible
+            && !appGridInteraction.dropRefreshVisible
             && !quickSearchVisible
     }
 
@@ -993,9 +999,9 @@ struct ContentView: View {
 
     private var uncommonAppBubbleOverlay: some View {
         GeometryReader { proxy in
-            if let context = editingBubble ?? hoveredBubble {
+            if let context = appGridInteraction.editingBubble ?? appGridInteraction.hoveredBubble {
                 let rootFrame = proxy.frame(in: .global)
-                let editing = editingBubble != nil
+                let editing = appGridInteraction.editingBubble != nil
                 let width = min(editing ? 440 : 520, max(260, proxy.size.width - 48))
                 let placement = bubblePlacement(for: context.frame, rootFrame: rootFrame)
                 let metrics = bubbleMetrics(
@@ -1013,7 +1019,7 @@ struct ContentView: View {
                     isEditing: editing,
                     placement: placement,
                     arrowOffset: metrics.arrowOffset,
-                    draftNote: $bubbleDraftNote,
+                    draftNote: $appGridInteraction.bubbleDraftNote,
                     noteFocused: $bubbleNoteFocused,
                     onCommit: commitBubbleNote,
                     onCancel: dismissAppBubble
@@ -1026,7 +1032,7 @@ struct ContentView: View {
             }
         }
         .ignoresSafeArea()
-        .allowsHitTesting(editingBubble != nil)
+        .allowsHitTesting(appGridInteraction.editingBubble != nil)
     }
 
     private var smartStartNoticeOverlay: some View {
@@ -1432,7 +1438,7 @@ struct ContentView: View {
 
     private var uncategorizedDropConfirmOverlay: some View {
         GeometryReader { proxy in
-            if let pendingDrop = pendingUncategorizedDrop {
+            if let pendingDrop = appGridInteraction.pendingUncategorizedDrop {
                 ZStack {
                     Color.black.opacity(0.14)
                         .ignoresSafeArea()
@@ -1453,12 +1459,12 @@ struct ContentView: View {
             }
         }
         .ignoresSafeArea()
-        .allowsHitTesting(pendingUncategorizedDrop != nil)
+        .allowsHitTesting(appGridInteraction.pendingUncategorizedDrop != nil)
     }
 
     private var tagRemovalDropConfirmOverlay: some View {
         GeometryReader { proxy in
-            if let pendingDrop = pendingTagRemovalDrop {
+            if let pendingDrop = appGridInteraction.pendingTagRemovalDrop {
                 ZStack {
                     Color.black.opacity(0.14)
                         .ignoresSafeArea()
@@ -1467,7 +1473,7 @@ struct ContentView: View {
                         title: tr("drop.removeTagConfirmTitle"),
                         message: tagRemovalConfirmMessage(for: pendingDrop),
                         doNotRemindTitle: tr("drop.removeTagDoNotAskAgain"),
-                        doNotRemind: $tagRemovalDropSuppressFuturePrompt,
+                        doNotRemind: $appGridInteraction.tagRemovalDropSuppressFuturePrompt,
                         cancelTitle: tr("drop.removeTagConfirmNo"),
                         confirmTitle: tr("drop.removeTagConfirmYes"),
                         onCancel: dismissTagRemovalDropConfirm,
@@ -1481,7 +1487,7 @@ struct ContentView: View {
             }
         }
         .ignoresSafeArea()
-        .allowsHitTesting(pendingTagRemovalDrop != nil)
+        .allowsHitTesting(appGridInteraction.pendingTagRemovalDrop != nil)
     }
 
     private func buildEditActionFeedback(for selectedApps: [AppInfo], tags: [String]) -> EditActionFeedback {
@@ -1757,7 +1763,7 @@ struct ContentView: View {
     }
 
     private func handleAppGridScrollActivity() {
-        hoveredBubble = nil
+        appGridInteraction.hoveredBubble = nil
     }
 
     private func handleBubbleHover(app: AppInfo, frame: CGRect, event: AppBubbleHoverEvent) {
@@ -1765,17 +1771,17 @@ struct ContentView: View {
             clearAppBubbleState()
             return
         }
-        guard editingBubble == nil else { return }
+        guard appGridInteraction.editingBubble == nil else { return }
         switch event {
         case .entered(let canShowBubble):
             if canShowBubble {
-                hoveredBubble = AppBubbleContext(app: app, frame: frame)
+                appGridInteraction.hoveredBubble = AppBubbleContext(app: app, frame: frame)
             } else {
-                hoveredBubble = nil
+                appGridInteraction.hoveredBubble = nil
             }
         case .exited:
-            guard hoveredBubble?.app.path == app.path else { return }
-            hoveredBubble = nil
+            guard appGridInteraction.hoveredBubble?.app.path == app.path else { return }
+            appGridInteraction.hoveredBubble = nil
         }
     }
 
@@ -1784,9 +1790,9 @@ struct ContentView: View {
             clearAppBubbleState()
             return
         }
-        bubbleDraftNote = currentNote(for: app)
-        hoveredBubble = nil
-        editingBubble = AppBubbleContext(app: app, frame: frame)
+        appGridInteraction.bubbleDraftNote = currentNote(for: app)
+        appGridInteraction.hoveredBubble = nil
+        appGridInteraction.editingBubble = AppBubbleContext(app: app, frame: frame)
         notifyAppNoteEditing(active: true)
         DispatchQueue.main.async {
             bubbleNoteFocused = true
@@ -1794,33 +1800,33 @@ struct ContentView: View {
     }
 
     private func commitBubbleNote() {
-        guard let context = editingBubble else { return }
-        let limited = String(bubbleDraftNote.prefix(TagDatabase.maxAppNoteLength))
+        guard let context = appGridInteraction.editingBubble else { return }
+        let limited = String(appGridInteraction.bubbleDraftNote.prefix(TagDatabase.maxAppNoteLength))
             .trimmingCharacters(in: .whitespacesAndNewlines)
         TagEditor.setAppNote(limited, for: context.app.path.path)
-        bubbleDraftNote = limited
-        editingBubble = nil
+        appGridInteraction.bubbleDraftNote = limited
+        appGridInteraction.editingBubble = nil
         bubbleNoteFocused = false
         notifyAppNoteEditing(active: false)
         refreshApps()
     }
 
     private func dismissAppBubble() {
-        hoveredBubble = nil
-        if editingBubble != nil {
+        appGridInteraction.hoveredBubble = nil
+        if appGridInteraction.editingBubble != nil {
             notifyAppNoteEditing(active: false)
         }
-        editingBubble = nil
+        appGridInteraction.editingBubble = nil
         bubbleNoteFocused = false
     }
 
     private func clearAppBubbleState() {
-        if hoveredBubble != nil {
-            hoveredBubble = nil
+        if appGridInteraction.hoveredBubble != nil {
+            appGridInteraction.hoveredBubble = nil
         }
-        if editingBubble != nil {
+        if appGridInteraction.editingBubble != nil {
             notifyAppNoteEditing(active: false)
-            editingBubble = nil
+            appGridInteraction.editingBubble = nil
         }
         if bubbleNoteFocused {
             bubbleNoteFocused = false
@@ -2031,9 +2037,9 @@ struct ContentView: View {
         }
 
         clearAppBubbleState()
-        tagRemovalDropSuppressFuturePrompt = false
+        appGridInteraction.tagRemovalDropSuppressFuturePrompt = false
         withAnimation(.spring(response: 0.24, dampingFraction: 0.84)) {
-            pendingTagRemovalDrop = PendingTagRemovalDrop(app: app, tagName: sourceTag)
+            appGridInteraction.pendingTagRemovalDrop = PendingTagRemovalDrop(app: app, tagName: sourceTag)
         }
     }
 
@@ -2045,7 +2051,7 @@ struct ContentView: View {
 
         clearAppBubbleState()
         withAnimation(.spring(response: 0.24, dampingFraction: 0.84)) {
-            pendingUncategorizedDrop = PendingUncategorizedDrop(
+            appGridInteraction.pendingUncategorizedDrop = PendingUncategorizedDrop(
                 app: app,
                 assignedTags: assignedTags,
                 removableTags: removableTags
@@ -2099,17 +2105,17 @@ struct ContentView: View {
     private func dismissUncategorizedDropConfirm() {
         resetTransientDragState(keepingPendingUncategorizedDrop: true)
         withAnimation(.easeOut(duration: 0.18)) {
-            pendingUncategorizedDrop = nil
+            appGridInteraction.pendingUncategorizedDrop = nil
         }
     }
 
     private func confirmPendingUncategorizedDrop() {
-        guard let pendingDrop = pendingUncategorizedDrop else { return }
+        guard let pendingDrop = appGridInteraction.pendingUncategorizedDrop else { return }
         let path = pendingDrop.app.path.path
         let tags = pendingDrop.removableTags
         resetTransientDragState(keepingPendingUncategorizedDrop: true)
         withAnimation(.easeOut(duration: 0.16)) {
-            pendingUncategorizedDrop = nil
+            appGridInteraction.pendingUncategorizedDrop = nil
         }
         guard !tags.isEmpty else { return }
         TagEditor.removeTags(tags, from: [path])
@@ -2118,23 +2124,23 @@ struct ContentView: View {
     }
 
     private func dismissTagRemovalDropConfirm() {
-        tagRemovalDropSuppressFuturePrompt = false
+        appGridInteraction.tagRemovalDropSuppressFuturePrompt = false
         withAnimation(.easeOut(duration: 0.18)) {
-            pendingTagRemovalDrop = nil
+            appGridInteraction.pendingTagRemovalDrop = nil
         }
     }
 
     private func confirmPendingTagRemovalDrop() {
-        guard let pendingDrop = pendingTagRemovalDrop else { return }
+        guard let pendingDrop = appGridInteraction.pendingTagRemovalDrop else { return }
         let app = pendingDrop.app
         let tagName = pendingDrop.tagName
-        let shouldSuppressFuturePrompt = tagRemovalDropSuppressFuturePrompt
+        let shouldSuppressFuturePrompt = appGridInteraction.tagRemovalDropSuppressFuturePrompt
         if shouldSuppressFuturePrompt {
             skipTagRemovalDropConfirm = true
         }
-        tagRemovalDropSuppressFuturePrompt = false
+        appGridInteraction.tagRemovalDropSuppressFuturePrompt = false
         withAnimation(.easeOut(duration: 0.16)) {
-            pendingTagRemovalDrop = nil
+            appGridInteraction.pendingTagRemovalDrop = nil
         }
         DispatchQueue.main.async {
             removeTagFromDroppedApp(app: app, tagName: tagName)
@@ -2180,45 +2186,45 @@ struct ContentView: View {
 
     private func showDropWarning() {
         withAnimation(.spring(response: 0.24, dampingFraction: 0.82)) {
-            dropWarningToast = tr("drop.systemDefaultWarning")
+            appGridInteraction.dropWarningToast = tr("drop.systemDefaultWarning")
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
             withAnimation(.easeOut(duration: 0.18)) {
-                dropWarningToast = nil
+                appGridInteraction.dropWarningToast = nil
             }
         }
     }
 
     private func showDropRefresh() {
-        dropRefreshStartedAt = Date()
+        appGridInteraction.dropRefreshStartedAt = Date()
         withAnimation(.spring(response: 0.22, dampingFraction: 0.82)) {
-            dropRefreshVisible = true
+            appGridInteraction.dropRefreshVisible = true
         }
     }
 
     private func finishDropRefreshAfterMinimumDuration() {
         let minimumDuration: TimeInterval = 0.85
-        let elapsed = dropRefreshStartedAt.map { Date().timeIntervalSince($0) } ?? minimumDuration
+        let elapsed = appGridInteraction.dropRefreshStartedAt.map { Date().timeIntervalSince($0) } ?? minimumDuration
         let delay = max(0, minimumDuration - elapsed)
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             withAnimation(.easeOut(duration: 0.18)) {
-                dropRefreshVisible = false
+                appGridInteraction.dropRefreshVisible = false
             }
-            dropRefreshStartedAt = nil
+            appGridInteraction.dropRefreshStartedAt = nil
         }
     }
 
     private func setAppDragMode(_ active: Bool) {
-        guard appDragModeActive != active else { return }
+        guard appGridInteraction.appDragModeActive != active else { return }
         if active {
             endTagNavReorder()
             clearAppBubbleState()
         }
-        appDragModeActive = active
+        appGridInteraction.appDragModeActive = active
         if active {
             DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
-                if appDragModeActive && !AppDragCoordinator.shared.hasActiveDrag {
-                    appDragModeActive = false
+                if appGridInteraction.appDragModeActive && !AppDragCoordinator.shared.hasActiveDrag {
+                    appGridInteraction.appDragModeActive = false
                 }
             }
         }
@@ -2228,13 +2234,13 @@ struct ContentView: View {
         keepingPendingUncategorizedDrop: Bool = false,
         keepingPendingTagRemovalDrop: Bool = false
     ) {
-        let hadAppDragState = appDragModeActive
+        let hadAppDragState = appGridInteraction.appDragModeActive
         AppDragCoordinator.shared.cancelDrag()
-        if appDragModeActive {
-            appDragModeActive = false
+        if appGridInteraction.appDragModeActive {
+            appGridInteraction.appDragModeActive = false
         }
         if hadAppDragState {
-            appDragResetToken &+= 1
+            appGridInteraction.appDragResetToken &+= 1
         }
         if tagNavDragModeActive {
             tagNavDragModeActive = false
@@ -2249,11 +2255,11 @@ struct ContentView: View {
             dragItem = nil
         }
         clearAppBubbleState()
-        if !keepingPendingUncategorizedDrop, pendingUncategorizedDrop != nil {
-            pendingUncategorizedDrop = nil
+        if !keepingPendingUncategorizedDrop, appGridInteraction.pendingUncategorizedDrop != nil {
+            appGridInteraction.pendingUncategorizedDrop = nil
         }
-        if !keepingPendingTagRemovalDrop, pendingTagRemovalDrop != nil {
-            pendingTagRemovalDrop = nil
+        if !keepingPendingTagRemovalDrop, appGridInteraction.pendingTagRemovalDrop != nil {
+            appGridInteraction.pendingTagRemovalDrop = nil
         }
     }
 
@@ -2309,7 +2315,7 @@ struct ContentView: View {
         closeOverlayOnSuccess: Bool = true,
         onFailure: (() -> Void)? = nil
     ) {
-        appDragModeActive = false
+        appGridInteraction.appDragModeActive = false
         endTagNavReorder()
         let configuration = NSWorkspace.OpenConfiguration()
         NSWorkspace.shared.openApplication(at: app.path, configuration: configuration) { _, error in

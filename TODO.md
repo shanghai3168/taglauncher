@@ -16,7 +16,8 @@
   - 目标: 先做低风险状态收口，把 App Grid 的 bubble、drag、drop、refresh toast 等临时交互状态集中管理，降低后续标签栏 AppKit 化风险。
   - 原则: 不改变用户可见 UI，不改变拖拽/hover/Quick Search/窗口行为。
   - 验收: `bash build.sh`、`codesign --verify --deep --strict`、localization JSON 解析、App Grid 交互 targeted QA、必要时跑 `Scripts/window_logic_qa.sh`。
-  - QA: 自动化通过后，由 QA 屏幕点击复核；用户只做最终体验验收。
+  - QA: 自动化/半自动化 QA 已通过；待用户最终体验验收后移动到 `Done`。
+  - 结果: `ContentView` 中 App Grid 的 bubble、drag、drop、refresh toast 临时状态已收口到 `AppGridInteractionState`；窗口 8 逻辑 QA 已全部通过。
 
 ## Todo
 
