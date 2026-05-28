@@ -1702,23 +1702,14 @@ struct ContentView: View {
 
         let scannedApps = allApps
         DispatchQueue.global(qos: .userInitiated).async {
-            let result = SmartStartService.applySuggestion(draft)
-            let store = result.store
-            let apps = TagEditor.annotate(apps: scannedApps, store: store)
-            let quickSearchDocs = QuickSearchEngine.makeDocuments(apps: apps, store: store)
-            let colors = store.tags.mapValues { $0.color }
-            let order = TagEditor.orderedTagNames()
+            let result = AppLibraryController.applySmartStartSuggestion(
+                draft,
+                scannedApps: scannedApps
+            )
 
             DispatchQueue.main.async {
                 pendingSmartStartDraft = nil
-                allApps = apps
-                quickSearchDocuments = quickSearchDocs
-                tagColors = colors
-                draggedTagNames = order
-                rebuildDisplayGroups(apps: apps, tagOrder: order)
-                if quickSearchVisible {
-                    refreshQuickSearchResults()
-                }
+                applyAppLibrarySnapshot(result.snapshot)
                 if let summary = result.summary {
                     showSmartStartNotice(mode: .manuallyApplied, summary: summary)
                 } else {
@@ -2370,27 +2361,10 @@ struct ContentView: View {
 
         refreshInProgress = true
         DispatchQueue.global(qos: .userInitiated).async {
-            let scannedApps = AppIndexer.scan()
-            let reconciledStore = TagEditor.reconcileScannedApps(scannedApps)
-            let smartStartResult = SmartStartService.runIfNeeded(
-                apps: scannedApps,
-                store: reconciledStore
-            )
-            let store = smartStartResult.store
-            let apps = TagEditor.annotate(apps: scannedApps, store: store)
-            let quickSearchDocs = QuickSearchEngine.makeDocuments(apps: apps, store: store)
-            let colors = store.tags.mapValues { $0.color }
-            let order = TagEditor.orderedTagNames()
+            let result = AppLibraryController.refresh()
             DispatchQueue.main.async {
-                allApps = apps
-                quickSearchDocuments = quickSearchDocs
-                tagColors = colors
-                draggedTagNames = order
-                rebuildDisplayGroups(apps: apps, tagOrder: order)
-                if quickSearchVisible {
-                    refreshQuickSearchResults()
-                }
-                handleSmartStartRunResult(smartStartResult)
+                applyAppLibrarySnapshot(result.snapshot)
+                handleSmartStartRunResult(result.smartStartResult)
                 if forceLayoutRefresh {
                     finishDropRefreshAfterMinimumDuration()
                 }
@@ -2402,6 +2376,17 @@ struct ContentView: View {
                     refreshApps(forceLayoutRefresh: shouldForceLayout)
                 }
             }
+        }
+    }
+
+    private func applyAppLibrarySnapshot(_ snapshot: AppLibrarySnapshot) {
+        allApps = snapshot.apps
+        quickSearchDocuments = snapshot.quickSearchDocuments
+        tagColors = snapshot.tagColors
+        draggedTagNames = snapshot.tagOrder
+        rebuildDisplayGroups(apps: snapshot.apps, tagOrder: snapshot.tagOrder)
+        if quickSearchVisible {
+            refreshQuickSearchResults()
         }
     }
 

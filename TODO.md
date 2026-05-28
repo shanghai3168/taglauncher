@@ -13,15 +13,17 @@
 
 ## Todo
 
-- [2026-05-28] AppLibraryController / 数据刷新管线整理。
-  - 目标: 把扫描、reconcile、Smart Start、annotate、Quick Search documents 更新从 `ContentView` 中抽离。
-  - 验收: 启动扫描、拖拽改标签、Quick Search 索引同步、新安装 App 后刷新。
-
 - [2026-05-28] 设置页和 Smart Start 模块化。
   - 目标: 低频路径后置整理。
   - 验收: 语言、通用、快捷键、标签、数据、关于页都保持现有行为。
 
 ## Done
+
+- [2026-05-29] AppLibraryController / 数据刷新管线整理。
+  - 提交: 本次提交
+  - 结果: 新增 `AppLibraryController` 和 `AppLibrarySnapshot`，把扫描、reconcile、Smart Start、annotate、Quick Search documents、标签颜色和标签顺序组装从 `ContentView` 的刷新路径中抽离。
+  - 范围: 不改扫描、数据库、搜索匹配、拖拽改标签逻辑；`ContentView` 只应用 snapshot 并刷新 UI。
+  - 验证: `bash build.sh`、`codesign --verify --deep --strict`、启动 App Grid 屏幕复核、Quick Search `sor` 索引复核、上下键复核、`Scripts/window_logic_qa.sh` 全部通过。
 
 - [2026-05-29] OverlayWindowController 收口。
   - 提交: 本次提交
