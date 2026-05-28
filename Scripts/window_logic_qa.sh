@@ -1143,8 +1143,9 @@ print("PASS screen frame: \(actual)")
 SWIFT
   done < <(swift "$screens_swift")
 else
-  rg -Fq 'screenContainingCurrentPointer() ??' "$ROOT_DIR/Apptag/ApptagApp.swift"
-  rg -Fq 'NSMouseInRect(mousePoint, $0.frame, false)' "$ROOT_DIR/Apptag/ApptagApp.swift"
+  rg -Fq 'statusMenuScreenForNextOverlay = overlayController.screenContainingCurrentPointer()' "$ROOT_DIR/Apptag/ApptagApp.swift"
+  rg -Fq 'screenContainingCurrentPointer() ??' "$ROOT_DIR/Apptag/OverlayWindowController.swift"
+  rg -Fq 'NSMouseInRect(mousePoint, $0.frame, false)' "$ROOT_DIR/Apptag/OverlayWindowController.swift"
   log "PASS screen-following static path: single physical display here; code selects NSScreen under current pointer"
 fi
 

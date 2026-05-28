@@ -271,16 +271,12 @@ struct PreferencesView: View {
         isApplyingSystemScheme = true
 
         DispatchQueue.global(qos: .userInitiated).async {
-            let scannedApps = AppIndexer.scan(useCache: false)
-            let result = SmartStartService.applySystemInitialScheme(apps: scannedApps)
-            let store = result.store
-            let apps = TagEditor.annotate(apps: scannedApps, store: store)
-            let colors = store.tags.mapValues { $0.color }
+            let result = AppLibraryController.applySystemInitialScheme()
 
             DispatchQueue.main.async {
                 isApplyingSystemScheme = false
-                allApps = apps
-                tagColors = colors
+                allApps = result.snapshot.apps
+                tagColors = result.snapshot.tagColors
                 refreshDataState()
                 notifyDataChanged()
 

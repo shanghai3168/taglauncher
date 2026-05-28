@@ -13,11 +13,13 @@
 
 ## Todo
 
-- [2026-05-28] 设置页和 Smart Start 模块化。
-  - 目标: 低频路径后置整理。
-  - 验收: 语言、通用、快捷键、标签、数据、关于页都保持现有行为。
-
 ## Done
+
+- [2026-05-29] 设置页和 Smart Start 模块化。
+  - 提交: 本次提交
+  - 结果: `SmartStartNoticeOverlay` 已从 `ContentView` 拆出；设置页“应用系统智能化初始分类”的扫描、Smart Start 应用和 snapshot 组装改由 `AppLibraryController` 统一处理；窗口 QA 脚本同步适配 `OverlayWindowController` 的屏幕选择静态检查。
+  - 范围: 不改设置页 UI 布局、不改 Smart Start 分类规则、不改导入/导出/恢复行为。
+  - 验证: `bash build.sh`、`codesign --verify --deep --strict`、设置页语言/通用/快捷键/标签/数据/关于六个 tab 屏幕复核、`Scripts/window_logic_qa.sh` 全部通过。
 
 - [2026-05-29] AppLibraryController / 数据刷新管线整理。
   - 提交: 本次提交

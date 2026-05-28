@@ -17,6 +17,11 @@ struct AppLibrarySmartStartApplyResult {
     let summary: SmartStartSummary?
 }
 
+struct AppLibrarySystemSchemeApplyResult {
+    let snapshot: AppLibrarySnapshot
+    let summary: SmartStartSummary?
+}
+
 enum AppLibraryController {
     static func refresh() -> AppLibraryRefreshResult {
         let scannedApps = AppIndexer.scan()
@@ -37,6 +42,15 @@ enum AppLibraryController {
     ) -> AppLibrarySmartStartApplyResult {
         let result = SmartStartService.applySuggestion(draft)
         return AppLibrarySmartStartApplyResult(
+            snapshot: makeSnapshot(scannedApps: scannedApps, store: result.store),
+            summary: result.summary
+        )
+    }
+
+    static func applySystemInitialScheme() -> AppLibrarySystemSchemeApplyResult {
+        let scannedApps = AppIndexer.scan(useCache: false)
+        let result = SmartStartService.applySystemInitialScheme(apps: scannedApps)
+        return AppLibrarySystemSchemeApplyResult(
             snapshot: makeSnapshot(scannedApps: scannedApps, store: result.store),
             summary: result.summary
         )
