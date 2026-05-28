@@ -593,12 +593,11 @@ struct ContentView: View {
             quickSearchErrorMessage = nil
             refreshQuickSearchResults()
         }
-        .onChange(of: pendingUncategorizedDrop != nil) { _, active in
-            NotificationCenter.default.post(
-                name: .tagLauncherModalInteractionChanged,
-                object: nil,
-                userInfo: ["active": active]
-            )
+        .onChange(of: pendingUncategorizedDrop != nil) { _, _ in
+            publishModalInteractionState()
+        }
+        .onChange(of: pendingTagRemovalDrop != nil) { _, _ in
+            publishModalInteractionState()
         }
         .onDisappear {
             NotificationCenter.default.post(
@@ -607,6 +606,14 @@ struct ContentView: View {
                 userInfo: ["active": false]
             )
         }
+    }
+
+    private func publishModalInteractionState() {
+        NotificationCenter.default.post(
+            name: .tagLauncherModalInteractionChanged,
+            object: nil,
+            userInfo: ["active": pendingUncategorizedDrop != nil || pendingTagRemovalDrop != nil]
+        )
     }
 
     /// Set edit phase with synchronous notification BEFORE state change.
@@ -2111,7 +2118,6 @@ struct ContentView: View {
     }
 
     private func dismissTagRemovalDropConfirm() {
-        resetTransientDragState(keepingPendingTagRemovalDrop: true)
         tagRemovalDropSuppressFuturePrompt = false
         withAnimation(.easeOut(duration: 0.18)) {
             pendingTagRemovalDrop = nil
@@ -2122,15 +2128,17 @@ struct ContentView: View {
         guard let pendingDrop = pendingTagRemovalDrop else { return }
         let app = pendingDrop.app
         let tagName = pendingDrop.tagName
-        if tagRemovalDropSuppressFuturePrompt {
+        let shouldSuppressFuturePrompt = tagRemovalDropSuppressFuturePrompt
+        if shouldSuppressFuturePrompt {
             skipTagRemovalDropConfirm = true
         }
-        resetTransientDragState(keepingPendingTagRemovalDrop: true)
         tagRemovalDropSuppressFuturePrompt = false
         withAnimation(.easeOut(duration: 0.16)) {
             pendingTagRemovalDrop = nil
         }
-        removeTagFromDroppedApp(app: app, tagName: tagName)
+        DispatchQueue.main.async {
+            removeTagFromDroppedApp(app: app, tagName: tagName)
+        }
     }
 
     private func removeTagFromDroppedApp(app: AppInfo, tagName: String) {

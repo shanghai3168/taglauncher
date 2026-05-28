@@ -406,7 +406,7 @@ struct TagRemovalDropConfirmBubble: View {
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                Button(action: onCancel) {
+                Button(action: { DispatchQueue.main.async(execute: onCancel) }) {
                     Image(systemName: "xmark")
                         .font(.system(size: 12, weight: .bold))
                         .foregroundStyle(.white.opacity(0.82))
@@ -427,15 +427,37 @@ struct TagRemovalDropConfirmBubble: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-            Toggle(doNotRemindTitle, isOn: $doNotRemind)
-                .toggleStyle(.checkbox)
-                .font(.system(size: 13, weight: .medium))
-                .foregroundStyle(.white.opacity(0.80))
+            Button {
+                doNotRemind.toggle()
+            } label: {
+                HStack(spacing: 10) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 4, style: .continuous)
+                            .fill(doNotRemind ? Color.accentColor : Color.white.opacity(0.10))
+                        RoundedRectangle(cornerRadius: 4, style: .continuous)
+                            .stroke(Color.white.opacity(0.92), lineWidth: 1.6)
+                        if doNotRemind {
+                            Image(systemName: "checkmark")
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundStyle(.white)
+                        }
+                    }
+                    .frame(width: 18, height: 18)
+
+                    Text(doNotRemindTitle)
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundStyle(.white.opacity(0.82))
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
+                }
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
 
             HStack(spacing: 12) {
                 Spacer(minLength: 0)
 
-                Button(action: onCancel) {
+                Button(action: { DispatchQueue.main.async(execute: onCancel) }) {
                     Text(cancelTitle)
                         .font(.system(size: 13, weight: .semibold))
                         .foregroundStyle(.white.opacity(0.86))
@@ -447,7 +469,7 @@ struct TagRemovalDropConfirmBubble: View {
                 }
                 .buttonStyle(.plain)
 
-                Button(action: onConfirm) {
+                Button(action: { DispatchQueue.main.async(execute: onConfirm) }) {
                     Text(confirmTitle)
                         .font(.system(size: 13, weight: .semibold))
                         .foregroundStyle(.white)

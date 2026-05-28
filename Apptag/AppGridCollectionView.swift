@@ -339,7 +339,9 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
         guard let coordinator,
               coordinator.displayStyle != .flat
         else { return }
-        coordinator.onDropOutsideGroup(path, source, copy)
+        DispatchQueue.main.async {
+            coordinator.onDropOutsideGroup(path, source, copy)
+        }
     }
 
     private func setup() {
