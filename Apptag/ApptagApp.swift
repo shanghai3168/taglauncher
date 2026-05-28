@@ -54,6 +54,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var statusItem: NSStatusItem?
     private var overlayWindow: NSWindow?
     private var overlayKeyMonitor: Any?
+    private var quickSearchLocalMouseMonitor: Any?
     private var quickSearchExternalMouseMonitor: Any?
     private var settingsWindow: NSWindow?    // Track Settings window to keep it above overlay
     private var mainHotkeyRef: EventHotKeyRef?
@@ -1279,6 +1280,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     /// Settings must always appear centered over the current overlay view and float above it.
     private func prepareSettingsWindow(_ window: NSWindow) {
+        dismissQuickSearchIfNeeded()
         let settingsSize = NSSize(width: 880, height: 460)
         window.identifier = NSUserInterfaceItemIdentifier("TagLauncherPreferencesWindow")
         window.minSize = settingsSize
@@ -1518,6 +1520,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     private func installQuickSearchExternalMouseMonitor() {
+        installQuickSearchLocalMouseMonitor()
         guard quickSearchExternalMouseMonitor == nil else { return }
         quickSearchExternalMouseMonitor = NSEvent.addGlobalMonitorForEvents(
             matching: [.leftMouseDown, .rightMouseDown, .otherMouseDown]
@@ -1529,7 +1532,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
 
+    private func installQuickSearchLocalMouseMonitor() {
+        guard quickSearchLocalMouseMonitor == nil else { return }
+        quickSearchLocalMouseMonitor = NSEvent.addLocalMonitorForEvents(
+            matching: [.leftMouseDown, .rightMouseDown, .otherMouseDown]
+        ) { [weak self] event in
+            guard let self, self.isQuickSearchOpen else { return event }
+            if event.window === self.overlayWindow {
+                NotificationCenter.default.post(name: .tagLauncherQuickSearchDismissRequested, object: nil)
+                return nil
+            }
+            return event
+        }
+    }
+
     private func removeQuickSearchExternalMouseMonitor() {
+        if let quickSearchLocalMouseMonitor {
+            NSEvent.removeMonitor(quickSearchLocalMouseMonitor)
+            self.quickSearchLocalMouseMonitor = nil
+        }
         if let quickSearchExternalMouseMonitor {
             NSEvent.removeMonitor(quickSearchExternalMouseMonitor)
             self.quickSearchExternalMouseMonitor = nil
@@ -1571,6 +1592,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     @objc private func openPreferences(_ sender: Any? = nil) {
+        dismissQuickSearchIfNeeded()
         TagDatabase.flushPendingCategorySchemeBackupBatch()
         if overlayAvoidsSpaceSwitch {
             refreshLauncherChromeState(activate: false, avoidSpaceSwitch: true)
@@ -1600,6 +1622,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         window.isReleasedWhenClosed = false
         settingsWindow = window
         prepareSettingsWindow(window)
+    }
+
+    private func dismissQuickSearchIfNeeded() {
+        guard isQuickSearchOpen else { return }
+        isQuickSearchOpen = false
+        removeQuickSearchExternalMouseMonitor()
+        updateOverlayLevelForTextInput()
+        NotificationCenter.default.post(name: .tagLauncherQuickSearchDismissRequested, object: nil)
     }
 
     @objc private func switchLanguage(_ sender: NSMenuItem) {

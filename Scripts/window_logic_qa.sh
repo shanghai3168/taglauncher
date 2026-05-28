@@ -381,6 +381,39 @@ func tagWindows(_ windows: [WindowInfo]) -> [WindowInfo] {
     }
 }
 
+func rect(_ window: WindowInfo) -> CGRect {
+    CGRect(
+        x: dimension(window.bounds, "X"),
+        y: dimension(window.bounds, "Y"),
+        width: dimension(window.bounds, "Width"),
+        height: dimension(window.bounds, "Height")
+    )
+}
+
+func isOverlayWindow(_ window: WindowInfo) -> Bool {
+    guard window.name.isEmpty else { return false }
+    let windowFrame = rect(window)
+    return NSScreen.screens.contains { screen in
+        let screenFrame = screen.frame
+        return abs(windowFrame.width - screenFrame.width) <= 12
+            && windowFrame.height >= screenFrame.height * 0.75
+            && abs(windowFrame.midX - screenFrame.midX) <= 12
+    }
+}
+
+func isQuickSearchWindow(_ window: WindowInfo) -> Bool {
+    guard window.name.isEmpty, !isOverlayWindow(window) else { return false }
+    let windowFrame = rect(window)
+    return windowFrame.width >= 500
+        && windowFrame.width <= 900
+        && windowFrame.height >= 120
+        && windowFrame.height <= 850
+}
+
+func isSettingsLikeWindow(_ window: WindowInfo) -> Bool {
+    !window.name.isEmpty
+}
+
 func assertTagLayer(_ tag: [WindowInfo]) {
     for window in tag where window.layer != 23 {
         fail("TagLauncher window has unexpected layer \(window.layer); expected 23")
@@ -395,6 +428,7 @@ switch mode {
 case "overlay":
     guard tag.count == 1 else { fail("overlay expected 1 TagLauncher window, got \(tag.count)") }
     assertTagLayer(tag)
+    guard isOverlayWindow(tag[0]) else { fail("overlay window was not full-screen sized: \(tag[0].bounds)") }
     let menubarLayer = windows.first { $0.owner == "Window Server" && $0.name == "Menubar" }?.layer
     guard menubarLayer == 24 else { fail("menubar layer expected 24, got \(String(describing: menubarLayer))") }
     let dockWindows = windows.filter { $0.owner == "Dock" }
@@ -404,7 +438,12 @@ case "overlay":
 case "settings":
     guard tag.count == 2 else { fail("settings expected 2 TagLauncher windows, got \(tag.count)") }
     assertTagLayer(tag)
-    guard !tag[0].name.isEmpty, tag[1].name.isEmpty else {
+    let overlays = tag.filter(isOverlayWindow)
+    let settings = tag.filter(isSettingsLikeWindow)
+    guard overlays.count == 1, settings.count == 1 else {
+        fail("settings stack wrong: names=\(tag.map(\.name)) bounds=\(tag.map(\.bounds))")
+    }
+    guard !tag[0].name.isEmpty else {
         fail("settings order wrong: \(tag.map(\.name))")
     }
     print("PASS settings over overlay: order=\(tag.map(\.name))")
@@ -451,26 +490,33 @@ case "fullscreen-target":
     print("PASS fullscreen target: layer=\(target.layer) bounds=\(target.bounds)")
 
 case "fullscreen-overlay":
-    guard tag.count == 1 else { fail("fullscreen overlay expected 1 TagLauncher window, got \(tag.count)") }
+    guard tag.count == 1 || tag.count == 2 else { fail("fullscreen overlay expected 1 or 2 TagLauncher windows, got \(tag.count)") }
     assertTagLayer(tag)
     guard let target = windows.first(where: { $0.name == "TagLauncherFullscreenQATargetFullscreen" }) else {
         fail("fullscreen target disappeared; TagLauncher likely switched to another Space")
     }
-    let overlayWidth = dimension(tag[0].bounds, "Width")
-    let overlayHeight = dimension(tag[0].bounds, "Height")
-    let overlayMidX = dimension(tag[0].bounds, "X") + overlayWidth / 2
+    guard let overlay = tag.first(where: isOverlayWindow) else {
+        fail("fullscreen overlay TagLauncher window not found: \(tag.map(\.bounds))")
+    }
+    let quickSearch = tag.filter(isQuickSearchWindow)
+    guard quickSearch.count == tag.count - 1 else {
+        fail("fullscreen overlay stack has unexpected windows: \(tag.map(\.bounds))")
+    }
+    let overlayWidth = dimension(overlay.bounds, "Width")
+    let overlayHeight = dimension(overlay.bounds, "Height")
+    let overlayMidX = dimension(overlay.bounds, "X") + overlayWidth / 2
     let targetWidth = dimension(target.bounds, "Width")
     let targetHeight = dimension(target.bounds, "Height")
     let targetMidX = dimension(target.bounds, "X") + targetWidth / 2
     guard abs(overlayWidth - targetWidth) <= 12,
           overlayHeight >= targetHeight * 0.88,
           abs(overlayMidX - targetMidX) <= 12 else {
-        fail("fullscreen overlay is not on the target fullscreen display: overlay=\(tag[0].bounds) target=\(target.bounds)")
+        fail("fullscreen overlay is not on the target fullscreen display: overlay=\(overlay.bounds) target=\(target.bounds)")
     }
-    guard tag[0].layer > target.layer else {
-        fail("TagLauncher layer \(tag[0].layer) is not above fullscreen target layer \(target.layer)")
+    guard tag.allSatisfy({ $0.layer > target.layer }) else {
+        fail("TagLauncher stack is not above fullscreen target")
     }
-    print("PASS fullscreen overlay above target: overlayLayer=\(tag[0].layer) targetLayer=\(target.layer)")
+    print("PASS fullscreen overlay above target: tagLayers=\(tag.map(\.layer)) targetLayer=\(target.layer)")
 
 case "fullscreen-settings":
     guard tag.count == 2 else { fail("fullscreen settings expected 2 TagLauncher windows, got \(tag.count)") }
@@ -478,7 +524,12 @@ case "fullscreen-settings":
     guard let target = windows.first(where: { $0.name == "TagLauncherFullscreenQATargetFullscreen" }) else {
         fail("fullscreen target disappeared after opening settings; TagLauncher likely switched to another Space")
     }
-    guard !tag[0].name.isEmpty, tag[1].name.isEmpty else {
+    let overlays = tag.filter(isOverlayWindow)
+    let settings = tag.filter(isSettingsLikeWindow)
+    guard overlays.count == 1, settings.count == 1 else {
+        fail("fullscreen settings stack wrong: names=\(tag.map(\.name)) bounds=\(tag.map(\.bounds))")
+    }
+    guard !tag[0].name.isEmpty else {
         fail("fullscreen settings order wrong: \(tag.map(\.name))")
     }
     guard tag.allSatisfy({ $0.layer > target.layer }) else {

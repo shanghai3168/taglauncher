@@ -13,11 +13,6 @@
 
 ## Todo
 
-- [2026-05-28] Quick Search 独立面板化。
-  - 目标: 从主 overlay 里拆出来，做 Spotlight 风格独立 `NSPanel`。
-  - 风险: 高，涉及焦点、Esc、外部点击、全局快捷键、窗口层级。
-  - 验收: 普通桌面、全屏、Split View、Settings 同时存在时都不跳 Space。
-
 - [2026-05-28] OverlayWindowController 收口。
   - 目标: 把 `AppDelegate` 里的 overlay 显示、隐藏、层级、屏幕选择拆出去。
   - 时机: Quick Search 窗口边界稳定后再做。
@@ -32,6 +27,12 @@
   - 验收: 语言、通用、快捷键、标签、数据、关于页都保持现有行为。
 
 ## Done
+
+- [2026-05-29] Quick Search 独立面板化。
+  - 提交: 本次提交
+  - 结果: Quick Search 面板已从主 overlay SwiftUI 层拆出，改为独立 `NSPanel` 并作为 overlay child window 显示；搜索状态、输入框、结果列表、启动逻辑保持原路径。
+  - 补强: Quick Search panel 与 overlay 保持同层级，避免压过菜单栏；打开 Settings 前统一关闭 Quick Search；本应用内外部点击可关闭 Quick Search 但保留 App Grid。
+  - 验证: `bash build.sh`、`codesign --verify --deep --strict`、`Scripts/window_logic_qa.sh` 全部通过；屏幕 QA 验证打开、输入 `sor`、上下键选中和 Esc 关闭均正常。
 
 - [2026-05-29] Quick Search 结果列表 AppKit 化。
   - 提交: 本次提交

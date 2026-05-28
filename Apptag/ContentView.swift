@@ -664,7 +664,7 @@ struct ContentView: View {
                     }
                     .zIndex(899)
 
-                QuickSearchOverlayView(
+                QuickSearchPanelPresentationView(
                     query: $quickSearchQuery,
                     results: quickSearchResults,
                     selectedID: quickSearchSelectedID,
@@ -672,16 +672,15 @@ struct ContentView: View {
                     selectionScrollToken: quickSearchSelectionScrollToken,
                     isLoading: quickSearchDocuments.isEmpty && refreshInProgress,
                     maxVisibleRows: quickSearchMaxVisibleRows(in: proxy.size),
+                    panelTopY: quickSearchPanelTopY(in: proxy.size),
+                    panelHeight: quickSearchPanelContentHeight(in: proxy.size),
                     errorMessage: quickSearchErrorMessage,
                     onCommand: handleQuickSearchCommand,
                     onHover: selectQuickSearchResult,
                     onLaunch: launchQuickSearchResult
                 )
-                .position(
-                    x: proxy.size.width / 2,
-                    y: quickSearchPanelCenterY(in: proxy.size)
-                )
-                .transition(.scale(scale: 0.98).combined(with: .opacity))
+                .frame(width: 0, height: 0)
+                .allowsHitTesting(false)
                 .zIndex(900)
             }
         }
@@ -689,10 +688,15 @@ struct ContentView: View {
         .animation(.easeOut(duration: 0.12), value: quickSearchVisible)
     }
 
-    private func quickSearchPanelCenterY(in size: CGSize) -> CGFloat {
-        let visibleRows = max(1, min(quickSearchResults.isEmpty ? 1 : quickSearchResults.count, quickSearchMaxVisibleRows(in: size)))
-        let estimatedPanelHeight = CGFloat(visibleRows) * 76 + 122
-        return quickSearchPanelTopY(in: size) + estimatedPanelHeight / 2
+    private func quickSearchPanelContentHeight(in size: CGSize) -> CGFloat {
+        let hasResultList = !(quickSearchDocuments.isEmpty && refreshInProgress)
+            && quickSearchErrorMessage == nil
+            && !quickSearchResults.isEmpty
+        let visibleRows = min(max(1, quickSearchResults.count), quickSearchMaxVisibleRows(in: size))
+        return QuickSearchPanelMetrics.contentHeight(
+            hasResultList: hasResultList,
+            visibleRows: visibleRows
+        )
     }
 
     private func quickSearchPanelTopY(in size: CGSize) -> CGFloat {
@@ -701,8 +705,11 @@ struct ContentView: View {
 
     private func quickSearchMaxVisibleRows(in size: CGSize) -> Int {
         let bottomClearance: CGFloat = 84
-        let chromeHeight: CGFloat = 122
-        let rowHeightWithSpacing: CGFloat = 76
+        let chromeHeight = QuickSearchPanelMetrics.headerHeight
+            + QuickSearchPanelMetrics.dividerHeight
+            + QuickSearchPanelMetrics.resultListVerticalInset * 2
+        let rowHeightWithSpacing = QuickSearchPanelMetrics.rowHeight
+            + QuickSearchPanelMetrics.rowSpacing
         let availableHeight = max(0, size.height - quickSearchPanelTopY(in: size) - bottomClearance - chromeHeight)
         return max(1, min(8, Int(floor(availableHeight / rowHeightWithSpacing))))
     }

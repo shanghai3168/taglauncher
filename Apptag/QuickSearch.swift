@@ -729,6 +729,252 @@ enum QuickSearchCommand {
     case dismiss
 }
 
+enum QuickSearchPanelMetrics {
+    static let width: CGFloat = 760
+    static let rowHeight: CGFloat = 74
+    static let rowSpacing: CGFloat = 2
+    static let resultListVerticalInset: CGFloat = 10
+    static let headerHeight: CGFloat = 84
+    static let dividerHeight: CGFloat = 1
+    static let messageRowHeight: CGFloat = 86
+
+    static func contentHeight(hasResultList: Bool, visibleRows: Int) -> CGFloat {
+        if hasResultList {
+            return headerHeight
+                + dividerHeight
+                + CGFloat(max(1, visibleRows)) * (rowHeight + rowSpacing)
+                + resultListVerticalInset * 2
+        }
+        return headerHeight + dividerHeight + messageRowHeight
+    }
+}
+
+struct QuickSearchPanelPresentationView: NSViewRepresentable {
+    @Binding var query: String
+    let results: [QuickSearchResult]
+    let selectedID: URL?
+    let focusToken: Int
+    let selectionScrollToken: Int
+    let isLoading: Bool
+    let maxVisibleRows: Int
+    let panelTopY: CGFloat
+    let panelHeight: CGFloat
+    let errorMessage: String?
+    let onCommand: (QuickSearchCommand) -> Void
+    let onHover: (QuickSearchResult) -> Void
+    let onLaunch: (QuickSearchResult) -> Void
+
+    func makeNSView(context: Context) -> QuickSearchPanelAnchorView {
+        QuickSearchPanelAnchorView()
+    }
+
+    func updateNSView(_ view: QuickSearchPanelAnchorView, context: Context) {
+        let size = NSSize(width: QuickSearchPanelMetrics.width, height: panelHeight)
+        let rootView = QuickSearchPanelWindowContent(
+            size: size,
+            content: AnyView(
+                QuickSearchOverlayView(
+                    query: $query,
+                    results: results,
+                    selectedID: selectedID,
+                    focusToken: focusToken,
+                    selectionScrollToken: selectionScrollToken,
+                    isLoading: isLoading,
+                    maxVisibleRows: maxVisibleRows,
+                    errorMessage: errorMessage,
+                    onCommand: onCommand,
+                    onHover: onHover,
+                    onLaunch: onLaunch
+                )
+            )
+        )
+        context.coordinator.apply(
+            QuickSearchPanelConfiguration(
+                panelTopY: panelTopY,
+                size: size,
+                rootView: AnyView(rootView)
+            ),
+            anchorView: view
+        )
+    }
+
+    static func dismantleNSView(_ nsView: QuickSearchPanelAnchorView, coordinator: Coordinator) {
+        coordinator.closePanel()
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+
+    final class Coordinator {
+        private var panel: QuickSearchPanel?
+        private var hostingView: NSHostingView<AnyView>?
+        private weak var parentWindow: NSWindow?
+        private var deferredApplyPending = false
+
+        func apply(_ configuration: QuickSearchPanelConfiguration, anchorView: QuickSearchPanelAnchorView) {
+            guard let parentWindow = anchorView.window else {
+                scheduleDeferredApply(configuration, anchorView: anchorView)
+                return
+            }
+
+            deferredApplyPending = false
+            let panel = ensurePanel(parentWindow: parentWindow)
+            let frame = windowFrame(
+                parentWindow: parentWindow,
+                panelTopY: configuration.panelTopY,
+                size: configuration.size
+            )
+
+            hostingView?.rootView = configuration.rootView
+            hostingView?.frame = NSRect(origin: .zero, size: configuration.size)
+            panel.contentView?.frame = NSRect(origin: .zero, size: configuration.size)
+            panel.collectionBehavior = collectionBehavior(parentWindow: parentWindow)
+            panel.level = parentWindow.level
+
+            if panel.parent !== parentWindow {
+                if let previousParent = panel.parent {
+                    previousParent.removeChildWindow(panel)
+                }
+                parentWindow.addChildWindow(panel, ordered: .above)
+                self.parentWindow = parentWindow
+            }
+
+            if panel.frame != frame {
+                panel.setFrame(frame, display: true)
+            }
+            panel.makeKeyAndOrderFront(nil)
+            panel.orderFrontRegardless()
+        }
+
+        func closePanel() {
+            if let panel {
+                if let parent = panel.parent {
+                    parent.removeChildWindow(panel)
+                }
+                panel.orderOut(nil)
+            }
+            panel = nil
+            hostingView = nil
+            parentWindow = nil
+            deferredApplyPending = false
+        }
+
+        private func ensurePanel(parentWindow: NSWindow) -> QuickSearchPanel {
+            if let panel {
+                return panel
+            }
+
+            let panel = QuickSearchPanel(
+                contentRect: .zero,
+                styleMask: [.borderless, .fullSizeContentView, .nonactivatingPanel],
+                backing: .buffered,
+                defer: false
+            )
+            panel.isFloatingPanel = true
+            panel.hidesOnDeactivate = false
+            panel.isOpaque = false
+            panel.backgroundColor = .clear
+            panel.hasShadow = false
+            panel.titlebarAppearsTransparent = true
+            panel.titleVisibility = .hidden
+            panel.isReleasedWhenClosed = false
+            panel.collectionBehavior = collectionBehavior(parentWindow: parentWindow)
+
+            let hostingView = NSHostingView(rootView: AnyView(EmptyView()))
+            hostingView.wantsLayer = true
+            hostingView.layer?.backgroundColor = NSColor.clear.cgColor
+            panel.contentView = hostingView
+
+            self.panel = panel
+            self.hostingView = hostingView
+            return panel
+        }
+
+        private func scheduleDeferredApply(
+            _ configuration: QuickSearchPanelConfiguration,
+            anchorView: QuickSearchPanelAnchorView
+        ) {
+            guard !deferredApplyPending else { return }
+            deferredApplyPending = true
+            DispatchQueue.main.async { [weak self, weak anchorView] in
+                guard let self, let anchorView else { return }
+                self.deferredApplyPending = false
+                self.apply(configuration, anchorView: anchorView)
+            }
+        }
+
+        private func windowFrame(
+            parentWindow: NSWindow,
+            panelTopY: CGFloat,
+            size: NSSize
+        ) -> NSRect {
+            let parentFrame = parentWindow.frame
+            return NSRect(
+                x: parentFrame.minX + (parentFrame.width - size.width) / 2,
+                y: parentFrame.maxY - panelTopY - size.height,
+                width: size.width,
+                height: size.height
+            )
+        }
+
+        private func collectionBehavior(parentWindow: NSWindow) -> NSWindow.CollectionBehavior {
+            var behavior: NSWindow.CollectionBehavior = [
+                .fullScreenAuxiliary,
+                .stationary,
+                .transient,
+                .ignoresCycle
+            ]
+            if parentWindow.collectionBehavior.contains(.canJoinAllSpaces) {
+                behavior.insert(.canJoinAllSpaces)
+            }
+            return behavior
+        }
+    }
+}
+
+private final class QuickSearchPanel: NSPanel {
+    override var canBecomeKey: Bool { true }
+    override var canBecomeMain: Bool { false }
+
+    override func constrainFrameRect(_ frameRect: NSRect, to screen: NSScreen?) -> NSRect {
+        frameRect
+    }
+}
+
+final class QuickSearchPanelAnchorView: NSView {
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        setup()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setup()
+    }
+
+    private func setup() {
+        wantsLayer = true
+        layer?.backgroundColor = NSColor.clear.cgColor
+    }
+}
+
+struct QuickSearchPanelConfiguration {
+    let panelTopY: CGFloat
+    let size: NSSize
+    let rootView: AnyView
+}
+
+private struct QuickSearchPanelWindowContent: View {
+    let size: NSSize
+    let content: AnyView
+
+    var body: some View {
+        content
+            .frame(width: size.width, height: size.height, alignment: .top)
+    }
+}
+
 struct QuickSearchOverlayView: View {
     @Binding var query: String
     let results: [QuickSearchResult]
@@ -744,8 +990,8 @@ struct QuickSearchOverlayView: View {
 
     @Environment(\.colorScheme) private var colorScheme
 
-    private let panelWidth: CGFloat = 760
-    private let rowHeight: CGFloat = 74
+    private let panelWidth: CGFloat = QuickSearchPanelMetrics.width
+    private let rowHeight: CGFloat = QuickSearchPanelMetrics.rowHeight
 
     private var panelBackgroundColor: Color {
         colorScheme == .dark
@@ -806,7 +1052,11 @@ struct QuickSearchOverlayView: View {
                     onHover: onHover,
                     onLaunch: onLaunch
                 )
-                .frame(height: CGFloat(min(results.count, maxVisibleRows)) * (rowHeight + 2) + 20)
+                .frame(
+                    height: CGFloat(min(results.count, maxVisibleRows))
+                        * (rowHeight + QuickSearchPanelMetrics.rowSpacing)
+                        + QuickSearchPanelMetrics.resultListVerticalInset * 2
+                )
             }
         }
         .frame(width: panelWidth)
