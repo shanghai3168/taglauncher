@@ -423,13 +423,15 @@ final class TagNavigationButton: NSButton {
 
     private func updateAppearance() {
         let background = TagColor.nsColor(for: item.colorIndex)
+        let dragScale: CGFloat = isDragging ? 1.04 : 1.0
         layer?.backgroundColor = background.cgColor
         layer?.cornerRadius = orientation == .horizontal ? 7 : 6
-        layer?.shadowColor = NSColor.black.withAlphaComponent(isDragging ? 0.38 : 0.20).cgColor
+        layer?.shadowColor = NSColor.black.withAlphaComponent(isDragging ? 0.50 : 0.20).cgColor
         layer?.shadowOpacity = 1
-        layer?.shadowRadius = isDragging ? 14 : 3
-        layer?.shadowOffset = NSSize(width: 0, height: isDragging ? -7 : -1)
-        layer?.zPosition = isDragging ? 20 : 0
+        layer?.shadowRadius = isDragging ? 18 : 3
+        layer?.shadowOffset = NSSize(width: 0, height: isDragging ? -9 : -1)
+        layer?.zPosition = isDragging ? 30 : 0
+        layer?.setAffineTransform(CGAffineTransform(scaleX: dragScale, y: dragScale))
         alphaValue = dragModeActive ? (isDragging ? 1.0 : 0.62) : 1.0
 
         let textColor: NSColor = (item.colorIndex == 0 || item.colorIndex == 5) ? .labelColor : .white
