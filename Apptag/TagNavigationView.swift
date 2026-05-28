@@ -16,8 +16,14 @@ struct TagNavigationView: NSViewRepresentable {
     let items: [TagNavigationItem]
     let orientation: Orientation
     let contentInsets: NSEdgeInsets
+    let dragModeActive: Bool
+    let draggingItemID: String?
     let onActivate: (String) -> Void
     let onHoverChange: (String, Bool) -> Void
+    let canReorder: (String) -> Bool
+    let onReorderBegan: (String) -> Void
+    let onReorderMoved: (String, String) -> Void
+    let onReorderEnded: () -> Void
 
     func makeNSView(context: Context) -> TagNavigationHostView {
         let view = TagNavigationHostView()
@@ -25,8 +31,14 @@ struct TagNavigationView: NSViewRepresentable {
             items: items,
             orientation: orientation,
             contentInsets: contentInsets,
+            dragModeActive: dragModeActive,
+            draggingItemID: draggingItemID,
             onActivate: onActivate,
-            onHoverChange: onHoverChange
+            onHoverChange: onHoverChange,
+            canReorder: canReorder,
+            onReorderBegan: onReorderBegan,
+            onReorderMoved: onReorderMoved,
+            onReorderEnded: onReorderEnded
         )
         return view
     }
@@ -36,8 +48,14 @@ struct TagNavigationView: NSViewRepresentable {
             items: items,
             orientation: orientation,
             contentInsets: contentInsets,
+            dragModeActive: dragModeActive,
+            draggingItemID: draggingItemID,
             onActivate: onActivate,
-            onHoverChange: onHoverChange
+            onHoverChange: onHoverChange,
+            canReorder: canReorder,
+            onReorderBegan: onReorderBegan,
+            onReorderMoved: onReorderMoved,
+            onReorderEnded: onReorderEnded
         )
     }
 }
@@ -62,15 +80,27 @@ final class TagNavigationHostView: NSView {
         items: [TagNavigationItem],
         orientation: TagNavigationView.Orientation,
         contentInsets: NSEdgeInsets,
+        dragModeActive: Bool,
+        draggingItemID: String?,
         onActivate: @escaping (String) -> Void,
-        onHoverChange: @escaping (String, Bool) -> Void
+        onHoverChange: @escaping (String, Bool) -> Void,
+        canReorder: @escaping (String) -> Bool,
+        onReorderBegan: @escaping (String) -> Void,
+        onReorderMoved: @escaping (String, String) -> Void,
+        onReorderEnded: @escaping () -> Void
     ) {
         documentView.update(
             items: items,
             orientation: orientation,
             contentInsets: contentInsets,
+            dragModeActive: dragModeActive,
+            draggingItemID: draggingItemID,
             onActivate: onActivate,
-            onHoverChange: onHoverChange
+            onHoverChange: onHoverChange,
+            canReorder: canReorder,
+            onReorderBegan: onReorderBegan,
+            onReorderMoved: onReorderMoved,
+            onReorderEnded: onReorderEnded
         )
         scrollView.hasHorizontalScroller = orientation == .horizontal
         scrollView.hasVerticalScroller = orientation == .vertical
@@ -108,8 +138,14 @@ final class TagNavigationDocumentView: NSView {
     private var orientation: TagNavigationView.Orientation = .horizontal
     private var contentInsets = NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     private var buttons: [TagNavigationButton] = []
+    private var dragModeActive = false
+    private var draggingItemID: String?
     private var onActivate: (String) -> Void = { _ in }
     private var onHoverChange: (String, Bool) -> Void = { _, _ in }
+    private var canReorder: (String) -> Bool = { _ in false }
+    private var onReorderBegan: (String) -> Void = { _ in }
+    private var onReorderMoved: (String, String) -> Void = { _, _ in }
+    private var onReorderEnded: () -> Void = {}
 
     override var isFlipped: Bool { true }
 
@@ -117,23 +153,36 @@ final class TagNavigationDocumentView: NSView {
         items: [TagNavigationItem],
         orientation: TagNavigationView.Orientation,
         contentInsets: NSEdgeInsets,
+        dragModeActive: Bool,
+        draggingItemID: String?,
         onActivate: @escaping (String) -> Void,
-        onHoverChange: @escaping (String, Bool) -> Void
+        onHoverChange: @escaping (String, Bool) -> Void,
+        canReorder: @escaping (String) -> Bool,
+        onReorderBegan: @escaping (String) -> Void,
+        onReorderMoved: @escaping (String, String) -> Void,
+        onReorderEnded: @escaping () -> Void
     ) {
-        let needsRebuild = self.items != items || self.orientation != orientation
+        let oldNames = self.items.map(\.name)
+        let newNames = items.map(\.name)
+        let needsRebuild = Set(oldNames) != Set(newNames) || self.orientation != orientation
         self.items = items
         self.orientation = orientation
         self.contentInsets = contentInsets
+        self.dragModeActive = dragModeActive
+        self.draggingItemID = draggingItemID
         self.onActivate = onActivate
         self.onHoverChange = onHoverChange
+        self.canReorder = canReorder
+        self.onReorderBegan = onReorderBegan
+        self.onReorderMoved = onReorderMoved
+        self.onReorderEnded = onReorderEnded
 
         if needsRebuild {
             rebuildButtons()
         } else {
-            for (button, item) in zip(buttons, items) {
-                button.configure(item: item, orientation: orientation)
-            }
+            reuseButtonsInCurrentOrder()
         }
+        updateButtonRuntimeState()
         needsLayout = true
     }
 
@@ -171,9 +220,45 @@ final class TagNavigationDocumentView: NSView {
             let button = TagNavigationButton(item: item, orientation: orientation)
             button.onActivate = { [weak self] tagID in self?.onActivate(tagID) }
             button.onHoverChange = { [weak self] tagID, active in self?.onHoverChange(tagID, active) }
+            button.canReorder = { [weak self] tagID in self?.canReorder(tagID) ?? false }
+            button.onReorderBegan = { [weak self] tagID in self?.onReorderBegan(tagID) }
+            button.onReorderMoved = { [weak self] tagID, screenPoint in
+                self?.handleReorderMove(tagID: tagID, screenPoint: screenPoint)
+            }
+            button.onReorderEnded = { [weak self] in self?.onReorderEnded() }
             addSubview(button)
             return button
         }
+    }
+
+    private func reuseButtonsInCurrentOrder() {
+        let existing = Dictionary(uniqueKeysWithValues: buttons.map { ($0.itemName, $0) })
+        buttons = items.compactMap { item in
+            guard let button = existing[item.name] else { return nil }
+            button.configure(item: item, orientation: orientation)
+            return button
+        }
+    }
+
+    private func updateButtonRuntimeState() {
+        for button in buttons {
+            button.configureRuntime(
+                dragModeActive: dragModeActive && canReorder(button.itemName),
+                isDragging: draggingItemID == button.itemName
+            )
+        }
+    }
+
+    private func handleReorderMove(tagID: String, screenPoint: NSPoint) {
+        guard let window else { return }
+        let windowPoint = window.convertPoint(fromScreen: screenPoint)
+        let point = convert(windowPoint, from: nil)
+        guard let target = buttons.first(where: { button in
+            button.itemName != tagID
+                && canReorder(button.itemName)
+                && button.frame.insetBy(dx: -4, dy: -4).contains(point)
+        }) else { return }
+        onReorderMoved(tagID, target.itemName)
     }
 
     private func layoutHorizontal() {
@@ -201,11 +286,19 @@ final class TagNavigationDocumentView: NSView {
 final class TagNavigationButton: NSButton {
     var onActivate: (String) -> Void = { _ in }
     var onHoverChange: (String, Bool) -> Void = { _, _ in }
+    var canReorder: (String) -> Bool = { _ in false }
+    var onReorderBegan: (String) -> Void = { _ in }
+    var onReorderMoved: (String, NSPoint) -> Void = { _, _ in }
+    var onReorderEnded: () -> Void = {}
 
     private var item: TagNavigationItem
     private var orientation: TagNavigationView.Orientation
     private var trackingAreaRef: NSTrackingArea?
     private var isMouseInside = false
+    private var dragModeActive = false
+    private var isDragging = false
+
+    var itemName: String { item.name }
 
     var preferredSize: NSSize {
         let font = NSFont.systemFont(ofSize: 13, weight: .medium)
@@ -246,6 +339,12 @@ final class TagNavigationButton: NSButton {
         needsLayout = true
     }
 
+    func configureRuntime(dragModeActive: Bool, isDragging: Bool) {
+        self.dragModeActive = dragModeActive
+        self.isDragging = isDragging
+        updateAppearance()
+    }
+
     override func updateTrackingAreas() {
         super.updateTrackingAreas()
         if let trackingAreaRef {
@@ -275,6 +374,49 @@ final class TagNavigationButton: NSButton {
         onHoverChange(item.id, false)
     }
 
+    override func mouseDown(with event: NSEvent) {
+        guard canReorder(item.id) else {
+            onActivate(item.id)
+            return
+        }
+
+        let start = Date()
+        let longPressDuration: TimeInterval = 0.35
+        var reorderActive = false
+        var finished = false
+
+        while !finished {
+            if !reorderActive && Date().timeIntervalSince(start) >= longPressDuration {
+                reorderActive = true
+                onReorderBegan(item.id)
+            }
+
+            let nextEvent = window?.nextEvent(
+                matching: [.leftMouseDragged, .leftMouseUp],
+                until: Date().addingTimeInterval(0.04),
+                inMode: .eventTracking,
+                dequeue: true
+            )
+
+            guard let nextEvent else { continue }
+            switch nextEvent.type {
+            case .leftMouseDragged:
+                if reorderActive {
+                    onReorderMoved(item.id, NSEvent.mouseLocation)
+                }
+            case .leftMouseUp:
+                if reorderActive {
+                    onReorderEnded()
+                } else {
+                    onActivate(item.id)
+                }
+                finished = true
+            default:
+                break
+            }
+        }
+    }
+
     @objc private func performActivation() {
         onActivate(item.id)
     }
@@ -285,8 +427,9 @@ final class TagNavigationButton: NSButton {
         layer?.cornerRadius = orientation == .horizontal ? 7 : 6
         layer?.shadowColor = NSColor.black.withAlphaComponent(0.20).cgColor
         layer?.shadowOpacity = 1
-        layer?.shadowRadius = 3
-        layer?.shadowOffset = NSSize(width: 0, height: -1)
+        layer?.shadowRadius = isDragging ? 8 : 3
+        layer?.shadowOffset = NSSize(width: 0, height: isDragging ? -4 : -1)
+        alphaValue = dragModeActive ? (isDragging ? 1.0 : 0.62) : 1.0
 
         let textColor: NSColor = (item.colorIndex == 0 || item.colorIndex == 5) ? .labelColor : .white
         let paragraph = NSMutableParagraphStyle()

@@ -934,11 +934,25 @@ struct ContentView: View {
             contentInsets: isHorizontal
                 ? NSEdgeInsets(top: 3, left: 24, bottom: 3, right: tagPosition == "top" ? floatingControlsReservedWidth : 24)
                 : NSEdgeInsets(top: 12, left: 12, bottom: 12, right: 12),
+            dragModeActive: tagNavDragModeActive,
+            draggingItemID: tagNavDragItem,
             onActivate: { tagID in
                 activateTagNavigation(tagID)
             },
             onHoverChange: { tagID, active in
                 handleTagNavigationHover(tagID, active: active)
+            },
+            canReorder: { tagID in
+                canReorderTag(tagID)
+            },
+            onReorderBegan: { tagID in
+                beginTagNavReorder(tagID)
+            },
+            onReorderMoved: { tagID, targetID in
+                reorderTagNavItem(fromName: tagID, to: targetID)
+            },
+            onReorderEnded: {
+                endTagNavReorder()
             }
         )
     }
@@ -2054,11 +2068,18 @@ struct ContentView: View {
     private func reorderTagNavItem(at location: CGPoint) {
         guard let fromName = tagNavDragItem,
               let targetName = tagNavReorderFrames.first(where: { $0.value.contains(location) })?.key,
-              fromName != targetName,
+              fromName != targetName
+        else { return }
+        reorderTagNavItem(fromName: fromName, to: targetName)
+    }
+
+    private func reorderTagNavItem(fromName: String, to targetName: String) {
+        guard fromName != targetName,
+              canReorderTag(fromName),
+              canReorderTag(targetName),
               let fromIndex = draggedTagNames.firstIndex(of: fromName),
               let toIndex = draggedTagNames.firstIndex(of: targetName)
         else { return }
-
         tagNavReorderDidMove = true
         withAnimation(.spring(response: 0.22, dampingFraction: 0.82)) {
             let destination = toIndex > fromIndex ? toIndex + 1 : toIndex

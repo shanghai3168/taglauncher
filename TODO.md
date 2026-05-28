@@ -11,19 +11,7 @@
 
 ## In Progress
 
-- [2026-05-28] 第二批 AppKit 化第 3 项：标签栏 AppKit 化第二阶段，hover 与容器高亮。
-  - 分支: `codex/post-freeze-new-requirement`
-  - 目标: hover 标签时高亮对应容器，保留 colorless container 的填充/取消逻辑。
-  - 验收: hover 触发频率、滚动不过度、视觉不闪烁、全屏/Split View 不跳 Space。
-  - QA: 构建、签名、本地化 JSON、hover 静态 QA、colorless grid 屏幕 hover/点击复核、窗口 8 逻辑 QA 已通过；待用户最终体验验收后移动到 `Done`。
-  - 结果: 标签 hover 进入/离开已接入 AppKit；hover 高亮只刷新可见运行态，不触发 App Grid reload；重复 hover 滚动已去抖。
-
 ## Todo
-
-- [2026-05-28] 第二批 AppKit 化第 4 项：标签栏 AppKit 化第三阶段，拖拽排序。
-  - 目标: 用 AppKit hit-testing 替换 SwiftUI `GeometryReader + preference` 的标签排序命中逻辑。
-  - 持久化: 继续走 `TagEditor.reorderTags`。
-  - 验收: 顶部/左/右三种方向拖拽排序；关闭重开后顺序保留；数据库顺序正确。
 
 - [2026-05-28] 清理或改名 `AppGridItem.swift` 残留。
   - 目标: 该文件现在主要是 shared metrics / bubble 类型，不再是旧浏览态 grid，名称容易误导。
@@ -53,6 +41,16 @@
   - 验收: 语言、通用、快捷键、标签、数据、关于页都保持现有行为。
 
 ## Done
+
+- [2026-05-28] 第二批 AppKit 化第 4 项：标签栏 AppKit 化第三阶段，拖拽排序。
+  - 提交: 本次提交
+  - 结果: AppKit 标签栏已支持长按拖拽排序；排序命中改为 AppKit button frame hit-testing；持久化继续走 `TagEditor.reorderTags`。
+  - 验证: 构建 `7.6.0 (20260528.2052)`、签名、静态 QA、顶部/左/右三种标签栏拖拽排序、`tags.json` 持久化、窗口 8 逻辑 QA 全部通过；QA 后已恢复用户标签顺序和语言自动设置。
+
+- [2026-05-28] 第二批 AppKit 化第 3 项：标签栏 AppKit 化第二阶段，hover 与容器高亮。
+  - 提交: `9d87dbe`
+  - 结果: 标签 hover 进入/离开已接入 AppKit；hover 高亮只刷新可见运行态，不触发 App Grid reload；重复 hover 滚动已去抖。
+  - 验证: 构建、签名、本地化 JSON、hover 静态 QA、colorless grid 屏幕 hover/点击复核、窗口 8 逻辑 QA 全部通过；用户已确认第 3 项 OK。
 
 - [2026-05-28] 第二批 AppKit 化第 2 项：标签栏 AppKit 化第一阶段，只读导航。
   - 提交: `b4a1ba5`
