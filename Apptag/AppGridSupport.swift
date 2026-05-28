@@ -1,7 +1,7 @@
 import SwiftUI
 import AppKit
 
-// MARK: - App Grid Shared Types
+// MARK: - App Grid Shared Support
 
 enum AppGridItemMetrics {
     static let hoverScale: CGFloat = 1.22
