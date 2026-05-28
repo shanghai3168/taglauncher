@@ -13,11 +13,6 @@
 
 ## Todo
 
-- [2026-05-28] Quick Search 结果列表 AppKit 化。
-  - 目标: 先只替换结果列表，不动独立面板。
-  - 保持: 输入框、搜索逻辑、快捷键行为不变。
-  - 验收: 默认选中、上下键、Return、滚动、鼠标 hover、无结果状态。
-
 - [2026-05-28] Quick Search 独立面板化。
   - 目标: 从主 overlay 里拆出来，做 Spotlight 风格独立 `NSPanel`。
   - 风险: 高，涉及焦点、Esc、外部点击、全局快捷键、窗口层级。
@@ -37,6 +32,12 @@
   - 验收: 语言、通用、快捷键、标签、数据、关于页都保持现有行为。
 
 ## Done
+
+- [2026-05-29] Quick Search 结果列表 AppKit 化。
+  - 提交: 本次提交
+  - 结果: Quick Search 结果列表已替换为 AppKit `NSScrollView` + 自绘 row；输入框、搜索逻辑、快捷键命令、外层 overlay 保持原路径。
+  - 范围: 只改结果列表渲染层，不动独立面板、窗口层级、搜索匹配和启动逻辑。
+  - 验证: `bash build.sh`、`codesign --verify --deep --strict`、静态确认旧 SwiftUI `QuickSearchResultRow` 已移除；屏幕 QA 验证默认选中、上下键、滚动跟随、`sor` 搜到 Shottr、无结果状态、Return 启动选中结果并关闭 Quick Search。
 
 - [2026-05-29] 修复 App 图标白边并清除旧图标残留。
   - 提交: 本次提交

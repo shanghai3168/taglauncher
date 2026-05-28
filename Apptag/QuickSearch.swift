@@ -796,36 +796,17 @@ struct QuickSearchOverlayView: View {
                     tint: .secondary
                 )
             } else {
-                ScrollViewReader { scrollProxy in
-                    ScrollView(.vertical, showsIndicators: results.count > maxVisibleRows) {
-                        LazyVStack(spacing: 2) {
-                            ForEach(results) { result in
-                                QuickSearchResultRow(
-                                    result: result,
-                                    isSelected: result.id == selectedID
-                                )
-                                .frame(height: rowHeight)
-                                .id(result.id)
-                                .contentShape(Rectangle())
-                                .onHover { hovering in
-                                    if hovering { onHover(result) }
-                                }
-                                .onTapGesture {
-                                    onLaunch(result)
-                                }
-                            }
-                        }
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 10)
-                    }
-                    .frame(height: CGFloat(min(results.count, maxVisibleRows)) * (rowHeight + 2) + 20)
-                    .onChange(of: selectionScrollToken) { _, _ in
-                        guard let id = selectedID else { return }
-                        withAnimation(.easeOut(duration: 0.08)) {
-                            scrollProxy.scrollTo(id, anchor: .center)
-                        }
-                    }
-                }
+                QuickSearchResultListView(
+                    results: results,
+                    selectedID: selectedID,
+                    selectionScrollToken: selectionScrollToken,
+                    maxVisibleRows: maxVisibleRows,
+                    rowHeight: rowHeight,
+                    isDarkMode: colorScheme == .dark,
+                    onHover: onHover,
+                    onLaunch: onLaunch
+                )
+                .frame(height: CGFloat(min(results.count, maxVisibleRows)) * (rowHeight + 2) + 20)
             }
         }
         .frame(width: panelWidth)
@@ -843,66 +824,373 @@ struct QuickSearchOverlayView: View {
     }
 }
 
-private struct QuickSearchResultRow: View {
-    let result: QuickSearchResult
-    let isSelected: Bool
-    @Environment(\.colorScheme) private var colorScheme
+private struct QuickSearchResultListView: NSViewRepresentable {
+    let results: [QuickSearchResult]
+    let selectedID: URL?
+    let selectionScrollToken: Int
+    let maxVisibleRows: Int
+    let rowHeight: CGFloat
+    let isDarkMode: Bool
+    let onHover: (QuickSearchResult) -> Void
+    let onLaunch: (QuickSearchResult) -> Void
 
-    var body: some View {
-        HStack(spacing: 16) {
-            Image(nsImage: result.app.icon)
-                .resizable()
-                .frame(width: 46, height: 46)
-                .cornerRadius(10)
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text(result.app.displayName)
-                    .font(.system(size: 20, weight: .semibold))
-                    .foregroundStyle(.primary)
-                    .lineLimit(1)
-                    .truncationMode(.tail)
-
-                if let detailText {
-                    Text(detailText)
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundStyle(Color.primary.opacity(0.38))
-                        .lineLimit(1)
-                        .truncationMode(.tail)
-                }
-            }
-            .layoutPriority(1)
-
-            Spacer(minLength: 8)
-
-            if let tagName = rightTagName {
-                Text(tagName)
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(Color.primary.opacity(0.46))
-                    .lineLimit(1)
-                    .truncationMode(.tail)
-                    .padding(.horizontal, 12)
-                    .frame(height: 32)
-                    .frame(maxWidth: 128)
-                    .background(
-                        Capsule(style: .continuous)
-                            .fill(Color.primary.opacity(colorScheme == .dark ? 0.12 : 0.07))
-                    )
-            }
-        }
-        .padding(.horizontal, 18)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .fill(isSelected ? selectedFill : Color.clear)
+    func makeNSView(context: Context) -> QuickSearchResultListHostView {
+        let view = QuickSearchResultListHostView()
+        view.update(
+            results: results,
+            selectedID: selectedID,
+            selectionScrollToken: selectionScrollToken,
+            maxVisibleRows: maxVisibleRows,
+            rowHeight: rowHeight,
+            isDarkMode: isDarkMode,
+            onHover: onHover,
+            onLaunch: onLaunch
         )
-        .accessibilityLabel(accessibilityText)
+        return view
     }
 
-    private var selectedFill: Color {
-        colorScheme == .dark ? Color.white.opacity(0.14) : Color.black.opacity(0.075)
+    func updateNSView(_ view: QuickSearchResultListHostView, context: Context) {
+        view.update(
+            results: results,
+            selectedID: selectedID,
+            selectionScrollToken: selectionScrollToken,
+            maxVisibleRows: maxVisibleRows,
+            rowHeight: rowHeight,
+            isDarkMode: isDarkMode,
+            onHover: onHover,
+            onLaunch: onLaunch
+        )
+    }
+}
+
+final class QuickSearchResultListHostView: NSView {
+    private let scrollView = NSScrollView()
+    private let documentView = QuickSearchResultListDocumentView()
+    private var selectedID: URL?
+    private var selectionScrollToken = 0
+    private var didInstall = false
+
+    override var isFlipped: Bool { true }
+
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        setup()
     }
 
-    private var detailText: String? {
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setup()
+    }
+
+    func update(
+        results: [QuickSearchResult],
+        selectedID: URL?,
+        selectionScrollToken: Int,
+        maxVisibleRows: Int,
+        rowHeight: CGFloat,
+        isDarkMode: Bool,
+        onHover: @escaping (QuickSearchResult) -> Void,
+        onLaunch: @escaping (QuickSearchResult) -> Void
+    ) {
+        let shouldScrollSelection = selectionScrollToken != self.selectionScrollToken
+        self.selectedID = selectedID
+        self.selectionScrollToken = selectionScrollToken
+        scrollView.hasVerticalScroller = results.count > maxVisibleRows
+        documentView.update(
+            results: results,
+            selectedID: selectedID,
+            rowHeight: rowHeight,
+            isDarkMode: isDarkMode,
+            onHover: onHover,
+            onLaunch: onLaunch
+        )
+        needsLayout = true
+        layoutSubtreeIfNeeded()
+        if shouldScrollSelection, let selectedID {
+            scrollResultToCenter(selectedID)
+        }
+    }
+
+    override func layout() {
+        super.layout()
+        scrollView.frame = bounds
+        let visibleSize = scrollView.contentView.bounds.size
+        documentView.frame = NSRect(
+            origin: .zero,
+            size: NSSize(
+                width: max(visibleSize.width, bounds.width),
+                height: documentView.preferredHeight
+            )
+        )
+        documentView.needsLayout = true
+    }
+
+    private func setup() {
+        guard !didInstall else { return }
+        didInstall = true
+        wantsLayer = true
+        layer?.backgroundColor = NSColor.clear.cgColor
+
+        scrollView.drawsBackground = false
+        scrollView.borderType = .noBorder
+        scrollView.autohidesScrollers = true
+        scrollView.scrollerStyle = .overlay
+        scrollView.hasHorizontalScroller = false
+        scrollView.hasVerticalScroller = false
+        scrollView.documentView = documentView
+        addSubview(scrollView)
+    }
+
+    private func scrollResultToCenter(_ id: URL) {
+        guard let frame = documentView.frameForResult(id) else { return }
+        let visibleBounds = scrollView.contentView.bounds
+        let maxY = max(0, documentView.bounds.height - visibleBounds.height)
+        let targetY = min(max(0, frame.midY - visibleBounds.height / 2), maxY)
+        scrollView.contentView.scroll(to: NSPoint(x: 0, y: targetY))
+        scrollView.reflectScrolledClipView(scrollView.contentView)
+    }
+}
+
+final class QuickSearchResultListDocumentView: NSView {
+    private var rowViews: [QuickSearchResultRowView] = []
+    private var rowIDs: [URL] = []
+    private var rowHeight: CGFloat = 74
+    private let rowSpacing: CGFloat = 2
+    private let horizontalInset: CGFloat = 10
+    private let verticalInset: CGFloat = 10
+
+    override var isFlipped: Bool { true }
+
+    var preferredHeight: CGFloat {
+        verticalInset * 2
+            + CGFloat(rowViews.count) * rowHeight
+            + CGFloat(max(0, rowViews.count - 1)) * rowSpacing
+    }
+
+    func update(
+        results: [QuickSearchResult],
+        selectedID: URL?,
+        rowHeight: CGFloat,
+        isDarkMode: Bool,
+        onHover: @escaping (QuickSearchResult) -> Void,
+        onLaunch: @escaping (QuickSearchResult) -> Void
+    ) {
+        self.rowHeight = rowHeight
+        let nextIDs = results.map(\.id)
+        if nextIDs != rowIDs {
+            rebuildRows(for: results)
+            rowIDs = nextIDs
+        }
+
+        for (index, row) in rowViews.enumerated() {
+            guard index < results.count else { continue }
+            row.configure(
+                result: results[index],
+                isSelected: results[index].id == selectedID,
+                isDarkMode: isDarkMode,
+                onHover: onHover,
+                onLaunch: onLaunch
+            )
+        }
+        needsLayout = true
+    }
+
+    func frameForResult(_ id: URL) -> NSRect? {
+        guard let index = rowIDs.firstIndex(of: id),
+              index < rowViews.count
+        else { return nil }
+        return rowViews[index].frame
+    }
+
+    override func layout() {
+        super.layout()
+        let width = max(0, bounds.width - horizontalInset * 2)
+        var y = verticalInset
+        for row in rowViews {
+            row.frame = NSRect(x: horizontalInset, y: y, width: width, height: rowHeight)
+            y += rowHeight + rowSpacing
+        }
+    }
+
+    private func rebuildRows(for results: [QuickSearchResult]) {
+        rowViews.forEach { $0.removeFromSuperview() }
+        rowViews = results.map { _ in
+            let row = QuickSearchResultRowView()
+            addSubview(row)
+            return row
+        }
+    }
+}
+
+final class QuickSearchResultRowView: NSView {
+    private let iconView = NSImageView()
+    private let titleLabel = NSTextField(labelWithString: "")
+    private let detailLabel = NSTextField(labelWithString: "")
+    private let tagBackgroundView = NSView()
+    private let tagLabel = NSTextField(labelWithString: "")
+    private var trackingAreaRef: NSTrackingArea?
+    private var result: QuickSearchResult?
+    private var isSelected = false
+    private var isDarkMode = false
+    private var onHover: (QuickSearchResult) -> Void = { _ in }
+    private var onLaunch: (QuickSearchResult) -> Void = { _ in }
+
+    override var isFlipped: Bool { true }
+
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        setup()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setup()
+    }
+
+    func configure(
+        result: QuickSearchResult,
+        isSelected: Bool,
+        isDarkMode: Bool,
+        onHover: @escaping (QuickSearchResult) -> Void,
+        onLaunch: @escaping (QuickSearchResult) -> Void
+    ) {
+        self.result = result
+        self.isSelected = isSelected
+        self.isDarkMode = isDarkMode
+        self.onHover = onHover
+        self.onLaunch = onLaunch
+
+        iconView.image = result.app.icon
+        titleLabel.stringValue = result.app.displayName
+        detailLabel.stringValue = detailText(for: result) ?? ""
+        detailLabel.isHidden = detailLabel.stringValue.isEmpty
+        tagLabel.stringValue = rightTagName(for: result) ?? ""
+        tagBackgroundView.isHidden = tagLabel.stringValue.isEmpty
+        setAccessibilityLabel(accessibilityText(for: result))
+        updateColors()
+        needsLayout = true
+    }
+
+    override func layout() {
+        super.layout()
+        let iconSize: CGFloat = 46
+        let iconX: CGFloat = 18
+        iconView.frame = NSRect(
+            x: iconX,
+            y: (bounds.height - iconSize) / 2,
+            width: iconSize,
+            height: iconSize
+        )
+
+        let tagMaxWidth: CGFloat = 128
+        let tagHeight: CGFloat = 32
+        let trailingInset: CGFloat = 18
+        var tagFrame = NSRect.zero
+        if !tagBackgroundView.isHidden {
+            let labelWidth = min(tagMaxWidth - 24, max(22, tagLabel.intrinsicContentSize.width))
+            let tagWidth = min(tagMaxWidth, labelWidth + 24)
+            tagFrame = NSRect(
+                x: bounds.width - trailingInset - tagWidth,
+                y: (bounds.height - tagHeight) / 2,
+                width: tagWidth,
+                height: tagHeight
+            )
+            tagBackgroundView.frame = tagFrame
+            tagLabel.frame = NSRect(x: 12, y: 6, width: tagWidth - 24, height: 20)
+        }
+
+        let textX = iconX + iconSize + 16
+        let textRight = tagBackgroundView.isHidden ? bounds.width - trailingInset : tagFrame.minX - 16
+        let textWidth = max(40, textRight - textX)
+        if detailLabel.isHidden {
+            titleLabel.frame = NSRect(x: textX, y: (bounds.height - 26) / 2, width: textWidth, height: 26)
+            detailLabel.frame = .zero
+        } else {
+            titleLabel.frame = NSRect(x: textX, y: 14, width: textWidth, height: 25)
+            detailLabel.frame = NSRect(x: textX, y: 42, width: textWidth, height: 21)
+        }
+    }
+
+    override func updateTrackingAreas() {
+        super.updateTrackingAreas()
+        if let trackingAreaRef {
+            removeTrackingArea(trackingAreaRef)
+        }
+        let area = NSTrackingArea(
+            rect: bounds,
+            options: [.mouseEnteredAndExited, .activeAlways, .inVisibleRect],
+            owner: self,
+            userInfo: nil
+        )
+        addTrackingArea(area)
+        trackingAreaRef = area
+    }
+
+    override func mouseEntered(with event: NSEvent) {
+        super.mouseEntered(with: event)
+        if let result {
+            onHover(result)
+        }
+    }
+
+    override func mouseDown(with event: NSEvent) {
+        if let result {
+            onLaunch(result)
+        } else {
+            super.mouseDown(with: event)
+        }
+    }
+
+    private func setup() {
+        wantsLayer = true
+        layer?.cornerRadius = 18
+        layer?.cornerCurve = .continuous
+
+        iconView.imageScaling = .scaleProportionallyUpOrDown
+        iconView.wantsLayer = true
+        iconView.layer?.cornerRadius = 10
+        iconView.layer?.cornerCurve = .continuous
+        iconView.layer?.masksToBounds = true
+        addSubview(iconView)
+
+        titleLabel.font = NSFont.systemFont(ofSize: 20, weight: .semibold)
+        titleLabel.lineBreakMode = .byTruncatingTail
+        titleLabel.maximumNumberOfLines = 1
+        titleLabel.backgroundColor = .clear
+        addSubview(titleLabel)
+
+        detailLabel.font = NSFont.systemFont(ofSize: 16, weight: .medium)
+        detailLabel.lineBreakMode = .byTruncatingTail
+        detailLabel.maximumNumberOfLines = 1
+        detailLabel.backgroundColor = .clear
+        addSubview(detailLabel)
+
+        tagBackgroundView.wantsLayer = true
+        tagBackgroundView.layer?.cornerRadius = 16
+        tagBackgroundView.layer?.cornerCurve = .continuous
+        tagBackgroundView.addSubview(tagLabel)
+        addSubview(tagBackgroundView)
+
+        tagLabel.font = NSFont.systemFont(ofSize: 14, weight: .semibold)
+        tagLabel.alignment = .center
+        tagLabel.lineBreakMode = .byTruncatingTail
+        tagLabel.maximumNumberOfLines = 1
+        tagLabel.backgroundColor = .clear
+    }
+
+    private func updateColors() {
+        layer?.backgroundColor = isSelected
+            ? NSColor.labelColor.withAlphaComponent(isDarkMode ? 0.14 : 0.075).cgColor
+            : NSColor.clear.cgColor
+        titleLabel.textColor = .labelColor
+        detailLabel.textColor = NSColor.labelColor.withAlphaComponent(0.38)
+        tagLabel.textColor = NSColor.labelColor.withAlphaComponent(0.46)
+        tagBackgroundView.layer?.backgroundColor = NSColor.labelColor
+            .withAlphaComponent(isDarkMode ? 0.12 : 0.07)
+            .cgColor
+    }
+
+    private func detailText(for result: QuickSearchResult) -> String? {
         if let note = result.noteSnippet, !note.isEmpty {
             return note
         }
@@ -913,14 +1201,14 @@ private struct QuickSearchResultRow: View {
         return nil
     }
 
-    private var rightTagName: String? {
+    private func rightTagName(for result: QuickSearchResult) -> String? {
         let tag = result.matchedTagName ?? result.document.tagNames.first
         guard let tag, !tag.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return nil }
         return tag
     }
 
-    private var accessibilityText: String {
-        [result.app.displayName, detailText].compactMap { $0 }.joined(separator: ", ")
+    private func accessibilityText(for result: QuickSearchResult) -> String {
+        [result.app.displayName, detailText(for: result)].compactMap { $0 }.joined(separator: ", ")
     }
 }
 
