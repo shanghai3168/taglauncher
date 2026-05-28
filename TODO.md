@@ -1,0 +1,77 @@
+# TagLauncher TODO
+
+## Workflow
+
+- 每次修改前先检查本文件。
+- 如果用户提出的新需求不在清单中，先新增到 `Todo` 或 `In Progress`。
+- 开始做任务时，把任务移动到 `In Progress`。
+- 任务完成并验证后，把任务移动到 `Done`，补一句完成结果。
+- 每个任务必须单独提交、单独构建、单独验收；验收通过后再进入下一个任务。
+- 每个任务的 QA 顺序固定为：自动化/半自动化验证 → QA 屏幕点击复核 → 用户最终体验验收。
+
+## In Progress
+
+- [2026-05-28] 第二批 AppKit 化第 1 项：清理 `ContentView` 的 App Grid 交互职责。
+  - 分支: `codex/post-freeze-new-requirement`
+  - 目标: 先做低风险状态收口，把 App Grid 的 bubble、drag、drop、refresh toast 等临时交互状态集中管理，降低后续标签栏 AppKit 化风险。
+  - 原则: 不改变用户可见 UI，不改变拖拽/hover/Quick Search/窗口行为。
+  - 验收: `bash build.sh`、`codesign --verify --deep --strict`、localization JSON 解析、App Grid 交互 targeted QA、必要时跑 `Scripts/window_logic_qa.sh`。
+  - QA: 自动化通过后，由 QA 屏幕点击复核；用户只做最终体验验收。
+
+## Todo
+
+- [2026-05-28] 第二批 AppKit 化第 2 项：标签栏 AppKit 化第一阶段，只读导航。
+  - 目标: 抽 `TagNavItem` / callbacks 边界，新增可回滚的 AppKit 标签栏。
+  - 范围: 顶部、左侧、右侧标签栏显示；点击标签滚动到对应分组。
+  - 暂不做: 标签拖拽排序。
+  - 回滚: 保留旧 SwiftUI 标签栏作为开关。
+  - 验收: 三种标签位置、点击滚动、长标签、多语言、全屏和 Split View。
+
+- [2026-05-28] 第二批 AppKit 化第 3 项：标签栏 AppKit 化第二阶段，hover 与容器高亮。
+  - 目标: hover 标签时高亮对应容器，保留 colorless container 的填充/取消逻辑。
+  - 验收: hover 触发频率、滚动不过度、视觉不闪烁、全屏/Split View 不跳 Space。
+
+- [2026-05-28] 第二批 AppKit 化第 4 项：标签栏 AppKit 化第三阶段，拖拽排序。
+  - 目标: 用 AppKit hit-testing 替换 SwiftUI `GeometryReader + preference` 的标签排序命中逻辑。
+  - 持久化: 继续走 `TagEditor.reorderTags`。
+  - 验收: 顶部/左/右三种方向拖拽排序；关闭重开后顺序保留；数据库顺序正确。
+
+- [2026-05-28] 清理或改名 `AppGridItem.swift` 残留。
+  - 目标: 该文件现在主要是 shared metrics / bubble 类型，不再是旧浏览态 grid，名称容易误导。
+  - 验收: 构建通过，App Grid smoke test 通过。
+
+- [2026-05-28] Quick Search 结果列表 AppKit 化。
+  - 目标: 先只替换结果列表，不动独立面板。
+  - 保持: 输入框、搜索逻辑、快捷键行为不变。
+  - 验收: 默认选中、上下键、Return、滚动、鼠标 hover、无结果状态。
+
+- [2026-05-28] Quick Search 独立面板化。
+  - 目标: 从主 overlay 里拆出来，做 Spotlight 风格独立 `NSPanel`。
+  - 风险: 高，涉及焦点、Esc、外部点击、全局快捷键、窗口层级。
+  - 验收: 普通桌面、全屏、Split View、Settings 同时存在时都不跳 Space。
+
+- [2026-05-28] OverlayWindowController 收口。
+  - 目标: 把 `AppDelegate` 里的 overlay 显示、隐藏、层级、屏幕选择拆出去。
+  - 时机: Quick Search 窗口边界稳定后再做。
+  - 验收: 全屏、Split View、Settings、Force Quit、文件面板、Dock 图标重复问题。
+
+- [2026-05-28] AppLibraryController / 数据刷新管线整理。
+  - 目标: 把扫描、reconcile、Smart Start、annotate、Quick Search documents 更新从 `ContentView` 中抽离。
+  - 验收: 启动扫描、拖拽改标签、Quick Search 索引同步、新安装 App 后刷新。
+
+- [2026-05-28] 设置页和 Smart Start 模块化。
+  - 目标: 低频路径后置整理。
+  - 验收: 语言、通用、快捷键、标签、数据、关于页都保持现有行为。
+
+## Done
+
+- [2026-05-28] 冻结发布版本并从冻结 tag 拉出新需求分支。
+  - 冻结 tag: `appstore-7.6.0-20260527.0124`
+  - 新需求分支: `codex/post-freeze-new-requirement`
+  - 说明: 新需求开发失败时可直接回到冻结 tag，不影响准备发布的版本。
+
+- [2026-05-28] 新增“拖出容器空隙只移除来源标签”的确认逻辑。
+  - 提交: `71bfdd4`、`da71eb5`
+  - 行为: 非 Flat/list 的容器视图中，APP 拖到容器空隙时确认是否只移除来源容器对应的 1 个标签。
+  - 补强: “知道了，以后不用再提醒我”改为清晰可见的自绘勾选框。
+  - 验证: 用户已验证功能正常。
