@@ -38,6 +38,12 @@
 
 ## Done
 
+- [2026-05-29] 修复 App 图标白边并清除旧图标残留。
+  - 提交: 本次提交
+  - 结果: 当前 grid/rainbow AppIcon 的圆角外区域已改为透明；`generate_icon.py` 删除旧“两张标签”生成逻辑，并增加 grid/rainbow 图标族校验，防止旧图标被重新生成。
+  - 范围: 更新 `.icns`、`AppIcon.appiconset`、Release 1024 图标、Local QA DMG；`build.sh` 改为优先从 `AppIcon.appiconset` 生成 bundle `AppIcon.icns`。
+  - 验证: `python3 generate_icon.py`、`bash build.sh`、`codesign --verify --deep --strict`、DMG 挂载检查、全项目图片/DMG 旧图标近似匹配扫描均通过；根 `.icns`、appiconset、Release 1024 图标、bundle/DMG 内 AppIcon 四角 alpha 均为 0。
+
 - [2026-05-29] 清理或改名 `AppGridItem.swift` 残留。
   - 提交: 本次提交
   - 结果: `AppGridItem.swift` 已改名为 `AppGridSupport.swift`，文件标题改为 App Grid shared support，避免误解为旧 SwiftUI 浏览态 grid。

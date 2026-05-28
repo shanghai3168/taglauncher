@@ -8,16 +8,16 @@ This folder is the working release pack for the first Mac App Store submission o
 - Platform: macOS / Mac App Store
 - Bundle ID: `com.taglauncher.app`
 - Version: `7.6.0`
-- Local QA build: `20260525.0016`
-- Frozen source commit: `0258b3e`
-- Frozen source branch: `main`
+- Local QA build: `20260529.0153` icon cleanup copy
+- Source ref: `codex/post-freeze-new-requirement` icon-resource hotfix
+- Source branch: `codex/post-freeze-new-requirement`
 - Release folder: `Release/AppStore-7.6.0-20260525.0016`
-- DMG SHA-256: `4689856f4a976c394ef4737db5bb5eebcc5b5bb95eea81fe72f5b6c3e3ed4b23`
-- App binary SHA-256: `01ace57df10061fd7d684fa8a5bd795f87f55ee2c713cbb1ab2d01f5f63ed404`
+- DMG SHA-256: `a887c26943136c629bf36a577ded512f85a0aac8132622e2c418c4c6d2b870f7`
+- App binary SHA-256: `8e0fd85ee62b6791940ce32c220ca802a02f5e6f9d43a366f6d1f6b7bb53eb9a`
 
 ## Freeze Status
 
-This release pack is frozen on the locally QA-passed build `20260525.0016`. Use this folder, its hashes, and its metadata as the source of truth for the first Mac App Store submission prep.
+This archive was originally frozen on the locally QA-passed build `20260525.0016`. On 2026-05-29 its local QA DMG and App icon asset were refreshed to remove stale icon packages from the project tree. This archive is reference-only and should not be used for submission.
 
 Do not use earlier prep folders or builds such as `20260524.1652` or `20260524.1849`; they predate the final fullscreen/Split View secondary-window close and same-app Split View fixes.
 

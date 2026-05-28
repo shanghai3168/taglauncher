@@ -71,10 +71,39 @@ cp "$INFO_PLIST" "$APP_INFO_PLIST"
 /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $APP_BUILD" "$APP_INFO_PLIST"
 
 echo "==> Copying AppIcon.icns..."
-if [ -f "$PROJECT_DIR/icon-icns.icns" ]; then
+APPICON_SOURCE_DIR="$SWIFT_DIR/Assets.xcassets/AppIcon.appiconset"
+if [ -d "$APPICON_SOURCE_DIR" ]; then
+    TMP_ICONSET_PARENT="$(mktemp -d -t taglauncher-appicon.XXXXXX)"
+    TMP_ICONSET="$TMP_ICONSET_PARENT/AppIcon.iconset"
+    mkdir -p "$TMP_ICONSET"
+    ICON_NAMES=(
+        icon_16x16.png
+        icon_16x16@2x.png
+        icon_32x32.png
+        icon_32x32@2x.png
+        icon_128x128.png
+        icon_128x128@2x.png
+        icon_256x256.png
+        icon_256x256@2x.png
+        icon_512x512.png
+        icon_512x512@2x.png
+    )
+    for icon_name in "${ICON_NAMES[@]}"; do
+        if [ ! -f "$APPICON_SOURCE_DIR/$icon_name" ]; then
+            echo "❌ Missing AppIcon asset: $APPICON_SOURCE_DIR/$icon_name"
+            exit 1
+        fi
+        cp "$APPICON_SOURCE_DIR/$icon_name" "$TMP_ICONSET/$icon_name"
+    done
+    iconutil -c icns "$TMP_ICONSET" -o "$RESOURCES_DIR/AppIcon.icns"
+    rm -rf "$TMP_ICONSET_PARENT"
+elif [ -f "$PROJECT_DIR/icon-icns.icns" ]; then
     cp "$PROJECT_DIR/icon-icns.icns" "$RESOURCES_DIR/AppIcon.icns"
 elif [ -f "$SWIFT_DIR/AppIcon.iconset/icon_512x512@2x.png" ]; then
     iconutil -c icns "$SWIFT_DIR/AppIcon.iconset" -o "$RESOURCES_DIR/AppIcon.icns" 2>/dev/null
+else
+    echo "❌ Missing AppIcon source"
+    exit 1
 fi
 
 echo "==> Copying menu bar icon..."

@@ -3,18 +3,20 @@
 ## Local Build
 
 - Version: `7.6.0`
-- Build: `20260525.0016`
-- Frozen source commit: `0258b3e`
+- Build: `20260529.0153` icon cleanup copy
+- Source ref: `codex/post-freeze-new-requirement` icon-resource hotfix
 - App path: `/Users/ar/Projects/Taglauncher/build/TagLauncher.app`
 - DMG path: `/Users/ar/Projects/Taglauncher/build/TagLauncher.dmg`
 - App executable size: `1.4M`
 - DMG size: `5.7M`
 
+2026-05-29 icon cleanup: the local QA DMG and App icon asset in this archived folder were refreshed so the project tree no longer contains stale icon packages. This archive is reference-only and should not be used for submission.
+
 ## Hashes
 
 ```text
-4689856f4a976c394ef4737db5bb5eebcc5b5bb95eea81fe72f5b6c3e3ed4b23  build/TagLauncher.dmg
-01ace57df10061fd7d684fa8a5bd795f87f55ee2c713cbb1ab2d01f5f63ed404  build/TagLauncher.app/Contents/MacOS/TagLauncher
+a887c26943136c629bf36a577ded512f85a0aac8132622e2c418c4c6d2b870f7  build/TagLauncher.dmg
+8e0fd85ee62b6791940ce32c220ca802a02f5e6f9d43a366f6d1f6b7bb53eb9a  build/TagLauncher.app/Contents/MacOS/TagLauncher
 ```
 
 ## Commands Run

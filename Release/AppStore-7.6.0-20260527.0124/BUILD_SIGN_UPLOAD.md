@@ -4,10 +4,10 @@
 
 The local QA build is suitable for verification and direct local testing, but it is not an App Store upload artifact.
 
-- Frozen local QA build: `20260527.0124`
-- Frozen source ref: `appstore-7.6.0-20260527.0124`
-- Frozen DMG SHA-256: `1952295e0169853c46572e6226c72adc43059cb20dd7ee9b161e28e42887f5a2`
-- Frozen app binary SHA-256: `b31270ee22d8c4c74e85b00ea96d0c378e5762f41432b057b653896566ba2f62`
+- Local QA build: `20260529.0153`
+- Source ref: `codex/post-freeze-new-requirement` icon-resource hotfix
+- DMG SHA-256: `a887c26943136c629bf36a577ded512f85a0aac8132622e2c418c4c6d2b870f7`
+- App binary SHA-256: `8e0fd85ee62b6791940ce32c220ca802a02f5e6f9d43a366f6d1f6b7bb53eb9a`
 - Local build command: `bash build.sh`
 - Local DMG command: `bash make_dmg.sh`
 - App path: `build/TagLauncher.app`

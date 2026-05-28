@@ -3,18 +3,20 @@
 ## Local Build
 
 - Version: `7.6.0`
-- Build: `20260527.0124`
-- Frozen source ref: `appstore-7.6.0-20260527.0124`
+- Build: `20260529.0153`
+- Source ref: `codex/post-freeze-new-requirement` icon-resource hotfix
 - App path: `/Users/ar/Projects/Taglauncher/build/TagLauncher.app`
 - DMG path: `/Users/ar/Projects/Taglauncher/build/TagLauncher.dmg`
 - App executable size: `1.4M`
 - DMG size: `5.7M`
 
+2026-05-29 icon hotfix: the local QA DMG and App icon assets were regenerated to remove opaque/removed icon resources from the project tree.
+
 ## Hashes
 
 ```text
-1952295e0169853c46572e6226c72adc43059cb20dd7ee9b161e28e42887f5a2  build/TagLauncher.dmg
-b31270ee22d8c4c74e85b00ea96d0c378e5762f41432b057b653896566ba2f62  build/TagLauncher.app/Contents/MacOS/TagLauncher
+a887c26943136c629bf36a577ded512f85a0aac8132622e2c418c4c6d2b870f7  build/TagLauncher.dmg
+8e0fd85ee62b6791940ce32c220ca802a02f5e6f9d43a366f6d1f6b7bb53eb9a  build/TagLauncher.app/Contents/MacOS/TagLauncher
 ```
 
 ## Commands Run
@@ -24,6 +26,7 @@ bash build.sh
 bash make_dmg.sh
 codesign --verify --deep --strict --verbose=2 build/TagLauncher.app
 hdiutil verify build/TagLauncher.dmg
+python3 generate_icon.py
 ```
 
 ## Window Logic QA Result

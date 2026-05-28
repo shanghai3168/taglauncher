@@ -1,109 +1,183 @@
 #!/usr/bin/env python3
-"""Generate TagLauncher app icon — two overlapping tags (red + blue) on macOS squircle."""
-from PIL import Image, ImageDraw, ImageFilter
-import math, os, subprocess, tempfile
+"""Regenerate the current TagLauncher grid/rainbow app icon assets."""
+
+from __future__ import annotations
+
+import colorsys
+import subprocess
+import tempfile
+from pathlib import Path
+
+from PIL import Image, ImageChops, ImageDraw
+
 
 SIZE = 1024
-PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_DIR = Path(__file__).resolve().parent
+APPICON_DIR = PROJECT_DIR / "Apptag" / "Assets.xcassets" / "AppIcon.appiconset"
+ROOT_ICNS = PROJECT_DIR / "icon-icns.icns"
 
-def rounded_rectangle_mask(size, radius):
-    mask = Image.new("L", (size, size), 0)
+RELEASE_ICON_TARGETS = [
+    PROJECT_DIR
+    / "Release"
+    / "AppStore-7.6.0-20260527.0124"
+    / "Assets"
+    / "TagLauncher-AppIcon-1024.png",
+    PROJECT_DIR
+    / "Release"
+    / "_archive"
+    / "AppStore-7.6.0-20260525.0016"
+    / "Assets"
+    / "TagLauncher-AppIcon-1024.png",
+]
+
+SOURCE_CANDIDATES = [
+    APPICON_DIR / "icon_512x512@2x.png",
+    RELEASE_ICON_TARGETS[0],
+    ROOT_ICNS,
+]
+
+VARIANTS = [
+    ("icon_16x16.png", 16),
+    ("icon_16x16@2x.png", 32),
+    ("icon_32x32.png", 32),
+    ("icon_32x32@2x.png", 64),
+    ("icon_128x128.png", 128),
+    ("icon_128x128@2x.png", 256),
+    ("icon_256x256.png", 256),
+    ("icon_256x256@2x.png", 512),
+    ("icon_512x512.png", 512),
+    ("icon_512x512@2x.png", 1024),
+]
+
+# The approved grid/rainbow icon artwork sits inside this rounded rect.
+# Keeping this mask explicit prevents the old opaque-white square corners from
+# reappearing when assets are regenerated from an older flattened source.
+MASK_BOUNDS = (77, 57, 943, 934)
+MASK_RADIUS = 232
+
+
+def load_source() -> tuple[Path, Image.Image]:
+    for path in SOURCE_CANDIDATES:
+        if not path.exists():
+            continue
+        with Image.open(path) as image:
+            image.load()
+            source = image.convert("RGBA").resize((SIZE, SIZE), Image.LANCZOS)
+        return path, source
+    raise FileNotFoundError("No app icon source found.")
+
+
+def assert_current_grid_rainbow_icon(image: Image.Image) -> None:
+    """Reject the removed two-tag icon if it is accidentally used as source."""
+
+    bands = {"yellow": 0, "green": 0, "cyan": 0, "purple": 0}
+    pixels = image.load()
+
+    for y in range(120, 900, 4):
+        for x in range(520, 900, 4):
+            red, green, blue, alpha = pixels[x, y]
+            if alpha < 128:
+                continue
+            hue, saturation, value = colorsys.rgb_to_hsv(
+                red / 255.0, green / 255.0, blue / 255.0
+            )
+            if saturation < 0.30 or value < 0.35:
+                continue
+            if 0.10 <= hue <= 0.19:
+                bands["yellow"] += 1
+            elif 0.20 <= hue <= 0.42:
+                bands["green"] += 1
+            elif 0.43 <= hue <= 0.58:
+                bands["cyan"] += 1
+            elif 0.70 <= hue <= 0.86:
+                bands["purple"] += 1
+
+    present_bands = [name for name, count in bands.items() if count >= 100]
+    if len(present_bands) < 3:
+        raise ValueError(
+            "Source image does not match the current grid/rainbow icon family; "
+            f"detected color bands: {bands}"
+        )
+
+
+def icon_mask() -> Image.Image:
+    x0, y0, x1, y1 = MASK_BOUNDS
+    mask = Image.new("L", (SIZE, SIZE), 0)
     draw = ImageDraw.Draw(mask)
-    draw.rounded_rectangle([(0, 0), (size-1, size-1)], radius=radius, fill=255)
+    draw.rounded_rectangle(
+        [x0, y0, x1 - 1, y1 - 1],
+        radius=MASK_RADIUS,
+        fill=255,
+    )
     return mask
 
-def draw_tag(cx, cy, width, height, color, angle_deg, hole_ratio=0.22):
-    padding = int(width * 1.5)
-    tag_img = Image.new("RGBA", (padding*2, padding*2), (0,0,0,0))
-    tag_draw = ImageDraw.Draw(tag_img)
-    x0 = padding - width//2
-    y0 = padding - height//2
-    x1 = padding + width//2
-    y1 = padding + height//2
-    r = int(min(width, height) * 0.18)
-    tag_draw.rounded_rectangle([x0, y0, x1, y1], radius=r, fill=color)
-    hole_r = int(width * hole_ratio)
-    hole_x = padding + width//2 - int(width * 0.22)
-    hole_y = padding - height//2 + int(height * 0.2)
-    tag_draw.ellipse(
-        [hole_x - hole_r, hole_y - hole_r, hole_x + hole_r, hole_y + hole_r],
-        fill=(0,0,0,0)
-    )
-    tag_img = tag_img.rotate(angle_deg, resample=Image.BICUBIC, expand=True)
-    return tag_img
 
-# --- Build the icon ---
-img = Image.new("RGBA", (SIZE, SIZE), (0,0,0,0))
+def normalize_icon(image: Image.Image) -> Image.Image:
+    image = image.resize((SIZE, SIZE), Image.LANCZOS).convert("RGBA")
+    alpha = ImageChops.multiply(image.getchannel("A"), icon_mask())
+    normalized = Image.new("RGBA", (SIZE, SIZE), (0, 0, 0, 0))
+    normalized.paste(image, (0, 0), alpha)
+    normalized.putalpha(alpha)
+    return normalized
 
-squircle_r = int(SIZE * 0.225)
-bg_mask = rounded_rectangle_mask(SIZE, squircle_r)
-bg_color = Image.new("RGBA", (SIZE, SIZE), (240, 241, 245, 255))
-img = Image.composite(bg_color, img, bg_mask)
 
-red_color = (220, 45, 85, 255)
-blue_color = (45, 130, 220, 255)
+def save_png(path: Path, image: Image.Image, size: int) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    resized = image.resize((size, size), Image.LANCZOS)
+    resized.save(path, "PNG", optimize=True)
+    print(f"  {path.relative_to(PROJECT_DIR)} ({size}x{size})")
 
-tag_w = int(SIZE * 0.42)
-tag_h = int(SIZE * 0.55)
-red_tag = draw_tag(0, 0, tag_w, tag_h, red_color, -8)
-red_x = SIZE//2 - red_tag.width//2
-red_y = SIZE//2 - red_tag.height//2 - int(SIZE * 0.04)
 
-tag_w2 = int(SIZE * 0.46)
-tag_h2 = int(SIZE * 0.58)
-blue_tag = draw_tag(0, 0, tag_w2, tag_h2, blue_color, 12)
-blue_x = SIZE//2 - blue_tag.width//2 + int(SIZE * 0.02)
-blue_y = SIZE//2 - blue_tag.height//2 + int(SIZE * 0.03)
+def generate_icns(image: Image.Image) -> None:
+    with tempfile.TemporaryDirectory() as temp_dir:
+        iconset = Path(temp_dir) / "AppIcon.iconset"
+        iconset.mkdir()
+        for name, size in VARIANTS:
+            image.resize((size, size), Image.LANCZOS).save(iconset / name, "PNG")
+        subprocess.run(
+            ["iconutil", "-c", "icns", str(iconset), "-o", str(ROOT_ICNS)],
+            check=True,
+        )
+    print(f"  {ROOT_ICNS.relative_to(PROJECT_DIR)}")
 
-# Drop shadows
-shadow = blue_tag.copy()
-shadow_data = shadow.getdata()
-shadow.putdata([(0,0,0, min(a//4, 80)) if a > 0 else (0,0,0,0) for (r,g,b,a) in shadow_data])
-shadow = shadow.filter(ImageFilter.GaussianBlur(radius=SIZE*0.025))
-img.paste(shadow, (blue_x+int(SIZE*0.015), blue_y+int(SIZE*0.02)), shadow)
-img.paste(blue_tag, (blue_x, blue_y), blue_tag)
 
-shadow2 = red_tag.copy()
-shadow_data2 = shadow2.getdata()
-shadow2.putdata([(0,0,0, min(a//3, 80)) if a > 0 else (0,0,0,0) for (r,g,b,a) in shadow_data2])
-shadow2 = shadow2.filter(ImageFilter.GaussianBlur(radius=SIZE*0.02))
-img.paste(shadow2, (red_x+int(SIZE*0.01), red_y+int(SIZE*0.015)), shadow2)
-img.paste(red_tag, (red_x, red_y), red_tag)
+def print_corner_alpha(path: Path) -> None:
+    with Image.open(path) as image:
+        rgba = image.convert("RGBA")
+        width, height = rgba.size
+        corners = [
+            rgba.getpixel((0, 0))[3],
+            rgba.getpixel((width - 1, 0))[3],
+            rgba.getpixel((0, height - 1))[3],
+            rgba.getpixel((width - 1, height - 1))[3],
+        ]
+    print(f"  alpha corners {path.relative_to(PROJECT_DIR)}: {corners}")
 
-mask = rounded_rectangle_mask(SIZE, squircle_r)
-img.putalpha(mask)
 
-# --- Save PNG variants to temp .iconset, then generate .icns ---
-with tempfile.TemporaryDirectory() as tmpdir:
-    iconset = os.path.join(tmpdir, "AppIcon.iconset")
-    os.makedirs(iconset)
+def main() -> None:
+    source_path, source = load_source()
+    assert_current_grid_rainbow_icon(source)
+    icon = normalize_icon(source)
 
-    variants = [
-        ("icon_16x16.png", 16),
-        ("icon_16x16@2x.png", 32),
-        ("icon_32x32.png", 32),
-        ("icon_32x32@2x.png", 64),
-        ("icon_128x128.png", 128),
-        ("icon_128x128@2x.png", 256),
-        ("icon_256x256.png", 256),
-        ("icon_256x256@2x.png", 512),
-        ("icon_512x512.png", 512),
-        ("icon_512x512@2x.png", 1024),
-    ]
+    print(f"Source: {source_path.relative_to(PROJECT_DIR)}")
+    print("Writing AppIcon.appiconset:")
+    save_png(APPICON_DIR / "icon_1024_preview.png", icon, 1024)
+    for name, size in VARIANTS:
+        save_png(APPICON_DIR / name, icon, size)
 
-    for name, size in variants:
-        resized = img.resize((size, size), Image.LANCZOS)
-        path = os.path.join(iconset, name)
-        resized.save(path, "PNG", optimize=True)
-        print(f"  {name} ({size}x{size}): {os.path.getsize(path):,}B")
+    print("Writing release 1024 assets:")
+    for target in RELEASE_ICON_TARGETS:
+        save_png(target, icon, 1024)
 
-    # Generate .icns to project root
-    out_icns = os.path.join(PROJECT_DIR, "icon-icns.icns")
-    subprocess.run(["iconutil", "-c", "icns", iconset, "-o", out_icns], check=True)
-    icns_size = os.path.getsize(out_icns)
-    print(f"\nGenerated: {out_icns} ({icns_size:,}B, {icns_size/1024:.0f}KB)")
+    print("Writing root .icns:")
+    generate_icns(icon)
 
-# Also save 1024x1024 preview
-preview_path = os.path.join(PROJECT_DIR, "icon_preview.png")
-img.save(preview_path, "PNG", optimize=True)
-print(f"Preview: {preview_path}")
+    print("Validation:")
+    print_corner_alpha(ROOT_ICNS)
+    print_corner_alpha(APPICON_DIR / "icon_512x512@2x.png")
+    for target in RELEASE_ICON_TARGETS:
+        print_corner_alpha(target)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,17 +1,19 @@
 # App Store Asset Inventory
 
-This release pack is frozen for TagLauncher `7.6.0` build `20260525.0016`.
+This release pack was originally frozen for TagLauncher `7.6.0` build `20260525.0016`.
+
+2026-05-29 icon cleanup: the local QA DMG and App icon asset in this archived folder were refreshed from the current icon-resource hotfix build so the project tree no longer contains stale icon packages. This archive is reference-only and should not be used for submission.
 
 Use this file as the submission asset checklist. Anything marked `Needs user input` must be completed before submitting in App Store Connect.
 
-## Frozen Build
+## Archived Build
 
 - Version: `7.6.0`
-- Local QA build: `20260525.0016`
-- Source commit: `0258b3e`
+- Local QA build: `20260529.0153` icon cleanup copy
+- Source commit: `codex/post-freeze-new-requirement` icon-resource hotfix
 - Local QA DMG: `Archive/TagLauncher-7.6.0-20260525.0016-local-QA.dmg`
-- DMG SHA-256: `4689856f4a976c394ef4737db5bb5eebcc5b5bb95eea81fe72f5b6c3e3ed4b23`
-- App binary SHA-256: `01ace57df10061fd7d684fa8a5bd795f87f55ee2c713cbb1ab2d01f5f63ed404`
+- DMG SHA-256: `a887c26943136c629bf36a577ded512f85a0aac8132622e2c418c4c6d2b870f7`
+- App binary SHA-256: `8e0fd85ee62b6791940ce32c220ca802a02f5e6f9d43a366f6d1f6b7bb53eb9a`
 
 ## Metadata
 
