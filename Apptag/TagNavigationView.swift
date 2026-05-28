@@ -17,7 +17,7 @@ struct TagNavigationView: NSViewRepresentable {
     let orientation: Orientation
     let contentInsets: NSEdgeInsets
     let onActivate: (String) -> Void
-    let onHover: (String) -> Void
+    let onHoverChange: (String, Bool) -> Void
 
     func makeNSView(context: Context) -> TagNavigationHostView {
         let view = TagNavigationHostView()
@@ -26,7 +26,7 @@ struct TagNavigationView: NSViewRepresentable {
             orientation: orientation,
             contentInsets: contentInsets,
             onActivate: onActivate,
-            onHover: onHover
+            onHoverChange: onHoverChange
         )
         return view
     }
@@ -37,7 +37,7 @@ struct TagNavigationView: NSViewRepresentable {
             orientation: orientation,
             contentInsets: contentInsets,
             onActivate: onActivate,
-            onHover: onHover
+            onHoverChange: onHoverChange
         )
     }
 }
@@ -63,14 +63,14 @@ final class TagNavigationHostView: NSView {
         orientation: TagNavigationView.Orientation,
         contentInsets: NSEdgeInsets,
         onActivate: @escaping (String) -> Void,
-        onHover: @escaping (String) -> Void
+        onHoverChange: @escaping (String, Bool) -> Void
     ) {
         documentView.update(
             items: items,
             orientation: orientation,
             contentInsets: contentInsets,
             onActivate: onActivate,
-            onHover: onHover
+            onHoverChange: onHoverChange
         )
         scrollView.hasHorizontalScroller = orientation == .horizontal
         scrollView.hasVerticalScroller = orientation == .vertical
@@ -109,7 +109,7 @@ final class TagNavigationDocumentView: NSView {
     private var contentInsets = NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     private var buttons: [TagNavigationButton] = []
     private var onActivate: (String) -> Void = { _ in }
-    private var onHover: (String) -> Void = { _ in }
+    private var onHoverChange: (String, Bool) -> Void = { _, _ in }
 
     override var isFlipped: Bool { true }
 
@@ -118,14 +118,14 @@ final class TagNavigationDocumentView: NSView {
         orientation: TagNavigationView.Orientation,
         contentInsets: NSEdgeInsets,
         onActivate: @escaping (String) -> Void,
-        onHover: @escaping (String) -> Void
+        onHoverChange: @escaping (String, Bool) -> Void
     ) {
         let needsRebuild = self.items != items || self.orientation != orientation
         self.items = items
         self.orientation = orientation
         self.contentInsets = contentInsets
         self.onActivate = onActivate
-        self.onHover = onHover
+        self.onHoverChange = onHoverChange
 
         if needsRebuild {
             rebuildButtons()
@@ -170,7 +170,7 @@ final class TagNavigationDocumentView: NSView {
         buttons = items.map { item in
             let button = TagNavigationButton(item: item, orientation: orientation)
             button.onActivate = { [weak self] tagID in self?.onActivate(tagID) }
-            button.onHover = { [weak self] tagID in self?.onHover(tagID) }
+            button.onHoverChange = { [weak self] tagID, active in self?.onHoverChange(tagID, active) }
             addSubview(button)
             return button
         }
@@ -200,11 +200,12 @@ final class TagNavigationDocumentView: NSView {
 
 final class TagNavigationButton: NSButton {
     var onActivate: (String) -> Void = { _ in }
-    var onHover: (String) -> Void = { _ in }
+    var onHoverChange: (String, Bool) -> Void = { _, _ in }
 
     private var item: TagNavigationItem
     private var orientation: TagNavigationView.Orientation
     private var trackingAreaRef: NSTrackingArea?
+    private var isMouseInside = false
 
     var preferredSize: NSSize {
         let font = NSFont.systemFont(ofSize: 13, weight: .medium)
@@ -262,7 +263,16 @@ final class TagNavigationButton: NSButton {
 
     override func mouseEntered(with event: NSEvent) {
         super.mouseEntered(with: event)
-        onHover(item.id)
+        guard !isMouseInside else { return }
+        isMouseInside = true
+        onHoverChange(item.id, true)
+    }
+
+    override func mouseExited(with event: NSEvent) {
+        super.mouseExited(with: event)
+        guard isMouseInside else { return }
+        isMouseInside = false
+        onHoverChange(item.id, false)
     }
 
     @objc private func performActivation() {

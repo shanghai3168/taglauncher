@@ -158,7 +158,6 @@ struct AppGridCollectionView: NSViewRepresentable {
                 iconSize: iconSize,
                 showNames: showNames,
                 showUncommonAppBubbles: showUncommonAppBubbles,
-                highlightedGroupName: highlightedGroupName,
                 contentRevision: contentRevision
             )
             if nextSignature != contentSignature {
@@ -235,7 +234,6 @@ struct AppGridCollectionView: NSViewRepresentable {
             iconSize: CGFloat,
             showNames: Bool,
             showUncommonAppBubbles: Bool,
-            highlightedGroupName: String?,
             contentRevision: Int
         ) -> String {
             let colorPart = tagColors
@@ -247,7 +245,6 @@ struct AppGridCollectionView: NSViewRepresentable {
                 "\(Int(iconSize.rounded()))",
                 showNames ? "names" : "nonames",
                 showUncommonAppBubbles ? "uncommon" : "allbubbles",
-                highlightedGroupName ?? "",
                 colorPart,
                 "rev=\(contentRevision)"
             ].joined(separator: "|")
@@ -951,8 +948,9 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
         guard let coordinator, let group else { return }
         let displayStyle = coordinator.displayStyle
         let tagColor = TagColor.nsColor(for: coordinator.tagColors[group.name] ?? 0)
+        let isNavigationHighlighted = coordinator.highlightedGroupName == group.name
         let isColorlessActive = coordinator.isColorlessContainerMode
-            && (isHovered || coordinator.highlightedGroupName == group.name)
+            && (isHovered || isNavigationHighlighted)
 
         if displayStyle.usesCardSurface {
             let rect = bounds.insetBy(dx: 0.5, dy: 0.5)
@@ -1033,10 +1031,11 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
 
     private func updateCardShadow() {
         guard let coordinator else { return }
+        let isNavigationHighlighted = coordinator.highlightedGroupName == group?.name
         let isColorlessActive = coordinator.isColorlessContainerMode
-            && (isHovered || coordinator.highlightedGroupName == group?.name)
+            && (isHovered || isNavigationHighlighted)
         let shouldShadow = coordinator.displayStyle.usesCardSurface
-            && ((coordinator.isColoredContainerMode && isHovered) || isColorlessActive)
+            && ((coordinator.isColoredContainerMode && (isHovered || isNavigationHighlighted)) || isColorlessActive)
         layer?.shadowColor = NSColor.black.cgColor
         layer?.shadowOpacity = shouldShadow ? 0.22 : 0
         layer?.shadowRadius = shouldShadow ? 8 : 0

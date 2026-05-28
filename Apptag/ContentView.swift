@@ -316,6 +316,9 @@ private struct AppGridInteractionState {
     var tagRemovalDropSuppressFuturePrompt = false
     var appDragResetToken = 0
     var bubbleDraftNote = ""
+    var tagNavigationHoveredGroupName: String? = nil
+    var tagNavigationLastHoverScrollID: String? = nil
+    var tagNavigationLastHoverScrollAt: Date? = nil
 }
 
 private struct EditActionFeedback: Identifiable {
@@ -430,7 +433,12 @@ struct ContentView: View {
             || appGridInteraction.pendingUncategorizedDrop != nil
             || appGridInteraction.pendingTagRemovalDrop != nil
     }
+    private var appGridHighlightedGroupName: String? {
+        appGridInteraction.tagNavigationHoveredGroupName
+            ?? (isColorlessContainerMode ? filledColorlessContainer : nil)
+    }
     private let rightSidebarFloatingClearance: CGFloat = 44
+    private let tagNavigationHoverScrollInterval: TimeInterval = 0.22
 
     private var floatingButtonSurfaceColor: Color {
         colorScheme == .dark
@@ -929,8 +937,8 @@ struct ContentView: View {
             onActivate: { tagID in
                 activateTagNavigation(tagID)
             },
-            onHover: { tagID in
-                handleTagNavigationHover(tagID)
+            onHoverChange: { tagID, active in
+                handleTagNavigationHover(tagID, active: active)
             }
         )
     }
@@ -949,9 +957,7 @@ struct ContentView: View {
                     .zIndex(tagNavDragItem == tag.name ? 1 : 0)
                     .highPriorityGesture(tagNavReorderGesture(for: tag.name))
                     .onHover { hovering in
-                        if hovering {
-                            handleTagNavigationHover(tag.id)
-                        }
+                        handleTagNavigationHover(tag.id, active: hovering)
                     }
                 }
             }
@@ -978,9 +984,7 @@ struct ContentView: View {
                     .zIndex(tagNavDragItem == tag.name ? 1 : 0)
                     .highPriorityGesture(tagNavReorderGesture(for: tag.name))
                     .onHover { hovering in
-                        if hovering {
-                            handleTagNavigationHover(tag.id)
-                        }
+                        handleTagNavigationHover(tag.id, active: hovering)
                     }
                 }
             }
@@ -1011,7 +1015,7 @@ struct ContentView: View {
                     showNames: !hideAppNames,
                     bubbleDisabled: appBubbleDisabled,
                     showUncommonAppBubbles: showUncommonAppBubbles,
-                    highlightedGroupName: filledColorlessContainer,
+                    highlightedGroupName: appGridHighlightedGroupName,
                     contentRevision: groupLayoutVersion,
                     scrollTargetID: appGridScrollTargetID,
                     scrollRequestToken: appGridScrollRequestToken,
@@ -1945,8 +1949,28 @@ struct ContentView: View {
         scrollTo(id)
     }
 
-    private func handleTagNavigationHover(_ id: String) {
+    private func handleTagNavigationHover(_ id: String, active: Bool) {
+        guard active else {
+            if appGridInteraction.tagNavigationHoveredGroupName == id {
+                appGridInteraction.tagNavigationHoveredGroupName = nil
+            }
+            return
+        }
+
+        appGridInteraction.tagNavigationHoveredGroupName = id
         fillColorlessContainer(id)
+        scrollToTagFromHover(id)
+    }
+
+    private func scrollToTagFromHover(_ id: String) {
+        let now = Date()
+        if appGridInteraction.tagNavigationLastHoverScrollID == id,
+           let lastScrollAt = appGridInteraction.tagNavigationLastHoverScrollAt,
+           now.timeIntervalSince(lastScrollAt) < tagNavigationHoverScrollInterval {
+            return
+        }
+        appGridInteraction.tagNavigationLastHoverScrollID = id
+        appGridInteraction.tagNavigationLastHoverScrollAt = now
         scrollTo(id)
     }
 
