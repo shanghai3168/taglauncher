@@ -5,7 +5,7 @@ enum AppDefaults {
     static let currentSchemaVersion = 3
 
     static let tagFontSize: Double = 22
-    static let iconSize: Double = 80
+    static let iconSize: Double = 64
     static let tagPosition = "right"
     static let displayMode = "coloredGridContainer"
     static let hideAppNames = true

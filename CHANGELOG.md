@@ -1,5 +1,33 @@
 # TagLauncher Changelog
 
+## [7.8.1] — 2026-05-29
+
+- 新用户首次安装时，App Grid 默认图标大小从 `80` 调整为 `64`，让初始界面更紧凑；已有用户已保存的图标大小设置不会被覆盖
+- 版本号更新为 `7.8.1`
+
+## [7.8.0] — 2026-05-29
+
+- Quick Search 结果列表改为 AppKit-backed 渲染，保留原搜索匹配和启动逻辑，同时提升键盘选择、滚动跟随和结果列表稳定性
+- Quick Search 从主 overlay SwiftUI 层拆出为独立 `NSPanel`，并保持与 AppGrid 同层级显示，避免全屏/Split View 场景下窗口层级或 Space 行为异常
+- 新增 `OverlayWindowController`，将 overlay 窗口实例、Space 避让、show/focus/hide、屏幕选择、全屏/Split View 判定从 AppDelegate 中收口
+- 新增 `AppLibraryController` 和 snapshot 数据刷新管线，集中处理 App 扫描、TagDatabase reconcile、Smart Start 应用、Quick Search 文档和标签颜色/顺序组装
+- 设置页 Smart Start 路径模块化，系统智能化初始分类的扫描、应用和 snapshot 组装改由 `AppLibraryController` 统一处理
+- 修复滚动 AppGrid 后 `Esc` 偶发无法关闭、`Space` 偶发无法唤出 Quick Search 的问题；overlay 键盘处理新增 AppKit `sendEvent` 兜底，AppGrid 滚轮进入时会重新声明 key/front
+- 优化 AppGrid 滚动期间的刷新频率：滚动 burst 期间不再反复跨 SwiftUI 写入 hover 状态，滚动停止后再恢复 hover replay 和 visible item runtime state
+- 窗口 QA 脚本补强滚动后 `Space` / `Esc` 连续循环验证，并继续覆盖全屏、Split View、Settings、文件面板、Force Quit、Dock 图标重复和屏幕跟随
+- 版本号更新为 `7.8.0`
+
+## [7.7.0] — 2026-05-28
+
+- 标签栏完成 AppKit 化，支持顶部、左侧、右侧三种位置下的 AppKit-backed 标签导航
+- 标签栏新增长按拖拽排序，排序命中、持久化和标签顺序刷新走 AppKit 路径
+- 优化标签拖拽态视觉：拖拽中的标签增加浮起阴影、轻微放大和更高层级，用户更容易判断当前拖拽对象
+- 拖出容器空隙时新增单标签移除确认：确认后只移除来源容器代表的那个标签；可选择“知道了，以后不用再提醒我”
+- 拖到“未分类”时新增独立“不再提醒”选项；该开关与拖到空隙移除单标签的开关分离，避免混淆批量移除和单标签移除
+- 修复 App 图标圆角外区域白边问题，当前 grid/rainbow AppIcon 的四角透明；清除旧“两张标签”图标生成逻辑，并让构建优先从 `AppIcon.appiconset` 生成 bundle 图标
+- 清理旧 SwiftUI 浏览态 grid 命名残留，将 `AppGridItem.swift` 改名为 `AppGridSupport.swift`
+- 版本号更新为 `7.7.0`
+
 ## [7.6.0 App Store Freeze] — 2026-05-24
 
 - 冻结首轮 Mac App Store 准备资料，以本地 QA 通过 Build `20260524.1849` 为准
