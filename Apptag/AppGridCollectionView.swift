@@ -272,6 +272,7 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
     private var lastLayoutSize: NSSize = .zero
     private var lastReportedBoundsOrigin: NSPoint?
     private var scrollUnfreezeWorkItem: DispatchWorkItem?
+    private var scrollActivityIsActive = false
 
     override var isFlipped: Bool { true }
 
@@ -385,14 +386,18 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
     }
 
     private func handleScrollActivity() {
-        if coordinator?.setScrollBubbleDisabled(true) == true {
-            refreshVisibleRuntimeState()
+        if !scrollActivityIsActive {
+            scrollActivityIsActive = true
+            if coordinator?.setScrollBubbleDisabled(true) == true {
+                refreshVisibleRuntimeState()
+            }
+            coordinator?.onScrollActivity()
         }
-        coordinator?.onScrollActivity()
 
         scrollUnfreezeWorkItem?.cancel()
         let workItem = DispatchWorkItem { [weak self] in
             guard let self else { return }
+            self.scrollActivityIsActive = false
             self.replayPointerHover()
             if self.coordinator?.setScrollBubbleDisabled(false) == true {
                 self.refreshVisibleRuntimeState()

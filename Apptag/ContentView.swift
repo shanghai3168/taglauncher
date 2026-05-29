@@ -1732,7 +1732,9 @@ struct ContentView: View {
     }
 
     private func handleAppGridScrollActivity() {
-        appGridInteraction.hoveredBubble = nil
+        if appGridInteraction.hoveredBubble != nil {
+            appGridInteraction.hoveredBubble = nil
+        }
     }
 
     private func handleBubbleHover(app: AppInfo, frame: CGRect, event: AppBubbleHoverEvent) {

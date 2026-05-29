@@ -13,11 +13,13 @@
 
 ## Todo
 
-- [2026-05-29] 第二批：AppGrid 滚动流畅性优化。
-  - 目标: 降低滚动期间 SwiftUI 状态写入和 visible item 刷新频率，改善偶发卡顿/抖动。
-  - 验收: 滚动手感稳定；hover 气泡不在滚动中闪现；不影响标签 hover 定位和拖拽。
-
 ## Done
+
+- [2026-05-29] 第二批：AppGrid 滚动流畅性优化。
+  - 提交: 本次提交
+  - 结果: AppGrid 滚动期间只在滚动 burst 开始时通知 SwiftUI 清理 hover 气泡，不再每次 bounds 变化重复写状态；滚动停止后再恢复 hover replay 和 visible item runtime state。
+  - 范围: 不改布局算法、不改拖拽、不改 hover 气泡展示规则，只降低滚动期间的刷新频率。
+  - 验证: `bash build.sh`、`codesign --verify --deep --strict`、`Scripts/window_logic_qa.sh` 全部通过；滚动后 Space/Esc 连续循环 QA 保持通过。
 
 - [2026-05-29] 第一批：未分类拖拽确认记忆 + 滚动后键盘兜底。
   - 提交: 本次提交
