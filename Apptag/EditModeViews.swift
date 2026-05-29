@@ -314,6 +314,8 @@ struct EditActionFeedbackBubble: View {
 struct UncategorizedDropConfirmBubble: View {
     let title: String
     let message: String
+    let doNotRemindTitle: String
+    @Binding var doNotRemind: Bool
     let cancelTitle: String
     let confirmTitle: String
     let onCancel: () -> Void
@@ -347,6 +349,33 @@ struct UncategorizedDropConfirmBubble: View {
                 .multilineTextAlignment(.leading)
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity, alignment: .leading)
+
+            Button {
+                doNotRemind.toggle()
+            } label: {
+                HStack(spacing: 10) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 4, style: .continuous)
+                            .fill(doNotRemind ? Color.accentColor : Color.white.opacity(0.10))
+                        RoundedRectangle(cornerRadius: 4, style: .continuous)
+                            .stroke(Color.white.opacity(0.92), lineWidth: 1.6)
+                        if doNotRemind {
+                            Image(systemName: "checkmark")
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundStyle(.white)
+                        }
+                    }
+                    .frame(width: 18, height: 18)
+
+                    Text(doNotRemindTitle)
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundStyle(.white.opacity(0.82))
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
+                }
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
 
             HStack(spacing: 12) {
                 Spacer(minLength: 0)

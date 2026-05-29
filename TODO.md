@@ -13,7 +13,17 @@
 
 ## Todo
 
+- [2026-05-29] 第二批：AppGrid 滚动流畅性优化。
+  - 目标: 降低滚动期间 SwiftUI 状态写入和 visible item 刷新频率，改善偶发卡顿/抖动。
+  - 验收: 滚动手感稳定；hover 气泡不在滚动中闪现；不影响标签 hover 定位和拖拽。
+
 ## Done
+
+- [2026-05-29] 第一批：未分类拖拽确认记忆 + 滚动后键盘兜底。
+  - 提交: 本次提交
+  - 结果: “拖到未分类”弹窗新增独立“不再提醒”checkbox 和 `skipUncategorizedDropConfirm` 持久化；overlay 键盘处理增加 AppKit `sendEvent` 兜底；AppGrid 滚轮进入时重新声明 key/front，避免滚动后 Space/Esc 偶发丢失。
+  - 范围: 不改拖到空隙移除单标签语义；不改全屏/Split View 窗口层级；不改 Quick Search 独立面板结构。
+  - 验证: `bash build.sh`、`codesign --verify --deep --strict`、`Scripts/window_logic_qa.sh` 全部通过；新增滚动后 Space/Esc 连续循环 QA；屏幕 smoke 验证滚动后 Space 打开 Quick Search、Esc 关闭 Quick Search、再次 Esc 关闭 AppGrid。
 
 - [2026-05-29] 设置页和 Smart Start 模块化。
   - 提交: 本次提交

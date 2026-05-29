@@ -313,6 +313,7 @@ private struct AppGridInteractionState {
     var editingBubble: AppBubbleContext? = nil
     var pendingUncategorizedDrop: PendingUncategorizedDrop? = nil
     var pendingTagRemovalDrop: PendingTagRemovalDrop? = nil
+    var uncategorizedDropSuppressFuturePrompt = false
     var tagRemovalDropSuppressFuturePrompt = false
     var appDragResetToken = 0
     var bubbleDraftNote = ""
@@ -409,6 +410,7 @@ struct ContentView: View {
     @AppStorage("showUncommonAppBubbles") private var showUncommonAppBubbles = AppDefaults.showUncommonAppBubbles
     @AppStorage("useAppKitTagNavigation") private var useAppKitTagNavigation = AppDefaults.useAppKitTagNavigation
     @AppStorage("skipTagRemovalDropConfirm") private var skipTagRemovalDropConfirm = false
+    @AppStorage("skipUncategorizedDropConfirm") private var skipUncategorizedDropConfirm = false
 
     private let editSidebarWidth: CGFloat = 188
     private let editSidebarHorizontalInset: CGFloat = 12
@@ -1420,6 +1422,8 @@ struct ContentView: View {
                     UncategorizedDropConfirmBubble(
                         title: tr("drop.uncategorizedConfirmTitle"),
                         message: uncategorizedConfirmMessage(for: pendingDrop),
+                        doNotRemindTitle: tr("drop.removeTagDoNotAskAgain"),
+                        doNotRemind: $appGridInteraction.uncategorizedDropSuppressFuturePrompt,
                         cancelTitle: tr("tag.cancel"),
                         confirmTitle: tr("edit.confirm"),
                         onCancel: dismissUncategorizedDropConfirm,
@@ -2046,7 +2050,13 @@ struct ContentView: View {
         guard !removableTags.isEmpty else { return }
         let assignedTags = assignedRegularDisplayTags(for: removableTags)
 
+        if skipUncategorizedDropConfirm {
+            moveDroppedAppToUncategorized(path: app.path.path, tags: removableTags)
+            return
+        }
+
         clearAppBubbleState()
+        appGridInteraction.uncategorizedDropSuppressFuturePrompt = false
         withAnimation(.spring(response: 0.24, dampingFraction: 0.84)) {
             appGridInteraction.pendingUncategorizedDrop = PendingUncategorizedDrop(
                 app: app,
@@ -2100,6 +2110,7 @@ struct ContentView: View {
     }
 
     private func dismissUncategorizedDropConfirm() {
+        appGridInteraction.uncategorizedDropSuppressFuturePrompt = false
         resetTransientDragState(keepingPendingUncategorizedDrop: true)
         withAnimation(.easeOut(duration: 0.18)) {
             appGridInteraction.pendingUncategorizedDrop = nil
@@ -2110,10 +2121,19 @@ struct ContentView: View {
         guard let pendingDrop = appGridInteraction.pendingUncategorizedDrop else { return }
         let path = pendingDrop.app.path.path
         let tags = pendingDrop.removableTags
+        let shouldSuppressFuturePrompt = appGridInteraction.uncategorizedDropSuppressFuturePrompt
+        if shouldSuppressFuturePrompt {
+            skipUncategorizedDropConfirm = true
+        }
+        appGridInteraction.uncategorizedDropSuppressFuturePrompt = false
         resetTransientDragState(keepingPendingUncategorizedDrop: true)
         withAnimation(.easeOut(duration: 0.16)) {
             appGridInteraction.pendingUncategorizedDrop = nil
         }
+        moveDroppedAppToUncategorized(path: path, tags: tags)
+    }
+
+    private func moveDroppedAppToUncategorized(path: String, tags: [String]) {
         guard !tags.isEmpty else { return }
         TagEditor.removeTags(tags, from: [path])
         showDropRefresh()

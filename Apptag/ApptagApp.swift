@@ -92,6 +92,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                     }
                 )
             },
+            handleOverlayKeyEvent: { [weak self] event in
+                self?.handleOverlayKeyEvent(event) ?? false
+            },
             installOverlayKeyMonitor: { [weak self] in
                 self?.installOverlayKeyMonitor()
             },
@@ -851,24 +854,43 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard overlayKeyMonitor == nil else { return }
         overlayKeyMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
             guard let self else { return event }
-            guard self.shouldHandleOverlayKeyEvent(event) else { return event }
-            if event.keyCode == 53 { // Escape
-                if self.isQuickSearchOpen {
-                    self.isQuickSearchOpen = false
-                    self.removeQuickSearchExternalMouseMonitor()
-                    self.updateOverlayLevelForTextInput()
-                    NotificationCenter.default.post(name: .tagLauncherQuickSearchDismissRequested, object: nil)
-                    return nil
-                }
-                self.hideOverlay(force: true)
-                return nil
-            }
-            if self.shouldOpenQuickSearch(for: event) {
-                self.requestQuickSearch(source: QuickSearchOpenSource.mainOverlay)
+            if self.handleOverlayKeyEvent(event) {
                 return nil
             }
             return event
         }
+    }
+
+    @discardableResult
+    private func handleOverlayKeyEvent(_ event: NSEvent) -> Bool {
+        guard event.type == .keyDown,
+              shouldHandleOverlayKeyEvent(event)
+        else { return false }
+
+        if event.keyCode == UInt16(kVK_Escape) {
+            return handleOverlayEscapeKey()
+        }
+        if shouldOpenQuickSearch(for: event) {
+            requestQuickSearch(source: QuickSearchOpenSource.mainOverlay)
+            return true
+        }
+        return false
+    }
+
+    private func handleOverlayEscapeKey() -> Bool {
+        if isQuickSearchOpen {
+            isQuickSearchOpen = false
+            removeQuickSearchExternalMouseMonitor()
+            updateOverlayLevelForTextInput()
+            NotificationCenter.default.post(name: .tagLauncherQuickSearchDismissRequested, object: nil)
+            return true
+        }
+        guard !isSettingsVisible,
+              !isEditingAppNote,
+              !isModalInteractionActive
+        else { return false }
+        hideOverlay(force: true)
+        return true
     }
 
     private func requestQuickSearch(source: String) {

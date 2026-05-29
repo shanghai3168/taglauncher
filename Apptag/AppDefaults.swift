@@ -26,6 +26,7 @@ enum AppDefaults {
             "showUncommonAppBubbles": showUncommonAppBubbles,
             "useAppKitTagNavigation": useAppKitTagNavigation,
             "skipTagRemovalDropConfirm": false,
+            "skipUncategorizedDropConfirm": false,
             LauncherHotkeyRegistrationStore.mainStateKey: LauncherHotkeyRegistrationState.active.rawValue,
             LauncherHotkeyRegistrationStore.quickSearchStateKey: LauncherHotkeyRegistrationState.active.rawValue
         ])

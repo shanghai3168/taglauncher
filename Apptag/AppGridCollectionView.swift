@@ -252,9 +252,19 @@ struct AppGridCollectionView: NSViewRepresentable {
     }
 }
 
+private final class AppGridScrollView: NSScrollView {
+    override var acceptsFirstResponder: Bool { true }
+
+    override func scrollWheel(with event: NSEvent) {
+        window?.makeKeyAndOrderFront(nil)
+        window?.orderFrontRegardless()
+        super.scrollWheel(with: event)
+    }
+}
+
 final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
     private let emptyDropTargetID = UUID()
-    private let scrollView = NSScrollView()
+    private let scrollView = AppGridScrollView()
     private let collectionView = NSCollectionView()
     private let gridLayout = AppGridContainerCollectionLayout()
     private weak var coordinator: AppGridCollectionView.Coordinator?

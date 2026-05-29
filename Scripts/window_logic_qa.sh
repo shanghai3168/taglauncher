@@ -435,6 +435,16 @@ case "overlay":
     guard dockWindows.isEmpty else { fail("Dock should be hidden while overlay is visible; found \(dockWindows.count) Dock windows") }
     print("PASS overlay: tagLayer=\(tag[0].layer) menubarLayer=24 dockWindows=0")
 
+case "quick-search":
+    guard tag.count == 2 else { fail("quick search expected overlay plus panel, got \(tag.count)") }
+    assertTagLayer(tag)
+    let overlays = tag.filter(isOverlayWindow)
+    let quickSearch = tag.filter(isQuickSearchWindow)
+    guard overlays.count == 1, quickSearch.count == 1 else {
+        fail("quick search stack wrong: names=\(tag.map(\.name)) bounds=\(tag.map(\.bounds))")
+    }
+    print("PASS quick search stack: tagLayers=\(tag.map(\.layer))")
+
 case "settings":
     guard tag.count == 2 else { fail("settings expected 2 TagLauncher windows, got \(tag.count)") }
     assertTagLayer(tag)
@@ -685,6 +695,23 @@ case "overlay-outside":
     let overlayX = dimension(overlayBounds, "X")
     let overlayY = dimension(overlayBounds, "Y")
     print("\(Int(round(overlayX + 120))) \(Int(round(overlayY + 160)))")
+case "overlay-center":
+    guard let overlay = tag.max(by: { lhs, rhs in
+        let lhsBounds = lhs[kCGWindowBounds as String] as? NSDictionary ?? [:]
+        let rhsBounds = rhs[kCGWindowBounds as String] as? NSDictionary ?? [:]
+        let lhsArea = dimension(lhsBounds, "Width") * dimension(lhsBounds, "Height")
+        let rhsArea = dimension(rhsBounds, "Width") * dimension(rhsBounds, "Height")
+        return lhsArea < rhsArea
+    }), let overlayBounds = overlay[kCGWindowBounds as String] as? NSDictionary else {
+        let screen = NSScreen.screens.first?.frame ?? CGRect(x: 0, y: 0, width: 1200, height: 800)
+        print("\(Int(round(screen.midX))) \(Int(round(screen.midY)))")
+        exit(0)
+    }
+    let overlayX = dimension(overlayBounds, "X")
+    let overlayY = dimension(overlayBounds, "Y")
+    let overlayWidth = dimension(overlayBounds, "Width")
+    let overlayHeight = dimension(overlayBounds, "Height")
+    print("\(Int(round(overlayX + overlayWidth / 2))) \(Int(round(overlayY + overlayHeight / 2)))")
 case "fullscreen-target-center":
     guard let target = raw.first(where: { ($0[kCGWindowName as String] as? String) == "TagLauncherFullscreenQATargetFullscreen" }),
           let bounds = target[kCGWindowBounds as String] as? NSDictionary else {
@@ -944,6 +971,28 @@ click_overlay_outside_quick_search() {
   click_xy "$x" "$y"
 }
 
+page_scroll_appgrid() {
+  local coords
+  coords="$(swift "$coords_swift" overlay-center)"
+  read -r x y <<<"$coords"
+  move_xy "$x" "$y"
+  sleep 0.15
+  swift - <<'SWIFT'
+import CoreGraphics
+if let event = CGEvent(
+    scrollWheelEvent2Source: nil,
+    units: .pixel,
+    wheelCount: 1,
+    wheel1: -900,
+    wheel2: 0,
+    wheel3: 0
+) {
+    event.post(tap: .cghidEventTap)
+}
+SWIFT
+  sleep 0.25
+}
+
 kill_fullscreen_qa_target() {
   if [[ -n "${FULLSCREEN_QA_PID:-}" ]]; then
     kill "$FULLSCREEN_QA_PID" >/dev/null 2>&1 || true
@@ -1090,6 +1139,22 @@ sleep 0.4
 swift_assert overlay
 send_keycode 53
 sleep 0.4
+swift_assert no-overlay
+
+log "==> QA 4/7: appgrid scroll keeps Space and Esc keyboard routing"
+show_overlay
+for _ in {1..5}; do
+  page_scroll_appgrid
+  send_keycode 49
+  sleep 0.35
+  swift_assert quick-search
+  send_keycode 53
+  sleep 0.25
+  swift_assert overlay
+done
+page_scroll_appgrid
+send_keycode 53
+sleep 0.35
 swift_assert no-overlay
 
 log "==> QA 5/7: clicking outside quick search closes search, not appgrid"

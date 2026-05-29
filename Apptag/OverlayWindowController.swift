@@ -2,8 +2,18 @@ import AppKit
 import SwiftUI
 
 final class OverlayPanel: NSPanel {
+    var handleOverlayKeyEvent: ((NSEvent) -> Bool)?
+
     override var canBecomeKey: Bool { true }
     override var canBecomeMain: Bool { true }
+
+    override func sendEvent(_ event: NSEvent) {
+        if event.type == .keyDown,
+           handleOverlayKeyEvent?(event) == true {
+            return
+        }
+        super.sendEvent(event)
+    }
 
     override func constrainFrameRect(_ frameRect: NSRect, to screen: NSScreen?) -> NSRect {
         frameRect
@@ -19,6 +29,7 @@ final class OverlayWindowController {
         let currentOverlayLevel: () -> NSWindow.Level
         let overlayLevel: (_ initialQuickSearchSource: String?) -> NSWindow.Level
         let makeContentView: (_ initialQuickSearchSource: String?) -> NSView
+        let handleOverlayKeyEvent: (NSEvent) -> Bool
         let installOverlayKeyMonitor: () -> Void
         let removeOverlayKeyMonitor: () -> Void
         let removeQuickSearchMouseMonitor: () -> Void
@@ -215,6 +226,7 @@ final class OverlayWindowController {
         panel.titlebarAppearsTransparent = true
         panel.titleVisibility = .hidden
         panel.isReleasedWhenClosed = false
+        panel.handleOverlayKeyEvent = dependencies.handleOverlayKeyEvent
         panel.contentView = dependencies.makeContentView(initialQuickSearchSource)
         return panel
     }
