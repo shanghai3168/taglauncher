@@ -1,5 +1,13 @@
 # TagLauncher Changelog
 
+## [7.8.2] — 2026-05-30
+
+- 修复全局 `Fn + Space` 唤出 Quick Search 后输入框未立即获得焦点的问题，用户可以唤出后直接输入
+- 修复只想打开 Quick Search 时 App Grid 主界面偶发被带出的竞态问题
+- 补强连续快速按 `Fn + Space` 的 quick-only 会话隔离和防抖，避免 App Grid 被误渲染
+- 补强 Quick Search 独立面板成为 key window 时的 `Esc` 兜底处理，避免出现退不出的残留 overlay
+- 版本号更新为 `7.8.2`，Build 更新为 `20260530.1557`
+
 ## [7.8.1] — 2026-05-29
 
 - 新用户首次安装时，App Grid 默认图标大小从 `80` 调整为 `64`，让初始界面更紧凑；已有用户已保存的图标大小设置不会被覆盖
