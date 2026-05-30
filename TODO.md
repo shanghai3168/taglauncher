@@ -13,6 +13,14 @@
 
 ## Todo
 
+- [发布后独立任务] 设置页 tab 容器 AppKit/自控化评估与实现。
+  - 决策: 当前发布前 No-Go；保留 SwiftUI `TabView`，不改 QA 脚本。
+  - 背景: QA 过程中曾观察到设置页顶部 tab 偶发折叠/消失，但目前不是稳定可复现 release blocker。
+  - 约束: 必须单独开分支、单独提交、单独构建、单独 QA、单独验收；不得混入当前 quick search/window 修复或 App Store 发布包。
+  - 改动边界: 优先只改 `Apptag/PreferencesView.swift`；不碰 `AppDelegate`、`OverlayWindowController`、窗口层级、quick search、App Grid、数据导入导出逻辑。
+  - 风险点: 需要保留 Language/General/Hotkeys/Tags/Data/About 六页行为；特别注意 `Tags` 页 `scanApps()`、`Data` 页 `refreshDataState()`、语言热切换、toast/confirmation overlay、固定 `880x460` 布局高度和 accessibility。
+  - 验证要求: `bash build.sh`、`codesign --verify --deep --strict`、`Scripts/window_logic_qa.sh`；手工复核 6 个设置页、全屏/Split View 中 Settings 层级、文件面板层级、长文本语言和键盘/辅助功能导航。
+
 ## Done
 
 - [2026-05-29] 版本拆分与 7.8.1 默认图标大小调整。
