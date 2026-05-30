@@ -17,7 +17,7 @@ struct TagLauncherApp: App {
         Settings {
             PreferencesView()
         }
-        .defaultSize(width: 880, height: 460)
+        .defaultSize(width: 1000, height: 480)
         .commands {
             CommandGroup(replacing: .systemServices) { }
             CommandGroup(replacing: .appVisibility) { }
@@ -335,11 +335,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         let shouldStayAccessoryForCurrentFullscreenSpace = isOverlayVisible
             && (avoidSpaceSwitch || overlayAvoidsSpaceSwitch)
+        let shouldStayAccessoryForQuickOnlySearch = isOverlayVisible
+            && quickSearchOnlyOverlaySession
+            && !showDock
         let desiredPolicy: NSApplication.ActivationPolicy = shouldStayAccessoryForCurrentFullscreenSpace
             ? .accessory
+            : (shouldStayAccessoryForQuickOnlySearch ? .accessory
             : (requiresForegroundOwnership
             ? .regular
-            : (showDock ? .regular : .accessory))
+            : (showDock ? .regular : .accessory)))
         if NSApp.activationPolicy() != desiredPolicy {
             NSApp.setActivationPolicy(desiredPolicy)
         }
@@ -349,7 +353,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             NSApp.presentationOptions = desiredPresentation
         }
 
-        if activate && requiresForegroundOwnership && !shouldStayAccessoryForCurrentFullscreenSpace {
+        if activate && requiresForegroundOwnership
+            && !shouldStayAccessoryForCurrentFullscreenSpace
+            && !shouldStayAccessoryForQuickOnlySearch {
             let keyWindow = isSettingsVisible ? settingsWindow : (isOverlayVisible ? overlayWindow : nil)
             claimLauncherForeground(
                 keyWindow: keyWindow,
@@ -1159,7 +1165,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// Settings must always appear centered over the current overlay view and float above it.
     private func prepareSettingsWindow(_ window: NSWindow) {
         dismissQuickSearchIfNeeded()
-        let settingsSize = NSSize(width: 880, height: 460)
+        let settingsSize = NSSize(width: 1000, height: 480)
         window.identifier = NSUserInterfaceItemIdentifier("TagLauncherPreferencesWindow")
         window.minSize = settingsSize
         window.maxSize = settingsSize
@@ -1338,6 +1344,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             overlayWindow.orderFrontRegardless()
             return
         }
+        if quickSearchOnlyOverlaySession && !UserDefaults.standard.bool(forKey: Self.showDockIconKey) {
+            refreshLauncherChromeState(activate: false)
+            guard let overlayWindow else { return }
+            NSApp.activate(ignoringOtherApps: true)
+            overlayWindow.makeKeyAndOrderFront(nil)
+            overlayWindow.orderFrontRegardless()
+            return
+        }
         beginLauncherForegroundOwnership()
         guard let overlayWindow else { return }
         overlayWindow.makeKeyAndOrderFront(nil)
@@ -1482,7 +1496,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             return
         }
 
-        let settingsSize = NSSize(width: 880, height: 460)
+        let settingsSize = NSSize(width: 1000, height: 480)
         let window = NSWindow(
             contentRect: NSRect(origin: .zero, size: settingsSize),
             styleMask: [.titled, .closable],

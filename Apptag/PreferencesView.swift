@@ -4,8 +4,8 @@ import AppKit
 // MARK: - Preferences View
 
 struct PreferencesView: View {
-    private let settingsWindowWidth: CGFloat = 880
-    private let settingsContentWidth: CGFloat = 820
+    private let settingsWindowWidth: CGFloat = 1000
+    private let settingsContentWidth: CGFloat = 940
     private let generalContentWidth: CGFloat = 720
     private let generalLabelWidth: CGFloat = 190
     private let generalControlWidth: CGFloat = 500
@@ -948,7 +948,7 @@ struct PreferencesView: View {
                 .transition(.opacity.combined(with: .move(edge: .bottom)))
             }
         }
-        .frame(width: settingsWindowWidth, height: 460)
+        .frame(width: settingsWindowWidth, height: 480)
         .onAppear {
             syncSelectedLanguage()
             showPendingHotkeyWarningIfNeeded()
