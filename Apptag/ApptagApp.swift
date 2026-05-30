@@ -51,6 +51,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var quickSearchHotkeyRef: EventHotKeyRef?
     private var hotkeyEventHandlerInstalled = false
     private var isQuickSearchOpen = false
+    private var quickSearchShouldHideOverlayOnClose = false
+    private var quickSearchOnlyOverlaySession = false
+    private var lastQuickSearchHotkeyAt = Date.distantPast
     private var isModalInteractionActive = false
     private var isInEditMode = false  // Suppress auto-dismiss during editing
     private var isEditingAppNote = false
@@ -103,6 +106,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             },
             removeQuickSearchMouseMonitor: { [weak self] in
                 self?.removeQuickSearchExternalMouseMonitor()
+                self?.quickSearchShouldHideOverlayOnClose = false
+                self?.quickSearchOnlyOverlaySession = false
             },
             detachSettingsWindow: { [weak self] window in
                 self?.detachSettingsWindow(window)
@@ -843,6 +848,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         preferredScreen: NSScreen? = nil,
         stagedForAllSpaces: Bool = false
     ) {
+        if initialQuickSearchSource == QuickSearchOpenSource.globalHidden {
+            isQuickSearchOpen = true
+            quickSearchShouldHideOverlayOnClose = true
+            quickSearchOnlyOverlaySession = true
+        }
         overlayController.show(
             initialQuickSearchSource: initialQuickSearchSource,
             preferredScreen: preferredScreen,
@@ -863,9 +873,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     @discardableResult
     private func handleOverlayKeyEvent(_ event: NSEvent) -> Bool {
-        guard event.type == .keyDown,
-              shouldHandleOverlayKeyEvent(event)
-        else { return false }
+        guard event.type == .keyDown else { return false }
+
+        if event.keyCode == UInt16(kVK_Escape),
+           isQuickSearchOpen || quickSearchOnlyOverlaySession {
+            return handleOverlayEscapeKey()
+        }
+
+        guard shouldHandleOverlayKeyEvent(event) else { return false }
 
         if event.keyCode == UInt16(kVK_Escape) {
             return handleOverlayEscapeKey()
@@ -878,11 +893,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     private func handleOverlayEscapeKey() -> Bool {
-        if isQuickSearchOpen {
+        if isQuickSearchOpen || quickSearchOnlyOverlaySession {
+            let shouldHideOverlayAfterDismiss = quickSearchShouldHideOverlayOnClose || quickSearchOnlyOverlaySession
             isQuickSearchOpen = false
             removeQuickSearchExternalMouseMonitor()
             updateOverlayLevelForTextInput()
             NotificationCenter.default.post(name: .tagLauncherQuickSearchDismissRequested, object: nil)
+            if shouldHideOverlayAfterDismiss {
+                quickSearchShouldHideOverlayOnClose = false
+                quickSearchOnlyOverlaySession = false
+                DispatchQueue.main.async { [weak self] in
+                    self?.hideOverlay(force: true)
+                }
+            }
             return true
         }
         guard !isSettingsVisible,
@@ -895,6 +918,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     private func requestQuickSearch(source: String) {
         isQuickSearchOpen = true
+        quickSearchShouldHideOverlayOnClose = quickSearchShouldHideOverlayOnClose
+            || source == QuickSearchOpenSource.globalHidden
+        quickSearchOnlyOverlaySession = quickSearchOnlyOverlaySession
+            || source == QuickSearchOpenSource.globalHidden
         promoteOverlayToForegroundInput()
         updateOverlayLevelForTextInput()
         installQuickSearchExternalMouseMonitor()
@@ -1038,6 +1065,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     private func showQuickSearchFromGlobalHotkey() {
+        let now = Date()
+        if now.timeIntervalSince(lastQuickSearchHotkeyAt) < 0.28 {
+            promoteOverlayToForegroundInput()
+            updateOverlayLevelForTextInput()
+            return
+        }
+        lastQuickSearchHotkeyAt = now
+
+        if overlayWindow?.isVisible == true, isQuickSearchOpen || quickSearchOnlyOverlaySession {
+            promoteOverlayToForegroundInput()
+            updateOverlayLevelForTextInput()
+            return
+        }
         if overlayWindow?.isVisible == true {
             refreshLauncherChromeState(
                 activate: !overlayAvoidsSpaceSwitch,
@@ -1046,6 +1086,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             requestQuickSearch(source: QuickSearchOpenSource.globalVisible)
             return
         }
+        isQuickSearchOpen = true
+        quickSearchShouldHideOverlayOnClose = true
+        quickSearchOnlyOverlaySession = true
         showOverlay(initialQuickSearchSource: QuickSearchOpenSource.globalHidden)
     }
 
@@ -1308,7 +1351,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             queue: .main
         ) { [weak self] notification in
             guard let self else { return }
-            self.isQuickSearchOpen = (notification.userInfo?["active"] as? Bool) ?? false
+            let active = (notification.userInfo?["active"] as? Bool) ?? false
+            let hideOverlayOnClose = (notification.userInfo?["hideOverlayOnClose"] as? Bool) ?? false
+            self.isQuickSearchOpen = active
+            if active, hideOverlayOnClose {
+                self.quickSearchShouldHideOverlayOnClose = true
+                self.quickSearchOnlyOverlaySession = true
+            }
             if self.isQuickSearchOpen {
                 self.promoteOverlayToForegroundInput()
             }
@@ -1317,6 +1366,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 self.installQuickSearchExternalMouseMonitor()
             } else {
                 self.removeQuickSearchExternalMouseMonitor()
+                if hideOverlayOnClose || self.quickSearchShouldHideOverlayOnClose {
+                    self.quickSearchShouldHideOverlayOnClose = false
+                    self.quickSearchOnlyOverlaySession = false
+                    self.hideOverlay(force: true)
+                }
             }
         }
 
@@ -1447,6 +1501,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         isQuickSearchOpen = false
         removeQuickSearchExternalMouseMonitor()
         updateOverlayLevelForTextInput()
+        quickSearchShouldHideOverlayOnClose = false
+        quickSearchOnlyOverlaySession = false
         NotificationCenter.default.post(name: .tagLauncherQuickSearchDismissRequested, object: nil)
     }
 

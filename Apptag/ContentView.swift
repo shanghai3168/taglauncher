@@ -387,6 +387,7 @@ struct ContentView: View {
     @State private var quickSearchFocusToken = 0
     @State private var quickSearchSelectionScrollToken = 0
     @State private var quickSearchCloseHidesOverlay = false
+    @State private var quickSearchOnlySession = false
     @State private var quickSearchErrorMessage: String? = nil
     @State private var initialQuickSearchConsumed = false
 
@@ -394,8 +395,10 @@ struct ContentView: View {
         self.hideOverlay = hideOverlay
         self.initialQuickSearchSource = initialQuickSearchSource
         let startsInQuickSearch = initialQuickSearchSource != nil
+        let startsInQuickSearchOnlySession = initialQuickSearchSource == QuickSearchOpenSource.globalHidden
         _quickSearchVisible = State(initialValue: startsInQuickSearch)
-        _quickSearchCloseHidesOverlay = State(initialValue: initialQuickSearchSource == QuickSearchOpenSource.globalHidden)
+        _quickSearchCloseHidesOverlay = State(initialValue: startsInQuickSearchOnlySession)
+        _quickSearchOnlySession = State(initialValue: startsInQuickSearchOnlySession)
         _quickSearchFocusToken = State(initialValue: startsInQuickSearch ? 1 : 0)
     }
 
@@ -447,7 +450,10 @@ struct ContentView: View {
     }
 
     private var shouldRenderAppGridBehindQuickSearch: Bool {
-        !quickSearchVisible || !quickSearchCloseHidesOverlay
+        if quickSearchOnlySession {
+            return false
+        }
+        return !quickSearchVisible || !quickSearchCloseHidesOverlay
     }
 
     var body: some View {
@@ -527,7 +533,10 @@ struct ContentView: View {
             refreshAppsIfNeeded()
             if let initialQuickSearchSource, !initialQuickSearchConsumed {
                 initialQuickSearchConsumed = true
-                quickSearchCloseHidesOverlay = initialQuickSearchSource == QuickSearchOpenSource.globalHidden
+                if initialQuickSearchSource == QuickSearchOpenSource.globalHidden {
+                    quickSearchCloseHidesOverlay = true
+                    quickSearchOnlySession = true
+                }
                 if !quickSearchVisible {
                     quickSearchVisible = true
                     quickSearchFocusToken &+= 1
@@ -536,7 +545,10 @@ struct ContentView: View {
                 NotificationCenter.default.post(
                     name: .tagLauncherQuickSearchVisibilityChanged,
                     object: nil,
-                    userInfo: ["active": true]
+                    userInfo: [
+                        "active": true,
+                        "hideOverlayOnClose": quickSearchCloseHidesOverlay
+                    ]
                 )
             }
         }
@@ -548,6 +560,8 @@ struct ContentView: View {
         .onReceive(NotificationCenter.default.publisher(for: .tagLauncherOverlayDidHide)) { _ in
             resetTransientDragState()
             closeQuickSearch(notify: true, hideOverlayIfNeeded: false)
+            quickSearchOnlySession = false
+            quickSearchCloseHidesOverlay = false
         }
         .onReceive(NotificationCenter.default.publisher(for: .tagLauncherQuickSearchRequested)) { notification in
             let source = notification.userInfo?["source"] as? String ?? QuickSearchOpenSource.mainOverlay
@@ -705,7 +719,11 @@ struct ContentView: View {
     private func openQuickSearch(source: String) {
         guard canOpenQuickSearch else { return }
         dismissAppBubble()
-        quickSearchCloseHidesOverlay = source == QuickSearchOpenSource.globalHidden
+        if source == QuickSearchOpenSource.globalHidden {
+            quickSearchOnlySession = true
+        }
+        quickSearchCloseHidesOverlay = quickSearchCloseHidesOverlay
+            || source == QuickSearchOpenSource.globalHidden
         quickSearchVisible = true
         quickSearchQuery = ""
         quickSearchManualSelection = false
@@ -715,7 +733,10 @@ struct ContentView: View {
         NotificationCenter.default.post(
             name: .tagLauncherQuickSearchVisibilityChanged,
             object: nil,
-            userInfo: ["active": true]
+            userInfo: [
+                "active": true,
+                "hideOverlayOnClose": quickSearchCloseHidesOverlay
+            ]
         )
     }
 
@@ -736,16 +757,20 @@ struct ContentView: View {
         quickSearchSelectedID = nil
         quickSearchManualSelection = false
         quickSearchErrorMessage = nil
-        quickSearchCloseHidesOverlay = false
         if notify {
             NotificationCenter.default.post(
                 name: .tagLauncherQuickSearchVisibilityChanged,
                 object: nil,
-                userInfo: ["active": false]
+                userInfo: [
+                    "active": false,
+                    "hideOverlayOnClose": shouldHideOverlay
+                ]
             )
         }
         if shouldHideOverlay {
             hideOverlay()
+        } else {
+            quickSearchCloseHidesOverlay = false
         }
     }
 

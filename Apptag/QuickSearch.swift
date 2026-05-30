@@ -1524,11 +1524,17 @@ private struct QuickSearchTextField: NSViewRepresentable {
     }
 
     private func requestFocus(_ field: QuickSearchNativeTextField) {
-        DispatchQueue.main.async { [weak field] in
-            guard let field,
-                  field.window?.firstResponder !== field
-            else { return }
-            field.window?.makeFirstResponder(field)
+        for delay in [0.0, 0.03, 0.08, 0.16] {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak field] in
+                guard let field,
+                      let window = field.window,
+                      window.isVisible,
+                      window.firstResponder !== field
+                else { return }
+                window.makeKeyAndOrderFront(nil)
+                window.orderFrontRegardless()
+                window.makeFirstResponder(field)
+            }
         }
     }
 
@@ -1577,6 +1583,8 @@ private struct QuickSearchTextField: NSViewRepresentable {
 
 private final class QuickSearchNativeTextField: NSTextField {
     var onCommand: ((QuickSearchCommand) -> Void)?
+
+    override var acceptsFirstResponder: Bool { true }
 
     override func keyDown(with event: NSEvent) {
         switch Int(event.keyCode) {
