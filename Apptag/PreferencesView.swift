@@ -372,8 +372,9 @@ struct PreferencesView: View {
     }
     private var languageColumns: [GridItem] {
         [
-            GridItem(.flexible(minimum: 220), spacing: 18, alignment: .top),
-            GridItem(.flexible(minimum: 220), spacing: 18, alignment: .top),
+            GridItem(.flexible(minimum: 180), spacing: 14, alignment: .top),
+            GridItem(.flexible(minimum: 180), spacing: 14, alignment: .top),
+            GridItem(.flexible(minimum: 180), spacing: 14, alignment: .top),
         ]
     }
     private var displayModeColumns: [GridItem] {
@@ -554,9 +555,7 @@ struct PreferencesView: View {
                         }
                         .padding(.vertical, 4)
                     }
-                    .frame(maxHeight: 250)
-
-                    Spacer(minLength: 0)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 }
                 .frame(maxWidth: settingsContentWidth, alignment: .leading)
                 .tabItem { Label(tr("settings.language"), systemImage: "globe") }
