@@ -208,10 +208,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         configureApplicationMenuWhenAvailable(retries: 12)
     }
 
-    /// Dock icon click → show overlay (same as menubar "Show TagLauncher")
+    /// Reopening the already-running app must not implicitly show App Grid.
+    /// App Grid is only opened by explicit launcher commands: main hotkey or status item/menu.
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         guard Date() >= suppressReopenUntil else { return false }
-        showOrFocusOverlay()
         return false  // Suppress default "unhide all windows" behavior
     }
 
@@ -1477,7 +1477,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     @objc private func handleExternalActivationRequest(_ notification: Notification) {
-        let shouldShowOverlay = notification.userInfo?["showOverlay"] as? Bool ?? true
+        let shouldShowOverlay = notification.userInfo?["showOverlay"] as? Bool ?? false
         guard shouldShowOverlay else { return }
         showOrFocusOverlay()
     }

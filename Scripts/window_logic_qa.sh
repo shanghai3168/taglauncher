@@ -1054,6 +1054,15 @@ done
 sleep 1.5
 assert_single_qa_app_instance
 assert_single_dock_tile
+swift_assert no-overlay
+for _ in {1..3}; do
+  "$APP_BUNDLE/Contents/MacOS/TagLauncher" >/dev/null 2>&1 &
+  sleep 0.25
+done
+sleep 2.0
+assert_single_qa_app_instance
+assert_single_dock_tile
+swift_assert no-overlay
 for _ in {1..3}; do
   "$APP_BUNDLE/Contents/MacOS/TagLauncher" --hide >/dev/null 2>&1 &
   sleep 0.25
@@ -1061,6 +1070,7 @@ done
 sleep 2.0
 assert_single_qa_app_instance
 assert_single_dock_tile
+swift_assert no-overlay
 kill_all_taglauncher_instances
 sleep 0.4
 swift_assert no-overlay

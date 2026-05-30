@@ -31,7 +31,11 @@ enum TagLauncherProcessSingleton {
     }
 
     private static func handOffAndExit() -> Never {
-        let shouldShowOverlay = !CommandLine.arguments.dropFirst().contains("--hide")
+        let arguments = CommandLine.arguments.dropFirst()
+        let shouldShowOverlay = arguments.contains("--show-overlay")
+        if !shouldShowOverlay {
+            NSApplication.shared.setActivationPolicy(.accessory)
+        }
         let ownerInstance = NSRunningApplication
             .runningApplications(withBundleIdentifier: AppIdentity.bundleIdentifier)
             .filter { $0.processIdentifier != getpid() && !$0.isTerminated }
