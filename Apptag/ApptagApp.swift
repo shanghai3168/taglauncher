@@ -38,6 +38,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private static let downloadHelpMenuItemIdentifier = NSUserInterfaceItemIdentifier("TagLauncherDownloadHelpMenuItem")
     private static let externalActivationNotification = Notification.Name("TagLauncherExternalActivationRequested")
     private static let externalActivationObject = AppIdentity.bundleIdentifier
+    private static let duplicateLaunchSuppressReopenKey = "duplicateLaunchSuppressReopenAt"
     private static let launcherOverlayLevel = NSWindow.Level(rawValue: NSWindow.Level.mainMenu.rawValue - 1)
     private static let overlayDefaultLevel = launcherOverlayLevel
     private static let overlayTextInputLevel = launcherOverlayLevel
@@ -208,11 +209,39 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         configureApplicationMenuWhenAvailable(retries: 12)
     }
 
-    /// Reopening the already-running app must not implicitly show App Grid.
-    /// App Grid is only opened by explicit launcher commands: main hotkey or status item/menu.
+    /// Dock icon reopen is an explicit App Grid entry only when the user chooses to show the Dock icon.
+    /// Duplicate-instance handoff suppresses this path so repeated launches do not show App Grid.
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         guard Date() >= suppressReopenUntil else { return false }
+        let lastDuplicateLaunch = UserDefaults.standard.double(forKey: Self.duplicateLaunchSuppressReopenKey)
+        if lastDuplicateLaunch > 0,
+           Date().timeIntervalSince1970 - lastDuplicateLaunch < 2.0 {
+            suppressReopenUntil = Date().addingTimeInterval(1.0)
+            return false
+        }
+        guard UserDefaults.standard.bool(forKey: Self.showDockIconKey) else { return false }
+        guard isPointerNearDockArea() else { return false }
+        showOrFocusOverlay()
         return false  // Suppress default "unhide all windows" behavior
+    }
+
+    private func isPointerNearDockArea() -> Bool {
+        let mouse = NSEvent.mouseLocation
+        return NSScreen.screens.contains { screen in
+            let frame = screen.frame
+            let visible = screen.visibleFrame
+            guard NSMouseInRect(mouse, frame, false) else { return false }
+            let bottomDock = visible.minY > frame.minY
+                && mouse.y >= frame.minY
+                && mouse.y <= visible.minY + 24
+            let leftDock = visible.minX > frame.minX
+                && mouse.x >= frame.minX
+                && mouse.x <= visible.minX + 24
+            let rightDock = visible.maxX < frame.maxX
+                && mouse.x <= frame.maxX
+                && mouse.x >= visible.maxX - 24
+            return bottomDock || leftDock || rightDock
+        }
     }
 
     func applicationWillTerminate(_ notification: Notification) {
@@ -272,11 +301,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     private func beginLauncherForegroundOwnership(activate: Bool = true, keyWindow: NSWindow? = nil) {
-        if NSApp.activationPolicy() != .regular {
-            NSApp.setActivationPolicy(.regular)
+        let showDock = UserDefaults.standard.bool(forKey: Self.showDockIconKey)
+        let desiredPolicy: NSApplication.ActivationPolicy = showDock ? .regular : .accessory
+        if NSApp.activationPolicy() != desiredPolicy {
+            NSApp.setActivationPolicy(desiredPolicy)
         }
-        if activate {
+        if activate, showDock {
             claimLauncherForeground(keyWindow: keyWindow)
+        } else if activate {
+            NSApp.activate(ignoringOtherApps: true)
+            keyWindow?.makeKeyAndOrderFront(nil)
+            keyWindow?.orderFrontRegardless()
         }
     }
 
@@ -335,15 +370,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         let shouldStayAccessoryForCurrentFullscreenSpace = isOverlayVisible
             && (avoidSpaceSwitch || overlayAvoidsSpaceSwitch)
+        let shouldStayAccessoryForHiddenDockChrome = requiresForegroundOwnership
+            && !showDock
         let shouldStayAccessoryForQuickOnlySearch = isOverlayVisible
             && quickSearchOnlyOverlaySession
             && !showDock
         let desiredPolicy: NSApplication.ActivationPolicy = shouldStayAccessoryForCurrentFullscreenSpace
             ? .accessory
+            : (shouldStayAccessoryForHiddenDockChrome ? .accessory
             : (shouldStayAccessoryForQuickOnlySearch ? .accessory
             : (requiresForegroundOwnership
             ? .regular
-            : (showDock ? .regular : .accessory)))
+            : (showDock ? .regular : .accessory))))
         if NSApp.activationPolicy() != desiredPolicy {
             NSApp.setActivationPolicy(desiredPolicy)
         }
@@ -355,6 +393,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         if activate && requiresForegroundOwnership
             && !shouldStayAccessoryForCurrentFullscreenSpace
+            && !shouldStayAccessoryForHiddenDockChrome
             && !shouldStayAccessoryForQuickOnlySearch {
             let keyWindow = isSettingsVisible ? settingsWindow : (isOverlayVisible ? overlayWindow : nil)
             claimLauncherForeground(
@@ -1478,7 +1517,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     @objc private func handleExternalActivationRequest(_ notification: Notification) {
         let shouldShowOverlay = notification.userInfo?["showOverlay"] as? Bool ?? false
-        guard shouldShowOverlay else { return }
+        guard shouldShowOverlay else {
+            suppressReopenUntil = Date().addingTimeInterval(1.0)
+            return
+        }
         showOrFocusOverlay()
     }
 

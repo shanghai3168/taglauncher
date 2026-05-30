@@ -278,6 +278,61 @@ OSA
   log "PASS Dock tile count: $names"
 }
 
+assert_no_dock_tile() {
+  local output count names
+  output="$(osascript <<'OSA'
+tell application "System Events"
+  tell process "Dock"
+    set tagCount to 0
+    set tagNames to {}
+    repeat with itemRef in UI elements of list 1
+      try
+        set itemName to name of itemRef as text
+        if itemName is "TagLauncher" then
+          set tagCount to tagCount + 1
+          set end of tagNames to itemName
+        end if
+      end try
+    end repeat
+    return (tagCount as text) & "|" & (tagNames as text)
+  end tell
+end tell
+OSA
+)"
+  count="${output%%|*}"
+  names="${output#*|}"
+  if [[ "$count" != "0" ]]; then
+    echo "FAIL: expected no TagLauncher Dock tile, got $count ($names)" >&2
+    return 1
+  fi
+  log "PASS no TagLauncher Dock tile"
+}
+
+click_taglauncher_dock_tile() {
+  local coords x y
+  coords="$(osascript <<'OSA'
+tell application "System Events"
+  tell process "Dock"
+    repeat with itemRef in UI elements of list 1
+      try
+        if (name of itemRef as text) is "TagLauncher" then
+          set itemPosition to position of itemRef
+          set itemSize to size of itemRef
+          set centerX to (item 1 of itemPosition) + ((item 1 of itemSize) / 2)
+          set centerY to (item 2 of itemPosition) + ((item 2 of itemSize) / 2)
+          return (centerX as integer as text) & " " & (centerY as integer as text)
+        end if
+      end try
+    end repeat
+    error "TagLauncher Dock tile not found"
+  end tell
+end tell
+OSA
+)"
+  read -r x y <<<"$coords"
+  click_xy "$x" "$y"
+}
+
 assert_frontmost_taglauncher() {
   local frontmost
   frontmost="$(osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true')"
@@ -1071,6 +1126,24 @@ sleep 2.0
 assert_single_qa_app_instance
 assert_single_dock_tile
 swift_assert no-overlay
+log "==> QA Dock reopen: showDockIcon=true opens App Grid from explicit app reopen"
+click_taglauncher_dock_tile
+sleep 1.0
+wait_swift_assert overlay
+send_keycode 53
+sleep 0.4
+wait_swift_assert no-overlay
+log "==> QA hidden Dock: main hotkey opens App Grid without showing Dock tile"
+defaults write "$DEFAULTS_DOMAIN" showDockIcon -bool false
+prepare_isolated_app_instance
+assert_no_dock_tile
+send_main_hotkey
+sleep 0.8
+wait_swift_assert overlay
+assert_no_dock_tile
+send_keycode 53
+sleep 0.4
+wait_swift_assert no-overlay
 kill_all_taglauncher_instances
 sleep 0.4
 swift_assert no-overlay

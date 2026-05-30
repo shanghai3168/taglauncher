@@ -6,6 +6,7 @@ enum TagLauncherProcessSingleton {
     private static let lockURL = AppIdentity.applicationSupportDirectory
         .appendingPathComponent("TagLauncher.lock")
     private static let activationNotification = Notification.Name("TagLauncherExternalActivationRequested")
+    private static let duplicateLaunchSuppressReopenKey = "duplicateLaunchSuppressReopenAt"
 
     static func acquireOrHandOffAndExit() -> FileHandle {
         do {
@@ -34,6 +35,8 @@ enum TagLauncherProcessSingleton {
         let arguments = CommandLine.arguments.dropFirst()
         let shouldShowOverlay = arguments.contains("--show-overlay")
         if !shouldShowOverlay {
+            UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: duplicateLaunchSuppressReopenKey)
+            UserDefaults.standard.synchronize()
             NSApplication.shared.setActivationPolicy(.accessory)
         }
         let ownerInstance = NSRunningApplication

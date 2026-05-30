@@ -1,5 +1,13 @@
 # TagLauncher Changelog
 
+## [7.8.7] — 2026-05-31
+
+- 修复关闭“Show in Dock”后用主快捷键打开 App Grid 时 TagLauncher Dock 图标仍会闪现的问题；隐藏 Dock 图标设置现在严格生效
+- 恢复“Show in Dock”开启时点击 Dock 图标打开 App Grid 的交互，同时继续阻止程序化重复启动误唤出 App Grid
+- 加固 overlay 显示后的窗口 frame 复核，避免隐藏 Dock / 多屏 / 全屏场景下系统坐标变化导致 overlay 偏移
+- 窗口 QA 增加 Dock 点击、隐藏 Dock 主快捷键、重复启动不弹 App Grid 的组合回归
+- 版本号更新为 `7.8.7`，Build 更新为 `20260531.0252`
+
 ## [7.8.6] — 2026-05-31
 
 - 修复未按主快捷键时 App Grid 可能被重复启动或外部激活路径误唤出的问题；App Grid 现在只由主快捷键或状态栏显式命令打开

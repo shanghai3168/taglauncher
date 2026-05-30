@@ -154,6 +154,14 @@ final class OverlayWindowController {
                 newWindow.setFrame(placementFrame, display: true)
                 self.orderFront(newWindow)
             }
+            for delay in [0.2, 0.5] {
+                DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self, weak newWindow] in
+                    guard let self, let newWindow, self.window === newWindow else { return }
+                    guard newWindow.frame != placementFrame else { return }
+                    newWindow.setFrame(placementFrame, display: true)
+                    self.orderFront(newWindow)
+                }
+            }
             if let settingsWindow = self.dependencies.settingsWindow(), settingsWindow.isVisible {
                 self.dependencies.prepareSettingsWindow(settingsWindow)
             }
