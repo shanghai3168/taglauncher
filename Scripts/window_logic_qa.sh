@@ -97,6 +97,22 @@ send_main_hotkey() {
   osascript -e 'tell application "System Events" to keystroke space using {option down, shift down}'
 }
 
+send_quick_search_hotkey() {
+  swift - <<'SWIFT' >/dev/null 2>&1
+import CoreGraphics
+import Foundation
+
+let source = CGEventSource(stateID: .hidSystemState)
+let down = CGEvent(keyboardEventSource: source, virtualKey: 49, keyDown: true)!
+down.flags = [.maskSecondaryFn]
+down.post(tap: .cghidEventTap)
+usleep(80_000)
+let up = CGEvent(keyboardEventSource: source, virtualKey: 49, keyDown: false)!
+up.flags = [.maskSecondaryFn]
+up.post(tap: .cghidEventTap)
+SWIFT
+}
+
 send_cmd_comma() {
   osascript -e 'tell application "System Events" to keystroke "," using {command down}'
 }
@@ -767,6 +783,25 @@ case "overlay-center":
     let overlayWidth = dimension(overlayBounds, "Width")
     let overlayHeight = dimension(overlayBounds, "Height")
     print("\(Int(round(overlayX + overlayWidth / 2))) \(Int(round(overlayY + overlayHeight / 2)))")
+case "quick-search-result":
+    guard let quickSearch = tag.first(where: { window in
+        let name = (window[kCGWindowName as String] as? String) ?? ""
+        let bounds = window[kCGWindowBounds as String] as? NSDictionary ?? [:]
+        let width = dimension(bounds, "Width")
+        let height = dimension(bounds, "Height")
+        return name.isEmpty
+            && width >= 500
+            && width <= 900
+            && height >= 120
+            && height <= 850
+    }), let bounds = quickSearch[kCGWindowBounds as String] as? NSDictionary else {
+        fputs("FAIL: could not find quick search bounds\n", stderr)
+        exit(1)
+    }
+    let x = dimension(bounds, "X")
+    let y = dimension(bounds, "Y")
+    let width = dimension(bounds, "Width")
+    print("\(Int(round(x + width * 0.35))) \(Int(round(y + 125)))")
 case "fullscreen-target-center":
     guard let target = raw.first(where: { ($0[kCGWindowName as String] as? String) == "TagLauncherFullscreenQATargetFullscreen" }),
           let bounds = target[kCGWindowBounds as String] as? NSDictionary else {
@@ -1026,6 +1061,23 @@ click_overlay_outside_quick_search() {
   click_xy "$x" "$y"
 }
 
+hover_quick_search_results() {
+  local coords x y
+  coords="$(swift "$coords_swift" quick-search-result)"
+  read -r x y <<<"$coords"
+  for offset in 0 42 84 126 84 42 0; do
+    move_xy "$x" "$((y + offset))"
+    sleep 0.08
+  done
+}
+
+click_quick_search_result() {
+  local coords x y
+  coords="$(swift "$coords_swift" quick-search-result)"
+  read -r x y <<<"$coords"
+  click_xy "$x" "$y"
+}
+
 page_scroll_appgrid() {
   local coords
   coords="$(swift "$coords_swift" overlay-center)"
@@ -1147,6 +1199,36 @@ wait_swift_assert no-overlay
 kill_all_taglauncher_instances
 sleep 0.4
 swift_assert no-overlay
+prepare_isolated_app_instance
+assert_no_dock_tile
+log "==> QA hidden Dock: Fn+Space Quick Search hover does not resurrect App Grid"
+send_quick_search_hotkey
+sleep 0.8
+wait_swift_assert quick-search
+hover_quick_search_results
+sleep 0.8
+wait_swift_assert quick-search
+assert_no_dock_tile
+send_quick_search_hotkey
+sleep 0.8
+wait_swift_assert no-overlay
+assert_no_dock_tile
+kill_all_taglauncher_instances
+sleep 0.4
+swift_assert no-overlay
+prepare_isolated_app_instance
+assert_no_dock_tile
+log "==> QA hidden Dock: clicking Quick Search result closes without showing App Grid"
+send_quick_search_hotkey
+sleep 0.8
+wait_swift_assert quick-search
+click_quick_search_result
+sleep 1.4
+wait_swift_assert no-overlay
+assert_no_dock_tile
+kill_all_taglauncher_instances
+sleep 0.4
+swift_assert no-overlay
 
 log "==> QA split-view fullscreen geometry detection"
 swift_assert split-geometry
@@ -1164,6 +1246,7 @@ run_fullscreen_space_case() {
   log "==> QA fullscreen Space: quick search from appgrid does not switch Space"
   send_keycode 49
   sleep 0.4
+  wait_swift_assert quick-search
   assert_fullscreen_overlay_stable
   send_keycode 53
   sleep 0.3
@@ -1209,7 +1292,7 @@ sleep 0.7
 swift_assert file-panel
 send_keycode 53
 sleep 0.3
-send_cmd_w
+close_settings_window
 sleep 0.9
 swift_assert overlay
 assert_frontmost_taglauncher

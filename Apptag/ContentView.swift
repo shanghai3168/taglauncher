@@ -318,6 +318,7 @@ private struct AppGridInteractionState {
     var appDragResetToken = 0
     var bubbleDraftNote = ""
     var tagNavigationHoveredGroupName: String? = nil
+    var tagNavigationAppDropTargetName: String? = nil
     var tagNavigationLastHoverScrollID: String? = nil
     var tagNavigationLastHoverScrollAt: Date? = nil
 }
@@ -948,6 +949,7 @@ struct ContentView: View {
 
     private func appKitTagNavigation(orientation: TagNavigationView.Orientation) -> some View {
         let isHorizontal = orientation == .horizontal
+        let appDropTargetID = appGridInteraction.tagNavigationAppDropTargetName
         return TagNavigationView(
             items: tagLabels,
             orientation: orientation,
@@ -956,6 +958,8 @@ struct ContentView: View {
                 : NSEdgeInsets(top: 12, left: 12, bottom: 12, right: 12),
             dragModeActive: tagNavDragModeActive,
             draggingItemID: tagNavDragItem,
+            appDragModeActive: appGridInteraction.appDragModeActive,
+            appDropTargetID: appDropTargetID,
             onActivate: { tagID in
                 activateTagNavigation(tagID)
             },
@@ -965,6 +969,9 @@ struct ContentView: View {
             canReorder: { tagID in
                 canReorderTag(tagID)
             },
+            canAcceptAppDrop: { tagID in
+                canAssignDroppedAppToTag(tagID)
+            },
             onReorderBegan: { tagID in
                 beginTagNavReorder(tagID)
             },
@@ -973,6 +980,12 @@ struct ContentView: View {
             },
             onReorderEnded: {
                 endTagNavReorder()
+            },
+            onAppDropHoverChange: { tagID, active in
+                handleTagNavigationAppDropHover(tagID, active: active)
+            },
+            onAppDrop: { path, source, targetTag, copy in
+                dropAppOnTagNavigation(path: path, sourceTag: source, targetTag: targetTag, copy: copy)
             }
         )
     }
@@ -1903,6 +1916,13 @@ struct ContentView: View {
     }
 
     private func handleTagNavigationHover(_ id: String, active: Bool) {
+        if appGridInteraction.appDragModeActive {
+            if !active, appGridInteraction.tagNavigationHoveredGroupName == id {
+                appGridInteraction.tagNavigationHoveredGroupName = nil
+            }
+            return
+        }
+
         guard active else {
             if appGridInteraction.tagNavigationHoveredGroupName == id {
                 appGridInteraction.tagNavigationHoveredGroupName = nil
@@ -1913,6 +1933,24 @@ struct ContentView: View {
         appGridInteraction.tagNavigationHoveredGroupName = id
         fillColorlessContainer(id)
         scrollToTagFromHover(id)
+    }
+
+    private func handleTagNavigationAppDropHover(_ id: String, active: Bool) {
+        guard appGridInteraction.appDragModeActive else {
+            if appGridInteraction.tagNavigationAppDropTargetName == id {
+                appGridInteraction.tagNavigationAppDropTargetName = nil
+            }
+            return
+        }
+
+        guard active, canAssignDroppedAppToTag(id) else {
+            if appGridInteraction.tagNavigationAppDropTargetName == id {
+                appGridInteraction.tagNavigationAppDropTargetName = nil
+            }
+            return
+        }
+
+        appGridInteraction.tagNavigationAppDropTargetName = id
     }
 
     private func scrollToTagFromHover(_ id: String) {
@@ -2050,6 +2088,22 @@ struct ContentView: View {
         )
         showDropRefresh()
         refreshApps(forceLayoutRefresh: true)
+    }
+
+    private func dropAppOnTagNavigation(path: String, sourceTag: String, targetTag: String, copy: Bool) {
+        resetTransientDragState()
+        guard canAssignDroppedAppToTag(targetTag) else { return }
+        guard let app = allApps.first(where: { $0.path.path == path }) else { return }
+        guard !appHasTag(app, tagName: targetTag) else { return }
+        TagEditor.appendTags([targetTag], to: [path])
+        showDropRefresh()
+        refreshApps(forceLayoutRefresh: true)
+    }
+
+    private func canAssignDroppedAppToTag(_ tagName: String) -> Bool {
+        tagColors[tagName] != nil
+            && !isAppleBuiltInDropTarget(tagName)
+            && !isUncategorizedDropTarget(tagName)
     }
 
     private func dropAppOutsideGroup(path: String, sourceTag: String, copy: Bool) {
@@ -2263,12 +2317,17 @@ struct ContentView: View {
         if active {
             endTagNavReorder()
             clearAppBubbleState()
+            appGridInteraction.tagNavigationAppDropTargetName = nil
         }
         appGridInteraction.appDragModeActive = active
+        if !active {
+            appGridInteraction.tagNavigationAppDropTargetName = nil
+        }
         if active {
             DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
                 if appGridInteraction.appDragModeActive && !AppDragCoordinator.shared.hasActiveDrag {
                     appGridInteraction.appDragModeActive = false
+                    appGridInteraction.tagNavigationAppDropTargetName = nil
                 }
             }
         }
@@ -2282,6 +2341,9 @@ struct ContentView: View {
         AppDragCoordinator.shared.cancelDrag()
         if appGridInteraction.appDragModeActive {
             appGridInteraction.appDragModeActive = false
+        }
+        if appGridInteraction.tagNavigationAppDropTargetName != nil {
+            appGridInteraction.tagNavigationAppDropTargetName = nil
         }
         if hadAppDragState {
             appGridInteraction.appDragResetToken &+= 1
@@ -2355,6 +2417,13 @@ struct ContentView: View {
     ) {
         appGridInteraction.appDragModeActive = false
         endTagNavReorder()
+        let closeQuickSearchAndOverlayBeforeOpening = closeQuickSearchOnSuccess
+            && closeOverlayOnSuccess
+            && (quickSearchCloseHidesOverlay || quickSearchOnlySession)
+        if closeQuickSearchAndOverlayBeforeOpening {
+            closeQuickSearch(hideOverlayIfNeeded: true)
+            hideOverlay()
+        }
         let configuration = NSWorkspace.OpenConfiguration()
         NSWorkspace.shared.openApplication(at: app.path, configuration: configuration) { _, error in
             DispatchQueue.main.async {
@@ -2366,10 +2435,10 @@ struct ContentView: View {
                 DispatchQueue.global(qos: .utility).async {
                     TagEditor.recordLauncherOpen(for: app.path.path)
                 }
-                if closeQuickSearchOnSuccess {
-                    closeQuickSearch(hideOverlayIfNeeded: false)
+                if closeQuickSearchOnSuccess && !closeQuickSearchAndOverlayBeforeOpening {
+                    closeQuickSearch(hideOverlayIfNeeded: closeOverlayOnSuccess)
                 }
-                if closeOverlayOnSuccess {
+                if closeOverlayOnSuccess && !closeQuickSearchAndOverlayBeforeOpening {
                     hideOverlay()
                 }
             }

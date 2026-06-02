@@ -1,5 +1,23 @@
 # TagLauncher Changelog
 
+## [7.8.9] — 2026-06-02
+
+- 新增 App Grid 拖拽到标签栏建立关联：在 5 种 App Grid 视图中，App 图标可拖到顶部、左侧或右侧标签名称上，放手后追加该标签关联
+- 拖到标签名称时复用标签排序的视觉反馈：目标标签浮起，其他标签变暗，帮助用户确认即将生效的标签
+- 标签栏 drop 只追加目标标签，不删除原有标签；已有关联时不重复写入
+- 复用现有 App 拖拽协调器并增加 drop-target hover 通知，避免新增平行拖拽系统
+- 版本号更新为 `7.8.9`，Build 更新为 `20260602.1929`
+
+## [7.8.8] — 2026-05-31
+
+- 修复全局 `Fn + Space` Quick Search-only 场景下，鼠标在候选区 hover 或点击结果后 App Grid / Overlay 可能残留或重新冒出的问题
+- Quick Search 结果点击改为在鼠标事件完成后的主队列启动，避免 AppKit `mouseDown` 与窗口关闭交叉导致背板露出
+- Overlay 关闭时不再复用已隐藏的旧 `NSPanel`，每次关闭都释放窗口实例，下一次显示重新绑定当前 Space，减少隐藏 Dock / 全屏 / Split View 场景下的幽灵窗口风险
+- 移除顶部 AppKit 标签栏下方多余的浅灰色滚动条，同时保留标签栏横向滚动能力
+- 加固 Dock 图标显式打开 App Grid 的判定：必须是最近真实鼠标点击且位于 Dock 区域，避免重复启动或程序化打开误触发 App Grid
+- 窗口 QA 增加隐藏 Dock 下 Quick Search hover、点击搜索结果不弹 App Grid 的专项回归，并继续覆盖全屏、Split View、Settings、文件面板、Dock 图标和滚动后键盘路由
+- 版本号更新为 `7.8.8`，Build 更新为 `20260531.1601`
+
 ## [7.8.7] — 2026-05-31
 
 - 修复关闭“Show in Dock”后用主快捷键打开 App Grid 时 TagLauncher Dock 图标仍会闪现的问题；隐藏 Dock 图标设置现在严格生效

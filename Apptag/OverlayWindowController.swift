@@ -130,6 +130,7 @@ final class OverlayWindowController {
             initialQuickSearchSource: initialQuickSearchSource
         )
         generation &+= 1
+        let showGeneration = generation
         window = newWindow
         dependencies.installOverlayKeyMonitor()
         if shouldStageAsAccessory {
@@ -149,6 +150,7 @@ final class OverlayWindowController {
         let placementFrame = placement.frame
         let finishForegroundClaim: () -> Void = { [weak self, weak newWindow] in
             guard let self, let newWindow, self.window === newWindow else { return }
+            guard self.generation == showGeneration, newWindow.isVisible else { return }
             self.dependencies.refreshChromeState(!shouldAvoidSpaceSwitch, shouldAvoidSpaceSwitch)
             if newWindow.frame != placementFrame {
                 newWindow.setFrame(placementFrame, display: true)
@@ -157,6 +159,7 @@ final class OverlayWindowController {
             for delay in [0.2, 0.5] {
                 DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self, weak newWindow] in
                     guard let self, let newWindow, self.window === newWindow else { return }
+                    guard self.generation == showGeneration, newWindow.isVisible else { return }
                     guard newWindow.frame != placementFrame else { return }
                     newWindow.setFrame(placementFrame, display: true)
                     self.orderFront(newWindow)
@@ -182,15 +185,20 @@ final class OverlayWindowController {
         if let settingsWindow = dependencies.settingsWindow(), settingsWindow.parent == window {
             dependencies.detachSettingsWindow(settingsWindow)
         }
-        window?.orderOut(nil)
+        let windowToHide = window
+        windowToHide?.ignoresMouseEvents = true
+        windowToHide?.alphaValue = 0
+        windowToHide?.orderOut(nil)
         dependencies.removeOverlayKeyMonitor()
         dependencies.removeQuickSearchMouseMonitor()
+        windowToHide?.contentView = nil
+        windowToHide?.close()
+        if window === windowToHide {
+            window = nil
+        }
         avoidsSpaceSwitch = false
         dependencies.refreshChromeState(false, false)
         dependencies.onDidHide()
-        if discardWindow {
-            window = nil
-        }
     }
 
     func screenUnderMouse() -> NSScreen? {

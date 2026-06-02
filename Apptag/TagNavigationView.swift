@@ -18,12 +18,17 @@ struct TagNavigationView: NSViewRepresentable {
     let contentInsets: NSEdgeInsets
     let dragModeActive: Bool
     let draggingItemID: String?
+    let appDragModeActive: Bool
+    let appDropTargetID: String?
     let onActivate: (String) -> Void
     let onHoverChange: (String, Bool) -> Void
     let canReorder: (String) -> Bool
+    let canAcceptAppDrop: (String) -> Bool
     let onReorderBegan: (String) -> Void
     let onReorderMoved: (String, String) -> Void
     let onReorderEnded: () -> Void
+    let onAppDropHoverChange: (String, Bool) -> Void
+    let onAppDrop: (String, String, String, Bool) -> Void
 
     func makeNSView(context: Context) -> TagNavigationHostView {
         let view = TagNavigationHostView()
@@ -33,12 +38,17 @@ struct TagNavigationView: NSViewRepresentable {
             contentInsets: contentInsets,
             dragModeActive: dragModeActive,
             draggingItemID: draggingItemID,
+            appDragModeActive: appDragModeActive,
+            appDropTargetID: appDropTargetID,
             onActivate: onActivate,
             onHoverChange: onHoverChange,
             canReorder: canReorder,
+            canAcceptAppDrop: canAcceptAppDrop,
             onReorderBegan: onReorderBegan,
             onReorderMoved: onReorderMoved,
-            onReorderEnded: onReorderEnded
+            onReorderEnded: onReorderEnded,
+            onAppDropHoverChange: onAppDropHoverChange,
+            onAppDrop: onAppDrop
         )
         return view
     }
@@ -50,12 +60,17 @@ struct TagNavigationView: NSViewRepresentable {
             contentInsets: contentInsets,
             dragModeActive: dragModeActive,
             draggingItemID: draggingItemID,
+            appDragModeActive: appDragModeActive,
+            appDropTargetID: appDropTargetID,
             onActivate: onActivate,
             onHoverChange: onHoverChange,
             canReorder: canReorder,
+            canAcceptAppDrop: canAcceptAppDrop,
             onReorderBegan: onReorderBegan,
             onReorderMoved: onReorderMoved,
-            onReorderEnded: onReorderEnded
+            onReorderEnded: onReorderEnded,
+            onAppDropHoverChange: onAppDropHoverChange,
+            onAppDrop: onAppDrop
         )
     }
 }
@@ -82,12 +97,17 @@ final class TagNavigationHostView: NSView {
         contentInsets: NSEdgeInsets,
         dragModeActive: Bool,
         draggingItemID: String?,
+        appDragModeActive: Bool,
+        appDropTargetID: String?,
         onActivate: @escaping (String) -> Void,
         onHoverChange: @escaping (String, Bool) -> Void,
         canReorder: @escaping (String) -> Bool,
+        canAcceptAppDrop: @escaping (String) -> Bool,
         onReorderBegan: @escaping (String) -> Void,
         onReorderMoved: @escaping (String, String) -> Void,
-        onReorderEnded: @escaping () -> Void
+        onReorderEnded: @escaping () -> Void,
+        onAppDropHoverChange: @escaping (String, Bool) -> Void,
+        onAppDrop: @escaping (String, String, String, Bool) -> Void
     ) {
         documentView.update(
             items: items,
@@ -95,15 +115,20 @@ final class TagNavigationHostView: NSView {
             contentInsets: contentInsets,
             dragModeActive: dragModeActive,
             draggingItemID: draggingItemID,
+            appDragModeActive: appDragModeActive,
+            appDropTargetID: appDropTargetID,
             onActivate: onActivate,
             onHoverChange: onHoverChange,
             canReorder: canReorder,
+            canAcceptAppDrop: canAcceptAppDrop,
             onReorderBegan: onReorderBegan,
             onReorderMoved: onReorderMoved,
-            onReorderEnded: onReorderEnded
+            onReorderEnded: onReorderEnded,
+            onAppDropHoverChange: onAppDropHoverChange,
+            onAppDrop: onAppDrop
         )
-        scrollView.hasHorizontalScroller = orientation == .horizontal
-        scrollView.hasVerticalScroller = orientation == .vertical
+        scrollView.hasHorizontalScroller = false
+        scrollView.hasVerticalScroller = false
         needsLayout = true
     }
 
@@ -126,6 +151,8 @@ final class TagNavigationHostView: NSView {
         scrollView.borderType = .noBorder
         scrollView.autohidesScrollers = true
         scrollView.scrollerStyle = .overlay
+        scrollView.horizontalScrollElasticity = .allowed
+        scrollView.verticalScrollElasticity = .allowed
         scrollView.hasHorizontalScroller = false
         scrollView.hasVerticalScroller = false
         scrollView.documentView = documentView
@@ -140,12 +167,17 @@ final class TagNavigationDocumentView: NSView {
     private var buttons: [TagNavigationButton] = []
     private var dragModeActive = false
     private var draggingItemID: String?
+    private var appDragModeActive = false
+    private var appDropTargetID: String?
     private var onActivate: (String) -> Void = { _ in }
     private var onHoverChange: (String, Bool) -> Void = { _, _ in }
     private var canReorder: (String) -> Bool = { _ in false }
+    private var canAcceptAppDrop: (String) -> Bool = { _ in false }
     private var onReorderBegan: (String) -> Void = { _ in }
     private var onReorderMoved: (String, String) -> Void = { _, _ in }
     private var onReorderEnded: () -> Void = {}
+    private var onAppDropHoverChange: (String, Bool) -> Void = { _, _ in }
+    private var onAppDrop: (String, String, String, Bool) -> Void = { _, _, _, _ in }
 
     override var isFlipped: Bool { true }
 
@@ -155,12 +187,17 @@ final class TagNavigationDocumentView: NSView {
         contentInsets: NSEdgeInsets,
         dragModeActive: Bool,
         draggingItemID: String?,
+        appDragModeActive: Bool,
+        appDropTargetID: String?,
         onActivate: @escaping (String) -> Void,
         onHoverChange: @escaping (String, Bool) -> Void,
         canReorder: @escaping (String) -> Bool,
+        canAcceptAppDrop: @escaping (String) -> Bool,
         onReorderBegan: @escaping (String) -> Void,
         onReorderMoved: @escaping (String, String) -> Void,
-        onReorderEnded: @escaping () -> Void
+        onReorderEnded: @escaping () -> Void,
+        onAppDropHoverChange: @escaping (String, Bool) -> Void,
+        onAppDrop: @escaping (String, String, String, Bool) -> Void
     ) {
         let oldNames = self.items.map(\.name)
         let newNames = items.map(\.name)
@@ -170,12 +207,17 @@ final class TagNavigationDocumentView: NSView {
         self.contentInsets = contentInsets
         self.dragModeActive = dragModeActive
         self.draggingItemID = draggingItemID
+        self.appDragModeActive = appDragModeActive
+        self.appDropTargetID = appDropTargetID
         self.onActivate = onActivate
         self.onHoverChange = onHoverChange
         self.canReorder = canReorder
+        self.canAcceptAppDrop = canAcceptAppDrop
         self.onReorderBegan = onReorderBegan
         self.onReorderMoved = onReorderMoved
         self.onReorderEnded = onReorderEnded
+        self.onAppDropHoverChange = onAppDropHoverChange
+        self.onAppDrop = onAppDrop
 
         if needsRebuild {
             rebuildButtons()
@@ -226,6 +268,14 @@ final class TagNavigationDocumentView: NSView {
                 self?.handleReorderMove(tagID: tagID, screenPoint: screenPoint)
             }
             button.onReorderEnded = { [weak self] in self?.onReorderEnded() }
+            button.canAcceptAppDrop = { [weak self] tagID in self?.canAcceptAppDrop(tagID) ?? false }
+            button.onAppDropHoverChange = { [weak self] tagID, active in
+                self?.setLocalAppDropHover(tagID, active: active)
+                self?.onAppDropHoverChange(tagID, active)
+            }
+            button.onAppDrop = { [weak self] path, source, targetTag, copy in
+                self?.onAppDrop(path, source, targetTag, copy)
+            }
             addSubview(button)
             return button
         }
@@ -236,17 +286,30 @@ final class TagNavigationDocumentView: NSView {
         buttons = items.compactMap { item in
             guard let button = existing[item.name] else { return nil }
             button.configure(item: item, orientation: orientation)
+            button.refreshAppDropRegistration()
             return button
         }
     }
 
     private func updateButtonRuntimeState() {
         for button in buttons {
+            let isAppDropTarget = appDropTargetID == button.itemName
+            let appDropVisualActive = appDropTargetID != nil
             button.configureRuntime(
-                dragModeActive: dragModeActive && canReorder(button.itemName),
-                isDragging: draggingItemID == button.itemName
+                dragModeActive: (dragModeActive && canReorder(button.itemName)) || appDropVisualActive,
+                isDragging: draggingItemID == button.itemName || isAppDropTarget
             )
+            button.refreshAppDropRegistration()
         }
+    }
+
+    private func setLocalAppDropHover(_ tagID: String, active: Bool) {
+        if active {
+            appDropTargetID = tagID
+        } else if appDropTargetID == tagID {
+            appDropTargetID = nil
+        }
+        updateButtonRuntimeState()
     }
 
     private func handleReorderMove(tagID: String, screenPoint: NSPoint) {
@@ -283,13 +346,16 @@ final class TagNavigationDocumentView: NSView {
     }
 }
 
-final class TagNavigationButton: NSButton {
+final class TagNavigationButton: NSButton, AppDropTargetReceivingView {
     var onActivate: (String) -> Void = { _ in }
     var onHoverChange: (String, Bool) -> Void = { _, _ in }
     var canReorder: (String) -> Bool = { _ in false }
     var onReorderBegan: (String) -> Void = { _ in }
     var onReorderMoved: (String, NSPoint) -> Void = { _, _ in }
     var onReorderEnded: () -> Void = {}
+    var canAcceptAppDrop: (String) -> Bool = { _ in false }
+    var onAppDropHoverChange: (String, Bool) -> Void = { _, _ in }
+    var onAppDrop: (String, String, String, Bool) -> Void = { _, _, _, _ in }
 
     private var item: TagNavigationItem
     private var orientation: TagNavigationView.Orientation
@@ -297,6 +363,8 @@ final class TagNavigationButton: NSButton {
     private var isMouseInside = false
     private var dragModeActive = false
     private var isDragging = false
+    private let appDropTargetID = UUID()
+    private var appDropRegistered = false
 
     var itemName: String { item.name }
 
@@ -330,12 +398,16 @@ final class TagNavigationButton: NSButton {
     }
 
     func configure(item: TagNavigationItem, orientation: TagNavigationView.Orientation) {
+        if self.item.name != item.name {
+            unregisterAppDropTarget()
+        }
         self.item = item
         self.orientation = orientation
         title = item.name
         alignment = orientation == .horizontal ? .center : .left
         setAccessibilityLabel(item.name)
         updateAppearance()
+        refreshAppDropRegistration()
         needsLayout = true
     }
 
@@ -343,6 +415,34 @@ final class TagNavigationButton: NSButton {
         self.dragModeActive = dragModeActive
         self.isDragging = isDragging
         updateAppearance()
+    }
+
+    func refreshAppDropRegistration() {
+        guard window != nil, canAcceptAppDrop(item.id) else {
+            unregisterAppDropTarget()
+            return
+        }
+        AppDragCoordinator.shared.register(id: appDropTargetID, view: self, tag: item.name)
+        appDropRegistered = true
+    }
+
+    override func viewDidMoveToWindow() {
+        super.viewDidMoveToWindow()
+        refreshAppDropRegistration()
+    }
+
+    func appDragHoverChanged(active: Bool) {
+        guard canAcceptAppDrop(item.id) || !active else { return }
+        onAppDropHoverChange(item.name, active)
+    }
+
+    func performDrop(path: String, source: String, copy: Bool) {
+        guard canAcceptAppDrop(item.id) else { return }
+        onAppDrop(path, source, item.name, copy)
+    }
+
+    deinit {
+        unregisterAppDropTarget()
     }
 
     override func updateTrackingAreas() {
@@ -419,6 +519,12 @@ final class TagNavigationButton: NSButton {
 
     @objc private func performActivation() {
         onActivate(item.id)
+    }
+
+    private func unregisterAppDropTarget() {
+        guard appDropRegistered else { return }
+        AppDragCoordinator.shared.unregister(id: appDropTargetID)
+        appDropRegistered = false
     }
 
     private func updateAppearance() {

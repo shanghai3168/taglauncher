@@ -25,6 +25,7 @@ final class AppDragCoordinator {
     private var dragWindow: NSWindow?
     private var dragImageSize: NSSize = .zero
     private var activePayload = ""
+    private weak var hoveredTarget: AppDropTargetReceivingView?
 
     private init() {}
 
@@ -129,15 +130,20 @@ final class AppDragCoordinator {
             CATransaction.setDisableActions(true)
             dragLayer.position = contentPoint
             CATransaction.commit()
+            updateHoverTarget(at: screenPoint)
             return
         }
 
-        guard let dragWindow else { return }
+        guard let dragWindow else {
+            updateHoverTarget(at: screenPoint)
+            return
+        }
         let origin = NSPoint(
             x: screenPoint.x - dragImageSize.width / 2,
             y: screenPoint.y - dragImageSize.height / 2
         )
         dragWindow.setFrameOrigin(origin)
+        updateHoverTarget(at: screenPoint)
     }
 
     func finishDrag(at screenPoint: NSPoint, copy: Bool) {
@@ -147,18 +153,7 @@ final class AppDragCoordinator {
         let source = parts.dropFirst().first ?? ""
         pruneDeadTargets()
 
-        let hitTarget = targets.values
-            .compactMap { target -> (AppDropTargetReceivingView, CGFloat)? in
-                guard let view = target.view,
-                      let frame = view.screenFrame(),
-                      frame.contains(screenPoint)
-                else { return nil }
-                return (view, frame.width * frame.height)
-            }
-            .sorted { $0.1 < $1.1 }
-            .first?.0
-
-        if let hitTarget {
+        if let hitTarget = dropTarget(at: screenPoint) {
             hitTarget.performDrop(path: path, source: source, copy: copy)
             return
         }
@@ -191,6 +186,8 @@ final class AppDragCoordinator {
     }
 
     private func endDragVisuals() {
+        hoveredTarget?.appDragHoverChanged(active: false)
+        hoveredTarget = nil
         dragLayer?.removeFromSuperlayer()
         dragLayer = nil
         dragLayerHostView = nil
@@ -207,6 +204,29 @@ final class AppDragCoordinator {
     private func pruneDeadTargets() {
         targets = targets.filter { $0.value.view != nil }
         emptyTargets = emptyTargets.filter { $0.value.view != nil }
+    }
+
+    private func updateHoverTarget(at screenPoint: NSPoint) {
+        guard hasActiveDrag else { return }
+        pruneDeadTargets()
+        let nextTarget = dropTarget(at: screenPoint)
+        guard nextTarget !== hoveredTarget else { return }
+        hoveredTarget?.appDragHoverChanged(active: false)
+        nextTarget?.appDragHoverChanged(active: true)
+        hoveredTarget = nextTarget
+    }
+
+    private func dropTarget(at screenPoint: NSPoint) -> AppDropTargetReceivingView? {
+        targets.values
+            .compactMap { target -> (AppDropTargetReceivingView, CGFloat)? in
+                guard let view = target.view,
+                      let frame = view.screenFrame(),
+                      frame.contains(screenPoint)
+                else { return nil }
+                return (view, frame.width * frame.height)
+            }
+            .sorted { $0.1 < $1.1 }
+            .first?.0
     }
 
     private static func cgImage(from image: NSImage) -> CGImage? {
@@ -261,6 +281,7 @@ final class AppDragCoordinator {
 
 protocol AppDropTargetReceivingView: AnyObject {
     func screenFrame() -> NSRect?
+    func appDragHoverChanged(active: Bool)
     func performDrop(path: String, source: String, copy: Bool)
 }
 
@@ -275,6 +296,10 @@ extension AppDropTargetReceivingView where Self: NSView {
         let rectInWindow = convert(bounds, to: nil)
         return window.convertToScreen(rectInWindow)
     }
+}
+
+extension AppDropTargetReceivingView {
+    func appDragHoverChanged(active: Bool) {}
 }
 
 extension AppEmptyDropReceivingView where Self: NSView {

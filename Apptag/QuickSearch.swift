@@ -1385,7 +1385,9 @@ final class QuickSearchResultRowView: NSView {
 
     override func mouseDown(with event: NSEvent) {
         if let result {
-            onLaunch(result)
+            DispatchQueue.main.async { [onLaunch] in
+                onLaunch(result)
+            }
         } else {
             super.mouseDown(with: event)
         }
