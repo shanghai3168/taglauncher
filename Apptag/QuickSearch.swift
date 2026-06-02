@@ -731,6 +731,7 @@ enum QuickSearchCommand {
 
 enum QuickSearchPanelMetrics {
     static let width: CGFloat = 760
+    static let shadowOutset: CGFloat = 56
     static let rowHeight: CGFloat = 74
     static let rowSpacing: CGFloat = 2
     static let resultListVerticalInset: CGFloat = 10
@@ -769,9 +770,14 @@ struct QuickSearchPanelPresentationView: NSViewRepresentable {
     }
 
     func updateNSView(_ view: QuickSearchPanelAnchorView, context: Context) {
-        let size = NSSize(width: QuickSearchPanelMetrics.width, height: panelHeight)
+        let contentSize = NSSize(width: QuickSearchPanelMetrics.width, height: panelHeight)
+        let windowSize = NSSize(
+            width: contentSize.width + QuickSearchPanelMetrics.shadowOutset * 2,
+            height: contentSize.height + QuickSearchPanelMetrics.shadowOutset * 2
+        )
         let rootView = QuickSearchPanelWindowContent(
-            size: size,
+            windowSize: windowSize,
+            contentSize: contentSize,
             content: AnyView(
                 QuickSearchOverlayView(
                     query: $query,
@@ -791,7 +797,8 @@ struct QuickSearchPanelPresentationView: NSViewRepresentable {
         context.coordinator.apply(
             QuickSearchPanelConfiguration(
                 panelTopY: panelTopY,
-                size: size,
+                windowSize: windowSize,
+                contentSize: contentSize,
                 rootView: AnyView(rootView)
             ),
             anchorView: view
@@ -823,12 +830,13 @@ struct QuickSearchPanelPresentationView: NSViewRepresentable {
             let frame = windowFrame(
                 parentWindow: parentWindow,
                 panelTopY: configuration.panelTopY,
-                size: configuration.size
+                contentSize: configuration.contentSize,
+                windowSize: configuration.windowSize
             )
 
             hostingView?.rootView = configuration.rootView
-            hostingView?.frame = NSRect(origin: .zero, size: configuration.size)
-            panel.contentView?.frame = NSRect(origin: .zero, size: configuration.size)
+            hostingView?.frame = NSRect(origin: .zero, size: configuration.windowSize)
+            panel.contentView?.frame = NSRect(origin: .zero, size: configuration.windowSize)
             panel.collectionBehavior = collectionBehavior(parentWindow: parentWindow)
             panel.level = parentWindow.level
 
@@ -907,14 +915,15 @@ struct QuickSearchPanelPresentationView: NSViewRepresentable {
         private func windowFrame(
             parentWindow: NSWindow,
             panelTopY: CGFloat,
-            size: NSSize
+            contentSize: NSSize,
+            windowSize: NSSize
         ) -> NSRect {
             let parentFrame = parentWindow.frame
             return NSRect(
-                x: parentFrame.minX + (parentFrame.width - size.width) / 2,
-                y: parentFrame.maxY - panelTopY - size.height,
-                width: size.width,
-                height: size.height
+                x: parentFrame.minX + (parentFrame.width - contentSize.width) / 2 - QuickSearchPanelMetrics.shadowOutset,
+                y: parentFrame.maxY - panelTopY - contentSize.height - QuickSearchPanelMetrics.shadowOutset,
+                width: windowSize.width,
+                height: windowSize.height
             )
         }
 
@@ -961,17 +970,27 @@ final class QuickSearchPanelAnchorView: NSView {
 
 struct QuickSearchPanelConfiguration {
     let panelTopY: CGFloat
-    let size: NSSize
+    let windowSize: NSSize
+    let contentSize: NSSize
     let rootView: AnyView
 }
 
 private struct QuickSearchPanelWindowContent: View {
-    let size: NSSize
+    let windowSize: NSSize
+    let contentSize: NSSize
     let content: AnyView
 
     var body: some View {
-        content
-            .frame(width: size.width, height: size.height, alignment: .top)
+        VStack(spacing: 0) {
+            content
+                .frame(width: contentSize.width, height: contentSize.height, alignment: .top)
+            Spacer(minLength: 0)
+        }
+        .padding(.top, QuickSearchPanelMetrics.shadowOutset)
+        .padding(.horizontal, QuickSearchPanelMetrics.shadowOutset)
+        .padding(.bottom, QuickSearchPanelMetrics.shadowOutset)
+        .frame(width: windowSize.width, height: windowSize.height, alignment: .top)
+        .background(Color.clear)
     }
 }
 
@@ -997,6 +1016,10 @@ struct QuickSearchOverlayView: View {
         colorScheme == .dark
             ? Color(red: 0.105, green: 0.110, blue: 0.125).opacity(0.97)
             : Color.white.opacity(0.97)
+    }
+
+    private var panelShape: RoundedRectangle {
+        RoundedRectangle(cornerRadius: 34, style: .continuous)
     }
 
     var body: some View {
@@ -1061,14 +1084,15 @@ struct QuickSearchOverlayView: View {
         }
         .frame(width: panelWidth)
         .background(
-            RoundedRectangle(cornerRadius: 34, style: .continuous)
-                .fill(panelBackgroundColor)
-                .shadow(color: .black.opacity(0.18), radius: 36, y: 18)
+            panelShape.fill(panelBackgroundColor)
         )
+        .clipShape(panelShape)
         .overlay(
-            RoundedRectangle(cornerRadius: 34, style: .continuous)
-                .stroke(Color.primary.opacity(0.10), lineWidth: 1)
+            panelShape.stroke(Color.primary.opacity(0.10), lineWidth: 1)
         )
+        .compositingGroup()
+        .shadow(color: .black.opacity(colorScheme == .dark ? 0.46 : 0.26), radius: 30, x: 0, y: 18)
+        .shadow(color: .black.opacity(colorScheme == .dark ? 0.24 : 0.12), radius: 8, x: 0, y: 3)
         .accessibilityElement(children: .contain)
         .accessibilityLabel(tr("quickSearch.title"))
     }
