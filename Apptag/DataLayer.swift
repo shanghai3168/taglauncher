@@ -480,7 +480,7 @@ enum AppIndexer {
     private static func deduplicationIdentity(for app: AppInfo) -> String {
         if let bundleIdentifier = app.bundleIdentifier?.trimmingCharacters(in: .whitespacesAndNewlines),
            !bundleIdentifier.isEmpty {
-            return "bundle:\(bundleIdentifier.lowercased())"
+            return "bundle:\(bundleIdentifier.lowercased())|name:\(normalizedAppName(app.name))"
         }
         return "name:\(normalizedAppName(app.name))"
     }
