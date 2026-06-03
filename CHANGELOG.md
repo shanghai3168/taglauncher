@@ -1,5 +1,13 @@
 # TagLauncher Changelog
 
+## [7.8.11] — 2026-06-03
+
+- 优化 Quick Search 结果行右侧标签显示：短标签完整显示，右侧标签列右对齐并减少不必要留白
+- 修复安装/卸载应用后 Quick Search 应用索引滞后的问题；应用目录变化后不再复用旧扫描缓存
+- Quick Search 搜索结果会过滤磁盘上已不存在的 `.app`，避免用户点到已卸载应用
+- 修复同一个 Bundle ID 但 App 名称不同的应用被错误去重的问题；例如 `PrivateVoice Input` 和 `PrivateVoice Dictation` 现在可以同时进入 App Grid 和 Quick Search
+- 版本号更新为 `7.8.11`，Build 更新为 `20260603.2149`
+
 ## [7.8.10] — 2026-06-02
 
 - 修复 Quick Search 面板四个圆角处出现脏色块的问题；面板内容改为按圆角形状裁剪，避免透明窗口边缘和背景叠加产生视觉瑕疵
