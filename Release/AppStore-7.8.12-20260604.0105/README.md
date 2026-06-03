@@ -18,6 +18,20 @@
 - SHA256：f93702a912fb56a24a826386467b86e607e5b12b55fcc6dbe3b5a7224321be0a
 - 大小：5991391 bytes
 
+## App Store 发布资料
+
+- 发布清单：`APP_STORE_RELEASE_CHECKLIST.md`
+- 资产清单：`APP_STORE_ASSET_INVENTORY.md`
+- App Store Connect 文案草稿：`APP_STORE_CONNECT_METADATA.md`
+- 签名、打包和上传说明：`BUILD_SIGN_UPLOAD.md`
+- 审核备注：`Review/APP_REVIEW_NOTES.md`
+- 隐私政策草稿：`Legal/PRIVACY_POLICY.md`、`Legal/PRIVACY_POLICY.zh-Hans.md`
+- 支持页草稿：`Support/SUPPORT.md`
+- 截图计划：`Screenshots/SCREENSHOT_SHOT_LIST.md`
+- App 图标：`Assets/TagLauncher-AppIcon-1024.png`
+
+注意：本目录内 DMG 是本地可回滚候选包，不是 App Store Connect 的最终上传产物。上传 App Store 仍需要 Apple Developer 账号侧的 Mac App Store 签名证书、Provisioning Profile，并按 `BUILD_SIGN_UPLOAD.md` 生成上传包。
+
 ## 本版本变更
 
 - 修复 Quick Search-only 模式刚打开后可能被过期鼠标关闭事件立即关掉的问题。
