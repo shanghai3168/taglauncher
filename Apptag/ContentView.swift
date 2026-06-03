@@ -731,6 +731,7 @@ struct ContentView: View {
         quickSearchErrorMessage = nil
         quickSearchFocusToken &+= 1
         refreshQuickSearchResults()
+        refreshApps()
         NotificationCenter.default.post(
             name: .tagLauncherQuickSearchVisibilityChanged,
             object: nil,
@@ -777,7 +778,10 @@ struct ContentView: View {
 
     private func refreshQuickSearchResults() {
         let previousSelection = quickSearchSelectedID
-        quickSearchResults = QuickSearchEngine.search(quickSearchQuery, documents: quickSearchDocuments)
+        quickSearchResults = QuickSearchEngine.search(
+            quickSearchQuery,
+            documents: quickSearchDocuments.filter { FileManager.default.fileExists(atPath: $0.app.path.path) }
+        )
 
         if quickSearchResults.isEmpty {
             quickSearchSelectedID = nil
@@ -2369,7 +2373,7 @@ struct ContentView: View {
         }
     }
 
-    func refreshApps(forceLayoutRefresh: Bool = false) {
+    func refreshApps(forceLayoutRefresh: Bool = false, useCache: Bool = true) {
         guard !refreshInProgress else {
             if forceLayoutRefresh {
                 refreshAgainAfterCurrent = true
@@ -2380,7 +2384,7 @@ struct ContentView: View {
 
         refreshInProgress = true
         DispatchQueue.global(qos: .userInitiated).async {
-            let result = AppLibraryController.refresh()
+            let result = AppLibraryController.refresh(useCache: useCache)
             DispatchQueue.main.async {
                 applyAppLibrarySnapshot(result.snapshot)
                 handleSmartStartRunResult(result.smartStartResult)
@@ -2417,6 +2421,13 @@ struct ContentView: View {
     ) {
         appGridInteraction.appDragModeActive = false
         endTagNavReorder()
+        guard FileManager.default.fileExists(atPath: app.path.path) else {
+            AppIndexer.invalidateScanCache()
+            refreshApps()
+            onFailure?()
+            return
+        }
+
         let closeQuickSearchAndOverlayBeforeOpening = closeQuickSearchOnSuccess
             && closeOverlayOnSuccess
             && (quickSearchCloseHidesOverlay || quickSearchOnlySession)

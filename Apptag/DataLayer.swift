@@ -94,9 +94,16 @@ enum TagColor {
 // MARK: - App Scanner
 
 enum AppIndexer {
+    private struct SearchPathSignature: Equatable {
+        let path: String
+        let exists: Bool
+        let contentModificationTime: TimeInterval?
+    }
+
     private static let scanCacheLock = NSLock()
     private static var cachedScanApps: [AppInfo]? = nil
     private static var cachedScanAt: Date? = nil
+    private static var cachedSearchPathSignature: [SearchPathSignature]? = nil
     private static let scanCacheTTL: TimeInterval = 1800
 
     static let searchPaths: [URL] = [
@@ -120,12 +127,13 @@ enum AppIndexer {
 
     /// Scan all standard locations. Tags are annotated from TagDatabase by the caller.
     static func scan(useCache: Bool = true) -> [AppInfo] {
-        if useCache, let cached = cachedScanIfFresh() {
+        let searchPathSignature = currentSearchPathSignature()
+        if useCache, let cached = cachedScanIfFresh(matching: searchPathSignature) {
             return cached
         }
 
         let apps = performScan()
-        updateScanCache(apps)
+        updateScanCache(apps, searchPathSignature: searchPathSignature)
         return apps
     }
 
@@ -133,25 +141,49 @@ enum AppIndexer {
         scanCacheLock.lock()
         cachedScanApps = nil
         cachedScanAt = nil
+        cachedSearchPathSignature = nil
         scanCacheLock.unlock()
     }
 
-    private static func cachedScanIfFresh() -> [AppInfo]? {
+    private static func cachedScanIfFresh(matching searchPathSignature: [SearchPathSignature]) -> [AppInfo]? {
         scanCacheLock.lock()
         defer { scanCacheLock.unlock() }
 
         guard let cachedScanApps,
               let cachedScanAt,
+              cachedSearchPathSignature == searchPathSignature,
               Date().timeIntervalSince(cachedScanAt) < scanCacheTTL
         else { return nil }
         return cachedScanApps
     }
 
-    private static func updateScanCache(_ apps: [AppInfo]) {
+    private static func updateScanCache(_ apps: [AppInfo], searchPathSignature: [SearchPathSignature]) {
         scanCacheLock.lock()
         cachedScanApps = apps
         cachedScanAt = Date()
+        cachedSearchPathSignature = searchPathSignature
         scanCacheLock.unlock()
+    }
+
+    private static func currentSearchPathSignature() -> [SearchPathSignature] {
+        searchPaths.map { url in
+            var isDirectory: ObjCBool = false
+            let exists = FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory)
+            guard exists, isDirectory.boolValue else {
+                return SearchPathSignature(
+                    path: url.path,
+                    exists: false,
+                    contentModificationTime: nil
+                )
+            }
+
+            let values = try? url.resourceValues(forKeys: [.contentModificationDateKey])
+            return SearchPathSignature(
+                path: url.path,
+                exists: true,
+                contentModificationTime: values?.contentModificationDate?.timeIntervalSinceReferenceDate
+            )
+        }
     }
 
     private static func performScan() -> [AppInfo] {

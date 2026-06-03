@@ -23,8 +23,8 @@ struct AppLibrarySystemSchemeApplyResult {
 }
 
 enum AppLibraryController {
-    static func refresh() -> AppLibraryRefreshResult {
-        let scannedApps = AppIndexer.scan()
+    static func refresh(useCache: Bool = true) -> AppLibraryRefreshResult {
+        let scannedApps = AppIndexer.scan(useCache: useCache)
         let reconciledStore = TagEditor.reconcileScannedApps(scannedApps)
         let smartStartResult = SmartStartService.runIfNeeded(
             apps: scannedApps,
