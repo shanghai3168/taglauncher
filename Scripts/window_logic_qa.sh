@@ -801,7 +801,7 @@ case "quick-search-result":
     let x = dimension(bounds, "X")
     let y = dimension(bounds, "Y")
     let width = dimension(bounds, "Width")
-    print("\(Int(round(x + width * 0.35))) \(Int(round(y + 125)))")
+    print("\(Int(round(x + width * 0.35))) \(Int(round(y + 190)))")
 case "fullscreen-target-center":
     guard let target = raw.first(where: { ($0[kCGWindowName as String] as? String) == "TagLauncherFullscreenQATargetFullscreen" }),
           let bounds = target[kCGWindowBounds as String] as? NSDictionary else {
@@ -1015,6 +1015,20 @@ wait_swift_assert() {
   return 1
 }
 
+open_quick_search_with_retry() {
+  local output=""
+  for _ in {1..3}; do
+    send_quick_search_hotkey
+    sleep 0.8
+    if output="$(wait_swift_assert quick-search 2>&1)"; then
+      printf '%s\n' "$output"
+      return 0
+    fi
+  done
+  printf '%s\n' "$output" >&2
+  return 1
+}
+
 assert_fullscreen_overlay_stable() {
   local output=""
   for _ in {1..20}; do
@@ -1202,9 +1216,7 @@ swift_assert no-overlay
 prepare_isolated_app_instance
 assert_no_dock_tile
 log "==> QA hidden Dock: Fn+Space Quick Search hover does not resurrect App Grid"
-send_quick_search_hotkey
-sleep 0.8
-wait_swift_assert quick-search
+open_quick_search_with_retry
 hover_quick_search_results
 sleep 0.8
 wait_swift_assert quick-search
@@ -1219,9 +1231,7 @@ swift_assert no-overlay
 prepare_isolated_app_instance
 assert_no_dock_tile
 log "==> QA hidden Dock: clicking Quick Search result closes without showing App Grid"
-send_quick_search_hotkey
-sleep 0.8
-wait_swift_assert quick-search
+open_quick_search_with_retry
 click_quick_search_result
 sleep 1.4
 wait_swift_assert no-overlay

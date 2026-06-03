@@ -430,7 +430,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
 
         if isQuickSearchOpen {
-            NotificationCenter.default.post(name: .tagLauncherQuickSearchDismissRequested, object: nil)
+            NotificationCenter.default.post(
+                name: .tagLauncherQuickSearchDismissRequested,
+                object: nil,
+                userInfo: ["source": QuickSearchDismissSource.programmatic]
+            )
         }
 
         if !requiresForegroundOwnership {
@@ -987,7 +991,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         isQuickSearchOpen = false
         removeQuickSearchExternalMouseMonitor()
         updateOverlayLevelForTextInput()
-        NotificationCenter.default.post(name: .tagLauncherQuickSearchDismissRequested, object: nil)
+        NotificationCenter.default.post(
+            name: .tagLauncherQuickSearchDismissRequested,
+            object: nil,
+            userInfo: ["source": QuickSearchDismissSource.keyboard]
+        )
         if shouldHideOverlayAfterDismiss {
             quickSearchShouldHideOverlayOnClose = false
             quickSearchOnlyOverlaySession = false
@@ -1526,7 +1534,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ) { [weak self] _ in
             DispatchQueue.main.async {
                 guard self?.isQuickSearchOpen == true else { return }
-                NotificationCenter.default.post(name: .tagLauncherQuickSearchDismissRequested, object: nil)
+                NotificationCenter.default.post(
+                    name: .tagLauncherQuickSearchDismissRequested,
+                    object: nil,
+                    userInfo: ["source": QuickSearchDismissSource.mouse]
+                )
             }
         }
     }
@@ -1538,7 +1550,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ) { [weak self] event in
             guard let self, self.isQuickSearchOpen else { return event }
             if event.window === self.overlayWindow {
-                NotificationCenter.default.post(name: .tagLauncherQuickSearchDismissRequested, object: nil)
+                NotificationCenter.default.post(
+                    name: .tagLauncherQuickSearchDismissRequested,
+                    object: nil,
+                    userInfo: ["source": QuickSearchDismissSource.mouse]
+                )
                 return nil
             }
             return event
@@ -1633,7 +1649,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         updateOverlayLevelForTextInput()
         quickSearchShouldHideOverlayOnClose = false
         quickSearchOnlyOverlaySession = false
-        NotificationCenter.default.post(name: .tagLauncherQuickSearchDismissRequested, object: nil)
+        NotificationCenter.default.post(
+            name: .tagLauncherQuickSearchDismissRequested,
+            object: nil,
+            userInfo: ["source": QuickSearchDismissSource.programmatic]
+        )
     }
 
     @objc private func switchLanguage(_ sender: NSMenuItem) {
@@ -1695,7 +1715,11 @@ final class DismissibleHostingView<Content: View>: NSHostingView<Content> {
         }
         if hit == self {
             if quickSearchSuppressesBackdropDismiss {
-                NotificationCenter.default.post(name: .tagLauncherQuickSearchDismissRequested, object: nil)
+                NotificationCenter.default.post(
+                    name: .tagLauncherQuickSearchDismissRequested,
+                    object: nil,
+                    userInfo: ["source": QuickSearchDismissSource.backdrop]
+                )
                 return
             }
             if suppressBackdropDismiss {

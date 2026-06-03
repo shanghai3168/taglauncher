@@ -389,6 +389,7 @@ struct ContentView: View {
     @State private var quickSearchSelectionScrollToken = 0
     @State private var quickSearchCloseHidesOverlay = false
     @State private var quickSearchOnlySession = false
+    @State private var quickSearchOpenedAt: Date? = nil
     @State private var quickSearchErrorMessage: String? = nil
     @State private var initialQuickSearchConsumed = false
 
@@ -542,6 +543,7 @@ struct ContentView: View {
                     quickSearchVisible = true
                     quickSearchFocusToken &+= 1
                 }
+                quickSearchOpenedAt = Date()
                 refreshQuickSearchResults()
                 NotificationCenter.default.post(
                     name: .tagLauncherQuickSearchVisibilityChanged,
@@ -568,8 +570,9 @@ struct ContentView: View {
             let source = notification.userInfo?["source"] as? String ?? QuickSearchOpenSource.mainOverlay
             openQuickSearch(source: source)
         }
-        .onReceive(NotificationCenter.default.publisher(for: .tagLauncherQuickSearchDismissRequested)) { _ in
-            closeQuickSearch()
+        .onReceive(NotificationCenter.default.publisher(for: .tagLauncherQuickSearchDismissRequested)) { notification in
+            let source = notification.userInfo?["source"] as? String
+            closeQuickSearch(dismissalSource: source)
         }
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
             guard allApps.isEmpty, !refreshInProgress else { return }
@@ -663,7 +666,7 @@ struct ContentView: View {
                     .ignoresSafeArea()
                     .contentShape(Rectangle())
                     .onTapGesture {
-                        closeQuickSearch()
+                        closeQuickSearch(dismissalSource: QuickSearchDismissSource.backdrop)
                     }
                     .zIndex(899)
 
@@ -726,6 +729,7 @@ struct ContentView: View {
         quickSearchCloseHidesOverlay = quickSearchCloseHidesOverlay
             || source == QuickSearchOpenSource.globalHidden
         quickSearchVisible = true
+        quickSearchOpenedAt = Date()
         quickSearchQuery = ""
         quickSearchManualSelection = false
         quickSearchErrorMessage = nil
@@ -750,10 +754,26 @@ struct ContentView: View {
             && !quickSearchVisible
     }
 
-    private func closeQuickSearch(notify: Bool = true, hideOverlayIfNeeded: Bool = true) {
+    private func closeQuickSearch(
+        notify: Bool = true,
+        hideOverlayIfNeeded: Bool = true,
+        dismissalSource: String? = nil
+    ) {
+        Diagnostics.log("content.quickSearch.closeRequest", [
+            "source": dismissalSource,
+            "notify": notify,
+            "hideOverlayIfNeeded": hideOverlayIfNeeded,
+            "quickSearchVisible": quickSearchVisible,
+            "quickSearchCloseHidesOverlay": quickSearchCloseHidesOverlay,
+            "quickSearchOnlySession": quickSearchOnlySession
+        ])
+        if shouldIgnoreEarlyQuickSearchDismiss(from: dismissalSource) {
+            return
+        }
         let shouldHideOverlay = quickSearchVisible && quickSearchCloseHidesOverlay && hideOverlayIfNeeded
         guard quickSearchVisible else { return }
         quickSearchVisible = false
+        quickSearchOpenedAt = nil
         quickSearchQuery = ""
         quickSearchResults = []
         quickSearchSelectedID = nil
@@ -774,6 +794,23 @@ struct ContentView: View {
         } else {
             quickSearchCloseHidesOverlay = false
         }
+    }
+
+    private func shouldIgnoreEarlyQuickSearchDismiss(from source: String?) -> Bool {
+        guard quickSearchVisible,
+              let quickSearchOpenedAt,
+              source == QuickSearchDismissSource.mouse || source == QuickSearchDismissSource.backdrop
+        else { return false }
+
+        let age = Date().timeIntervalSince(quickSearchOpenedAt)
+        let gracePeriod: TimeInterval = quickSearchOnlySession ? 1.25 : 0.30
+        guard age < gracePeriod else { return false }
+        Diagnostics.log("content.quickSearch.ignoredEarlyDismiss", [
+            "source": source,
+            "age": String(format: "%.3f", age),
+            "gracePeriod": String(format: "%.2f", gracePeriod)
+        ])
+        return true
     }
 
     private func refreshQuickSearchResults() {
@@ -800,6 +837,11 @@ struct ContentView: View {
     }
 
     private func handleQuickSearchCommand(_ command: QuickSearchCommand) {
+        Diagnostics.log("content.quickSearch.command", [
+            "command": String(describing: command),
+            "quickSearchCloseHidesOverlay": quickSearchCloseHidesOverlay,
+            "quickSearchOnlySession": quickSearchOnlySession
+        ])
         switch command {
         case .moveUp:
             moveQuickSearchSelection(by: -1)

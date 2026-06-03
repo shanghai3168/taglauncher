@@ -15,6 +15,13 @@ enum QuickSearchOpenSource {
     static let globalVisible = "globalVisible"
 }
 
+enum QuickSearchDismissSource {
+    static let keyboard = "keyboard"
+    static let mouse = "mouse"
+    static let backdrop = "backdrop"
+    static let programmatic = "programmatic"
+}
+
 // MARK: - Hotkeys
 
 struct LauncherHotkey: Equatable {

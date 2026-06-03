@@ -23,6 +23,12 @@
 
 ## Done
 
+- [2026-06-04] 修复 Quick Search 刚打开即被过期 dismiss 事件关闭的 QA 失败。
+  - 提交: 本次提交
+  - 结果: quick-search-only 模式会忽略打开初期的过期鼠标/背板关闭事件；键盘 Esc 和再次按 `Fn + Space` 仍立即关闭；QA 脚本对合成 `Fn + Space` 投递增加重试，并把结果点击坐标修正到首条结果行中心。
+  - 范围: 不改搜索匹配、App Grid 布局、Settings、文件面板或窗口层级策略。
+  - 验证: targeted 两段式 `Fn + Space` 打开/关闭通过；targeted 点击 Quick Search 结果后窗口数为 0；`Scripts/window_logic_qa.sh` 全部通过。
+
 - [2026-05-29] 版本拆分与 7.8.1 默认图标大小调整。
   - 提交: 本次提交
   - 结果: `CHANGELOG.md` 已补充 `7.7.0`、`7.8.0`、`7.8.1` 三段版本记录；源码版本号更新为 `7.8.1`；新用户默认 `iconSize` 从 `80` 调整为 `64`。
