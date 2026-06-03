@@ -1297,6 +1297,18 @@ final class QuickSearchResultListDocumentView: NSView {
 }
 
 final class QuickSearchResultRowView: NSView {
+    private enum TagBadgeLayout {
+        static let columnWidth: CGFloat = 196
+        static let minWidth: CGFloat = 80
+        static let maxWidth: CGFloat = 196
+        static let height: CGFloat = 32
+        static let horizontalInset: CGFloat = 16
+        static let labelSafetyWidth: CGFloat = 8
+        static let trailingInset: CGFloat = 18
+        static let textGap: CGFloat = 18
+        static let minimumMainTextWidth: CGFloat = 260
+    }
+
     private let iconView = NSImageView()
     private let titleLabel = NSTextField(labelWithString: "")
     private let detailLabel = NSTextField(labelWithString: "")
@@ -1356,25 +1368,44 @@ final class QuickSearchResultRowView: NSView {
             height: iconSize
         )
 
-        let tagMaxWidth: CGFloat = 128
-        let tagHeight: CGFloat = 32
-        let trailingInset: CGFloat = 18
+        let textX = iconX + iconSize + 16
+        let trailingInset = TagBadgeLayout.trailingInset
+        let rightLimit = bounds.width - trailingInset
         var tagFrame = NSRect.zero
-        if !tagBackgroundView.isHidden {
-            let labelWidth = min(tagMaxWidth - 24, max(22, tagLabel.intrinsicContentSize.width))
-            let tagWidth = min(tagMaxWidth, labelWidth + 24)
+        let hasTag = !tagLabel.stringValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        let availableBadgeColumnWidth = rightLimit - textX - TagBadgeLayout.minimumMainTextWidth - TagBadgeLayout.textGap
+        let tagColumnWidth = min(TagBadgeLayout.columnWidth, max(0, availableBadgeColumnWidth))
+        let canShowTag = hasTag && tagColumnWidth >= TagBadgeLayout.minWidth
+        tagBackgroundView.isHidden = !canShowTag
+
+        if canShowTag {
+            let measuredLabelWidth = measuredTagLabelWidth()
+            let measuredBadgeWidth = measuredLabelWidth
+                + TagBadgeLayout.horizontalInset * 2
+                + TagBadgeLayout.labelSafetyWidth
+            let tagWidth = min(
+                min(TagBadgeLayout.maxWidth, tagColumnWidth),
+                max(TagBadgeLayout.minWidth, measuredBadgeWidth)
+            )
             tagFrame = NSRect(
-                x: bounds.width - trailingInset - tagWidth,
-                y: (bounds.height - tagHeight) / 2,
+                x: rightLimit - tagWidth,
+                y: (bounds.height - TagBadgeLayout.height) / 2,
                 width: tagWidth,
-                height: tagHeight
+                height: TagBadgeLayout.height
             )
             tagBackgroundView.frame = tagFrame
-            tagLabel.frame = NSRect(x: 12, y: 6, width: tagWidth - 24, height: 20)
+            tagLabel.frame = NSRect(
+                x: TagBadgeLayout.horizontalInset,
+                y: 6,
+                width: tagWidth - TagBadgeLayout.horizontalInset * 2,
+                height: 20
+            )
+        } else {
+            tagBackgroundView.frame = .zero
+            tagLabel.frame = .zero
         }
 
-        let textX = iconX + iconSize + 16
-        let textRight = tagBackgroundView.isHidden ? bounds.width - trailingInset : tagFrame.minX - 16
+        let textRight = tagBackgroundView.isHidden ? bounds.width - trailingInset : tagFrame.minX - TagBadgeLayout.textGap
         let textWidth = max(40, textRight - textX)
         if detailLabel.isHidden {
             titleLabel.frame = NSRect(x: textX, y: (bounds.height - 26) / 2, width: textWidth, height: 26)
@@ -1383,6 +1414,11 @@ final class QuickSearchResultRowView: NSView {
             titleLabel.frame = NSRect(x: textX, y: 14, width: textWidth, height: 25)
             detailLabel.frame = NSRect(x: textX, y: 42, width: textWidth, height: 21)
         }
+    }
+
+    private func measuredTagLabelWidth() -> CGFloat {
+        let font = tagLabel.font ?? NSFont.systemFont(ofSize: 14, weight: .semibold)
+        return ceil((tagLabel.stringValue as NSString).size(withAttributes: [.font: font]).width)
     }
 
     override func updateTrackingAreas() {
@@ -1452,6 +1488,9 @@ final class QuickSearchResultRowView: NSView {
         tagLabel.lineBreakMode = .byTruncatingTail
         tagLabel.maximumNumberOfLines = 1
         tagLabel.backgroundColor = .clear
+        tagLabel.allowsDefaultTighteningForTruncation = true
+        tagLabel.cell?.usesSingleLineMode = true
+        tagLabel.cell?.lineBreakMode = .byTruncatingTail
     }
 
     private func updateColors() {
