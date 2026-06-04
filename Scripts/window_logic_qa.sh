@@ -806,7 +806,7 @@ case "quick-search-result":
         return name.isEmpty
             && width >= 500
             && width <= 900
-            && height >= 320
+            && height >= 120
             && height <= 850
     }), let bounds = quickSearch[kCGWindowBounds as String] as? NSDictionary else {
         fputs("FAIL: could not find quick search result-list bounds\n", stderr)

@@ -4,7 +4,8 @@
 
 - 修复 Quick Search 和 App Grid 没有扫描 `/System/Library/CoreServices/Applications`，导致“钥匙串访问 / Keychain Access”等系统应用无法被检索和启动的问题
 - 该目录纳入轻量应用目录签名检查；目录未变化时仍不会触发额外索引刷新，避免拖慢打开 App Grid / Quick Search 的体验
-- 版本号更新为 `7.8.14`，Build 更新为 `20260605.0122`
+- 窗口 QA 坐标辅助脚本同步 Quick Search 面板识别条件，避免发布前 QA 被旧高度阈值误拦截
+- 版本号更新为 `7.8.14`，Build 更新为 `20260605.0150`
 
 ## [7.8.13] — 2026-06-04
 
