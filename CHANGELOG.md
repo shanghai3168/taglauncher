@@ -1,5 +1,11 @@
 # TagLauncher Changelog
 
+## [7.8.14] — 2026-06-05
+
+- 修复 Quick Search 和 App Grid 没有扫描 `/System/Library/CoreServices/Applications`，导致“钥匙串访问 / Keychain Access”等系统应用无法被检索和启动的问题
+- 该目录纳入轻量应用目录签名检查；目录未变化时仍不会触发额外索引刷新，避免拖慢打开 App Grid / Quick Search 的体验
+- 版本号更新为 `7.8.14`，Build 更新为 `20260605.0122`
+
 ## [7.8.13] — 2026-06-04
 
 - 修复 App 运行期间新安装应用后，App Grid 和 Quick Search 仍复用旧应用索引、无法立即检索到新应用的问题

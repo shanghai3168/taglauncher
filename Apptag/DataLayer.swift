@@ -109,6 +109,7 @@ enum AppIndexer {
     static let searchPaths: [URL] = [
         URL(fileURLWithPath: "/Applications"),
         URL(fileURLWithPath: "/System/Applications"),
+        URL(fileURLWithPath: "/System/Library/CoreServices/Applications"),
         URL(fileURLWithPath: "/System/Cryptexes/App/System/Applications"),
         URL(fileURLWithPath: "/System/Volumes/Preboot/Cryptexes/App/System/Applications"),
         FileManager.default.homeDirectoryForCurrentUser
@@ -117,6 +118,7 @@ enum AppIndexer {
 
     private static let systemAppPathPrefixes = [
         "/System/Applications/",
+        "/System/Library/CoreServices/Applications/",
         "/System/Cryptexes/App/System/Applications/",
         "/System/Volumes/Preboot/Cryptexes/App/System/Applications/"
     ]
