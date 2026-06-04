@@ -1,5 +1,13 @@
 # TagLauncher Changelog
 
+## [7.8.13] — 2026-06-04
+
+- 修复 App 运行期间新安装应用后，App Grid 和 Quick Search 仍复用旧应用索引、无法立即检索到新应用的问题
+- App Grid / Quick Search 打开时会轻量检查标准应用目录签名；签名未变化时不刷新也不重建界面，只有目录变化时才后台重扫
+- 刷新过程中再次打开 App Grid 或 Quick Search 会合并一个后续刷新请求，避免新安装发生在刷新窗口内被漏掉
+- 窗口 QA 对 Dock 点击打开、App Grid 内打开 Quick Search 和 Quick Search 结果坐标读取增加短重试，避免系统事件或窗口列表瞬时抖动导致误判
+- 版本号更新为 `7.8.13`，Build 更新为 `20260604.1121`
+
 ## [7.8.12] — 2026-06-04
 
 - 修复 Quick Search-only 模式刚打开后可能被过期鼠标关闭事件立即关掉的问题；现在 `Fn + Space` 打开后候选面板会保持稳定，键盘取消和再次按 `Fn + Space` 仍可立即关闭

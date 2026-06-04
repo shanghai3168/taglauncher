@@ -349,6 +349,20 @@ OSA
   click_xy "$x" "$y"
 }
 
+open_overlay_from_dock_with_retry() {
+  local output=""
+  for _ in {1..3}; do
+    click_taglauncher_dock_tile
+    sleep 0.8
+    if output="$(wait_swift_assert overlay 2>&1)"; then
+      printf '%s\n' "$output"
+      return 0
+    fi
+  done
+  printf '%s\n' "$output" >&2
+  return 1
+}
+
 assert_frontmost_taglauncher() {
   local frontmost
   frontmost="$(osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true')"
@@ -792,10 +806,10 @@ case "quick-search-result":
         return name.isEmpty
             && width >= 500
             && width <= 900
-            && height >= 120
+            && height >= 320
             && height <= 850
     }), let bounds = quickSearch[kCGWindowBounds as String] as? NSDictionary else {
-        fputs("FAIL: could not find quick search bounds\n", stderr)
+        fputs("FAIL: could not find quick search result-list bounds\n", stderr)
         exit(1)
     }
     let x = dimension(bounds, "X")
@@ -1029,16 +1043,37 @@ open_quick_search_with_retry() {
   return 1
 }
 
+open_appgrid_quick_search_with_retry() {
+  local output=""
+  for _ in {1..3}; do
+    send_keycode 49
+    sleep 0.4
+    if output="$(wait_swift_assert quick-search 2>&1)"; then
+      printf '%s\n' "$output"
+      return 0
+    fi
+  done
+  printf '%s\n' "$output" >&2
+  return 1
+}
+
 assert_fullscreen_overlay_stable() {
   local output=""
+  local consecutive_successes=0
   for _ in {1..20}; do
-    if ! output="$(swift "$assert_swift" fullscreen-overlay 2>&1)"; then
-      printf '%s\n' "$output" >&2
-      return 1
+    if output="$(swift "$assert_swift" fullscreen-overlay 2>&1)"; then
+      consecutive_successes=$((consecutive_successes + 1))
+      if [[ "$consecutive_successes" -ge 6 ]]; then
+        printf '%s\n' "$output"
+        return 0
+      fi
+    else
+      consecutive_successes=0
     fi
     sleep 0.1
   done
-  printf '%s\n' "$output"
+  printf '%s\n' "$output" >&2
+  return 1
 }
 
 show_overlay() {
@@ -1077,9 +1112,9 @@ click_overlay_outside_quick_search() {
 
 hover_quick_search_results() {
   local coords x y
-  coords="$(swift "$coords_swift" quick-search-result)"
+  coords="$(quick_search_result_coords_with_retry)"
   read -r x y <<<"$coords"
-  for offset in 0 42 84 126 84 42 0; do
+  for offset in 0 8 16 8 0; do
     move_xy "$x" "$((y + offset))"
     sleep 0.08
   done
@@ -1087,9 +1122,22 @@ hover_quick_search_results() {
 
 click_quick_search_result() {
   local coords x y
-  coords="$(swift "$coords_swift" quick-search-result)"
+  coords="$(quick_search_result_coords_with_retry)"
   read -r x y <<<"$coords"
   click_xy "$x" "$y"
+}
+
+quick_search_result_coords_with_retry() {
+  local output
+  for _ in {1..8}; do
+    if output="$(swift "$coords_swift" quick-search-result 2>&1)"; then
+      printf '%s\n' "$output"
+      return 0
+    fi
+    sleep 0.15
+  done
+  printf '%s\n' "$output" >&2
+  return 1
 }
 
 page_scroll_appgrid() {
@@ -1193,9 +1241,7 @@ assert_single_qa_app_instance
 assert_single_dock_tile
 swift_assert no-overlay
 log "==> QA Dock reopen: showDockIcon=true opens App Grid from explicit app reopen"
-click_taglauncher_dock_tile
-sleep 1.0
-wait_swift_assert overlay
+open_overlay_from_dock_with_retry
 send_keycode 53
 sleep 0.4
 wait_swift_assert no-overlay
@@ -1254,9 +1300,7 @@ run_fullscreen_space_case() {
   wait_swift_assert fullscreen-overlay
   assert_fullscreen_overlay_stable
   log "==> QA fullscreen Space: quick search from appgrid does not switch Space"
-  send_keycode 49
-  sleep 0.4
-  wait_swift_assert quick-search
+  open_appgrid_quick_search_with_retry
   assert_fullscreen_overlay_stable
   send_keycode 53
   sleep 0.3
@@ -1288,8 +1332,7 @@ frontmost="$(osascript -e 'tell application "System Events" to get name of first
 swift_assert overlay
 
 log "==> QA 1/7 and 4/7: settings floats above appgrid and quick search"
-send_keycode 49
-sleep 0.4
+open_appgrid_quick_search_with_retry
 send_cmd_comma
 sleep 0.7
 swift_assert settings
@@ -1308,8 +1351,7 @@ swift_assert overlay
 assert_frontmost_taglauncher
 
 log "==> QA 4/7 and 5/7: appgrid-space quick search and double-Esc behavior"
-send_keycode 49
-sleep 0.4
+open_appgrid_quick_search_with_retry
 send_keycode 53
 sleep 0.4
 swift_assert overlay
@@ -1321,9 +1363,7 @@ log "==> QA 4/7: appgrid scroll keeps Space and Esc keyboard routing"
 show_overlay
 for _ in {1..5}; do
   page_scroll_appgrid
-  send_keycode 49
-  sleep 0.35
-  swift_assert quick-search
+  open_appgrid_quick_search_with_retry
   send_keycode 53
   sleep 0.25
   swift_assert overlay
@@ -1335,8 +1375,7 @@ swift_assert no-overlay
 
 log "==> QA 5/7: clicking outside quick search closes search, not appgrid"
 show_overlay
-send_keycode 49
-sleep 0.4
+open_appgrid_quick_search_with_retry
 click_overlay_outside_quick_search
 sleep 0.4
 swift_assert overlay

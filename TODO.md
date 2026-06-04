@@ -23,6 +23,12 @@
 
 ## Done
 
+- [2026-06-04] 修复新安装 App 后 App Grid / Quick Search 不能立即检索到的问题。
+  - 提交: 本次提交
+  - 结果: App Grid / Quick Search 打开时先轻量检查标准应用目录签名；签名未变化时不刷新也不重建界面，目录变化时才后台重扫应用索引。
+  - 范围: 不改搜索匹配规则、不改 App Grid 布局、不改窗口层级策略；只收敛应用索引刷新触发条件和 QA 脚本稳定性。
+  - 验证: 本地 `7.8.13 (20260604.1121)` targeted 输入 `notch` 命中 `TheBoringNotch` 且无“未找到”；`APP_BUILD=20260604.1121 zsh ./build.sh`、签名/版本校验、`Scripts/window_logic_qa.sh` 全部通过。
+
 - [2026-06-04] 修复 Quick Search 刚打开即被过期 dismiss 事件关闭的 QA 失败。
   - 提交: 本次提交
   - 结果: quick-search-only 模式会忽略打开初期的过期鼠标/背板关闭事件；键盘 Esc 和再次按 `Fn + Space` 仍立即关闭；QA 脚本对合成 `Fn + Space` 投递增加重试，并把结果点击坐标修正到首条结果行中心。

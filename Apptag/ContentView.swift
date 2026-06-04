@@ -376,6 +376,7 @@ struct ContentView: View {
     @State private var refreshInProgress = false
     @State private var refreshAgainAfterCurrent = false
     @State private var refreshAgainForceLayout = false
+    @State private var refreshAgainUseCache = true
     @FocusState private var bubbleNoteFocused: Bool
 
     // Quick Search
@@ -532,7 +533,7 @@ struct ContentView: View {
         }
         .onAppear {
             refreshNotchHeight()
-            refreshAppsIfNeeded()
+            refreshAppsForOverlay()
             if let initialQuickSearchSource, !initialQuickSearchConsumed {
                 initialQuickSearchConsumed = true
                 if initialQuickSearchSource == QuickSearchOpenSource.globalHidden {
@@ -545,6 +546,7 @@ struct ContentView: View {
                 }
                 quickSearchOpenedAt = Date()
                 refreshQuickSearchResults()
+                refreshAppsForQuickSearch()
                 NotificationCenter.default.post(
                     name: .tagLauncherQuickSearchVisibilityChanged,
                     object: nil,
@@ -558,7 +560,7 @@ struct ContentView: View {
         .onReceive(NotificationCenter.default.publisher(for: .tagLauncherOverlayDidShow)) { _ in
             resetTransientDragState()
             refreshNotchHeight()
-            refreshAppsIfNeeded()
+            refreshAppsForOverlay()
         }
         .onReceive(NotificationCenter.default.publisher(for: .tagLauncherOverlayDidHide)) { _ in
             resetTransientDragState()
@@ -676,7 +678,7 @@ struct ContentView: View {
                     selectedID: quickSearchSelectedID,
                     focusToken: quickSearchFocusToken,
                     selectionScrollToken: quickSearchSelectionScrollToken,
-                    isLoading: quickSearchDocuments.isEmpty && refreshInProgress,
+                    isLoading: quickSearchShouldShowLoading,
                     maxVisibleRows: quickSearchMaxVisibleRows(in: proxy.size),
                     panelTopY: quickSearchPanelTopY(in: proxy.size),
                     panelHeight: quickSearchPanelContentHeight(in: proxy.size),
@@ -695,7 +697,7 @@ struct ContentView: View {
     }
 
     private func quickSearchPanelContentHeight(in size: CGSize) -> CGFloat {
-        let hasResultList = !(quickSearchDocuments.isEmpty && refreshInProgress)
+        let hasResultList = !quickSearchShouldShowLoading
             && quickSearchErrorMessage == nil
             && !quickSearchResults.isEmpty
         let visibleRows = min(max(1, quickSearchResults.count), quickSearchMaxVisibleRows(in: size))
@@ -735,7 +737,7 @@ struct ContentView: View {
         quickSearchErrorMessage = nil
         quickSearchFocusToken &+= 1
         refreshQuickSearchResults()
-        refreshApps()
+        refreshAppsForQuickSearch()
         NotificationCenter.default.post(
             name: .tagLauncherQuickSearchVisibilityChanged,
             object: nil,
@@ -752,6 +754,10 @@ struct ContentView: View {
             && smartStartNotice == nil
             && !appGridInteraction.dropRefreshVisible
             && !quickSearchVisible
+    }
+
+    private var quickSearchShouldShowLoading: Bool {
+        quickSearchVisible && refreshInProgress && quickSearchResults.isEmpty
     }
 
     private func closeQuickSearch(
@@ -1807,6 +1813,16 @@ struct ContentView: View {
         refreshApps()
     }
 
+    private func refreshAppsForOverlay() {
+        guard AppIndexer.shouldRefreshForSearchPathChanges() else { return }
+        refreshApps()
+    }
+
+    private func refreshAppsForQuickSearch() {
+        guard AppIndexer.shouldRefreshForSearchPathChanges() else { return }
+        refreshApps()
+    }
+
     private func refreshNotchHeight() {
         let mousePoint = NSEvent.mouseLocation
         let activeScreen = NSScreen.screens.first(where: {
@@ -2417,10 +2433,9 @@ struct ContentView: View {
 
     func refreshApps(forceLayoutRefresh: Bool = false, useCache: Bool = true) {
         guard !refreshInProgress else {
-            if forceLayoutRefresh {
-                refreshAgainAfterCurrent = true
-                refreshAgainForceLayout = true
-            }
+            refreshAgainAfterCurrent = true
+            refreshAgainForceLayout = refreshAgainForceLayout || forceLayoutRefresh
+            refreshAgainUseCache = refreshAgainUseCache && useCache
             return
         }
 
@@ -2436,9 +2451,11 @@ struct ContentView: View {
                 refreshInProgress = false
                 if refreshAgainAfterCurrent {
                     let shouldForceLayout = refreshAgainForceLayout
+                    let shouldUseCache = refreshAgainUseCache
                     refreshAgainAfterCurrent = false
                     refreshAgainForceLayout = false
-                    refreshApps(forceLayoutRefresh: shouldForceLayout)
+                    refreshAgainUseCache = true
+                    refreshApps(forceLayoutRefresh: shouldForceLayout, useCache: shouldUseCache)
                 }
             }
         }

@@ -145,6 +145,16 @@ enum AppIndexer {
         scanCacheLock.unlock()
     }
 
+    static func shouldRefreshForSearchPathChanges() -> Bool {
+        scanCacheLock.lock()
+        let hasCachedApps = cachedScanApps != nil
+        let cachedSignature = cachedSearchPathSignature
+        scanCacheLock.unlock()
+
+        guard hasCachedApps else { return true }
+        return cachedSignature != currentSearchPathSignature()
+    }
+
     private static func cachedScanIfFresh(matching searchPathSignature: [SearchPathSignature]) -> [AppInfo]? {
         scanCacheLock.lock()
         defer { scanCacheLock.unlock() }
