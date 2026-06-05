@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TagLauncher — 标签化 Mac 应用启动器</title>
   <meta name="description" content="TagLauncher：用标签管理 Mac 应用，可滚动网格、多标签归类、应用备忘、布局备份。比 Launchpad 更适合应用很多的用户。">
+  <meta property="og:image" content="https://shanghai3168.github.io/taglauncher/assets/screenshot-app-grid.jpg">
   <link rel="stylesheet" href="styles.css">
   <link rel="alternate" hreflang="en" href="index-en.html">
   <link rel="alternate" hreflang="zh-Hans" href="index.html">
@@ -13,7 +14,7 @@
   <header class="site-header">
     <div class="inner">
       <a class="brand" href="index.html">
-        <span class="brand-mark" aria-hidden="true"></span>
+        <img src="assets/app-icon-256.png" width="36" height="36" alt="">
         TagLauncher
       </a>
       <nav aria-label="主导航">
@@ -26,25 +27,61 @@
   </header>
 
   <main class="wrap">
-    <section class="hero">
-      <p class="lang-switch">
-        <a href="index.html" class="active">简体中文</a>
-        <a href="index-en.html">English</a>
-      </p>
-      <h1>比启动台更顺手的 Mac 应用启动器</h1>
-      <p class="lead">
-        用<strong>标签</strong>而不是文件夹整理应用：一屏滚动浏览、同一 App 多个标签、可写用途备忘、布局 JSON 备份恢复。
-        <kbd>Option</kbd>+<kbd>Shift</kbd>+<kbd>Space</kbd> 唤起应用网格。
-      </p>
-      <div class="pill-row">
-        <span class="pill">macOS 15.0+</span>
-        <span class="pill">29 种界面语言</span>
-        <span class="pill">本地数据 · 无账号</span>
-        <span class="pill">Mac App Store 即将上架</span>
+    <section class="hero-stage">
+      <div class="hero-copy">
+        <p class="lang-switch">
+          <a href="index.html" class="active">简体中文</a>
+          <a href="index-en.html">English</a>
+        </p>
+        <h1>比启动台更顺手的 Mac 应用启动器</h1>
+        <p class="lead">
+          用<strong>标签</strong>而不是文件夹整理应用：一屏滚动浏览、同一 App 多个标签、可写用途备忘、布局 JSON 备份恢复。
+          <kbd>Option</kbd>+<kbd>Shift</kbd>+<kbd>Space</kbd> 唤起应用网格。
+        </p>
+        <div class="pill-row">
+          <span class="pill">macOS 15.0+</span>
+          <span class="pill">29 种界面语言</span>
+          <span class="pill">本地数据 · 无账号</span>
+          <span class="pill">Mac App Store 即将上架</span>
+        </div>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="support.html">获取支持与联系</a>
+          <a class="btn btn-secondary" href="privacy-zh.html">隐私政策</a>
+        </div>
       </div>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="support.html">获取支持与联系</a>
-        <a class="btn btn-secondary" href="privacy-zh.html">隐私政策</a>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="icon-float">
+          <img src="assets/app-icon-256.png" width="112" height="112" alt="TagLauncher 图标">
+        </div>
+        <figure class="device-shot shot-back">
+          <img src="assets/screenshot-app-grid.jpg" alt="" loading="lazy">
+        </figure>
+        <figure class="device-shot shot-front">
+          <img src="assets/screenshot-notes.jpg" alt="" loading="lazy">
+        </figure>
+      </div>
+    </section>
+
+    <section class="showcase">
+      <div class="showcase-inner">
+        <img src="assets/screenshot-app-grid.jpg" alt="TagLauncher 应用网格：按彩色标签分组展示已安装应用" width="2880" height="1800" loading="lazy">
+        <div class="showcase-caption">
+          <strong>App Grid</strong>
+          彩色标签 + 可滚动图标网格，一眼浏览大量应用
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="feature-show">
+        <div class="feature-shot">
+          <img src="assets/screenshot-notes.jpg" alt="悬停显示应用名称与用途备忘" loading="lazy">
+        </div>
+        <div class="feature-copy">
+          <h3>给每个 App 写备忘</h3>
+          <p>悬停或编辑用途说明，Quick Search 可搜应用名、标签与备忘。Launchpad 很难做到这一点。</p>
+        </div>
       </div>
     </section>
 
