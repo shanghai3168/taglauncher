@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TagLauncher — Tag-based Mac app launcher</title>
   <meta name="description" content="TagLauncher organizes Mac apps with tags: scrollable grid, multi-tag apps, searchable notes, JSON layout backup—beyond Launchpad folders and pages.">
-  <meta property="og:image" content="https://shanghai3168.github.io/taglauncher/assets/taglauncher-hero-3d-promo-2880x1800.jpg">
+  <meta property="og:image" content="https://shanghai3168.github.io/taglauncher/assets/hero-website-2880x1800.jpg">
   <link rel="stylesheet" href="styles.css">
   <link rel="alternate" hreflang="en" href="index-en.html">
   <link rel="alternate" hreflang="zh-Hans" href="index.html">
 </head>
-<body>
-  <header class="site-header">
+<body class="page-home">
+  <header class="site-header site-header--overlay">
     <div class="inner">
       <a class="brand" href="index-en.html">
         <img src="assets/app-icon-256.png" width="36" height="36" alt="">
@@ -23,66 +23,26 @@
         <a href="privacy.html">Privacy</a>
         <a href="https://github.com/shanghai3168/taglauncher/releases" rel="noopener">Help PDFs</a>
       </nav>
+      <p class="lang-switch lang-switch--header">
+        <a href="index.html">中文</a>
+        <a href="index-en.html" class="active">EN</a>
+      </p>
     </div>
   </header>
 
-  <main class="wrap">
-    <section class="hero-stage">
-      <div class="hero-copy">
-        <p class="lang-switch">
-          <a href="index.html">简体中文</a>
-          <a href="index-en.html" class="active">English</a>
-        </p>
-        <h1>A Mac launcher beyond Launchpad</h1>
-        <p class="lead">
-          Organize apps with <strong>tags</strong>, not folders: one scrollable grid, multiple tags per app, per-app notes, and JSON layout backup.
-          Press <kbd>Option</kbd>+<kbd>Shift</kbd>+<kbd>Space</kbd> to open the App Grid.
-        </p>
-        <div class="pill-row">
-          <span class="pill">macOS 15.0+</span>
-          <span class="pill">29 UI languages</span>
-          <span class="pill">Local data · No account</span>
-          <span class="pill">Mac App Store coming soon</span>
-        </div>
-        <div class="cta-row">
-          <a class="btn btn-primary" href="support.html">Support & contact</a>
-          <a class="btn btn-secondary" href="privacy.html">Privacy policy</a>
-        </div>
-      </div>
+  <section class="hero-full" aria-label="TagLauncher hero">
+    <img
+      class="hero-full__img"
+      src="assets/hero-website-2880x1800.jpg"
+      alt="TagLauncher App Grid"
+      width="2880"
+      height="1800"
+      fetchpriority="high"
+      decoding="async">
+    <p class="hero-full__tagline">Organize Mac apps with tags—not folders</p>
+  </section>
 
-      <figure class="hero-promo-3d" aria-hidden="true">
-        <img
-          src="assets/taglauncher-hero-3d-promo-2880x1800.jpg"
-          alt=""
-          width="2880"
-          height="1800"
-          loading="eager"
-          decoding="async">
-      </figure>
-    </section>
-
-    <section class="showcase">
-      <div class="showcase-inner">
-        <img src="assets/screenshot-app-grid.jpg" alt="TagLauncher App Grid with colorful tag groups" width="2880" height="1800" loading="lazy">
-        <div class="showcase-caption">
-          <strong>App Grid</strong>
-          Colorful tags and a scrollable icon grid for many apps
-        </div>
-      </div>
-    </section>
-
-    <section class="card">
-      <div class="feature-show reverse">
-        <div class="feature-shot">
-          <img src="assets/screenshot-notes.jpg" alt="App name and purpose note bubble on hover" loading="lazy">
-        </div>
-        <div class="feature-copy">
-          <h3>Per-app notes you can search</h3>
-          <p>Hover to see purpose notes, or edit them. Quick Search matches apps, tags, and notes—something Launchpad does not offer.</p>
-        </div>
-      </div>
-    </section>
-
+  <main class="wrap content-below">
     <section class="card">
       <h2>Why not just Launchpad?</h2>
       <table class="compare">
@@ -96,13 +56,13 @@
         <tbody>
           <tr>
             <td><strong>Browse</strong></td>
-            <td>Paged screens—you hunt for the right page</td>
-            <td>Scrollable app grid</td>
+            <td>Pages of icons—hard to scan when you have many apps</td>
+            <td>One scrollable grid</td>
           </tr>
           <tr>
             <td><strong>Organize</strong></td>
             <td>Folders; one app, one folder</td>
-            <td>Tags; same app in Design and Work</td>
+            <td>Multiple tags per app</td>
           </tr>
           <tr>
             <td><strong>Notes</strong></td>
@@ -111,52 +71,49 @@
           </tr>
           <tr>
             <td><strong>Backup</strong></td>
-            <td>Hard to export or restore layout</td>
-            <td>Export / import JSON in Settings</td>
+            <td>Layout is hard to export</td>
+            <td>JSON export / import</td>
           </tr>
         </tbody>
       </table>
     </section>
 
     <section class="card">
-      <h2>Highlights</h2>
+      <h2>Core features</h2>
       <div class="feature-grid">
         <div class="feature">
           <strong>App Grid</strong>
-          Global hotkey overlay; works across displays and fullscreen Spaces.
+          Press <kbd>Option</kbd>+<kbd>Shift</kbd>+<kbd>Space</kbd> for a full-screen-friendly grid.
         </div>
         <div class="feature">
           <strong>Quick Search</strong>
-          Search apps, tags, and notes—<kbd>Space</kbd> or <kbd>Fn</kbd>+<kbd>Space</kbd>.
+          Search app names, tags, and notes.
         </div>
         <div class="feature">
           <strong>Tags</strong>
-          Colors, reorder, drag apps onto tag names, batch edit mode.
+          Custom colors; drag icons onto tag names to categorize.
         </div>
         <div class="feature">
-          <strong>Five list styles</strong>
-          Flat, containers, and aligned grids; tunable icon and tag sizes.
+          <strong>App notes</strong>
+          Remember what each app is for—searchable.
         </div>
         <div class="feature">
-          <strong>Smart Start</strong>
-          Optional suggestions to tag newly installed apps.
+          <strong>Layout backup</strong>
+          Export and import JSON layouts.
         </div>
         <div class="feature">
-          <strong>Privacy-first</strong>
-          Local preferences and index; no analytics or ad SDKs in this build.
+          <strong>Local-first</strong>
+          Data stays on your Mac; no analytics SDK.
         </div>
       </div>
     </section>
 
-    <section class="card">
-      <h2>Quick start</h2>
-      <ol>
-        <li>Install TagLauncher from the Mac App Store (when available).</li>
-        <li>Press <kbd>Option</kbd>+<kbd>Shift</kbd>+<kbd>Space</kbd> for the App Grid.</li>
-        <li>Press <kbd>Space</kbd> in the grid for Quick Search.</li>
-        <li>Export your layout from Settings → Data for backup.</li>
-      </ol>
-      <p>Illustrated help: <a href="https://github.com/shanghai3168/taglauncher/releases" rel="noopener">29 localized PDFs on GitHub Releases</a>.</p>
+    <section class="card card-cta">
+      <p>Mac App Store coming soon · macOS 15.0+ · 29 UI languages</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="support.html">Support & contact</a>
+        <a class="btn btn-secondary" href="privacy.html">Privacy policy</a>
+      </div>
     </section>
   </main>
 
@@ -165,7 +122,6 @@
       <a href="mailto:shanghai3168@gmail.com">shanghai3168@gmail.com</a>
       · <a href="support.html">Support</a>
       · <a href="privacy.html">Privacy</a>
-      · <a href="privacy-zh.html">隐私政策</a>
     </p>
     <p>© 2026 TagLauncher · Hainan Wanxing Technology Co., Ltd.</p>
   </footer>
