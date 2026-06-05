@@ -211,6 +211,28 @@ nav a[aria-current="page"] {
   text-decoration: none;
 }
 
+.hero-promo-3d {
+  margin: 0;
+  border-radius: calc(var(--radius) + 6px);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  background: #0a0b12;
+  transform: perspective(1200px) rotateY(-4deg) rotateX(2deg);
+  transition: transform 0.45s ease;
+}
+
+.hero-promo-3d:hover {
+  transform: perspective(1200px) rotateY(-1deg) rotateX(0deg);
+}
+
+.hero-promo-3d img {
+  display: block;
+  width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
 .hero-visual {
   position: relative;
   min-height: 380px;
