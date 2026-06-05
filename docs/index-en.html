@@ -5,125 +5,158 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TagLauncher — Tag-based Mac app launcher</title>
   <meta name="description" content="TagLauncher organizes Mac apps with tags: scrollable grid, multi-tag apps, searchable notes, JSON layout backup—beyond Launchpad folders and pages.">
-  <meta property="og:image" content="https://shanghai3168.github.io/taglauncher/assets/hero-website-2880x1800.jpg">
+  <meta property="og:image" content="https://shanghai3168.github.io/taglauncher/assets/screenshot-app-grid.jpg">
   <link rel="stylesheet" href="styles.css">
   <link rel="alternate" hreflang="en" href="index-en.html">
   <link rel="alternate" hreflang="zh-Hans" href="index.html">
 </head>
-<body class="page-home">
-  <header class="site-header site-header--overlay">
-    <div class="inner">
+<body>
+  <header class="site-header">
+    <div class="layout site-header__bar">
       <a class="brand" href="index-en.html">
-        <img src="assets/app-icon-256.png" width="36" height="36" alt="">
+        <img src="assets/app-icon-256.png" width="34" height="34" alt="">
         TagLauncher
       </a>
-      <nav aria-label="Main">
+      <nav class="site-nav" aria-label="Main">
         <a href="index-en.html" aria-current="page">Home</a>
         <a href="support.html">Support</a>
         <a href="privacy.html">Privacy</a>
         <a href="https://github.com/shanghai3168/taglauncher/releases" rel="noopener">Help PDFs</a>
       </nav>
-      <p class="lang-switch lang-switch--header">
-        <a href="index.html">中文</a>
-        <a href="index-en.html" class="active">EN</a>
-      </p>
+      <div class="lang-switch" role="navigation" aria-label="Language">
+        <a href="index.html" hreflang="zh-Hans">中文</a>
+        <a href="index-en.html" class="is-active" hreflang="en">EN</a>
+      </div>
     </div>
   </header>
 
-  <section class="hero-full" aria-label="TagLauncher hero">
-    <img
-      class="hero-full__img"
-      src="assets/hero-website-2880x1800.jpg"
-      alt="TagLauncher App Grid"
-      width="2880"
-      height="1800"
-      fetchpriority="high"
-      decoding="async">
-    <p class="hero-full__tagline">Organize Mac apps with tags—not folders</p>
+  <section class="hero" aria-label="Product showcase">
+    <div class="hero__mosaic">
+      <figure class="glass-panel glass-panel--main">
+        <div class="glass-panel__frame">
+          <div class="glass-panel__body">
+            <img src="assets/screenshot-app-grid.jpg" alt="TagLauncher App Grid" width="1024" height="640" fetchpriority="high">
+          </div>
+          <div class="glass-panel__reflection" aria-hidden="true">
+            <img src="assets/screenshot-app-grid.jpg" alt="" width="1024" height="640">
+          </div>
+          <span class="glass-panel__shine" aria-hidden="true"></span>
+        </div>
+      </figure>
+      <figure class="glass-panel glass-panel--tags">
+        <div class="glass-panel__frame">
+          <div class="glass-panel__body">
+            <img src="assets/screenshot-tags.jpg" alt="Colorful tags" width="1400" height="875" loading="lazy">
+          </div>
+          <div class="glass-panel__reflection" aria-hidden="true">
+            <img src="assets/screenshot-tags.jpg" alt="" width="1400" height="875">
+          </div>
+          <span class="glass-panel__shine" aria-hidden="true"></span>
+        </div>
+      </figure>
+      <figure class="glass-panel glass-panel--memo">
+        <div class="glass-panel__frame">
+          <div class="glass-panel__body">
+            <img src="assets/screenshot-notes.jpg" alt="Per-app notes" width="1024" height="640" loading="lazy">
+          </div>
+          <div class="glass-panel__reflection" aria-hidden="true">
+            <img src="assets/screenshot-notes.jpg" alt="" width="1024" height="640">
+          </div>
+          <span class="glass-panel__shine" aria-hidden="true"></span>
+        </div>
+      </figure>
+    </div>
+    <div class="layout">
+      <p class="hero__tagline">Organize Mac apps with tags—not folders</p>
+    </div>
   </section>
 
-  <main class="wrap content-below">
-    <section class="card">
-      <h2>Why not just Launchpad?</h2>
-      <table class="compare">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Launchpad</th>
-            <th>TagLauncher</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Browse</strong></td>
-            <td>Pages of icons—hard to scan when you have many apps</td>
-            <td>One scrollable grid</td>
-          </tr>
-          <tr>
-            <td><strong>Organize</strong></td>
-            <td>Folders; one app, one folder</td>
-            <td>Multiple tags per app</td>
-          </tr>
-          <tr>
-            <td><strong>Notes</strong></td>
-            <td>No per-app purpose notes</td>
-            <td>Searchable app notes</td>
-          </tr>
-          <tr>
-            <td><strong>Backup</strong></td>
-            <td>Layout is hard to export</td>
-            <td>JSON export / import</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+  <main class="page-main">
+    <div class="layout">
+      <section class="card">
+        <h2>Why not just Launchpad?</h2>
+        <table class="compare">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Launchpad</th>
+              <th>TagLauncher</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Browse</strong></td>
+              <td>Pages of icons—hard to scan many apps</td>
+              <td>One scrollable grid</td>
+            </tr>
+            <tr>
+              <td><strong>Organize</strong></td>
+              <td>Folders; one app per folder</td>
+              <td>Multiple tags per app</td>
+            </tr>
+            <tr>
+              <td><strong>Notes</strong></td>
+              <td>No per-app purpose notes</td>
+              <td>Searchable app notes</td>
+            </tr>
+            <tr>
+              <td><strong>Backup</strong></td>
+              <td>Layout hard to export</td>
+              <td>JSON export / import</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
 
-    <section class="card">
-      <h2>Core features</h2>
-      <div class="feature-grid">
-        <div class="feature">
-          <strong>App Grid</strong>
-          Press <kbd>Option</kbd>+<kbd>Shift</kbd>+<kbd>Space</kbd> for a full-screen-friendly grid.
+      <section class="card">
+        <h2>Core features</h2>
+        <div class="feature-grid">
+          <div class="feature">
+            <strong>App Grid</strong>
+            <kbd>Option</kbd>+<kbd>Shift</kbd>+<kbd>Space</kbd> opens the grid.
+          </div>
+          <div class="feature">
+            <strong>Quick Search</strong>
+            Search names, tags, and notes.
+          </div>
+          <div class="feature">
+            <strong>Tags</strong>
+            Custom colors; drag icons onto tags.
+          </div>
+          <div class="feature">
+            <strong>App notes</strong>
+            Remember what each app is for.
+          </div>
+          <div class="feature">
+            <strong>Layout backup</strong>
+            Export and import JSON.
+          </div>
+          <div class="feature">
+            <strong>Local-first</strong>
+            Data stays on your Mac.
+          </div>
         </div>
-        <div class="feature">
-          <strong>Quick Search</strong>
-          Search app names, tags, and notes.
-        </div>
-        <div class="feature">
-          <strong>Tags</strong>
-          Custom colors; drag icons onto tag names to categorize.
-        </div>
-        <div class="feature">
-          <strong>App notes</strong>
-          Remember what each app is for—searchable.
-        </div>
-        <div class="feature">
-          <strong>Layout backup</strong>
-          Export and import JSON layouts.
-        </div>
-        <div class="feature">
-          <strong>Local-first</strong>
-          Data stays on your Mac; no analytics SDK.
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="card card-cta">
-      <p>Mac App Store coming soon · macOS 15.0+ · 29 UI languages</p>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="support.html">Support & contact</a>
-        <a class="btn btn-secondary" href="privacy.html">Privacy policy</a>
-      </div>
-    </section>
+      <section class="card card-cta">
+        <p>Mac App Store coming soon · macOS 15.0+ · 29 UI languages</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="support.html">Support & contact</a>
+          <a class="btn btn-secondary" href="privacy.html">Privacy policy</a>
+        </div>
+      </section>
+    </div>
   </main>
 
-  <footer class="site-footer wrap">
-    <p>
-      <a href="mailto:shanghai3168@gmail.com">shanghai3168@gmail.com</a>
-      · <a href="support.html">Support</a>
-      · <a href="privacy.html">Privacy</a>
-    </p>
-    <p>© 2026 TagLauncher · Hainan Wanxing Technology Co., Ltd. (海南万幸科技有限公司)</p>
+  <footer class="site-footer">
+    <div class="layout">
+      <p>
+        <a href="mailto:shanghai3168@gmail.com">shanghai3168@gmail.com</a>
+        · <a href="support.html">Support</a>
+        · <a href="privacy.html">Privacy</a>
+      </p>
+      <p>© 2026 TagLauncher · Hainan Wanxing Technology Co., Ltd. (海南万幸科技有限公司)</p>
+    </div>
   </footer>
 </body>
 </html>
