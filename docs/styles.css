@@ -141,6 +141,12 @@ a:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
+/* Legacy floating hero icon — must not appear */
+.icon-float,
+.icon-orb {
+  display: none !important;
+}
+
 /* Hero — light studio, glass screenshots + reflection */
 .hero {
   position: relative;
