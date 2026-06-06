@@ -151,12 +151,10 @@ a:hover {
   background: rgba(255, 255, 255, 0.88);
 }
 
-/* Hero — reference layout: copy left, stacked screenshots right */
+/* Hero — copy left, original design visual right (compact, no forced full-screen) */
 .hero {
   width: 100%;
-  min-height: calc(100svh - var(--header-h));
-  min-height: calc(100vh - var(--header-h));
-  padding: 48px 0 64px;
+  padding: 40px 0 48px;
   background: var(--hero-bg);
   overflow: hidden;
 }
@@ -166,8 +164,6 @@ a:hover {
   grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
   gap: 12px 32px;
   align-items: center;
-  min-height: calc(100svh - var(--header-h) - 96px);
-  min-height: calc(100vh - var(--header-h) - 96px);
 }
 
 .hero__copy {
@@ -191,7 +187,7 @@ a:hover {
   max-width: 22em;
 }
 
-/* Right art: pixels from user's original design (vertical crop only — stack + reflection intact) */
+/* Right art: original design pixels — subtle reflection only, capped height */
 .hero__art {
   margin: 0;
   line-height: 0;
@@ -202,9 +198,10 @@ a:hover {
 
 .hero__art img {
   display: block;
-  width: 100%;
+  width: auto;
   max-width: 100%;
   height: auto;
+  max-height: clamp(300px, 42vw, 500px);
 }
 
 /* Main content */
