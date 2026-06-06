@@ -300,12 +300,22 @@ a:hover {
   background: var(--accent);
 }
 
+.views__modes-row {
+  display: flex;
+  align-items: center;
+  gap: 14px 20px;
+  flex-wrap: wrap;
+}
+
+.views__modes-row__label {
+  flex-shrink: 0;
+}
+
 .views__shortcut {
-  margin-top: 32px;
   display: inline-flex;
   flex-direction: column;
   gap: 6px;
-  padding: 14px 20px;
+  padding: 12px 18px;
   border-radius: 14px;
   background: #f5f5f7;
   border: 1px solid var(--border);
