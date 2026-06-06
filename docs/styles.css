@@ -187,7 +187,7 @@ a:hover {
   max-width: 22em;
 }
 
-/* Right art: composited 3D stack from real screenshot (built asset, no extra CSS warp) */
+/* Right art: user-provided hero visual (use as-is) */
 .hero__art {
   margin: 0;
   line-height: 0;
