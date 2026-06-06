@@ -187,7 +187,7 @@ a:hover {
   max-width: 22em;
 }
 
-/* Right art: original design pixels — subtle reflection only, capped height */
+/* Right art: composited 3D stack from real screenshot (built asset, no extra CSS warp) */
 .hero__art {
   margin: 0;
   line-height: 0;
@@ -198,10 +198,9 @@ a:hover {
 
 .hero__art img {
   display: block;
-  width: auto;
+  width: 100%;
   max-width: 100%;
   height: auto;
-  max-height: clamp(300px, 42vw, 500px);
 }
 
 /* Main content */
