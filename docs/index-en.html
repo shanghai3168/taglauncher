@@ -21,7 +21,7 @@
         <a href="index-en.html" aria-current="page">Home</a>
         <a href="support.html">Support</a>
         <a href="privacy.html">Privacy</a>
-        <a href="https://github.com/shanghai3168/taglauncher/releases" rel="noopener">Help PDFs</a>
+        <a href="https://github.com/shanghai3168/taglauncher/releases/download/v7.6.0/Taglauncher-help-en.pdf" rel="noopener" type="application/pdf">Help PDF</a>
       </nav>
       <div class="lang-switch" role="navigation" aria-label="Language">
         <a href="index.html" hreflang="zh-Hans">中文</a>
@@ -49,7 +49,7 @@
     </div>
   </section>
 
-  <section class="views" aria-label="Five view modes">
+  <section class="views" aria-label="Four view modes">
     <div class="layout views__split">
       <div class="views__gallery">
         <figure class="views__shot">
@@ -67,23 +67,24 @@
       </div>
 
       <div class="views__copy">
-        <h2 class="views__headline">Five views—everything on one screen</h2>
+        <h2 class="views__headline">Four views—everything on one screen</h2>
         <p class="views__lead">No more opening folders one by one or flipping through pages. You're just finding an app—it shouldn't feel like a trek.</p>
         <hr class="views__rule" aria-hidden="true">
-        <p class="views__label">5 view modes</p>
-        <ul class="views__modes">
-          <li>Flat</li>
-          <li>Plain containers</li>
-          <li class="views__modes-row">
-            <span class="views__modes-row__label">Colored containers</span>
-            <div class="views__shortcut">
-              <span class="views__shortcut-label">Quick launch</span>
-              <span class="views__shortcut-keys"><kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd></span>
-            </div>
-          </li>
-          <li>Plain grid</li>
-          <li>Colored grid</li>
-        </ul>
+        <div class="views__details">
+          <div class="views__modes-block">
+            <p class="views__label">4 view modes</p>
+            <ul class="views__modes">
+              <li>Flat</li>
+              <li>Plain containers</li>
+              <li>Colored containers</li>
+              <li>Plain grid</li>
+            </ul>
+          </div>
+          <div class="views__shortcut">
+            <span class="views__shortcut-label">Quick launch</span>
+            <span class="views__shortcut-keys"><kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd></span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -115,10 +116,10 @@
     <div class="layout memo__split">
       <figure class="memo__art">
         <img
-          src="assets/app-memo.jpg"
+          src="assets/app-memo.png"
           alt="TagLauncher app memo shown on hover"
-          width="880"
-          height="572"
+          width="1600"
+          height="1040"
           loading="lazy"
           decoding="async">
       </figure>
@@ -144,10 +145,10 @@
 
       <figure class="search__art">
         <img
-          src="assets/quick-search.jpg"
+          src="assets/quick-search.png"
           alt="TagLauncher Quick Search for apps, tags, and memos"
-          width="1024"
-          height="768"
+          width="1809"
+          height="1357"
           loading="lazy"
           decoding="async">
       </figure>
@@ -180,7 +181,10 @@
         <p class="privacy__lead">Data stays on your device—no analytics SDK, no ads. Never needs the network.</p>
 
         <div class="privacy__feature">
-          <h3 class="privacy__feature-title">Privacy matters</h3>
+          <h3 class="privacy__feature-title">
+            <span class="privacy__feature-icon" aria-hidden="true"></span>
+            Privacy matters
+          </h3>
           <p class="privacy__feature-text">TagLauncher never touches your privacy. Every line of code is built for local efficiency.</p>
         </div>
 
@@ -191,8 +195,6 @@
           </h3>
           <p class="privacy__feature-text">No bloated network components—fast launch, zero background footprint.</p>
         </div>
-
-        <p class="privacy__protocol">TagLauncher Security Protocol</p>
       </div>
 
       <figure class="privacy__art">
@@ -218,7 +220,7 @@
         </div>
         <div class="feature">
           <strong>Quick Search</strong>
-          Search names, tags, and notes.
+          <kbd>fn</kbd>+<kbd>Space</kbd> searches names, tags, and notes.
         </div>
         <div class="feature">
           <strong>Tags</strong>
@@ -233,15 +235,15 @@
           Export and import JSON.
         </div>
         <div class="feature">
-          <strong>Local-first</strong>
-          Data stays on your Mac.
+          <strong>Smart tag initialization</strong>
+          Initializes tag sets for 5000+ popular Mac apps, reducing setup from zero.
         </div>
       </div>
 
       <div class="features__cta">
         <p>Mac App Store coming soon · macOS 15.0+ · 29 UI languages</p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="support.html">Support & contact</a>
+          <a class="btn btn-primary" href="support.html">Support &amp; contact</a>
           <a class="btn btn-secondary" href="privacy.html">Privacy policy</a>
         </div>
       </div>
