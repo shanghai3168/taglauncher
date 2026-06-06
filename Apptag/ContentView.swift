@@ -1814,12 +1814,18 @@ struct ContentView: View {
     }
 
     private func refreshAppsForOverlay() {
-        guard AppIndexer.shouldRefreshForSearchPathChanges() else { return }
+        // Each overlay show creates a fresh ContentView with empty `allApps`. The indexer
+        // cache may still be warm from a prior overlay/settings scan, so path-signature
+        // alone must not skip the first hydrate or the grid spinner never clears.
+        guard allApps.isEmpty || AppIndexer.shouldRefreshForSearchPathChanges() else { return }
         refreshApps()
     }
 
     private func refreshAppsForQuickSearch() {
-        guard AppIndexer.shouldRefreshForSearchPathChanges() else { return }
+        guard allApps.isEmpty
+            || quickSearchDocuments.isEmpty
+            || AppIndexer.shouldRefreshForSearchPathChanges()
+        else { return }
         refreshApps()
     }
 

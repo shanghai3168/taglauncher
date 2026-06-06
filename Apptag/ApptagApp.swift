@@ -210,6 +210,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         setupLaunchAtLogin()
         suppressReopenUntil = Date().addingTimeInterval(1.0)
         configureApplicationMenuWhenAvailable(retries: 200)
+        warmAppIndexInBackground()
+    }
+
+    /// Pre-scan application folders so the first App Grid open can hydrate from cache quickly.
+    private func warmAppIndexInBackground() {
+        DispatchQueue.global(qos: .utility).async {
+            _ = AppIndexer.scan(useCache: true)
+        }
     }
 
     func applicationDidBecomeActive(_ notification: Notification) {

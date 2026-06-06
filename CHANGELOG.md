@@ -1,5 +1,11 @@
 # TagLauncher Changelog
 
+## [7.8.15] — 2026-06-05
+
+- 修复 App Grid 再次打开时可能一直转圈、无法显示应用图标的问题：overlay 每次新建 `ContentView` 时，即使应用索引缓存仍有效也会先 hydrate 界面数据
+- 应用启动后在后台预热应用索引，减轻首次打开 App Grid 的等待时间
+- 版本号更新为 `7.8.15`，Build 更新为 `20260605.2337`（2332 为同版本首次构建）
+
 ## [7.8.14] — 2026-06-05
 
 - 修复 Quick Search 和 App Grid 没有扫描 `/System/Library/CoreServices/Applications`，导致“钥匙串访问 / Keychain Access”等系统应用无法被检索和启动的问题
