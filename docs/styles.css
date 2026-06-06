@@ -12,7 +12,7 @@
   --radius: 16px;
   --shadow: 0 20px 50px rgba(30, 45, 90, 0.12);
   --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "PingFang SC", "Segoe UI", sans-serif;
-  --hero-bg: linear-gradient(135deg, #ffffff 0%, #f7faff 54%, #f6f2ff 100%);
+  --hero-bg: #ffffff;
   --section-blue: linear-gradient(180deg, #ffffff 0%, #f6f9ff 100%);
   --section-lilac: linear-gradient(135deg, #fbfcff 0%, #ffffff 44%, #f8f5ff 100%);
   --section-mint: linear-gradient(135deg, #ffffff 0%, #f7fbff 52%, #f3fbf7 100%);
@@ -34,6 +34,10 @@ body {
   -webkit-font-smoothing: antialiased;
   background: linear-gradient(180deg, #fbfcff 0%, #f4f7ff 38%, #f5fbf8 72%, #fbfcff 100%);
   min-height: 100vh;
+}
+
+.page-home {
+  background: #ffffff;
 }
 
 a {
@@ -151,7 +155,7 @@ a:hover {
 }
 
 .page-home .site-header {
-  background: rgba(255, 255, 255, 0.86);
+  background: #ffffff;
 }
 
 /* Hero — copy left, original design visual right (compact, no forced full-screen) */
