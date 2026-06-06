@@ -8,8 +8,8 @@
 - Bundle ID: com.taglauncher.app
 - Minimum macOS: 15.0
 - Generated at: 2026-06-05 23:41:00 HKT
-- Branch: codex/fix-quick-search-focus-routing
-- Source commit: ed43ee83789cb99b1cb95db340fee939dd0dedec
+- Branch: codex/recover-7.8.15-grok-fix
+- Source commit: 6dea81ebd24bcdb3c62ff8d2251a2670cb8b64c5
 - Release tag: v7.8.15-build20260605.2337
 
 ## Artifact
