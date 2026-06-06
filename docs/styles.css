@@ -206,6 +206,122 @@ a:hover {
   border: 0;
 }
 
+/* Second screen — 5 view modes */
+.views {
+  padding: 56px 0 64px;
+  background: #ffffff;
+}
+
+.views__split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  gap: 28px 48px;
+  align-items: center;
+}
+
+.views__gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 500px;
+  justify-self: start;
+}
+
+.views__shot {
+  margin: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  line-height: 0;
+  background: #f5f5f7;
+  box-shadow: 0 10px 28px rgba(30, 45, 90, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.views__shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.views__headline {
+  margin: 0;
+  font-size: clamp(1.85rem, 3.8vw, 2.7rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.12;
+  color: #000;
+}
+
+.views__lead {
+  margin: 22px 0 0;
+  font-size: clamp(0.98rem, 1.55vw, 1.1rem);
+  line-height: 1.75;
+  color: #6e6e73;
+  max-width: 26em;
+}
+
+.views__rule {
+  margin: 30px 0 22px;
+  border: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(99, 102, 241, 0.5), rgba(99, 102, 241, 0.06));
+}
+
+.views__label {
+  margin: 0 0 16px;
+  font-size: 0.94rem;
+  color: #86868b;
+}
+
+.views__modes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.views__modes li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 1.04rem;
+  font-weight: 500;
+  color: #1d1d1f;
+}
+
+.views__modes li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.58em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.views__shortcut {
+  margin-top: 32px;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 20px;
+  border-radius: 14px;
+  background: #f5f5f7;
+  border: 1px solid var(--border);
+}
+
+.views__shortcut-label {
+  font-size: 0.8rem;
+  color: #86868b;
+}
+
+.views__shortcut-keys {
+  font-size: 1.02rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+}
+
 /* Main content */
 .page-main {
   padding: 56px 0 72px;
@@ -375,6 +491,20 @@ kbd {
 
   .hero__art {
     justify-content: center;
+  }
+
+  .views__split {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .views__gallery {
+    max-width: 100%;
+    justify-self: center;
+  }
+
+  .views__copy {
+    max-width: 36em;
   }
 }
 
