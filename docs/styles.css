@@ -163,8 +163,8 @@ a:hover {
 
 .hero__split {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  gap: 20px 48px;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: 12px 32px;
   align-items: center;
   min-height: calc(100svh - var(--header-h) - 96px);
   min-height: calc(100vh - var(--header-h) - 96px);
@@ -191,31 +191,20 @@ a:hover {
   max-width: 22em;
 }
 
-.hero__visual {
-  position: relative;
-  min-height: 420px;
+/* Right art: pixels from user's original design (vertical crop only — stack + reflection intact) */
+.hero__art {
+  margin: 0;
+  line-height: 0;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 
-.hero__stack-stage {
-  position: relative;
-  width: 100%;
-  max-width: 620px;
-  margin-left: auto;
-  padding: 12px 0 28px;
-  perspective: 1600px;
-  perspective-origin: 35% 45%;
-}
-
-.hero__stack-img {
+.hero__art img {
   display: block;
   width: 100%;
+  max-width: 100%;
   height: auto;
-  transform: rotateY(-11deg) rotateX(4deg) translateZ(0);
-  transform-origin: 40% 50%;
-  filter: drop-shadow(0 28px 48px rgba(30, 45, 90, 0.14));
 }
 
 /* Main content */
@@ -385,13 +374,8 @@ kbd {
     gap: 32px;
   }
 
-  .hero__stack-stage {
-    max-width: 100%;
-    margin-left: 0;
-  }
-
-  .hero__stack-img {
-    transform: rotateY(-7deg) rotateX(3deg);
+  .hero__art {
+    justify-content: center;
   }
 }
 
