@@ -11,6 +11,6 @@ Public resources for [TagLauncher](https://shanghai3168.github.io/taglauncher/) 
 
 ## Help PDFs
 
-Localized help manuals are attached to [GitHub Releases](https://github.com/shanghai3168/taglauncher/releases) (e.g. `v7.6.0`). The Mac app opens these URLs from Preferences → About.
+Localized help manuals are attached to [GitHub Releases](https://github.com/shanghai3168/taglauncher/releases) . The Mac app opens these URLs from Preferences → About.
 
 Application source code is not published in this repository.
