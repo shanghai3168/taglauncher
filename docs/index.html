@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TagLauncher — 标签化 Mac 应用启动器</title>
   <meta name="description" content="TagLauncher：用标签管理 Mac 应用，可滚动网格、多标签归类、应用备忘、布局备份。比 Launchpad 更适合应用很多的用户。">
-  <meta property="og:image" content="https://shanghai3168.github.io/taglauncher/assets/screenshot-app-grid.jpg">
+  <meta property="og:image" content="https://shanghai3168.github.io/taglauncher/assets/hero-shot-grid.jpg">
   <link rel="stylesheet" href="styles.css">
   <link rel="alternate" hreflang="en" href="index-en.html">
   <link rel="alternate" hreflang="zh-Hans" href="index.html">
 </head>
-<body>
+<body class="page-home">
   <header class="site-header">
     <div class="layout site-header__bar">
       <a class="brand" href="index.html">
@@ -30,44 +30,39 @@
     </div>
   </header>
 
-  <section class="hero" aria-label="产品展示">
-    <div class="hero__mosaic">
-      <figure class="glass-panel glass-panel--main">
-        <div class="glass-panel__frame">
-          <div class="glass-panel__body">
-            <img src="assets/screenshot-app-grid.jpg" alt="TagLauncher 应用网格" width="1024" height="640" fetchpriority="high">
-          </div>
-          <div class="glass-panel__reflection" aria-hidden="true">
-            <img src="assets/screenshot-app-grid.jpg" alt="" width="1024" height="640">
-          </div>
-          <span class="glass-panel__shine" aria-hidden="true"></span>
+  <section class="hero" aria-label="TagLauncher 宣传主图">
+    <div class="layout hero__split">
+      <div class="hero__copy">
+        <h1 class="hero__headline">在全球，这可能是Mac最好用的应用启动台</h1>
+        <p class="hero__lead">不用怀念 macOS 26 Tahoe 上消失的 Launchpad（启动台），因为它一直都不好用，从来就没好用过</p>
+      </div>
+
+      <div class="hero__visual" aria-hidden="true">
+        <div class="hero__stack">
+          <figure class="hero-shot hero-shot--back">
+            <div class="hero-shot__chrome">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="hero-shot__screen">
+              <img src="assets/hero-shot-memo.jpg" alt="" width="1600" height="1040" loading="lazy" decoding="async">
+            </div>
+            <div class="hero-shot__reflection">
+              <img src="assets/hero-shot-memo.jpg" alt="" width="1600" height="1040">
+            </div>
+          </figure>
+          <figure class="hero-shot hero-shot--front">
+            <div class="hero-shot__chrome">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="hero-shot__screen">
+              <img src="assets/hero-shot-grid.jpg" alt="TagLauncher 应用网格界面" width="1600" height="1040" fetchpriority="high" decoding="async">
+            </div>
+            <div class="hero-shot__reflection">
+              <img src="assets/hero-shot-grid.jpg" alt="" width="1600" height="1040">
+            </div>
+          </figure>
         </div>
-      </figure>
-      <figure class="glass-panel glass-panel--tags">
-        <div class="glass-panel__frame">
-          <div class="glass-panel__body">
-            <img src="assets/screenshot-tags.jpg" alt="彩色标签与分类" width="1400" height="875" loading="lazy">
-          </div>
-          <div class="glass-panel__reflection" aria-hidden="true">
-            <img src="assets/screenshot-tags.jpg" alt="" width="1400" height="875">
-          </div>
-          <span class="glass-panel__shine" aria-hidden="true"></span>
-        </div>
-      </figure>
-      <figure class="glass-panel glass-panel--memo">
-        <div class="glass-panel__frame">
-          <div class="glass-panel__body">
-            <img src="assets/screenshot-notes.jpg" alt="应用用途备忘" width="1024" height="640" loading="lazy">
-          </div>
-          <div class="glass-panel__reflection" aria-hidden="true">
-            <img src="assets/screenshot-notes.jpg" alt="" width="1024" height="640">
-          </div>
-          <span class="glass-panel__shine" aria-hidden="true"></span>
-        </div>
-      </figure>
-    </div>
-    <div class="layout">
-      <p class="hero__tagline">用标签，而不是文件夹，整理你的 Mac 应用</p>
+      </div>
     </div>
   </section>
 

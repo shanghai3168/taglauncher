@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TagLauncher — Tag-based Mac app launcher</title>
   <meta name="description" content="TagLauncher organizes Mac apps with tags: scrollable grid, multi-tag apps, searchable notes, JSON layout backup—beyond Launchpad folders and pages.">
-  <meta property="og:image" content="https://shanghai3168.github.io/taglauncher/assets/screenshot-app-grid.jpg">
+  <meta property="og:image" content="https://shanghai3168.github.io/taglauncher/assets/hero-shot-grid.jpg">
   <link rel="stylesheet" href="styles.css">
   <link rel="alternate" hreflang="en" href="index-en.html">
   <link rel="alternate" hreflang="zh-Hans" href="index.html">
 </head>
-<body>
+<body class="page-home">
   <header class="site-header">
     <div class="layout site-header__bar">
       <a class="brand" href="index-en.html">
@@ -30,44 +30,39 @@
     </div>
   </header>
 
-  <section class="hero" aria-label="Product showcase">
-    <div class="hero__mosaic">
-      <figure class="glass-panel glass-panel--main">
-        <div class="glass-panel__frame">
-          <div class="glass-panel__body">
-            <img src="assets/screenshot-app-grid.jpg" alt="TagLauncher App Grid" width="1024" height="640" fetchpriority="high">
-          </div>
-          <div class="glass-panel__reflection" aria-hidden="true">
-            <img src="assets/screenshot-app-grid.jpg" alt="" width="1024" height="640">
-          </div>
-          <span class="glass-panel__shine" aria-hidden="true"></span>
+  <section class="hero" aria-label="TagLauncher hero">
+    <div class="layout hero__split">
+      <div class="hero__copy">
+        <h1 class="hero__headline">Possibly the best Mac app launcher—anywhere</h1>
+        <p class="hero__lead">Don't mourn Launchpad on macOS 26 Tahoe. It was never great—and it still isn't.</p>
+      </div>
+
+      <div class="hero__visual" aria-hidden="true">
+        <div class="hero__stack">
+          <figure class="hero-shot hero-shot--back">
+            <div class="hero-shot__chrome">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="hero-shot__screen">
+              <img src="assets/hero-shot-memo.jpg" alt="" width="1600" height="1040" loading="lazy" decoding="async">
+            </div>
+            <div class="hero-shot__reflection">
+              <img src="assets/hero-shot-memo.jpg" alt="" width="1600" height="1040">
+            </div>
+          </figure>
+          <figure class="hero-shot hero-shot--front">
+            <div class="hero-shot__chrome">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="hero-shot__screen">
+              <img src="assets/hero-shot-grid.jpg" alt="TagLauncher App Grid" width="1600" height="1040" fetchpriority="high" decoding="async">
+            </div>
+            <div class="hero-shot__reflection">
+              <img src="assets/hero-shot-grid.jpg" alt="" width="1600" height="1040">
+            </div>
+          </figure>
         </div>
-      </figure>
-      <figure class="glass-panel glass-panel--tags">
-        <div class="glass-panel__frame">
-          <div class="glass-panel__body">
-            <img src="assets/screenshot-tags.jpg" alt="Colorful tags" width="1400" height="875" loading="lazy">
-          </div>
-          <div class="glass-panel__reflection" aria-hidden="true">
-            <img src="assets/screenshot-tags.jpg" alt="" width="1400" height="875">
-          </div>
-          <span class="glass-panel__shine" aria-hidden="true"></span>
-        </div>
-      </figure>
-      <figure class="glass-panel glass-panel--memo">
-        <div class="glass-panel__frame">
-          <div class="glass-panel__body">
-            <img src="assets/screenshot-notes.jpg" alt="Per-app notes" width="1024" height="640" loading="lazy">
-          </div>
-          <div class="glass-panel__reflection" aria-hidden="true">
-            <img src="assets/screenshot-notes.jpg" alt="" width="1024" height="640">
-          </div>
-          <span class="glass-panel__shine" aria-hidden="true"></span>
-        </div>
-      </figure>
-    </div>
-    <div class="layout">
-      <p class="hero__tagline">Organize Mac apps with tags—not folders</p>
+      </div>
     </div>
   </section>
 
