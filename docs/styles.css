@@ -695,58 +695,26 @@ a:hover {
   filter: drop-shadow(0 18px 36px rgba(60, 80, 140, 0.16));
 }
 
-/* Main content */
-.page-main {
+/* Features + CTA — full-width white band */
+.features {
   padding: 56px 0 72px;
+  background: #ffffff;
 }
 
-.card {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 28px 32px;
-  margin-bottom: 22px;
-}
-
-.card h2 {
-  margin: 0 0 14px;
+.features__headline {
+  margin: 0 0 24px;
   font-size: 1.3rem;
   letter-spacing: -0.02em;
 }
 
-.card-cta {
+.features__cta {
+  margin-top: 40px;
   text-align: center;
 }
 
-.card-cta p {
+.features__cta p {
   margin: 0 0 16px;
   color: var(--muted);
-}
-
-.compare {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.95rem;
-}
-
-.compare th,
-.compare td {
-  text-align: left;
-  padding: 11px 12px;
-  border-bottom: 1px solid var(--border);
-  vertical-align: top;
-}
-
-.compare th {
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--muted);
-}
-
-.compare tr:last-child td {
-  border-bottom: none;
 }
 
 .feature-grid {
