@@ -37,27 +37,24 @@
         <p class="hero__lead">Don't mourn Launchpad on macOS 26 Tahoe. It was never great—and it still isn't.</p>
       </div>
 
-      <div class="hero__visual" aria-hidden="true">
+      <div class="hero__visual">
         <div class="hero__stack">
-          <figure class="hero-shot hero-shot--back">
-            <div class="hero-shot__chrome">
+          <div class="hero-stack-layer hero-stack-layer--far" aria-hidden="true">
+            <div class="hero-stack-layer__chrome"><span></span><span></span><span></span></div>
+            <div class="hero-stack-layer__body"></div>
+          </div>
+          <div class="hero-stack-layer hero-stack-layer--near" aria-hidden="true">
+            <div class="hero-stack-layer__chrome"><span></span><span></span><span></span></div>
+            <div class="hero-stack-layer__body"></div>
+          </div>
+          <figure class="hero-window">
+            <div class="hero-window__chrome">
               <span></span><span></span><span></span>
             </div>
-            <div class="hero-shot__screen">
-              <img src="assets/hero-shot-memo.jpg" alt="" width="1600" height="1040" loading="lazy" decoding="async">
-            </div>
-            <div class="hero-shot__reflection">
-              <img src="assets/hero-shot-memo.jpg" alt="" width="1600" height="1040">
-            </div>
-          </figure>
-          <figure class="hero-shot hero-shot--front">
-            <div class="hero-shot__chrome">
-              <span></span><span></span><span></span>
-            </div>
-            <div class="hero-shot__screen">
+            <div class="hero-window__screen">
               <img src="assets/hero-shot-grid.jpg" alt="TagLauncher App Grid" width="1600" height="1040" fetchpriority="high" decoding="async">
             </div>
-            <div class="hero-shot__reflection">
+            <div class="hero-window__reflection" aria-hidden="true">
               <img src="assets/hero-shot-grid.jpg" alt="" width="1600" height="1040">
             </div>
           </figure>
