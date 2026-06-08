@@ -24,25 +24,25 @@ SKU：`taglauncher-macos`
 
 ## 1. App Information / App 信息
 
-| 字段 | 中文填写 | English fill |
-| --- | --- | --- |
-| Name / 名称 | `TagLauncher` | `TagLauncher` |
-| Subtitle / 副标题 | `标签化应用启动器` | `Tag-based app launcher` |
-| Bundle ID | `com.taglauncher.app` | `com.taglauncher.app` |
-| SKU | `taglauncher-macos` | `taglauncher-macos` |
-| Primary Category / 主分类 | `Utilities / 工具` | `Utilities` |
-| Secondary Category / 副分类 | `Productivity / 效率` | `Productivity` |
-| Minimum macOS / 最低系统 | `macOS 15.0` | `macOS 15.0` |
-| Copyright / 版权 | `© 2026 Hainan Wanxing Technology Co., Ltd.` | `© 2026 Hainan Wanxing Technology Co., Ltd.` |
+| 字段                       | 中文填写                                         | English fill                                 |
+| ------------------------ | -------------------------------------------- | -------------------------------------------- |
+| Name / 名称                | `TagLauncher`                                | `TagLauncher`                                |
+| Subtitle / 副标题           | `标签化应用启动器`                                   | `Tag-based app launcher`                     |
+| Bundle ID                | `com.taglauncher.app`                        | `com.taglauncher.app`                        |
+| SKU                      | `taglauncher-macos`                          | `taglauncher-macos`                          |
+| Primary Category / 主分类   | `Utilities / 工具`                             | `Utilities`                                  |
+| Secondary Category / 副分类 | `Productivity / 效率`                          | `Productivity`                               |
+| Minimum macOS / 最低系统     | `macOS 15.0`                                 | `macOS 15.0`                                 |
+| Copyright / 版权           | `© 2026 Hainan Wanxing Technology Co., Ltd.` | `© 2026 Hainan Wanxing Technology Co., Ltd.` |
 
 ## 2. URLs / 链接
 
-| 字段 | 中文填写 | English fill |
-| --- | --- | --- |
-| Marketing URL / 营销网址 | `https://shanghai3168.github.io/taglauncher/index.html` | `https://shanghai3168.github.io/taglauncher/index-en.html` |
-| Support URL / 支持网址 | `https://shanghai3168.github.io/taglauncher/support.html` | `https://shanghai3168.github.io/taglauncher/support.html` |
-| Privacy Policy URL / 隐私政策网址 | `https://shanghai3168.github.io/taglauncher/privacy-zh.html` | `https://shanghai3168.github.io/taglauncher/privacy.html` |
-| Help PDF / 帮助 PDF | `https://github.com/shanghai3168/taglauncher/releases/download/v7.6.0/Taglauncher-help-zh.pdf` | `https://github.com/shanghai3168/taglauncher/releases/download/v7.6.0/Taglauncher-help-en.pdf` |
+| 字段                          | 中文填写                                                                                           | English fill                                                                                   |
+| --------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Marketing URL / 营销网址        | `https://shanghai3168.github.io/taglauncher/index.html`                                        | `https://shanghai3168.github.io/taglauncher/index-en.html`                                     |
+| Support URL / 支持网址          | `https://shanghai3168.github.io/taglauncher/support.html`                                      | `https://shanghai3168.github.io/taglauncher/support.html`                                      |
+| Privacy Policy URL / 隐私政策网址 | `https://shanghai3168.github.io/taglauncher/privacy-zh.html`                                   | `https://shanghai3168.github.io/taglauncher/privacy.html`                                      |
+| Help PDF / 帮助 PDF           | `https://github.com/shanghai3168/taglauncher/releases/download/v7.6.0/Taglauncher-help-zh.pdf` | `https://github.com/shanghai3168/taglauncher/releases/download/v7.6.0/Taglauncher-help-en.pdf` |
 
 说明：
 
@@ -51,10 +51,10 @@ SKU：`taglauncher-macos`
 
 ## 3. Version Information / 版本信息
 
-| 字段 | 中文填写 | English fill |
-| --- | --- | --- |
-| Version / 版本号 | `7.8.15` | `7.8.15` |
-| Build / 构建号 | `20260605.2337` | `20260605.2337` |
+| 字段                      | 中文填写                                        | English fill                                                                                      |
+| ----------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Version / 版本号           | `7.8.15`                                    | `7.8.15`                                                                                          |
+| Build / 构建号             | `20260605.2337`                             | `20260605.2337`                                                                                   |
 | Promotional Text / 推广文字 | `用标签整理 Mac 应用，用快捷键和 Quick Search 更快找到目标应用。` | `Organize Mac apps by tag and launch them faster with a keyboard-friendly grid and Quick Search.` |
 
 ## 4. Description / 描述
@@ -91,10 +91,10 @@ Highlights:
 
 ## 5. Keywords / 关键词
 
-| Locale / 语言 | Keywords / 关键词 |
-| --- | --- |
-| Chinese (Simplified) | `启动器,标签,应用,效率,搜索,工具,Mac` |
-| English (U.S.) | `launcher,tags,apps,productivity,quick search,utility,mac` |
+| Locale / 语言          | Keywords / 关键词                                             |
+| -------------------- | ---------------------------------------------------------- |
+| Chinese (Simplified) | `启动器,标签,应用,效率,搜索,工具,Mac`                                   |
+| English (U.S.)       | `launcher,tags,apps,productivity,quick search,utility,mac` |
 
 ## 6. What's New / 此版本新增内容
 
@@ -136,13 +136,13 @@ Highlights:
 
 推荐填法：
 
-| App Store Connect 问题 | 推荐选择 |
-| --- | --- |
+| App Store Connect 问题                 | 推荐选择                                 |
+| ------------------------------------ | ------------------------------------ |
 | Does this app collect data? / 是否收集数据 | `No, this app does not collect data` |
-| Tracking / 是否追踪用户 | `No` |
-| Analytics / 是否分析 | `No` |
-| Ads / 是否广告 | `No` |
-| Data linked to user / 是否关联用户数据 | `No` |
+| Tracking / 是否追踪用户                    | `No`                                 |
+| Analytics / 是否分析                     | `No`                                 |
+| Ads / 是否广告                           | `No`                                 |
+| Data linked to user / 是否关联用户数据       | `No`                                 |
 
 可用于说明的文字：
 
@@ -160,17 +160,17 @@ TagLauncher does not collect personal data, does not include ads, and does not u
 
 建议逐项选择：
 
-| 内容项 | 推荐选择 |
-| --- | --- |
-| Cartoon or Fantasy Violence | `None` |
-| Realistic Violence | `None` |
-| Sexual Content or Nudity | `None` |
-| Profanity or Crude Humor | `None` |
-| Alcohol, Tobacco, Drug Use | `None` |
+| 内容项                              | 推荐选择   |
+| -------------------------------- | ------ |
+| Cartoon or Fantasy Violence      | `None` |
+| Realistic Violence               | `None` |
+| Sexual Content or Nudity         | `None` |
+| Profanity or Crude Humor         | `None` |
+| Alcohol, Tobacco, Drug Use       | `None` |
 | Medical or Treatment Information | `None` |
-| Gambling | `None` |
-| User-Generated Content | `No` |
-| Unrestricted Web Access | `No` |
+| Gambling                         | `None` |
+| User-Generated Content           | `No`   |
+| Unrestricted Web Access          | `No`   |
 
 ## 10. Content Rights / 第三方内容版权
 
@@ -196,22 +196,22 @@ TagLauncher reads and displays the names and icons of apps installed on the user
 
 需要你确认：
 
-| 字段 | 建议 |
-| --- | --- |
-| Price / 价格 | 如果第一版先低摩擦获客，建议设为 `Free`；如果要直接商业化，需要你定价格档位。 |
-| Availability / 上架地区 | 建议先选择 `All countries or regions`，除非你有明确不想发布的地区。 |
-| App Store Distribution Method | `Public - Available on the App Store` |
-| License Agreement | 使用 Apple 标准许可协议，除非你要自定义 EULA。 |
+| 字段                            | 建议                                              |
+| ----------------------------- | ----------------------------------------------- |
+| Price / 价格                    | 如果第一版先低摩擦获客，建议设为 `Free`；如果要直接商业化，需要你定价格档位。      |
+| Availability / 上架地区           | 建议先选择 `All countries or regions`，除非你有明确不想发布的地区。 |
+| App Store Distribution Method | `Public - Available on the App Store`           |
+| License Agreement             | 使用 Apple 标准许可协议，除非你要自定义 EULA。                   |
 
 ## 12. App Review Information / 审核信息
 
-| 字段 | 填写 |
-| --- | --- |
-| Contact first name / 联系人名 | 用你的 App Store Connect 账号联系人 |
-| Contact last name / 联系人姓 | 用你的 App Store Connect 账号联系人 |
-| Phone / 电话 | 用你的开发者账号联系电话 |
-| Email / 邮箱 | `shanghai3168@gmail.com` |
-| Demo account required / 是否需要演示账号 | `No` |
+| 字段                               | 填写                          |
+| -------------------------------- | --------------------------- |
+| Contact first name / 联系人名        | 用你的 App Store Connect 账号联系人 |
+| Contact last name / 联系人姓         | 用你的 App Store Connect 账号联系人 |
+| Phone / 电话                       | 用你的开发者账号联系电话                |
+| Email / 邮箱                       | `shanghai3168@gmail.com`    |
+| Demo account required / 是否需要演示账号 | `No`                        |
 
 ### Review Notes / 审核备注
 
@@ -259,10 +259,10 @@ TagLauncher 是一款 macOS 工具，用于把已安装应用整理成可视化�
 
 上传 `.pkg` 并等待 Processing 完成后，在版本页面选择：
 
-| 字段 | 值 |
-| --- | --- |
-| Version | `7.8.15` |
-| Build | `20260605.2337` |
+| 字段        | 值                     |
+| --------- | --------------------- |
+| Version   | `7.8.15`              |
+| Build     | `20260605.2337`       |
 | Bundle ID | `com.taglauncher.app` |
 
 不要选择旧 build：
@@ -274,8 +274,8 @@ TagLauncher 是一款 macOS 工具，用于把已安装应用整理成可视化�
 
 推荐选择：
 
-| 问题 | 推荐 |
-| --- | --- |
+| 问题                                     | 推荐                               |
+| -------------------------------------- | -------------------------------- |
 | Does your app use encryption? / 是否使用加密 | `No`，前提是 App 没有自带加密功能，也没有网络加密逻辑。 |
 
 说明：
@@ -287,8 +287,8 @@ TagLauncher 是一款 macOS 工具，用于把已安装应用整理成可视化�
 
 推荐：
 
-| 字段 | 推荐 |
-| --- | --- |
+| 字段              | 推荐                              |
+| --------------- | ------------------------------- |
 | Version Release | `Manually release this version` |
 
 理由：
@@ -308,3 +308,4 @@ TagLauncher 是一款 macOS 工具，用于把已安装应用整理成可视化�
 - [ ] 选择 build `20260605.2337`。
 - [ ] 审核备注包含 Option-Shift-Space 和 Quick Search 的测试路径。
 - [ ] 版本发布方式选手动发布。
+

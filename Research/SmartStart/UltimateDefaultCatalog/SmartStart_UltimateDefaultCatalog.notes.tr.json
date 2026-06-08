@@ -46,10 +46,6 @@
       "note": "Birden fazla kod barındırma platformu oturum açma işlemine uygun Git kimlik bilg"
     },
     {
-      "entryID": "com-apple-finder-2de1d8bbb107",
-      "note": "MacOS sistemi, ilgili sistem yönetimini veya günlük işlemleri tamamlamaya uygun"
-    },
-    {
       "entryID": "com-mitchellh-ghostty-5194f8485e90",
       "note": "Komut satırı, derleme, hata ayıklama veya proje yönetimi için geliştirici araçla"
     },
@@ -72,10 +68,6 @@
     {
       "entryID": "1password-cli-85e1ca6fa403",
       "note": "Parolaları, doğrulama kodlarını ve erişim anahtarlarını yönetmek için hesap güve"
-    },
-    {
-      "entryID": "com-apple-safari-b2041c4573f8",
-      "note": "Apple'ın resmi tarayıcısı, güç tasarrufu, gizlilik ve ekolojik bağlantı onun güç"
     },
     {
       "entryID": "com-anthropic-claudefordesktop-b2f723339fad",
@@ -102,10 +94,6 @@
       "note": "Eksiksiz bir eklenti ekosistemine sahip hafif ama güçlü bir kod düzenleyici"
     },
     {
-      "entryID": "com-apple-mail-9c1e969ca734",
-      "note": "Sistem posta istemcisi, birden fazla posta kutusu merkezi olarak işlenebilir"
-    },
-    {
       "entryID": "md-obsidian-9f1625d466f0",
       "note": "İkinci beyninizin uzun vadeli birikimine uygun yerel Markdown bilgi tabanı"
     },
@@ -128,10 +116,6 @@
     {
       "entryID": "com-tencent-meeting-5bd65448f293",
       "note": "Tencent konferansına giriş, Çin ofisi ve uzaktan işbirliği çok yaygındır"
-    },
-    {
-      "entryID": "com-apple-mobilesms-a7066fed8087",
-      "note": "iMessage ve SMS portalı, Mac'te mesajları daha hızlı yanıtlayın"
     },
     {
       "entryID": "com-mojang-minecraftlauncher-606072fb1e80",
@@ -174,10 +158,6 @@
       "note": "Android resmi IDE'si, Android Uygulamalarını geliştirmek ve hata ayıklamak için"
     },
     {
-      "entryID": "com-apple-facetime-96f99030aef8",
-      "note": "Apple ekosistemine sesli ve görüntülü çağrı girişi"
-    },
-    {
       "entryID": "maccy-0c7236cb0f2d",
       "note": "Pano geçmişi aracı, kopyalanan içerik istenildiği zaman alınabilir"
     },
@@ -190,10 +170,6 @@
       "note": "Akışlı müzik çalar, hem iş hem de dinlenme için bir şarkınız olabilir"
     },
     {
-      "entryID": "com-apple-ical-8e998503177c",
-      "note": "Programı kafanızdan çıkarın ve zamana görsel bir harita verin"
-    },
-    {
       "entryID": "blackhole-2ch-0b7c58e0297a",
       "note": "Ekran kaydı, canlı yayın ve ses yönlendirmeye uygun sanal ses sürücüsü"
     },
@@ -204,10 +180,6 @@
     {
       "entryID": "com-electron-lark-6559e48147f2",
       "note": "Çin ekibinin sohbetlerinin, belgelerinin ve toplantılarının bulunduğu Feishu işb"
-    },
-    {
-      "entryID": "com-apple-notes-aaf1d7cf1c90",
-      "note": "The fastest system memo, text, pictures and lists can all be collected"
     },
     {
       "entryID": "com-electron-ollama-25be0e7340d2",
@@ -238,10 +210,6 @@
       "note": "Kod yazmak, okumak ve sürdürmek için programlama geliştirme araçları"
     },
     {
-      "entryID": "com-apple-reminders-92a9335b31bb",
-      "note": "Küçük günlük görevleri yakalamak için uygun yapılacaklar ve hatırlatıcılar"
-    },
-    {
       "entryID": "com-openai-chat-7c12a7107aad",
       "note": "Yapay zeka asistanını masaüstünüze koyun ve parmaklarınızın ucunda yazın, çalışı"
     },
@@ -260,10 +228,6 @@
     {
       "entryID": "com-kingsoft-wpsoffice-mac-c371eb320d54",
       "note": "Belgeleri, elektronik tabloları ve sunumları düzenlemek için ofis paketi"
-    },
-    {
-      "entryID": "com-apple-photos-9678510fed1e",
-      "note": "Sistemin fotoğraf kitaplığı, fotoğrafları yönetmek, düzenlemek ve senkronize etm"
     },
     {
       "entryID": "adobe-acrobat-reader-fb99f7bea88f",
@@ -290,14 +254,6 @@
       "note": "İnternette günlük gezinmek ve web hizmetlerine erişmek için uygun web tarayıcısı"
     },
     {
-      "entryID": "com-apple-music-63ea41e016ea",
-      "note": "Yerel ve akışlı müzik çalar"
-    },
-    {
-      "entryID": "com-apple-terminal-77aba1385326",
-      "note": "Komut satırı girişi, Mac'in gizli kokpiti"
-    },
-    {
       "entryID": "utm-f2a3e184ea9f",
       "note": "Sistem ortamlarını çalıştırmak ve uzak bilgisayarlara erişmek için uygun sanalla"
     },
@@ -310,260 +266,12 @@
       "note": "Şarkı dinlemek, çalma listelerini yönetmek ve Tencent Müzik hizmetlerini kullanm"
     },
     {
-      "entryID": "com-apple-activitymonitor-1ca0c04d6757",
-      "note": "Kimin güç ve bellek tükettiğini ve bilgisayarınızı yavaşlattığını görmek için Ma"
-    },
-    {
-      "entryID": "com-apple-airport-airportutility-85b3849d7d98",
-      "note": "AirPort'ları ve Time Capsul'leri yönetmek için eski tarz ağ oluşturma araçları"
-    },
-    {
-      "entryID": "com-apple-appstore-0619ceddf32a",
-      "note": "Resmi Mac yazılım mağazası; uygulamaları, güncellemeleri ve abonelikleri bulmak"
-    },
-    {
-      "entryID": "com-apple-apps-launcher-c27c2e6c3e15",
-      "note": "Uygulamaları sistem düzeyinde hızla açmanıza yardımcı olacak hafif bir uygulama"
-    },
-    {
-      "entryID": "com-apple-audio-audiomidisetup-8327be183cc9",
-      "note": "Müzisyenler ve hata ayıklayıcılar tarafından yaygın olarak kullanılan ses ekipma"
-    },
-    {
-      "entryID": "com-apple-automator-3134734f076f",
-      "note": "Kod yazmadan bir dizi Mac otomasyon eylemini bir araya getirebilirsiniz"
-    },
-    {
-      "entryID": "com-apple-bluetoothfileexchange-a83f24bdfabc",
-      "note": "Dosya göndermek ve almak için Bluetooth'u kullanmak eski modadır ancak sizi krit"
-    },
-    {
-      "entryID": "com-apple-ibooksx-61d0b1b4ae4c",
-      "note": "Mac'inizi masaya dönüştürmeye uygun, e-kitapları okumak ve yönetmek için bir gir"
-    },
-    {
-      "entryID": "com-apple-bootcampassistant-e4ab0159032f",
-      "note": "Windows'u Intel Mac'e yüklemek için resmi kılavuz"
-    },
-    {
-      "entryID": "com-apple-calculator-390516777a37",
-      "note": "Küçük hesap makinesi, birim dönüştürme ve programcı modu da içeride gizlidir"
-    },
-    {
-      "entryID": "com-apple-chess-8ccbf1801854",
-      "note": "Sistem, balık tutmayı internette gezinmekten daha şık hale getiren satrançla bir"
-    },
-    {
-      "entryID": "com-apple-clock-f922597106e9",
-      "note": "Alarmlar, zamanlayıcılar, kronometreler ve dünya saatleri için birleşik bir port"
-    },
-    {
       "entryID": "cmux-3a661d84a58c",
       "note": "Medya meta verilerini düzenlemek, dosyaları adlandırmak veya kapsüllemek için id"
     },
     {
-      "entryID": "com-apple-colorsyncutility-68af0cd69154",
-      "note": "Renk profillerini görüntüleyin ve onarın, ekran ve yazdırma renk farklılıklarını"
-    },
-    {
-      "entryID": "com-apple-console-5e449417a9e8",
-      "note": "Sistem günlüklerini görüntüleme penceresi, anormallikleri giderirken çok kullanı"
-    },
-    {
-      "entryID": "com-apple-addressbook-0b4e2b893a86",
-      "note": "Mail, Mesajlar ve FaceTime için Kişiler merkezi"
-    },
-    {
-      "entryID": "com-apple-dictionary-4625013af142",
-      "note": "Çevrimdışı sözlük ve eş anlamlılar sözlüğü, kelimeleri yazarken ve ararken taray"
-    },
-    {
-      "entryID": "com-apple-digitalcolormeter-fb99a6aa0c0b",
-      "note": "Ekran rengi seçici, tasarımcıların renkleri geçici olarak seçmesine yönelik küçü"
-    },
-    {
-      "entryID": "com-apple-diskutility-48d48cee3d46",
-      "note": "Disk, bölüm, format ve ilk yardım, bunlarla uğraşmayın ama önemli"
-    },
-    {
-      "entryID": "com-apple-findmy-f15882533adf",
-      "note": "Ekipman bulun, öğeleri bulun ve kayıp Mac'inize eve dönmeniz için ipuçları verin"
-    },
-    {
-      "entryID": "com-apple-fontbook-83009f0e620e",
-      "note": "Yazı tipi kurulum ve yönetim merkezi, tasarlamadan önce yazı tiplerini yönetin"
-    },
-    {
-      "entryID": "com-apple-freeform-c79ff8861497",
-      "note": "Beyin fırtınası, eskiz ve rastgele fikirler için sınırsız beyaz tahta"
-    },
-    {
-      "entryID": "com-apple-games-18b06d160812",
-      "note": "Oynanabilir Apple Arcade içeriğini merkezi olarak yönetmek için Apple oyun porta"
-    },
-    {
-      "entryID": "com-apple-grapher-dde725719597",
-      "note": "Grafik denklemleri, matematiksel görselleştirme için gizli bir araç"
-    },
-    {
-      "entryID": "com-apple-home-339f72ecc4b8",
-      "note": "Akıllı ev kontrol girişi aydınlatmayı, klimayı ve diğer ekipmanları yönetebilir"
-    },
-    {
-      "entryID": "com-apple-image-capture-8de5b7375bed",
-      "note": "Resimleri kameradan veya tarayıcıdan içe aktarın; basit ama kararlı"
-    },
-    {
-      "entryID": "com-apple-generativeplaygroundapp-05897f8dbe4c",
-      "note": "Hızlı yaratıcı taslaklar oluşturmak için mükemmel olan Apple zekasıyla görüntüle"
-    },
-    {
-      "entryID": "com-apple-imovieapp-00a9c7493d26",
-      "note": "Giriş seviyesi video düzenleme, ev videoları ve hafif kısa filmler için yeterlid"
-    },
-    {
-      "entryID": "com-apple-screencontinuity-867a48a76333",
-      "note": "iPhone'unuzu doğrudan Mac'iniz üzerinde çalıştırarak telefonunuza bir kez ulaşma"
-    },
-    {
-      "entryID": "com-apple-journal-29ceb46d5ff5",
-      "note": "Günlük parçaları kaydedin ve düşüncelerinizi yavaş yavaş kişisel bir zaman çizel"
-    },
-    {
-      "entryID": "com-apple-iwork-keynote-e86356f31ec2",
-      "note": "Güzel slaytlar oluşturmak kolay, Apple tarzı sunum aracı"
-    },
-    {
       "entryID": "com-riotgames-leagueoflegends-ee692e90efde",
       "note": "League of Legends istemcisi, klasik takım yarışması oyunlarına giriş"
-    },
-    {
-      "entryID": "com-apple-magnifier-c9044527cd0d",
-      "note": "Görüş ve ince incelemeye yardımcı olmak için ekran ayrıntılarını büyütün"
-    },
-    {
-      "entryID": "com-apple-maps-310ca6c69cea",
-      "note": "Rotaları kontrol edin, şehirleri görüntüleyin ve varış noktalarını iPhone'a akta"
-    },
-    {
-      "entryID": "com-apple-migrateassistant-5f03ff480fe8",
-      "note": "Yeni bir Mac'e geçerken eski verileri yeni makineye taşıyın"
-    },
-    {
-      "entryID": "com-apple-exposelauncher-62e07c598f71",
-      "note": "Pencerenin ve masaüstünün havadan görünümü, eğer dağınıksa bir bakın"
-    },
-    {
-      "entryID": "com-apple-news-7614a9b54b68",
-      "note": "Seçilen medya içeriğini görüntülemek için uygun Apple News portalı"
-    },
-    {
-      "entryID": "com-apple-iwork-numbers-361a6aaf7056",
-      "note": "Apple E-Tablolar aracı, hafif raporlar Excel'den daha yenileyicidir"
-    },
-    {
-      "entryID": "com-apple-iwork-pages-d6f13bb4e29c",
-      "note": "Apple kelime işlemcisi, belge yazmak ve dizgi yapmak için güzel"
-    },
-    {
-      "entryID": "com-apple-passwords-08719cef9f02",
-      "note": "Sistem şifre yöneticisi, hesapların, doğrulama kodlarının ve geçiş anahtarlarını"
-    },
-    {
-      "entryID": "com-apple-mobilephone-5739fb6f2a60",
-      "note": "Telefonunuzla Mac'te arama yapın"
-    },
-    {
-      "entryID": "com-apple-photobooth-9d976a9cdfcd",
-      "note": "Kamera özçekimleri ve küçük özel efektler de kamerayı test etmek için uygundur"
-    },
-    {
-      "entryID": "com-apple-podcasts-4a2a186dcc8f",
-      "note": "İşe gidip gelirken ve ders çalışırken yararlı olan podcast'leri dinlemeye yöneli"
-    },
-    {
-      "entryID": "com-apple-preview-9ef385a7e445",
-      "note": "En az beğenilen Mac aracı: Resimleri görüntüleyin, PDF'lere açıklama ekleyin ve"
-    },
-    {
-      "entryID": "com-apple-printcenter-5a8f324fe84d",
-      "note": "Yazdırma kuyruklarını görüntüleyin ve yönetin. Kağıt sıkışması görevleri için ön"
-    },
-    {
-      "entryID": "com-apple-quicktimeplayerx-f2aee71b906d",
-      "note": "Ekranı oynatabilen, kaydedebilen ve ses kaydedebilen köklü bir araç"
-    },
-    {
-      "entryID": "com-apple-screensharing-3d1e02ff893a",
-      "note": "İnsanların bilgisayarlarını onarmalarına yardımcı olmak için çok kullanışlı olan"
-    },
-    {
-      "entryID": "com-apple-screenshot-launcher-f3c7a7a2c583",
-      "note": "Shift-Command-5'in arkasında ekran görüntüsü ve ekran kayıt portalı"
-    },
-    {
-      "entryID": "com-apple-scripteditor2-f8a19fe3d1d8",
-      "note": "Eski tarz Mac otomasyonunu kontrol etmek için AppleScript yazın ve çalıştırın"
-    },
-    {
-      "entryID": "com-apple-sfsymbols-9dc6c630daed",
-      "note": "Apple'ın yerel arayüzler için gerekli olan resmi sembol kütüphanesi"
-    },
-    {
-      "entryID": "com-apple-shortcuts-f629e5e3e216",
-      "note": "Birden fazla eylemi tek tıklatma süreçlerine sığdırmak, Automator'ın modern vers"
-    },
-    {
-      "entryID": "com-apple-siri-launcher-77250557ebe9",
-      "note": "Sesli asistan girişi, bilgileri kontrol edebilir, uygulamaları açabilir ve siste"
-    },
-    {
-      "entryID": "com-apple-stickies-9ed4ed5e1103",
-      "note": "Masaüstü yapışkan notlar, geçici notlar hemen önünüze gönderilir"
-    },
-    {
-      "entryID": "com-apple-stocks-6a1a80292efe",
-      "note": "Hisse senetleri ve piyasa dinamikleri için küçük panellere bakın"
-    },
-    {
-      "entryID": "com-apple-systemprofiler-fdfe3344179e",
-      "note": "En doğru yapılandırmayı bulmak için donanım, yazılım ve cihaz ayrıntılarını görü"
-    },
-    {
-      "entryID": "com-apple-systempreferences-5632452dbd3d",
-      "note": "Mac ayarları ana girişi, neredeyse tüm sistem anahtarları burada"
-    },
-    {
-      "entryID": "com-apple-textedit-64d314fbf2b9",
-      "note": "En basit metin editörü, TXT ve RTF'yi çok hızlı açar"
-    },
-    {
-      "entryID": "com-apple-backup-launcher-918b22a1257e",
-      "note": "Sistem yedekleme aracı, pişmanlığa önceden ilaç hazırlamak için ona güvenin"
-    },
-    {
-      "entryID": "com-apple-helpviewer-6e90a07b56cc",
-      "note": "Apple'ın kullanmadığınız özellikleri zaman zaman keşfetmenize yönelik resmi ipuç"
-    },
-    {
-      "entryID": "com-apple-tv-28f9f8e2e47b",
-      "note": "Film ve televizyon içeriği oynatma ve yönetimi girişi"
-    },
-    {
-      "entryID": "com-apple-voicememos-f4eb9f35a1b8",
-      "note": "Önce toplantı ilhamlarını ve röportaj malzemelerini hızla kaydedin ve saklayın"
-    },
-    {
-      "entryID": "com-apple-voiceoverutility-9623fe74d030",
-      "note": "Mac'inizin görme engelli kullanıcılar için daha erişilebilir olmasını sağlamak i"
-    },
-    {
-      "entryID": "com-apple-weather-a1b814774719",
-      "note": "Hava tahmini portalı, daha fazla istikrar için dışarı çıkmadan önce kontrol edin"
-    },
-    {
-      "entryID": "com-apple-dt-xcode-66da3f910767",
-      "note": "Apple, iOS ve macOS uygulamaları yazmak için ana savaş alanı olan FamilyMart'ı g"
     },
     {
       "entryID": "com-github-githubclient-c94dd11b1995",
@@ -874,10 +582,6 @@
       "note": "Ekran görüntüsü almak, açıklama eklemek, metni tanımak veya görsel geri bildirim"
     },
     {
-      "entryID": "com-apple-garageband10-af435df6c94a",
-      "note": "Apple'ın kayıt ve düzenleme için kullanımı kolay giriş seviyesi müzik prodüksiyo"
-    },
-    {
       "entryID": "com-microsoft-excel-2ff4add4000d",
       "note": "Tablolar ve veri analizi, finans, operasyonlar ve modeller konusunda tecrübeli b"
     },
@@ -914,10 +618,6 @@
       "note": "MacOS için geliştirilmiş hafif bir kod düzenleyici"
     },
     {
-      "entryID": "com-apple-finalcut-6383fea0b510",
-      "note": "Apple'ın profesyonel video düzenleme aracı, kesme, renklendirme ve dışa aktarma"
-    },
-    {
       "entryID": "github-copilot-for-xcode-60555f2d4d11",
       "note": "Kodlama, hata ayıklama ve otomasyona uygun yapay zekayı geliştirme sürecine dahi"
     },
@@ -932,10 +632,6 @@
     {
       "entryID": "finetune-5431832269e6",
       "note": "Ses içeriğini düzenlemek, yazıya dökmek veya optimize etmek için uygun yapay zek"
-    },
-    {
-      "entryID": "com-apple-logic10-69f8eefc0ddf",
-      "note": "Apple'ın kaydetme, düzenleme ve mikslemede güçlü profesyonel müzik prodüksiyon a"
     },
     {
       "entryID": "com-getdropbox-dropbox-72c7db8f1763",
@@ -968,10 +664,6 @@
     {
       "entryID": "font-jetbrains-mono-nerd-font-4a662d68a338",
       "note": "Editörler, terminaller veya tasarım çalışmaları için yazı tiplerini desteklemeye"
-    },
-    {
-      "entryID": "com-apple-testflight-cfe027705d73",
-      "note": "Beta uygulamaları yüklemek ve deneyimlemek için uygun Apple uygulama test aracı"
     },
     {
       "entryID": "claude-code-latest-ba2522b660cf",

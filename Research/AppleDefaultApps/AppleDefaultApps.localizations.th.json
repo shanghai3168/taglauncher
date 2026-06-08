@@ -1,0 +1,453 @@
+{
+  "resourceFormatVersion": 1,
+  "catalogContentVersion": 1,
+  "language": "th",
+  "localizationsVersion": 2,
+  "entries": [
+    {
+      "bundleIdentifier": "com.apple.finder",
+      "displayName": "Finder",
+      "note": "ระบบ macOS มาพร้อมกับเครื่องมือที่เหมาะสำหรับการจัดการระบบที่เกี่ยวข้องห"
+    },
+    {
+      "bundleIdentifier": "com.apple.Safari",
+      "displayName": "Safari",
+      "note": "เบราว์เซอร์อย่างเป็นทางการของ Apple การประหยัดพลังงาน ความเป็นส่วนตัว"
+    },
+    {
+      "bundleIdentifier": "com.apple.mail",
+      "displayName": "เมล",
+      "note": "โปรแกรมรับส่งเมลระบบ กล่องจดหมายหลายกล่องสามารถประมวลผลจากส่วนกลางได้"
+    },
+    {
+      "bundleIdentifier": "com.apple.MobileSMS",
+      "displayName": "ข้อความ",
+      "note": "พอร์ทัล iMessage และ SMS ตอบกลับข้อความเร็วขึ้นบน Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.FaceTime",
+      "displayName": "FaceTime",
+      "note": "การเข้าใช้การโทรด้วยเสียงและวิดีโอในระบบนิเวศของ Apple"
+    },
+    {
+      "bundleIdentifier": "com.apple.iCal",
+      "displayName": "ปฏิทิน",
+      "note": "ไม่ต้องมีตารางงานและให้เวลาเป็นภาพแผนที่"
+    },
+    {
+      "bundleIdentifier": "com.apple.Notes",
+      "displayName": "โน้ต",
+      "note": "สามารถรวบรวมบันทึก ข้อความ รูปภาพ และรายการของระบบที่เร็วที่สุดทั้งหมด"
+    },
+    {
+      "bundleIdentifier": "com.apple.reminders",
+      "displayName": "เตือนความจำ",
+      "note": "สิ่งที่ต้องทำและการเตือนความจำ เหมาะสำหรับจับงานเล็กๆ น้อยๆ ในแต่ละวัน"
+    },
+    {
+      "bundleIdentifier": "com.apple.Photos",
+      "displayName": "รูปภาพ",
+      "note": "ไลบรารีรูปภาพของระบบ ทางเข้าหลักในการจัดการ แก้ไข และซิงโครไนซ์รูปภาพ"
+    },
+    {
+      "bundleIdentifier": "com.apple.Music",
+      "displayName": "เพลง",
+      "note": "เครื่องเล่นเพลงท้องถิ่นและสตรีมมิ่ง"
+    },
+    {
+      "bundleIdentifier": "com.apple.Terminal",
+      "displayName": "เทอร์มินัล",
+      "note": "รายการบรรทัดคำสั่ง ห้องนักบินที่ซ่อนอยู่ของ Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.ActivityMonitor",
+      "displayName": "ตัวตรวจสอบกิจกรรม",
+      "note": "แดชบอร์ดของ Mac เพื่อดูว่าใครใช้พลังงาน หน่วยความจำ"
+    },
+    {
+      "bundleIdentifier": "com.apple.airport.airportutility",
+      "displayName": "ยูทิลิตี้ AirPort",
+      "note": "เครื่องมือระบบเครือข่ายแบบเก่าสำหรับจัดการ AirPort และ Time Capsules"
+    },
+    {
+      "bundleIdentifier": "com.apple.AppStore",
+      "displayName": "App Store",
+      "note": "ร้านซอฟต์แวร์ Mac อย่างเป็นทางการ เริ่มต้นที่นี่เพื่อค้นหาแอพ อัปเดต"
+    },
+    {
+      "bundleIdentifier": "com.apple.apps.launcher",
+      "displayName": "แอป",
+      "note": "พอร์ทัลแอปพลิเคชันขนาดเล็กที่จะช่วยให้คุณเปิดแอปจากระดับระบบได้อย่างรวดเร็ว"
+    },
+    {
+      "bundleIdentifier": "com.apple.audio.audiomidisetup",
+      "displayName": "การตั้งค่าเสียง MIDI",
+      "note": "อุปกรณ์เครื่องเสียงและการกำหนดเส้นทาง MIDI"
+    },
+    {
+      "bundleIdentifier": "com.apple.automator",
+      "displayName": "Automator",
+      "note": "คุณสามารถรวมสตริงการทำงานอัตโนมัติของ Mac เข้าด้วยกันได้โดยไม่ต้องเขียนโค้ด"
+    },
+    {
+      "bundleIdentifier": "com.apple.bluetoothfileexchange",
+      "displayName": "การแลกเปลี่ยนไฟล์ผ่านบลูทูธ",
+      "note": "การใช้ Bluetooth เพื่อส่งและรับไฟล์นั้นล้าสมัย"
+    },
+    {
+      "bundleIdentifier": "com.apple.iBooksX",
+      "displayName": "หนังสือ",
+      "note": "จุดเริ่มต้นสำหรับการอ่านและจัดการ eBook เหมาะสำหรับเปลี่ยน Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.bootcampassistant",
+      "displayName": "ผู้ช่วย Boot Camp",
+      "note": "คู่มืออย่างเป็นทางการในการติดตั้ง Windows บน Intel Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.calculator",
+      "displayName": "เครื่องคิดเลข",
+      "note": "เครื่องคิดเลขขนาดเล็ก การแปลงหน่วย และโหมดโปรแกรมเมอร์ก็ซ่อนอยู่ภายในเช่นกัน"
+    },
+    {
+      "bundleIdentifier": "com.apple.chess",
+      "displayName": "หมากรุก",
+      "note": "หมากรุกในระบบสำหรับพักสั้นๆ และฝึกเล่น"
+    },
+    {
+      "bundleIdentifier": "com.apple.clock",
+      "displayName": "นาฬิกา",
+      "note": "พอร์ทัลรวมสำหรับนาฬิกาปลุก ตัวจับเวลา นาฬิกาจับเวลา และนาฬิกาโลก"
+    },
+    {
+      "bundleIdentifier": "com.apple.colorsyncutility",
+      "displayName": "ยูทิลิตี้ ColorSync",
+      "note": "ดูและซ่อมแซมโปรไฟล์สี จัดการการแสดงผลและการพิมพ์ความแตกต่างของสี"
+    },
+    {
+      "bundleIdentifier": "com.apple.console",
+      "displayName": "จอคอนโซล",
+      "note": "หน้าต่างสำหรับดูบันทึกของระบบมีประโยชน์มากเมื่อแก้ไขปัญหาความผิดปกติ"
+    },
+    {
+      "bundleIdentifier": "com.apple.addressbook",
+      "displayName": "รายชื่อ",
+      "note": "ศูนย์กลางรายชื่อสำหรับเมล ข้อความ และ FaceTime"
+    },
+    {
+      "bundleIdentifier": "com.apple.dictionary",
+      "displayName": "พจนานุกรม",
+      "note": "พจนานุกรมและอรรถาภิธานออฟไลน์"
+    },
+    {
+      "bundleIdentifier": "com.apple.digitalcolormeter",
+      "displayName": "มิเตอร์สีดิจิทัล",
+      "note": "ตัวเลือกสีหน้าจอ สิ่งเล็กๆ สำหรับนักออกแบบในการเลือกสีชั่วคราว"
+    },
+    {
+      "bundleIdentifier": "com.apple.DiskUtility",
+      "displayName": "ยูทิลิตี้ดิสก์",
+      "note": "ดิสก์ พาร์ติชัน ฟอร์แมต และการปฐมพยาบาล อย่าไปยุ่งกับมันแต่มันสำคัญ"
+    },
+    {
+      "bundleIdentifier": "com.apple.findmy",
+      "displayName": "ค้นหาของฉัน",
+      "note": "ค้นหาอุปกรณ์ ค้นหาสิ่งของ และแจ้งเบาะแส Mac ที่สูญหายเพื่อกลับบ้าน"
+    },
+    {
+      "bundleIdentifier": "com.apple.fontbook",
+      "displayName": "สมุดแบบอักษร",
+      "note": "ศูนย์ติดตั้งและจัดการฟอนต์ จัดการฟอนต์ก่อนออกแบบ"
+    },
+    {
+      "bundleIdentifier": "com.apple.freeform",
+      "displayName": "Freeform",
+      "note": "ไวท์บอร์ดไม่จำกัดสำหรับการระดมความคิด สเก็ตช์ภาพ และไอเดียแบบสุ่ม"
+    },
+    {
+      "bundleIdentifier": "com.apple.games",
+      "displayName": "เกม",
+      "note": "พอร์ทัลเกมของ Apple เพื่อจัดการเนื้อหา Apple Arcade"
+    },
+    {
+      "bundleIdentifier": "com.apple.grapher",
+      "displayName": "Grapher",
+      "note": "สมการกราฟ เครื่องมือที่ซ่อนอยู่สำหรับการแสดงภาพทางคณิตศาสตร์"
+    },
+    {
+      "bundleIdentifier": "com.apple.home",
+      "displayName": "บ้าน",
+      "note": "ทางเข้าระบบควบคุมบ้านอัจฉริยะสามารถจัดการระบบแสงสว่าง เครื่องปรับอากาศ"
+    },
+    {
+      "bundleIdentifier": "com.apple.image_capture",
+      "displayName": "ตัวจับภาพ",
+      "note": "นำเข้ารูปภาพจากกล้องหรือสแกนเนอร์ เรียบง่ายแต่มีเสถียรภาพ"
+    },
+    {
+      "bundleIdentifier": "com.apple.generativeplaygroundapp",
+      "displayName": "Playground",
+      "note": "สร้างภาพด้วยความชาญฉลาดของ Apple"
+    },
+    {
+      "bundleIdentifier": "com.apple.iMovieApp",
+      "displayName": "iMovie",
+      "note": "เพียงพอสำหรับการตัดต่อวิดีโอระดับเริ่มต้น โฮมวิดีโอ และหนังสั้นขนาดเบา"
+    },
+    {
+      "bundleIdentifier": "com.apple.screencontinuity",
+      "displayName": "สะท้อนหน้าจอ iPhone",
+      "note": "ใช้งาน iPhone ของคุณโดยตรงบน Mac ของคุณ"
+    },
+    {
+      "bundleIdentifier": "com.apple.journal",
+      "displayName": "บันทึก",
+      "note": "บันทึกเรื่องราวในแต่ละวันและค่อยๆ เปลี่ยนความคิดของคุณให้เป็นไทม์ไลน์ส่วนตัว"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Keynote",
+      "displayName": "Keynote",
+      "note": "เครื่องมือนำเสนอสไตล์ Apple สร้างสไลด์สวยๆ ได้ง่ายๆ"
+    },
+    {
+      "bundleIdentifier": "com.apple.magnifier",
+      "displayName": "แว่นขยาย",
+      "note": "ขยายรายละเอียดหน้าจอเพื่อช่วยในการมองเห็นและการตรวจสอบอย่างละเอียด"
+    },
+    {
+      "bundleIdentifier": "com.apple.Maps",
+      "displayName": "แผนที่",
+      "note": "ตรวจสอบเส้นทาง ดูเมือง และพุชจุดหมายปลายทางไปยัง iPhone"
+    },
+    {
+      "bundleIdentifier": "com.apple.migrateassistant",
+      "displayName": "ผู้ช่วยการโยกย้าย",
+      "note": "เมื่อย้ายไปยัง Mac เครื่องใหม่ ให้ย้ายข้อมูลเก่าไปยังเครื่องใหม่"
+    },
+    {
+      "bundleIdentifier": "com.apple.exposelauncher",
+      "displayName": "Mission Control",
+      "note": "มุมมองทางอากาศของหน้าต่างและเดสก์ท็อป เพียงแค่ดูว่ามีความยุ่งเหยิงหรือไม่"
+    },
+    {
+      "bundleIdentifier": "com.apple.news",
+      "displayName": "News",
+      "note": "พอร์ทัล Apple News เหมาะสำหรับการดูเนื้อหาสื่อที่เลือก"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Numbers",
+      "displayName": "Numbers",
+      "note": "เครื่องมือ Apple Sheets รายงานแบบน้ำหนักเบามีความสดชื่นมากกว่า Excel"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Pages",
+      "displayName": "Pages",
+      "note": "โปรแกรมประมวลผลคำของ Apple สวยงามสำหรับการเขียนเอกสารและการเรียงพิมพ์"
+    },
+    {
+      "bundleIdentifier": "com.apple.passwords",
+      "displayName": "รหัสผ่าน",
+      "note": "ผู้จัดการรหัสผ่านระบบ การจัดการบัญชีแบบรวมศูนย์ รหัสยืนยัน และรหัสผ่าน"
+    },
+    {
+      "bundleIdentifier": "com.apple.mobilephone",
+      "displayName": "โทรศัพท์",
+      "note": "โทรออกบน Mac ด้วยโทรศัพท์ของคุณ"
+    },
+    {
+      "bundleIdentifier": "com.apple.AboutThisMacLauncher",
+      "displayName": "เกี่ยวกับ Mac เครื่องนี้",
+      "note": "ดูรุ่น Mac เวอร์ชั่นระบบ และหมายเลขประจำเครื่อง"
+    },
+    {
+      "bundleIdentifier": "com.apple.archiveutility",
+      "displayName": "ยูทิลิตี้การเก็บถาวร",
+      "note": "บีบอัดและแตกไฟล์ ZIP และไฟล์เก็บถาวร"
+    },
+    {
+      "bundleIdentifier": "com.apple.DeskCam",
+      "displayName": "มุมมองด้านหน้าโต๊ะ",
+      "note": "แสดงมุมมองโต๊ะด้วยกล้อง Continuity"
+    },
+    {
+      "bundleIdentifier": "com.apple.DirectoryUtility",
+      "displayName": "ยูทิลิตี้ไดเรกทอรี",
+      "note": "ตั้งค่าบริการไดเรกทอรี LDAP และบัญชีเครือข่าย"
+    },
+    {
+      "bundleIdentifier": "com.apple.DVDPlayer",
+      "displayName": "เครื่องเล่น DVD",
+      "note": "เล่นแผ่น DVD และเนื้อหา DVD ในเครื่อง"
+    },
+    {
+      "bundleIdentifier": "com.apple.ExpansionSlotUtility",
+      "displayName": "ยูทิลิตี้ช่องเสียบส่วนขยาย",
+      "note": "ดูและตั้งค่าช่องเสียบส่วนขยายของ Mac Pro"
+    },
+    {
+      "bundleIdentifier": "com.apple.appleseed.FeedbackAssistant",
+      "displayName": "Feedback Assistant",
+      "note": "ส่งคำติชมระบบและข้อมูลวินิจฉัยให้ Apple"
+    },
+    {
+      "bundleIdentifier": "com.apple.FolderActionsSetup",
+      "displayName": "การตั้งค่าการทำงานโฟลเดอร์",
+      "note": "เพิ่มการทำงานสคริปต์อัตโนมัติให้โฟลเดอร์"
+    },
+    {
+      "bundleIdentifier": "com.apple.IPAInstaller",
+      "displayName": "ตัวติดตั้งแอป iOS",
+      "note": "ติดตั้งแพ็กเกจแอป iOS ด้วยเครื่องมือระบบ"
+    },
+    {
+      "bundleIdentifier": "com.apple.keychainaccess",
+      "displayName": "การเข้าถึงพวงกุญแจ",
+      "note": "จัดการรหัสผ่าน ใบรับรอง กุญแจ และรายการปลอดภัย"
+    },
+    {
+      "bundleIdentifier": "com.apple.Ticket-Viewer",
+      "displayName": "ตัวดูตั๋ว",
+      "note": "ดูตั๋ว Kerberos และสถานะการตรวจสอบสิทธิ์"
+    },
+    {
+      "bundleIdentifier": "com.apple.wifi.diagnostics",
+      "displayName": "การวินิจฉัยระบบไร้สาย",
+      "note": "วินิจฉัย Wi-Fi และสร้างรายงานไร้สาย"
+    },
+    {
+      "bundleIdentifier": "com.apple.photobooth",
+      "displayName": "Photo Booth",
+      "note": "กล้องเซลฟี่และเอฟเฟกต์พิเศษเล็กๆ น้อยๆ ก็สะดวกสำหรับการทดสอบกล้องเช่นกัน"
+    },
+    {
+      "bundleIdentifier": "com.apple.podcasts",
+      "displayName": "พ็อดคาสท์",
+      "note": "พอร์ทัลอย่างเป็นทางการสำหรับการฟังพอดแคสต์"
+    },
+    {
+      "bundleIdentifier": "com.apple.Preview",
+      "displayName": "แสดงตัวอย่าง",
+      "note": "เครื่องมือ Mac ที่ประเมินต่ำที่สุด"
+    },
+    {
+      "bundleIdentifier": "com.apple.printcenter",
+      "displayName": "ศูนย์การพิมพ์",
+      "note": "ดูและจัดการคิวการพิมพ์ สำหรับงานกระดาษติด โปรดดูที่นี่ก่อน"
+    },
+    {
+      "bundleIdentifier": "com.apple.quicktimeplayerx",
+      "displayName": "QuickTime Player",
+      "note": "เครื่องมือที่มีชื่อเสียงซึ่งสามารถเล่น บันทึกหน้าจอ และบันทึกเสียงได้"
+    },
+    {
+      "bundleIdentifier": "com.apple.screensharing",
+      "displayName": "การแชร์หน้าจอ",
+      "note": "ควบคุม Mac เครื่องอื่นจากระยะไกล"
+    },
+    {
+      "bundleIdentifier": "com.apple.screenshot.launcher",
+      "displayName": "ถ่ายภาพหน้าจอ",
+      "note": "พอร์ทัลบันทึกภาพหน้าจอและหน้าจอ ด้านหลัง Shift-Command-5"
+    },
+    {
+      "bundleIdentifier": "com.apple.scripteditor2",
+      "displayName": "ตัวแก้ไขสคริปต์",
+      "note": "เขียนและเรียกใช้ AppleScript เพื่อควบคุมระบบอัตโนมัติของ Mac รุ่นเก่า"
+    },
+    {
+      "bundleIdentifier": "com.apple.sfsymbols",
+      "displayName": "SF Symbols",
+      "note": "คลังสัญลักษณ์อย่างเป็นทางการของ Apple จำเป็นสำหรับอินเทอร์เฟซดั้งเดิม"
+    },
+    {
+      "bundleIdentifier": "com.apple.shortcuts",
+      "displayName": "คำสั่งลัด",
+      "note": "การรวมหลายการกระทำไว้ในกระบวนการคลิกเดียวคือ Automator เวอร์ชันใหม่"
+    },
+    {
+      "bundleIdentifier": "com.apple.siri.launcher",
+      "displayName": "Siri",
+      "note": "ทางเข้าระบบสั่งงานด้วยเสียง สามารถตรวจสอบข้อมูล เปิดแอพ และควบคุมระบบได้"
+    },
+    {
+      "bundleIdentifier": "com.apple.stickies",
+      "displayName": "โน้ตแปะ",
+      "note": "กระดาษโน้ตบนเดสก์ท็อป กระดาษโน้ตชั่วคราวจะติดไว้ตรงหน้าคุณ"
+    },
+    {
+      "bundleIdentifier": "com.apple.stocks",
+      "displayName": "Stocks",
+      "note": "ดูแผงเล็กๆ สำหรับหุ้นและการเปลี่ยนแปลงของตลาด"
+    },
+    {
+      "bundleIdentifier": "com.apple.systemprofiler",
+      "displayName": "ข้อมูลระบบ",
+      "note": "ดูรายละเอียดฮาร์ดแวร์ ซอฟต์แวร์"
+    },
+    {
+      "bundleIdentifier": "com.apple.systempreferences",
+      "displayName": "การตั้งค่าระบบ",
+      "note": "ทางเข้าหลักของการตั้งค่า Mac สวิตช์ระบบเกือบทั้งหมดอยู่ที่นี่"
+    },
+    {
+      "bundleIdentifier": "com.apple.textedit",
+      "displayName": "TextEdit",
+      "note": "โปรแกรมแก้ไขข้อความที่ง่ายที่สุด เปิด TXT และ RTF ได้อย่างรวดเร็ว"
+    },
+    {
+      "bundleIdentifier": "com.apple.backup.launcher",
+      "displayName": "Time Machine",
+      "note": "สำรองข้อมูลระบบเพื่อกู้คืนไฟล์เมื่อจำเป็น"
+    },
+    {
+      "bundleIdentifier": "com.apple.helpviewer",
+      "displayName": "เคล็ดลับ",
+      "note": "เคล็ดลับอย่างเป็นทางการของ Apple"
+    },
+    {
+      "bundleIdentifier": "com.apple.TV",
+      "displayName": "TV",
+      "note": "การเล่นเนื้อหาภาพยนตร์และโทรทัศน์และทางเข้าการจัดการ"
+    },
+    {
+      "bundleIdentifier": "com.apple.voicememos",
+      "displayName": "เสียงบันทึก",
+      "note": "บันทึก บันทึกแรงบันดาลใจในการประชุม และเอกสารการสัมภาษณ์อย่างรวดเร็วก่อน"
+    },
+    {
+      "bundleIdentifier": "com.apple.voiceoverutility",
+      "displayName": "ยูทิลิตี้ VoiceOver",
+      "note": "จัดการคุณสมบัติการช่วยการเข้าถึงการอ่านหน้าจอเพื่อให้ Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.weather",
+      "displayName": "สภาพอากาศ",
+      "note": "พอร์ทัลพยากรณ์อากาศควรตรวจสอบก่อนออกไปข้างนอกเพื่อความเสถียรมากขึ้น"
+    },
+    {
+      "bundleIdentifier": "com.apple.dt.Xcode",
+      "displayName": "Xcode",
+      "note": "เครื่องมือพัฒนา Apple สำหรับสร้างแอป iOS และ macOS"
+    },
+    {
+      "bundleIdentifier": "com.apple.garageband10",
+      "displayName": "GarageBand",
+      "note": "เครื่องมือผลิตเพลงระดับเริ่มต้นของ Apple"
+    },
+    {
+      "bundleIdentifier": "com.apple.FinalCut",
+      "displayName": "Final Cut Pro",
+      "note": "เครื่องมือตัดต่อวิดีโอระดับมืออาชีพของ Apple การตัด การระบายสี"
+    },
+    {
+      "bundleIdentifier": "com.apple.logic10",
+      "displayName": "Logic Pro",
+      "note": "เครื่องมือผลิตเพลงระดับมืออาชีพของ Apple ที่ทรงพลังในการบันทึก"
+    },
+    {
+      "bundleIdentifier": "com.apple.TestFlight",
+      "displayName": "TestFlight",
+      "note": "เครื่องมือทดสอบแอปของ Apple เหมาะสำหรับการติดตั้งและสัมผัสประสบการณ์แอปเบต้า"
+    }
+  ]
+}

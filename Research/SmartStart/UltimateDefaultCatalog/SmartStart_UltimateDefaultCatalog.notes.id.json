@@ -46,10 +46,6 @@
       "note": "Digunakan untuk menyimpan dan mengelola kredensial Git, cocok untuk login platfo"
     },
     {
-      "entryID": "com-apple-finder-2de1d8bbb107",
-      "note": "Sistem macOS dilengkapi dengan alat yang cocok untuk menyelesaikan manajemen sis"
-    },
-    {
       "entryID": "com-mitchellh-ghostty-5194f8485e90",
       "note": "Alat pengembang untuk baris perintah, pembuatan, debugging, atau manajemen proye"
     },
@@ -72,10 +68,6 @@
     {
       "entryID": "1password-cli-85e1ca6fa403",
       "note": "Alat keamanan akun untuk mengelola kata sandi, kode verifikasi, dan kunci akses"
-    },
-    {
-      "entryID": "com-apple-safari-b2041c4573f8",
-      "note": "Browser resmi Apple, hemat daya, privasi, dan hubungan ekologis adalah kelebihan"
     },
     {
       "entryID": "com-anthropic-claudefordesktop-b2f723339fad",
@@ -102,10 +94,6 @@
       "note": "Editor kode yang ringan namun kuat dengan ekosistem plug-in yang sangat lengkap"
     },
     {
-      "entryID": "com-apple-mail-9c1e969ca734",
-      "note": "Klien email sistem, beberapa kotak surat dapat diproses secara terpusat"
-    },
-    {
       "entryID": "md-obsidian-9f1625d466f0",
       "note": "Basis pengetahuan Penurunan Harga Lokal, cocok untuk akumulasi otak kedua Anda d"
     },
@@ -128,10 +116,6 @@
     {
       "entryID": "com-tencent-meeting-5bd65448f293",
       "note": "Pintu masuk konferensi Tencent, kantor Tiongkok, dan kolaborasi jarak jauh sanga"
-    },
-    {
-      "entryID": "com-apple-mobilesms-a7066fed8087",
-      "note": "iMessage dan portal SMS, membalas pesan lebih cepat di Mac"
     },
     {
       "entryID": "com-mojang-minecraftlauncher-606072fb1e80",
@@ -174,10 +158,6 @@
       "note": "IDE resmi Android, penting untuk mengembangkan dan men-debug Aplikasi Android"
     },
     {
-      "entryID": "com-apple-facetime-96f99030aef8",
-      "note": "Pintu masuk panggilan audio dan video di ekosistem Apple"
-    },
-    {
       "entryID": "maccy-0c7236cb0f2d",
       "note": "Alat riwayat papan klip, konten yang disalin dapat diambil kapan saja"
     },
@@ -190,10 +170,6 @@
       "note": "Streaming pemutar musik, Anda dapat memiliki lagu untuk bekerja dan bersantai"
     },
     {
-      "entryID": "com-apple-ical-8e998503177c",
-      "note": "Keluarkan jadwal dari kepala Anda dan berikan waktu peta visual"
-    },
-    {
       "entryID": "blackhole-2ch-0b7c58e0297a",
       "note": "Driver audio virtual, cocok untuk perekaman layar, siaran langsung, dan perutean"
     },
@@ -204,10 +180,6 @@
     {
       "entryID": "com-electron-lark-6559e48147f2",
       "note": "Portal kolaborasi Feishu, tempat semua obrolan, dokumen, dan pertemuan tim Tiong"
-    },
-    {
-      "entryID": "com-apple-notes-aaf1d7cf1c90",
-      "note": "Memo, teks, gambar, dan daftar sistem tercepat semuanya dapat dikumpulkan"
     },
     {
       "entryID": "com-electron-ollama-25be0e7340d2",
@@ -238,10 +210,6 @@
       "note": "Alat pengembangan pemrograman untuk menulis, membaca, dan memelihara kode"
     },
     {
-      "entryID": "com-apple-reminders-92a9335b31bb",
-      "note": "Agenda dan pengingat, cocok untuk melakukan tugas kecil sehari-hari"
-    },
-    {
       "entryID": "com-openai-chat-7c12a7107aad",
       "note": "Letakkan asisten AI di desktop Anda dan tulis, pelajari, dan bertukar pikiran di"
     },
@@ -260,10 +228,6 @@
     {
       "entryID": "com-kingsoft-wpsoffice-mac-c371eb320d54",
       "note": "Paket Office untuk mengedit dokumen, spreadsheet, dan presentasi"
-    },
-    {
-      "entryID": "com-apple-photos-9678510fed1e",
-      "note": "Perpustakaan foto sistem, pintu masuk utama untuk mengelola, mengedit, dan menyi"
     },
     {
       "entryID": "adobe-acrobat-reader-fb99f7bea88f",
@@ -290,14 +254,6 @@
       "note": "Browser web, cocok untuk berselancar di Internet setiap hari dan mengakses layan"
     },
     {
-      "entryID": "com-apple-music-63ea41e016ea",
-      "note": "Pemutar musik lokal dan streaming"
-    },
-    {
-      "entryID": "com-apple-terminal-77aba1385326",
-      "note": "Entri baris perintah, kokpit tersembunyi Mac"
-    },
-    {
       "entryID": "utm-f2a3e184ea9f",
       "note": "Alat virtualisasi atau koneksi jarak jauh, cocok untuk menjalankan lingkungan si"
     },
@@ -310,260 +266,12 @@
       "note": "Pemutar musik, cocok untuk mendengarkan lagu, mengelola playlist dan menggunakan"
     },
     {
-      "entryID": "com-apple-activitymonitor-1ca0c04d6757",
-      "note": "Dasbor Mac untuk melihat siapa yang menghabiskan daya, memori, dan memperlambat"
-    },
-    {
-      "entryID": "com-apple-airport-airportutility-85b3849d7d98",
-      "note": "Alat jaringan kuno untuk mengelola AirPorts dan Time Capsules"
-    },
-    {
-      "entryID": "com-apple-appstore-0619ceddf32a",
-      "note": "Toko perangkat lunak Mac resmi, mulai di sini untuk menemukan aplikasi, pembarua"
-    },
-    {
-      "entryID": "com-apple-apps-launcher-c27c2e6c3e15",
-      "note": "Portal aplikasi ringan untuk membantu Anda membuka aplikasi dengan cepat dari ti"
-    },
-    {
-      "entryID": "com-apple-audio-audiomidisetup-8327be183cc9",
-      "note": "Perlengkapan audio dan perutean MIDI, biasa digunakan oleh musisi dan debugger"
-    },
-    {
-      "entryID": "com-apple-automator-3134734f076f",
-      "note": "Anda dapat merangkai serangkaian tindakan otomatisasi Mac tanpa menulis kode"
-    },
-    {
-      "entryID": "com-apple-bluetoothfileexchange-a83f24bdfabc",
-      "note": "Menggunakan Bluetooth untuk mengirim dan menerima file adalah hal yang kuno teta"
-    },
-    {
-      "entryID": "com-apple-ibooksx-61d0b1b4ae4c",
-      "note": "Titik masuk untuk membaca dan mengelola e-book, cocok untuk mengubah Mac Anda me"
-    },
-    {
-      "entryID": "com-apple-bootcampassistant-e4ab0159032f",
-      "note": "Panduan resmi untuk menginstal Windows di Intel Mac"
-    },
-    {
-      "entryID": "com-apple-calculator-390516777a37",
-      "note": "Kalkulator kecil, konversi satuan, dan mode pemrogram juga tersembunyi di dalamn"
-    },
-    {
-      "entryID": "com-apple-chess-8ccbf1801854",
-      "note": "Sistemnya dilengkapi dengan catur, yang menjadikan memancing lebih elegan daripa"
-    },
-    {
-      "entryID": "com-apple-clock-f922597106e9",
-      "note": "Portal terpadu untuk alarm, pengatur waktu, stopwatch, dan jam dunia"
-    },
-    {
       "entryID": "cmux-3a661d84a58c",
       "note": "Ideal untuk mengatur metadata media, memberi nama atau merangkum file"
     },
     {
-      "entryID": "com-apple-colorsyncutility-68af0cd69154",
-      "note": "Melihat dan memperbaiki profil warna, menangani perbedaan warna tampilan dan pen"
-    },
-    {
-      "entryID": "com-apple-console-5e449417a9e8",
-      "note": "Jendela untuk melihat log sistem sangat berguna saat memecahkan masalah kelainan"
-    },
-    {
-      "entryID": "com-apple-addressbook-0b4e2b893a86",
-      "note": "Hub kontak untuk Mail, Pesan, dan FaceTime"
-    },
-    {
-      "entryID": "com-apple-dictionary-4625013af142",
-      "note": "Kamus dan tesaurus offline, tidak perlu membuka browser saat menulis dan mencari"
-    },
-    {
-      "entryID": "com-apple-digitalcolormeter-fb99a6aa0c0b",
-      "note": "Pemilih warna layar, artefak kecil bagi desainer untuk memilih warna sementara"
-    },
-    {
-      "entryID": "com-apple-diskutility-48d48cee3d46",
-      "note": "Disk, partisi, format dan P3K, jangan dipusingkan tapi ini penting"
-    },
-    {
-      "entryID": "com-apple-findmy-f15882533adf",
-      "note": "Temukan peralatan, temukan item, dan berikan petunjuk pada Mac Anda yang hilang"
-    },
-    {
-      "entryID": "com-apple-fontbook-83009f0e620e",
-      "note": "Pusat instalasi dan manajemen font, kelola font sebelum mendesain"
-    },
-    {
-      "entryID": "com-apple-freeform-c79ff8861497",
-      "note": "Papan tulis tanpa batas untuk bertukar pikiran, membuat sketsa, dan ide acak"
-    },
-    {
-      "entryID": "com-apple-games-18b06d160812",
-      "note": "Portal game Apple untuk mengelola konten Apple Arkade yang dapat dimainkan secar"
-    },
-    {
-      "entryID": "com-apple-grapher-dde725719597",
-      "note": "Persamaan grafik, alat tersembunyi untuk visualisasi matematika"
-    },
-    {
-      "entryID": "com-apple-home-339f72ecc4b8",
-      "note": "Pintu masuk kontrol rumah pintar dapat mengatur pencahayaan, AC, dan peralatan l"
-    },
-    {
-      "entryID": "com-apple-image-capture-8de5b7375bed",
-      "note": "Impor gambar dari kamera atau pemindai, sederhana namun stabil"
-    },
-    {
-      "entryID": "com-apple-generativeplaygroundapp-05897f8dbe4c",
-      "note": "Hasilkan gambar dengan kecerdasan Apple, sempurna untuk penyusunan kreatif cepat"
-    },
-    {
-      "entryID": "com-apple-imovieapp-00a9c7493d26",
-      "note": "Cukup untuk pengeditan video tingkat pemula, video rumahan, dan film pendek ring"
-    },
-    {
-      "entryID": "com-apple-screencontinuity-867a48a76333",
-      "note": "Operasikan iPhone Anda langsung di Mac Anda, sehingga tidak perlu lagi meraih po"
-    },
-    {
-      "entryID": "com-apple-journal-29ceb46d5ff5",
-      "note": "Rekam bagian harian dan perlahan-lahan ubah pemikiran Anda menjadi garis waktu p"
-    },
-    {
-      "entryID": "com-apple-iwork-keynote-e86356f31ec2",
-      "note": "Alat presentasi bergaya Apple, mudah untuk membuat slide yang indah"
-    },
-    {
       "entryID": "com-riotgames-leagueoflegends-ee692e90efde",
       "note": "Klien League of Legends, pintu masuk ke permainan kompetisi tim klasik"
-    },
-    {
-      "entryID": "com-apple-magnifier-c9044527cd0d",
-      "note": "Perbesar detail layar untuk membantu penglihatan dan pemeriksaan halus"
-    },
-    {
-      "entryID": "com-apple-maps-310ca6c69cea",
-      "note": "Periksa rute, lihat kota, dan masukkan tujuan ke iPhone"
-    },
-    {
-      "entryID": "com-apple-migrateassistant-5f03ff480fe8",
-      "note": "Saat berpindah ke Mac baru, pindahkan data lama ke mesin baru"
-    },
-    {
-      "entryID": "com-apple-exposelauncher-62e07c598f71",
-      "note": "Tampilan udara jendela dan desktop, lihat saja kalau berantakan"
-    },
-    {
-      "entryID": "com-apple-news-7614a9b54b68",
-      "note": "Portal Apple News, cocok untuk melihat konten media terpilih"
-    },
-    {
-      "entryID": "com-apple-iwork-numbers-361a6aaf7056",
-      "note": "Alat Apple Sheets, laporan ringan lebih menyegarkan daripada Excel"
-    },
-    {
-      "entryID": "com-apple-iwork-pages-d6f13bb4e29c",
-      "note": "Pengolah kata Apple, cantik untuk menulis dokumen dan penyusunan huruf"
-    },
-    {
-      "entryID": "com-apple-passwords-08719cef9f02",
-      "note": "Pengelola kata sandi sistem, pengelolaan akun terpusat, kode verifikasi, dan kun"
-    },
-    {
-      "entryID": "com-apple-mobilephone-5739fb6f2a60",
-      "note": "Lakukan panggilan di Mac dengan ponsel Anda"
-    },
-    {
-      "entryID": "com-apple-photobooth-9d976a9cdfcd",
-      "note": "Selfie kamera dan efek khusus kecil juga nyaman untuk menguji kamera"
-    },
-    {
-      "entryID": "com-apple-podcasts-4a2a186dcc8f",
-      "note": "Portal resmi untuk mendengarkan podcast, berguna untuk bepergian dan belajar"
-    },
-    {
-      "entryID": "com-apple-preview-9ef385a7e445",
-      "note": "Alat Mac yang paling diremehkan: Lihat gambar, beri anotasi pada PDF, dan lakuka"
-    },
-    {
-      "entryID": "com-apple-printcenter-5a8f324fe84d",
-      "note": "Melihat dan mengelola antrian cetak. Untuk tugas paper jam lihat disini dulu"
-    },
-    {
-      "entryID": "com-apple-quicktimeplayerx-f2aee71b906d",
-      "note": "Alat mapan yang dapat memutar, merekam layar, dan merekam audio"
-    },
-    {
-      "entryID": "com-apple-screensharing-3d1e02ff893a",
-      "note": "Mengontrol Mac lain dari jarak jauh, yang sangat berguna untuk membantu orang me"
-    },
-    {
-      "entryID": "com-apple-screenshot-launcher-f3c7a7a2c583",
-      "note": "Portal tangkapan layar dan perekaman layar, di belakang Shift-Command-5"
-    },
-    {
-      "entryID": "com-apple-scripteditor2-f8a19fe3d1d8",
-      "note": "Tulis dan jalankan AppleScript untuk mengontrol otomatisasi Mac model lama"
-    },
-    {
-      "entryID": "com-apple-sfsymbols-9dc6c630daed",
-      "note": "Perpustakaan simbol resmi Apple, penting untuk antarmuka asli"
-    },
-    {
-      "entryID": "com-apple-shortcuts-f629e5e3e216",
-      "note": "Merangkai beberapa tindakan ke dalam proses satu klik adalah versi modern dari A"
-    },
-    {
-      "entryID": "com-apple-siri-launcher-77250557ebe9",
-      "note": "Pintu masuk asisten suara, dapat memeriksa informasi, membuka aplikasi, dan meng"
-    },
-    {
-      "entryID": "com-apple-stickies-9ed4ed5e1103",
-      "note": "Catatan tempel desktop, catatan sementara diposting tepat di depan Anda"
-    },
-    {
-      "entryID": "com-apple-stocks-6a1a80292efe",
-      "note": "Lihat panel kecil untuk mengetahui saham dan dinamika pasar"
-    },
-    {
-      "entryID": "com-apple-systemprofiler-fdfe3344179e",
-      "note": "Lihat detail perangkat keras, perangkat lunak, dan perangkat untuk menemukan kon"
-    },
-    {
-      "entryID": "com-apple-systempreferences-5632452dbd3d",
-      "note": "Pintu masuk utama pengaturan Mac, hampir semua sakelar sistem ada di sini"
-    },
-    {
-      "entryID": "com-apple-textedit-64d314fbf2b9",
-      "note": "Editor teks paling sederhana, buka TXT dan RTF dengan sangat cepat"
-    },
-    {
-      "entryID": "com-apple-backup-launcher-918b22a1257e",
-      "note": "Alat cadangan sistem, andalkan untuk menyiapkan obat penyesalan terlebih dahulu"
-    },
-    {
-      "entryID": "com-apple-helpviewer-6e90a07b56cc",
-      "note": "Kiat resmi Apple untuk sesekali menemukan fitur yang belum Anda gunakan"
-    },
-    {
-      "entryID": "com-apple-tv-28f9f8e2e47b",
-      "note": "Pemutaran konten film dan televisi dan pintu masuk manajemen"
-    },
-    {
-      "entryID": "com-apple-voicememos-f4eb9f35a1b8",
-      "note": "Catat dengan cepat, simpan inspirasi rapat dan materi wawancara terlebih dahulu"
-    },
-    {
-      "entryID": "com-apple-voiceoverutility-9623fe74d030",
-      "note": "Kelola fitur aksesibilitas membaca layar untuk menjadikan Mac Anda lebih mudah d"
-    },
-    {
-      "entryID": "com-apple-weather-a1b814774719",
-      "note": "Portal ramalan cuaca, periksa sebelum keluar untuk stabilitas lebih"
-    },
-    {
-      "entryID": "com-apple-dt-xcode-66da3f910767",
-      "note": "Apple mengembangkan FamilyMart, medan perang utama untuk menulis aplikasi iOS da"
     },
     {
       "entryID": "com-github-githubclient-c94dd11b1995",
@@ -874,10 +582,6 @@
       "note": "Ideal untuk mengambil tangkapan layar, membuat anotasi, mengenali teks, atau mem"
     },
     {
-      "entryID": "com-apple-garageband10-af435df6c94a",
-      "note": "Alat produksi musik tingkat pemula Apple, mudah digunakan untuk merekam dan meng"
-    },
-    {
       "entryID": "com-microsoft-excel-2ff4add4000d",
       "note": "Seorang veteran dalam tabel dan analisis data, keuangan, operasi, dan model semu"
     },
@@ -914,10 +618,6 @@
       "note": "Editor kode ringan yang dikembangkan untuk macOS"
     },
     {
-      "entryID": "com-apple-finalcut-6383fea0b510",
-      "note": "Alat pengeditan, pemotongan, pewarnaan, dan ekspor video profesional Apple semua"
-    },
-    {
       "entryID": "github-copilot-for-xcode-60555f2d4d11",
       "note": "Menghadirkan AI ke dalam proses pengembangan, cocok untuk pengkodean, debugging"
     },
@@ -932,10 +632,6 @@
     {
       "entryID": "finetune-5431832269e6",
       "note": "Alat audio AI, cocok untuk mengatur, menyalin, atau mengoptimalkan konten suara"
-    },
-    {
-      "entryID": "com-apple-logic10-69f8eefc0ddf",
-      "note": "Alat produksi musik profesional Apple, canggih dalam perekaman, aransemen, dan m"
     },
     {
       "entryID": "com-getdropbox-dropbox-72c7db8f1763",
@@ -968,10 +664,6 @@
     {
       "entryID": "font-jetbrains-mono-nerd-font-4a662d68a338",
       "note": "Paket sumber daya font, cocok untuk melengkapi font untuk editor, terminal, atau"
-    },
-    {
-      "entryID": "com-apple-testflight-cfe027705d73",
-      "note": "Alat pengujian aplikasi Apple, cocok untuk menginstal dan mencoba aplikasi beta"
     },
     {
       "entryID": "claude-code-latest-ba2522b660cf",

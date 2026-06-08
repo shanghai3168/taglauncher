@@ -174,19 +174,6 @@
       ]
     },
     {
-      "entryID": "com-apple-finder-2de1d8bbb107",
-      "rank": 11,
-      "name": "",
-      "normalizedName": "finder",
-      "bundleIdentifier": "com.apple.finder",
-      "defaultTag": [
-        "file-management"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
       "entryID": "com-mitchellh-ghostty-5194f8485e90",
       "rank": 12,
       "name": "",
@@ -260,19 +247,6 @@
       "defaultTag": [
         "security",
         "terminal-tools"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-safari-b2041c4573f8",
-      "rank": 18,
-      "name": "",
-      "normalizedName": "safari",
-      "bundleIdentifier": "com.apple.Safari",
-      "defaultTag": [
-        "browser"
       ],
       "sourceEvidence": [
         "curated_tager_catalog"
@@ -358,19 +332,6 @@
       ]
     },
     {
-      "entryID": "com-apple-mail-9c1e969ca734",
-      "rank": 25,
-      "name": "",
-      "normalizedName": "mail",
-      "bundleIdentifier": "com.apple.mail",
-      "defaultTag": [
-        "communication"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
       "entryID": "md-obsidian-9f1625d466f0",
       "rank": 26,
       "name": "",
@@ -445,19 +406,6 @@
       "bundleIdentifier": "com.tencent.meeting",
       "defaultTag": [
         "Meeting"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-mobilesms-a7066fed8087",
-      "rank": 32,
-      "name": "",
-      "normalizedName": "messages",
-      "bundleIdentifier": "com.apple.MobileSMS",
-      "defaultTag": [
-        "communication"
       ],
       "sourceEvidence": [
         "curated_tager_catalog"
@@ -595,20 +543,6 @@
       ]
     },
     {
-      "entryID": "com-apple-facetime-96f99030aef8",
-      "rank": 43,
-      "name": "",
-      "normalizedName": "facetime",
-      "bundleIdentifier": "com.apple.FaceTime",
-      "defaultTag": [
-        "communication",
-        "video"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
       "entryID": "maccy-0c7236cb0f2d",
       "rank": 44,
       "name": "",
@@ -649,20 +583,6 @@
       ]
     },
     {
-      "entryID": "com-apple-ical-8e998503177c",
-      "rank": 47,
-      "name": "",
-      "normalizedName": "calendar",
-      "bundleIdentifier": "com.apple.iCal",
-      "defaultTag": [
-        "communication",
-        "GTD"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
       "entryID": "blackhole-2ch-0b7c58e0297a",
       "rank": 48,
       "name": "",
@@ -697,19 +617,6 @@
       "bundleIdentifier": "com.electron.lark",
       "defaultTag": [
         "Meeting"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-notes-aaf1d7cf1c90",
-      "rank": 51,
-      "name": "",
-      "normalizedName": "notes",
-      "bundleIdentifier": "com.apple.Notes",
-      "defaultTag": [
-        "Notes"
       ],
       "sourceEvidence": [
         "curated_tager_catalog"
@@ -809,19 +716,6 @@
       ]
     },
     {
-      "entryID": "com-apple-reminders-92a9335b31bb",
-      "rank": 59,
-      "name": "",
-      "normalizedName": "reminders",
-      "bundleIdentifier": "com.apple.reminders",
-      "defaultTag": [
-        "GTD"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
       "entryID": "com-openai-chat-7c12a7107aad",
       "rank": 60,
       "name": "",
@@ -883,19 +777,6 @@
       "bundleIdentifier": "com.kingsoft.wpsoffice.mac",
       "defaultTag": [
         "office"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-photos-9678510fed1e",
-      "rank": 65,
-      "name": "",
-      "normalizedName": "photos",
-      "bundleIdentifier": "com.apple.Photos",
-      "defaultTag": [
-        "picture-photo"
       ],
       "sourceEvidence": [
         "curated_tager_catalog"
@@ -980,32 +861,6 @@
       ]
     },
     {
-      "entryID": "com-apple-music-63ea41e016ea",
-      "rank": 72,
-      "name": "",
-      "normalizedName": "music",
-      "bundleIdentifier": "com.apple.Music",
-      "defaultTag": [
-        "audio"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-terminal-77aba1385326",
-      "rank": 73,
-      "name": "",
-      "normalizedName": "terminal",
-      "bundleIdentifier": "com.apple.Terminal",
-      "defaultTag": [
-        "terminal-tools"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
       "entryID": "utm-f2a3e184ea9f",
       "rank": 74,
       "name": "",
@@ -1045,165 +900,6 @@
       ]
     },
     {
-      "entryID": "com-apple-activitymonitor-1ca0c04d6757",
-      "rank": 77,
-      "name": "",
-      "normalizedName": "activity-monitor",
-      "bundleIdentifier": "com.apple.ActivityMonitor",
-      "defaultTag": [
-        "system-maintenance"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-airport-airportutility-85b3849d7d98",
-      "rank": 78,
-      "name": "",
-      "normalizedName": "airport-utility",
-      "bundleIdentifier": "com.apple.airport.airportutility",
-      "defaultTag": [
-        "system"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-appstore-0619ceddf32a",
-      "rank": 79,
-      "name": "",
-      "normalizedName": "app-store",
-      "bundleIdentifier": "com.apple.AppStore",
-      "defaultTag": [
-        "system"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-apps-launcher-c27c2e6c3e15",
-      "rank": 80,
-      "name": "",
-      "normalizedName": "apps",
-      "bundleIdentifier": "com.apple.apps.launcher",
-      "defaultTag": [
-        "system"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-audio-audiomidisetup-8327be183cc9",
-      "rank": 81,
-      "name": "",
-      "normalizedName": "audio-midi-setup",
-      "bundleIdentifier": "com.apple.audio.audiomidisetup",
-      "defaultTag": [
-        "audio",
-        "device-management"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-automator-3134734f076f",
-      "rank": 82,
-      "name": "",
-      "normalizedName": "automator",
-      "bundleIdentifier": "com.apple.automator",
-      "defaultTag": [
-        "Automation"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-bluetoothfileexchange-a83f24bdfabc",
-      "rank": 83,
-      "name": "",
-      "normalizedName": "bluetooth-file-exchange",
-      "bundleIdentifier": "com.apple.bluetoothfileexchange",
-      "defaultTag": [
-        "transfer",
-        "device-management"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-ibooksx-61d0b1b4ae4c",
-      "rank": 84,
-      "name": "",
-      "normalizedName": "books",
-      "bundleIdentifier": "com.apple.iBooksX",
-      "defaultTag": [
-        "writing",
-        "education"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-bootcampassistant-e4ab0159032f",
-      "rank": 85,
-      "name": "",
-      "normalizedName": "boot-camp-assistant",
-      "bundleIdentifier": "com.apple.bootcampassistant",
-      "defaultTag": [
-        "system"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-calculator-390516777a37",
-      "rank": 86,
-      "name": "",
-      "normalizedName": "calculator",
-      "bundleIdentifier": "com.apple.calculator",
-      "defaultTag": [
-        "utilities"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-chess-8ccbf1801854",
-      "rank": 87,
-      "name": "",
-      "normalizedName": "chess",
-      "bundleIdentifier": "com.apple.chess",
-      "defaultTag": [
-        "game"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-clock-f922597106e9",
-      "rank": 88,
-      "name": "",
-      "normalizedName": "clock",
-      "bundleIdentifier": "com.apple.clock",
-      "defaultTag": [
-        "GTD"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
       "entryID": "cmux-3a661d84a58c",
       "rank": 89,
       "name": "",
@@ -1217,244 +913,6 @@
       ]
     },
     {
-      "entryID": "com-apple-colorsyncutility-68af0cd69154",
-      "rank": 90,
-      "name": "",
-      "normalizedName": "colorsync-utility",
-      "bundleIdentifier": "com.apple.colorsyncutility",
-      "defaultTag": [
-        "picture-photo"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-console-5e449417a9e8",
-      "rank": 91,
-      "name": "",
-      "normalizedName": "console",
-      "bundleIdentifier": "com.apple.console",
-      "defaultTag": [
-        "system-maintenance"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-addressbook-0b4e2b893a86",
-      "rank": 92,
-      "name": "",
-      "normalizedName": "contacts",
-      "bundleIdentifier": "com.apple.addressbook",
-      "defaultTag": [
-        "communication"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-dictionary-4625013af142",
-      "rank": 93,
-      "name": "",
-      "normalizedName": "dictionary",
-      "bundleIdentifier": "com.apple.dictionary",
-      "defaultTag": [
-        "writing",
-        "education"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-digitalcolormeter-fb99a6aa0c0b",
-      "rank": 94,
-      "name": "",
-      "normalizedName": "digital-color-meter",
-      "bundleIdentifier": "com.apple.digitalcolormeter",
-      "defaultTag": [
-        "picture-photo"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-diskutility-48d48cee3d46",
-      "rank": 95,
-      "name": "",
-      "normalizedName": "disk-utility",
-      "bundleIdentifier": "com.apple.DiskUtility",
-      "defaultTag": [
-        "system-maintenance"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-findmy-f15882533adf",
-      "rank": 96,
-      "name": "",
-      "normalizedName": "find-my",
-      "bundleIdentifier": "com.apple.findmy",
-      "defaultTag": [
-        "system"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-fontbook-83009f0e620e",
-      "rank": 97,
-      "name": "",
-      "normalizedName": "font-book",
-      "bundleIdentifier": "com.apple.fontbook",
-      "defaultTag": [
-        "Font"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-freeform-c79ff8861497",
-      "rank": 98,
-      "name": "",
-      "normalizedName": "freeform",
-      "bundleIdentifier": "com.apple.freeform",
-      "defaultTag": [
-        "Notes"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-games-18b06d160812",
-      "rank": 99,
-      "name": "",
-      "normalizedName": "games",
-      "bundleIdentifier": "com.apple.games",
-      "defaultTag": [
-        "game"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-grapher-dde725719597",
-      "rank": 100,
-      "name": "",
-      "normalizedName": "grapher",
-      "bundleIdentifier": "com.apple.grapher",
-      "defaultTag": [
-        "education"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-home-339f72ecc4b8",
-      "rank": 101,
-      "name": "",
-      "normalizedName": "home",
-      "bundleIdentifier": "com.apple.home",
-      "defaultTag": [
-        "system"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-image-capture-8de5b7375bed",
-      "rank": 102,
-      "name": "",
-      "normalizedName": "image-capture",
-      "bundleIdentifier": "com.apple.image_capture",
-      "defaultTag": [
-        "picture-photo",
-        "transfer",
-        "device-management"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-generativeplaygroundapp-05897f8dbe4c",
-      "rank": 103,
-      "name": "",
-      "normalizedName": "image-playground",
-      "bundleIdentifier": "com.apple.generativeplaygroundapp",
-      "defaultTag": [
-        "ai-tools",
-        "picture-photo"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-imovieapp-00a9c7493d26",
-      "rank": 104,
-      "name": "",
-      "normalizedName": "imovie",
-      "bundleIdentifier": "com.apple.iMovieApp",
-      "defaultTag": [
-        "video"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-screencontinuity-867a48a76333",
-      "rank": 105,
-      "name": "",
-      "normalizedName": "iphone-mirroring",
-      "bundleIdentifier": "com.apple.screencontinuity",
-      "defaultTag": [
-        "device-management"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-journal-29ceb46d5ff5",
-      "rank": 106,
-      "name": "",
-      "normalizedName": "journal",
-      "bundleIdentifier": "com.apple.journal",
-      "defaultTag": [
-        "Notes"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-iwork-keynote-e86356f31ec2",
-      "rank": 107,
-      "name": "",
-      "normalizedName": "keynote",
-      "bundleIdentifier": "com.apple.iWork.Keynote",
-      "defaultTag": [
-        "office"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
       "entryID": "com-riotgames-leagueoflegends-ee692e90efde",
       "rank": 108,
       "name": "",
@@ -1462,427 +920,6 @@
       "bundleIdentifier": "com.riotgames.leagueoflegends",
       "defaultTag": [
         "game"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-magnifier-c9044527cd0d",
-      "rank": 109,
-      "name": "",
-      "normalizedName": "magnifier",
-      "bundleIdentifier": "com.apple.magnifier",
-      "defaultTag": [
-        "system"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-maps-310ca6c69cea",
-      "rank": 110,
-      "name": "",
-      "normalizedName": "maps",
-      "bundleIdentifier": "com.apple.Maps",
-      "defaultTag": [
-        "GTD"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-migrateassistant-5f03ff480fe8",
-      "rank": 111,
-      "name": "",
-      "normalizedName": "migration-assistant",
-      "bundleIdentifier": "com.apple.migrateassistant",
-      "defaultTag": [
-        "transfer"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-exposelauncher-62e07c598f71",
-      "rank": 112,
-      "name": "",
-      "normalizedName": "mission-control",
-      "bundleIdentifier": "com.apple.exposelauncher",
-      "defaultTag": [
-        "system"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-news-7614a9b54b68",
-      "rank": 113,
-      "name": "",
-      "normalizedName": "news",
-      "bundleIdentifier": "com.apple.news",
-      "defaultTag": [
-        "media"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-iwork-numbers-361a6aaf7056",
-      "rank": 114,
-      "name": "",
-      "normalizedName": "numbers",
-      "bundleIdentifier": "com.apple.iWork.Numbers",
-      "defaultTag": [
-        "office"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-iwork-pages-d6f13bb4e29c",
-      "rank": 115,
-      "name": "",
-      "normalizedName": "pages",
-      "bundleIdentifier": "com.apple.iWork.Pages",
-      "defaultTag": [
-        "writing",
-        "office"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-passwords-08719cef9f02",
-      "rank": 116,
-      "name": "",
-      "normalizedName": "passwords",
-      "bundleIdentifier": "com.apple.passwords",
-      "defaultTag": [
-        "security"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-mobilephone-5739fb6f2a60",
-      "rank": 117,
-      "name": "",
-      "normalizedName": "phone",
-      "bundleIdentifier": "com.apple.mobilephone",
-      "defaultTag": [
-        "communication"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-photobooth-9d976a9cdfcd",
-      "rank": 118,
-      "name": "",
-      "normalizedName": "photo-booth",
-      "bundleIdentifier": "com.apple.photobooth",
-      "defaultTag": [
-        "picture-photo"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-podcasts-4a2a186dcc8f",
-      "rank": 119,
-      "name": "",
-      "normalizedName": "podcasts",
-      "bundleIdentifier": "com.apple.podcasts",
-      "defaultTag": [
-        "audio"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-preview-9ef385a7e445",
-      "rank": 120,
-      "name": "",
-      "normalizedName": "preview",
-      "bundleIdentifier": "com.apple.Preview",
-      "defaultTag": [
-        "picture-photo",
-        "PDF"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-printcenter-5a8f324fe84d",
-      "rank": 121,
-      "name": "",
-      "normalizedName": "print-center",
-      "bundleIdentifier": "com.apple.printcenter",
-      "defaultTag": [
-        "system"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-quicktimeplayerx-f2aee71b906d",
-      "rank": 122,
-      "name": "",
-      "normalizedName": "quicktime-player",
-      "bundleIdentifier": "com.apple.quicktimeplayerx",
-      "defaultTag": [
-        "video",
-        "audio"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-screensharing-3d1e02ff893a",
-      "rank": 123,
-      "name": "",
-      "normalizedName": "screen-sharing",
-      "bundleIdentifier": "com.apple.screensharing",
-      "defaultTag": [
-        "communication",
-        "network-tools"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-screenshot-launcher-f3c7a7a2c583",
-      "rank": 124,
-      "name": "",
-      "normalizedName": "screenshot",
-      "bundleIdentifier": "com.apple.screenshot.launcher",
-      "defaultTag": [
-        "video",
-        "picture-photo"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-scripteditor2-f8a19fe3d1d8",
-      "rank": 125,
-      "name": "",
-      "normalizedName": "script-editor",
-      "bundleIdentifier": "com.apple.scripteditor2",
-      "defaultTag": [
-        "Automation"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-sfsymbols-9dc6c630daed",
-      "rank": 126,
-      "name": "",
-      "normalizedName": "sf-symbols",
-      "bundleIdentifier": "com.apple.sfsymbols",
-      "defaultTag": [
-        "ui-prototyping"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-shortcuts-f629e5e3e216",
-      "rank": 127,
-      "name": "",
-      "normalizedName": "shortcuts",
-      "bundleIdentifier": "com.apple.shortcuts",
-      "defaultTag": [
-        "Automation"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-siri-launcher-77250557ebe9",
-      "rank": 128,
-      "name": "",
-      "normalizedName": "siri",
-      "bundleIdentifier": "com.apple.siri.launcher",
-      "defaultTag": [
-        "system"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-stickies-9ed4ed5e1103",
-      "rank": 129,
-      "name": "",
-      "normalizedName": "stickies",
-      "bundleIdentifier": "com.apple.stickies",
-      "defaultTag": [
-        "Notes"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-stocks-6a1a80292efe",
-      "rank": 130,
-      "name": "",
-      "normalizedName": "stocks",
-      "bundleIdentifier": "com.apple.stocks",
-      "defaultTag": [
-        "finance"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-systemprofiler-fdfe3344179e",
-      "rank": 131,
-      "name": "",
-      "normalizedName": "system-information",
-      "bundleIdentifier": "com.apple.systemprofiler",
-      "defaultTag": [
-        "device-management"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-systempreferences-5632452dbd3d",
-      "rank": 132,
-      "name": "",
-      "normalizedName": "system-settings",
-      "bundleIdentifier": "com.apple.systempreferences",
-      "defaultTag": [
-        "system"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-textedit-64d314fbf2b9",
-      "rank": 133,
-      "name": "",
-      "normalizedName": "textedit",
-      "bundleIdentifier": "com.apple.textedit",
-      "defaultTag": [
-        "writing"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-backup-launcher-918b22a1257e",
-      "rank": 134,
-      "name": "",
-      "normalizedName": "time-machine",
-      "bundleIdentifier": "com.apple.backup.launcher",
-      "defaultTag": [
-        "system"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-helpviewer-6e90a07b56cc",
-      "rank": 135,
-      "name": "",
-      "normalizedName": "tips",
-      "bundleIdentifier": "com.apple.helpviewer",
-      "defaultTag": [
-        "education"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-tv-28f9f8e2e47b",
-      "rank": 136,
-      "name": "",
-      "normalizedName": "tv",
-      "bundleIdentifier": "com.apple.TV",
-      "defaultTag": [
-        "video"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-voicememos-f4eb9f35a1b8",
-      "rank": 137,
-      "name": "",
-      "normalizedName": "voice-memos",
-      "bundleIdentifier": "com.apple.voicememos",
-      "defaultTag": [
-        "audio"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-voiceoverutility-9623fe74d030",
-      "rank": 138,
-      "name": "",
-      "normalizedName": "voiceover-utility",
-      "bundleIdentifier": "com.apple.voiceoverutility",
-      "defaultTag": [
-        "system"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-weather-a1b814774719",
-      "rank": 139,
-      "name": "",
-      "normalizedName": "weather",
-      "bundleIdentifier": "com.apple.weather",
-      "defaultTag": [
-        "utilities"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-dt-xcode-66da3f910767",
-      "rank": 140,
-      "name": "",
-      "normalizedName": "xcode",
-      "bundleIdentifier": "com.apple.dt.Xcode",
-      "defaultTag": [
-        "ide"
       ],
       "sourceEvidence": [
         "curated_tager_catalog"
@@ -2905,19 +1942,6 @@
       ]
     },
     {
-      "entryID": "com-apple-garageband10-af435df6c94a",
-      "rank": 218,
-      "name": "",
-      "normalizedName": "garageband",
-      "bundleIdentifier": "com.apple.garageband10",
-      "defaultTag": [
-        "audio"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
       "entryID": "com-microsoft-excel-2ff4add4000d",
       "rank": 219,
       "name": "",
@@ -3041,19 +2065,6 @@
       ]
     },
     {
-      "entryID": "com-apple-finalcut-6383fea0b510",
-      "rank": 228,
-      "name": "",
-      "normalizedName": "final-cut-pro",
-      "bundleIdentifier": "com.apple.FinalCut",
-      "defaultTag": [
-        "video"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
       "entryID": "github-copilot-for-xcode-60555f2d4d11",
       "rank": 229,
       "name": "",
@@ -3103,19 +2114,6 @@
       "bundleIdentifier": null,
       "defaultTag": [
         "ai-tools",
-        "audio"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-logic10-69f8eefc0ddf",
-      "rank": 233,
-      "name": "",
-      "normalizedName": "logic-pro",
-      "bundleIdentifier": "com.apple.logic10",
-      "defaultTag": [
         "audio"
       ],
       "sourceEvidence": [
@@ -3223,19 +2221,6 @@
       "bundleIdentifier": null,
       "defaultTag": [
         "Font"
-      ],
-      "sourceEvidence": [
-        "curated_tager_catalog"
-      ]
-    },
-    {
-      "entryID": "com-apple-testflight-cfe027705d73",
-      "rank": 242,
-      "name": "",
-      "normalizedName": "testflight",
-      "bundleIdentifier": "com.apple.TestFlight",
-      "defaultTag": [
-        "ide"
       ],
       "sourceEvidence": [
         "curated_tager_catalog"

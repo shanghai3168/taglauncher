@@ -46,10 +46,6 @@
       "note": "用于保存和管理 Git 凭据，适合多个代码托管平台登录"
     },
     {
-      "entryID": "com-apple-finder-2de1d8bbb107",
-      "note": "macOS 系统自带工具，适合完成对应的系统管理或日常操作"
-    },
-    {
       "entryID": "com-mitchellh-ghostty-5194f8485e90",
       "note": "开发者工具，适合命令行、构建、调试或工程管理"
     },
@@ -72,10 +68,6 @@
     {
       "entryID": "1password-cli-85e1ca6fa403",
       "note": "账号安全工具，适合管理密码、验证码和通行密钥"
-    },
-    {
-      "entryID": "com-apple-safari-b2041c4573f8",
-      "note": "Apple 官方浏览器，省电、隐私和生态联动是强项"
     },
     {
       "entryID": "com-anthropic-claudefordesktop-b2f723339fad",
@@ -102,10 +94,6 @@
       "note": "轻量但强大的代码编辑器，插件生态非常完整"
     },
     {
-      "entryID": "com-apple-mail-9c1e969ca734",
-      "note": "系统邮件客户端，多个邮箱可以集中处理"
-    },
-    {
       "entryID": "md-obsidian-9f1625d466f0",
       "note": "本地 Markdown 知识库，适合长期沉淀自己的第二大脑"
     },
@@ -128,10 +116,6 @@
     {
       "entryID": "com-tencent-meeting-5bd65448f293",
       "note": "腾讯会议入口，中文办公和远程协作很常见"
-    },
-    {
-      "entryID": "com-apple-mobilesms-a7066fed8087",
-      "note": "iMessage 和短信入口，Mac 上回消息更快"
     },
     {
       "entryID": "com-mojang-minecraftlauncher-606072fb1e80",
@@ -174,10 +158,6 @@
       "note": "Android 官方 IDE，开发和调试 Android App 必备"
     },
     {
-      "entryID": "com-apple-facetime-96f99030aef8",
-      "note": "苹果生态里的音视频通话入口"
-    },
-    {
       "entryID": "maccy-0c7236cb0f2d",
       "note": "剪贴板历史工具，复制过的内容随时找回来"
     },
@@ -190,10 +170,6 @@
       "note": "流媒体音乐播放器，工作和放松都能配一首歌"
     },
     {
-      "entryID": "com-apple-ical-8e998503177c",
-      "note": "把日程从脑子里搬出来，给时间一张可视化地图"
-    },
-    {
       "entryID": "blackhole-2ch-0b7c58e0297a",
       "note": "虚拟音频驱动，适合录屏、直播和音频路由"
     },
@@ -204,10 +180,6 @@
     {
       "entryID": "com-electron-lark-6559e48147f2",
       "note": "飞书协作入口，中文团队的聊天、文档和会议都在这"
-    },
-    {
-      "entryID": "com-apple-notes-aaf1d7cf1c90",
-      "note": "最快的系统备忘录，文字、图片、清单都能收"
     },
     {
       "entryID": "com-electron-ollama-25be0e7340d2",
@@ -238,10 +210,6 @@
       "note": "编程开发工具，适合编写、阅读和维护代码"
     },
     {
-      "entryID": "com-apple-reminders-92a9335b31bb",
-      "note": "待办和提醒事项，适合抓住日常小任务"
-    },
-    {
       "entryID": "com-openai-chat-7c12a7107aad",
       "note": "把 AI 助手放到桌面，写作、学习和头脑风暴随手就来"
     },
@@ -260,10 +228,6 @@
     {
       "entryID": "com-kingsoft-wpsoffice-mac-c371eb320d54",
       "note": "办公套件，适合编辑文档、表格和演示稿"
-    },
-    {
-      "entryID": "com-apple-photos-9678510fed1e",
-      "note": "系统照片库，管理、编辑和同步照片的主入口"
     },
     {
       "entryID": "adobe-acrobat-reader-fb99f7bea88f",
@@ -290,14 +254,6 @@
       "note": "网页浏览器，适合日常上网和访问 Web 服务"
     },
     {
-      "entryID": "com-apple-music-63ea41e016ea",
-      "note": "本地和流媒体音乐播放器"
-    },
-    {
-      "entryID": "com-apple-terminal-77aba1385326",
-      "note": "命令行入口，Mac 的隐藏驾驶舱"
-    },
-    {
       "entryID": "utm-f2a3e184ea9f",
       "note": "虚拟化或远程连接工具，适合运行系统环境和访问远程电脑"
     },
@@ -310,260 +266,12 @@
       "note": "音乐播放器，适合听歌、管理歌单和使用腾讯音乐服务"
     },
     {
-      "entryID": "com-apple-activitymonitor-1ca0c04d6757",
-      "note": "Mac 的仪表盘，专看谁在耗电、吃内存、拖慢电脑"
-    },
-    {
-      "entryID": "com-apple-airport-airportutility-85b3849d7d98",
-      "note": "管理 AirPort 和 Time Capsule 的老派网络工具"
-    },
-    {
-      "entryID": "com-apple-appstore-0619ceddf32a",
-      "note": "Mac 官方软件商店，找应用、更新和订阅都从这里开始"
-    },
-    {
-      "entryID": "com-apple-apps-launcher-c27c2e6c3e15",
-      "note": "一个轻量应用入口，帮你从系统层面快速打开 App"
-    },
-    {
-      "entryID": "com-apple-audio-audiomidisetup-8327be183cc9",
-      "note": "管音频设备和 MIDI 路由，音乐人和调试党很常用"
-    },
-    {
-      "entryID": "com-apple-automator-3134734f076f",
-      "note": "不写代码也能串起一串 Mac 自动化动作"
-    },
-    {
-      "entryID": "com-apple-bluetoothfileexchange-a83f24bdfabc",
-      "note": "用蓝牙收发文件，古早但关键时能救急"
-    },
-    {
-      "entryID": "com-apple-ibooksx-61d0b1b4ae4c",
-      "note": "阅读和管理电子书的入口，适合把 Mac 变成书桌"
-    },
-    {
-      "entryID": "com-apple-bootcampassistant-e4ab0159032f",
-      "note": "Intel Mac 安装 Windows 的官方向导"
-    },
-    {
-      "entryID": "com-apple-calculator-390516777a37",
-      "note": "小计算器，单位换算和程序员模式也藏在里面"
-    },
-    {
-      "entryID": "com-apple-chess-8ccbf1801854",
-      "note": "系统自带国际象棋，摸鱼时比刷网页更优雅"
-    },
-    {
-      "entryID": "com-apple-clock-f922597106e9",
-      "note": "闹钟、计时器、秒表和世界时钟的统一入口"
-    },
-    {
       "entryID": "cmux-3a661d84a58c",
       "note": "适合整理媒体元数据、命名或封装文件"
     },
     {
-      "entryID": "com-apple-colorsyncutility-68af0cd69154",
-      "note": "查看和修复色彩配置文件，处理显示和打印色差"
-    },
-    {
-      "entryID": "com-apple-console-5e449417a9e8",
-      "note": "看系统日志的窗口，排查异常时很有用"
-    },
-    {
-      "entryID": "com-apple-addressbook-0b4e2b893a86",
-      "note": "通讯录中枢，邮件、信息和 FaceTime 都会用到它"
-    },
-    {
-      "entryID": "com-apple-dictionary-4625013af142",
-      "note": "离线词典和同义词库，写作查词不用开浏览器"
-    },
-    {
-      "entryID": "com-apple-digitalcolormeter-fb99a6aa0c0b",
-      "note": "屏幕取色器，设计师临时取色的小神器"
-    },
-    {
-      "entryID": "com-apple-diskutility-48d48cee3d46",
-      "note": "管磁盘、分区、格式化和急救，别乱点但很重要"
-    },
-    {
-      "entryID": "com-apple-findmy-f15882533adf",
-      "note": "找设备、找物品，也让丢失的 Mac 有回家的线索"
-    },
-    {
-      "entryID": "com-apple-fontbook-83009f0e620e",
-      "note": "字体安装和管理中心，设计前先管好字体"
-    },
-    {
-      "entryID": "com-apple-freeform-c79ff8861497",
-      "note": "无限白板，适合头脑风暴、草图和乱七八糟的想法"
-    },
-    {
-      "entryID": "com-apple-games-18b06d160812",
-      "note": "Apple 游戏入口，集中管理可玩的 Apple Arcade 内容"
-    },
-    {
-      "entryID": "com-apple-grapher-dde725719597",
-      "note": "把方程画成图，数学可视化的隐藏工具"
-    },
-    {
-      "entryID": "com-apple-home-339f72ecc4b8",
-      "note": "智能家居控制入口，可管理灯光、空调等设备"
-    },
-    {
-      "entryID": "com-apple-image-capture-8de5b7375bed",
-      "note": "从相机或扫描仪导入图片，朴素但稳定"
-    },
-    {
-      "entryID": "com-apple-generativeplaygroundapp-05897f8dbe4c",
-      "note": "用 Apple 智能生成图像，适合快速玩创意草稿"
-    },
-    {
-      "entryID": "com-apple-imovieapp-00a9c7493d26",
-      "note": "入门级视频剪辑，家庭视频和轻量短片够用"
-    },
-    {
-      "entryID": "com-apple-screencontinuity-867a48a76333",
-      "note": "在 Mac 上直接操作 iPhone，少一次伸手拿手机"
-    },
-    {
-      "entryID": "com-apple-journal-29ceb46d5ff5",
-      "note": "记录日常片段，让碎碎念慢慢变成个人时间线"
-    },
-    {
-      "entryID": "com-apple-iwork-keynote-e86356f31ec2",
-      "note": "苹果式演示文稿工具，做漂亮幻灯片很顺手"
-    },
-    {
       "entryID": "com-riotgames-leagueoflegends-ee692e90efde",
       "note": "英雄联盟客户端，经典团队竞技游戏入口"
-    },
-    {
-      "entryID": "com-apple-magnifier-c9044527cd0d",
-      "note": "放大屏幕细节，给视力和精细检查一个帮手"
-    },
-    {
-      "entryID": "com-apple-maps-310ca6c69cea",
-      "note": "查路线、看城市，也能把目的地推给 iPhone"
-    },
-    {
-      "entryID": "com-apple-migrateassistant-5f03ff480fe8",
-      "note": "换新 Mac 时搬家，把旧资料迁到新机器"
-    },
-    {
-      "entryID": "com-apple-exposelauncher-62e07c598f71",
-      "note": "窗口和桌面的空中俯视图，乱了就看它"
-    },
-    {
-      "entryID": "com-apple-news-7614a9b54b68",
-      "note": "苹果新闻入口，适合看精选媒体内容"
-    },
-    {
-      "entryID": "com-apple-iwork-numbers-361a6aaf7056",
-      "note": "苹果表格工具，轻量报表比 Excel 更清爽"
-    },
-    {
-      "entryID": "com-apple-iwork-pages-d6f13bb4e29c",
-      "note": "苹果文字处理器，写文档和排版都好看"
-    },
-    {
-      "entryID": "com-apple-passwords-08719cef9f02",
-      "note": "系统密码管家，账号、验证码和通行密钥集中管"
-    },
-    {
-      "entryID": "com-apple-mobilephone-5739fb6f2a60",
-      "note": "借助手机在 Mac 上接打电话"
-    },
-    {
-      "entryID": "com-apple-photobooth-9d976a9cdfcd",
-      "note": "摄像头自拍和小特效，测试摄像头也方便"
-    },
-    {
-      "entryID": "com-apple-podcasts-4a2a186dcc8f",
-      "note": "听播客的官方入口，通勤和学习都能用"
-    },
-    {
-      "entryID": "com-apple-preview-9ef385a7e445",
-      "note": "Mac 最被低估的工具：看图、批注 PDF、简单编辑全能"
-    },
-    {
-      "entryID": "com-apple-printcenter-5a8f324fe84d",
-      "note": "查看和管理打印队列，卡纸卡任务先看这里"
-    },
-    {
-      "entryID": "com-apple-quicktimeplayerx-f2aee71b906d",
-      "note": "播放、录屏、录音都能干的老牌工具"
-    },
-    {
-      "entryID": "com-apple-screensharing-3d1e02ff893a",
-      "note": "远程控制另一台 Mac，帮人修电脑很方便"
-    },
-    {
-      "entryID": "com-apple-screenshot-launcher-f3c7a7a2c583",
-      "note": "截图和录屏入口，Shift-Command-5 的背后就是它"
-    },
-    {
-      "entryID": "com-apple-scripteditor2-f8a19fe3d1d8",
-      "note": "写和运行 AppleScript，控制老派 Mac 自动化"
-    },
-    {
-      "entryID": "com-apple-sfsymbols-9dc6c630daed",
-      "note": "Apple 官方符号库，做原生界面必备"
-    },
-    {
-      "entryID": "com-apple-shortcuts-f629e5e3e216",
-      "note": "把多个动作串成一键流程，是现代版 Automator"
-    },
-    {
-      "entryID": "com-apple-siri-launcher-77250557ebe9",
-      "note": "语音助手入口，能查信息、开 App、控制系统"
-    },
-    {
-      "entryID": "com-apple-stickies-9ed4ed5e1103",
-      "note": "桌面便利贴，临时记事就贴在眼前"
-    },
-    {
-      "entryID": "com-apple-stocks-6a1a80292efe",
-      "note": "看股票和市场动态的小面板"
-    },
-    {
-      "entryID": "com-apple-systemprofiler-fdfe3344179e",
-      "note": "查看硬件、软件和设备详情，查配置最准确"
-    },
-    {
-      "entryID": "com-apple-systempreferences-5632452dbd3d",
-      "note": "Mac 设置总入口，几乎所有系统开关都在这里"
-    },
-    {
-      "entryID": "com-apple-textedit-64d314fbf2b9",
-      "note": "最朴素的文本编辑器，开 TXT 和 RTF 很快"
-    },
-    {
-      "entryID": "com-apple-backup-launcher-918b22a1257e",
-      "note": "系统备份工具，后悔药就靠它提前准备"
-    },
-    {
-      "entryID": "com-apple-helpviewer-6e90a07b56cc",
-      "note": "苹果官方小技巧，偶尔能发现你没用过的功能"
-    },
-    {
-      "entryID": "com-apple-tv-28f9f8e2e47b",
-      "note": "影视内容播放和管理入口"
-    },
-    {
-      "entryID": "com-apple-voicememos-f4eb9f35a1b8",
-      "note": "快速录音，会议灵感和采访素材先存下来"
-    },
-    {
-      "entryID": "com-apple-voiceoverutility-9623fe74d030",
-      "note": "管理读屏辅助功能，让 Mac 更适合视觉障碍用户"
-    },
-    {
-      "entryID": "com-apple-weather-a1b814774719",
-      "note": "天气预报入口，出门前看一眼更稳"
-    },
-    {
-      "entryID": "com-apple-dt-xcode-66da3f910767",
-      "note": "苹果开发全家桶，写 iOS 和 macOS App 的主战场"
     },
     {
       "entryID": "com-github-githubclient-c94dd11b1995",
@@ -874,10 +582,6 @@
       "note": "适合截图、标注、识别文字或制作视觉反馈"
     },
     {
-      "entryID": "com-apple-garageband10-af435df6c94a",
-      "note": "苹果入门音乐制作工具，录音和编曲都容易上手"
-    },
-    {
       "entryID": "com-microsoft-excel-2ff4add4000d",
       "note": "表格和数据分析老将，财务、运营和模型都靠它"
     },
@@ -914,10 +618,6 @@
       "note": "针对 macOS 开发的轻量级代码编辑器"
     },
     {
-      "entryID": "com-apple-finalcut-6383fea0b510",
-      "note": "苹果专业视频剪辑工具，剪片、调色和导出都很快"
-    },
-    {
       "entryID": "github-copilot-for-xcode-60555f2d4d11",
       "note": "把 AI 带进开发流程，适合写代码、调试和自动化"
     },
@@ -932,10 +632,6 @@
     {
       "entryID": "finetune-5431832269e6",
       "note": "AI 音频工具，适合整理、转写或优化声音内容"
-    },
-    {
-      "entryID": "com-apple-logic10-69f8eefc0ddf",
-      "note": "苹果专业音乐制作工具，录音、编曲和混音都很强"
     },
     {
       "entryID": "com-getdropbox-dropbox-72c7db8f1763",
@@ -968,10 +664,6 @@
     {
       "entryID": "font-jetbrains-mono-nerd-font-4a662d68a338",
       "note": "字体资源包，适合为编辑器、终端或设计工作补充字体"
-    },
-    {
-      "entryID": "com-apple-testflight-cfe027705d73",
-      "note": "Apple 应用测试工具，适合安装和体验测试版 App"
     },
     {
       "entryID": "claude-code-latest-ba2522b660cf",

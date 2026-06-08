@@ -1,0 +1,90 @@
+normalizedName,tager,bundleIdentifier,defaultNote-ZH
+finder,file-management,com.apple.finder,macOS 系统自带工具，适合完成对应的系统管理或日常操作
+safari,browser,com.apple.Safari,Apple 官方浏览器，省电、隐私和生态联动是强项
+mail,communication,com.apple.mail,系统邮件客户端，多个邮箱可以集中处理
+messages,communication,com.apple.MobileSMS,iMessage 和短信入口，Mac 上回消息更快
+facetime,communication|video,com.apple.FaceTime,苹果生态里的音视频通话入口
+calendar,communication|GTD,com.apple.iCal,把日程从脑子里搬出来，给时间一张可视化地图
+notes,Notes,com.apple.Notes,最快的系统备忘录，文字、图片、清单都能收
+reminders,GTD,com.apple.reminders,待办和提醒事项，适合抓住日常小任务
+photos,picture-photo,com.apple.Photos,系统照片库，管理、编辑和同步照片的主入口
+music,audio,com.apple.Music,本地和流媒体音乐播放器
+terminal,terminal-tools,com.apple.Terminal,命令行入口，Mac 的隐藏驾驶舱
+activity-monitor,system-maintenance,com.apple.ActivityMonitor,Mac 的仪表盘，专看谁在耗电、吃内存、拖慢电脑
+airport-utility,system,com.apple.airport.airportutility,管理 AirPort 和 Time Capsule 的老派网络工具
+app-store,system,com.apple.AppStore,Mac 官方软件商店，找应用、更新和订阅都从这里开始
+apps,system,com.apple.apps.launcher,一个轻量应用入口，帮你从系统层面快速打开 App
+audio-midi-setup,audio|device-management,com.apple.audio.audiomidisetup,管音频设备和 MIDI 路由，音乐人和调试党很常用
+automator,Automation,com.apple.automator,不写代码也能串起一串 Mac 自动化动作
+bluetooth-file-exchange,transfer|device-management,com.apple.bluetoothfileexchange,用蓝牙收发文件，古早但关键时能救急
+books,writing|education,com.apple.iBooksX,阅读和管理电子书的入口，适合把 Mac 变成书桌
+boot-camp-assistant,system,com.apple.bootcampassistant,Intel Mac 安装 Windows 的官方向导
+calculator,utilities,com.apple.calculator,小计算器，单位换算和程序员模式也藏在里面
+chess,game,com.apple.chess,系统自带国际象棋，适合短暂休息和练习棋局
+clock,GTD,com.apple.clock,闹钟、计时器、秒表和世界时钟的统一入口
+colorsync-utility,picture-photo,com.apple.colorsyncutility,查看和修复色彩配置文件，处理显示和打印色差
+console,system-maintenance,com.apple.console,看系统日志的窗口，排查异常时很有用
+contacts,communication,com.apple.addressbook,通讯录中枢，邮件、信息和 FaceTime 都会用到它
+dictionary,writing|education,com.apple.dictionary,离线词典和同义词库，写作查词不用开浏览器
+digital-color-meter,picture-photo,com.apple.digitalcolormeter,屏幕取色器，设计师临时取色的小神器
+disk-utility,system-maintenance,com.apple.DiskUtility,管理磁盘、分区、格式化和急救，处理存储问题很重要
+find-my,system,com.apple.findmy,找设备、找物品，也让丢失的 Mac 有回家的线索
+font-book,Font,com.apple.fontbook,字体安装和管理中心，设计前先管好字体
+freeform,Notes,com.apple.freeform,无限白板，适合头脑风暴、草图和自由整理想法
+games,game,com.apple.games,Apple 游戏入口，集中管理可玩的 Apple Arcade 内容
+grapher,education,com.apple.grapher,把方程画成图，数学可视化的隐藏工具
+home,system,com.apple.home,智能家居控制入口，可管理灯光、空调等设备
+image-capture,picture-photo|transfer|device-management,com.apple.image_capture,从相机或扫描仪导入图片，朴素但稳定
+image-playground,ai-tools|picture-photo,com.apple.generativeplaygroundapp,用 Apple 智能生成图像，适合快速玩创意草稿
+imovie,video,com.apple.iMovieApp,入门级视频剪辑，家庭视频和轻量短片够用
+iphone-mirroring,device-management,com.apple.screencontinuity,在 Mac 上直接操作 iPhone，跨设备处理消息和应用
+journal,Notes,com.apple.journal,记录日常片段，让碎碎念慢慢变成个人时间线
+keynote,office,com.apple.iWork.Keynote,苹果式演示文稿工具，做漂亮幻灯片很顺手
+magnifier,system,com.apple.magnifier,放大屏幕细节，给视力和精细检查一个帮手
+maps,GTD,com.apple.Maps,查路线、看城市，也能把目的地推给 iPhone
+migration-assistant,transfer,com.apple.migrateassistant,换新 Mac 时搬家，把旧资料迁到新机器
+mission-control,system,com.apple.exposelauncher,窗口和桌面的空中俯视图，乱了就看它
+news,media,com.apple.news,苹果新闻入口，适合看精选媒体内容
+numbers,office,com.apple.iWork.Numbers,苹果表格工具，轻量报表比 Excel 更清爽
+pages,writing|office,com.apple.iWork.Pages,苹果文字处理器，写文档和排版都好看
+passwords,security,com.apple.passwords,系统密码管家，账号、验证码和通行密钥集中管理
+phone,communication,com.apple.mobilephone,借助手机在 Mac 上接打电话
+about-this-mac,system,com.apple.AboutThisMacLauncher,查看 Mac 型号、系统版本和序列号
+archive-utility,file-management|utilities,com.apple.archiveutility,压缩和解压 ZIP 等归档文件的系统工具
+desk-view,video|device-management,com.apple.DeskCam,配合连续互通摄像头显示桌面视角
+directory-utility,system|network-tools,com.apple.DirectoryUtility,配置目录服务、LDAP 和网络账号连接
+dvd-player,video,com.apple.DVDPlayer,播放 DVD 光盘和本地 DVD 内容
+expansion-slot-utility,device-management|system,com.apple.ExpansionSlotUtility,查看和配置 Mac Pro 扩展槽
+feedback-assistant,system,com.apple.appleseed.FeedbackAssistant,向 Apple 提交系统反馈和诊断报告
+folder-actions-setup,Automation,com.apple.FolderActionsSetup,为文件夹配置自动触发的脚本动作
+ios-app-installer,utilities,com.apple.IPAInstaller,安装 iOS App 包的系统辅助工具
+keychain-access,security,com.apple.keychainaccess,管理密码、证书、密钥和安全项目
+ticket-viewer,security|network-tools,com.apple.Ticket-Viewer,查看 Kerberos 票据和身份验证状态
+wireless-diagnostics,network-tools|system-maintenance,com.apple.wifi.diagnostics,诊断 Wi-Fi 问题并生成无线报告
+photo-booth,picture-photo,com.apple.photobooth,摄像头自拍和小特效，测试摄像头也方便
+podcasts,audio,com.apple.podcasts,听播客的官方入口，通勤和学习都能用
+preview,picture-photo|PDF,com.apple.Preview,Mac 最被低估的工具：看图、批注 PDF、简单编辑全能
+print-center,system,com.apple.printcenter,查看和管理打印队列，卡纸卡任务先看这里
+quicktime-player,video|audio,com.apple.quicktimeplayerx,播放、录屏、录音都能干的老牌工具
+screen-sharing,communication|network-tools,com.apple.screensharing,远程控制另一台 Mac，帮人修电脑很方便
+screenshot,video|picture-photo,com.apple.screenshot.launcher,截图和录屏入口，Shift-Command-5 的背后就是它
+script-editor,Automation,com.apple.scripteditor2,写和运行 AppleScript，控制老派 Mac 自动化
+sf-symbols,ui-prototyping,com.apple.sfsymbols,Apple 官方符号库，做原生界面必备
+shortcuts,Automation,com.apple.shortcuts,把多个动作串成一键流程，是现代版 Automator
+siri,system,com.apple.siri.launcher,语音助手入口，能查信息、开 App、控制系统
+stickies,Notes,com.apple.stickies,桌面便利贴，临时记事就贴在眼前
+stocks,finance,com.apple.stocks,看股票和市场动态的小面板
+system-information,device-management,com.apple.systemprofiler,查看硬件、软件和设备详情，查配置最准确
+system-settings,system,com.apple.systempreferences,Mac 设置总入口，几乎所有系统开关都在这里
+textedit,writing,com.apple.textedit,最朴素的文本编辑器，开 TXT 和 RTF 很快
+time-machine,system,com.apple.backup.launcher,系统备份工具，适合提前准备文件恢复方案
+tips,education,com.apple.helpviewer,苹果官方小技巧，偶尔能发现你没用过的功能
+tv,video,com.apple.TV,影视内容播放和管理入口
+voice-memos,audio,com.apple.voicememos,快速录音，会议灵感和采访素材先存下来
+voiceover-utility,system,com.apple.voiceoverutility,管理读屏辅助功能，让 Mac 更适合视觉障碍用户
+weather,utilities,com.apple.weather,天气预报入口，出门前看一眼更稳
+xcode,ide,com.apple.dt.Xcode,苹果开发工具套件，适合编写 iOS 和 macOS App
+garageband,audio,com.apple.garageband10,苹果入门音乐制作工具，录音和编曲都容易上手
+final-cut-pro,video,com.apple.FinalCut,苹果专业视频剪辑工具，剪片、调色和导出都很快
+logic-pro,audio,com.apple.logic10,苹果专业音乐制作工具，录音、编曲和混音都很强
+testflight,ide,com.apple.TestFlight,Apple 应用测试工具，适合安装和体验测试版 App

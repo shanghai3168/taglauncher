@@ -46,10 +46,6 @@
       "note": "Folosit pentru a salva și gestiona acreditările Git, potrivite pentru autentific"
     },
     {
-      "entryID": "com-apple-finder-2de1d8bbb107",
-      "note": "Sistemul macOS vine cu instrumente, potrivite pentru a finaliza gestionarea sist"
-    },
-    {
       "entryID": "com-mitchellh-ghostty-5194f8485e90",
       "note": "Instrumente pentru dezvoltatori pentru linia de comandă, compilare, depanare sau"
     },
@@ -72,10 +68,6 @@
     {
       "entryID": "1password-cli-85e1ca6fa403",
       "note": "Instrument de securitate a contului pentru gestionarea parolelor, codurilor de v"
-    },
-    {
-      "entryID": "com-apple-safari-b2041c4573f8",
-      "note": "Browserul oficial Apple, economisirea energiei, confidențialitatea și legătura e"
     },
     {
       "entryID": "com-anthropic-claudefordesktop-b2f723339fad",
@@ -102,10 +94,6 @@
       "note": "Un editor de cod ușor, dar puternic, cu un ecosistem de plug-in foarte complet"
     },
     {
-      "entryID": "com-apple-mail-9c1e969ca734",
-      "note": "Client de e-mail de sistem, mai multe cutii poștale pot fi procesate central"
-    },
-    {
       "entryID": "md-obsidian-9f1625d466f0",
       "note": "Baza locală de cunoștințe Markdown, potrivită pentru acumularea pe termen lung a"
     },
@@ -128,10 +116,6 @@
     {
       "entryID": "com-tencent-meeting-5bd65448f293",
       "note": "Intrarea la conferința Tencent, biroul chinez și colaborarea la distanță sunt fo"
-    },
-    {
-      "entryID": "com-apple-mobilesms-a7066fed8087",
-      "note": "Portal iMessage și SMS, răspunde la mesaje mai rapid pe Mac"
     },
     {
       "entryID": "com-mojang-minecraftlauncher-606072fb1e80",
@@ -174,10 +158,6 @@
       "note": "IDE oficial Android, esențial pentru dezvoltarea și depanarea aplicațiilor Andro"
     },
     {
-      "entryID": "com-apple-facetime-96f99030aef8",
-      "note": "Intrare apel audio și video în ecosistemul Apple"
-    },
-    {
       "entryID": "maccy-0c7236cb0f2d",
       "note": "Instrument de istorie Clipboard, conținutul copiat poate fi preluat în orice mom"
     },
@@ -190,10 +170,6 @@
       "note": "Redând muzică în flux, poți avea o melodie atât pentru muncă, cât și pentru rela"
     },
     {
-      "entryID": "com-apple-ical-8e998503177c",
-      "note": "Scoate-ți programul din cap și oferă timpului o hartă vizuală"
-    },
-    {
       "entryID": "blackhole-2ch-0b7c58e0297a",
       "note": "Driver audio virtual, potrivit pentru înregistrarea ecranului, transmisia live ș"
     },
@@ -204,10 +180,6 @@
     {
       "entryID": "com-electron-lark-6559e48147f2",
       "note": "Portalul de colaborare Feishu, unde se află chat-urile, documentele și întâlniri"
-    },
-    {
-      "entryID": "com-apple-notes-aaf1d7cf1c90",
-      "note": "Cele mai rapide note de sistem, text, imagini și liste pot fi colectate"
     },
     {
       "entryID": "com-electron-ollama-25be0e7340d2",
@@ -238,10 +210,6 @@
       "note": "Instrumente de dezvoltare de programare pentru scrierea, citirea și întreținerea"
     },
     {
-      "entryID": "com-apple-reminders-92a9335b31bb",
-      "note": "Activități și mementouri, potrivite pentru îndeplinirea sarcinilor zilnice mici"
-    },
-    {
       "entryID": "com-openai-chat-7c12a7107aad",
       "note": "Puneți asistentul AI pe desktop și scrieți, studiați și gândiți-vă la îndemână"
     },
@@ -260,10 +228,6 @@
     {
       "entryID": "com-kingsoft-wpsoffice-mac-c371eb320d54",
       "note": "Suită Office pentru editarea documentelor, foilor de calcul și prezentărilor"
-    },
-    {
-      "entryID": "com-apple-photos-9678510fed1e",
-      "note": "Biblioteca foto de sistem, intrarea principală pentru gestionarea, editarea și s"
     },
     {
       "entryID": "adobe-acrobat-reader-fb99f7bea88f",
@@ -290,14 +254,6 @@
       "note": "Browser web, potrivit pentru navigarea zilnică pe Internet și accesarea servicii"
     },
     {
-      "entryID": "com-apple-music-63ea41e016ea",
-      "note": "Player muzical local și în flux"
-    },
-    {
-      "entryID": "com-apple-terminal-77aba1385326",
-      "note": "Intrare în linia de comandă, cabina ascunsă a Mac"
-    },
-    {
       "entryID": "utm-f2a3e184ea9f",
       "note": "Instrumente de virtualizare sau de conectare la distanță, potrivite pentru rular"
     },
@@ -310,260 +266,12 @@
       "note": "Player muzical, potrivit pentru ascultarea melodiilor, gestionarea listelor de r"
     },
     {
-      "entryID": "com-apple-activitymonitor-1ca0c04d6757",
-      "note": "Tabloul de bord al Mac pentru a vedea cine consumă energie, memorie și încetineș"
-    },
-    {
-      "entryID": "com-apple-airport-airportutility-85b3849d7d98",
-      "note": "Instrumente vechi de rețea pentru gestionarea AirPort-urilor și Time Capsules"
-    },
-    {
-      "entryID": "com-apple-appstore-0619ceddf32a",
-      "note": "Magazinul oficial de software pentru Mac, începe aici pentru a găsi aplicații, a"
-    },
-    {
-      "entryID": "com-apple-apps-launcher-c27c2e6c3e15",
-      "note": "Un portal de aplicații ușor pentru a vă ajuta să deschideți rapid aplicații de l"
-    },
-    {
-      "entryID": "com-apple-audio-audiomidisetup-8327be183cc9",
-      "note": "Echipamente audio și rutare MIDI, utilizate în mod obișnuit de muzicieni și depa"
-    },
-    {
-      "entryID": "com-apple-automator-3134734f076f",
-      "note": "Puteți înșira un șir de acțiuni de automatizare Mac fără a scrie cod"
-    },
-    {
-      "entryID": "com-apple-bluetoothfileexchange-a83f24bdfabc",
-      "note": "Utilizarea Bluetooth pentru a trimite și a primi fișiere este de modă veche, dar"
-    },
-    {
-      "entryID": "com-apple-ibooksx-61d0b1b4ae4c",
-      "note": "Un punct de intrare pentru citirea și gestionarea cărților electronice, potrivit"
-    },
-    {
-      "entryID": "com-apple-bootcampassistant-e4ab0159032f",
-      "note": "Ghid oficial pentru instalarea Windows pe Intel Mac"
-    },
-    {
-      "entryID": "com-apple-calculator-390516777a37",
-      "note": "Calculatorul mic, conversia unității și modul programator sunt, de asemenea, asc"
-    },
-    {
-      "entryID": "com-apple-chess-8ccbf1801854",
-      "note": "Sistemul vine cu șah, ceea ce face pescuitul mai elegant decât navigarea pe web"
-    },
-    {
-      "entryID": "com-apple-clock-f922597106e9",
-      "note": "Un portal unificat pentru alarme, cronometre, cronometre și ceasuri mondiale"
-    },
-    {
       "entryID": "cmux-3a661d84a58c",
       "note": "Ideal pentru organizarea metadatelor media, denumirea sau încapsularea fișierelo"
     },
     {
-      "entryID": "com-apple-colorsyncutility-68af0cd69154",
-      "note": "Vizualizați și reparați profilele de culoare, gestionați afișarea și imprimarea"
-    },
-    {
-      "entryID": "com-apple-console-5e449417a9e8",
-      "note": "Fereastra de vizualizare a jurnalelor de sistem este foarte utilă la depanarea a"
-    },
-    {
-      "entryID": "com-apple-addressbook-0b4e2b893a86",
-      "note": "Centru de contacte pentru e-mail, mesaje și FaceTime"
-    },
-    {
-      "entryID": "com-apple-dictionary-4625013af142",
-      "note": "Dicționar și tezaur offline, nu este nevoie să deschideți un browser când scrieț"
-    },
-    {
-      "entryID": "com-apple-digitalcolormeter-fb99a6aa0c0b",
-      "note": "Selector de culori pentru ecran, un mic artefact pentru care designerii pot aleg"
-    },
-    {
-      "entryID": "com-apple-diskutility-48d48cee3d46",
-      "note": "Disc, partiție, formatare și prim ajutor, nu vă încurcați cu el, dar este import"
-    },
-    {
-      "entryID": "com-apple-findmy-f15882533adf",
-      "note": "Găsiți echipament, găsiți obiecte și oferiți-vă Mac-ul pierdut indicii pentru a"
-    },
-    {
-      "entryID": "com-apple-fontbook-83009f0e620e",
-      "note": "Centru de instalare și gestionare a fonturilor, gestionați fonturile înainte de"
-    },
-    {
-      "entryID": "com-apple-freeform-c79ff8861497",
-      "note": "Table albe nelimitate pentru brainstorming, schițe și idei aleatorii"
-    },
-    {
-      "entryID": "com-apple-games-18b06d160812",
-      "note": "Portal de jocuri Apple pentru a gestiona centralizat conținutul Apple Arcade car"
-    },
-    {
-      "entryID": "com-apple-grapher-dde725719597",
-      "note": "Ecuații grafice, un instrument ascuns pentru vizualizarea matematică"
-    },
-    {
-      "entryID": "com-apple-home-339f72ecc4b8",
-      "note": "Intrarea inteligentă pentru controlul casei poate gestiona iluminatul, aerul con"
-    },
-    {
-      "entryID": "com-apple-image-capture-8de5b7375bed",
-      "note": "Importați imagini de pe cameră sau scaner, simplu, dar stabil"
-    },
-    {
-      "entryID": "com-apple-generativeplaygroundapp-05897f8dbe4c",
-      "note": "Generați imagini cu inteligența Apple, perfecte pentru o creație rapidă"
-    },
-    {
-      "entryID": "com-apple-imovieapp-00a9c7493d26",
-      "note": "Suficient pentru editare video la nivel de intrare, videoclipuri acasă și scurtm"
-    },
-    {
-      "entryID": "com-apple-screencontinuity-867a48a76333",
-      "note": "Operați iPhone-ul direct pe Mac, eliminând nevoia de a ajunge la telefon o dată"
-    },
-    {
-      "entryID": "com-apple-journal-29ceb46d5ff5",
-      "note": "Înregistrați fragmente zilnice și transformați-vă încet gândurile într-o cronolo"
-    },
-    {
-      "entryID": "com-apple-iwork-keynote-e86356f31ec2",
-      "note": "Instrument de prezentare în stil Apple, ușor de creat diapozitive frumoase"
-    },
-    {
       "entryID": "com-riotgames-leagueoflegends-ee692e90efde",
       "note": "Client League of Legends, intrarea la jocurile clasice de competiție pe echipe"
-    },
-    {
-      "entryID": "com-apple-magnifier-c9044527cd0d",
-      "note": "Măriți detaliile ecranului pentru a vă ajuta cu vederea și inspecția fină"
-    },
-    {
-      "entryID": "com-apple-maps-310ca6c69cea",
-      "note": "Verificați rute, vizualizați orașe și trimiteți destinații pe iPhone"
-    },
-    {
-      "entryID": "com-apple-migrateassistant-5f03ff480fe8",
-      "note": "Când vă mutați pe un nou Mac, mutați datele vechi pe noul computer"
-    },
-    {
-      "entryID": "com-apple-exposelauncher-62e07c598f71",
-      "note": "Vedere aeriană a ferestrei și a desktopului, doar uitați-vă la el dacă este dezo"
-    },
-    {
-      "entryID": "com-apple-news-7614a9b54b68",
-      "note": "Portalul Apple News, potrivit pentru vizualizarea conținutului media selectat"
-    },
-    {
-      "entryID": "com-apple-iwork-numbers-361a6aaf7056",
-      "note": "Instrumentul Apple Sheets, rapoartele ușoare sunt mai revigorante decât Excel"
-    },
-    {
-      "entryID": "com-apple-iwork-pages-d6f13bb4e29c",
-      "note": "Procesor de text Apple, frumos pentru scrierea documentelor și compoziție"
-    },
-    {
-      "entryID": "com-apple-passwords-08719cef9f02",
-      "note": "Manager de parole de sistem, management centralizat al conturilor, coduri de ver"
-    },
-    {
-      "entryID": "com-apple-mobilephone-5739fb6f2a60",
-      "note": "Efectuați apeluri pe Mac cu telefonul dvs"
-    },
-    {
-      "entryID": "com-apple-photobooth-9d976a9cdfcd",
-      "note": "Selfie-urile camerei și micile efecte speciale sunt, de asemenea, convenabile pe"
-    },
-    {
-      "entryID": "com-apple-podcasts-4a2a186dcc8f",
-      "note": "Portalul oficial pentru ascultarea podcast-urilor, util pentru navetă și studiu"
-    },
-    {
-      "entryID": "com-apple-preview-9ef385a7e445",
-      "note": "Cel mai subestimat instrument pentru Mac: vizualizați imagini, adnotați PDF-uri"
-    },
-    {
-      "entryID": "com-apple-printcenter-5a8f324fe84d",
-      "note": "Vizualizați și gestionați cozile de imprimare. Pentru sarcinile de blocare a hâr"
-    },
-    {
-      "entryID": "com-apple-quicktimeplayerx-f2aee71b906d",
-      "note": "Un instrument bine stabilit care poate reda, înregistra ecranul și înregistra su"
-    },
-    {
-      "entryID": "com-apple-screensharing-3d1e02ff893a",
-      "note": "Controlați de la distanță un alt Mac, ceea ce este foarte convenabil pentru a aj"
-    },
-    {
-      "entryID": "com-apple-screenshot-launcher-f3c7a7a2c583",
-      "note": "Captură de ecran și portal de înregistrare a ecranului, în spatele Shift-Command"
-    },
-    {
-      "entryID": "com-apple-scripteditor2-f8a19fe3d1d8",
-      "note": "Scrieți și rulați AppleScript pentru a controla automatizarea Mac de școală vech"
-    },
-    {
-      "entryID": "com-apple-sfsymbols-9dc6c630daed",
-      "note": "Biblioteca oficială de simboluri a Apple, esențială pentru interfețele native"
-    },
-    {
-      "entryID": "com-apple-shortcuts-f629e5e3e216",
-      "note": "Acordarea mai multor acțiuni în procese cu un singur clic este versiunea modernă"
-    },
-    {
-      "entryID": "com-apple-siri-launcher-77250557ebe9",
-      "note": "Intrarea asistentului vocal, poate verifica informații, deschide aplicații și po"
-    },
-    {
-      "entryID": "com-apple-stickies-9ed4ed5e1103",
-      "note": "Notele lipicioase de pe desktop, notele temporare sunt postate chiar în fața ta"
-    },
-    {
-      "entryID": "com-apple-stocks-6a1a80292efe",
-      "note": "Vedeți panouri mici pentru acțiuni și dinamica pieței"
-    },
-    {
-      "entryID": "com-apple-systemprofiler-fdfe3344179e",
-      "note": "Vizualizați detaliile hardware, software și dispozitiv pentru a găsi cea mai pre"
-    },
-    {
-      "entryID": "com-apple-systempreferences-5632452dbd3d",
-      "note": "Intrarea principală a setărilor Mac, aproape toate comutatoarele de sistem sunt"
-    },
-    {
-      "entryID": "com-apple-textedit-64d314fbf2b9",
-      "note": "Cel mai simplu editor de text, deschide TXT și RTF foarte repede"
-    },
-    {
-      "entryID": "com-apple-backup-launcher-918b22a1257e",
-      "note": "Instrument de backup al sistemului, bazați-vă pe el pentru a pregăti în avans me"
-    },
-    {
-      "entryID": "com-apple-helpviewer-6e90a07b56cc",
-      "note": "Sfaturi oficiale Apple pentru a descoperi ocazional funcții pe care nu le-ați fo"
-    },
-    {
-      "entryID": "com-apple-tv-28f9f8e2e47b",
-      "note": "Redarea conținutului de film și televiziune și intrare de gestionare"
-    },
-    {
-      "entryID": "com-apple-voicememos-f4eb9f35a1b8",
-      "note": "Înregistrați rapid, salvați mai întâi materialele de inspirație pentru întâlniri"
-    },
-    {
-      "entryID": "com-apple-voiceoverutility-9623fe74d030",
-      "note": "Gestionați funcțiile de accesibilitate pentru citirea ecranului pentru a face Ma"
-    },
-    {
-      "entryID": "com-apple-weather-a1b814774719",
-      "note": "Portalul de prognoză meteo, verificați-l înainte de a ieși pentru mai multă stab"
-    },
-    {
-      "entryID": "com-apple-dt-xcode-66da3f910767",
-      "note": "Apple dezvoltă FamilyMart, principalul câmp de luptă pentru scrierea aplicațiilo"
     },
     {
       "entryID": "com-github-githubclient-c94dd11b1995",
@@ -874,10 +582,6 @@
       "note": "Ideal pentru realizarea de capturi de ecran, adnotarea, recunoașterea textului s"
     },
     {
-      "entryID": "com-apple-garageband10-af435df6c94a",
-      "note": "Instrumentul de producție muzicală de la Apple, ușor de utilizat pentru înregist"
-    },
-    {
       "entryID": "com-microsoft-excel-2ff4add4000d",
       "note": "Un veteran în tabele și analize de date, finanțe, operațiuni și modele se bazeaz"
     },
@@ -914,10 +618,6 @@
       "note": "Un editor de cod ușor dezvoltat pentru macOS"
     },
     {
-      "entryID": "com-apple-finalcut-6383fea0b510",
-      "note": "Instrumentul profesional de editare video de la Apple, tăierea, colorarea și exp"
-    },
-    {
       "entryID": "github-copilot-for-xcode-60555f2d4d11",
       "note": "Introduceți AI în procesul de dezvoltare, potrivit pentru codare, depanare și au"
     },
@@ -932,10 +632,6 @@
     {
       "entryID": "finetune-5431832269e6",
       "note": "Instrumente audio AI, potrivite pentru organizarea, transcrierea sau optimizarea"
-    },
-    {
-      "entryID": "com-apple-logic10-69f8eefc0ddf",
-      "note": "Instrumentul profesional de producție muzicală Apple, puternic în înregistrare"
     },
     {
       "entryID": "com-getdropbox-dropbox-72c7db8f1763",
@@ -968,10 +664,6 @@
     {
       "entryID": "font-jetbrains-mono-nerd-font-4a662d68a338",
       "note": "Pachet de resurse de fonturi, potrivit pentru completarea fonturilor pentru edit"
-    },
-    {
-      "entryID": "com-apple-testflight-cfe027705d73",
-      "note": "Instrument de testare a aplicațiilor Apple, potrivit pentru instalarea și experi"
     },
     {
       "entryID": "claude-code-latest-ba2522b660cf",

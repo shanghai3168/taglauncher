@@ -211,6 +211,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         suppressReopenUntil = Date().addingTimeInterval(1.0)
         configureApplicationMenuWhenAvailable(retries: 200)
         warmAppIndexInBackground()
+        relocalizeDefaultAppNotesForCurrentLanguageAsync()
     }
 
     /// Pre-scan application folders so the first App Grid open can hydrate from cache quickly.
@@ -458,6 +459,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ) { [weak self] _ in
             self?.setupMenuBar()
             self?.configureApplicationMenuWhenAvailable()
+            self?.relocalizeDefaultAppNotesForCurrentLanguageAsync()
+        }
+    }
+
+    private func relocalizeDefaultAppNotesForCurrentLanguageAsync() {
+        DispatchQueue.global(qos: .utility).async {
+            let apps = AppIndexer.scan(useCache: true)
+            let appleChanged = AppleDefaultAppCatalog.relocalizeDefaultNotesForCurrentLanguage(apps: apps)
+            let smartStartChanged = SmartStartService.relocalizeDefaultNotesForCurrentLanguage(apps: apps)
+            guard appleChanged || smartStartChanged else { return }
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: .tagLauncherDataDidChange, object: nil)
+            }
         }
     }
 

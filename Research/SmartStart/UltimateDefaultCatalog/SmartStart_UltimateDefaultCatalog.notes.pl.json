@@ -46,10 +46,6 @@
       "note": "Służy do zapisywania danych uwierzytelniających Git i zarządzania nimi, odpowied"
     },
     {
-      "entryID": "com-apple-finder-2de1d8bbb107",
-      "note": "System macOS jest wyposażony w narzędzia odpowiednie do odpowiedniego zarządzani"
-    },
-    {
       "entryID": "com-mitchellh-ghostty-5194f8485e90",
       "note": "Narzędzia programistyczne do wiersza poleceń, kompilacji, debugowania i zarządza"
     },
@@ -72,10 +68,6 @@
     {
       "entryID": "1password-cli-85e1ca6fa403",
       "note": "Narzędzie zabezpieczające konto do zarządzania hasłami, kodami weryfikacyjnymi i"
-    },
-    {
-      "entryID": "com-apple-safari-b2041c4573f8",
-      "note": "Oficjalna przeglądarka Apple, oszczędność energii, prywatność i powiązanie ekolo"
     },
     {
       "entryID": "com-anthropic-claudefordesktop-b2f723339fad",
@@ -102,10 +94,6 @@
       "note": "Lekki, ale potężny edytor kodu z bardzo kompletnym ekosystemem wtyczek"
     },
     {
-      "entryID": "com-apple-mail-9c1e969ca734",
-      "note": "Systemowy klient poczty, wiele skrzynek pocztowych może być przetwarzanych centr"
-    },
-    {
       "entryID": "md-obsidian-9f1625d466f0",
       "note": "Lokalna baza wiedzy Markdown, odpowiednia do długoterminowej akumulacji Twojego"
     },
@@ -128,10 +116,6 @@
     {
       "entryID": "com-tencent-meeting-5bd65448f293",
       "note": "Wejście na konferencję Tencent, chińskie biuro i zdalna współpraca są bardzo pow"
-    },
-    {
-      "entryID": "com-apple-mobilesms-a7066fed8087",
-      "note": "Portal iMessage i SMS, szybciej odpowiadaj na wiadomości na komputerze Mac"
     },
     {
       "entryID": "com-mojang-minecraftlauncher-606072fb1e80",
@@ -174,10 +158,6 @@
       "note": "Oficjalne IDE Androida, niezbędne do tworzenia i debugowania aplikacji na Androi"
     },
     {
-      "entryID": "com-apple-facetime-96f99030aef8",
-      "note": "Wejście do rozmów audio i wideo w ekosystemie Apple"
-    },
-    {
       "entryID": "maccy-0c7236cb0f2d",
       "note": "Narzędzie historii schowka, skopiowane treści można odzyskać w dowolnym momencie"
     },
@@ -190,10 +170,6 @@
       "note": "Odtwarzacz muzyki strumieniowej, możesz mieć piosenkę zarówno do pracy, jak i re"
     },
     {
-      "entryID": "com-apple-ical-8e998503177c",
-      "note": "Wyrzuć harmonogram z głowy i daj czasowi wizualną mapę"
-    },
-    {
       "entryID": "blackhole-2ch-0b7c58e0297a",
       "note": "Wirtualny sterownik audio, odpowiedni do nagrywania ekranu, transmisji na żywo i"
     },
@@ -204,10 +180,6 @@
     {
       "entryID": "com-electron-lark-6559e48147f2",
       "note": "Portal współpracy Feishu, w którym znajdują się czaty, dokumenty i spotkania chi"
-    },
-    {
-      "entryID": "com-apple-notes-aaf1d7cf1c90",
-      "note": "Można gromadzić najszybsze notatki systemowe, tekst, obrazy i listy"
     },
     {
       "entryID": "com-electron-ollama-25be0e7340d2",
@@ -238,10 +210,6 @@
       "note": "Narzędzia programistyczne do pisania, czytania i utrzymywania kodu"
     },
     {
-      "entryID": "com-apple-reminders-92a9335b31bb",
-      "note": "Zadania i przypomnienia, odpowiednie do łapania małych codziennych zadań"
-    },
-    {
       "entryID": "com-openai-chat-7c12a7107aad",
       "note": "Umieść asystenta AI na swoim komputerze i pisz, ucz się i przeprowadzaj burze mó"
     },
@@ -260,10 +228,6 @@
     {
       "entryID": "com-kingsoft-wpsoffice-mac-c371eb320d54",
       "note": "Pakiet biurowy do edycji dokumentów, arkuszy kalkulacyjnych i prezentacji"
-    },
-    {
-      "entryID": "com-apple-photos-9678510fed1e",
-      "note": "Systemowa biblioteka zdjęć, główne wejście do zarządzania, edytowania i synchron"
     },
     {
       "entryID": "adobe-acrobat-reader-fb99f7bea88f",
@@ -290,14 +254,6 @@
       "note": "Przeglądarka internetowa, odpowiednia do codziennego surfowania po Internecie i"
     },
     {
-      "entryID": "com-apple-music-63ea41e016ea",
-      "note": "Lokalny i strumieniowy odtwarzacz muzyki"
-    },
-    {
-      "entryID": "com-apple-terminal-77aba1385326",
-      "note": "Wpis w wierszu poleceń, ukryty kokpit Maca"
-    },
-    {
       "entryID": "utm-f2a3e184ea9f",
       "note": "Narzędzia do wirtualizacji lub połączeń zdalnych, odpowiednie do uruchamiania śr"
     },
@@ -310,260 +266,12 @@
       "note": "Odtwarzacz muzyki, odpowiedni do słuchania piosenek, zarządzania listami odtwarz"
     },
     {
-      "entryID": "com-apple-activitymonitor-1ca0c04d6757",
-      "note": "Pulpit nawigacyjny komputera Mac, aby zobaczyć, kto zużywa energię, pamięć i spo"
-    },
-    {
-      "entryID": "com-apple-airport-airportutility-85b3849d7d98",
-      "note": "Oldschoolowe narzędzia sieciowe do zarządzania portami AirPort i Time Capsules"
-    },
-    {
-      "entryID": "com-apple-appstore-0619ceddf32a",
-      "note": "Oficjalny sklep z oprogramowaniem dla komputerów Mac. Zacznij tutaj, aby znaleźć"
-    },
-    {
-      "entryID": "com-apple-apps-launcher-c27c2e6c3e15",
-      "note": "Lekki portal aplikacji, który pomoże Ci szybko otwierać aplikacje z poziomu syst"
-    },
-    {
-      "entryID": "com-apple-audio-audiomidisetup-8327be183cc9",
-      "note": "Sprzęt audio i routing MIDI, powszechnie używane przez muzyków i debugerów"
-    },
-    {
-      "entryID": "com-apple-automator-3134734f076f",
-      "note": "Możesz połączyć ciąg działań automatyzujących komputer Mac bez pisania kodu"
-    },
-    {
-      "entryID": "com-apple-bluetoothfileexchange-a83f24bdfabc",
-      "note": "Używanie Bluetooth do wysyłania i odbierania plików jest przestarzałe, ale może"
-    },
-    {
-      "entryID": "com-apple-ibooksx-61d0b1b4ae4c",
-      "note": "Punkt wejścia do czytania e-booków i zarządzania nimi, dzięki któremu Twój Mac s"
-    },
-    {
-      "entryID": "com-apple-bootcampassistant-e4ab0159032f",
-      "note": "Oficjalny przewodnik dotyczący instalacji systemu Windows na komputerze Mac z pr"
-    },
-    {
-      "entryID": "com-apple-calculator-390516777a37",
-      "note": "W środku ukryty jest także mały kalkulator, przeliczanie jednostek i tryb progra"
-    },
-    {
-      "entryID": "com-apple-chess-8ccbf1801854",
-      "note": "Do systemu dołączone są szachy, dzięki którym łowienie ryb jest bardziej eleganc"
-    },
-    {
-      "entryID": "com-apple-clock-f922597106e9",
-      "note": "Ujednolicony portal alarmów, timerów, stoperów i zegarów światowych"
-    },
-    {
       "entryID": "cmux-3a661d84a58c",
       "note": "Idealny do organizowania metadanych multimediów, nadawania nazw lub hermetyzowan"
     },
     {
-      "entryID": "com-apple-colorsyncutility-68af0cd69154",
-      "note": "Przeglądaj i naprawiaj profile kolorów, obsługuj różnice w kolorach wyświetlacza"
-    },
-    {
-      "entryID": "com-apple-console-5e449417a9e8",
-      "note": "Okno przeglądania logów systemowych jest bardzo przydatne przy rozwiązywaniu pro"
-    },
-    {
-      "entryID": "com-apple-addressbook-0b4e2b893a86",
-      "note": "Centrum kontaktów dla poczty, wiadomości i FaceTime"
-    },
-    {
-      "entryID": "com-apple-dictionary-4625013af142",
-      "note": "Słownik i tezaurus offline, nie ma potrzeby otwierania przeglądarki podczas pisa"
-    },
-    {
-      "entryID": "com-apple-digitalcolormeter-fb99a6aa0c0b",
-      "note": "Selektor kolorów ekranu, mały artefakt dla projektantów umożliwiający tymczasowe"
-    },
-    {
-      "entryID": "com-apple-diskutility-48d48cee3d46",
-      "note": "Dysk, partycja, format i pierwsza pomoc, nie zadzieraj z tym, ale to ważne"
-    },
-    {
-      "entryID": "com-apple-findmy-f15882533adf",
-      "note": "Znajdź sprzęt, znajdź przedmioty i daj zgubionemu Macowi wskazówki, jak wrócić d"
-    },
-    {
-      "entryID": "com-apple-fontbook-83009f0e620e",
-      "note": "Centrum instalacji i zarządzania czcionkami, zarządzaj czcionkami przed projekto"
-    },
-    {
-      "entryID": "com-apple-freeform-c79ff8861497",
-      "note": "Nieograniczone tablice do burzy mózgów, szkicowania i przypadkowych pomysłów"
-    },
-    {
-      "entryID": "com-apple-games-18b06d160812",
-      "note": "Portal gier Apple do centralnego zarządzania grywalną zawartością Apple Arcade"
-    },
-    {
-      "entryID": "com-apple-grapher-dde725719597",
-      "note": "Równania wykresu, ukryte narzędzie do wizualizacji matematycznej"
-    },
-    {
-      "entryID": "com-apple-home-339f72ecc4b8",
-      "note": "Inteligentne wejście do domu może zarządzać oświetleniem, klimatyzacją i innym s"
-    },
-    {
-      "entryID": "com-apple-image-capture-8de5b7375bed",
-      "note": "Importuj zdjęcia z aparatu lub skanera, proste, ale stabilne"
-    },
-    {
-      "entryID": "com-apple-generativeplaygroundapp-05897f8dbe4c",
-      "note": "Generuj obrazy dzięki inteligencji Apple, idealnej do szybkiego, kreatywnego szk"
-    },
-    {
-      "entryID": "com-apple-imovieapp-00a9c7493d26",
-      "note": "Wystarczający do podstawowej edycji wideo, domowych nagrań wideo i lekkich filmó"
-    },
-    {
-      "entryID": "com-apple-screencontinuity-867a48a76333",
-      "note": "Obsługuj iPhone'a bezpośrednio na komputerze Mac, eliminując potrzebę jednorazow"
-    },
-    {
-      "entryID": "com-apple-journal-29ceb46d5ff5",
-      "note": "Nagrywaj codzienne fragmenty i powoli przekształcaj swoje myśli w osobistą oś cz"
-    },
-    {
-      "entryID": "com-apple-iwork-keynote-e86356f31ec2",
-      "note": "Narzędzie do prezentacji w stylu Apple, umożliwiające łatwe tworzenie pięknych s"
-    },
-    {
       "entryID": "com-riotgames-leagueoflegends-ee692e90efde",
       "note": "Klient League of Legends, wejście do klasycznych gier zespołowych"
-    },
-    {
-      "entryID": "com-apple-magnifier-c9044527cd0d",
-      "note": "Powiększ szczegóły ekranu, aby ułatwić widzenie i dokładną kontrolę"
-    },
-    {
-      "entryID": "com-apple-maps-310ca6c69cea",
-      "note": "Sprawdzaj trasy, przeglądaj miasta i przesyłaj miejsca docelowe do iPhone'a"
-    },
-    {
-      "entryID": "com-apple-migrateassistant-5f03ff480fe8",
-      "note": "Przenosząc się na nowy komputer Mac, przenieś stare dane na nowy komputer"
-    },
-    {
-      "entryID": "com-apple-exposelauncher-62e07c598f71",
-      "note": "Widok z lotu ptaka na okno i pulpit, po prostu spójrz, jeśli jest bałagan"
-    },
-    {
-      "entryID": "com-apple-news-7614a9b54b68",
-      "note": "Portal Apple News, odpowiedni do przeglądania wybranych treści multimedialnych"
-    },
-    {
-      "entryID": "com-apple-iwork-numbers-361a6aaf7056",
-      "note": "Narzędzie Apple Sheets, lekkie raporty są bardziej odświeżające niż Excel"
-    },
-    {
-      "entryID": "com-apple-iwork-pages-d6f13bb4e29c",
-      "note": "Procesor tekstu Apple, piękny do pisania dokumentów i składu"
-    },
-    {
-      "entryID": "com-apple-passwords-08719cef9f02",
-      "note": "Systemowy menedżer haseł, scentralizowane zarządzanie kontami, kodami weryfikacy"
-    },
-    {
-      "entryID": "com-apple-mobilephone-5739fb6f2a60",
-      "note": "Dzwoń na komputerze Mac za pomocą telefonu"
-    },
-    {
-      "entryID": "com-apple-photobooth-9d976a9cdfcd",
-      "note": "Selfie z aparatu i małe efekty specjalne są również wygodne do testowania aparat"
-    },
-    {
-      "entryID": "com-apple-podcasts-4a2a186dcc8f",
-      "note": "Oficjalny portal do słuchania podcastów, przydatny w dojazdach do pracy i nauce"
-    },
-    {
-      "entryID": "com-apple-preview-9ef385a7e445",
-      "note": "Najbardziej niedoceniane narzędzie dla komputerów Mac: przeglądaj zdjęcia, dodaw"
-    },
-    {
-      "entryID": "com-apple-printcenter-5a8f324fe84d",
-      "note": "Przeglądaj i zarządzaj kolejkami druku. Aby zapoznać się z zadaniami związanymi"
-    },
-    {
-      "entryID": "com-apple-quicktimeplayerx-f2aee71b906d",
-      "note": "Sprawdzone narzędzie, które może odtwarzać, nagrywać ekran i nagrywać dźwięk"
-    },
-    {
-      "entryID": "com-apple-screensharing-3d1e02ff893a",
-      "note": "Zdalnie steruj innym komputerem Mac, co jest bardzo wygodne, ponieważ pomaga lud"
-    },
-    {
-      "entryID": "com-apple-screenshot-launcher-f3c7a7a2c583",
-      "note": "Portal do zrzutów ekranu i nagrywania ekranu, za Shift-Command-5"
-    },
-    {
-      "entryID": "com-apple-scripteditor2-f8a19fe3d1d8",
-      "note": "Napisz i uruchom AppleScript, aby kontrolować staroświecką automatyzację kompute"
-    },
-    {
-      "entryID": "com-apple-sfsymbols-9dc6c630daed",
-      "note": "Oficjalna biblioteka symboli Apple, niezbędna dla natywnych interfejsów"
-    },
-    {
-      "entryID": "com-apple-shortcuts-f629e5e3e216",
-      "note": "Łączenie wielu działań w procesy realizowane jednym kliknięciem to nowoczesna we"
-    },
-    {
-      "entryID": "com-apple-siri-launcher-77250557ebe9",
-      "note": "Wejście asystenta głosowego, może sprawdzać informacje, otwierać aplikacje i ste"
-    },
-    {
-      "entryID": "com-apple-stickies-9ed4ed5e1103",
-      "note": "Notatki samoprzylepne na pulpicie, notatki tymczasowe są publikowane tuż przed t"
-    },
-    {
-      "entryID": "com-apple-stocks-6a1a80292efe",
-      "note": "Zobacz małe panele dotyczące akcji i dynamiki rynku"
-    },
-    {
-      "entryID": "com-apple-systemprofiler-fdfe3344179e",
-      "note": "Wyświetl szczegóły sprzętu, oprogramowania i urządzeń, aby znaleźć najdokładniej"
-    },
-    {
-      "entryID": "com-apple-systempreferences-5632452dbd3d",
-      "note": "Ustawienia komputera Mac, główne wejście, prawie wszystkie przełączniki systemow"
-    },
-    {
-      "entryID": "com-apple-textedit-64d314fbf2b9",
-      "note": "Najprostszy edytor tekstu, bardzo szybko otwiera TXT i RTF"
-    },
-    {
-      "entryID": "com-apple-backup-launcher-918b22a1257e",
-      "note": "Narzędzie do tworzenia kopii zapasowych systemu, polegaj na nim, aby z wyprzedze"
-    },
-    {
-      "entryID": "com-apple-helpviewer-6e90a07b56cc",
-      "note": "Oficjalne wskazówki Apple dotyczące okazjonalnego odkrywania funkcji, z których"
-    },
-    {
-      "entryID": "com-apple-tv-28f9f8e2e47b",
-      "note": "Wejście do odtwarzania i zarządzania treściami filmowymi i telewizyjnymi"
-    },
-    {
-      "entryID": "com-apple-voicememos-f4eb9f35a1b8",
-      "note": "Najpierw szybko nagrywaj, zapisuj inspiracje ze spotkań i materiały z wywiadów"
-    },
-    {
-      "entryID": "com-apple-voiceoverutility-9623fe74d030",
-      "note": "Zarządzaj funkcjami ułatwień dostępu poprzez czytanie ekranu, aby Twój Mac był b"
-    },
-    {
-      "entryID": "com-apple-weather-a1b814774719",
-      "note": "Portal prognozy pogody, sprawdź go przed wyjściem, aby uzyskać większą stabilnoś"
-    },
-    {
-      "entryID": "com-apple-dt-xcode-66da3f910767",
-      "note": "Apple rozwija FamilyMart, główne pole bitwy przy pisaniu aplikacji na iOS i macO"
     },
     {
       "entryID": "com-github-githubclient-c94dd11b1995",
@@ -874,10 +582,6 @@
       "note": "Idealny do robienia zrzutów ekranu, dodawania adnotacji, rozpoznawania tekstu lu"
     },
     {
-      "entryID": "com-apple-garageband10-af435df6c94a",
-      "note": "Podstawowe narzędzie Apple do produkcji muzyki, łatwe w użyciu do nagrywania i a"
-    },
-    {
       "entryID": "com-microsoft-excel-2ff4add4000d",
       "note": "Weteran tabel i analiz danych, finansów, operacji i modeli na nim polega"
     },
@@ -914,10 +618,6 @@
       "note": "Lekki edytor kodu opracowany dla systemu macOS"
     },
     {
-      "entryID": "com-apple-finalcut-6383fea0b510",
-      "note": "Profesjonalne narzędzie do edycji wideo firmy Apple umożliwia wycinanie, kolorow"
-    },
-    {
       "entryID": "github-copilot-for-xcode-60555f2d4d11",
       "note": "Wprowadź sztuczną inteligencję do procesu programowania, odpowiednią do kodowani"
     },
@@ -932,10 +632,6 @@
     {
       "entryID": "finetune-5431832269e6",
       "note": "Narzędzia audio AI, odpowiednie do porządkowania, transkrypcji i optymalizacji t"
-    },
-    {
-      "entryID": "com-apple-logic10-69f8eefc0ddf",
-      "note": "Profesjonalne narzędzie Apple do produkcji muzyki, potężne w nagrywaniu, aranżow"
     },
     {
       "entryID": "com-getdropbox-dropbox-72c7db8f1763",
@@ -968,10 +664,6 @@
     {
       "entryID": "font-jetbrains-mono-nerd-font-4a662d68a338",
       "note": "Pakiet zasobów czcionek, odpowiedni do uzupełniania czcionek dla redaktorów, ter"
-    },
-    {
-      "entryID": "com-apple-testflight-cfe027705d73",
-      "note": "Narzędzie do testowania aplikacji Apple, odpowiednie do instalowania aplikacji w"
     },
     {
       "entryID": "claude-code-latest-ba2522b660cf",

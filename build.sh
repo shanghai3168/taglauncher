@@ -114,6 +114,54 @@ fi
 echo "==> Copying Localization files..."
 cp -r "$SWIFT_DIR/Localization" "$RESOURCES_DIR/Localization"
 
+echo "==> Copying Apple default app catalog..."
+APPLE_DEFAULT_SOURCE_DIR="$PROJECT_DIR/Research/AppleDefaultApps"
+for required in \
+    "AppleDefaultApps.base.json" \
+    "AppleDefaultApps.manifest.json" \
+    "AppleDefaultApps.localizations.en.json" \
+    "AppleDefaultApps.localizations.zh-Hans.json"; do
+    if [ ! -f "$APPLE_DEFAULT_SOURCE_DIR/$required" ]; then
+        echo "❌ Missing Apple default app resource: $required"
+        exit 1
+    fi
+done
+python3 - "$APPLE_DEFAULT_SOURCE_DIR/AppleDefaultApps.base.json" "$RESOURCES_DIR/AppleDefaultApps.base.json" <<'PY'
+import json
+import sys
+source, destination = sys.argv[1], sys.argv[2]
+with open(source, "r", encoding="utf-8") as f:
+    data = json.load(f)
+with open(destination, "w", encoding="utf-8") as f:
+    json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
+PY
+python3 - "$APPLE_DEFAULT_SOURCE_DIR/AppleDefaultApps.manifest.json" "$RESOURCES_DIR/AppleDefaultApps.manifest.json" <<'PY'
+import json
+import sys
+source, destination = sys.argv[1], sys.argv[2]
+with open(source, "r", encoding="utf-8") as f:
+    data = json.load(f)
+with open(destination, "w", encoding="utf-8") as f:
+    json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
+PY
+for localization_file in "$APPLE_DEFAULT_SOURCE_DIR"/AppleDefaultApps.localizations.*.json; do
+    [ -e "$localization_file" ] || continue
+    output_name="$(basename "$localization_file").deflate"
+    python3 - "$localization_file" "$RESOURCES_DIR/$output_name" <<'PY'
+import json
+import sys
+import zlib
+source, destination = sys.argv[1], sys.argv[2]
+with open(source, "r", encoding="utf-8") as f:
+    data = json.load(f)
+payload = json.dumps(data, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+compressor = zlib.compressobj(level=9, wbits=-15)
+compressed = compressor.compress(payload) + compressor.flush()
+with open(destination, "wb") as f:
+    f.write(compressed)
+PY
+done
+
 echo "==> Copying Smart Start catalog..."
 SMARTSTART_SOURCE_DIR="$PROJECT_DIR/Research/SmartStart/UltimateDefaultCatalog"
 for required in \
@@ -166,6 +214,7 @@ done
 if find "$RESOURCES_DIR" -maxdepth 1 -type f \( \
     -name '*TranslationCache*' -o \
     -name '*invalid*' -o \
+    -name 'AppleDefaultApps.localizations.*.json' -o \
     -name 'SmartStartUltimateDefaultCatalog.json' -o \
     -name 'SmartStartUltimateDefaultCatalog.csv' -o \
     -name 'SmartStartUltimateDefaultCatalog.notes.*.json' \
@@ -174,6 +223,7 @@ if find "$RESOURCES_DIR" -maxdepth 1 -type f \( \
     find "$RESOURCES_DIR" -maxdepth 1 -type f \( \
         -name '*TranslationCache*' -o \
         -name '*invalid*' -o \
+        -name 'AppleDefaultApps.localizations.*.json' -o \
         -name 'SmartStartUltimateDefaultCatalog.json' -o \
         -name 'SmartStartUltimateDefaultCatalog.csv' -o \
         -name 'SmartStartUltimateDefaultCatalog.notes.*.json' \

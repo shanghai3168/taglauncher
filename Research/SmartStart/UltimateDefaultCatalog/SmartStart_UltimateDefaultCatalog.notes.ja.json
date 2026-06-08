@@ -46,10 +46,6 @@
       "note": "Git 認証情報の保存と管理に使用され、複数のコード ホスティング プラットフォームのログインに適しています"
     },
     {
-      "entryID": "com-apple-finder-2de1d8bbb107",
-      "note": "macOS システムには、対応するシステム管理や日常操作を完了するのに適したツールが付属しています"
-    },
-    {
       "entryID": "com-mitchellh-ghostty-5194f8485e90",
       "note": "コマンドライン、ビルド、デバッグ、またはプロジェクト管理用の開発者ツール"
     },
@@ -72,10 +68,6 @@
     {
       "entryID": "1password-cli-85e1ca6fa403",
       "note": "パスワード、確認コード、アクセスキーを管理するためのアカウントセキュリティツール"
-    },
-    {
-      "entryID": "com-apple-safari-b2041c4573f8",
-      "note": "Apple公式ブラウザ、省電力、プライバシー、エコロジー連携が強み"
     },
     {
       "entryID": "com-anthropic-claudefordesktop-b2f723339fad",
@@ -102,10 +94,6 @@
       "note": "非常に完全なプラグイン エコシステムを備えた、軽量かつ強力なコード エディター"
     },
     {
-      "entryID": "com-apple-mail-9c1e969ca734",
-      "note": "システムメールクライアント、複数のメールボックスを一元的に処理可能"
-    },
-    {
       "entryID": "md-obsidian-9f1625d466f0",
       "note": "第二の脳の長期的な蓄積に適したローカル Markdown ナレッジ ベース"
     },
@@ -128,10 +116,6 @@
     {
       "entryID": "com-tencent-meeting-5bd65448f293",
       "note": "Tencent カンファレンスの入場、中国オフィス、リモートコラボレーションは非常に一般的です"
-    },
-    {
-      "entryID": "com-apple-mobilesms-a7066fed8087",
-      "note": "iMessage と SMS ポータル、Mac でのメッセージの返信が高速化"
     },
     {
       "entryID": "com-mojang-minecraftlauncher-606072fb1e80",
@@ -174,10 +158,6 @@
       "note": "Android アプリの開発とデバッグに不可欠な Android 公式 IDE"
     },
     {
-      "entryID": "com-apple-facetime-96f99030aef8",
-      "note": "Apple エコシステムへの音声通話とビデオ通話の入り口"
-    },
-    {
       "entryID": "maccy-0c7236cb0f2d",
       "note": "クリップボード履歴ツール、コピーされたコンテンツがいつでも取得可能"
     },
@@ -190,10 +170,6 @@
       "note": "ストリーミング音楽プレーヤー。仕事にもリラックスにも最適な曲を楽しめます"
     },
     {
-      "entryID": "com-apple-ical-8e998503177c",
-      "note": "スケジュールを頭から追い出し、時間に視覚的な地図を与えましょう"
-    },
-    {
       "entryID": "blackhole-2ch-0b7c58e0297a",
       "note": "画面録画、ライブブロードキャスト、オーディオルーティングに適した仮想オーディオドライバー"
     },
@@ -204,10 +180,6 @@
     {
       "entryID": "com-electron-lark-6559e48147f2",
       "note": "Feishu コラボレーション ポータル。中国チームのチャット、ドキュメント、会議がすべてここにあります"
-    },
-    {
-      "entryID": "com-apple-notes-aaf1d7cf1c90",
-      "note": "システムメモ、テキスト、写真、リストを最速で収集可能"
     },
     {
       "entryID": "com-electron-ollama-25be0e7340d2",
@@ -238,10 +210,6 @@
       "note": "コードの作成、読み取り、保守のためのプログラミング開発ツール"
     },
     {
-      "entryID": "com-apple-reminders-92a9335b31bb",
-      "note": "ToDo とリマインダー。日常の小さなタスクを把握するのに適しています"
-    },
-    {
       "entryID": "com-openai-chat-7c12a7107aad",
       "note": "AI アシスタントをデスクトップに置いて、すぐに文章を書いたり、勉強したり、ブレインストーミングをしたりできます"
     },
@@ -260,10 +228,6 @@
     {
       "entryID": "com-kingsoft-wpsoffice-mac-c371eb320d54",
       "note": "ドキュメント、スプレッドシート、プレゼンテーションを編集するためのオフィス スイート"
-    },
-    {
-      "entryID": "com-apple-photos-9678510fed1e",
-      "note": "システム フォト ライブラリ、写真を管理、編集、同期するためのメインの入り口"
     },
     {
       "entryID": "adobe-acrobat-reader-fb99f7bea88f",
@@ -290,14 +254,6 @@
       "note": "Web ブラウザ。毎日のインターネットサーフィンや Web サービスへのアクセスに適しています"
     },
     {
-      "entryID": "com-apple-music-63ea41e016ea",
-      "note": "ローカルおよびストリーミング音楽プレーヤー"
-    },
-    {
-      "entryID": "com-apple-terminal-77aba1385326",
-      "note": "コマンドラインエントリ、Mac の隠しコックピット"
-    },
-    {
       "entryID": "utm-f2a3e184ea9f",
       "note": "システム環境の実行やリモート コンピュータへのアクセスに適した仮想化ツールまたはリモート接続ツール"
     },
@@ -310,260 +266,12 @@
       "note": "曲の視聴、プレイリストの管理、Tencent Music サービスの使用に適した音楽プレーヤー"
     },
     {
-      "entryID": "com-apple-activitymonitor-1ca0c04d6757",
-      "note": "Mac のダッシュボードは、誰が電力を消費し、メモリを消費し、コンピュータの速度を低下させているかを確認できるように設計されています"
-    },
-    {
-      "entryID": "com-apple-airport-airportutility-85b3849d7d98",
-      "note": "AirMac と Time Capsule を管理するための昔ながらのネットワーキング ツール"
-    },
-    {
-      "entryID": "com-apple-appstore-0619ceddf32a",
-      "note": "公式 Mac ソフトウェア ストア。ここからアプリ、アップデート、サブスクリプションを見つけてください"
-    },
-    {
-      "entryID": "com-apple-apps-launcher-c27c2e6c3e15",
-      "note": "システム レベルからアプリをすばやく開くのに役立つ軽量のアプリケーション ポータル"
-    },
-    {
-      "entryID": "com-apple-audio-audiomidisetup-8327be183cc9",
-      "note": "ミュージシャンやデバッガーが一般的に使用するオーディオ機器と MIDI ルーティング"
-    },
-    {
-      "entryID": "com-apple-automator-3134734f076f",
-      "note": "コードを書かずに一連の Mac オートメーション アクションをつなぎ合わせることができます"
-    },
-    {
-      "entryID": "com-apple-bluetoothfileexchange-a83f24bdfabc",
-      "note": "Bluetooth を使用してファイルを送受信するのは時代遅れですが、重大な状況では身を守ることができます"
-    },
-    {
-      "entryID": "com-apple-ibooksx-61d0b1b4ae4c",
-      "note": "Mac をデスクに変えるのに適した、電子書籍の閲覧と管理のエントリー ポイント"
-    },
-    {
-      "entryID": "com-apple-bootcampassistant-e4ab0159032f",
-      "note": "Intel Mac に Windows をインストールするための公式ガイド"
-    },
-    {
-      "entryID": "com-apple-calculator-390516777a37",
-      "note": "小さな電卓、単位変換、プログラマーモードも内部に隠されています"
-    },
-    {
-      "entryID": "com-apple-chess-8ccbf1801854",
-      "note": "このシステムにはチェスが付属しており、Web を閲覧するよりも釣りをよりエレガントに行うことができます"
-    },
-    {
-      "entryID": "com-apple-clock-f922597106e9",
-      "note": "アラーム、タイマー、ストップウォッチ、世界時計の統合ポータル"
-    },
-    {
       "entryID": "cmux-3a661d84a58c",
       "note": "メディアのメタデータの整理、ファイルの名前付けまたはカプセル化に最適"
     },
     {
-      "entryID": "com-apple-colorsyncutility-68af0cd69154",
-      "note": "カラープロファイルの表示と修復、表示と印刷の色の違いの処理"
-    },
-    {
-      "entryID": "com-apple-console-5e449417a9e8",
-      "note": "システムログを表示する画面は、異常時のトラブルシューティングに非常に役立ちます"
-    },
-    {
-      "entryID": "com-apple-addressbook-0b4e2b893a86",
-      "note": "メール、メッセージ、FaceTime の連絡先ハブ"
-    },
-    {
-      "entryID": "com-apple-dictionary-4625013af142",
-      "note": "オフラインの辞書とシソーラス。単語を書いたり調べたりするときにブラウザを開く必要はありません"
-    },
-    {
-      "entryID": "com-apple-digitalcolormeter-fb99a6aa0c0b",
-      "note": "画面カラーピッカー、デザイナーが一時的に色を選択するための小さなアーティファクト"
-    },
-    {
-      "entryID": "com-apple-diskutility-48d48cee3d46",
-      "note": "ディスク、パーティション、フォーマット、応急処置、いじらないでください、しかし重要です"
-    },
-    {
-      "entryID": "com-apple-findmy-f15882533adf",
-      "note": "装備を見つけ、アイテムを見つけ、紛失した Mac に家に帰るための手がかりを与えます"
-    },
-    {
-      "entryID": "com-apple-fontbook-83009f0e620e",
-      "note": "フォントのインストールおよび管理センター、デザイン前にフォントを管理"
-    },
-    {
-      "entryID": "com-apple-freeform-c79ff8861497",
-      "note": "ブレーンストーミング、スケッチ、ランダムなアイデアのための無制限のホワイトボード"
-    },
-    {
-      "entryID": "com-apple-games-18b06d160812",
-      "note": "プレイ可能な Apple Arcade コンテンツを一元管理する Apple ゲーム ポータル"
-    },
-    {
-      "entryID": "com-apple-grapher-dde725719597",
-      "note": "グラフ方程式、数学的視覚化のための隠れたツール"
-    },
-    {
-      "entryID": "com-apple-home-339f72ecc4b8",
-      "note": "スマートホームコントロールエントランスで照明や空調などの設備を管理可能"
-    },
-    {
-      "entryID": "com-apple-image-capture-8de5b7375bed",
-      "note": "カメラまたはスキャナから画像をインポート、シンプルだが安定"
-    },
-    {
-      "entryID": "com-apple-generativeplaygroundapp-05897f8dbe4c",
-      "note": "Apple インテリジェンスを利用して画像を生成し、クリエイティブな素早い製図に最適です"
-    },
-    {
-      "entryID": "com-apple-imovieapp-00a9c7493d26",
-      "note": "初心者レベルのビデオ編集、ホームビデオ、軽量の短編映画には十分です"
-    },
-    {
-      "entryID": "com-apple-screencontinuity-867a48a76333",
-      "note": "iPhone を Mac 上で直接操作できるため、一度電話に手を伸ばす必要がなくなります"
-    },
-    {
-      "entryID": "com-apple-journal-29ceb46d5ff5",
-      "note": "日々の断片を記録し、ゆっくりと自分の考えを個人的なタイムラインに変えましょう"
-    },
-    {
-      "entryID": "com-apple-iwork-keynote-e86356f31ec2",
-      "note": "Apple スタイルのプレゼンテーション ツール、美しいスライドを簡単に作成"
-    },
-    {
       "entryID": "com-riotgames-leagueoflegends-ee692e90efde",
       "note": "リーグ・オブ・レジェンドのクライアント、古典的なチーム対戦ゲームへの入り口"
-    },
-    {
-      "entryID": "com-apple-magnifier-c9044527cd0d",
-      "note": "画面の詳細を拡大して視覚と細かい検査を支援します"
-    },
-    {
-      "entryID": "com-apple-maps-310ca6c69cea",
-      "note": "ルートを確認し、都市を表示し、目的地を iPhone にプッシュします"
-    },
-    {
-      "entryID": "com-apple-migrateassistant-5f03ff480fe8",
-      "note": "新しい Mac に移行する場合は、古いデータを新しいマシンに移動します"
-    },
-    {
-      "entryID": "com-apple-exposelauncher-62e07c598f71",
-      "note": "ウィンドウとデスクトップの上空からの眺め。散らかっている場合は見てください"
-    },
-    {
-      "entryID": "com-apple-news-7614a9b54b68",
-      "note": "Apple News ポータル、選択したメディア コンテンツの表示に適しています"
-    },
-    {
-      "entryID": "com-apple-iwork-numbers-361a6aaf7056",
-      "note": "Apple Sheets ツール、軽量レポートは Excel よりも新鮮"
-    },
-    {
-      "entryID": "com-apple-iwork-pages-d6f13bb4e29c",
-      "note": "Apple ワード プロセッサ、文書の作成や植字に最適"
-    },
-    {
-      "entryID": "com-apple-passwords-08719cef9f02",
-      "note": "システムパスワードマネージャー、アカウント、認証コード、パスキーの一元管理"
-    },
-    {
-      "entryID": "com-apple-mobilephone-5739fb6f2a60",
-      "note": "携帯電話を使って Mac で電話をかける"
-    },
-    {
-      "entryID": "com-apple-photobooth-9d976a9cdfcd",
-      "note": "カメラのセルフィーや小さな特殊効果もカメラのテストに便利です"
-    },
-    {
-      "entryID": "com-apple-podcasts-4a2a186dcc8f",
-      "note": "通勤・通学に便利なポッドキャストを聴くための公式ポータル"
-    },
-    {
-      "entryID": "com-apple-preview-9ef385a7e445",
-      "note": "最も過小評価されている Mac ツール: 画像の表示、PDF への注釈付け、簡単な編集をすべて 1 つで行うことができます"
-    },
-    {
-      "entryID": "com-apple-printcenter-5a8f324fe84d",
-      "note": "印刷キューを表示および管理します。紙詰まりのタスクについては、まずここを参照してください"
-    },
-    {
-      "entryID": "com-apple-quicktimeplayerx-f2aee71b906d",
-      "note": "画面の再生、録画、音声の録音ができる確立されたツール"
-    },
-    {
-      "entryID": "com-apple-screensharing-3d1e02ff893a",
-      "note": "別の Mac をリモート制御します。これは、コンピュータの修理を手伝うのに非常に便利です"
-    },
-    {
-      "entryID": "com-apple-screenshot-launcher-f3c7a7a2c583",
-      "note": "Shift-Command-5 の背後にあるスクリーンショットおよび画面記録ポータル"
-    },
-    {
-      "entryID": "com-apple-scripteditor2-f8a19fe3d1d8",
-      "note": "AppleScript を作成して実行して、昔ながらの Mac オートメーションを制御する"
-    },
-    {
-      "entryID": "com-apple-sfsymbols-9dc6c630daed",
-      "note": "Apple の公式シンボル ライブラリ、ネイティブ インターフェイスに不可欠"
-    },
-    {
-      "entryID": "com-apple-shortcuts-f629e5e3e216",
-      "note": "複数のアクションをワンクリックのプロセスに組み込むのが Automator の最新バージョンです"
-    },
-    {
-      "entryID": "com-apple-siri-launcher-77250557ebe9",
-      "note": "音声アシスタントによる入口、情報の確認、アプリの起動、システムの制御が可能"
-    },
-    {
-      "entryID": "com-apple-stickies-9ed4ed5e1103",
-      "note": "デスクトップ付箋、一時メモが目の前に貼られます"
-    },
-    {
-      "entryID": "com-apple-stocks-6a1a80292efe",
-      "note": "株式と市場の動向については小さなパネルをご覧ください"
-    },
-    {
-      "entryID": "com-apple-systemprofiler-fdfe3344179e",
-      "note": "ハードウェア、ソフトウェア、デバイスの詳細を表示して、最も正確な構成を見つけます"
-    },
-    {
-      "entryID": "com-apple-systempreferences-5632452dbd3d",
-      "note": "Mac 設定のメインの入り口、ほぼすべてのシステム スイッチがここにあります"
-    },
-    {
-      "entryID": "com-apple-textedit-64d314fbf2b9",
-      "note": "最もシンプルなテキスト エディター。TXT と RTF をすばやく開きます"
-    },
-    {
-      "entryID": "com-apple-backup-launcher-918b22a1257e",
-      "note": "システムバックアップツール、後悔に備えて事前に準備するために頼りましょう"
-    },
-    {
-      "entryID": "com-apple-helpviewer-6e90a07b56cc",
-      "note": "使用していない機能を時々発見するための Apple の公式ヒント"
-    },
-    {
-      "entryID": "com-apple-tv-28f9f8e2e47b",
-      "note": "映画やテレビのコンテンツの再生と管理の入り口"
-    },
-    {
-      "entryID": "com-apple-voicememos-f4eb9f35a1b8",
-      "note": "会議のインスピレーションやインタビュー資料を最初にすばやく記録して保存します"
-    },
-    {
-      "entryID": "com-apple-voiceoverutility-9623fe74d030",
-      "note": "画面読み上げのアクセシビリティ機能を管理して、視覚障害のあるユーザーが Mac を利用しやすくする"
-    },
-    {
-      "entryID": "com-apple-weather-a1b814774719",
-      "note": "天気予報ポータル。安定性を高めるために外出前にチェックしてください"
-    },
-    {
-      "entryID": "com-apple-dt-xcode-66da3f910767",
-      "note": "Apple、iOS および macOS アプリ作成の主戦場となるファミリーマートを開発"
     },
     {
       "entryID": "com-github-githubclient-c94dd11b1995",
@@ -874,10 +582,6 @@
       "note": "スクリーンショットの撮影、注釈の追加、テキストの認識、視覚的なフィードバックの作成に最適です"
     },
     {
-      "entryID": "com-apple-garageband10-af435df6c94a",
-      "note": "録音やアレンジが簡単にできる、Apple のエントリーレベルの音楽制作ツール"
-    },
-    {
       "entryID": "com-microsoft-excel-2ff4add4000d",
       "note": "テーブルとデータ分析、財務、運用、モデルのすべてのベテランがこのツールに依存しています"
     },
@@ -914,10 +618,6 @@
       "note": "macOS 用に開発された軽量のコード エディター"
     },
     {
-      "entryID": "com-apple-finalcut-6383fea0b510",
-      "note": "Apple のプロフェッショナルなビデオ編集ツール、カット、カラーリング、エクスポートはすべて非常に高速です"
-    },
-    {
       "entryID": "github-copilot-for-xcode-60555f2d4d11",
       "note": "開発プロセスに AI を導入し、コーディング、デバッグ、自動化に適しています"
     },
@@ -932,10 +632,6 @@
     {
       "entryID": "finetune-5431832269e6",
       "note": "AI オーディオ ツール。サウンド コンテンツの整理、文字起こし、最適化に適しています"
-    },
-    {
-      "entryID": "com-apple-logic10-69f8eefc0ddf",
-      "note": "Apple のプロフェッショナルな音楽制作ツールで、録音、アレンジ、ミキシングに強力です"
     },
     {
       "entryID": "com-getdropbox-dropbox-72c7db8f1763",
@@ -968,10 +664,6 @@
     {
       "entryID": "font-jetbrains-mono-nerd-font-4a662d68a338",
       "note": "エディター、端末、またはデザイン作業用のフォントを補完するのに適したフォント リソース パック"
-    },
-    {
-      "entryID": "com-apple-testflight-cfe027705d73",
-      "note": "Apple アプリのテスト ツール。ベータ版アプリのインストールと体験に適しています"
     },
     {
       "entryID": "claude-code-latest-ba2522b660cf",

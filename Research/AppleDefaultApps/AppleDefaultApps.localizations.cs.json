@@ -1,0 +1,453 @@
+{
+  "resourceFormatVersion": 1,
+  "catalogContentVersion": 1,
+  "language": "cs",
+  "localizationsVersion": 2,
+  "entries": [
+    {
+      "bundleIdentifier": "com.apple.finder",
+      "displayName": "Finder",
+      "note": "Systém macOS je dodáván s nástroji vhodnými pro dokončení odpovídající."
+    },
+    {
+      "bundleIdentifier": "com.apple.Safari",
+      "displayName": "Safari",
+      "note": "Oficiální prohlížeč Apple, úspora energie."
+    },
+    {
+      "bundleIdentifier": "com.apple.mail",
+      "displayName": "Mail",
+      "note": "Systémový poštovní klient, více schránek lze zpracovávat centrálně"
+    },
+    {
+      "bundleIdentifier": "com.apple.MobileSMS",
+      "displayName": "Zprávy",
+      "note": "iMessage a SMS portál, odpovídejte na zprávy rychleji na Macu"
+    },
+    {
+      "bundleIdentifier": "com.apple.FaceTime",
+      "displayName": "FaceTime",
+      "note": "Vstup pro audio a video hovory v ekosystému Apple"
+    },
+    {
+      "bundleIdentifier": "com.apple.iCal",
+      "displayName": "Kalendář",
+      "note": "Vyhoďte rozvrh z hlavy a dejte času vizuální mapu"
+    },
+    {
+      "bundleIdentifier": "com.apple.Notes",
+      "displayName": "Poznámky",
+      "note": "Lze shromáždit nejrychlejší systémové poznámky, text, obrázky a seznamy"
+    },
+    {
+      "bundleIdentifier": "com.apple.reminders",
+      "displayName": "Připomínky",
+      "note": "Úkoly a upomínky, vhodné pro chytání malých denních úkolů"
+    },
+    {
+      "bundleIdentifier": "com.apple.Photos",
+      "displayName": "Fotky",
+      "note": "Systémová knihovna fotografií, hlavní vstup pro správu."
+    },
+    {
+      "bundleIdentifier": "com.apple.Music",
+      "displayName": "Hudba",
+      "note": "Místní a streamovaný hudební přehrávač"
+    },
+    {
+      "bundleIdentifier": "com.apple.Terminal",
+      "displayName": "Terminál",
+      "note": "Vstup z příkazového řádku, skrytý kokpit Macu"
+    },
+    {
+      "bundleIdentifier": "com.apple.ActivityMonitor",
+      "displayName": "Monitor aktivity",
+      "note": "Ovládací panel Mac, abyste viděli, kdo spotřebovává energii."
+    },
+    {
+      "bundleIdentifier": "com.apple.airport.airportutility",
+      "displayName": "Nastavení AirPortu",
+      "note": "Staré síťové nástroje pro správu AirPortů a Time Capsules"
+    },
+    {
+      "bundleIdentifier": "com.apple.AppStore",
+      "displayName": "App Store",
+      "note": "Oficiální obchod se softwarem pro Mac, začněte zde."
+    },
+    {
+      "bundleIdentifier": "com.apple.apps.launcher",
+      "displayName": "Aplikace",
+      "note": "Odlehčený aplikační portál."
+    },
+    {
+      "bundleIdentifier": "com.apple.audio.audiomidisetup",
+      "displayName": "Nastavení audio MIDI",
+      "note": "Audio zařízení a MIDI směrování, běžně používané hudebníky a debuggery"
+    },
+    {
+      "bundleIdentifier": "com.apple.automator",
+      "displayName": "Automator",
+      "note": "Můžete řetězit dohromady řetězec automatizačních akcí Mac bez psaní kódu"
+    },
+    {
+      "bundleIdentifier": "com.apple.bluetoothfileexchange",
+      "displayName": "Bluetooth přenos souborů",
+      "note": "Používání Bluetooth k odesílání a přijímání souborů je zastaralé."
+    },
+    {
+      "bundleIdentifier": "com.apple.iBooksX",
+      "displayName": "Knihy",
+      "note": "Vstupní bod pro čtení a správu elektronických knih."
+    },
+    {
+      "bundleIdentifier": "com.apple.bootcampassistant",
+      "displayName": "Průvodce pro Boot Camp",
+      "note": "Oficiální průvodce instalací Windows na Intel Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.calculator",
+      "displayName": "Kalkulačka",
+      "note": "Uvnitř se skrývá také malá kalkulačka, převod jednotek a programátorský režim"
+    },
+    {
+      "bundleIdentifier": "com.apple.chess",
+      "displayName": "Šachy",
+      "note": "Vestavěné šachy pro krátkou pauzu a trénink"
+    },
+    {
+      "bundleIdentifier": "com.apple.clock",
+      "displayName": "Hodiny",
+      "note": "Jednotný portál pro budíky, časovače, stopky a světové hodiny"
+    },
+    {
+      "bundleIdentifier": "com.apple.colorsyncutility",
+      "displayName": "Utilita ColorSync",
+      "note": "Prohlížejte a opravujte barevné profily."
+    },
+    {
+      "bundleIdentifier": "com.apple.console",
+      "displayName": "Konzola",
+      "note": "Okno pro zobrazení systémových protokolů je velmi užitečné při."
+    },
+    {
+      "bundleIdentifier": "com.apple.addressbook",
+      "displayName": "Kontakty",
+      "note": "Centrum kontaktů pro Mail, Zprávy a FaceTime"
+    },
+    {
+      "bundleIdentifier": "com.apple.dictionary",
+      "displayName": "Slovník",
+      "note": "Offline slovník a tezauru."
+    },
+    {
+      "bundleIdentifier": "com.apple.digitalcolormeter",
+      "displayName": "Digitální měřič barev",
+      "note": "Výběr barvy obrazovky, malý artefakt pro návrháře k dočasnému výběru barev"
+    },
+    {
+      "bundleIdentifier": "com.apple.DiskUtility",
+      "displayName": "Disková utilita",
+      "note": "Disk, oddíl, formát a první pomoc, nezahrávejte si s tím, ale je to důležité"
+    },
+    {
+      "bundleIdentifier": "com.apple.findmy",
+      "displayName": "Najít",
+      "note": "Najděte vybavení, najděte předměty a dejte svému ztracenému Macu."
+    },
+    {
+      "bundleIdentifier": "com.apple.fontbook",
+      "displayName": "Kniha písem",
+      "note": "Centrum instalace a správy písem, spravujte písma před návrhem"
+    },
+    {
+      "bundleIdentifier": "com.apple.freeform",
+      "displayName": "Freeform",
+      "note": "Neomezené tabule pro brainstorming, skicování a náhodné nápady"
+    },
+    {
+      "bundleIdentifier": "com.apple.games",
+      "displayName": "Hry",
+      "note": "Herní portál Apple pro centrální správu hratelného obsahu Apple Arcade"
+    },
+    {
+      "bundleIdentifier": "com.apple.grapher",
+      "displayName": "Grapher",
+      "note": "Grafové rovnice, skrytý nástroj pro matematickou vizualizaci"
+    },
+    {
+      "bundleIdentifier": "com.apple.home",
+      "displayName": "Domácnost",
+      "note": "Smart home control vchod dokáže řídit osvětlení, klimatizaci a další vybavení"
+    },
+    {
+      "bundleIdentifier": "com.apple.image_capture",
+      "displayName": "Přenos obrázků",
+      "note": "Import obrázků z fotoaparátu nebo skeneru, jednoduchý, ale stabilní"
+    },
+    {
+      "bundleIdentifier": "com.apple.generativeplaygroundapp",
+      "displayName": "Playground",
+      "note": "Vytvářejte obrázky s inteligencí Apple, ideální pro rychlé kreativní kreslení"
+    },
+    {
+      "bundleIdentifier": "com.apple.iMovieApp",
+      "displayName": "iMovie",
+      "note": "Dostatečný pro základní úpravy videa, domácí videa a lehké krátké filmy"
+    },
+    {
+      "bundleIdentifier": "com.apple.screencontinuity",
+      "displayName": "Zrcadlení iPhonu",
+      "note": "Ovládejte svůj iPhone přímo na Macu."
+    },
+    {
+      "bundleIdentifier": "com.apple.journal",
+      "displayName": "Deník",
+      "note": "Zaznamenávejte denní úryvky a pomalu přeměňujte své myšlenky na osobní."
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Keynote",
+      "displayName": "Keynote",
+      "note": "Prezentační nástroj ve stylu Apple, snadné vytváření krásných snímků"
+    },
+    {
+      "bundleIdentifier": "com.apple.magnifier",
+      "displayName": "Lupa",
+      "note": "Zvětšete detaily obrazovky, abyste pomohli s viděním a jemnou kontrolou"
+    },
+    {
+      "bundleIdentifier": "com.apple.Maps",
+      "displayName": "Mapy",
+      "note": "Zkontrolujte trasy, zobrazte města a posílejte cíle do iPhone"
+    },
+    {
+      "bundleIdentifier": "com.apple.migrateassistant",
+      "displayName": "Průvodce přenosem dat",
+      "note": "Při přechodu na nový Mac přesuňte stará data do nového počítače"
+    },
+    {
+      "bundleIdentifier": "com.apple.exposelauncher",
+      "displayName": "Mission Control",
+      "note": "Letecký pohled na okno a plochu, stačí se na ni podívat, pokud je špinavá"
+    },
+    {
+      "bundleIdentifier": "com.apple.news",
+      "displayName": "News",
+      "note": "Portál Apple News, vhodný pro prohlížení vybraného mediálního obsahu"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Numbers",
+      "displayName": "Numbers",
+      "note": "Nástroj Apple Sheets, jednoduché sestavy jsou osvěžující než Excel"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Pages",
+      "displayName": "Pages",
+      "note": "Textový procesor Apple, krásný pro psaní dokumentů a sazbu"
+    },
+    {
+      "bundleIdentifier": "com.apple.passwords",
+      "displayName": "Hesla",
+      "note": "Systémový správce hesel, centralizovaná správa účtů."
+    },
+    {
+      "bundleIdentifier": "com.apple.mobilephone",
+      "displayName": "Telefon",
+      "note": "Volejte na Macu pomocí telefonu"
+    },
+    {
+      "bundleIdentifier": "com.apple.AboutThisMacLauncher",
+      "displayName": "O tomto Macu",
+      "note": "Zobrazí model Macu, verzi systému a sériové číslo"
+    },
+    {
+      "bundleIdentifier": "com.apple.archiveutility",
+      "displayName": "Archivační utilita",
+      "note": "Komprimuje a rozbaluje ZIP a další archivy"
+    },
+    {
+      "bundleIdentifier": "com.apple.DeskCam",
+      "displayName": "Pohled na stůl",
+      "note": "Ukáže stůl pomocí Kamery přes Kontinuitu"
+    },
+    {
+      "bundleIdentifier": "com.apple.DirectoryUtility",
+      "displayName": "Adresářová utilita",
+      "note": "Nastavuje adresářové služby, LDAP a síťové účty"
+    },
+    {
+      "bundleIdentifier": "com.apple.DVDPlayer",
+      "displayName": "DVD přehrávač",
+      "note": "Přehrává DVD disky a místní DVD obsah"
+    },
+    {
+      "bundleIdentifier": "com.apple.ExpansionSlotUtility",
+      "displayName": "Nastavení rozšiřujícího slotu",
+      "note": "Zobrazí a nastaví rozšiřující sloty Macu Pro"
+    },
+    {
+      "bundleIdentifier": "com.apple.appleseed.FeedbackAssistant",
+      "displayName": "Feedback Assistant",
+      "note": "Odesílá Apple zpětnou vazbu a diagnostiku systému"
+    },
+    {
+      "bundleIdentifier": "com.apple.FolderActionsSetup",
+      "displayName": "Nastavení akcí složek",
+      "note": "Přidává složkám automatické skriptové akce"
+    },
+    {
+      "bundleIdentifier": "com.apple.IPAInstaller",
+      "displayName": "Instalátor aplikací pro iOS",
+      "note": "Instaluje balíčky aplikací iOS systémovým nástrojem"
+    },
+    {
+      "bundleIdentifier": "com.apple.keychainaccess",
+      "displayName": "Klíčenka",
+      "note": "Spravuje hesla, certifikáty, klíče a zabezpečené položky"
+    },
+    {
+      "bundleIdentifier": "com.apple.Ticket-Viewer",
+      "displayName": "Prohlížeč lístků",
+      "note": "Zobrazí lístky Kerberos a stav ověření"
+    },
+    {
+      "bundleIdentifier": "com.apple.wifi.diagnostics",
+      "displayName": "Diagnostika bezdrátové sítě",
+      "note": "Diagnostikuje Wi-Fi a vytváří bezdrátové zprávy"
+    },
+    {
+      "bundleIdentifier": "com.apple.photobooth",
+      "displayName": "Photo Booth",
+      "note": "Selfie fotoaparátu a malé speciální efekty jsou také vhodné pro."
+    },
+    {
+      "bundleIdentifier": "com.apple.podcasts",
+      "displayName": "Podcasty",
+      "note": "Oficiální portál pro poslech podcastů, užitečný pro dojíždění a studium"
+    },
+    {
+      "bundleIdentifier": "com.apple.Preview",
+      "displayName": "Náhled",
+      "note": "Nejvíce podceňovaný nástroj pro Mac: Prohlížejte si obrázky."
+    },
+    {
+      "bundleIdentifier": "com.apple.printcenter",
+      "displayName": "Centrum tisku",
+      "note": "Zobrazení a správa tiskových front. Úlohy zasekávání papíru viz nejprve zde"
+    },
+    {
+      "bundleIdentifier": "com.apple.quicktimeplayerx",
+      "displayName": "QuickTime Player",
+      "note": "Dobře zavedený nástroj, který dokáže přehrávat."
+    },
+    {
+      "bundleIdentifier": "com.apple.screensharing",
+      "displayName": "Sdílení obrazovky",
+      "note": "Ovládejte na dálku jiný Mac."
+    },
+    {
+      "bundleIdentifier": "com.apple.screenshot.launcher",
+      "displayName": "Snímek obrazovky",
+      "note": "Snímek obrazovky a portál pro nahrávání obrazovky za Shift-Command-5"
+    },
+    {
+      "bundleIdentifier": "com.apple.scripteditor2",
+      "displayName": "Editor skriptů",
+      "note": "Napište a spusťte AppleScript pro ovládání staré školy automatizace Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.sfsymbols",
+      "displayName": "SF Symbols",
+      "note": "Oficiální knihovna symbolů společnosti Apple, nezbytná pro nativní rozhraní"
+    },
+    {
+      "bundleIdentifier": "com.apple.shortcuts",
+      "displayName": "Zkratky",
+      "note": "Řetězení více akcí do procesů na jedno kliknutí je moderní verzí Automatoru"
+    },
+    {
+      "bundleIdentifier": "com.apple.siri.launcher",
+      "displayName": "Siri",
+      "note": "Vstup hlasového asistenta, může kontrolovat informace."
+    },
+    {
+      "bundleIdentifier": "com.apple.stickies",
+      "displayName": "Lístečky",
+      "note": "Lepicí poznámky na plochu, dočasné poznámky jsou zveřejněny přímo před vámi"
+    },
+    {
+      "bundleIdentifier": "com.apple.stocks",
+      "displayName": "Stocks",
+      "note": "Podívejte se na malé panely pro akcie a dynamiku trhu"
+    },
+    {
+      "bundleIdentifier": "com.apple.systemprofiler",
+      "displayName": "Informace o systému",
+      "note": "Prohlédněte si podrobnosti o hardwaru, softwaru a zařízení."
+    },
+    {
+      "bundleIdentifier": "com.apple.systempreferences",
+      "displayName": "Nastavení systému",
+      "note": "Mac nastavení hlavního vchodu, téměř všechny systémové přepínače jsou zde"
+    },
+    {
+      "bundleIdentifier": "com.apple.textedit",
+      "displayName": "TextEdit",
+      "note": "Nejjednodušší textový editor, velmi rychle otevřete TXT a RTF"
+    },
+    {
+      "bundleIdentifier": "com.apple.backup.launcher",
+      "displayName": "Time Machine",
+      "note": "Systémové zálohování pro obnovu souborů podle potřeby"
+    },
+    {
+      "bundleIdentifier": "com.apple.helpviewer",
+      "displayName": "Tipy",
+      "note": "Oficiální tipy společnosti Apple, jak příležitostně objevit funkce."
+    },
+    {
+      "bundleIdentifier": "com.apple.TV",
+      "displayName": "TV",
+      "note": "Vstup pro přehrávání a správu filmového a televizního obsahu"
+    },
+    {
+      "bundleIdentifier": "com.apple.voicememos",
+      "displayName": "Diktafon",
+      "note": "Nejprve rychle nahrajte, uložte si inspiraci ze schůzek a materiály k."
+    },
+    {
+      "bundleIdentifier": "com.apple.voiceoverutility",
+      "displayName": "Utilita VoiceOver",
+      "note": "Spravujte funkce usnadnění čtení obrazovky."
+    },
+    {
+      "bundleIdentifier": "com.apple.weather",
+      "displayName": "Počasí",
+      "note": "Portál předpovědi počasí, zkontrolujte jej před odchodem."
+    },
+    {
+      "bundleIdentifier": "com.apple.dt.Xcode",
+      "displayName": "Xcode",
+      "note": "Vývojové nástroje Apple pro tvorbu aplikací iOS a macOS"
+    },
+    {
+      "bundleIdentifier": "com.apple.garageband10",
+      "displayName": "GarageBand",
+      "note": "Základní nástroj pro hudební produkci společnosti Apple."
+    },
+    {
+      "bundleIdentifier": "com.apple.FinalCut",
+      "displayName": "Final Cut Pro",
+      "note": "Profesionální nástroj pro úpravu videa od společnosti Apple, stříhání."
+    },
+    {
+      "bundleIdentifier": "com.apple.logic10",
+      "displayName": "Logic Pro",
+      "note": "Profesionální nástroj pro hudební produkci společnosti Apple."
+    },
+    {
+      "bundleIdentifier": "com.apple.TestFlight",
+      "displayName": "TestFlight",
+      "note": "Nástroj pro testování aplikací Apple."
+    }
+  ]
+}

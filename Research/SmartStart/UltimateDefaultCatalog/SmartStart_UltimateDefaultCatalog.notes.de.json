@@ -46,10 +46,6 @@
       "note": "Wird zum Speichern und Verwalten von Git-Anmeldeinformationen verwendet und eign"
     },
     {
-      "entryID": "com-apple-finder-2de1d8bbb107",
-      "note": "Das macOS-System verfügt über Tools, die für die entsprechende Systemverwaltung"
-    },
-    {
       "entryID": "com-mitchellh-ghostty-5194f8485e90",
       "note": "Entwicklertools für Befehlszeile, Build, Debugging oder Projektmanagement"
     },
@@ -72,10 +68,6 @@
     {
       "entryID": "1password-cli-85e1ca6fa403",
       "note": "Kontosicherheitstool zur Verwaltung von Passwörtern, Bestätigungscodes und Zugan"
-    },
-    {
-      "entryID": "com-apple-safari-b2041c4573f8",
-      "note": "Apples offizieller Browser, Energiesparen, Datenschutz und ökologische Verknüpfu"
     },
     {
       "entryID": "com-anthropic-claudefordesktop-b2f723339fad",
@@ -102,10 +94,6 @@
       "note": "Ein leichter, aber leistungsstarker Code-Editor mit einem sehr vollständigen Plu"
     },
     {
-      "entryID": "com-apple-mail-9c1e969ca734",
-      "note": "System-Mail-Client, mehrere Postfächer können zentral bearbeitet werden"
-    },
-    {
       "entryID": "md-obsidian-9f1625d466f0",
       "note": "Lokale Markdown-Wissensdatenbank, geeignet für die langfristige Anhäufung Ihres"
     },
@@ -128,10 +116,6 @@
     {
       "entryID": "com-tencent-meeting-5bd65448f293",
       "note": "Der Zugang zu Tencent-Konferenzen, das chinesische Büro und die Remote-Zusammena"
-    },
-    {
-      "entryID": "com-apple-mobilesms-a7066fed8087",
-      "note": "iMessage- und SMS-Portal: Beantworten Sie Nachrichten schneller auf dem Mac"
     },
     {
       "entryID": "com-mojang-minecraftlauncher-606072fb1e80",
@@ -174,10 +158,6 @@
       "note": "Offizielle Android-IDE, unverzichtbar für die Entwicklung und das Debuggen von A"
     },
     {
-      "entryID": "com-apple-facetime-96f99030aef8",
-      "note": "Zugang zu Audio- und Videoanrufen im Apple-Ökosystem"
-    },
-    {
       "entryID": "maccy-0c7236cb0f2d",
       "note": "Zwischenablage-Verlaufstool, kopierte Inhalte können jederzeit abgerufen werden"
     },
@@ -190,10 +170,6 @@
       "note": "Mit dem Streaming-Musikplayer können Sie ein Lied sowohl zum Arbeiten als auch z"
     },
     {
-      "entryID": "com-apple-ical-8e998503177c",
-      "note": "Entfernen Sie den Zeitplan aus Ihrem Kopf und geben Sie der Zeit eine visuelle K"
-    },
-    {
       "entryID": "blackhole-2ch-0b7c58e0297a",
       "note": "Virtueller Audiotreiber, geeignet für Bildschirmaufzeichnung, Live-Übertragung u"
     },
@@ -204,10 +180,6 @@
     {
       "entryID": "com-electron-lark-6559e48147f2",
       "note": "Feishu-Kollaborationsportal, auf dem sich alle Chats, Dokumente und Besprechunge"
-    },
-    {
-      "entryID": "com-apple-notes-aaf1d7cf1c90",
-      "note": "Im schnellsten System können Memos, Texte, Bilder und Listen gesammelt werden"
     },
     {
       "entryID": "com-electron-ollama-25be0e7340d2",
@@ -238,10 +210,6 @@
       "note": "Programmierentwicklungstools zum Schreiben, Lesen und Verwalten von Code"
     },
     {
-      "entryID": "com-apple-reminders-92a9335b31bb",
-      "note": "Aufgaben und Erinnerungen, geeignet zum Erfassen kleinerer täglicher Aufgaben"
-    },
-    {
       "entryID": "com-openai-chat-7c12a7107aad",
       "note": "Platzieren Sie den KI-Assistenten auf Ihrem Desktop und schreiben, lernen und br"
     },
@@ -260,10 +228,6 @@
     {
       "entryID": "com-kingsoft-wpsoffice-mac-c371eb320d54",
       "note": "Office-Suite zum Bearbeiten von Dokumenten, Tabellenkalkulationen und Präsentati"
-    },
-    {
-      "entryID": "com-apple-photos-9678510fed1e",
-      "note": "Systemfotobibliothek, der Haupteingang zum Verwalten, Bearbeiten und Synchronisi"
     },
     {
       "entryID": "adobe-acrobat-reader-fb99f7bea88f",
@@ -290,14 +254,6 @@
       "note": "Webbrowser, geeignet für das tägliche Surfen im Internet und den Zugriff auf Web"
     },
     {
-      "entryID": "com-apple-music-63ea41e016ea",
-      "note": "Lokaler und Streaming-Musikplayer"
-    },
-    {
-      "entryID": "com-apple-terminal-77aba1385326",
-      "note": "Befehlszeileneingabe, Macs verstecktes Cockpit"
-    },
-    {
       "entryID": "utm-f2a3e184ea9f",
       "note": "Virtualisierungs- oder Remoteverbindungstools, geeignet zum Ausführen von System"
     },
@@ -310,260 +266,12 @@
       "note": "Musikplayer, geeignet zum Anhören von Songs, zum Verwalten von Wiedergabelisten"
     },
     {
-      "entryID": "com-apple-activitymonitor-1ca0c04d6757",
-      "note": "Sehen Sie im Mac-Dashboard, wer Strom und Speicher verbraucht und Ihren Computer"
-    },
-    {
-      "entryID": "com-apple-airport-airportutility-85b3849d7d98",
-      "note": "Netzwerk-Tools der alten Schule für die Verwaltung von Flughäfen und Zeitkapseln"
-    },
-    {
-      "entryID": "com-apple-appstore-0619ceddf32a",
-      "note": "Im offiziellen Mac-Software-Store finden Sie hier Apps, Updates und Abonnements"
-    },
-    {
-      "entryID": "com-apple-apps-launcher-c27c2e6c3e15",
-      "note": "Ein kompaktes Anwendungsportal, das Ihnen hilft, Apps schnell auf Systemebene zu"
-    },
-    {
-      "entryID": "com-apple-audio-audiomidisetup-8327be183cc9",
-      "note": "Audiogeräte und MIDI-Routing, häufig von Musikern und Debuggern verwendet"
-    },
-    {
-      "entryID": "com-apple-automator-3134734f076f",
-      "note": "Sie können eine Reihe von Mac-Automatisierungsaktionen aneinanderreihen, ohne Co"
-    },
-    {
-      "entryID": "com-apple-bluetoothfileexchange-a83f24bdfabc",
-      "note": "Die Verwendung von Bluetooth zum Senden und Empfangen von Dateien ist altmodisch"
-    },
-    {
-      "entryID": "com-apple-ibooksx-61d0b1b4ae4c",
-      "note": "Ein Einstiegspunkt zum Lesen und Verwalten von E-Books, der Ihren Mac in einen S"
-    },
-    {
-      "entryID": "com-apple-bootcampassistant-e4ab0159032f",
-      "note": "Offizielle Anleitung zur Installation von Windows auf Intel Mac"
-    },
-    {
-      "entryID": "com-apple-calculator-390516777a37",
-      "note": "Im Inneren sind auch ein kleiner Taschenrechner, eine Einheitenumrechnung und ei"
-    },
-    {
-      "entryID": "com-apple-chess-8ccbf1801854",
-      "note": "Das System ist mit Schach ausgestattet, was das Angeln eleganter macht als das S"
-    },
-    {
-      "entryID": "com-apple-clock-f922597106e9",
-      "note": "Ein einheitliches Portal für Alarme, Timer, Stoppuhren und Weltuhren"
-    },
-    {
       "entryID": "cmux-3a661d84a58c",
       "note": "Ideal zum Organisieren von Medienmetadaten, Benennen oder Kapseln von Dateien"
     },
     {
-      "entryID": "com-apple-colorsyncutility-68af0cd69154",
-      "note": "Farbprofile anzeigen und reparieren, Anzeige- und Druckfarbunterschiede verwalte"
-    },
-    {
-      "entryID": "com-apple-console-5e449417a9e8",
-      "note": "Das Fenster zum Anzeigen von Systemprotokollen ist bei der Fehlerbehebung bei An"
-    },
-    {
-      "entryID": "com-apple-addressbook-0b4e2b893a86",
-      "note": "Kontakt-Hub für E-Mail, Nachrichten und FaceTime"
-    },
-    {
-      "entryID": "com-apple-dictionary-4625013af142",
-      "note": "Offline-Wörterbuch und Thesaurus, zum Schreiben und Nachschlagen von Wörtern mus"
-    },
-    {
-      "entryID": "com-apple-digitalcolormeter-fb99a6aa0c0b",
-      "note": "Bildschirm-Farbauswahl, ein kleines Artefakt, mit dem Designer vorübergehend Far"
-    },
-    {
-      "entryID": "com-apple-diskutility-48d48cee3d46",
-      "note": "Festplatte, Partition, Format und Erste Hilfe, machen Sie sich keine Sorgen, abe"
-    },
-    {
-      "entryID": "com-apple-findmy-f15882533adf",
-      "note": "Finden Sie Ausrüstung, finden Sie Gegenstände und geben Sie Ihrem verlorenen Mac"
-    },
-    {
-      "entryID": "com-apple-fontbook-83009f0e620e",
-      "note": "Schriftarten-Installations- und Verwaltungscenter, verwalten Sie Schriftarten vo"
-    },
-    {
-      "entryID": "com-apple-freeform-c79ff8861497",
-      "note": "Unbegrenzte Whiteboards für Brainstorming, Skizzieren und zufällige Ideen"
-    },
-    {
-      "entryID": "com-apple-games-18b06d160812",
-      "note": "Apple-Spieleportal zur zentralen Verwaltung spielbarer Apple Arcade-Inhalte"
-    },
-    {
-      "entryID": "com-apple-grapher-dde725719597",
-      "note": "Diagrammgleichungen, ein verstecktes Werkzeug zur mathematischen Visualisierung"
-    },
-    {
-      "entryID": "com-apple-home-339f72ecc4b8",
-      "note": "Mit der Smart-Home-Eingangssteuerung können Beleuchtung, Klimaanlage und andere"
-    },
-    {
-      "entryID": "com-apple-image-capture-8de5b7375bed",
-      "note": "Bilder von Kamera oder Scanner importieren, einfach, aber stabil"
-    },
-    {
-      "entryID": "com-apple-generativeplaygroundapp-05897f8dbe4c",
-      "note": "Generate images with Apple intelligence, perfect for quick creative drafting"
-    },
-    {
-      "entryID": "com-apple-imovieapp-00a9c7493d26",
-      "note": "Ausreichend für Videobearbeitung der Einstiegsklasse, Heimvideos und leichte Kur"
-    },
-    {
-      "entryID": "com-apple-screencontinuity-867a48a76333",
-      "note": "Bedienen Sie Ihr iPhone direkt auf Ihrem Mac, sodass Sie nicht einmal zum Telefo"
-    },
-    {
-      "entryID": "com-apple-journal-29ceb46d5ff5",
-      "note": "Nehmen Sie tägliche Fragmente auf und verwandeln Sie Ihre Gedanken langsam in ei"
-    },
-    {
-      "entryID": "com-apple-iwork-keynote-e86356f31ec2",
-      "note": "Präsentationstool im Apple-Stil, mit dem sich ganz einfach schöne Folien erstell"
-    },
-    {
       "entryID": "com-riotgames-leagueoflegends-ee692e90efde",
       "note": "League of Legends-Client, der Zugang zu klassischen Teamwettbewerbsspielen"
-    },
-    {
-      "entryID": "com-apple-magnifier-c9044527cd0d",
-      "note": "Vergrößern Sie Bildschirmdetails, um die Sicht und die Feinprüfung zu erleichter"
-    },
-    {
-      "entryID": "com-apple-maps-310ca6c69cea",
-      "note": "Überprüfen Sie Routen, sehen Sie sich Städte an und übertragen Sie Ziele auf das"
-    },
-    {
-      "entryID": "com-apple-migrateassistant-5f03ff480fe8",
-      "note": "Wenn Sie auf einen neuen Mac wechseln, verschieben Sie alte Daten auf den neuen"
-    },
-    {
-      "entryID": "com-apple-exposelauncher-62e07c598f71",
-      "note": "Luftaufnahme des Fensters und des Desktops, schauen Sie einfach hin, wenn es uno"
-    },
-    {
-      "entryID": "com-apple-news-7614a9b54b68",
-      "note": "Apple News-Portal, geeignet zum Ansehen ausgewählter Medieninhalte"
-    },
-    {
-      "entryID": "com-apple-iwork-numbers-361a6aaf7056",
-      "note": "Mit dem Apple Sheets-Tool sind kompakte Berichte erfrischender als Excel"
-    },
-    {
-      "entryID": "com-apple-iwork-pages-d6f13bb4e29c",
-      "note": "Apple-Textverarbeitungsprogramm, ideal zum Schreiben von Dokumenten und zum Setz"
-    },
-    {
-      "entryID": "com-apple-passwords-08719cef9f02",
-      "note": "System-Passwort-Manager, zentrale Verwaltung von Konten, Bestätigungscodes und P"
-    },
-    {
-      "entryID": "com-apple-mobilephone-5739fb6f2a60",
-      "note": "Telefonieren Sie mit Ihrem Telefon auf dem Mac"
-    },
-    {
-      "entryID": "com-apple-photobooth-9d976a9cdfcd",
-      "note": "Auch Kamera-Selfies und kleine Spezialeffekte eignen sich zum Testen der Kamera"
-    },
-    {
-      "entryID": "com-apple-podcasts-4a2a186dcc8f",
-      "note": "Das offizielle Portal zum Anhören von Podcasts, nützlich zum Pendeln und Lernen"
-    },
-    {
-      "entryID": "com-apple-preview-9ef385a7e445",
-      "note": "Das am meisten unterschätzte Mac-Tool: Bilder anzeigen, PDFs mit Anmerkungen ver"
-    },
-    {
-      "entryID": "com-apple-printcenter-5a8f324fe84d",
-      "note": "Druckwarteschlangen anzeigen und verwalten. Informationen zu Papierstauproblemen"
-    },
-    {
-      "entryID": "com-apple-quicktimeplayerx-f2aee71b906d",
-      "note": "Ein bewährtes Tool zum Abspielen, Aufzeichnen von Bildschirminhalten und Aufzeic"
-    },
-    {
-      "entryID": "com-apple-screensharing-3d1e02ff893a",
-      "note": "Steuern Sie einen anderen Mac aus der Ferne, was sehr praktisch ist, um Menschen"
-    },
-    {
-      "entryID": "com-apple-screenshot-launcher-f3c7a7a2c583",
-      "note": "Screenshot- und Bildschirmaufzeichnungsportal hinter Shift-Command-5"
-    },
-    {
-      "entryID": "com-apple-scripteditor2-f8a19fe3d1d8",
-      "note": "Schreiben Sie AppleScript und führen Sie es aus, um die Mac-Automatisierung der"
-    },
-    {
-      "entryID": "com-apple-sfsymbols-9dc6c630daed",
-      "note": "Apples offizielle Symbolbibliothek, unverzichtbar für native Schnittstellen"
-    },
-    {
-      "entryID": "com-apple-shortcuts-f629e5e3e216",
-      "note": "Das Aneinanderreihen mehrerer Aktionen in Ein-Klick-Prozessen ist die moderne Ve"
-    },
-    {
-      "entryID": "com-apple-siri-launcher-77250557ebe9",
-      "note": "Sprachassistent-Eingang, kann Informationen überprüfen, Apps öffnen und das Syst"
-    },
-    {
-      "entryID": "com-apple-stickies-9ed4ed5e1103",
-      "note": "Haftnotizen für den Desktop und temporäre Notizen werden direkt vor Ihnen angebr"
-    },
-    {
-      "entryID": "com-apple-stocks-6a1a80292efe",
-      "note": "Sehen Sie sich kleine Panels für Aktien und Marktdynamik an"
-    },
-    {
-      "entryID": "com-apple-systemprofiler-fdfe3344179e",
-      "note": "Sehen Sie sich Hardware-, Software- und Gerätedetails an, um die genaueste Konfi"
-    },
-    {
-      "entryID": "com-apple-systempreferences-5632452dbd3d",
-      "note": "Haupteingang der Mac-Einstellungen, fast alle Systemschalter sind hier"
-    },
-    {
-      "entryID": "com-apple-textedit-64d314fbf2b9",
-      "note": "Der einfachste Texteditor, öffnet TXT und RTF sehr schnell"
-    },
-    {
-      "entryID": "com-apple-backup-launcher-918b22a1257e",
-      "note": "Verlassen Sie sich darauf, dass Ihr System-Backup-Tool die Medizin für Reue im V"
-    },
-    {
-      "entryID": "com-apple-helpviewer-6e90a07b56cc",
-      "note": "Offizielle Tipps von Apple, um gelegentlich Funktionen zu entdecken, die Sie nic"
-    },
-    {
-      "entryID": "com-apple-tv-28f9f8e2e47b",
-      "note": "Wiedergabe und Verwaltung von Film- und Fernsehinhalten"
-    },
-    {
-      "entryID": "com-apple-voicememos-f4eb9f35a1b8",
-      "note": "Zeichnen Sie zunächst schnell Besprechungsinspirationen und Interviewmaterialien"
-    },
-    {
-      "entryID": "com-apple-voiceoverutility-9623fe74d030",
-      "note": "Verwalten Sie die Barrierefreiheitsfunktionen für das Bildschirmlesen, um Ihren"
-    },
-    {
-      "entryID": "com-apple-weather-a1b814774719",
-      "note": "Überprüfen Sie das Wettervorhersageportal, bevor Sie losfahren, um mehr Stabilit"
-    },
-    {
-      "entryID": "com-apple-dt-xcode-66da3f910767",
-      "note": "Apple entwickelt FamilyMart, das wichtigste Schlachtfeld für das Schreiben von i"
     },
     {
       "entryID": "com-github-githubclient-c94dd11b1995",
@@ -874,10 +582,6 @@
       "note": "Ideal zum Erstellen von Screenshots, zum Kommentieren, zum Erkennen von Text ode"
     },
     {
-      "entryID": "com-apple-garageband10-af435df6c94a",
-      "note": "Apples Einstiegstool für die Musikproduktion, einfach zu verwenden zum Aufnehmen"
-    },
-    {
       "entryID": "com-microsoft-excel-2ff4add4000d",
       "note": "Ein Veteran der Tabellen- und Datenanalyse, Finanzen, Betrieb und Modelle verlas"
     },
@@ -914,10 +618,6 @@
       "note": "Ein leichter Code-Editor, der für macOS entwickelt wurde"
     },
     {
-      "entryID": "com-apple-finalcut-6383fea0b510",
-      "note": "Mit dem professionellen Videobearbeitungstool von Apple geht das Schneiden, Färb"
-    },
-    {
       "entryID": "github-copilot-for-xcode-60555f2d4d11",
       "note": "Bringen Sie KI in den Entwicklungsprozess ein, geeignet für Codierung, Debugging"
     },
@@ -932,10 +632,6 @@
     {
       "entryID": "finetune-5431832269e6",
       "note": "KI-Audiotools, geeignet zum Organisieren, Transkribieren oder Optimieren von Ton"
-    },
-    {
-      "entryID": "com-apple-logic10-69f8eefc0ddf",
-      "note": "Apples professionelles Musikproduktionstool, leistungsstark beim Aufnehmen, Arra"
     },
     {
       "entryID": "com-getdropbox-dropbox-72c7db8f1763",
@@ -968,10 +664,6 @@
     {
       "entryID": "font-jetbrains-mono-nerd-font-4a662d68a338",
       "note": "Schriftarten-Ressourcenpaket, geeignet zur Ergänzung von Schriftarten für Editor"
-    },
-    {
-      "entryID": "com-apple-testflight-cfe027705d73",
-      "note": "Apple-App-Testtool, geeignet zum Installieren und Testen von Beta-Apps"
     },
     {
       "entryID": "claude-code-latest-ba2522b660cf",

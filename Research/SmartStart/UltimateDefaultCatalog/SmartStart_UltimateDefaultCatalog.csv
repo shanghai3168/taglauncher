@@ -9,28 +9,24 @@ brave-browser,browser|security,com.brave.Browser,主打隐私和广告拦截的 
 ngrok,api-tools,null,适合调试接口、网络请求和开发环境
 arc,browser,company.thebrowser.Browser,工作流式浏览器，把网页、空间和资料组织得更清楚
 git-credential-manager,devops,null,用于保存和管理 Git 凭据，适合多个代码托管平台登录
-finder,file-management,com.apple.finder,macOS 系统自带工具，适合完成对应的系统管理或日常操作
 ghostty,terminal-tools,com.mitchellh.ghostty,开发者工具，适合命令行、构建、调试或工程管理
 slack,communication,com.tinyspeck.slackmacgap,团队聊天和工作流入口，项目沟通不必埋在邮件里
 iterm2,terminal-tools,com.googlecode.iterm2,增强版终端，开发者常用的命令行工作台
 libreoffice,office,null,开源 Office 套件，文档、表格和演示都能编辑
 wechat,communication,com.tencent.xinWeChat,即时通讯和通话工具，适合聊天、语音和视频沟通
 1password-cli,security|terminal-tools,null,账号安全工具，适合管理密码、验证码和通行密钥
-safari,browser,com.apple.Safari,Apple 官方浏览器，省电、隐私和生态联动是强项
 claude,ai-tools,com.anthropic.claudefordesktop,桌面入口，适合长文阅读、写作和思考辅助
 discord,communication|entertainment,com.hnc.Discord,语音和社区聊天工具，游戏和创作者圈子很常用
 cc-switch,ai-tools,null,把 AI 带进开发流程，适合写代码、调试和自动化
 qq,communication,com.tencent.qq,沟通工具，适合聊天、邮件、通话或团队交流
 orbstack,devops,null,轻量容器和 Linux 环境，替代 Docker Desktop 很顺手
 visual-studio-code,ide,com.microsoft.VSCode,轻量但强大的代码编辑器，插件生态非常完整
-mail,communication,com.apple.mail,系统邮件客户端，多个邮箱可以集中处理
 obsidian,Notes,md.obsidian,本地 Markdown 知识库，适合长期沉淀自己的第二大脑
 chromedriver,browser|api-tools,null,Chrome WebDriver 工具，适合自动化测试网页应用
 zoom,Meeting,us.zoom.xos,视频会议常用入口，远程沟通和线上课程都离不开
 warp,ai-tools|terminal-tools,null,现代终端，把命令行、搜索和 AI 辅助结合起来
 postman,api-tools,com.postmanlabs.mac,适合调试接口、网络请求和开发环境
 tencent-meeting,Meeting,com.tencent.meeting,腾讯会议入口，中文办公和远程协作很常见
-messages,communication,com.apple.MobileSMS,iMessage 和短信入口，Mac 上回消息更快
 minecraft,game,com.mojang.minecraftlauncher,开放世界沙盒游戏，建造、探索和模组玩法都很丰富
 stats,system-maintenance,null,位于macOS菜单栏的系统监控工具，它能让用户实时监控多项macOS系统指标
 macfuse,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
@@ -41,15 +37,12 @@ roblox,game,com.roblox.Roblox,游戏平台，玩社区创作的多人游戏和�
 dingtalk,Meeting,com.alibaba.DingTalkMac,钉钉桌面端，中文团队的沟通、会议和审批入口
 raycast,Automation,com.raycast.macos,键盘驱动的效率入口，启动 App、脚本和搜索都很快
 android-studio,ide,null,Android 官方 IDE，开发和调试 Android App 必备
-facetime,communication|video,com.apple.FaceTime,苹果生态里的音视频通话入口
 maccy,Automation,null,剪贴板历史工具，复制过的内容随时找回来
 telegram,communication|security,ru.keepcoder.Telegram,即时通讯工具，主打速度和安全
 spotify,audio,com.spotify.client,流媒体音乐播放器，工作和放松都能配一首歌
-calendar,communication|GTD,com.apple.iCal,把日程从脑子里搬出来，给时间一张可视化地图
 blackhole-2ch,audio|device-management,null,虚拟音频驱动，适合录屏、直播和音频路由
 whatsapp,communication,net.whatsapp.WhatsApp,沟通工具，适合聊天、邮件、通话或团队交流
 feishu,Meeting,com.electron.lark,飞书协作入口，中文团队的聊天、文档和会议都在这
-notes,Notes,com.apple.Notes,最快的系统备忘录，文字、图片、清单都能收
 ollama,ai-tools,com.electron.ollama,把 AI 带进开发流程，适合写代码、调试和自动化
 basictex,runtime-sdk,null,TeX/LaTeX 工具，适合论文、公式和专业排版
 signal,communication|security,org.whispersystems.signal-desktop,重视隐私的加密聊天工具
@@ -57,88 +50,22 @@ baidu-netdisk,transfer,com.baidu.netdisk,百度网盘客户端，适合云端备
 miniconda,runtime-sdk,null,轻量 Python 环境管理工具，做数据和开发更干净
 mitmproxy,security|network-tools,null,网络调试工具，适合抓包、代理和排查连接问题
 bruno,api-tools,null,编程开发工具，适合编写、阅读和维护代码
-reminders,GTD,com.apple.reminders,待办和提醒事项，适合抓住日常小任务
 chatgpt,ai-tools|Notes,com.openai.chat,把 AI 助手放到桌面，写作、学习和头脑风暴随手就来
 iina,video,com.colliderli.iina,现代 Mac 视频播放器，界面清爽、格式兼容好
 sublime-text,ide,null,轻快的代码与文本编辑器，写代码、改配置和记草稿都顺手
 notion,GTD|Notes,notion.id,把笔记、文档、数据库和项目管理收进一个团队工作台
 wps-office,office,com.kingsoft.wpsoffice.mac,办公套件，适合编辑文档、表格和演示稿
-photos,picture-photo,com.apple.Photos,系统照片库，管理、编辑和同步照片的主入口
 adobe-acrobat-reader,PDF,null,PDF 阅读和批注工具，合同、论文和表单都能处理
 1password,security,com.1password.1password,密码和密钥管理器，账号安全的核心保险箱
 figma,ui-prototyping,com.figma.Desktop,在线协作设计工具，界面、原型和设计系统都能做
 localsend,transfer,null,跨平台应用，支持设备间的安全通信，使用REST API和HTTPS加密
 netease-cloud-music,audio,com.netease.163music,网易云音乐桌面端，听歌、歌单和中文音乐社区都方便
 chromium,browser,null,网页浏览器，适合日常上网和访问 Web 服务
-music,audio,com.apple.Music,本地和流媒体音乐播放器
-terminal,terminal-tools,com.apple.Terminal,命令行入口，Mac 的隐藏驾驶舱
 utm,devops,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
 lm-studio,ai-tools,ai.lmstudio.app,本地大模型运行工具，适合下载、测试和调用开源模型
 qq-music,audio,com.tencent.QQMusicMac,音乐播放器，适合听歌、管理歌单和使用腾讯音乐服务
-activity-monitor,system-maintenance,com.apple.ActivityMonitor,Mac 的仪表盘，专看谁在耗电、吃内存、拖慢电脑
-airport-utility,system,com.apple.airport.airportutility,管理 AirPort 和 Time Capsule 的老派网络工具
-app-store,system,com.apple.AppStore,Mac 官方软件商店，找应用、更新和订阅都从这里开始
-apps,system,com.apple.apps.launcher,一个轻量应用入口，帮你从系统层面快速打开 App
-audio-midi-setup,audio|device-management,com.apple.audio.audiomidisetup,管音频设备和 MIDI 路由，音乐人和调试党很常用
-automator,Automation,com.apple.automator,不写代码也能串起一串 Mac 自动化动作
-bluetooth-file-exchange,transfer|device-management,com.apple.bluetoothfileexchange,用蓝牙收发文件，古早但关键时能救急
-books,writing|education,com.apple.iBooksX,阅读和管理电子书的入口，适合把 Mac 变成书桌
-boot-camp-assistant,system,com.apple.bootcampassistant,Intel Mac 安装 Windows 的官方向导
-calculator,utilities,com.apple.calculator,小计算器，单位换算和程序员模式也藏在里面
-chess,game,com.apple.chess,系统自带国际象棋，摸鱼时比刷网页更优雅
-clock,GTD,com.apple.clock,闹钟、计时器、秒表和世界时钟的统一入口
 cmux,ai-tools,null,适合整理媒体元数据、命名或封装文件
-colorsync-utility,picture-photo,com.apple.colorsyncutility,查看和修复色彩配置文件，处理显示和打印色差
-console,system-maintenance,com.apple.console,看系统日志的窗口，排查异常时很有用
-contacts,communication,com.apple.addressbook,通讯录中枢，邮件、信息和 FaceTime 都会用到它
-dictionary,writing|education,com.apple.dictionary,离线词典和同义词库，写作查词不用开浏览器
-digital-color-meter,picture-photo,com.apple.digitalcolormeter,屏幕取色器，设计师临时取色的小神器
-disk-utility,system-maintenance,com.apple.DiskUtility,管磁盘、分区、格式化和急救，别乱点但很重要
-find-my,system,com.apple.findmy,找设备、找物品，也让丢失的 Mac 有回家的线索
-font-book,Font,com.apple.fontbook,字体安装和管理中心，设计前先管好字体
-freeform,Notes,com.apple.freeform,无限白板，适合头脑风暴、草图和乱七八糟的想法
-games,game,com.apple.games,Apple 游戏入口，集中管理可玩的 Apple Arcade 内容
-grapher,education,com.apple.grapher,把方程画成图，数学可视化的隐藏工具
-home,system,com.apple.home,智能家居控制入口，可管理灯光、空调等设备
-image-capture,picture-photo|transfer|device-management,com.apple.image_capture,从相机或扫描仪导入图片，朴素但稳定
-image-playground,ai-tools|picture-photo,com.apple.generativeplaygroundapp,用 Apple 智能生成图像，适合快速玩创意草稿
-imovie,video,com.apple.iMovieApp,入门级视频剪辑，家庭视频和轻量短片够用
-iphone-mirroring,device-management,com.apple.screencontinuity,在 Mac 上直接操作 iPhone，少一次伸手拿手机
-journal,Notes,com.apple.journal,记录日常片段，让碎碎念慢慢变成个人时间线
-keynote,office,com.apple.iWork.Keynote,苹果式演示文稿工具，做漂亮幻灯片很顺手
 league-of-legends,game,com.riotgames.leagueoflegends,英雄联盟客户端，经典团队竞技游戏入口
-magnifier,system,com.apple.magnifier,放大屏幕细节，给视力和精细检查一个帮手
-maps,GTD,com.apple.Maps,查路线、看城市，也能把目的地推给 iPhone
-migration-assistant,transfer,com.apple.migrateassistant,换新 Mac 时搬家，把旧资料迁到新机器
-mission-control,system,com.apple.exposelauncher,窗口和桌面的空中俯视图，乱了就看它
-news,media,com.apple.news,苹果新闻入口，适合看精选媒体内容
-numbers,office,com.apple.iWork.Numbers,苹果表格工具，轻量报表比 Excel 更清爽
-pages,writing|office,com.apple.iWork.Pages,苹果文字处理器，写文档和排版都好看
-passwords,security,com.apple.passwords,系统密码管家，账号、验证码和通行密钥集中管
-phone,communication,com.apple.mobilephone,借助手机在 Mac 上接打电话
-photo-booth,picture-photo,com.apple.photobooth,摄像头自拍和小特效，测试摄像头也方便
-podcasts,audio,com.apple.podcasts,听播客的官方入口，通勤和学习都能用
-preview,picture-photo|PDF,com.apple.Preview,Mac 最被低估的工具：看图、批注 PDF、简单编辑全能
-print-center,system,com.apple.printcenter,查看和管理打印队列，卡纸卡任务先看这里
-quicktime-player,video|audio,com.apple.quicktimeplayerx,播放、录屏、录音都能干的老牌工具
-screen-sharing,communication|network-tools,com.apple.screensharing,远程控制另一台 Mac，帮人修电脑很方便
-screenshot,video|picture-photo,com.apple.screenshot.launcher,截图和录屏入口，Shift-Command-5 的背后就是它
-script-editor,Automation,com.apple.scripteditor2,写和运行 AppleScript，控制老派 Mac 自动化
-sf-symbols,ui-prototyping,com.apple.sfsymbols,Apple 官方符号库，做原生界面必备
-shortcuts,Automation,com.apple.shortcuts,把多个动作串成一键流程，是现代版 Automator
-siri,system,com.apple.siri.launcher,语音助手入口，能查信息、开 App、控制系统
-stickies,Notes,com.apple.stickies,桌面便利贴，临时记事就贴在眼前
-stocks,finance,com.apple.stocks,看股票和市场动态的小面板
-system-information,device-management,com.apple.systemprofiler,查看硬件、软件和设备详情，查配置最准确
-system-settings,system,com.apple.systempreferences,Mac 设置总入口，几乎所有系统开关都在这里
-textedit,writing,com.apple.textedit,最朴素的文本编辑器，开 TXT 和 RTF 很快
-time-machine,system,com.apple.backup.launcher,系统备份工具，后悔药就靠它提前准备
-tips,education,com.apple.helpviewer,苹果官方小技巧，偶尔能发现你没用过的功能
-tv,video,com.apple.TV,影视内容播放和管理入口
-voice-memos,audio,com.apple.voicememos,快速录音，会议灵感和采访素材先存下来
-voiceover-utility,system,com.apple.voiceoverutility,管理读屏辅助功能，让 Mac 更适合视觉障碍用户
-weather,utilities,com.apple.weather,天气预报入口，出门前看一眼更稳
-xcode,ide,com.apple.dt.Xcode,苹果开发全家桶，写 iOS 和 macOS App 的主战场
 github-desktop,terminal-tools|devops,com.github.GitHubClient,GitHub 官方桌面客户端，提交和同步仓库更直观
 mactex,runtime-sdk,null,TeX/LaTeX 工具，适合论文、公式和专业排版
 db-browser-for-sqlite,database-tools,null,数据库工具，适合连接、查询和管理数据库
@@ -216,7 +143,6 @@ freecad,3d-cad,null,适合建模、渲染和三维设计工作
 mweb,writing,com.coderforart.MWeb3,Markdown 写作工具，适合写博客、笔记和技术文档
 android-commandlinetools,terminal-tools|runtime-sdk,null,开发者工具，适合命令行、构建、调试或工程管理
 flameshot,picture-photo,null,适合截图、标注、识别文字或制作视觉反馈
-garageband,audio,com.apple.garageband10,苹果入门音乐制作工具，录音和编曲都容易上手
 microsoft-excel,office,com.microsoft.Excel,表格和数据分析老将，财务、运营和模型都靠它
 tor-browser,browser|security,null,安全工具，适合保护隐私、控制访问或加密数据
 marginnote,writing|education,QReader.MarginStudyMac,读书和论文标注工具，适合把阅读变成知识网络
@@ -226,12 +152,10 @@ kiro-cli,ai-tools|terminal-tools|ide,null,把 AI 带进开发流程，适合写�
 microsoft-powerpoint,office,com.microsoft.Powerpoint,经典演示工具，商务汇报和课程课件都常用
 macdown,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
 coteditor,ide,null,针对 macOS 开发的轻量级代码编辑器
-final-cut-pro,video,com.apple.FinalCut,苹果专业视频剪辑工具，剪片、调色和导出都很快
 github-copilot-for-xcode,ai-tools|devops|ide,null,把 AI 带进开发流程，适合写代码、调试和自动化
 microsoft-office,office,null,办公套件，适合处理文档、表格和演示稿
 openlens,devops|ide,null,编程开发工具，适合编写、阅读和维护代码
 finetune,ai-tools|audio,null,AI 音频工具，适合整理、转写或优化声音内容
-logic-pro,audio,com.apple.logic10,苹果专业音乐制作工具，录音、编曲和混音都很强
 dropbox,transfer,com.getdropbox.dropbox,老牌云同步工具，跨设备和团队共享文件很稳定
 openmtp,transfer|device-management,null,文件管理工具，适合整理、传输、清理或备份文件
 markedit,writing,null,Markdown 编辑器，适合写作、整理文档和发布内容
@@ -240,7 +164,6 @@ raspberry-pi-imager,picture-photo,null,树莓派系统写盘工具，制作启�
 temurin-17,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
 zotero,writing|education,null,文献管理工具，收集论文、引用和参考文献很省心
 font-jetbrains-mono-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
-testflight,ide,com.apple.TestFlight,Apple 应用测试工具，适合安装和体验测试版 App
 claude-code-latest,ai-tools|terminal-tools,null,Claude 相关工具，适合 AI 辅助开发或内容处理
 insomnia,api-tools,null,API 调试工具，测试接口和管理请求集合很顺
 pycharm,ide,null,编程开发工具，适合编写、阅读和维护代码

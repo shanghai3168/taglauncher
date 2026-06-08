@@ -46,10 +46,6 @@
       "note": "يُستخدم لحفظ بيانات اعتماد Git وإدارتها، وهو مناسب لعمليات تسجيل الدخول المتعددة"
     },
     {
-      "entryID": "com-apple-finder-2de1d8bbb107",
-      "note": "يأتي نظام macOS مزودًا بأدوات مناسبة لإكمال إدارة النظام المقابلة أو العمليات ال"
-    },
-    {
       "entryID": "com-mitchellh-ghostty-5194f8485e90",
       "note": "أدوات المطور لسطر الأوامر أو البناء أو التصحيح أو إدارة المشروع"
     },
@@ -72,10 +68,6 @@
     {
       "entryID": "1password-cli-85e1ca6fa403",
       "note": "أداة أمان الحساب لإدارة كلمات المرور ورموز التحقق ومفاتيح الوصول"
-    },
-    {
-      "entryID": "com-apple-safari-b2041c4573f8",
-      "note": "يعد متصفح Apple الرسمي وتوفير الطاقة والخصوصية والارتباط البيئي من نقاط قوتها"
     },
     {
       "entryID": "com-anthropic-claudefordesktop-b2f723339fad",
@@ -102,10 +94,6 @@
       "note": "محرر أكواد برمجية خفيف الوزن ولكنه قوي مع نظام متكامل للغاية للمكونات الإضافية"
     },
     {
-      "entryID": "com-apple-mail-9c1e969ca734",
-      "note": "عميل بريد النظام، يمكن معالجة صناديق بريد متعددة مركزيًا"
-    },
-    {
       "entryID": "md-obsidian-9f1625d466f0",
       "note": "قاعدة معارف Markdown المحلية، مناسبة للتراكم طويل المدى لعقلك الثاني"
     },
@@ -128,10 +116,6 @@
     {
       "entryID": "com-tencent-meeting-5bd65448f293",
       "note": "يعد الدخول إلى مؤتمر Tencent والمكتب الصيني والتعاون عن بعد أمرًا شائعًا جدًا"
-    },
-    {
-      "entryID": "com-apple-mobilesms-a7066fed8087",
-      "note": "iMessage وبوابة الرسائل النصية القصيرة، يمكنك الرد على الرسائل بشكل أسرع على أجه"
     },
     {
       "entryID": "com-mojang-minecraftlauncher-606072fb1e80",
@@ -174,10 +158,6 @@
       "note": "IDE الرسمي لنظام Android، وهو ضروري لتطوير تطبيقات Android وتصحيح أخطاءها"
     },
     {
-      "entryID": "com-apple-facetime-96f99030aef8",
-      "note": "مدخل مكالمات الصوت والفيديو في نظام Apple البيئي"
-    },
-    {
       "entryID": "maccy-0c7236cb0f2d",
       "note": "أداة سجل الحافظة، يمكن استرجاع المحتوى المنسوخ في أي وقت"
     },
@@ -190,10 +170,6 @@
       "note": "مشغل الموسيقى المتدفق، يمكنك الحصول على أغنية للعمل والاسترخاء"
     },
     {
-      "entryID": "com-apple-ical-8e998503177c",
-      "note": "أخرج الجدول الزمني من رأسك وأعطي الوقت خريطة مرئية"
-    },
-    {
       "entryID": "blackhole-2ch-0b7c58e0297a",
       "note": "برنامج تشغيل الصوت الافتراضي، مناسب لتسجيل الشاشة والبث المباشر وتوجيه الصوت"
     },
@@ -204,10 +180,6 @@
     {
       "entryID": "com-electron-lark-6559e48147f2",
       "note": "بوابة تعاون Feishu، حيث توجد جميع محادثات الفريق الصيني ووثائقه واجتماعاته"
-    },
-    {
-      "entryID": "com-apple-notes-aaf1d7cf1c90",
-      "note": "يمكن جمع أسرع مذكرة النظام والنصوص والصور والقوائم"
     },
     {
       "entryID": "com-electron-ollama-25be0e7340d2",
@@ -238,10 +210,6 @@
       "note": "أدوات تطوير البرمجة للكتابة والقراءة والحفاظ على التعليمات البرمجية"
     },
     {
-      "entryID": "com-apple-reminders-92a9335b31bb",
-      "note": "المهام والتذكيرات، مناسبة للقيام بالمهام اليومية الصغيرة"
-    },
-    {
       "entryID": "com-openai-chat-7c12a7107aad",
       "note": "ضع مساعد الذكاء الاصطناعي على سطح مكتبك واكتب وادرس وعصف ذهني في متناول يدك"
     },
@@ -260,10 +228,6 @@
     {
       "entryID": "com-kingsoft-wpsoffice-mac-c371eb320d54",
       "note": "مجموعة Office لتحرير المستندات وجداول البيانات والعروض التقديمية"
-    },
-    {
-      "entryID": "com-apple-photos-9678510fed1e",
-      "note": "ماكينات القمار الصناعية"
     },
     {
       "entryID": "adobe-acrobat-reader-fb99f7bea88f",
@@ -290,14 +254,6 @@
       "note": "متصفح ويب، مناسب لتصفح الإنترنت اليومي والوصول إلى خدمات الويب"
     },
     {
-      "entryID": "com-apple-music-63ea41e016ea",
-      "note": "مشغل الموسيقى المحلي والمتدفق"
-    },
-    {
-      "entryID": "com-apple-terminal-77aba1385326",
-      "note": "إدخال سطر الأوامر، قمرة القيادة المخفية لنظام Mac"
-    },
-    {
       "entryID": "utm-f2a3e184ea9f",
       "note": "أدوات المحاكاة الافتراضية أو الاتصال عن بعد، مناسبة لتشغيل بيئات النظام والوصول"
     },
@@ -310,260 +266,12 @@
       "note": "مشغل موسيقى، مناسب للاستماع إلى الأغاني وإدارة قوائم التشغيل واستخدام خدمات Tenc"
     },
     {
-      "entryID": "com-apple-activitymonitor-1ca0c04d6757",
-      "note": "لوحة تحكم Mac لمعرفة من يستهلك الطاقة والذاكرة ويبطئ جهاز الكمبيوتر الخاص بك"
-    },
-    {
-      "entryID": "com-apple-airport-airportutility-85b3849d7d98",
-      "note": "أدوات الشبكات القديمة لإدارة AirPorts وTime Capsules"
-    },
-    {
-      "entryID": "com-apple-appstore-0619ceddf32a",
-      "note": "متجر برامج Mac الرسمي، ابدأ هنا للعثور على التطبيقات والتحديثات والاشتراكات"
-    },
-    {
-      "entryID": "com-apple-apps-launcher-c27c2e6c3e15",
-      "note": "بوابة تطبيقات خفيفة الوزن تساعدك على فتح التطبيقات بسرعة من مستوى النظام"
-    },
-    {
-      "entryID": "com-apple-audio-audiomidisetup-8327be183cc9",
-      "note": "المعدات الصوتية وتوجيه MIDI، التي يشيع استخدامها من قبل الموسيقيين ومصححي الأخطا"
-    },
-    {
-      "entryID": "com-apple-automator-3134734f076f",
-      "note": "يمكنك تجميع سلسلة من إجراءات أتمتة Mac معًا دون كتابة تعليمات برمجية"
-    },
-    {
-      "entryID": "com-apple-bluetoothfileexchange-a83f24bdfabc",
-      "note": "يعد استخدام تقنية Bluetooth لإرسال واستقبال الملفات أمرًا قديمًا ولكنه يمكن أن ي"
-    },
-    {
-      "entryID": "com-apple-ibooksx-61d0b1b4ae4c",
-      "note": "مدخل لقراءة وإدارة الكتب الإلكترونية، مناسب لتحويل جهاز Mac الخاص بك إلى مكتب"
-    },
-    {
-      "entryID": "com-apple-bootcampassistant-e4ab0159032f",
-      "note": "الدليل الرسمي لتثبيت Windows على Intel Mac"
-    },
-    {
-      "entryID": "com-apple-calculator-390516777a37",
-      "note": "يتم أيضًا إخفاء الآلة الحاسبة الصغيرة وتحويل الوحدات ووضع المبرمج بالداخل"
-    },
-    {
-      "entryID": "com-apple-chess-8ccbf1801854",
-      "note": "يأتي النظام مزودًا بلعبة الشطرنج، مما يجعل الصيد أكثر أناقة من تصفح الويب"
-    },
-    {
-      "entryID": "com-apple-clock-f922597106e9",
-      "note": "بوابة موحدة للمنبهات والمؤقتات وساعات التوقف والساعات العالمية"
-    },
-    {
       "entryID": "cmux-3a661d84a58c",
       "note": "مثالية لتنظيم البيانات الوصفية للوسائط أو تسمية الملفات أو تغليفها"
     },
     {
-      "entryID": "com-apple-colorsyncutility-68af0cd69154",
-      "note": "عرض وإصلاح ملفات تعريف الألوان والتعامل مع اختلافات ألوان العرض والطباعة"
-    },
-    {
-      "entryID": "com-apple-console-5e449417a9e8",
-      "note": "تعد نافذة عرض سجلات النظام مفيدة جدًا عند استكشاف الأخطاء وإصلاحها"
-    },
-    {
-      "entryID": "com-apple-addressbook-0b4e2b893a86",
-      "note": "مركز جهات الاتصال للبريد والرسائل وFaceTime"
-    },
-    {
-      "entryID": "com-apple-dictionary-4625013af142",
-      "note": "قاموس وقاموس المرادفات غير متصل بالإنترنت، لا حاجة لفتح المتصفح عند كتابة الكلما"
-    },
-    {
-      "entryID": "com-apple-digitalcolormeter-fb99a6aa0c0b",
-      "note": "منتقي ألوان الشاشة، أداة صغيرة للمصممين لاختيار الألوان مؤقتًا"
-    },
-    {
-      "entryID": "com-apple-diskutility-48d48cee3d46",
-      "note": "القرص والقسم والتنسيق والإسعافات الأولية، لا تعبث بها ولكنها مهمة"
-    },
-    {
-      "entryID": "com-apple-findmy-f15882533adf",
-      "note": "ابحث عن المعدات، وابحث عن العناصر، وقدم أدلة Mac المفقودة للوصول إلى المنزل"
-    },
-    {
-      "entryID": "com-apple-fontbook-83009f0e620e",
-      "note": "مركز تثبيت وإدارة الخطوط، وإدارة الخطوط قبل التصميم"
-    },
-    {
-      "entryID": "com-apple-freeform-c79ff8861497",
-      "note": "ألواح معلومات غير محدودة للعصف الذهني والرسم والأفكار العشوائية"
-    },
-    {
-      "entryID": "com-apple-games-18b06d160812",
-      "note": "بوابة ألعاب Apple لإدارة محتوى Apple Arcade القابل للتشغيل مركزيًا"
-    },
-    {
-      "entryID": "com-apple-grapher-dde725719597",
-      "note": "معادلات الرسم البياني، أداة مخفية للتصور الرياضي"
-    },
-    {
-      "entryID": "com-apple-home-339f72ecc4b8",
-      "note": "يمكن لمدخل التحكم في المنزل الذكي إدارة الإضاءة وتكييف الهواء وغيرها من المعدات"
-    },
-    {
-      "entryID": "com-apple-image-capture-8de5b7375bed",
-      "note": "استيراد الصور من الكاميرا أو الماسح الضوئي، بسيط ولكنه مستقر"
-    },
-    {
-      "entryID": "com-apple-generativeplaygroundapp-05897f8dbe4c",
-      "note": "أنشئ صورًا باستخدام ذكاء Apple، مما يجعلها مثالية للصياغة الإبداعية السريعة"
-    },
-    {
-      "entryID": "com-apple-imovieapp-00a9c7493d26",
-      "note": "يكفي لتحرير الفيديو للمبتدئين ومقاطع الفيديو المنزلية والأفلام القصيرة خفيفة الو"
-    },
-    {
-      "entryID": "com-apple-screencontinuity-867a48a76333",
-      "note": "قم بتشغيل iPhone الخاص بك مباشرة على جهاز Mac الخاص بك، مما يلغي الحاجة للوصول إ"
-    },
-    {
-      "entryID": "com-apple-journal-29ceb46d5ff5",
-      "note": "قم بتسجيل الأجزاء اليومية وقم بتحويل أفكارك ببطء إلى جدولك الزمني الشخصي"
-    },
-    {
-      "entryID": "com-apple-iwork-keynote-e86356f31ec2",
-      "note": "أداة عرض بأسلوب Apple، سهلة لإنشاء شرائح جميلة"
-    },
-    {
       "entryID": "com-riotgames-leagueoflegends-ee692e90efde",
       "note": "عميل League of Legends، المدخل إلى ألعاب المنافسة الجماعية الكلاسيكية"
-    },
-    {
-      "entryID": "com-apple-magnifier-c9044527cd0d",
-      "note": "تكبير تفاصيل الشاشة للمساعدة في الرؤية والفحص الدقيق"
-    },
-    {
-      "entryID": "com-apple-maps-310ca6c69cea",
-      "note": "تحقق من الطرق، واعرض المدن، وادفع الوجهات إلى iPhone"
-    },
-    {
-      "entryID": "com-apple-migrateassistant-5f03ff480fe8",
-      "note": "عند الانتقال إلى جهاز Mac جديد، انقل البيانات القديمة إلى الجهاز الجديد"
-    },
-    {
-      "entryID": "com-apple-exposelauncher-62e07c598f71",
-      "note": "منظر جوي للنافذة وسطح المكتب، فقط انظر إليها إذا كانت فوضوية"
-    },
-    {
-      "entryID": "com-apple-news-7614a9b54b68",
-      "note": "بوابة أخبار Apple، مناسبة لعرض محتوى الوسائط المحدد"
-    },
-    {
-      "entryID": "com-apple-iwork-numbers-361a6aaf7056",
-      "note": "أداة Apple Sheets، التقارير خفيفة الوزن أكثر تحديثًا من Excel"
-    },
-    {
-      "entryID": "com-apple-iwork-pages-d6f13bb4e29c",
-      "note": "معالج نصوص Apple، جميل لكتابة المستندات والتنضيد"
-    },
-    {
-      "entryID": "com-apple-passwords-08719cef9f02",
-      "note": "مدير كلمات مرور النظام والإدارة المركزية للحسابات ورموز التحقق ومفاتيح المرور"
-    },
-    {
-      "entryID": "com-apple-mobilephone-5739fb6f2a60",
-      "note": "قم بإجراء مكالمات على جهاز Mac باستخدام هاتفك"
-    },
-    {
-      "entryID": "com-apple-photobooth-9d976a9cdfcd",
-      "note": "تعتبر صور السيلفي بالكاميرا والمؤثرات الخاصة الصغيرة ملائمة أيضًا لاختبار الكامي"
-    },
-    {
-      "entryID": "com-apple-podcasts-4a2a186dcc8f",
-      "note": "البوابة الرسمية للاستماع للبودكاست، مفيدة للتنقل والدراسة"
-    },
-    {
-      "entryID": "com-apple-preview-9ef385a7e445",
-      "note": "أداة Mac الأقل تقديرًا: عرض الصور والتعليق على ملفات PDF وإجراء تعديلات بسيطة، ك"
-    },
-    {
-      "entryID": "com-apple-printcenter-5a8f324fe84d",
-      "note": "عرض وإدارة قوائم انتظار الطباعة. بالنسبة لمهام انحشار الورق، راجع هنا أولاً"
-    },
-    {
-      "entryID": "com-apple-quicktimeplayerx-f2aee71b906d",
-      "note": "أداة راسخة يمكنها تشغيل الشاشة وتسجيلها وتسجيل الصوت"
-    },
-    {
-      "entryID": "com-apple-screensharing-3d1e02ff893a",
-      "note": "التحكم عن بعد بجهاز Mac آخر، وهو أمر مناسب جدًا لمساعدة الأشخاص على إصلاح أجهزة"
-    },
-    {
-      "entryID": "com-apple-screenshot-launcher-f3c7a7a2c583",
-      "note": "بوابة لقطة الشاشة وتسجيل الشاشة، خلف Shift-Command-5"
-    },
-    {
-      "entryID": "com-apple-scripteditor2-f8a19fe3d1d8",
-      "note": "قم بكتابة AppleScript وتشغيله للتحكم في التشغيل الآلي لنظام Mac في المدرسة القدي"
-    },
-    {
-      "entryID": "com-apple-sfsymbols-9dc6c630daed",
-      "note": "مكتبة الرموز الرسمية لشركة Apple، وهي ضرورية للواجهات الأصلية"
-    },
-    {
-      "entryID": "com-apple-shortcuts-f629e5e3e216",
-      "note": "يعد تجميع إجراءات متعددة في عمليات بنقرة واحدة هو الإصدار الحديث من Automator"
-    },
-    {
-      "entryID": "com-apple-siri-launcher-77250557ebe9",
-      "note": "مدخل مساعد صوتي، يمكنه التحقق من المعلومات، وفتح التطبيقات، والتحكم في النظام"
-    },
-    {
-      "entryID": "com-apple-stickies-9ed4ed5e1103",
-      "note": "يتم نشر الملاحظات اللاصقة لسطح المكتب والملاحظات المؤقتة أمامك مباشرةً"
-    },
-    {
-      "entryID": "com-apple-stocks-6a1a80292efe",
-      "note": "شاهد اللوحات الصغيرة للأسهم وديناميكيات السوق"
-    },
-    {
-      "entryID": "com-apple-systemprofiler-fdfe3344179e",
-      "note": "قم بعرض تفاصيل الأجهزة والبرامج والأجهزة للعثور على التكوين الأكثر دقة"
-    },
-    {
-      "entryID": "com-apple-systempreferences-5632452dbd3d",
-      "note": "المدخل الرئيسي لإعدادات Mac، جميع مفاتيح النظام تقريبًا موجودة هنا"
-    },
-    {
-      "entryID": "com-apple-textedit-64d314fbf2b9",
-      "note": "أبسط محرر نصوص، يفتح TXT وRTF بسرعة كبيرة"
-    },
-    {
-      "entryID": "com-apple-backup-launcher-918b22a1257e",
-      "note": "أداة النسخ الاحتياطي للنظام، اعتمد عليها لتحضير دواء الندم مسبقاً"
-    },
-    {
-      "entryID": "com-apple-helpviewer-6e90a07b56cc",
-      "note": "نصائح Apple الرسمية لاكتشاف الميزات التي لم تستخدمها من حين لآخر"
-    },
-    {
-      "entryID": "com-apple-tv-28f9f8e2e47b",
-      "note": "مدخل تشغيل المحتوى السينمائي والتلفزيوني وإدارته"
-    },
-    {
-      "entryID": "com-apple-voicememos-f4eb9f35a1b8",
-      "note": "سجل بسرعة واحفظ إلهام الاجتماع ومواد المقابلة أولاً"
-    },
-    {
-      "entryID": "com-apple-voiceoverutility-9623fe74d030",
-      "note": "قم بإدارة ميزات إمكانية وصول ذوي الاحتياجات الخاصة لقراءة الشاشة لتسهيل وصول الم"
-    },
-    {
-      "entryID": "com-apple-weather-a1b814774719",
-      "note": "بوابة توقعات الطقس، تأكد منها قبل الخروج لمزيد من الاستقرار"
-    },
-    {
-      "entryID": "com-apple-dt-xcode-66da3f910767",
-      "note": "قامت Apple بتطوير FamilyMart، ساحة المعركة الرئيسية لكتابة تطبيقات iOS وmacOS"
     },
     {
       "entryID": "com-github-githubclient-c94dd11b1995",
@@ -874,10 +582,6 @@
       "note": "مثالية لالتقاط لقطات الشاشة أو التعليق التوضيحي أو التعرف على النص أو إنشاء تعلي"
     },
     {
-      "entryID": "com-apple-garageband10-af435df6c94a",
-      "note": "أداة إنتاج الموسيقى للمبتدئين من Apple، سهلة الاستخدام للتسجيل والترتيب"
-    },
-    {
       "entryID": "com-microsoft-excel-2ff4add4000d",
       "note": "يعتمد عليه المخضرم في تحليل الجداول والبيانات والتمويل والعمليات والنماذج"
     },
@@ -914,10 +618,6 @@
       "note": "محرر تعليمات برمجية خفيف الوزن تم تطويره لنظام التشغيل macOS"
     },
     {
-      "entryID": "com-apple-finalcut-6383fea0b510",
-      "note": "إن أداة تحرير الفيديو الاحترافية من Apple، والقطع، والتلوين، والتصدير كلها سريعة"
-    },
-    {
       "entryID": "github-copilot-for-xcode-60555f2d4d11",
       "note": "أدخل الذكاء الاصطناعي في عملية التطوير، وهو مناسب للترميز وتصحيح الأخطاء والأتمت"
     },
@@ -932,10 +632,6 @@
     {
       "entryID": "finetune-5431832269e6",
       "note": "أدوات صوتية تعمل بالذكاء الاصطناعي، مناسبة لتنظيم المحتوى الصوتي أو نسخه أو تحسي"
-    },
-    {
-      "entryID": "com-apple-logic10-69f8eefc0ddf",
-      "note": "أداة إنتاج الموسيقى الاحترافية من Apple، قوية في التسجيل والترتيب والمزج"
     },
     {
       "entryID": "com-getdropbox-dropbox-72c7db8f1763",
@@ -968,10 +664,6 @@
     {
       "entryID": "font-jetbrains-mono-nerd-font-4a662d68a338",
       "note": "حزمة موارد الخطوط، مناسبة لتكملة الخطوط للمحررين أو المحطات الطرفية أو أعمال الت"
-    },
-    {
-      "entryID": "com-apple-testflight-cfe027705d73",
-      "note": "أداة اختبار تطبيقات Apple، وهي مناسبة لتثبيت التطبيقات التجريبية وتجربتها"
     },
     {
       "entryID": "claude-code-latest-ba2522b660cf",

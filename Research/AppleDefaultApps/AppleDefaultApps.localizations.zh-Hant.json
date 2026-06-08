@@ -1,0 +1,453 @@
+{
+  "resourceFormatVersion": 1,
+  "catalogContentVersion": 1,
+  "language": "zh-Hant",
+  "localizationsVersion": 2,
+  "entries": [
+    {
+      "bundleIdentifier": "com.apple.finder",
+      "displayName": "Finder",
+      "note": "macOS 系統自帶工具，適合完成對應的系統管理或日常操作"
+    },
+    {
+      "bundleIdentifier": "com.apple.Safari",
+      "displayName": "Safari",
+      "note": "Apple 官方瀏覽器，省電、隱私和生態聯動是強項"
+    },
+    {
+      "bundleIdentifier": "com.apple.mail",
+      "displayName": "郵件",
+      "note": "系統郵件客戶端，多個郵箱可以集中處理"
+    },
+    {
+      "bundleIdentifier": "com.apple.MobileSMS",
+      "displayName": "訊息",
+      "note": "iMessage 和短信入口，Mac 上回消息更快"
+    },
+    {
+      "bundleIdentifier": "com.apple.FaceTime",
+      "displayName": "FaceTime",
+      "note": "蘋果生態里的音視頻通話入口"
+    },
+    {
+      "bundleIdentifier": "com.apple.iCal",
+      "displayName": "行事曆",
+      "note": "把日程從腦子里搬出來，給時間一張可視化地圖"
+    },
+    {
+      "bundleIdentifier": "com.apple.Notes",
+      "displayName": "備忘錄",
+      "note": "最快的系統備忘錄，文字、圖片、清單都能收"
+    },
+    {
+      "bundleIdentifier": "com.apple.reminders",
+      "displayName": "提醒事項",
+      "note": "待辦和提醒事項，適合抓住日常小任務"
+    },
+    {
+      "bundleIdentifier": "com.apple.Photos",
+      "displayName": "照片",
+      "note": "系統照片庫，管理、編輯和同步照片的主入口"
+    },
+    {
+      "bundleIdentifier": "com.apple.Music",
+      "displayName": "音樂",
+      "note": "本地和流媒體音樂播放器"
+    },
+    {
+      "bundleIdentifier": "com.apple.Terminal",
+      "displayName": "終端機",
+      "note": "命令行入口，Mac 的隱藏駕駛艙"
+    },
+    {
+      "bundleIdentifier": "com.apple.ActivityMonitor",
+      "displayName": "活動監視器",
+      "note": "Mac 的儀錶盤，專看誰在耗電、吃內存、拖慢電腦"
+    },
+    {
+      "bundleIdentifier": "com.apple.airport.airportutility",
+      "displayName": "AirPort工具程式",
+      "note": "管理 AirPort 和 Time Capsule 的老派網絡工具"
+    },
+    {
+      "bundleIdentifier": "com.apple.AppStore",
+      "displayName": "App Store",
+      "note": "Mac 官方軟件商店，找應用、更新和訂閱都從這裡開始"
+    },
+    {
+      "bundleIdentifier": "com.apple.apps.launcher",
+      "displayName": "App",
+      "note": "一個輕量應用入口，幫你從系統層面快速打開 App"
+    },
+    {
+      "bundleIdentifier": "com.apple.audio.audiomidisetup",
+      "displayName": "音訊MIDI設定",
+      "note": "管音頻設備和 MIDI 路由，音樂人和調試黨很常用"
+    },
+    {
+      "bundleIdentifier": "com.apple.automator",
+      "displayName": "Automator",
+      "note": "不寫代碼也能串起一串 Mac 自動化動作"
+    },
+    {
+      "bundleIdentifier": "com.apple.bluetoothfileexchange",
+      "displayName": "藍牙檔案交換程式",
+      "note": "用藍牙收發文件，古早但關鍵時能救急"
+    },
+    {
+      "bundleIdentifier": "com.apple.iBooksX",
+      "displayName": "書籍",
+      "note": "閱讀和管理電子書的入口，適合把 Mac 變成書桌"
+    },
+    {
+      "bundleIdentifier": "com.apple.bootcampassistant",
+      "displayName": "啟動切換輔助程式",
+      "note": "Intel Mac 安裝 Windows 的官方嚮導"
+    },
+    {
+      "bundleIdentifier": "com.apple.calculator",
+      "displayName": "計算機",
+      "note": "小計算器，單位換算和程序員模式也藏在裡面"
+    },
+    {
+      "bundleIdentifier": "com.apple.chess",
+      "displayName": "西洋棋",
+      "note": "系統自帶西洋棋，適合短暫休息和練習棋局"
+    },
+    {
+      "bundleIdentifier": "com.apple.clock",
+      "displayName": "時鐘",
+      "note": "鬧鐘、計時器、秒錶和世界時鐘的統一入口"
+    },
+    {
+      "bundleIdentifier": "com.apple.colorsyncutility",
+      "displayName": "色彩同步工具程式",
+      "note": "查看和修復色彩配置文件，處理顯示和打印色差"
+    },
+    {
+      "bundleIdentifier": "com.apple.console",
+      "displayName": "系統監視程式",
+      "note": "看系統日誌的窗口，排查異常時很有用"
+    },
+    {
+      "bundleIdentifier": "com.apple.addressbook",
+      "displayName": "聯絡人",
+      "note": "通訊錄中樞，郵件、信息和 FaceTime 都會用到它"
+    },
+    {
+      "bundleIdentifier": "com.apple.dictionary",
+      "displayName": "辭典",
+      "note": "離線詞典和同義詞庫，寫作查詞不用開瀏覽器"
+    },
+    {
+      "bundleIdentifier": "com.apple.digitalcolormeter",
+      "displayName": "數位測色計",
+      "note": "屏幕取色器，設計師臨時取色的小神器"
+    },
+    {
+      "bundleIdentifier": "com.apple.DiskUtility",
+      "displayName": "磁碟工具程式",
+      "note": "管理磁碟、分割區、格式化和急救，處理儲存問題很重要"
+    },
+    {
+      "bundleIdentifier": "com.apple.findmy",
+      "displayName": "尋找",
+      "note": "找設備、找物品，也讓丟失的 Mac 有回家的線索"
+    },
+    {
+      "bundleIdentifier": "com.apple.fontbook",
+      "displayName": "字體簿",
+      "note": "字體安裝和管理中心，設計前先管好字體"
+    },
+    {
+      "bundleIdentifier": "com.apple.freeform",
+      "displayName": "無邊記",
+      "note": "無限白板，適合腦力激盪、草圖和自由整理想法"
+    },
+    {
+      "bundleIdentifier": "com.apple.games",
+      "displayName": "遊戲",
+      "note": "Apple 遊戲入口，集中管理可玩的 Apple Arcade 內容"
+    },
+    {
+      "bundleIdentifier": "com.apple.grapher",
+      "displayName": "Grapher",
+      "note": "把方程畫成圖，數學可視化的隱藏工具"
+    },
+    {
+      "bundleIdentifier": "com.apple.home",
+      "displayName": "家庭",
+      "note": "智能家居控制入口，可管理燈光、空調等設備"
+    },
+    {
+      "bundleIdentifier": "com.apple.image_capture",
+      "displayName": "影像擷取",
+      "note": "從相機或掃描儀導入圖片，樸素但穩定"
+    },
+    {
+      "bundleIdentifier": "com.apple.generativeplaygroundapp",
+      "displayName": "影像樂園",
+      "note": "用 Apple 智能生成圖像，適合快速玩創意草稿"
+    },
+    {
+      "bundleIdentifier": "com.apple.iMovieApp",
+      "displayName": "iMovie",
+      "note": "入門級視頻剪輯，家庭視頻和輕量短片夠用"
+    },
+    {
+      "bundleIdentifier": "com.apple.screencontinuity",
+      "displayName": "iPhone鏡像輸出",
+      "note": "在 Mac 上直接操作 iPhone，跨裝置處理訊息和 App"
+    },
+    {
+      "bundleIdentifier": "com.apple.journal",
+      "displayName": "日誌",
+      "note": "記錄日常片段，讓碎碎念慢慢變成個人時間線"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Keynote",
+      "displayName": "Keynote",
+      "note": "蘋果式演示文稿工具，做漂亮幻燈片很順手"
+    },
+    {
+      "bundleIdentifier": "com.apple.magnifier",
+      "displayName": "放大鏡",
+      "note": "放大屏幕細節，給視力和精細檢查一個幫手"
+    },
+    {
+      "bundleIdentifier": "com.apple.Maps",
+      "displayName": "地圖",
+      "note": "查路線、看城市，也能把目的地推給 iPhone"
+    },
+    {
+      "bundleIdentifier": "com.apple.migrateassistant",
+      "displayName": "系統移轉輔助程式",
+      "note": "換新 Mac 時搬家，把舊資料遷到新機器"
+    },
+    {
+      "bundleIdentifier": "com.apple.exposelauncher",
+      "displayName": "指揮中心",
+      "note": "窗口和桌面的空中俯視圖，亂了就看它"
+    },
+    {
+      "bundleIdentifier": "com.apple.news",
+      "displayName": "新聞",
+      "note": "蘋果新聞入口，適合看精選媒體內容"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Numbers",
+      "displayName": "Numbers",
+      "note": "蘋果表格工具，輕量報表比 Excel 更清爽"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Pages",
+      "displayName": "Pages",
+      "note": "蘋果文字處理器，寫文檔和排版都好看"
+    },
+    {
+      "bundleIdentifier": "com.apple.passwords",
+      "displayName": "密碼",
+      "note": "系統密碼管家，帳號、驗證碼和通行密鑰集中管理"
+    },
+    {
+      "bundleIdentifier": "com.apple.mobilephone",
+      "displayName": "電話",
+      "note": "借助手機在 Mac 上接打電話"
+    },
+    {
+      "bundleIdentifier": "com.apple.AboutThisMacLauncher",
+      "displayName": "關於這台Mac",
+      "note": "查看 Mac 型號、系統版本和序號"
+    },
+    {
+      "bundleIdentifier": "com.apple.archiveutility",
+      "displayName": "封存工具程式",
+      "note": "壓縮和解壓縮 ZIP 等封存檔案"
+    },
+    {
+      "bundleIdentifier": "com.apple.DeskCam",
+      "displayName": "桌上視角",
+      "note": "配合連續互通相機顯示桌上視角"
+    },
+    {
+      "bundleIdentifier": "com.apple.DirectoryUtility",
+      "displayName": "目錄工具程式",
+      "note": "設定目錄服務、LDAP 和網路帳號連線"
+    },
+    {
+      "bundleIdentifier": "com.apple.DVDPlayer",
+      "displayName": "DVD播放程式",
+      "note": "播放 DVD 光碟和本機 DVD 內容"
+    },
+    {
+      "bundleIdentifier": "com.apple.ExpansionSlotUtility",
+      "displayName": "擴充插槽工具程式",
+      "note": "查看和設定 Mac Pro 擴充插槽"
+    },
+    {
+      "bundleIdentifier": "com.apple.appleseed.FeedbackAssistant",
+      "displayName": "使用者意見程式",
+      "note": "向 Apple 送出系統回饋和診斷報告"
+    },
+    {
+      "bundleIdentifier": "com.apple.FolderActionsSetup",
+      "displayName": "檔案夾動作設定",
+      "note": "為檔案夾設定自動觸發的腳本動作"
+    },
+    {
+      "bundleIdentifier": "com.apple.IPAInstaller",
+      "displayName": "iOS App安裝程式",
+      "note": "安裝 iOS App 套件的系統輔助工具"
+    },
+    {
+      "bundleIdentifier": "com.apple.keychainaccess",
+      "displayName": "鑰匙圈存取",
+      "note": "管理密碼、憑證、密鑰和安全項目"
+    },
+    {
+      "bundleIdentifier": "com.apple.Ticket-Viewer",
+      "displayName": "票券檢視程式",
+      "note": "查看 Kerberos 票券和驗證狀態"
+    },
+    {
+      "bundleIdentifier": "com.apple.wifi.diagnostics",
+      "displayName": "無線診斷",
+      "note": "診斷 Wi-Fi 問題並產生無線報告"
+    },
+    {
+      "bundleIdentifier": "com.apple.photobooth",
+      "displayName": "Photo Booth",
+      "note": "攝像頭自拍和小特效，測試攝像頭也方便"
+    },
+    {
+      "bundleIdentifier": "com.apple.podcasts",
+      "displayName": "Podcast",
+      "note": "聽播客的官方入口，通勤和學習都能用"
+    },
+    {
+      "bundleIdentifier": "com.apple.Preview",
+      "displayName": "預覽程式",
+      "note": "Mac 最被低估的工具：看圖、批注 PDF、簡單編輯全能"
+    },
+    {
+      "bundleIdentifier": "com.apple.printcenter",
+      "displayName": "列印中心",
+      "note": "查看和管理打印隊列，卡紙卡任務先看這裡"
+    },
+    {
+      "bundleIdentifier": "com.apple.quicktimeplayerx",
+      "displayName": "QuickTime Player",
+      "note": "播放、錄屏、錄音都能幹的老牌工具"
+    },
+    {
+      "bundleIdentifier": "com.apple.screensharing",
+      "displayName": "螢幕共享",
+      "note": "遠程控制另一台 Mac，幫人修電腦很方便"
+    },
+    {
+      "bundleIdentifier": "com.apple.screenshot.launcher",
+      "displayName": "截圖",
+      "note": "截圖和錄屏入口，Shift-Command-5 的背後就是它"
+    },
+    {
+      "bundleIdentifier": "com.apple.scripteditor2",
+      "displayName": "工序指令編寫程式",
+      "note": "寫和運行 AppleScript，控制老派 Mac 自動化"
+    },
+    {
+      "bundleIdentifier": "com.apple.sfsymbols",
+      "displayName": "SF Symbols",
+      "note": "Apple 官方符號庫，做原生界面必備"
+    },
+    {
+      "bundleIdentifier": "com.apple.shortcuts",
+      "displayName": "捷徑",
+      "note": "把多個動作串成一鍵流程，是現代版 Automator"
+    },
+    {
+      "bundleIdentifier": "com.apple.siri.launcher",
+      "displayName": "Siri",
+      "note": "語音助手入口，能查信息、開 App、控制系統"
+    },
+    {
+      "bundleIdentifier": "com.apple.stickies",
+      "displayName": "便條紙",
+      "note": "桌面便利貼，臨時記事就貼在眼前"
+    },
+    {
+      "bundleIdentifier": "com.apple.stocks",
+      "displayName": "股市",
+      "note": "看股票和市場動態的小面板"
+    },
+    {
+      "bundleIdentifier": "com.apple.systemprofiler",
+      "displayName": "系統資訊",
+      "note": "查看硬件、軟件和設備詳情，查配置最準確"
+    },
+    {
+      "bundleIdentifier": "com.apple.systempreferences",
+      "displayName": "系統設定",
+      "note": "Mac 設置總入口，幾乎所有系統開關都在這裡"
+    },
+    {
+      "bundleIdentifier": "com.apple.textedit",
+      "displayName": "文字編輯",
+      "note": "最樸素的文本編輯器，開 TXT 和 RTF 很快"
+    },
+    {
+      "bundleIdentifier": "com.apple.backup.launcher",
+      "displayName": "時光機",
+      "note": "系統備份工具，適合提前準備檔案還原方案"
+    },
+    {
+      "bundleIdentifier": "com.apple.helpviewer",
+      "displayName": "提示",
+      "note": "蘋果官方小技巧，偶爾能發現你沒用過的功能"
+    },
+    {
+      "bundleIdentifier": "com.apple.TV",
+      "displayName": "TV",
+      "note": "影視內容播放和管理入口"
+    },
+    {
+      "bundleIdentifier": "com.apple.voicememos",
+      "displayName": "語音備忘錄",
+      "note": "快速錄音，會議靈感和採訪素材先存下來"
+    },
+    {
+      "bundleIdentifier": "com.apple.voiceoverutility",
+      "displayName": "旁白工具程式",
+      "note": "管理讀屏輔助功能，讓 Mac 更適合視覺障礙用戶"
+    },
+    {
+      "bundleIdentifier": "com.apple.weather",
+      "displayName": "天氣",
+      "note": "天氣預報入口，出門前看一眼更穩"
+    },
+    {
+      "bundleIdentifier": "com.apple.dt.Xcode",
+      "displayName": "Xcode",
+      "note": "Apple 開發工具套件，適合編寫 iOS 和 macOS App"
+    },
+    {
+      "bundleIdentifier": "com.apple.garageband10",
+      "displayName": "GarageBand",
+      "note": "蘋果入門音樂製作工具，錄音和編曲都容易上手"
+    },
+    {
+      "bundleIdentifier": "com.apple.FinalCut",
+      "displayName": "Final Cut Pro",
+      "note": "蘋果專業視頻剪輯工具，剪片、調色和導出都很快"
+    },
+    {
+      "bundleIdentifier": "com.apple.logic10",
+      "displayName": "Logic Pro",
+      "note": "蘋果專業音樂製作工具，錄音、編曲和混音都很強"
+    },
+    {
+      "bundleIdentifier": "com.apple.TestFlight",
+      "displayName": "TestFlight",
+      "note": "Apple 應用測試工具，適合安裝和體驗測試版 App"
+    }
+  ]
+}

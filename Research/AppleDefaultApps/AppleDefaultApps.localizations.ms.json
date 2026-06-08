@@ -1,0 +1,453 @@
+{
+  "resourceFormatVersion": 1,
+  "catalogContentVersion": 1,
+  "language": "ms",
+  "localizationsVersion": 2,
+  "entries": [
+    {
+      "bundleIdentifier": "com.apple.finder",
+      "displayName": "Finder",
+      "note": "Sistem macOS disertakan dengan alatan."
+    },
+    {
+      "bundleIdentifier": "com.apple.Safari",
+      "displayName": "Safari",
+      "note": "Pelayar rasmi Apple, penjimatan kuasa."
+    },
+    {
+      "bundleIdentifier": "com.apple.mail",
+      "displayName": "Mail",
+      "note": "Pelanggan mel sistem, berbilang peti mel boleh diproses secara berpusat"
+    },
+    {
+      "bundleIdentifier": "com.apple.MobileSMS",
+      "displayName": "Mesej",
+      "note": "iMessage dan portal SMS, balas mesej dengan lebih pantas pada Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.FaceTime",
+      "displayName": "FaceTime",
+      "note": "Pintu masuk panggilan audio dan video dalam ekosistem Apple"
+    },
+    {
+      "bundleIdentifier": "com.apple.iCal",
+      "displayName": "Kalendar",
+      "note": "Keluarkan jadual dari kepala anda dan berikan masa peta visual"
+    },
+    {
+      "bundleIdentifier": "com.apple.Notes",
+      "displayName": "Nota",
+      "note": "Memo sistem terpantas, teks, gambar dan senarai semuanya boleh dikumpulkan"
+    },
+    {
+      "bundleIdentifier": "com.apple.reminders",
+      "displayName": "Peringatan",
+      "note": "Tugasan dan peringatan, sesuai untuk menangkap tugas harian yang kecil"
+    },
+    {
+      "bundleIdentifier": "com.apple.Photos",
+      "displayName": "Foto",
+      "note": "Pustaka foto sistem, pintu masuk utama untuk menguru."
+    },
+    {
+      "bundleIdentifier": "com.apple.Music",
+      "displayName": "Muzik",
+      "note": "Pemain muzik tempatan dan penstriman"
+    },
+    {
+      "bundleIdentifier": "com.apple.Terminal",
+      "displayName": "Terminal",
+      "note": "Kemasukan baris arahan, kokpit tersembunyi Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.ActivityMonitor",
+      "displayName": "Monitor Aktiviti",
+      "note": "Papan pemuka Mac untuk melihat siapa yang menggunakan kuasa."
+    },
+    {
+      "bundleIdentifier": "com.apple.airport.airportutility",
+      "displayName": "Utiliti AirPort",
+      "note": "Alat rangkaian sekolah lama untuk mengurus AirPorts dan Kapsul Masa"
+    },
+    {
+      "bundleIdentifier": "com.apple.AppStore",
+      "displayName": "App Store",
+      "note": "Kedai perisian Mac rasmi, mulakan di sini untuk mencari apl."
+    },
+    {
+      "bundleIdentifier": "com.apple.apps.launcher",
+      "displayName": "App",
+      "note": "Portal aplikasi ringan untuk membantu anda membuka aplikasi dengan."
+    },
+    {
+      "bundleIdentifier": "com.apple.audio.audiomidisetup",
+      "displayName": "Persediaan MIDI Audio",
+      "note": "Peralatan audio dan penghalaan MIDI."
+    },
+    {
+      "bundleIdentifier": "com.apple.automator",
+      "displayName": "Automator",
+      "note": "Anda boleh menyusun rentetan tindakan automasi Mac tanpa menulis kod"
+    },
+    {
+      "bundleIdentifier": "com.apple.bluetoothfileexchange",
+      "displayName": "Pertukaran Fail Bluetooth",
+      "note": "Menggunakan Bluetooth untuk menghantar dan menerima fail adalah cara."
+    },
+    {
+      "bundleIdentifier": "com.apple.iBooksX",
+      "displayName": "Buku",
+      "note": "Pintu masuk untuk membaca dan mengurus e-buku."
+    },
+    {
+      "bundleIdentifier": "com.apple.bootcampassistant",
+      "displayName": "Pembantu Boot Camp",
+      "note": "Panduan rasmi untuk memasang Windows pada Intel Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.calculator",
+      "displayName": "Kalkulator",
+      "note": "Kalkulator kecil, penukaran unit dan mod pengaturcara juga tersembunyi."
+    },
+    {
+      "bundleIdentifier": "com.apple.chess",
+      "displayName": "Catur",
+      "note": "Catur terbina dalam untuk rehat singkat dan latihan"
+    },
+    {
+      "bundleIdentifier": "com.apple.clock",
+      "displayName": "Jam",
+      "note": "Portal bersatu untuk penggera, pemasa, jam randik dan jam dunia"
+    },
+    {
+      "bundleIdentifier": "com.apple.colorsyncutility",
+      "displayName": "Utiliti ColorSync",
+      "note": "Lihat dan baiki profil warna, kendalikan perbezaan warna paparan dan cetakan"
+    },
+    {
+      "bundleIdentifier": "com.apple.console",
+      "displayName": "Konsol",
+      "note": "Tetingkap untuk melihat log sistem sangat berguna apabila menyelesaikan."
+    },
+    {
+      "bundleIdentifier": "com.apple.addressbook",
+      "displayName": "Kenalan",
+      "note": "Hab kenalan untuk Mel, Mesej dan FaceTime"
+    },
+    {
+      "bundleIdentifier": "com.apple.dictionary",
+      "displayName": "Kamus",
+      "note": "Kamus luar talian dan tesauru."
+    },
+    {
+      "bundleIdentifier": "com.apple.digitalcolormeter",
+      "displayName": "Meter Digital Warna",
+      "note": "Pemilih warna skrin, artifak kecil untuk pereka bentuk memilih warna."
+    },
+    {
+      "bundleIdentifier": "com.apple.DiskUtility",
+      "displayName": "Utiliti Cakera",
+      "note": "Cakera, partition, format dan pertolongan cema."
+    },
+    {
+      "bundleIdentifier": "com.apple.findmy",
+      "displayName": "Cari",
+      "note": "Cari peralatan, cari item dan berikan petunjuk Mac anda yang hilang."
+    },
+    {
+      "bundleIdentifier": "com.apple.fontbook",
+      "displayName": "Buku Fon",
+      "note": "Pusat pemasangan dan pengurusan fon, uruskan fon sebelum mereka bentuk"
+    },
+    {
+      "bundleIdentifier": "com.apple.freeform",
+      "displayName": "Freeform",
+      "note": "Papan putih tanpa had untuk sumbang saran, lakaran dan idea rawak"
+    },
+    {
+      "bundleIdentifier": "com.apple.games",
+      "displayName": "Permainan",
+      "note": "Portal permainan Apple untuk mengurus kandungan Apple Arcade yang boleh."
+    },
+    {
+      "bundleIdentifier": "com.apple.grapher",
+      "displayName": "Grapher",
+      "note": "Persamaan graf, alat tersembunyi untuk visualisasi matematik"
+    },
+    {
+      "bundleIdentifier": "com.apple.home",
+      "displayName": "Rumah",
+      "note": "Pintu masuk kawalan rumah pintar boleh menguruskan pencahayaan."
+    },
+    {
+      "bundleIdentifier": "com.apple.image_capture",
+      "displayName": "Tangkap Imej",
+      "note": "Import gambar daripada kamera atau pengimbas, ringkas tetapi stabil"
+    },
+    {
+      "bundleIdentifier": "com.apple.generativeplaygroundapp",
+      "displayName": "Playground",
+      "note": "Hasilkan imej dengan kecerdasan Apple."
+    },
+    {
+      "bundleIdentifier": "com.apple.iMovieApp",
+      "displayName": "iMovie",
+      "note": "Cukup untuk penyuntingan video peringkat permulaan."
+    },
+    {
+      "bundleIdentifier": "com.apple.screencontinuity",
+      "displayName": "Pencerminan iPhone",
+      "note": "Kendalikan iPhone anda terus pada Mac anda."
+    },
+    {
+      "bundleIdentifier": "com.apple.journal",
+      "displayName": "Jurnal",
+      "note": "Rakam serpihan harian dan perlahan-lahan ubah fikiran anda menjadi."
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Keynote",
+      "displayName": "Keynote",
+      "note": "Alat persembahan gaya Apple, mudah untuk mencipta slaid yang cantik"
+    },
+    {
+      "bundleIdentifier": "com.apple.magnifier",
+      "displayName": "Pembesar",
+      "note": "Besarkan butiran skrin untuk membantu dengan penglihatan dan."
+    },
+    {
+      "bundleIdentifier": "com.apple.Maps",
+      "displayName": "Peta",
+      "note": "Semak laluan, lihat bandar dan tolak destinasi ke iPhone"
+    },
+    {
+      "bundleIdentifier": "com.apple.migrateassistant",
+      "displayName": "Pembantu Penghijrahan",
+      "note": "Apabila beralih ke Mac baharu, alihkan data lama ke mesin baharu"
+    },
+    {
+      "bundleIdentifier": "com.apple.exposelauncher",
+      "displayName": "Mission Control",
+      "note": "Pandangan udara pada tetingkap dan desktop, lihat sahaja jika ia tidak kemas"
+    },
+    {
+      "bundleIdentifier": "com.apple.news",
+      "displayName": "News",
+      "note": "Portal Apple News, sesuai untuk melihat kandungan media terpilih"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Numbers",
+      "displayName": "Numbers",
+      "note": "Alat Helaian Apple, laporan ringan lebih menyegarkan daripada Excel"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Pages",
+      "displayName": "Pages",
+      "note": "Pemproses perkataan epal, cantik untuk menulis dokumen dan menaip"
+    },
+    {
+      "bundleIdentifier": "com.apple.passwords",
+      "displayName": "Kata Laluan",
+      "note": "Pengurus kata laluan sistem, pengurusan akaun berpusat."
+    },
+    {
+      "bundleIdentifier": "com.apple.mobilephone",
+      "displayName": "Telefon",
+      "note": "Buat panggilan pada Mac menggunakan telefon anda"
+    },
+    {
+      "bundleIdentifier": "com.apple.AboutThisMacLauncher",
+      "displayName": "Perihal Mac Ini",
+      "note": "Memaparkan model Mac, versi sistem dan nombor siri"
+    },
+    {
+      "bundleIdentifier": "com.apple.archiveutility",
+      "displayName": "Utiliti Arkib",
+      "note": "Memampatkan dan mengekstrak ZIP serta arkib lain"
+    },
+    {
+      "bundleIdentifier": "com.apple.DeskCam",
+      "displayName": "Pandangan Meja",
+      "note": "Memaparkan meja dengan Kamera Kesinambungan"
+    },
+    {
+      "bundleIdentifier": "com.apple.DirectoryUtility",
+      "displayName": "Utiliti Direktori",
+      "note": "Mengkonfigurasi servis direktori, LDAP dan akaun rangkaian"
+    },
+    {
+      "bundleIdentifier": "com.apple.DVDPlayer",
+      "displayName": "Pemain DVD",
+      "note": "Memainkan cakera DVD dan kandungan DVD setempat"
+    },
+    {
+      "bundleIdentifier": "com.apple.ExpansionSlotUtility",
+      "displayName": "Utiliti Slot Pengembangan",
+      "note": "Melihat dan mengkonfigurasi slot pengembangan Mac Pro"
+    },
+    {
+      "bundleIdentifier": "com.apple.appleseed.FeedbackAssistant",
+      "displayName": "Feedback Assistant",
+      "note": "Menghantar maklum balas sistem dan diagnostik kepada Apple"
+    },
+    {
+      "bundleIdentifier": "com.apple.FolderActionsSetup",
+      "displayName": "Persediaan Tindakan Folder",
+      "note": "Menambah tindakan skrip automatik pada folder"
+    },
+    {
+      "bundleIdentifier": "com.apple.IPAInstaller",
+      "displayName": "Pemasang App iOS",
+      "note": "Memasang pakej app iOS dengan alat sistem"
+    },
+    {
+      "bundleIdentifier": "com.apple.keychainaccess",
+      "displayName": "Akses Rantai Kunci",
+      "note": "Mengurus kata laluan, sijil, kunci dan item selamat"
+    },
+    {
+      "bundleIdentifier": "com.apple.Ticket-Viewer",
+      "displayName": "Pemapar Tiket",
+      "note": "Melihat tiket Kerberos dan status pengesahan"
+    },
+    {
+      "bundleIdentifier": "com.apple.wifi.diagnostics",
+      "displayName": "Diagnostik Wayarles",
+      "note": "Mendiagnosis Wi-Fi dan mencipta laporan wayarles"
+    },
+    {
+      "bundleIdentifier": "com.apple.photobooth",
+      "displayName": "Photo Booth",
+      "note": "Selfie kamera dan kesan khas kecil juga mudah untuk menguji kamera"
+    },
+    {
+      "bundleIdentifier": "com.apple.podcasts",
+      "displayName": "Podcast",
+      "note": "Portal rasmi untuk mendengar podcast, berguna untuk berulang-alik dan belajar"
+    },
+    {
+      "bundleIdentifier": "com.apple.Preview",
+      "displayName": "Pratonton",
+      "note": "Alat Mac yang paling dipandang rendah: Lihat gambar."
+    },
+    {
+      "bundleIdentifier": "com.apple.printcenter",
+      "displayName": "Pusat Cetakan",
+      "note": "Lihat dan urus baris gilir cetakan. Untuk tugasan jem kerta."
+    },
+    {
+      "bundleIdentifier": "com.apple.quicktimeplayerx",
+      "displayName": "QuickTime Player",
+      "note": "Alat yang mantap yang boleh memainkan, merakam skrin dan merakam audio"
+    },
+    {
+      "bundleIdentifier": "com.apple.screensharing",
+      "displayName": "Perkongsian Skrin",
+      "note": "Kawal Mac lain dari jauh."
+    },
+    {
+      "bundleIdentifier": "com.apple.screenshot.launcher",
+      "displayName": "Tangkapan Skrin",
+      "note": "Tangkapan skrin dan portal rakaman skrin, di belakang Shift-Command-5"
+    },
+    {
+      "bundleIdentifier": "com.apple.scripteditor2",
+      "displayName": "Editor Skrip",
+      "note": "Tulis dan jalankan AppleScript untuk mengawal automasi Mac sekolah lama"
+    },
+    {
+      "bundleIdentifier": "com.apple.sfsymbols",
+      "displayName": "SF Symbols",
+      "note": "Pustaka simbol rasmi Apple, penting untuk antara muka asli"
+    },
+    {
+      "bundleIdentifier": "com.apple.shortcuts",
+      "displayName": "Pintasan",
+      "note": "Merangkai berbilang tindakan ke dalam proses satu klik ialah versi."
+    },
+    {
+      "bundleIdentifier": "com.apple.siri.launcher",
+      "displayName": "Siri",
+      "note": "Pintu masuk pembantu suara, boleh menyemak maklumat."
+    },
+    {
+      "bundleIdentifier": "com.apple.stickies",
+      "displayName": "Nota Lekat",
+      "note": "Nota melekit desktop, nota sementara disiarkan betul-betul di hadapan anda"
+    },
+    {
+      "bundleIdentifier": "com.apple.stocks",
+      "displayName": "Stocks",
+      "note": "Lihat panel kecil untuk saham dan dinamik pasaran"
+    },
+    {
+      "bundleIdentifier": "com.apple.systemprofiler",
+      "displayName": "Maklumat Sistem",
+      "note": "Lihat butiran perkakasan."
+    },
+    {
+      "bundleIdentifier": "com.apple.systempreferences",
+      "displayName": "Seting Sistem",
+      "note": "Pintu masuk utama tetapan Mac, hampir semua suis sistem ada di sini"
+    },
+    {
+      "bundleIdentifier": "com.apple.textedit",
+      "displayName": "TextEdit",
+      "note": "Editor teks paling mudah, buka TXT dan RTF dengan cepat"
+    },
+    {
+      "bundleIdentifier": "com.apple.backup.launcher",
+      "displayName": "Time Machine",
+      "note": "Sandaran sistem untuk memulihkan fail apabila diperlukan"
+    },
+    {
+      "bundleIdentifier": "com.apple.helpviewer",
+      "displayName": "Petua",
+      "note": "Apple’s official tips to occasionally discover features you haven’t used"
+    },
+    {
+      "bundleIdentifier": "com.apple.TV",
+      "displayName": "TV",
+      "note": "Main balik kandungan filem dan televisyen serta pintu masuk pengurusan"
+    },
+    {
+      "bundleIdentifier": "com.apple.voicememos",
+      "displayName": "Memo Suara",
+      "note": "Cepat rekod, simpan inspirasi mesyuarat dan bahan temuduga dahulu"
+    },
+    {
+      "bundleIdentifier": "com.apple.voiceoverutility",
+      "displayName": "Utiliti VoiceOver",
+      "note": "Urus ciri kebolehcapaian membaca skrin untuk menjadikan Mac anda lebih."
+    },
+    {
+      "bundleIdentifier": "com.apple.weather",
+      "displayName": "Cuaca",
+      "note": "Portal ramalan cuaca, semak sebelum keluar untuk lebih kestabilan"
+    },
+    {
+      "bundleIdentifier": "com.apple.dt.Xcode",
+      "displayName": "Xcode",
+      "note": "Alat pembangunan Apple untuk membina app iOS dan macOS"
+    },
+    {
+      "bundleIdentifier": "com.apple.garageband10",
+      "displayName": "GarageBand",
+      "note": "Alat pengeluaran muzik peringkat permulaan Apple."
+    },
+    {
+      "bundleIdentifier": "com.apple.FinalCut",
+      "displayName": "Final Cut Pro",
+      "note": "Alat penyuntingan video profesional Apple, memotong."
+    },
+    {
+      "bundleIdentifier": "com.apple.logic10",
+      "displayName": "Logic Pro",
+      "note": "Alat pengeluaran muzik profesional Apple, berkuasa dalam rakaman."
+    },
+    {
+      "bundleIdentifier": "com.apple.TestFlight",
+      "displayName": "TestFlight",
+      "note": "Alat ujian apl Apple, sesuai untuk memasang dan mengalami apl beta"
+    }
+  ]
+}

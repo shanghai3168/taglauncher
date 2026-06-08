@@ -1,0 +1,453 @@
+{
+  "resourceFormatVersion": 1,
+  "catalogContentVersion": 1,
+  "language": "nl",
+  "localizationsVersion": 2,
+  "entries": [
+    {
+      "bundleIdentifier": "com.apple.finder",
+      "displayName": "Finder",
+      "note": "Mac-bestandsbeheer voor mappen, schijven en apparaten"
+    },
+    {
+      "bundleIdentifier": "com.apple.Safari",
+      "displayName": "Safari",
+      "note": "Apple's officiële browser, energiebesparing."
+    },
+    {
+      "bundleIdentifier": "com.apple.mail",
+      "displayName": "Mail",
+      "note": "Systeemmailclient, meerdere mailboxen kunnen centraal worden verwerkt"
+    },
+    {
+      "bundleIdentifier": "com.apple.MobileSMS",
+      "displayName": "Berichten",
+      "note": "iMessage and SMS portal, reply messages faster on Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.FaceTime",
+      "displayName": "FaceTime",
+      "note": "Toegang tot audio- en videogesprekken in het Apple-ecosysteem"
+    },
+    {
+      "bundleIdentifier": "com.apple.iCal",
+      "displayName": "Agenda",
+      "note": "Haal het schema uit je hoofd en geef de tijd een visuele kaart"
+    },
+    {
+      "bundleIdentifier": "com.apple.Notes",
+      "displayName": "Notities",
+      "note": "The fastest system memo, text, pictures and lists can all be collected"
+    },
+    {
+      "bundleIdentifier": "com.apple.reminders",
+      "displayName": "Herinneringen",
+      "note": "To-do's en herinneringen."
+    },
+    {
+      "bundleIdentifier": "com.apple.Photos",
+      "displayName": "Foto's",
+      "note": "Systeemfotobibliotheek, de hoofdingang om foto's te beheren."
+    },
+    {
+      "bundleIdentifier": "com.apple.Music",
+      "displayName": "Muziek",
+      "note": "Lokale en streaming muziekspeler"
+    },
+    {
+      "bundleIdentifier": "com.apple.Terminal",
+      "displayName": "Terminal",
+      "note": "Commandoregelinvoer, Mac's verborgen cockpit"
+    },
+    {
+      "bundleIdentifier": "com.apple.ActivityMonitor",
+      "displayName": "Activiteiten­weergave",
+      "note": "Mac’s dashboard to see who is consuming power, memory."
+    },
+    {
+      "bundleIdentifier": "com.apple.airport.airportutility",
+      "displayName": "AirPort-configuratieprogramma",
+      "note": "Ouderwetse netwerktools voor het beheren van AirPorts en Time Capsules"
+    },
+    {
+      "bundleIdentifier": "com.apple.AppStore",
+      "displayName": "App Store",
+      "note": "The official Mac software store, start here to find app."
+    },
+    {
+      "bundleIdentifier": "com.apple.apps.launcher",
+      "displayName": "Apps",
+      "note": "A lightweight application portal to help you quickly open apps from the."
+    },
+    {
+      "bundleIdentifier": "com.apple.audio.audiomidisetup",
+      "displayName": "Audio/MIDI-configuratie",
+      "note": "Audioapparatuur en MIDI-routing, vaak gebruikt door muzikanten en debuggers"
+    },
+    {
+      "bundleIdentifier": "com.apple.automator",
+      "displayName": "Automator",
+      "note": "You can string together a string of Mac automation actions without."
+    },
+    {
+      "bundleIdentifier": "com.apple.bluetoothfileexchange",
+      "displayName": "Bluetooth-bestandsuitwisseling",
+      "note": "Bluetooth gebruiken voor het verzenden en ontvangen van bestanden i."
+    },
+    {
+      "bundleIdentifier": "com.apple.iBooksX",
+      "displayName": "Boeken",
+      "note": "Een toegangspunt voor het lezen en beheren van e-book."
+    },
+    {
+      "bundleIdentifier": "com.apple.bootcampassistant",
+      "displayName": "Boot Camp-assistent",
+      "note": "Officiële gids voor het installeren van Windows op Intel Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.calculator",
+      "displayName": "Reken­machine",
+      "note": "Kleine rekenmachine, eenheidconversie en programmeermodus zijn ook."
+    },
+    {
+      "bundleIdentifier": "com.apple.chess",
+      "displayName": "Schaken",
+      "note": "Ingebouwd schaken voor korte pauzes en oefening"
+    },
+    {
+      "bundleIdentifier": "com.apple.clock",
+      "displayName": "Klok",
+      "note": "Een uniform portaal voor alarmen, timers, stopwatches en wereldklokken"
+    },
+    {
+      "bundleIdentifier": "com.apple.colorsyncutility",
+      "displayName": "ColorSync-hulpprogramma",
+      "note": "View and repair color profiles, handle display and printing color differences"
+    },
+    {
+      "bundleIdentifier": "com.apple.console",
+      "displayName": "Console",
+      "note": "Het venster om systeemlogboeken te bekijken is erg handig bij het."
+    },
+    {
+      "bundleIdentifier": "com.apple.addressbook",
+      "displayName": "Contacten",
+      "note": "Contactenhub voor e-mail, berichten en FaceTime"
+    },
+    {
+      "bundleIdentifier": "com.apple.dictionary",
+      "displayName": "Woordenboek",
+      "note": "Offline woordenboek en thesauru."
+    },
+    {
+      "bundleIdentifier": "com.apple.digitalcolormeter",
+      "displayName": "Digitale-kleurenmeter",
+      "note": "Schermkleurkiezer, een klein artefact waarmee ontwerpers tijdelijk."
+    },
+    {
+      "bundleIdentifier": "com.apple.DiskUtility",
+      "displayName": "Schijf­hulpprogramma",
+      "note": "Schijf, partitie, formaat en eerste hulp, knoei er niet mee."
+    },
+    {
+      "bundleIdentifier": "com.apple.findmy",
+      "displayName": "Zoek mijn",
+      "note": "Zoek apparatuur, vind voorwerpen en geef uw verloren Mac aanwijzingen."
+    },
+    {
+      "bundleIdentifier": "com.apple.fontbook",
+      "displayName": "Lettertypecatalogus",
+      "note": "Fontinstallatie- en beheercentrum, beheer lettertypen vóór het ontwerpen"
+    },
+    {
+      "bundleIdentifier": "com.apple.freeform",
+      "displayName": "Freeform",
+      "note": "Onbeperkte whiteboards voor brainstormen, schetsen en willekeurige ideeën"
+    },
+    {
+      "bundleIdentifier": "com.apple.games",
+      "displayName": "Games",
+      "note": "Apple-gameportaal om speelbare Apple Arcade-content centraal te beheren"
+    },
+    {
+      "bundleIdentifier": "com.apple.grapher",
+      "displayName": "Grapher",
+      "note": "Grafiekvergelijkingen, een verborgen hulpmiddel voor wiskundige visualisatie"
+    },
+    {
+      "bundleIdentifier": "com.apple.home",
+      "displayName": "Woning",
+      "note": "Smart Home Control-ingang kan verlichting."
+    },
+    {
+      "bundleIdentifier": "com.apple.image_capture",
+      "displayName": "Fotolader",
+      "note": "Importeer foto's van camera of scanner, eenvoudig maar stabiel"
+    },
+    {
+      "bundleIdentifier": "com.apple.generativeplaygroundapp",
+      "displayName": "Playground",
+      "note": "Genereer afbeeldingen met de intelligentie van Apple."
+    },
+    {
+      "bundleIdentifier": "com.apple.iMovieApp",
+      "displayName": "iMovie",
+      "note": "Sufficient for entry-level video editing."
+    },
+    {
+      "bundleIdentifier": "com.apple.screencontinuity",
+      "displayName": "Synchrone iPhone-weergave",
+      "note": "Operate your iPhone directly on your Mac."
+    },
+    {
+      "bundleIdentifier": "com.apple.journal",
+      "displayName": "Dagboek",
+      "note": "Neem dagelijkse fragmenten op en verander je gedachten langzaam in een."
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Keynote",
+      "displayName": "Keynote",
+      "note": "Presentatietool in Apple-stijl."
+    },
+    {
+      "bundleIdentifier": "com.apple.magnifier",
+      "displayName": "Vergrootglas",
+      "note": "Vergroot schermdetails om te helpen bij zicht en fijne inspectie"
+    },
+    {
+      "bundleIdentifier": "com.apple.Maps",
+      "displayName": "Kaarten",
+      "note": "Check routes, view cities, and push destinations to iPhone"
+    },
+    {
+      "bundleIdentifier": "com.apple.migrateassistant",
+      "displayName": "Migratie-assistent",
+      "note": "Wanneer u naar een nieuwe Mac overstapt."
+    },
+    {
+      "bundleIdentifier": "com.apple.exposelauncher",
+      "displayName": "Mission Control",
+      "note": "Luchtfoto van het raam en het bureaublad."
+    },
+    {
+      "bundleIdentifier": "com.apple.news",
+      "displayName": "News",
+      "note": "Apple News-portaal, geschikt voor het bekijken van geselecteerde media-inhoud"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Numbers",
+      "displayName": "Numbers",
+      "note": "Apple Spreadsheets-tool, lichtgewicht rapporten zijn verfrissender dan Excel"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Pages",
+      "displayName": "Pages",
+      "note": "Apple tekstverwerker, prachtig voor het schrijven van documenten en zetwerk"
+    },
+    {
+      "bundleIdentifier": "com.apple.passwords",
+      "displayName": "Wachtwoorden",
+      "note": "Systeemwachtwoordbeheerder, gecentraliseerd beheer van account."
+    },
+    {
+      "bundleIdentifier": "com.apple.mobilephone",
+      "displayName": "Telefoon",
+      "note": "Bellen op Mac met je telefoon"
+    },
+    {
+      "bundleIdentifier": "com.apple.AboutThisMacLauncher",
+      "displayName": "Over deze Mac",
+      "note": "Toont Mac-model, systeemversie en serienummer"
+    },
+    {
+      "bundleIdentifier": "com.apple.archiveutility",
+      "displayName": "Archiveringshulpprogramma",
+      "note": "Comprimeert en pakt ZIP en andere archieven uit"
+    },
+    {
+      "bundleIdentifier": "com.apple.DeskCam",
+      "displayName": "Bureauweergave",
+      "note": "Toont je bureau met Continuïteitscamera"
+    },
+    {
+      "bundleIdentifier": "com.apple.DirectoryUtility",
+      "displayName": "Adreslijsthulpprogramma",
+      "note": "Configureert directoryservices, LDAP en netwerkaccounts"
+    },
+    {
+      "bundleIdentifier": "com.apple.DVDPlayer",
+      "displayName": "Dvd-speler",
+      "note": "Speelt dvd-schijven en lokale dvd-inhoud af"
+    },
+    {
+      "bundleIdentifier": "com.apple.ExpansionSlotUtility",
+      "displayName": "Uitbreidingssleufprogramma",
+      "note": "Toont en configureert Mac Pro-uitbreidingssleuven"
+    },
+    {
+      "bundleIdentifier": "com.apple.appleseed.FeedbackAssistant",
+      "displayName": "Feedbackassistent",
+      "note": "Stuurt systeemfeedback en diagnose naar Apple"
+    },
+    {
+      "bundleIdentifier": "com.apple.FolderActionsSetup",
+      "displayName": "Mapacties-configuratie",
+      "note": "Koppelt automatische scriptacties aan mappen"
+    },
+    {
+      "bundleIdentifier": "com.apple.IPAInstaller",
+      "displayName": "iOS-appinstallatieprogramma",
+      "note": "Installeert iOS-app-pakketten met een systeemhulp"
+    },
+    {
+      "bundleIdentifier": "com.apple.keychainaccess",
+      "displayName": "Sleutelhanger­toegang",
+      "note": "Beheert wachtwoorden, certificaten, sleutels en beveiligde items"
+    },
+    {
+      "bundleIdentifier": "com.apple.Ticket-Viewer",
+      "displayName": "Ticketviewer",
+      "note": "Toont Kerberos-tickets en authenticatiestatus"
+    },
+    {
+      "bundleIdentifier": "com.apple.wifi.diagnostics",
+      "displayName": "Wifiprobleemoplossing",
+      "note": "Diagnosticeert wifi en maakt draadloze rapporten"
+    },
+    {
+      "bundleIdentifier": "com.apple.photobooth",
+      "displayName": "Photo Booth",
+      "note": "Camera-selfies en kleine speciale effecten zijn ook handig om de camera."
+    },
+    {
+      "bundleIdentifier": "com.apple.podcasts",
+      "displayName": "Podcasts",
+      "note": "The official portal for listening to podcast."
+    },
+    {
+      "bundleIdentifier": "com.apple.Preview",
+      "displayName": "Voorvertoning",
+      "note": "The most underrated Mac tool: View pictures, annotate PDF."
+    },
+    {
+      "bundleIdentifier": "com.apple.printcenter",
+      "displayName": "Printercentrum",
+      "note": "View and manage print queue."
+    },
+    {
+      "bundleIdentifier": "com.apple.quicktimeplayerx",
+      "displayName": "QuickTime Player",
+      "note": "Een beproefd hulpmiddel dat audio kan afspelen, opnemen en opnemen"
+    },
+    {
+      "bundleIdentifier": "com.apple.screensharing",
+      "displayName": "Schermdeling",
+      "note": "Remotely control another Mac."
+    },
+    {
+      "bundleIdentifier": "com.apple.screenshot.launcher",
+      "displayName": "Scherm­afbeelding",
+      "note": "Screenshot en schermopnameportaal, achter Shift-Command-5"
+    },
+    {
+      "bundleIdentifier": "com.apple.scripteditor2",
+      "displayName": "Scripteditor",
+      "note": "Write and run AppleScript to control old-school Mac automation"
+    },
+    {
+      "bundleIdentifier": "com.apple.sfsymbols",
+      "displayName": "SF Symbols",
+      "note": "De officiële symboolbibliotheek van Apple, essentieel voor native interfaces"
+    },
+    {
+      "bundleIdentifier": "com.apple.shortcuts",
+      "displayName": "Opdrachten",
+      "note": "Het samenbrengen van meerdere acties in processen met één klik is de."
+    },
+    {
+      "bundleIdentifier": "com.apple.siri.launcher",
+      "displayName": "Siri",
+      "note": "Toegang met stemassistent, kan informatie controleren."
+    },
+    {
+      "bundleIdentifier": "com.apple.stickies",
+      "displayName": "Plaknotities",
+      "note": "Desktop sticky notes, temporary notes are posted right in front of you"
+    },
+    {
+      "bundleIdentifier": "com.apple.stocks",
+      "displayName": "Stocks",
+      "note": "Zie kleine panelen voor aandelen en marktdynamiek"
+    },
+    {
+      "bundleIdentifier": "com.apple.systemprofiler",
+      "displayName": "Systeem­informatie",
+      "note": "View hardware, software and device details to find the most accurate."
+    },
+    {
+      "bundleIdentifier": "com.apple.systempreferences",
+      "displayName": "Systeeminstellingen",
+      "note": "Mac settings main entrance, almost all system switches are here"
+    },
+    {
+      "bundleIdentifier": "com.apple.textedit",
+      "displayName": "Teksteditor",
+      "note": "The simplest text editor, open TXT and RTF very quickly"
+    },
+    {
+      "bundleIdentifier": "com.apple.backup.launcher",
+      "displayName": "Time Machine",
+      "note": "Systeemback-up om bestanden te herstellen wanneer nodig"
+    },
+    {
+      "bundleIdentifier": "com.apple.helpviewer",
+      "displayName": "Tips",
+      "note": "De officiële tips van Apple om af en toe functies te ontdekken die je."
+    },
+    {
+      "bundleIdentifier": "com.apple.TV",
+      "displayName": "TV",
+      "note": "Film- en televisiecontent afspelen en beheeringang"
+    },
+    {
+      "bundleIdentifier": "com.apple.voicememos",
+      "displayName": "Dictafoon",
+      "note": "Neem snel op, bewaar eerst vergaderinspiratie en interviewmateriaal"
+    },
+    {
+      "bundleIdentifier": "com.apple.voiceoverutility",
+      "displayName": "VoiceOver-programma",
+      "note": "Beheer toegankelijkheidsfuncties voor schermlezen om uw Mac."
+    },
+    {
+      "bundleIdentifier": "com.apple.weather",
+      "displayName": "Weer",
+      "note": "Weersvoorspellingsportaal."
+    },
+    {
+      "bundleIdentifier": "com.apple.dt.Xcode",
+      "displayName": "Xcode",
+      "note": "Apple-ontwikkeltools voor iOS- en macOS-apps"
+    },
+    {
+      "bundleIdentifier": "com.apple.garageband10",
+      "displayName": "GarageBand",
+      "note": "Apple's muziekproductietool op instapniveau."
+    },
+    {
+      "bundleIdentifier": "com.apple.FinalCut",
+      "displayName": "Final Cut Pro",
+      "note": "Apple's professionele videobewerkingstool, knippen."
+    },
+    {
+      "bundleIdentifier": "com.apple.logic10",
+      "displayName": "Logic Pro",
+      "note": "Apple's professionele muziekproductietool, krachtig in opnemen."
+    },
+    {
+      "bundleIdentifier": "com.apple.TestFlight",
+      "displayName": "TestFlight",
+      "note": "Apple app-testtool, geschikt voor het installeren en ervaren van bèta-apps"
+    }
+  ]
+}

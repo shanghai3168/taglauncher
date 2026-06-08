@@ -46,10 +46,6 @@
       "note": "Bruges til at gemme og administrere Git-legitimationsoplysninger, velegnet til l"
     },
     {
-      "entryID": "com-apple-finder-2de1d8bbb107",
-      "note": "MacOS-systemet leveres med værktøjer, der er egnede til at fuldføre tilsvarende"
-    },
-    {
       "entryID": "com-mitchellh-ghostty-5194f8485e90",
       "note": "Udviklerværktøjer til kommandolinje, build, fejlretning eller projektstyring"
     },
@@ -72,10 +68,6 @@
     {
       "entryID": "1password-cli-85e1ca6fa403",
       "note": "Kontosikkerhedsværktøj til håndtering af adgangskoder, bekræftelseskoder og adga"
-    },
-    {
-      "entryID": "com-apple-safari-b2041c4573f8",
-      "note": "Apples officielle browser, strømbesparelse, privatliv og økologisk forbindelse e"
     },
     {
       "entryID": "com-anthropic-claudefordesktop-b2f723339fad",
@@ -102,10 +94,6 @@
       "note": "En let, men kraftfuld kodeeditor med et meget komplet plug-in-økosystem"
     },
     {
-      "entryID": "com-apple-mail-9c1e969ca734",
-      "note": "System mail-klient, flere postkasser kan behandles centralt"
-    },
-    {
       "entryID": "md-obsidian-9f1625d466f0",
       "note": "Lokal Markdown vidensbase, velegnet til langsigtet akkumulering af din anden hje"
     },
@@ -128,10 +116,6 @@
     {
       "entryID": "com-tencent-meeting-5bd65448f293",
       "note": "Tencent konferenceindgang, kinesisk kontor og fjernsamarbejde er meget almindeli"
-    },
-    {
-      "entryID": "com-apple-mobilesms-a7066fed8087",
-      "note": "iMessage og SMS-portal, svar beskeder hurtigere på Mac"
     },
     {
       "entryID": "com-mojang-minecraftlauncher-606072fb1e80",
@@ -174,10 +158,6 @@
       "note": "Android officielle IDE, afgørende for udvikling og fejlretning af Android Apps"
     },
     {
-      "entryID": "com-apple-facetime-96f99030aef8",
-      "note": "Indgang til lyd- og videoopkald i Apple-økosystemet"
-    },
-    {
       "entryID": "maccy-0c7236cb0f2d",
       "note": "Udklipsholderhistorikværktøj, kopieret indhold kan hentes til enhver tid"
     },
@@ -190,10 +170,6 @@
       "note": "Streaming musikafspiller, du kan have en sang til både arbejde og afslapning"
     },
     {
-      "entryID": "com-apple-ical-8e998503177c",
-      "note": "Få tidsplanen ud af dit hoved og giv tiden et visuelt kort"
-    },
-    {
       "entryID": "blackhole-2ch-0b7c58e0297a",
       "note": "Virtuel lyddriver, velegnet til skærmoptagelse, live-udsendelse og audio-routing"
     },
@@ -204,10 +180,6 @@
     {
       "entryID": "com-electron-lark-6559e48147f2",
       "note": "Feishu samarbejdsportal, hvor det kinesiske teams chats, dokumenter og møder all"
-    },
-    {
-      "entryID": "com-apple-notes-aaf1d7cf1c90",
-      "note": "Det hurtigste systemmemo, tekst, billeder og lister kan alle indsamles"
     },
     {
       "entryID": "com-electron-ollama-25be0e7340d2",
@@ -238,10 +210,6 @@
       "note": "Programmeringsudviklingsværktøjer til at skrive, læse og vedligeholde kode"
     },
     {
-      "entryID": "com-apple-reminders-92a9335b31bb",
-      "note": "Gøremål og påmindelser, velegnet til at fange små daglige opgaver"
-    },
-    {
       "entryID": "com-openai-chat-7c12a7107aad",
       "note": "Sæt AI-assistenten på dit skrivebord, og skriv, studér og brainstorm lige ved hå"
     },
@@ -260,10 +228,6 @@
     {
       "entryID": "com-kingsoft-wpsoffice-mac-c371eb320d54",
       "note": "Office-pakke til redigering af dokumenter, regneark og præsentationer"
-    },
-    {
-      "entryID": "com-apple-photos-9678510fed1e",
-      "note": "Systemfotobibliotek, hovedindgangen til at administrere, redigere og synkroniser"
     },
     {
       "entryID": "adobe-acrobat-reader-fb99f7bea88f",
@@ -290,14 +254,6 @@
       "note": "Webbrowser, velegnet til daglig surfing på internettet og adgang til webtjeneste"
     },
     {
-      "entryID": "com-apple-music-63ea41e016ea",
-      "note": "Lokal og streaming musikafspiller"
-    },
-    {
-      "entryID": "com-apple-terminal-77aba1385326",
-      "note": "Kommandolinjeindtastning, Macs skjulte cockpit"
-    },
-    {
       "entryID": "utm-f2a3e184ea9f",
       "note": "Virtualiserings- eller fjernforbindelsesværktøjer, velegnet til at køre systemmi"
     },
@@ -310,260 +266,12 @@
       "note": "Musikafspiller, velegnet til at lytte til sange, administrere afspilningslister"
     },
     {
-      "entryID": "com-apple-activitymonitor-1ca0c04d6757",
-      "note": "Macs dashboard for at se, hvem der bruger strøm, hukommelse og gør din computer"
-    },
-    {
-      "entryID": "com-apple-airport-airportutility-85b3849d7d98",
-      "note": "Gammeldags netværksværktøjer til styring af AirPorts og Time Capsules"
-    },
-    {
-      "entryID": "com-apple-appstore-0619ceddf32a",
-      "note": "Den officielle Mac-softwarebutik, start her for at finde apps, opdateringer og a"
-    },
-    {
-      "entryID": "com-apple-apps-launcher-c27c2e6c3e15",
-      "note": "En let applikationsportal, der hjælper dig med hurtigt at åbne apps fra systemni"
-    },
-    {
-      "entryID": "com-apple-audio-audiomidisetup-8327be183cc9",
-      "note": "Lydudstyr og MIDI-routing, almindeligvis brugt af musikere og debuggere"
-    },
-    {
-      "entryID": "com-apple-automator-3134734f076f",
-      "note": "Du kan sammensætte en række Mac-automatiseringshandlinger uden at skrive kode"
-    },
-    {
-      "entryID": "com-apple-bluetoothfileexchange-a83f24bdfabc",
-      "note": "Brug af Bluetooth til at sende og modtage filer er gammeldags, men kan redde dig"
-    },
-    {
-      "entryID": "com-apple-ibooksx-61d0b1b4ae4c",
-      "note": "Et indgangspunkt til at læse og administrere e-bøger, velegnet til at forvandle"
-    },
-    {
-      "entryID": "com-apple-bootcampassistant-e4ab0159032f",
-      "note": "Officiel guide til installation af Windows på Intel Mac"
-    },
-    {
-      "entryID": "com-apple-calculator-390516777a37",
-      "note": "Lille lommeregner, enhedskonvertering og programmeringstilstand er også skjult i"
-    },
-    {
-      "entryID": "com-apple-chess-8ccbf1801854",
-      "note": "Systemet kommer med skak, hvilket gør fiskeri mere elegant end at surfe på nette"
-    },
-    {
-      "entryID": "com-apple-clock-f922597106e9",
-      "note": "En samlet portal til alarmer, timere, stopure og verdensure"
-    },
-    {
       "entryID": "cmux-3a661d84a58c",
       "note": "Ideel til at organisere medie-metadata, navngive eller indkapsle filer"
     },
     {
-      "entryID": "com-apple-colorsyncutility-68af0cd69154",
-      "note": "Se og reparer farveprofiler, håndter display og udskriv farveforskelle"
-    },
-    {
-      "entryID": "com-apple-console-5e449417a9e8",
-      "note": "Vinduet til at se systemlogfiler er meget nyttigt ved fejlfinding af abnormitete"
-    },
-    {
-      "entryID": "com-apple-addressbook-0b4e2b893a86",
-      "note": "Kontakthub til Mail, Beskeder og FaceTime"
-    },
-    {
-      "entryID": "com-apple-dictionary-4625013af142",
-      "note": "Offline ordbog og synonymordbog, ingen grund til at åbne en browser, når du skri"
-    },
-    {
-      "entryID": "com-apple-digitalcolormeter-fb99a6aa0c0b",
-      "note": "Skærmfarvevælger, en lille artefakt for designere til midlertidigt at vælge farv"
-    },
-    {
-      "entryID": "com-apple-diskutility-48d48cee3d46",
-      "note": "Disk, partition, formatering og førstehjælp, roder ikke med det, men det er vigt"
-    },
-    {
-      "entryID": "com-apple-findmy-f15882533adf",
-      "note": "Find udstyr, find genstande, og giv din mistede Mac ledetråde til at komme hjem"
-    },
-    {
-      "entryID": "com-apple-fontbook-83009f0e620e",
-      "note": "Font installations- og administrationscenter, administrer skrifttyper før design"
-    },
-    {
-      "entryID": "com-apple-freeform-c79ff8861497",
-      "note": "Ubegrænsede whiteboards til brainstorming, skitsering og tilfældige ideer"
-    },
-    {
-      "entryID": "com-apple-games-18b06d160812",
-      "note": "Apple-spilportal til central administration af spilbart Apple Arcade-indhold"
-    },
-    {
-      "entryID": "com-apple-grapher-dde725719597",
-      "note": "Grafligninger, et skjult værktøj til matematisk visualisering"
-    },
-    {
-      "entryID": "com-apple-home-339f72ecc4b8",
-      "note": "Smart home control-indgang kan styre belysning, aircondition og andet udstyr"
-    },
-    {
-      "entryID": "com-apple-image-capture-8de5b7375bed",
-      "note": "Importer billeder fra kamera eller scanner, enkelt men stabilt"
-    },
-    {
-      "entryID": "com-apple-generativeplaygroundapp-05897f8dbe4c",
-      "note": "Generer billeder med Apple-intelligens, perfekt til hurtig kreativ udkast"
-    },
-    {
-      "entryID": "com-apple-imovieapp-00a9c7493d26",
-      "note": "Tilstrækkelig til videoredigering på begynderniveau, hjemmevideoer og lette kort"
-    },
-    {
-      "entryID": "com-apple-screencontinuity-867a48a76333",
-      "note": "Betjen din iPhone direkte på din Mac, så du slipper for at række ud efter din te"
-    },
-    {
-      "entryID": "com-apple-journal-29ceb46d5ff5",
-      "note": "Optag daglige fragmenter og forvandl langsomt dine tanker til en personlig tidsl"
-    },
-    {
-      "entryID": "com-apple-iwork-keynote-e86356f31ec2",
-      "note": "Præsentationsværktøj i Apple-stil, nemt at skabe smukke dias"
-    },
-    {
       "entryID": "com-riotgames-leagueoflegends-ee692e90efde",
       "note": "League of Legends-klient, indgangen til klassiske holdkonkurrencespil"
-    },
-    {
-      "entryID": "com-apple-magnifier-c9044527cd0d",
-      "note": "Forstør skærmdetaljerne for at hjælpe med syn og fin inspektion"
-    },
-    {
-      "entryID": "com-apple-maps-310ca6c69cea",
-      "note": "Tjek ruter, se byer, og send destinationer til iPhone"
-    },
-    {
-      "entryID": "com-apple-migrateassistant-5f03ff480fe8",
-      "note": "Når du flytter til en ny Mac, skal du flytte gamle data til den nye maskine"
-    },
-    {
-      "entryID": "com-apple-exposelauncher-62e07c598f71",
-      "note": "Luftfoto af vinduet og skrivebordet, se bare på det, hvis det er rodet"
-    },
-    {
-      "entryID": "com-apple-news-7614a9b54b68",
-      "note": "Apple News portal, velegnet til at se udvalgt medieindhold"
-    },
-    {
-      "entryID": "com-apple-iwork-numbers-361a6aaf7056",
-      "note": "Apple Sheets-værktøj, lette rapporter er mere forfriskende end Excel"
-    },
-    {
-      "entryID": "com-apple-iwork-pages-d6f13bb4e29c",
-      "note": "Apple tekstbehandlingsprogram, smuk til at skrive dokumenter og sætte på"
-    },
-    {
-      "entryID": "com-apple-passwords-08719cef9f02",
-      "note": "Systemadgangskodeadministrator, centraliseret styring af konti, verifikationskod"
-    },
-    {
-      "entryID": "com-apple-mobilephone-5739fb6f2a60",
-      "note": "Foretag opkald på Mac med din telefon"
-    },
-    {
-      "entryID": "com-apple-photobooth-9d976a9cdfcd",
-      "note": "Kamera-selfies og små specialeffekter er også praktiske til at teste kameraet"
-    },
-    {
-      "entryID": "com-apple-podcasts-4a2a186dcc8f",
-      "note": "Den officielle portal til at lytte til podcasts, nyttig til pendling og studier"
-    },
-    {
-      "entryID": "com-apple-preview-9ef385a7e445",
-      "note": "Det mest undervurderede Mac-værktøj: Se billeder, anmærk PDF-filer, og foretag e"
-    },
-    {
-      "entryID": "com-apple-printcenter-5a8f324fe84d",
-      "note": "Se og administrer printkøer. For papirstop-opgaver, se her først"
-    },
-    {
-      "entryID": "com-apple-quicktimeplayerx-f2aee71b906d",
-      "note": "Et veletableret værktøj, der kan afspille, optage skærm og optage lyd"
-    },
-    {
-      "entryID": "com-apple-screensharing-3d1e02ff893a",
-      "note": "Fjernstyr en anden Mac, hvilket er meget praktisk til at hjælpe folk med at repa"
-    },
-    {
-      "entryID": "com-apple-screenshot-launcher-f3c7a7a2c583",
-      "note": "Skærmbillede og skærmoptagelsesportal, bag Shift-Command-5"
-    },
-    {
-      "entryID": "com-apple-scripteditor2-f8a19fe3d1d8",
-      "note": "Skriv og kør AppleScript for at styre gammeldags Mac-automatisering"
-    },
-    {
-      "entryID": "com-apple-sfsymbols-9dc6c630daed",
-      "note": "Apples officielle symbolbibliotek, afgørende for native grænseflader"
-    },
-    {
-      "entryID": "com-apple-shortcuts-f629e5e3e216",
-      "note": "At sammenkæde flere handlinger i processer med ét klik er den moderne version af"
-    },
-    {
-      "entryID": "com-apple-siri-launcher-77250557ebe9",
-      "note": "Stemmeassistent indgang, kan tjekke oplysninger, åbne apps og styre systemet"
-    },
-    {
-      "entryID": "com-apple-stickies-9ed4ed5e1103",
-      "note": "Sticky notes på skrivebordet, midlertidige noter er lagt op lige foran dig"
-    },
-    {
-      "entryID": "com-apple-stocks-6a1a80292efe",
-      "note": "Se små paneler for aktier og markedsdynamik"
-    },
-    {
-      "entryID": "com-apple-systemprofiler-fdfe3344179e",
-      "note": "Se hardware, software og enhedsdetaljer for at finde den mest nøjagtige konfigur"
-    },
-    {
-      "entryID": "com-apple-systempreferences-5632452dbd3d",
-      "note": "Mac-indstillinger hovedindgang, næsten alle systemkontakter er her"
-    },
-    {
-      "entryID": "com-apple-textedit-64d314fbf2b9",
-      "note": "Den enkleste teksteditor, åbne TXT og RTF meget hurtigt"
-    },
-    {
-      "entryID": "com-apple-backup-launcher-918b22a1257e",
-      "note": "System backup værktøj, stol på det til at forberede medicinen til beklagelse på"
-    },
-    {
-      "entryID": "com-apple-helpviewer-6e90a07b56cc",
-      "note": "Apples officielle tips til lejlighedsvis at opdage funktioner, du ikke har brugt"
-    },
-    {
-      "entryID": "com-apple-tv-28f9f8e2e47b",
-      "note": "Afspilning af film- og tv-indhold og indgang til administration"
-    },
-    {
-      "entryID": "com-apple-voicememos-f4eb9f35a1b8",
-      "note": "Optag hurtigt, gem mødeinspiration og interviewmateriale først"
-    },
-    {
-      "entryID": "com-apple-voiceoverutility-9623fe74d030",
-      "note": "Administrer skærmlæsende tilgængelighedsfunktioner for at gøre din Mac mere tilg"
-    },
-    {
-      "entryID": "com-apple-weather-a1b814774719",
-      "note": "Vejrudsigtsportal, tjek den før du går ud for mere stabilitet"
-    },
-    {
-      "entryID": "com-apple-dt-xcode-66da3f910767",
-      "note": "Apple udvikler FamilyMart, den vigtigste slagmark for at skrive iOS- og macOS-ap"
     },
     {
       "entryID": "com-github-githubclient-c94dd11b1995",
@@ -874,10 +582,6 @@
       "note": "Ideel til at tage skærmbilleder, kommentere, genkende tekst eller skabe visuel f"
     },
     {
-      "entryID": "com-apple-garageband10-af435df6c94a",
-      "note": "Apples musikproduktionsværktøj på begynderniveau, let at bruge til optagelse og"
-    },
-    {
       "entryID": "com-microsoft-excel-2ff4add4000d",
       "note": "En veteran af tabeller og dataanalyse, økonomi, drift og modeller er alle afhæng"
     },
@@ -914,10 +618,6 @@
       "note": "En let kodeeditor udviklet til macOS"
     },
     {
-      "entryID": "com-apple-finalcut-6383fea0b510",
-      "note": "Apples professionelle videoredigeringsværktøj, klipning, farvelægning og eksport"
-    },
-    {
       "entryID": "github-copilot-for-xcode-60555f2d4d11",
       "note": "Bring AI ind i udviklingsprocessen, velegnet til kodning, debugging og automatis"
     },
@@ -932,10 +632,6 @@
     {
       "entryID": "finetune-5431832269e6",
       "note": "AI-lydværktøjer, velegnet til at organisere, transskribere eller optimere lydind"
-    },
-    {
-      "entryID": "com-apple-logic10-69f8eefc0ddf",
-      "note": "Apples professionelle musikproduktionsværktøj, kraftfuldt til at optage, arrange"
     },
     {
       "entryID": "com-getdropbox-dropbox-72c7db8f1763",
@@ -968,10 +664,6 @@
     {
       "entryID": "font-jetbrains-mono-nerd-font-4a662d68a338",
       "note": "Skrifttyperessourcepakke, velegnet til at supplere skrifttyper til redaktører, t"
-    },
-    {
-      "entryID": "com-apple-testflight-cfe027705d73",
-      "note": "Apple app testværktøj, velegnet til at installere og opleve beta apps"
     },
     {
       "entryID": "claude-code-latest-ba2522b660cf",

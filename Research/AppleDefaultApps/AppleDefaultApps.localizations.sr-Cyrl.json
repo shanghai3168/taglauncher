@@ -1,0 +1,453 @@
+{
+  "resourceFormatVersion": 1,
+  "catalogContentVersion": 1,
+  "language": "sr-Cyrl",
+  "localizationsVersion": 2,
+  "entries": [
+    {
+      "bundleIdentifier": "com.apple.finder",
+      "displayName": "Finder",
+      "note": "МацОС систем долази са алаткама."
+    },
+    {
+      "bundleIdentifier": "com.apple.Safari",
+      "displayName": "Safari",
+      "note": "Апплеов званични претраживач, уштеда енергије."
+    },
+    {
+      "bundleIdentifier": "com.apple.mail",
+      "displayName": "Mail",
+      "note": "Системски клијент поште, више поштанских сандучића се може обрадити централно"
+    },
+    {
+      "bundleIdentifier": "com.apple.MobileSMS",
+      "displayName": "Messages",
+      "note": "иМессаге и СМС портал, брже одговарајте на поруке на Мац-у"
+    },
+    {
+      "bundleIdentifier": "com.apple.FaceTime",
+      "displayName": "FaceTime",
+      "note": "Улаз аудио и видео позива у Аппле екосистем"
+    },
+    {
+      "bundleIdentifier": "com.apple.iCal",
+      "displayName": "Calendar",
+      "note": "Избаците распоред из главе и дајте времену визуелну мапу"
+    },
+    {
+      "bundleIdentifier": "com.apple.Notes",
+      "displayName": "Notes",
+      "note": "Најбрже системске белешке, текст, слике и листе могу се прикупити"
+    },
+    {
+      "bundleIdentifier": "com.apple.reminders",
+      "displayName": "Reminders",
+      "note": "Обавезе и подсетници, погодни за хватање малих дневних задатака"
+    },
+    {
+      "bundleIdentifier": "com.apple.Photos",
+      "displayName": "Photos",
+      "note": "Системска библиотека фотографија, главни улаз за управљање."
+    },
+    {
+      "bundleIdentifier": "com.apple.Music",
+      "displayName": "Music",
+      "note": "Локални и стриминг музички плејер"
+    },
+    {
+      "bundleIdentifier": "com.apple.Terminal",
+      "displayName": "Terminal",
+      "note": "Унос командне линије, Мац-ов скривени кокпит"
+    },
+    {
+      "bundleIdentifier": "com.apple.ActivityMonitor",
+      "displayName": "Activity Monitor",
+      "note": "Мац-ова контролна табла да видите ко троши енергију."
+    },
+    {
+      "bundleIdentifier": "com.apple.airport.airportutility",
+      "displayName": "AirPort Utility",
+      "note": "Умрежни алати старе школе за управљање АирПортовима и Тиме Цапсулес"
+    },
+    {
+      "bundleIdentifier": "com.apple.AppStore",
+      "displayName": "App Store",
+      "note": "Званична продавница Мац софтвера."
+    },
+    {
+      "bundleIdentifier": "com.apple.apps.launcher",
+      "displayName": "Apps",
+      "note": "Лагани портал апликација који ће вам помоћи да брзо отворите апликације."
+    },
+    {
+      "bundleIdentifier": "com.apple.audio.audiomidisetup",
+      "displayName": "Audio MIDI Setup",
+      "note": "Аудио опрема и МИДИ рутирање, које обично користе музичари и дебагери"
+    },
+    {
+      "bundleIdentifier": "com.apple.automator",
+      "displayName": "Automator",
+      "note": "Можете да повежете низ акција аутоматизације Мац-а без писања кода"
+    },
+    {
+      "bundleIdentifier": "com.apple.bluetoothfileexchange",
+      "displayName": "Bluetooth File Exchange",
+      "note": "Коришћење Блуетоотх-а за слање и примање датотека је старомодно."
+    },
+    {
+      "bundleIdentifier": "com.apple.iBooksX",
+      "displayName": "Books",
+      "note": "Улазна тачка за читање и управљање е-књигама."
+    },
+    {
+      "bundleIdentifier": "com.apple.bootcampassistant",
+      "displayName": "Boot Camp Assistant",
+      "note": "Званични водич за инсталирање Виндовс-а на Интел Мац"
+    },
+    {
+      "bundleIdentifier": "com.apple.calculator",
+      "displayName": "Calculator",
+      "note": "Мали калкулатор, конверзија јединица и режим програматора су такође."
+    },
+    {
+      "bundleIdentifier": "com.apple.chess",
+      "displayName": "Chess",
+      "note": "Уграђени шах за кратку паузу и вежбу"
+    },
+    {
+      "bundleIdentifier": "com.apple.clock",
+      "displayName": "Clock",
+      "note": "Јединствени портал за аларме, тајмере, штоперице и светске сатове"
+    },
+    {
+      "bundleIdentifier": "com.apple.colorsyncutility",
+      "displayName": "ColorSync Utility",
+      "note": "Прегледајте и поправите профиле боја."
+    },
+    {
+      "bundleIdentifier": "com.apple.console",
+      "displayName": "Console",
+      "note": "Прозор за преглед системских евиденција је веома користан када се."
+    },
+    {
+      "bundleIdentifier": "com.apple.addressbook",
+      "displayName": "Contacts",
+      "note": "Чвориште контаката за пошту, поруке и ФацеТиме"
+    },
+    {
+      "bundleIdentifier": "com.apple.dictionary",
+      "displayName": "Dictionary",
+      "note": "Офлајн речник и тезаурус."
+    },
+    {
+      "bundleIdentifier": "com.apple.digitalcolormeter",
+      "displayName": "Digital Color Meter",
+      "note": "Бирач боја екрана, мали артефакт за дизајнере да привремено бирају боје"
+    },
+    {
+      "bundleIdentifier": "com.apple.DiskUtility",
+      "displayName": "Disk Utility",
+      "note": "Диск, партиција, формат и прва помоћ, не петљајте се с тим, али је важно"
+    },
+    {
+      "bundleIdentifier": "com.apple.findmy",
+      "displayName": "Find My",
+      "note": "Пронађите опрему, пронађите предмете и дајте свом изгубљеном Мац-у."
+    },
+    {
+      "bundleIdentifier": "com.apple.fontbook",
+      "displayName": "Font Book",
+      "note": "Центар за инсталацију и управљање фонтовима, управљајте фонтовима пре дизајна"
+    },
+    {
+      "bundleIdentifier": "com.apple.freeform",
+      "displayName": "Freeform",
+      "note": "Неограничене табле за размишљање, скицирање и насумичне идеје"
+    },
+    {
+      "bundleIdentifier": "com.apple.games",
+      "displayName": "Games",
+      "note": "Аппле портал за игре за централно управљање садржајем Аппле Арцаде који."
+    },
+    {
+      "bundleIdentifier": "com.apple.grapher",
+      "displayName": "Grapher",
+      "note": "Графичке једначине, скривени алат за математичку визуелизацију"
+    },
+    {
+      "bundleIdentifier": "com.apple.home",
+      "displayName": "Home",
+      "note": "Улаз за контролу паметне куће може управљати осветљењем."
+    },
+    {
+      "bundleIdentifier": "com.apple.image_capture",
+      "displayName": "Image Capture",
+      "note": "Увезите слике са камере или скенера, једноставно, али стабилно"
+    },
+    {
+      "bundleIdentifier": "com.apple.generativeplaygroundapp",
+      "displayName": "Image Playground",
+      "note": "Генеришите слике помоћу Аппле интелигенције."
+    },
+    {
+      "bundleIdentifier": "com.apple.iMovieApp",
+      "displayName": "iMovie",
+      "note": "Довољно за монтажу видео записа почетног нивоа."
+    },
+    {
+      "bundleIdentifier": "com.apple.screencontinuity",
+      "displayName": "iPhone Mirroring",
+      "note": "Управљајте својим иПхоне-ом директно на Мац-у."
+    },
+    {
+      "bundleIdentifier": "com.apple.journal",
+      "displayName": "Journal",
+      "note": "Снимите дневне фрагменте и полако претварајте своје мисли у личну."
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Keynote",
+      "displayName": "Keynote",
+      "note": "Алатка за презентацију у Аппле стилу, лака за креирање прелепих слајдова"
+    },
+    {
+      "bundleIdentifier": "com.apple.magnifier",
+      "displayName": "Magnifier",
+      "note": "Увећајте детаље на екрану да бисте помогли у погледу и финој инспекцији"
+    },
+    {
+      "bundleIdentifier": "com.apple.Maps",
+      "displayName": "Maps",
+      "note": "Проверите руте, погледајте градове и пребаците одредишта на иПхоне"
+    },
+    {
+      "bundleIdentifier": "com.apple.migrateassistant",
+      "displayName": "Migration Assistant",
+      "note": "Када прелазите на нови Мац, преместите старе податке на нову машину"
+    },
+    {
+      "bundleIdentifier": "com.apple.exposelauncher",
+      "displayName": "Mission Control",
+      "note": "Поглед из ваздуха на прозор и радну површину."
+    },
+    {
+      "bundleIdentifier": "com.apple.news",
+      "displayName": "News",
+      "note": "Аппле Невс портал, погодан за гледање одабраних медијских садржаја"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Numbers",
+      "displayName": "Numbers",
+      "note": "Алатка Аппле Схеетс, лагани извештаји су освежавајући од Екцел-а"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Pages",
+      "displayName": "Pages",
+      "note": "Аппле процесор текста, прелеп за писање докумената и куцање"
+    },
+    {
+      "bundleIdentifier": "com.apple.passwords",
+      "displayName": "Passwords",
+      "note": "Системски менаџер лозинки, централизовано управљање налозима."
+    },
+    {
+      "bundleIdentifier": "com.apple.mobilephone",
+      "displayName": "Phone",
+      "note": "Упућујте позиве на Мац-у помоћу телефона"
+    },
+    {
+      "bundleIdentifier": "com.apple.AboutThisMacLauncher",
+      "displayName": "About This Mac",
+      "note": "Приказује модел Mac-а, верзију система и серијски број"
+    },
+    {
+      "bundleIdentifier": "com.apple.archiveutility",
+      "displayName": "Archive Utility",
+      "note": "Компримује и распакује ZIP и друге архиве"
+    },
+    {
+      "bundleIdentifier": "com.apple.DeskCam",
+      "displayName": "Desk View",
+      "note": "Приказује радни сто помоћу Continuity камере"
+    },
+    {
+      "bundleIdentifier": "com.apple.DirectoryUtility",
+      "displayName": "Directory Utility",
+      "note": "Подешава директоријуме, LDAP и мрежне налоге"
+    },
+    {
+      "bundleIdentifier": "com.apple.DVDPlayer",
+      "displayName": "DVD Player",
+      "note": "Пушта DVD дискове и локални DVD садржај"
+    },
+    {
+      "bundleIdentifier": "com.apple.ExpansionSlotUtility",
+      "displayName": "Expansion Slot Utility",
+      "note": "Приказује и подешава Mac Pro слотове проширења"
+    },
+    {
+      "bundleIdentifier": "com.apple.appleseed.FeedbackAssistant",
+      "displayName": "Feedback Assistant",
+      "note": "Шаље Apple-у повратне информације и дијагностику"
+    },
+    {
+      "bundleIdentifier": "com.apple.FolderActionsSetup",
+      "displayName": "Folder Actions Setup",
+      "note": "Додаје аутоматске скрипт радње фасциклама"
+    },
+    {
+      "bundleIdentifier": "com.apple.IPAInstaller",
+      "displayName": "iOS App Installer",
+      "note": "Инсталира iOS пакете апликација системским алатом"
+    },
+    {
+      "bundleIdentifier": "com.apple.keychainaccess",
+      "displayName": "Keychain Access",
+      "note": "Управља лозинкама, сертификатима, кључевима и безбедним ставкама"
+    },
+    {
+      "bundleIdentifier": "com.apple.Ticket-Viewer",
+      "displayName": "Ticket Viewer",
+      "note": "Приказује Kerberos тикете и стање аутентификације"
+    },
+    {
+      "bundleIdentifier": "com.apple.wifi.diagnostics",
+      "displayName": "Wireless Diagnostics",
+      "note": "Дијагностикује Wi-Fi и прави бежичне извештаје"
+    },
+    {
+      "bundleIdentifier": "com.apple.photobooth",
+      "displayName": "Photo Booth",
+      "note": "Селфи камере и мали специјални ефекти су такође погодни за тестирање камере"
+    },
+    {
+      "bundleIdentifier": "com.apple.podcasts",
+      "displayName": "Podcasts",
+      "note": "Званични портал за слушање подцаста, користан за путовање на посао и учење"
+    },
+    {
+      "bundleIdentifier": "com.apple.Preview",
+      "displayName": "Preview",
+      "note": "Најпотцењенији Мац алат: Прегледајте слике."
+    },
+    {
+      "bundleIdentifier": "com.apple.printcenter",
+      "displayName": "Print Center",
+      "note": "Прегледајте редове за штампање и управљајте њима."
+    },
+    {
+      "bundleIdentifier": "com.apple.quicktimeplayerx",
+      "displayName": "QuickTime Player",
+      "note": "Добро успостављен алат који може да репродукује, снима екран и снима звук"
+    },
+    {
+      "bundleIdentifier": "com.apple.screensharing",
+      "displayName": "Screen Sharing",
+      "note": "Даљински контролишете други Мац."
+    },
+    {
+      "bundleIdentifier": "com.apple.screenshot.launcher",
+      "displayName": "Screenshot",
+      "note": "Портал за снимак екрана и снимање екрана, иза Схифт-Цомманд-5"
+    },
+    {
+      "bundleIdentifier": "com.apple.scripteditor2",
+      "displayName": "Script Editor",
+      "note": "Напишите и покрените АпплеСцрипт да бисте контролисали аутоматизацију."
+    },
+    {
+      "bundleIdentifier": "com.apple.sfsymbols",
+      "displayName": "SF Symbols",
+      "note": "Аппле-ова званична библиотека симбола, неопходна за изворне интерфејсе"
+    },
+    {
+      "bundleIdentifier": "com.apple.shortcuts",
+      "displayName": "Shortcuts",
+      "note": "Низање више радњи у процесе једним кликом је модерна верзија Аутоматора"
+    },
+    {
+      "bundleIdentifier": "com.apple.siri.launcher",
+      "displayName": "Siri",
+      "note": "Улаз гласовног помоћника, може да проверава информације."
+    },
+    {
+      "bundleIdentifier": "com.apple.stickies",
+      "displayName": "Stickies",
+      "note": "Лепљиве белешке за радну површину."
+    },
+    {
+      "bundleIdentifier": "com.apple.stocks",
+      "displayName": "Stocks",
+      "note": "Погледајте мале панеле за акције и динамику тржишта"
+    },
+    {
+      "bundleIdentifier": "com.apple.systemprofiler",
+      "displayName": "System Information",
+      "note": "Погледајте детаље о хардверу."
+    },
+    {
+      "bundleIdentifier": "com.apple.systempreferences",
+      "displayName": "System Settings",
+      "note": "Мац подешавања главни улаз, скоро сви системски прекидачи су овде"
+    },
+    {
+      "bundleIdentifier": "com.apple.textedit",
+      "displayName": "TextEdit",
+      "note": "Најједноставнији уређивач текста, отвара ТКСТ и РТФ врло брзо"
+    },
+    {
+      "bundleIdentifier": "com.apple.backup.launcher",
+      "displayName": "Time Machine",
+      "note": "Системска резерва за враћање датотека по потреби"
+    },
+    {
+      "bundleIdentifier": "com.apple.helpviewer",
+      "displayName": "Tips",
+      "note": "Аппле-ови званични савети за повремено откривање функција које нисте."
+    },
+    {
+      "bundleIdentifier": "com.apple.TV",
+      "displayName": "TV",
+      "note": "Репродукција филмског и телевизијског садржаја и улаз за управљање"
+    },
+    {
+      "bundleIdentifier": "com.apple.voicememos",
+      "displayName": "Voice Memos",
+      "note": "Брзо снимите, сачувајте инспирацију за састанак и прво интервјуирајте."
+    },
+    {
+      "bundleIdentifier": "com.apple.voiceoverutility",
+      "displayName": "VoiceOver Utility",
+      "note": "Управљајте функцијама приступачности за читање са екрана како бисте."
+    },
+    {
+      "bundleIdentifier": "com.apple.weather",
+      "displayName": "Weather",
+      "note": "Портал временске прогнозе, проверите га пре изласка ради веће стабилности"
+    },
+    {
+      "bundleIdentifier": "com.apple.dt.Xcode",
+      "displayName": "Xcode",
+      "note": "Apple алати за развој iOS и macOS апликација"
+    },
+    {
+      "bundleIdentifier": "com.apple.garageband10",
+      "displayName": "GarageBand",
+      "note": "Аппле-ов почетнички алат за производњу музике."
+    },
+    {
+      "bundleIdentifier": "com.apple.FinalCut",
+      "displayName": "Final Cut Pro",
+      "note": "Аппле-ов професионални алат за уређивање видеа, сечење."
+    },
+    {
+      "bundleIdentifier": "com.apple.logic10",
+      "displayName": "Logic Pro",
+      "note": "Аппле-ов професионални алат за продукцију музике, моћан у снимању."
+    },
+    {
+      "bundleIdentifier": "com.apple.TestFlight",
+      "displayName": "TestFlight",
+      "note": "Алат за тестирање Аппле апликација."
+    }
+  ]
+}

@@ -207,14 +207,22 @@ enum SmartStartService {
 
         for path in appPaths {
             guard let currentNote = normalizedNote(store.appNotes[path]) else { continue }
-            guard let metadata = store.appNoteMetadata[path],
-                  metadata.origin == .catalogDefault,
-                  let currentCatalog = metadata.catalog,
-                  currentCatalog.noteFingerprint == TagDatabase.noteFingerprint(currentNote),
-                  let matched = catalog.entryIndex[currentCatalog.entryID],
-                  let localizedNote = matched.localizedNote,
-                  localizedNote.note != currentNote
-            else { continue }
+            guard let metadata = store.appNoteMetadata[path] else { continue }
+
+            let currentFingerprint = TagDatabase.noteFingerprint(currentNote)
+            let localizedNote: SmartStartLocalizedNote?
+            switch metadata.origin {
+            case .catalogDefault:
+                guard let currentCatalog = metadata.catalog,
+                      currentCatalog.noteFingerprint == currentFingerprint,
+                      let matched = catalog.entryIndex[currentCatalog.entryID]
+                else { continue }
+                localizedNote = matched.localizedNote
+            case .appleDefault, .manual:
+                continue
+            }
+
+            guard let localizedNote, localizedNote.note != currentNote else { continue }
 
             store.appNotes[path] = localizedNote.note
             store.appNoteMetadata[path] = TagDatabase.AppNoteMetadata(
@@ -259,6 +267,23 @@ enum SmartStartService {
         var unassigned: [SmartUnassignedApp] = []
 
         for app in apps {
+            if let appleCategorization = AppleDefaultAppCatalog.categorization(for: app) {
+                let key = app.bundleIdentifier?.lowercased() ?? app.path.path
+                guard seenAssignments.insert(key).inserted else { continue }
+
+                assignments.append(SmartAppCategorizationAssignment(
+                    appName: app.name,
+                    bundleIdentifier: app.bundleIdentifier,
+                    path: app.path.path,
+                    categoryIDs: appleCategorization.categoryIDs,
+                    confidence: 0.92,
+                    source: .localCatalog,
+                    reason: "Matched Apple default app catalog entry: \(appleCategorization.canonicalName)",
+                    provenance: appleCategorization.provenance
+                ))
+                continue
+            }
+
             let matched = match(
                 app: app,
                 bundleIndex: catalog.bundleIndex,
@@ -383,12 +408,16 @@ enum SmartStartService {
                 let currentNote = store.appNotes[path]?.trimmingCharacters(in: .whitespacesAndNewlines)
                 let normalizedCurrentNote = normalizedNote(currentNote)
                 let existingMetadata = store.appNoteMetadata[path]
+                let isManualOverride = existingMetadata?.origin == .manual
                 let currentMatchesCatalogDefault = existingMetadata?.origin == .catalogDefault
                     && normalizedCurrentNote.map { TagDatabase.noteFingerprint($0) } == existingMetadata?.catalog?.noteFingerprint
                 let knownDefaultNotes = Set(assignment.defaultNoteCandidates.compactMap(normalizedNote))
-                let shouldSeedNote = currentNote?.isEmpty != false
-                    || currentMatchesCatalogDefault
-                    || normalizedCurrentNote.map { knownDefaultNotes.contains($0) } == true
+                let shouldSeedNote = !isManualOverride
+                    && (
+                        currentNote?.isEmpty != false
+                        || currentMatchesCatalogDefault
+                        || normalizedCurrentNote.map { knownDefaultNotes.contains($0) } == true
+                    )
 
                 if shouldSeedNote {
                     store.appNotes[path] = String(defaultNote.prefix(TagDatabase.maxAppNoteLength))

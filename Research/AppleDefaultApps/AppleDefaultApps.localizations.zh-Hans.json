@@ -1,0 +1,453 @@
+{
+  "resourceFormatVersion": 1,
+  "catalogContentVersion": 1,
+  "language": "zh-Hans",
+  "localizationsVersion": 2,
+  "entries": [
+    {
+      "bundleIdentifier": "com.apple.finder",
+      "displayName": "访达",
+      "note": "macOS 系统自带工具，适合完成对应的系统管理或日常操作"
+    },
+    {
+      "bundleIdentifier": "com.apple.Safari",
+      "displayName": "Safari",
+      "note": "Apple 官方浏览器，省电、隐私和生态联动是强项"
+    },
+    {
+      "bundleIdentifier": "com.apple.mail",
+      "displayName": "邮件",
+      "note": "系统邮件客户端，多个邮箱可以集中处理"
+    },
+    {
+      "bundleIdentifier": "com.apple.MobileSMS",
+      "displayName": "信息",
+      "note": "iMessage 和短信入口，Mac 上回消息更快"
+    },
+    {
+      "bundleIdentifier": "com.apple.FaceTime",
+      "displayName": "FaceTime通话",
+      "note": "苹果生态里的音视频通话入口"
+    },
+    {
+      "bundleIdentifier": "com.apple.iCal",
+      "displayName": "日历",
+      "note": "把日程从脑子里搬出来，给时间一张可视化地图"
+    },
+    {
+      "bundleIdentifier": "com.apple.Notes",
+      "displayName": "备忘录",
+      "note": "最快的系统备忘录，文字、图片、清单都能收"
+    },
+    {
+      "bundleIdentifier": "com.apple.reminders",
+      "displayName": "提醒事项",
+      "note": "待办和提醒事项，适合抓住日常小任务"
+    },
+    {
+      "bundleIdentifier": "com.apple.Photos",
+      "displayName": "照片",
+      "note": "系统照片库，管理、编辑和同步照片的主入口"
+    },
+    {
+      "bundleIdentifier": "com.apple.Music",
+      "displayName": "音乐",
+      "note": "本地和流媒体音乐播放器"
+    },
+    {
+      "bundleIdentifier": "com.apple.Terminal",
+      "displayName": "终端",
+      "note": "命令行入口，Mac 的隐藏驾驶舱"
+    },
+    {
+      "bundleIdentifier": "com.apple.ActivityMonitor",
+      "displayName": "活动监视器",
+      "note": "Mac 的仪表盘，专看谁在耗电、吃内存、拖慢电脑"
+    },
+    {
+      "bundleIdentifier": "com.apple.airport.airportutility",
+      "displayName": "AirPort实用工具",
+      "note": "管理 AirPort 和 Time Capsule 的老派网络工具"
+    },
+    {
+      "bundleIdentifier": "com.apple.AppStore",
+      "displayName": "App Store",
+      "note": "Mac 官方软件商店，找应用、更新和订阅都从这里开始"
+    },
+    {
+      "bundleIdentifier": "com.apple.apps.launcher",
+      "displayName": "App",
+      "note": "一个轻量应用入口，帮你从系统层面快速打开 App"
+    },
+    {
+      "bundleIdentifier": "com.apple.audio.audiomidisetup",
+      "displayName": "音频MIDI设置",
+      "note": "管音频设备和 MIDI 路由，音乐人和调试党很常用"
+    },
+    {
+      "bundleIdentifier": "com.apple.automator",
+      "displayName": "自动操作",
+      "note": "不写代码也能串起一串 Mac 自动化动作"
+    },
+    {
+      "bundleIdentifier": "com.apple.bluetoothfileexchange",
+      "displayName": "蓝牙文件交换",
+      "note": "用蓝牙收发文件，古早但关键时能救急"
+    },
+    {
+      "bundleIdentifier": "com.apple.iBooksX",
+      "displayName": "图书",
+      "note": "阅读和管理电子书的入口，适合把 Mac 变成书桌"
+    },
+    {
+      "bundleIdentifier": "com.apple.bootcampassistant",
+      "displayName": "启动转换助理",
+      "note": "Intel Mac 安装 Windows 的官方向导"
+    },
+    {
+      "bundleIdentifier": "com.apple.calculator",
+      "displayName": "计算器",
+      "note": "小计算器，单位换算和程序员模式也藏在里面"
+    },
+    {
+      "bundleIdentifier": "com.apple.chess",
+      "displayName": "国际象棋",
+      "note": "系统自带国际象棋，适合短暂休息和练习棋局"
+    },
+    {
+      "bundleIdentifier": "com.apple.clock",
+      "displayName": "时钟",
+      "note": "闹钟、计时器、秒表和世界时钟的统一入口"
+    },
+    {
+      "bundleIdentifier": "com.apple.colorsyncutility",
+      "displayName": "色彩同步实用工具",
+      "note": "查看和修复色彩配置文件，处理显示和打印色差"
+    },
+    {
+      "bundleIdentifier": "com.apple.console",
+      "displayName": "控制台",
+      "note": "看系统日志的窗口，排查异常时很有用"
+    },
+    {
+      "bundleIdentifier": "com.apple.addressbook",
+      "displayName": "通讯录",
+      "note": "通讯录中枢，邮件、信息和 FaceTime 都会用到它"
+    },
+    {
+      "bundleIdentifier": "com.apple.dictionary",
+      "displayName": "词典",
+      "note": "离线词典和同义词库，写作查词不用开浏览器"
+    },
+    {
+      "bundleIdentifier": "com.apple.digitalcolormeter",
+      "displayName": "数码测色计",
+      "note": "屏幕取色器，设计师临时取色的小神器"
+    },
+    {
+      "bundleIdentifier": "com.apple.DiskUtility",
+      "displayName": "磁盘工具",
+      "note": "管理磁盘、分区、格式化和急救，处理存储问题很重要"
+    },
+    {
+      "bundleIdentifier": "com.apple.findmy",
+      "displayName": "查找",
+      "note": "找设备、找物品，也让丢失的 Mac 有回家的线索"
+    },
+    {
+      "bundleIdentifier": "com.apple.fontbook",
+      "displayName": "字体册",
+      "note": "字体安装和管理中心，设计前先管好字体"
+    },
+    {
+      "bundleIdentifier": "com.apple.freeform",
+      "displayName": "无边记",
+      "note": "无限白板，适合头脑风暴、草图和自由整理想法"
+    },
+    {
+      "bundleIdentifier": "com.apple.games",
+      "displayName": "游戏",
+      "note": "Apple 游戏入口，集中管理可玩的 Apple Arcade 内容"
+    },
+    {
+      "bundleIdentifier": "com.apple.grapher",
+      "displayName": "Grapher",
+      "note": "把方程画成图，数学可视化的隐藏工具"
+    },
+    {
+      "bundleIdentifier": "com.apple.home",
+      "displayName": "家庭",
+      "note": "智能家居控制入口，可管理灯光、空调等设备"
+    },
+    {
+      "bundleIdentifier": "com.apple.image_capture",
+      "displayName": "图像捕捉",
+      "note": "从相机或扫描仪导入图片，朴素但稳定"
+    },
+    {
+      "bundleIdentifier": "com.apple.generativeplaygroundapp",
+      "displayName": "图乐园",
+      "note": "用 Apple 智能生成图像，适合快速玩创意草稿"
+    },
+    {
+      "bundleIdentifier": "com.apple.iMovieApp",
+      "displayName": "iMovie 剪辑",
+      "note": "入门级视频剪辑，家庭视频和轻量短片够用"
+    },
+    {
+      "bundleIdentifier": "com.apple.screencontinuity",
+      "displayName": "iPhone镜像",
+      "note": "在 Mac 上直接操作 iPhone，跨设备处理消息和应用"
+    },
+    {
+      "bundleIdentifier": "com.apple.journal",
+      "displayName": "手记",
+      "note": "记录日常片段，让碎碎念慢慢变成个人时间线"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Keynote",
+      "displayName": "讲演",
+      "note": "苹果式演示文稿工具，做漂亮幻灯片很顺手"
+    },
+    {
+      "bundleIdentifier": "com.apple.magnifier",
+      "displayName": "放大器",
+      "note": "放大屏幕细节，给视力和精细检查一个帮手"
+    },
+    {
+      "bundleIdentifier": "com.apple.Maps",
+      "displayName": "地图",
+      "note": "查路线、看城市，也能把目的地推给 iPhone"
+    },
+    {
+      "bundleIdentifier": "com.apple.migrateassistant",
+      "displayName": "迁移助理",
+      "note": "换新 Mac 时搬家，把旧资料迁到新机器"
+    },
+    {
+      "bundleIdentifier": "com.apple.exposelauncher",
+      "displayName": "调度中心",
+      "note": "窗口和桌面的空中俯视图，乱了就看它"
+    },
+    {
+      "bundleIdentifier": "com.apple.news",
+      "displayName": "新闻",
+      "note": "苹果新闻入口，适合看精选媒体内容"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Numbers",
+      "displayName": "表格",
+      "note": "苹果表格工具，轻量报表比 Excel 更清爽"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Pages",
+      "displayName": "文稿",
+      "note": "苹果文字处理器，写文档和排版都好看"
+    },
+    {
+      "bundleIdentifier": "com.apple.passwords",
+      "displayName": "密码",
+      "note": "系统密码管家，账号、验证码和通行密钥集中管理"
+    },
+    {
+      "bundleIdentifier": "com.apple.mobilephone",
+      "displayName": "电话",
+      "note": "借助手机在 Mac 上接打电话"
+    },
+    {
+      "bundleIdentifier": "com.apple.AboutThisMacLauncher",
+      "displayName": "关于本机",
+      "note": "查看 Mac 型号、系统版本和序列号"
+    },
+    {
+      "bundleIdentifier": "com.apple.archiveutility",
+      "displayName": "归档实用工具",
+      "note": "压缩和解压 ZIP 等归档文件的系统工具"
+    },
+    {
+      "bundleIdentifier": "com.apple.DeskCam",
+      "displayName": "桌上视角",
+      "note": "配合连续互通摄像头显示桌面视角"
+    },
+    {
+      "bundleIdentifier": "com.apple.DirectoryUtility",
+      "displayName": "目录实用工具",
+      "note": "配置目录服务、LDAP 和网络账号连接"
+    },
+    {
+      "bundleIdentifier": "com.apple.DVDPlayer",
+      "displayName": "DVD播放程序",
+      "note": "播放 DVD 光盘和本地 DVD 内容"
+    },
+    {
+      "bundleIdentifier": "com.apple.ExpansionSlotUtility",
+      "displayName": "扩充槽实用工具",
+      "note": "查看和配置 Mac Pro 扩展槽"
+    },
+    {
+      "bundleIdentifier": "com.apple.appleseed.FeedbackAssistant",
+      "displayName": "反馈助理",
+      "note": "向 Apple 提交系统反馈和诊断报告"
+    },
+    {
+      "bundleIdentifier": "com.apple.FolderActionsSetup",
+      "displayName": "文件夹操作设置",
+      "note": "为文件夹配置自动触发的脚本动作"
+    },
+    {
+      "bundleIdentifier": "com.apple.IPAInstaller",
+      "displayName": "iOS App安装器",
+      "note": "安装 iOS App 包的系统辅助工具"
+    },
+    {
+      "bundleIdentifier": "com.apple.keychainaccess",
+      "displayName": "钥匙串访问",
+      "note": "管理密码、证书、密钥和安全项目"
+    },
+    {
+      "bundleIdentifier": "com.apple.Ticket-Viewer",
+      "displayName": "票据显示程序",
+      "note": "查看 Kerberos 票据和身份验证状态"
+    },
+    {
+      "bundleIdentifier": "com.apple.wifi.diagnostics",
+      "displayName": "无线诊断",
+      "note": "诊断 Wi-Fi 问题并生成无线报告"
+    },
+    {
+      "bundleIdentifier": "com.apple.photobooth",
+      "displayName": "Photo Booth",
+      "note": "摄像头自拍和小特效，测试摄像头也方便"
+    },
+    {
+      "bundleIdentifier": "com.apple.podcasts",
+      "displayName": "播客",
+      "note": "听播客的官方入口，通勤和学习都能用"
+    },
+    {
+      "bundleIdentifier": "com.apple.Preview",
+      "displayName": "预览",
+      "note": "Mac 最被低估的工具：看图、批注 PDF、简单编辑全能"
+    },
+    {
+      "bundleIdentifier": "com.apple.printcenter",
+      "displayName": "打印中心",
+      "note": "查看和管理打印队列，卡纸卡任务先看这里"
+    },
+    {
+      "bundleIdentifier": "com.apple.quicktimeplayerx",
+      "displayName": "QuickTime Player",
+      "note": "播放、录屏、录音都能干的老牌工具"
+    },
+    {
+      "bundleIdentifier": "com.apple.screensharing",
+      "displayName": "屏幕共享",
+      "note": "远程控制另一台 Mac，帮人修电脑很方便"
+    },
+    {
+      "bundleIdentifier": "com.apple.screenshot.launcher",
+      "displayName": "截屏",
+      "note": "截图和录屏入口，Shift-Command-5 的背后就是它"
+    },
+    {
+      "bundleIdentifier": "com.apple.scripteditor2",
+      "displayName": "脚本编辑器",
+      "note": "写和运行 AppleScript，控制老派 Mac 自动化"
+    },
+    {
+      "bundleIdentifier": "com.apple.sfsymbols",
+      "displayName": "SF Symbols",
+      "note": "Apple 官方符号库，做原生界面必备"
+    },
+    {
+      "bundleIdentifier": "com.apple.shortcuts",
+      "displayName": "快捷指令",
+      "note": "把多个动作串成一键流程，是现代版 Automator"
+    },
+    {
+      "bundleIdentifier": "com.apple.siri.launcher",
+      "displayName": "Siri",
+      "note": "语音助手入口，能查信息、开 App、控制系统"
+    },
+    {
+      "bundleIdentifier": "com.apple.stickies",
+      "displayName": "便笺",
+      "note": "桌面便利贴，临时记事就贴在眼前"
+    },
+    {
+      "bundleIdentifier": "com.apple.stocks",
+      "displayName": "股市",
+      "note": "看股票和市场动态的小面板"
+    },
+    {
+      "bundleIdentifier": "com.apple.systemprofiler",
+      "displayName": "系统信息",
+      "note": "查看硬件、软件和设备详情，查配置最准确"
+    },
+    {
+      "bundleIdentifier": "com.apple.systempreferences",
+      "displayName": "系统设置",
+      "note": "Mac 设置总入口，几乎所有系统开关都在这里"
+    },
+    {
+      "bundleIdentifier": "com.apple.textedit",
+      "displayName": "文本编辑",
+      "note": "最朴素的文本编辑器，开 TXT 和 RTF 很快"
+    },
+    {
+      "bundleIdentifier": "com.apple.backup.launcher",
+      "displayName": "时间机器",
+      "note": "系统备份工具，适合提前准备文件恢复方案"
+    },
+    {
+      "bundleIdentifier": "com.apple.helpviewer",
+      "displayName": "提示",
+      "note": "苹果官方小技巧，偶尔能发现你没用过的功能"
+    },
+    {
+      "bundleIdentifier": "com.apple.TV",
+      "displayName": "TV",
+      "note": "影视内容播放和管理入口"
+    },
+    {
+      "bundleIdentifier": "com.apple.voicememos",
+      "displayName": "语音备忘录",
+      "note": "快速录音，会议灵感和采访素材先存下来"
+    },
+    {
+      "bundleIdentifier": "com.apple.voiceoverutility",
+      "displayName": "旁白实用工具",
+      "note": "管理读屏辅助功能，让 Mac 更适合视觉障碍用户"
+    },
+    {
+      "bundleIdentifier": "com.apple.weather",
+      "displayName": "天气",
+      "note": "天气预报入口，出门前看一眼更稳"
+    },
+    {
+      "bundleIdentifier": "com.apple.dt.Xcode",
+      "displayName": "Xcode",
+      "note": "苹果开发工具套件，适合编写 iOS 和 macOS App"
+    },
+    {
+      "bundleIdentifier": "com.apple.garageband10",
+      "displayName": "GarageBand",
+      "note": "苹果入门音乐制作工具，录音和编曲都容易上手"
+    },
+    {
+      "bundleIdentifier": "com.apple.FinalCut",
+      "displayName": "Final Cut Pro",
+      "note": "苹果专业视频剪辑工具，剪片、调色和导出都很快"
+    },
+    {
+      "bundleIdentifier": "com.apple.logic10",
+      "displayName": "Logic Pro",
+      "note": "苹果专业音乐制作工具，录音、编曲和混音都很强"
+    },
+    {
+      "bundleIdentifier": "com.apple.TestFlight",
+      "displayName": "TestFlight",
+      "note": "Apple 应用测试工具，适合安装和体验测试版 App"
+    }
+  ]
+}

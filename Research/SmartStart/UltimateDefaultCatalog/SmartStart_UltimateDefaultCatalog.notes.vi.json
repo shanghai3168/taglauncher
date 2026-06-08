@@ -46,10 +46,6 @@
       "note": "Được sử dụng để lưu và quản lý thông tin đăng nhập Git, phù hợp cho nhiều lần đă"
     },
     {
-      "entryID": "com-apple-finder-2de1d8bbb107",
-      "note": "Hệ thống macOS đi kèm với các công cụ phù hợp để hoàn thành việc quản lý hệ thốn"
-    },
-    {
       "entryID": "com-mitchellh-ghostty-5194f8485e90",
       "note": "Công cụ dành cho nhà phát triển dành cho dòng lệnh, xây dựng, gỡ lỗi hoặc quản l"
     },
@@ -72,10 +68,6 @@
     {
       "entryID": "1password-cli-85e1ca6fa403",
       "note": "Công cụ bảo mật tài khoản để quản lý mật khẩu, mã xác minh và khóa truy cập"
-    },
-    {
-      "entryID": "com-apple-safari-b2041c4573f8",
-      "note": "Trình duyệt chính thức của Apple, tiết kiệm năng lượng, quyền riêng tư và liên k"
     },
     {
       "entryID": "com-anthropic-claudefordesktop-b2f723339fad",
@@ -102,10 +94,6 @@
       "note": "Trình chỉnh sửa mã nhẹ nhưng mạnh mẽ với hệ sinh thái plug-in rất hoàn chỉnh"
     },
     {
-      "entryID": "com-apple-mail-9c1e969ca734",
-      "note": "Ứng dụng thư hệ thống, nhiều hộp thư có thể được xử lý tập trung"
-    },
-    {
       "entryID": "md-obsidian-9f1625d466f0",
       "note": "Nền tảng kiến thức Markdown cục bộ, thích hợp cho việc tích lũy lâu dài bộ não t"
     },
@@ -128,10 +116,6 @@
     {
       "entryID": "com-tencent-meeting-5bd65448f293",
       "note": "Lối vào hội nghị Tencent, văn phòng Trung Quốc và cộng tác từ xa rất phổ biến"
-    },
-    {
-      "entryID": "com-apple-mobilesms-a7066fed8087",
-      "note": "Cổng iMessage và SMS, trả lời tin nhắn nhanh hơn trên Mac"
     },
     {
       "entryID": "com-mojang-minecraftlauncher-606072fb1e80",
@@ -174,10 +158,6 @@
       "note": "IDE chính thức của Android, cần thiết để phát triển và gỡ lỗi Ứng dụng Android"
     },
     {
-      "entryID": "com-apple-facetime-96f99030aef8",
-      "note": "Lối vào cuộc gọi âm thanh và video trong hệ sinh thái Apple"
-    },
-    {
       "entryID": "maccy-0c7236cb0f2d",
       "note": "Công cụ lịch sử clipboard, nội dung đã sao chép có thể được lấy lại bất cứ lúc n"
     },
@@ -190,10 +170,6 @@
       "note": "Trình phát nhạc trực tuyến, bạn có thể có một bài hát cho cả công việc và thư gi"
     },
     {
-      "entryID": "com-apple-ical-8e998503177c",
-      "note": "Hãy loại bỏ lịch trình ra khỏi đầu và dành thời gian cho một bản đồ trực quan"
-    },
-    {
       "entryID": "blackhole-2ch-0b7c58e0297a",
       "note": "Trình điều khiển âm thanh ảo, thích hợp để ghi màn hình, phát sóng trực tiếp và"
     },
@@ -204,10 +180,6 @@
     {
       "entryID": "com-electron-lark-6559e48147f2",
       "note": "Cổng cộng tác Feishu, nơi chứa tất cả các cuộc trò chuyện, tài liệu và cuộc họp"
-    },
-    {
-      "entryID": "com-apple-notes-aaf1d7cf1c90",
-      "note": "Tất cả các bản ghi nhớ, văn bản, hình ảnh và danh sách hệ thống nhanh nhất đều c"
     },
     {
       "entryID": "com-electron-ollama-25be0e7340d2",
@@ -238,10 +210,6 @@
       "note": "Lập trình các công cụ phát triển để viết, đọc và duy trì mã"
     },
     {
-      "entryID": "com-apple-reminders-92a9335b31bb",
-      "note": "Việc cần làm và lời nhắc, thích hợp để nắm bắt các công việc nhỏ hàng ngày"
-    },
-    {
       "entryID": "com-openai-chat-7c12a7107aad",
       "note": "Đặt trợ lý AI trên máy tính để bàn của bạn và viết, nghiên cứu và động não trong"
     },
@@ -260,10 +228,6 @@
     {
       "entryID": "com-kingsoft-wpsoffice-mac-c371eb320d54",
       "note": "Bộ ứng dụng văn phòng để chỉnh sửa tài liệu, bảng tính và thuyết trình"
-    },
-    {
-      "entryID": "com-apple-photos-9678510fed1e",
-      "note": "Hệ thống thư viện ảnh, cổng chính quản lý, chỉnh sửa và đồng bộ ảnh"
     },
     {
       "entryID": "adobe-acrobat-reader-fb99f7bea88f",
@@ -290,14 +254,6 @@
       "note": "Trình duyệt web, thích hợp cho việc lướt Internet và truy cập các dịch vụ web hà"
     },
     {
-      "entryID": "com-apple-music-63ea41e016ea",
-      "note": "Trình phát nhạc cục bộ và phát trực tuyến"
-    },
-    {
-      "entryID": "com-apple-terminal-77aba1385326",
-      "note": "Mục nhập dòng lệnh, buồng lái ẩn của Mac"
-    },
-    {
       "entryID": "utm-f2a3e184ea9f",
       "note": "Công cụ ảo hóa hoặc kết nối từ xa, phù hợp với môi trường hệ thống đang chạy và"
     },
@@ -310,260 +266,12 @@
       "note": "Trình phát nhạc, thích hợp để nghe nhạc, quản lý danh sách phát và sử dụng dịch"
     },
     {
-      "entryID": "com-apple-activitymonitor-1ca0c04d6757",
-      "note": "Bảng điều khiển của Mac để xem ai đang tiêu thụ năng lượng, bộ nhớ và làm chậm m"
-    },
-    {
-      "entryID": "com-apple-airport-airportutility-85b3849d7d98",
-      "note": "Các công cụ kết nối mạng kiểu cũ để quản lý AirPort và Time Capsules"
-    },
-    {
-      "entryID": "com-apple-appstore-0619ceddf32a",
-      "note": "Cửa hàng phần mềm Mac chính thức, bắt đầu tại đây để tìm ứng dụng, bản cập nhật"
-    },
-    {
-      "entryID": "com-apple-apps-launcher-c27c2e6c3e15",
-      "note": "Cổng ứng dụng nhẹ giúp bạn nhanh chóng mở ứng dụng từ cấp hệ thống"
-    },
-    {
-      "entryID": "com-apple-audio-audiomidisetup-8327be183cc9",
-      "note": "Thiết bị âm thanh và định tuyến MIDI, thường được các nhạc sĩ và người gỡ lỗi sử"
-    },
-    {
-      "entryID": "com-apple-automator-3134734f076f",
-      "note": "Bạn có thể xâu chuỗi các hành động tự động hóa máy Mac lại với nhau mà không cần"
-    },
-    {
-      "entryID": "com-apple-bluetoothfileexchange-a83f24bdfabc",
-      "note": "Sử dụng Bluetooth để gửi và nhận file đã lỗi thời nhưng có thể cứu bạn trong nhữ"
-    },
-    {
-      "entryID": "com-apple-ibooksx-61d0b1b4ae4c",
-      "note": "Một điểm truy cập để đọc và quản lý sách điện tử, thích hợp để biến máy Mac của"
-    },
-    {
-      "entryID": "com-apple-bootcampassistant-e4ab0159032f",
-      "note": "Hướng dẫn chính thức cài đặt Windows trên Intel Mac"
-    },
-    {
-      "entryID": "com-apple-calculator-390516777a37",
-      "note": "Máy tính nhỏ, chuyển đổi đơn vị và chế độ lập trình viên cũng được ẩn bên trong"
-    },
-    {
-      "entryID": "com-apple-chess-8ccbf1801854",
-      "note": "Hệ thống đi kèm với cờ vua, giúp việc câu cá trở nên tao nhã hơn so với việc duy"
-    },
-    {
-      "entryID": "com-apple-clock-f922597106e9",
-      "note": "Cổng thông tin thống nhất dành cho báo thức, hẹn giờ, đồng hồ bấm giờ và đồng hồ"
-    },
-    {
       "entryID": "cmux-3a661d84a58c",
       "note": "Lý tưởng để tổ chức siêu dữ liệu đa phương tiện, đặt tên hoặc đóng gói tệp"
     },
     {
-      "entryID": "com-apple-colorsyncutility-68af0cd69154",
-      "note": "Xem và sửa chữa cấu hình màu, xử lý sự khác biệt về màu sắc hiển thị và in ấn"
-    },
-    {
-      "entryID": "com-apple-console-5e449417a9e8",
-      "note": "Cửa sổ xem nhật ký hệ thống rất hữu ích khi khắc phục sự cố bất thường"
-    },
-    {
-      "entryID": "com-apple-addressbook-0b4e2b893a86",
-      "note": "Trung tâm liên hệ dành cho Thư, Tin nhắn và FaceTime"
-    },
-    {
-      "entryID": "com-apple-dictionary-4625013af142",
-      "note": "Từ điển và từ điển đồng nghĩa ngoại tuyến, không cần mở trình duyệt khi viết và"
-    },
-    {
-      "entryID": "com-apple-digitalcolormeter-fb99a6aa0c0b",
-      "note": "Công cụ chọn màu màn hình, một tạo tác nhỏ để các nhà thiết kế chọn màu tạm thời"
-    },
-    {
-      "entryID": "com-apple-diskutility-48d48cee3d46",
-      "note": "Đĩa, phân vùng, định dạng và sơ cứu, đừng lộn xộn với nó nhưng nó quan trọng"
-    },
-    {
-      "entryID": "com-apple-findmy-f15882533adf",
-      "note": "Tìm thiết bị, tìm vật phẩm và cung cấp manh mối cho máy Mac bị mất của bạn để về"
-    },
-    {
-      "entryID": "com-apple-fontbook-83009f0e620e",
-      "note": "Trung tâm cài đặt và quản lý font chữ, quản lý font chữ trước khi thiết kế"
-    },
-    {
-      "entryID": "com-apple-freeform-c79ff8861497",
-      "note": "Bảng trắng không giới hạn để động não, phác thảo và các ý tưởng ngẫu nhiên"
-    },
-    {
-      "entryID": "com-apple-games-18b06d160812",
-      "note": "Cổng trò chơi của Apple để quản lý tập trung nội dung Apple Arcade có thể chơi đ"
-    },
-    {
-      "entryID": "com-apple-grapher-dde725719597",
-      "note": "Phương trình đồ thị, một công cụ ẩn để trực quan hóa toán học"
-    },
-    {
-      "entryID": "com-apple-home-339f72ecc4b8",
-      "note": "Lối vào điều khiển nhà thông minh có thể quản lý hệ thống chiếu sáng, điều hòa v"
-    },
-    {
-      "entryID": "com-apple-image-capture-8de5b7375bed",
-      "note": "Nhập ảnh từ máy ảnh hoặc máy quét, đơn giản nhưng ổn định"
-    },
-    {
-      "entryID": "com-apple-generativeplaygroundapp-05897f8dbe4c",
-      "note": "Tạo hình ảnh bằng trí thông minh của Apple, hoàn hảo để soạn thảo sáng tạo nhanh"
-    },
-    {
-      "entryID": "com-apple-imovieapp-00a9c7493d26",
-      "note": "Đủ để chỉnh sửa video ở cấp độ đầu vào, video gia đình và phim ngắn nhẹ"
-    },
-    {
-      "entryID": "com-apple-screencontinuity-867a48a76333",
-      "note": "Vận hành iPhone của bạn trực tiếp trên máy Mac, loại bỏ nhu cầu chạm vào điện th"
-    },
-    {
-      "entryID": "com-apple-journal-29ceb46d5ff5",
-      "note": "Ghi lại những khoảnh khắc hàng ngày và từ từ biến suy nghĩ của bạn thành dòng th"
-    },
-    {
-      "entryID": "com-apple-iwork-keynote-e86356f31ec2",
-      "note": "Công cụ trình chiếu phong cách Apple, dễ dàng tạo slide đẹp mắt"
-    },
-    {
       "entryID": "com-riotgames-leagueoflegends-ee692e90efde",
       "note": "Client Liên Minh Huyền Thoại, lối vào các trò chơi thi đấu đồng đội cổ điển"
-    },
-    {
-      "entryID": "com-apple-magnifier-c9044527cd0d",
-      "note": "Phóng to các chi tiết màn hình để giúp quan sát và kiểm tra tốt"
-    },
-    {
-      "entryID": "com-apple-maps-310ca6c69cea",
-      "note": "Kiểm tra tuyến đường, xem thành phố và đẩy điểm đến vào iPhone"
-    },
-    {
-      "entryID": "com-apple-migrateassistant-5f03ff480fe8",
-      "note": "Khi chuyển sang máy Mac mới, chuyển dữ liệu cũ sang máy mới"
-    },
-    {
-      "entryID": "com-apple-exposelauncher-62e07c598f71",
-      "note": "Cửa sổ và màn hình nhìn từ trên cao, nếu lộn xộn thì chỉ cần nhìn thôi"
-    },
-    {
-      "entryID": "com-apple-news-7614a9b54b68",
-      "note": "Cổng thông tin Apple News, thích hợp để xem nội dung phương tiện đã chọn"
-    },
-    {
-      "entryID": "com-apple-iwork-numbers-361a6aaf7056",
-      "note": "Công cụ Apple Sheets, báo cáo gọn nhẹ sảng khoái hơn Excel"
-    },
-    {
-      "entryID": "com-apple-iwork-pages-d6f13bb4e29c",
-      "note": "Trình xử lý văn bản của Apple, tuyệt vời để viết tài liệu và sắp chữ"
-    },
-    {
-      "entryID": "com-apple-passwords-08719cef9f02",
-      "note": "Trình quản lý mật khẩu hệ thống, quản lý tài khoản tập trung, mã xác minh và mật"
-    },
-    {
-      "entryID": "com-apple-mobilephone-5739fb6f2a60",
-      "note": "Thực hiện cuộc gọi trên máy Mac bằng điện thoại của bạn"
-    },
-    {
-      "entryID": "com-apple-photobooth-9d976a9cdfcd",
-      "note": "Ảnh selfie của camera và các hiệu ứng đặc biệt nhỏ cũng thuận tiện cho việc test"
-    },
-    {
-      "entryID": "com-apple-podcasts-4a2a186dcc8f",
-      "note": "Cổng chính thức để nghe podcast, hữu ích cho việc đi lại và học tập"
-    },
-    {
-      "entryID": "com-apple-preview-9ef385a7e445",
-      "note": "Công cụ Mac bị đánh giá thấp nhất: Xem ảnh, chú thích các tệp PDF và thực hiện c"
-    },
-    {
-      "entryID": "com-apple-printcenter-5a8f324fe84d",
-      "note": "Xem và quản lý hàng đợi in. Đối với các tác vụ kẹt giấy, trước tiên hãy xem tại"
-    },
-    {
-      "entryID": "com-apple-quicktimeplayerx-f2aee71b906d",
-      "note": "Một công cụ được thiết lập tốt có thể phát, ghi màn hình và ghi âm"
-    },
-    {
-      "entryID": "com-apple-screensharing-3d1e02ff893a",
-      "note": "Điều khiển từ xa một máy Mac khác, rất thuận tiện trong việc giúp mọi người sửa"
-    },
-    {
-      "entryID": "com-apple-screenshot-launcher-f3c7a7a2c583",
-      "note": "Cổng chụp ảnh màn hình và ghi màn hình, đằng sau Shift-Command-5"
-    },
-    {
-      "entryID": "com-apple-scripteditor2-f8a19fe3d1d8",
-      "note": "Viết và chạy AppleScript để kiểm soát quá trình tự động hóa máy Mac kiểu cũ"
-    },
-    {
-      "entryID": "com-apple-sfsymbols-9dc6c630daed",
-      "note": "Thư viện biểu tượng chính thức của Apple, cần thiết cho giao diện gốc"
-    },
-    {
-      "entryID": "com-apple-shortcuts-f629e5e3e216",
-      "note": "Xâu chuỗi nhiều hành động thành quy trình bằng một cú nhấp chuột là phiên bản hi"
-    },
-    {
-      "entryID": "com-apple-siri-launcher-77250557ebe9",
-      "note": "Lối vào trợ lý giọng nói, có thể kiểm tra thông tin, mở ứng dụng và điều khiển h"
-    },
-    {
-      "entryID": "com-apple-stickies-9ed4ed5e1103",
-      "note": "Ghi chú dán trên màn hình, ghi chú tạm thời được dán ngay trước mặt bạn"
-    },
-    {
-      "entryID": "com-apple-stocks-6a1a80292efe",
-      "note": "Xem bảng nhỏ về cổ phiếu và động lực thị trường"
-    },
-    {
-      "entryID": "com-apple-systemprofiler-fdfe3344179e",
-      "note": "Xem chi tiết phần cứng, phần mềm và thiết bị để tìm cấu hình chính xác nhất"
-    },
-    {
-      "entryID": "com-apple-systempreferences-5632452dbd3d",
-      "note": "Lối vào chính của cài đặt Mac, hầu hết tất cả các công tắc hệ thống đều có ở đây"
-    },
-    {
-      "entryID": "com-apple-textedit-64d314fbf2b9",
-      "note": "Trình soạn thảo văn bản đơn giản nhất, mở TXT và RTF rất nhanh"
-    },
-    {
-      "entryID": "com-apple-backup-launcher-918b22a1257e",
-      "note": "Công cụ sao lưu hệ thống, dựa vào đó để chuẩn bị trước thuốc chữa hối tiếc"
-    },
-    {
-      "entryID": "com-apple-helpviewer-6e90a07b56cc",
-      "note": "Mẹo chính thức của Apple để thỉnh thoảng khám phá các tính năng bạn chưa sử dụng"
-    },
-    {
-      "entryID": "com-apple-tv-28f9f8e2e47b",
-      "note": "Lối vào quản lý và phát lại nội dung phim và truyền hình"
-    },
-    {
-      "entryID": "com-apple-voicememos-f4eb9f35a1b8",
-      "note": "Ghi nhanh, lưu lại cảm hứng họp và tài liệu phỏng vấn trước"
-    },
-    {
-      "entryID": "com-apple-voiceoverutility-9623fe74d030",
-      "note": "Quản lý các tính năng trợ năng đọc màn hình để giúp máy Mac của bạn dễ truy cập"
-    },
-    {
-      "entryID": "com-apple-weather-a1b814774719",
-      "note": "Cổng dự báo thời tiết, kiểm tra trước khi ra ngoài để ổn định hơn"
-    },
-    {
-      "entryID": "com-apple-dt-xcode-66da3f910767",
-      "note": "Apple phát triển FamilyMart, chiến trường chính để viết ứng dụng iOS và macOS"
     },
     {
       "entryID": "com-github-githubclient-c94dd11b1995",
@@ -874,10 +582,6 @@
       "note": "Lý tưởng để chụp ảnh màn hình, chú thích, nhận dạng văn bản hoặc tạo phản hồi tr"
     },
     {
-      "entryID": "com-apple-garageband10-af435df6c94a",
-      "note": "Công cụ sản xuất âm nhạc cấp thấp của Apple, dễ sử dụng để ghi và sắp xếp"
-    },
-    {
       "entryID": "com-microsoft-excel-2ff4add4000d",
       "note": "Một chuyên gia kỳ cựu về bảng và phân tích dữ liệu, tài chính, hoạt động và mô h"
     },
@@ -914,10 +618,6 @@
       "note": "Trình chỉnh sửa mã nhẹ được phát triển cho macOS"
     },
     {
-      "entryID": "com-apple-finalcut-6383fea0b510",
-      "note": "Công cụ chỉnh sửa, cắt, tô màu và xuất video chuyên nghiệp của Apple đều rất nha"
-    },
-    {
       "entryID": "github-copilot-for-xcode-60555f2d4d11",
       "note": "Đưa AI vào quá trình phát triển, phù hợp cho việc mã hóa, gỡ lỗi và tự động hóa"
     },
@@ -932,10 +632,6 @@
     {
       "entryID": "finetune-5431832269e6",
       "note": "Công cụ âm thanh AI, thích hợp để tổ chức, phiên âm hoặc tối ưu hóa nội dung âm"
-    },
-    {
-      "entryID": "com-apple-logic10-69f8eefc0ddf",
-      "note": "Công cụ sản xuất âm nhạc chuyên nghiệp của Apple, mạnh mẽ trong việc ghi âm, sắp"
     },
     {
       "entryID": "com-getdropbox-dropbox-72c7db8f1763",
@@ -968,10 +664,6 @@
     {
       "entryID": "font-jetbrains-mono-nerd-font-4a662d68a338",
       "note": "Gói tài nguyên phông chữ, thích hợp để bổ sung phông chữ cho người soạn thảo, th"
-    },
-    {
-      "entryID": "com-apple-testflight-cfe027705d73",
-      "note": "Công cụ kiểm tra ứng dụng của Apple, thích hợp để cài đặt và trải nghiệm ứng dụn"
     },
     {
       "entryID": "claude-code-latest-ba2522b660cf",

@@ -1,5 +1,54 @@
 # TagLauncher Changelog
 
+## [7.8.22] — 2026-06-08
+
+- 补齐 Apple 默认应用 catalog 对 `/System/Library/CoreServices/Applications` 的覆盖：钥匙串访问、归档实用工具、扩充槽实用工具、反馈助理、无线诊断等系统内置工具现在都有默认名称和备注
+- Apple 默认应用资源从 77 条扩展到 89 条；补齐新增 CoreServices 应用的 29 语言名称和备注
+- Apple 默认资源 QA 现在会按 AppIndexer 的系统扫描路径全量检查，当前系统中会被扫到的 `com.apple.*` 系统 app 不允许漏出 catalog
+- Apple 默认资源 QA 增加干净用户多语言门禁：非中文语言的默认备注不得等于简体中文源备注，防止日文/英文等环境首次写入中文备注
+- 版本号更新为 `7.8.22`，Build 更新为 `20260608.1324`
+
+## [7.8.21] — 2026-06-08
+
+- 修复 Apple 内置应用 29 语言默认备注资料质量问题：英语、法语、日语改为人工精简版，并清理其他语言中 79/80 字符边界处的硬截断半句
+- Apple 内置应用翻译源新增幂等修复脚本，避免后续生成资源时再次把机器截断文案写入运行时 catalog
+- Apple 默认应用 QA 同时校验翻译源和生成资源；备注超过 80 字直接失败，达到 78 字以上也失败，防止接近上限的半句再次进入发布包
+- 版本号更新为 `7.8.21`，Build 更新为 `20260608.1221`
+
+## [7.8.20] — 2026-06-08
+
+- 修复用户已经处在英文/目标语言时，启动 App 不会触发语言切换事件，导致旧 Apple 默认中文备注仍留在本地数据库的问题
+- App 启动后会全局扫描当前应用并重本地化 `.appleDefault` 与 `.catalogDefault` 默认备注；语言切换后也走同一全局路径
+- Apple 默认备注策略 QA 增加启动路径检查，确保旧默认备注不会依赖用户手动再切一次语言才更新
+- 版本号更新为 `7.8.20`，Build 更新为 `20260608.1030`
+
+## [7.8.19] — 2026-06-08
+
+- 修复在 Settings / 菜单栏切换语言时，Apple 默认应用备注重本地化可能没有执行的问题：默认备注更新不再依赖 App Grid 的 `ContentView` 是否正在显示
+- 语言切换后由 AppDelegate 全局扫描当前应用并重本地化 `.appleDefault` 与 `.catalogDefault` 备注，随后广播数据刷新
+- Apple 默认备注策略 QA 增加全局语言切换路径检查，防止备注重本地化再次只挂在 App Grid 层
+- 版本号更新为 `7.8.19`，Build 更新为 `20260608.1023`
+
+## [7.8.18] — 2026-06-08
+
+- 将 Apple 系统内置应用从 SmartStart 大 catalog 中彻底拆出：Apple 默认应用名称、分类和 29 语言备注改由 `AppleDefaultApps` 独立资源管理
+- 从 SmartStart CSV、runtime base 和 29 个 notes catalog 中移除 77 条 `com.apple.*` 条目，避免同一个 Apple 应用出现两套名称/备注来源
+- 新增 `AppleDefaultAppCatalog` runtime loader：Apple 默认备注写入 `.appleDefault`，SmartStart 默认备注继续写 `.catalogDefault`，用户编辑或清空继续写 `.manual`
+- 语言切换时只重本地化 fingerprint 仍匹配默认值的 Apple/SmartStart 默认备注；用户手动编辑或清空的备注不会被切语言、扫描刷新或 SmartStart apply 补回
+- Apple 默认应用资源新增 29 语言质量门禁，SmartStart 资源 QA 改为断言不得再包含 Apple 默认应用冲突条目
+- 版本号更新为 `7.8.18`，Build 更新为 `20260608.0126`
+
+## [7.8.17] — 2026-06-08
+
+- 已废弃，未作为发布包继续提交：该版本仍把 Apple 默认应用备注接入 SmartStart 大 catalog，非中文备注质量和资源边界不符合发布标准
+- 后续由 `7.8.18` 的 Apple 独立资源方案替代
+
+## [7.8.16] — 2026-06-07
+
+- 修复部分 wrapper / iOS-on-Mac 应用只显示内部英文 bundle 名的问题：App Grid 和 Quick Search 现在会把 Finder / Spotlight 的本地化显示名作为显示兜底
+- 增加“贝锐向日葵被控 / isunclient”结构的 Quick Search 名称回归检查，确认外层中文 wrapper 优先、内层 helper app 不进入索引
+- 版本号更新为 `7.8.16`，Build 更新为 `20260607.2329`
+
 ## [7.8.15] — 2026-06-05
 
 - 修复 App Grid 再次打开时可能一直转圈、无法显示应用图标的问题：overlay 每次新建 `ContentView` 时，即使应用索引缓存仍有效也会先 hydrate 界面数据

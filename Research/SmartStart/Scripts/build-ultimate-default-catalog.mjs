@@ -13,7 +13,6 @@ const outputDir = path.join(researchDir, "UltimateDefaultCatalog");
 
 const sources = {
   curatedCatalog: path.join(outputDir, "SmartStart_UltimateDefaultCatalog.csv"),
-  appleNotes: path.join(projectDir, "Apptag", "AppleDefaultAppNotes.swift"),
   localizationDir: path.join(projectDir, "Apptag", "Localization"),
 };
 
@@ -714,35 +713,6 @@ function buildSplitResources({ finalRows, supportedLanguages, generatedAt, noteL
   };
 }
 
-function parseAppleNotes() {
-  if (!fs.existsSync(sources.appleNotes)) {
-    return { byBundle: new Map(), byName: new Map() };
-  }
-
-  const swift = fs.readFileSync(sources.appleNotes, "utf8");
-  const byBundle = new Map();
-  const byName = new Map();
-  const entryPattern = /"([^"]+)"\s*:\s*"([^"]+)"/g;
-  let currentSection = null;
-
-  for (const line of swift.split("\n")) {
-    if (line.includes("private static let byBundleID")) currentSection = "bundle";
-    if (line.includes("private static let byName")) currentSection = "name";
-    if (line.includes("static func note")) currentSection = null;
-
-    let match;
-    while ((match = entryPattern.exec(line)) !== null) {
-      if (currentSection === "bundle") {
-        byBundle.set(match[1].toLowerCase(), match[2]);
-      } else if (currentSection === "name") {
-        byName.set(match[1], match[2]);
-      }
-    }
-  }
-
-  return { byBundle, byName };
-}
-
 function rawEntry({
   source,
   name,
@@ -867,19 +837,27 @@ async function build() {
       throw new Error(`required fallback language is missing from Localization: ${language}`);
     }
   }
-  const appleNotes = parseAppleNotes();
   const previousRuntimeEntries = fs.existsSync(outputs.runtimeJSON)
     ? new Map(
         (JSON.parse(fs.readFileSync(outputs.runtimeJSON, "utf8")).entries ?? []).map((entry) => [entry.normalizedName, entry]),
       )
     : new Map();
   const rawCuratedRows = readCSVObjects(sources.curatedCatalog);
+  const appleRows = rawCuratedRows.filter((row) => {
+    const bundleIdentifier = normalizeBundle(row.bundleIdentifier);
+    return bundleIdentifier?.toLowerCase().startsWith("com.apple.");
+  });
+  if (appleRows.length > 0) {
+    throw new Error(
+      `SmartStart curated catalog contains ${appleRows.length} Apple rows. ` +
+      "Move Apple default apps to Research/AppleDefaultApps before rebuilding.",
+    );
+  }
   const unknownTagerTokens = new Set();
   const stats = {
     curatedRows: rawCuratedRows.length,
     aliasDuplicatesRemoved: 0,
     rowsWithSourceNotes: 0,
-    appleNotesAttached: 0,
     tagChangedVsPrevious: 0,
     zhNoteChangedVsPrevious: 0,
     bundleChangedVsPrevious: 0,
@@ -894,16 +872,7 @@ async function build() {
     for (const token of mapping.unknownTokens) unknownTagerTokens.add(token);
 
     let noteZH = truncateNote(row["defaultNote-ZH"]);
-    let usedAppleFallback = false;
-    if (!noteZH) {
-      const bundleNote = bundleIdentifier ? appleNotes.byBundle.get(bundleIdentifier.toLowerCase()) : null;
-      const nameNote = appleNotes.byName.get(name);
-      if (bundleNote || nameNote) {
-        noteZH = truncateNote(bundleNote ?? nameNote);
-        usedAppleFallback = true;
-        stats.appleNotesAttached += 1;
-      }
-    } else {
+    if (noteZH) {
       stats.rowsWithSourceNotes += 1;
     }
 
@@ -927,9 +896,7 @@ async function build() {
       bundleIdentifier,
       tags: mapping.tags,
       noteZH,
-      sourceEvidence: usedAppleFallback
-        ? ["curated_tager_catalog", "apple_default_notes"]
-        : ["curated_tager_catalog"],
+      sourceEvidence: ["curated_tager_catalog"],
     };
   });
 
@@ -1084,7 +1051,6 @@ ${sourceLines}
 - Final rows: ${finalRows.length}
 - Rows with Chinese default notes: ${noteRows.length}
 - Rows with source Chinese notes from curated CSV: ${stats.rowsWithSourceNotes}
-- Rows with Apple note fallback attached: ${stats.appleNotesAttached}
 - Supported languages: ${supportedLanguages.length}
 - Unique source notes: ${uniqueSourceNotes.length}
 - Expected localized notes: ${noteRows.length * supportedLanguages.length}

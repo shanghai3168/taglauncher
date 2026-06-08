@@ -586,6 +586,7 @@ struct ContentView: View {
         .onReceive(NotificationCenter.default.publisher(for: .appLanguageDidChange)) { _ in
             let appsSnapshot = allApps
             DispatchQueue.global(qos: .userInitiated).async {
+                _ = AppleDefaultAppCatalog.relocalizeDefaultNotesForCurrentLanguage(apps: appsSnapshot)
                 _ = SmartStartService.relocalizeDefaultNotesForCurrentLanguage(apps: appsSnapshot)
                 DispatchQueue.main.async {
                     refreshApps(forceLayoutRefresh: true)

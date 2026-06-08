@@ -28,6 +28,9 @@ struct AppInfo: Identifiable, Hashable {
                 return localizedName
             }
         }
+        if let localizedName = localizedNames.first, !localizedName.isEmpty {
+            return localizedName
+        }
         return name
     }
 
@@ -266,10 +269,19 @@ enum AppIndexer {
         let name = displayURL.deletingPathExtension().lastPathComponent
         let icon = NSWorkspace.shared.icon(forFile: displayURL.path)
         icon.size = NSSize(width: 96, height: 96)
-        let localizedNamesByLanguage = localizedAppNameMap(
+        var localizedNamesByLanguage = localizedAppNameMap(
             bundle: bundle,
             fallbackName: name
         )
+        if let bundleId {
+            for (languageCode, displayName) in AppleDefaultAppCatalog.localizedNamesByLanguage(
+                forBundleIdentifier: bundleId
+            ) {
+                if localizedNamesByLanguage[languageCode]?.isEmpty != false {
+                    localizedNamesByLanguage[languageCode] = displayName
+                }
+            }
+        }
         let localizedNames = localizedAppNames(
             for: displayURL,
             fallbackName: name,
@@ -318,6 +330,7 @@ enum AppIndexer {
         localizedNamesByLanguage: [String: String]
     ) -> [String] {
         var values = L10n.supported.map { localizedNamesByLanguage[$0.code] }
+        values.append(resourceLocalizedName(for: appURL))
         values.append(spotlightDisplayName(for: appURL))
         values.append(FileManager.default.displayName(atPath: appURL.path).replacingOccurrences(of: ".app", with: ""))
 
@@ -438,6 +451,15 @@ enum AppIndexer {
         else { return nil }
 
         let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? nil : trimmed
+    }
+
+    private static func resourceLocalizedName(for appURL: URL) -> String? {
+        guard let value = try? appURL.resourceValues(forKeys: [.localizedNameKey]).localizedName else {
+            return nil
+        }
+
+        let trimmed = value.replacingOccurrences(of: ".app", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
         return trimmed.isEmpty ? nil : trimmed
     }
 
@@ -611,6 +633,7 @@ enum TagDatabase {
     struct AppNoteMetadata: Codable, Equatable {
         var origin: AppNoteOrigin
         var catalog: SmartDefaultNoteProvenance? = nil
+        var apple: SmartDefaultNoteProvenance? = nil
         var noteFingerprint: String
     }
 
@@ -1468,7 +1491,7 @@ enum TagEditor {
         for path in newPaths {
             if let app = appsByPath[path],
                app.isAppleApp,
-               AppleDefaultAppNotes.isFamiliarAppleApp(app) {
+               AppleDefaultAppCatalog.isFamiliarAppleApp(app) {
                 continue
             }
             uncommonPaths.insert(path)
@@ -1494,16 +1517,31 @@ enum TagEditor {
 
         for app in apps where app.isAppleApp {
             let path = app.path.path
-            if store.appNotes[path]?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false {
+
+            let currentNote = store.appNotes[path]?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let existingMetadata = store.appNoteMetadata[path]
+            if existingMetadata?.origin == .manual {
                 continue
             }
 
-            guard let note = AppleDefaultAppNotes.note(for: app) else { continue }
-            let limited = String(note.prefix(TagDatabase.maxAppNoteLength))
-            store.appNotes[path] = limited
+            if let currentNote, !currentNote.isEmpty {
+                let currentFingerprint = TagDatabase.noteFingerprint(currentNote)
+                let currentMatchesDefault = existingMetadata?.origin == .appleDefault
+                    && currentFingerprint == existingMetadata?.noteFingerprint
+                guard currentMatchesDefault else {
+                    continue
+                }
+            }
+
+            guard let defaultNote = AppleDefaultAppCatalog.defaultNote(for: app),
+                  defaultNote.note != currentNote
+            else { continue }
+
+            store.appNotes[path] = defaultNote.note
             store.appNoteMetadata[path] = TagDatabase.AppNoteMetadata(
                 origin: .appleDefault,
-                noteFingerprint: TagDatabase.noteFingerprint(limited)
+                apple: defaultNote.provenance,
+                noteFingerprint: defaultNote.provenance.noteFingerprint
             )
             changed = true
         }
@@ -1518,7 +1556,7 @@ enum TagEditor {
         var uncommonPaths = Set(store.uncommonAppPaths)
         var changed = false
 
-        for app in apps where app.isAppleApp && !AppleDefaultAppNotes.isFamiliarAppleApp(app) {
+        for app in apps where app.isAppleApp && !AppleDefaultAppCatalog.isFamiliarAppleApp(app) {
             let path = app.path.path
             if uncommonPaths.insert(path).inserted {
                 changed = true
@@ -1558,7 +1596,10 @@ enum TagEditor {
         let limited = String(trimmed.prefix(TagDatabase.maxAppNoteLength))
         if limited.isEmpty {
             store.appNotes.removeValue(forKey: path)
-            store.appNoteMetadata.removeValue(forKey: path)
+            store.appNoteMetadata[path] = TagDatabase.AppNoteMetadata(
+                origin: .manual,
+                noteFingerprint: TagDatabase.noteFingerprint("")
+            )
         } else {
             store.appNotes[path] = limited
             store.appNoteMetadata[path] = TagDatabase.AppNoteMetadata(

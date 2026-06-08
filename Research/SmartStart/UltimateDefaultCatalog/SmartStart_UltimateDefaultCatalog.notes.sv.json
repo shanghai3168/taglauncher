@@ -46,10 +46,6 @@
       "note": "Används för att spara och hantera Git-uppgifter, lämpliga för inloggningar för f"
     },
     {
-      "entryID": "com-apple-finder-2de1d8bbb107",
-      "note": "MacOS-systemet levereras med verktyg, lämpliga för att slutföra motsvarande syst"
-    },
-    {
       "entryID": "com-mitchellh-ghostty-5194f8485e90",
       "note": "Utvecklarverktyg för kommandorad, build, felsökning eller projektledning"
     },
@@ -72,10 +68,6 @@
     {
       "entryID": "1password-cli-85e1ca6fa403",
       "note": "Kontosäkerhetsverktyg för att hantera lösenord, verifieringskoder och åtkomstnyc"
-    },
-    {
-      "entryID": "com-apple-safari-b2041c4573f8",
-      "note": "Apples officiella webbläsare, energibesparing, integritet och ekologisk koppling"
     },
     {
       "entryID": "com-anthropic-claudefordesktop-b2f723339fad",
@@ -102,10 +94,6 @@
       "note": "En lätt men kraftfull kodredigerare med ett mycket komplett plug-in ekosystem"
     },
     {
-      "entryID": "com-apple-mail-9c1e969ca734",
-      "note": "Systempostklient, flera brevlådor kan behandlas centralt"
-    },
-    {
       "entryID": "md-obsidian-9f1625d466f0",
       "note": "Lokal Markdown kunskapsbas, lämplig för långsiktig ackumulering av din andra hjä"
     },
@@ -128,10 +116,6 @@
     {
       "entryID": "com-tencent-meeting-5bd65448f293",
       "note": "Tencent konferensentré, kinesiskt kontor och fjärrsamarbete är mycket vanliga"
-    },
-    {
-      "entryID": "com-apple-mobilesms-a7066fed8087",
-      "note": "iMessage och SMS-portal, svara på meddelanden snabbare på Mac"
     },
     {
       "entryID": "com-mojang-minecraftlauncher-606072fb1e80",
@@ -174,10 +158,6 @@
       "note": "Android officiella IDE, viktigt för att utveckla och felsöka Android-appar"
     },
     {
-      "entryID": "com-apple-facetime-96f99030aef8",
-      "note": "Ingång för ljud- och videosamtal i Apples ekosystem"
-    },
-    {
       "entryID": "maccy-0c7236cb0f2d",
       "note": "Urklippshistorikverktyg, kopierat innehåll kan hämtas när som helst"
     },
@@ -190,10 +170,6 @@
       "note": "Strömmande musikspelare, du kan ha en låt för både arbete och avkoppling"
     },
     {
-      "entryID": "com-apple-ical-8e998503177c",
-      "note": "Få schemat ur huvudet och ge tiden en visuell karta"
-    },
-    {
       "entryID": "blackhole-2ch-0b7c58e0297a",
       "note": "Virtuell ljuddrivrutin, lämplig för skärminspelning, livesändning och ljuddirige"
     },
@@ -204,10 +180,6 @@
     {
       "entryID": "com-electron-lark-6559e48147f2",
       "note": "Feishu samarbetsportal, där det kinesiska teamets chattar, dokument och möten al"
-    },
-    {
-      "entryID": "com-apple-notes-aaf1d7cf1c90",
-      "note": "Det snabbaste systemmemo, text, bilder och listor kan alla samlas in"
     },
     {
       "entryID": "com-electron-ollama-25be0e7340d2",
@@ -238,10 +210,6 @@
       "note": "Programmeringsutvecklingsverktyg för att skriva, läsa och underhålla kod"
     },
     {
-      "entryID": "com-apple-reminders-92a9335b31bb",
-      "note": "Att göra och påminnelser, lämpliga för att fånga små dagliga uppgifter"
-    },
-    {
       "entryID": "com-openai-chat-7c12a7107aad",
       "note": "Sätt AI-assistenten på skrivbordet och skriv, studera och brainstorma till hands"
     },
@@ -260,10 +228,6 @@
     {
       "entryID": "com-kingsoft-wpsoffice-mac-c371eb320d54",
       "note": "Office-paket för redigering av dokument, kalkylblad och presentationer"
-    },
-    {
-      "entryID": "com-apple-photos-9678510fed1e",
-      "note": "Systemfotobibliotek, huvudingången för att hantera, redigera och synkronisera fo"
     },
     {
       "entryID": "adobe-acrobat-reader-fb99f7bea88f",
@@ -290,14 +254,6 @@
       "note": "Webbläsare, lämplig för daglig surfning på Internet och åtkomst till webbtjänste"
     },
     {
-      "entryID": "com-apple-music-63ea41e016ea",
-      "note": "Lokal och strömmande musikspelare"
-    },
-    {
-      "entryID": "com-apple-terminal-77aba1385326",
-      "note": "Kommandoradsinmatning, Macs dolda cockpit"
-    },
-    {
       "entryID": "utm-f2a3e184ea9f",
       "note": "Virtualiserings- eller fjärranslutningsverktyg, lämpliga för att köra systemmilj"
     },
@@ -310,260 +266,12 @@
       "note": "Musikspelare, lämplig för att lyssna på låtar, hantera spellistor och använda Te"
     },
     {
-      "entryID": "com-apple-activitymonitor-1ca0c04d6757",
-      "note": "Macs instrumentpanel för att se vem som förbrukar ström, minne och saktar ner di"
-    },
-    {
-      "entryID": "com-apple-airport-airportutility-85b3849d7d98",
-      "note": "Gamla nätverksverktyg för att hantera AirPorts och Time Capsules"
-    },
-    {
-      "entryID": "com-apple-appstore-0619ceddf32a",
-      "note": "Den officiella Mac-programvarubutiken, börja här för att hitta appar, uppdaterin"
-    },
-    {
-      "entryID": "com-apple-apps-launcher-c27c2e6c3e15",
-      "note": "En lätt applikationsportal som hjälper dig att snabbt öppna appar från systemniv"
-    },
-    {
-      "entryID": "com-apple-audio-audiomidisetup-8327be183cc9",
-      "note": "Ljudutrustning och MIDI-routing, som vanligtvis används av musiker och debuggers"
-    },
-    {
-      "entryID": "com-apple-automator-3134734f076f",
-      "note": "Du kan sätta ihop en rad Mac-automatiseringsåtgärder utan att skriva kod"
-    },
-    {
-      "entryID": "com-apple-bluetoothfileexchange-a83f24bdfabc",
-      "note": "Att använda Bluetooth för att skicka och ta emot filer är gammaldags men kan räd"
-    },
-    {
-      "entryID": "com-apple-ibooksx-61d0b1b4ae4c",
-      "note": "En startpunkt för att läsa och hantera e-böcker, lämplig för att förvandla din M"
-    },
-    {
-      "entryID": "com-apple-bootcampassistant-e4ab0159032f",
-      "note": "Officiell guide för att installera Windows på Intel Mac"
-    },
-    {
-      "entryID": "com-apple-calculator-390516777a37",
-      "note": "Liten kalkylator, enhetsomvandling och programmeringsläge är också gömda inuti"
-    },
-    {
-      "entryID": "com-apple-chess-8ccbf1801854",
-      "note": "Systemet kommer med schack, vilket gör fisket mer elegant än att surfa på nätet"
-    },
-    {
-      "entryID": "com-apple-clock-f922597106e9",
-      "note": "En enhetlig portal för larm, timers, stoppur och världsklockor"
-    },
-    {
       "entryID": "cmux-3a661d84a58c",
       "note": "Idealisk för att organisera mediametadata, namnge eller kapsla in filer"
     },
     {
-      "entryID": "com-apple-colorsyncutility-68af0cd69154",
-      "note": "Visa och reparera färgprofiler, hantera display och skriva ut färgskillnader"
-    },
-    {
-      "entryID": "com-apple-console-5e449417a9e8",
-      "note": "Fönstret för att visa systemloggar är mycket användbart vid felsökning av avvike"
-    },
-    {
-      "entryID": "com-apple-addressbook-0b4e2b893a86",
-      "note": "Kontakthubb för Mail, Messages och FaceTime"
-    },
-    {
-      "entryID": "com-apple-dictionary-4625013af142",
-      "note": "Offlineordbok och synonymordbok, du behöver inte öppna en webbläsare när du skri"
-    },
-    {
-      "entryID": "com-apple-digitalcolormeter-fb99a6aa0c0b",
-      "note": "Skärmfärgväljare, en liten artefakt för designers att tillfälligt välja färger"
-    },
-    {
-      "entryID": "com-apple-diskutility-48d48cee3d46",
-      "note": "Disk, partition, formatering och första hjälpen, bråka inte med det men det är v"
-    },
-    {
-      "entryID": "com-apple-findmy-f15882533adf",
-      "note": "Hitta utrustning, hitta föremål och ge din förlorade Mac ledtrådar för att komma"
-    },
-    {
-      "entryID": "com-apple-fontbook-83009f0e620e",
-      "note": "Font installations- och hanteringscenter, hantera teckensnitt innan design"
-    },
-    {
-      "entryID": "com-apple-freeform-c79ff8861497",
-      "note": "Obegränsade whiteboards för brainstorming, skissar och slumpmässiga idéer"
-    },
-    {
-      "entryID": "com-apple-games-18b06d160812",
-      "note": "Apples spelportal för att centralt hantera spelbart Apple Arcade-innehåll"
-    },
-    {
-      "entryID": "com-apple-grapher-dde725719597",
-      "note": "Grafekvationer, ett dolt verktyg för matematisk visualisering"
-    },
-    {
-      "entryID": "com-apple-home-339f72ecc4b8",
-      "note": "Entrén för smart hemkontroll kan hantera belysning, luftkonditionering och annan"
-    },
-    {
-      "entryID": "com-apple-image-capture-8de5b7375bed",
-      "note": "Importera bilder från kamera eller skanner, enkelt men stabilt"
-    },
-    {
-      "entryID": "com-apple-generativeplaygroundapp-05897f8dbe4c",
-      "note": "Generera bilder med Apple-intelligens, perfekt för snabba kreativa utkast"
-    },
-    {
-      "entryID": "com-apple-imovieapp-00a9c7493d26",
-      "note": "Tillräckligt för videoredigering på nybörjarnivå, hemmavideor och lätta kortfilm"
-    },
-    {
-      "entryID": "com-apple-screencontinuity-867a48a76333",
-      "note": "Använd din iPhone direkt på din Mac, vilket eliminerar behovet av att sträcka di"
-    },
-    {
-      "entryID": "com-apple-journal-29ceb46d5ff5",
-      "note": "Spela in dagliga fragment och förvandla långsamt dina tankar till en personlig t"
-    },
-    {
-      "entryID": "com-apple-iwork-keynote-e86356f31ec2",
-      "note": "Presentationsverktyg i Apple-stil, lätt att skapa vackra bilder"
-    },
-    {
       "entryID": "com-riotgames-leagueoflegends-ee692e90efde",
       "note": "League of Legends-klient, ingången till klassiska lagtävlingsspel"
-    },
-    {
-      "entryID": "com-apple-magnifier-c9044527cd0d",
-      "note": "Förstora skärmdetaljer för att hjälpa till med syn och fininspektion"
-    },
-    {
-      "entryID": "com-apple-maps-310ca6c69cea",
-      "note": "Kontrollera rutter, visa städer och skicka destinationer till iPhone"
-    },
-    {
-      "entryID": "com-apple-migrateassistant-5f03ff480fe8",
-      "note": "När du flyttar till en ny Mac, flytta gamla data till den nya maskinen"
-    },
-    {
-      "entryID": "com-apple-exposelauncher-62e07c598f71",
-      "note": "Flygfoto över fönstret och skrivbordet, titta bara på det om det är rörigt"
-    },
-    {
-      "entryID": "com-apple-news-7614a9b54b68",
-      "note": "Apple News portal, lämplig för att visa valt medieinnehåll"
-    },
-    {
-      "entryID": "com-apple-iwork-numbers-361a6aaf7056",
-      "note": "Apple Sheets-verktyg, lätta rapporter är mer uppfriskande än Excel"
-    },
-    {
-      "entryID": "com-apple-iwork-pages-d6f13bb4e29c",
-      "note": "Apple ordbehandlare, vacker för att skriva dokument och sätta"
-    },
-    {
-      "entryID": "com-apple-passwords-08719cef9f02",
-      "note": "Systemlösenordshanterare, centraliserad hantering av konton, verifieringskoder o"
-    },
-    {
-      "entryID": "com-apple-mobilephone-5739fb6f2a60",
-      "note": "Ring samtal på Mac med din telefon"
-    },
-    {
-      "entryID": "com-apple-photobooth-9d976a9cdfcd",
-      "note": "Kameraselfies och små specialeffekter är också praktiska för att testa kameran"
-    },
-    {
-      "entryID": "com-apple-podcasts-4a2a186dcc8f",
-      "note": "Den officiella portalen för att lyssna på podcaster, användbar för pendling och"
-    },
-    {
-      "entryID": "com-apple-preview-9ef385a7e445",
-      "note": "Det mest underskattade Mac-verktyget: Visa bilder, kommentera PDF-filer och gör"
-    },
-    {
-      "entryID": "com-apple-printcenter-5a8f324fe84d",
-      "note": "Visa och hantera utskriftsköer. För uppgifter om pappersstopp, se här först"
-    },
-    {
-      "entryID": "com-apple-quicktimeplayerx-f2aee71b906d",
-      "note": "Ett väletablerat verktyg som kan spela, spela in skärm och spela in ljud"
-    },
-    {
-      "entryID": "com-apple-screensharing-3d1e02ff893a",
-      "note": "Fjärrstyr en annan Mac, vilket är väldigt bekvämt för att hjälpa människor att r"
-    },
-    {
-      "entryID": "com-apple-screenshot-launcher-f3c7a7a2c583",
-      "note": "Skärmdump och skärminspelningsportal, bakom Shift-Command-5"
-    },
-    {
-      "entryID": "com-apple-scripteditor2-f8a19fe3d1d8",
-      "note": "Skriv och kör AppleScript för att styra gammaldags Mac-automatisering"
-    },
-    {
-      "entryID": "com-apple-sfsymbols-9dc6c630daed",
-      "note": "Apples officiella symbolbibliotek, viktigt för inbyggda gränssnitt"
-    },
-    {
-      "entryID": "com-apple-shortcuts-f629e5e3e216",
-      "note": "Att stränga flera åtgärder i processer med ett klick är den moderna versionen av"
-    },
-    {
-      "entryID": "com-apple-siri-launcher-77250557ebe9",
-      "note": "Röstassistent ingång, kan kontrollera information, öppna appar och styra systeme"
-    },
-    {
-      "entryID": "com-apple-stickies-9ed4ed5e1103",
-      "note": "Skrivbordslappar, tillfälliga anteckningar läggs upp precis framför dig"
-    },
-    {
-      "entryID": "com-apple-stocks-6a1a80292efe",
-      "note": "Se små paneler för aktier och marknadsdynamik"
-    },
-    {
-      "entryID": "com-apple-systemprofiler-fdfe3344179e",
-      "note": "Visa hårdvara, mjukvara och enhetsdetaljer för att hitta den mest exakta konfigu"
-    },
-    {
-      "entryID": "com-apple-systempreferences-5632452dbd3d",
-      "note": "Mac-inställningar huvudingång, nästan alla systembrytare finns här"
-    },
-    {
-      "entryID": "com-apple-textedit-64d314fbf2b9",
-      "note": "Den enklaste textredigeraren, öppna TXT och RTF mycket snabbt"
-    },
-    {
-      "entryID": "com-apple-backup-launcher-918b22a1257e",
-      "note": "System backup verktyg, lita på det för att förbereda medicinen för ånger i förvä"
-    },
-    {
-      "entryID": "com-apple-helpviewer-6e90a07b56cc",
-      "note": "Apples officiella tips för att ibland upptäcka funktioner du inte har använt"
-    },
-    {
-      "entryID": "com-apple-tv-28f9f8e2e47b",
-      "note": "Uppspelning av film- och tv-innehåll och hanteringsingång"
-    },
-    {
-      "entryID": "com-apple-voicememos-f4eb9f35a1b8",
-      "note": "Spela in snabbt, spara mötesinspiration och intervjumaterial först"
-    },
-    {
-      "entryID": "com-apple-voiceoverutility-9623fe74d030",
-      "note": "Hantera tillgänglighetsfunktioner för skärmläsning för att göra din Mac mer till"
-    },
-    {
-      "entryID": "com-apple-weather-a1b814774719",
-      "note": "Väderprognosportal, kontrollera den innan du går ut för mer stabilitet"
-    },
-    {
-      "entryID": "com-apple-dt-xcode-66da3f910767",
-      "note": "Apple utvecklar FamilyMart, det huvudsakliga slagfältet för att skriva iOS- och"
     },
     {
       "entryID": "com-github-githubclient-c94dd11b1995",
@@ -874,10 +582,6 @@
       "note": "Idealisk för att ta skärmdumpar, kommentera, känna igen text eller skapa visuell"
     },
     {
-      "entryID": "com-apple-garageband10-af435df6c94a",
-      "note": "Apples musikproduktionsverktyg på nybörjarnivå, lätt att använda för inspelning"
-    },
-    {
       "entryID": "com-microsoft-excel-2ff4add4000d",
       "note": "En veteran av tabeller och dataanalys, ekonomi, drift och modeller förlitar sig"
     },
@@ -914,10 +618,6 @@
       "note": "En lätt kodredigerare utvecklad för macOS"
     },
     {
-      "entryID": "com-apple-finalcut-6383fea0b510",
-      "note": "Apples professionella videoredigeringsverktyg, klippning, färgläggning och expor"
-    },
-    {
       "entryID": "github-copilot-for-xcode-60555f2d4d11",
       "note": "Ta med AI i utvecklingsprocessen, lämplig för kodning, felsökning och automatise"
     },
@@ -932,10 +632,6 @@
     {
       "entryID": "finetune-5431832269e6",
       "note": "AI-ljudverktyg, lämpliga för att organisera, transkribera eller optimera ljudinn"
-    },
-    {
-      "entryID": "com-apple-logic10-69f8eefc0ddf",
-      "note": "Apples professionella musikproduktionsverktyg, kraftfullt i inspelning, arrangem"
     },
     {
       "entryID": "com-getdropbox-dropbox-72c7db8f1763",
@@ -968,10 +664,6 @@
     {
       "entryID": "font-jetbrains-mono-nerd-font-4a662d68a338",
       "note": "Font resurspaket, lämpligt för att komplettera typsnitt för redaktörer, terminal"
-    },
-    {
-      "entryID": "com-apple-testflight-cfe027705d73",
-      "note": "Apple apptestverktyg, lämpligt för att installera och uppleva betaappar"
     },
     {
       "entryID": "claude-code-latest-ba2522b660cf",

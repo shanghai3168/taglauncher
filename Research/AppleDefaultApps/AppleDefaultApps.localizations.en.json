@@ -1,0 +1,453 @@
+{
+  "resourceFormatVersion": 1,
+  "catalogContentVersion": 1,
+  "language": "en",
+  "localizationsVersion": 2,
+  "entries": [
+    {
+      "bundleIdentifier": "com.apple.finder",
+      "displayName": "Finder",
+      "note": "Manage files, folders, disks, and connected devices on Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.Safari",
+      "displayName": "Safari",
+      "note": "Fast, private Apple browser with strong battery efficiency"
+    },
+    {
+      "bundleIdentifier": "com.apple.mail",
+      "displayName": "Mail",
+      "note": "Manage multiple email accounts in one system mail client"
+    },
+    {
+      "bundleIdentifier": "com.apple.MobileSMS",
+      "displayName": "Messages",
+      "note": "Send and reply to iMessage and SMS from the Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.FaceTime",
+      "displayName": "FaceTime",
+      "note": "Audio and video calls across the Apple ecosystem"
+    },
+    {
+      "bundleIdentifier": "com.apple.iCal",
+      "displayName": "Calendar",
+      "note": "Organize schedules and see your time on a clear calendar"
+    },
+    {
+      "bundleIdentifier": "com.apple.Notes",
+      "displayName": "Notes",
+      "note": "Capture text, images, lists, and quick notes fast"
+    },
+    {
+      "bundleIdentifier": "com.apple.reminders",
+      "displayName": "Reminders",
+      "note": "Track to-dos and small daily tasks with reminders"
+    },
+    {
+      "bundleIdentifier": "com.apple.Photos",
+      "displayName": "Photos",
+      "note": "Manage, edit, and sync the system photo library"
+    },
+    {
+      "bundleIdentifier": "com.apple.Music",
+      "displayName": "Music",
+      "note": "Play local music and streaming tracks on Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.Terminal",
+      "displayName": "Terminal",
+      "note": "Command-line entry point for precise Mac control"
+    },
+    {
+      "bundleIdentifier": "com.apple.ActivityMonitor",
+      "displayName": "Activity Monitor",
+      "note": "See CPU, memory, energy, and heavy processes at a glance"
+    },
+    {
+      "bundleIdentifier": "com.apple.airport.airportutility",
+      "displayName": "AirPort Utility",
+      "note": "Manage AirPort and Time Capsule network devices"
+    },
+    {
+      "bundleIdentifier": "com.apple.AppStore",
+      "displayName": "App Store",
+      "note": "Official Mac store for apps, updates, and subscriptions"
+    },
+    {
+      "bundleIdentifier": "com.apple.apps.launcher",
+      "displayName": "Apps",
+      "note": "Lightweight system entry for opening installed apps"
+    },
+    {
+      "bundleIdentifier": "com.apple.audio.audiomidisetup",
+      "displayName": "Audio MIDI Setup",
+      "note": "Configure audio devices and MIDI routing"
+    },
+    {
+      "bundleIdentifier": "com.apple.automator",
+      "displayName": "Automator",
+      "note": "Build Mac automation workflows without writing code"
+    },
+    {
+      "bundleIdentifier": "com.apple.bluetoothfileexchange",
+      "displayName": "Bluetooth File Exchange",
+      "note": "Send and receive files over Bluetooth when needed"
+    },
+    {
+      "bundleIdentifier": "com.apple.iBooksX",
+      "displayName": "Books",
+      "note": "Read and manage ebooks on Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.bootcampassistant",
+      "displayName": "Boot Camp Assistant",
+      "note": "Official guide for installing Windows on Intel Macs"
+    },
+    {
+      "bundleIdentifier": "com.apple.calculator",
+      "displayName": "Calculator",
+      "note": "Calculator with unit conversion and programmer mode"
+    },
+    {
+      "bundleIdentifier": "com.apple.chess",
+      "displayName": "Chess",
+      "note": "Built-in chess game for short breaks and practice"
+    },
+    {
+      "bundleIdentifier": "com.apple.clock",
+      "displayName": "Clock",
+      "note": "Alarms, timers, stopwatch, and world clocks in one place"
+    },
+    {
+      "bundleIdentifier": "com.apple.colorsyncutility",
+      "displayName": "ColorSync Utility",
+      "note": "View and repair color profiles for display and print"
+    },
+    {
+      "bundleIdentifier": "com.apple.console",
+      "displayName": "Console",
+      "note": "Inspect system logs when diagnosing problems"
+    },
+    {
+      "bundleIdentifier": "com.apple.addressbook",
+      "displayName": "Contacts",
+      "note": "Contact hub used by Mail, Messages, and FaceTime"
+    },
+    {
+      "bundleIdentifier": "com.apple.dictionary",
+      "displayName": "Dictionary",
+      "note": "Offline dictionary and thesaurus for writing and lookup"
+    },
+    {
+      "bundleIdentifier": "com.apple.digitalcolormeter",
+      "displayName": "Digital Color Meter",
+      "note": "Pick exact colors from the screen"
+    },
+    {
+      "bundleIdentifier": "com.apple.DiskUtility",
+      "displayName": "Disk Utility",
+      "note": "Manage disks, partitions, formatting, and First Aid"
+    },
+    {
+      "bundleIdentifier": "com.apple.findmy",
+      "displayName": "Find My",
+      "note": "Locate devices, items, and a lost Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.fontbook",
+      "displayName": "Font Book",
+      "note": "Install, preview, and manage fonts"
+    },
+    {
+      "bundleIdentifier": "com.apple.freeform",
+      "displayName": "Freeform",
+      "note": "Infinite whiteboard for brainstorming, sketches, and loose ideas"
+    },
+    {
+      "bundleIdentifier": "com.apple.games",
+      "displayName": "Games",
+      "note": "Apple games hub for Apple Arcade and playable content"
+    },
+    {
+      "bundleIdentifier": "com.apple.grapher",
+      "displayName": "Grapher",
+      "note": "Plot equations and visualize math"
+    },
+    {
+      "bundleIdentifier": "com.apple.home",
+      "displayName": "Home",
+      "note": "Control smart home lights, climate, and accessories"
+    },
+    {
+      "bundleIdentifier": "com.apple.image_capture",
+      "displayName": "Image Capture",
+      "note": "Import images from cameras and scanners"
+    },
+    {
+      "bundleIdentifier": "com.apple.generativeplaygroundapp",
+      "displayName": "Playground",
+      "note": "Create images with Apple Intelligence for quick drafts"
+    },
+    {
+      "bundleIdentifier": "com.apple.iMovieApp",
+      "displayName": "iMovie",
+      "note": "Simple video editing for home movies and light projects"
+    },
+    {
+      "bundleIdentifier": "com.apple.screencontinuity",
+      "displayName": "iPhone Mirroring",
+      "note": "Control iPhone directly from the Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.journal",
+      "displayName": "Journal",
+      "note": "Record daily moments into a private timeline"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Keynote",
+      "displayName": "Keynote",
+      "note": "Create polished Apple-style presentations"
+    },
+    {
+      "bundleIdentifier": "com.apple.magnifier",
+      "displayName": "Magnifier",
+      "note": "Enlarge screen details for reading and inspection"
+    },
+    {
+      "bundleIdentifier": "com.apple.Maps",
+      "displayName": "Maps",
+      "note": "Check routes, explore cities, and send destinations to iPhone"
+    },
+    {
+      "bundleIdentifier": "com.apple.migrateassistant",
+      "displayName": "Migration Assistant",
+      "note": "Move data from an old Mac to a new one"
+    },
+    {
+      "bundleIdentifier": "com.apple.exposelauncher",
+      "displayName": "Mission Control",
+      "note": "See all windows and desktops when things get crowded"
+    },
+    {
+      "bundleIdentifier": "com.apple.news",
+      "displayName": "News",
+      "note": "Read selected Apple News stories and media"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Numbers",
+      "displayName": "Numbers",
+      "note": "Apple spreadsheet app for clean, lightweight reports"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Pages",
+      "displayName": "Pages",
+      "note": "Apple word processor for documents and page layout"
+    },
+    {
+      "bundleIdentifier": "com.apple.passwords",
+      "displayName": "Passwords",
+      "note": "Manage passwords, verification codes, and passkeys"
+    },
+    {
+      "bundleIdentifier": "com.apple.mobilephone",
+      "displayName": "Phone",
+      "note": "Make and answer phone calls on Mac through iPhone"
+    },
+    {
+      "bundleIdentifier": "com.apple.AboutThisMacLauncher",
+      "displayName": "About This Mac",
+      "note": "Show Mac model, system version, and serial number"
+    },
+    {
+      "bundleIdentifier": "com.apple.archiveutility",
+      "displayName": "Archive Utility",
+      "note": "Compress and extract ZIP and other archive files"
+    },
+    {
+      "bundleIdentifier": "com.apple.DeskCam",
+      "displayName": "Desk View",
+      "note": "Show a desk view with Continuity Camera"
+    },
+    {
+      "bundleIdentifier": "com.apple.DirectoryUtility",
+      "displayName": "Directory Utility",
+      "note": "Configure directory services, LDAP, and network accounts"
+    },
+    {
+      "bundleIdentifier": "com.apple.DVDPlayer",
+      "displayName": "DVD Player",
+      "note": "Play DVD discs and local DVD content"
+    },
+    {
+      "bundleIdentifier": "com.apple.ExpansionSlotUtility",
+      "displayName": "Expansion Slot Utility",
+      "note": "View and configure Mac Pro expansion slots"
+    },
+    {
+      "bundleIdentifier": "com.apple.appleseed.FeedbackAssistant",
+      "displayName": "Feedback Assistant",
+      "note": "Send system feedback and diagnostics to Apple"
+    },
+    {
+      "bundleIdentifier": "com.apple.FolderActionsSetup",
+      "displayName": "Folder Actions Setup",
+      "note": "Attach automatic script actions to folders"
+    },
+    {
+      "bundleIdentifier": "com.apple.IPAInstaller",
+      "displayName": "iOS App Installer",
+      "note": "Install iOS app packages with a system helper"
+    },
+    {
+      "bundleIdentifier": "com.apple.keychainaccess",
+      "displayName": "Keychain Access",
+      "note": "Manage passwords, certificates, keys, and secure items"
+    },
+    {
+      "bundleIdentifier": "com.apple.Ticket-Viewer",
+      "displayName": "Ticket Viewer",
+      "note": "View Kerberos tickets and authentication status"
+    },
+    {
+      "bundleIdentifier": "com.apple.wifi.diagnostics",
+      "displayName": "Wireless Diagnostics",
+      "note": "Diagnose Wi-Fi issues and create wireless reports"
+    },
+    {
+      "bundleIdentifier": "com.apple.photobooth",
+      "displayName": "Photo Booth",
+      "note": "Take camera selfies and test fun effects"
+    },
+    {
+      "bundleIdentifier": "com.apple.podcasts",
+      "displayName": "Podcasts",
+      "note": "Listen to podcasts for commutes, study, and downtime"
+    },
+    {
+      "bundleIdentifier": "com.apple.Preview",
+      "displayName": "Preview",
+      "note": "View images, annotate PDFs, and make quick edits"
+    },
+    {
+      "bundleIdentifier": "com.apple.printcenter",
+      "displayName": "Print Center",
+      "note": "View and manage print queues and stalled print jobs"
+    },
+    {
+      "bundleIdentifier": "com.apple.quicktimeplayerx",
+      "displayName": "QuickTime Player",
+      "note": "Play media and record screen or audio"
+    },
+    {
+      "bundleIdentifier": "com.apple.screensharing",
+      "displayName": "Screen Sharing",
+      "note": "Remotely control another Mac to help or troubleshoot"
+    },
+    {
+      "bundleIdentifier": "com.apple.screenshot.launcher",
+      "displayName": "Screenshot",
+      "note": "Capture screenshots and screen recordings"
+    },
+    {
+      "bundleIdentifier": "com.apple.scripteditor2",
+      "displayName": "Script Editor",
+      "note": "Write and run AppleScript automation"
+    },
+    {
+      "bundleIdentifier": "com.apple.sfsymbols",
+      "displayName": "SF Symbols",
+      "note": "Browse Apple's symbol library for native interfaces"
+    },
+    {
+      "bundleIdentifier": "com.apple.shortcuts",
+      "displayName": "Shortcuts",
+      "note": "Combine actions into quick one-tap workflows"
+    },
+    {
+      "bundleIdentifier": "com.apple.siri.launcher",
+      "displayName": "Siri",
+      "note": "Voice assistant for search, app launch, and system control"
+    },
+    {
+      "bundleIdentifier": "com.apple.stickies",
+      "displayName": "Stickies",
+      "note": "Desktop sticky notes for temporary reminders"
+    },
+    {
+      "bundleIdentifier": "com.apple.stocks",
+      "displayName": "Stocks",
+      "note": "Track stocks and market movement in a compact panel"
+    },
+    {
+      "bundleIdentifier": "com.apple.systemprofiler",
+      "displayName": "System Information",
+      "note": "View detailed hardware, software, and device information"
+    },
+    {
+      "bundleIdentifier": "com.apple.systempreferences",
+      "displayName": "System Settings",
+      "note": "Central place for Mac settings and system options"
+    },
+    {
+      "bundleIdentifier": "com.apple.textedit",
+      "displayName": "TextEdit",
+      "note": "Simple text editor for TXT and RTF files"
+    },
+    {
+      "bundleIdentifier": "com.apple.backup.launcher",
+      "displayName": "Time Machine",
+      "note": "System backup tool for restoring files later"
+    },
+    {
+      "bundleIdentifier": "com.apple.helpviewer",
+      "displayName": "Tips",
+      "note": "Apple tips for discovering useful macOS features"
+    },
+    {
+      "bundleIdentifier": "com.apple.TV",
+      "displayName": "TV",
+      "note": "Play and manage movies and TV content"
+    },
+    {
+      "bundleIdentifier": "com.apple.voicememos",
+      "displayName": "Voice Memos",
+      "note": "Quickly record ideas, meetings, and interviews"
+    },
+    {
+      "bundleIdentifier": "com.apple.voiceoverutility",
+      "displayName": "VoiceOver Utility",
+      "note": "Manage VoiceOver screen-reader accessibility settings"
+    },
+    {
+      "bundleIdentifier": "com.apple.weather",
+      "displayName": "Weather",
+      "note": "Check weather forecasts before heading out"
+    },
+    {
+      "bundleIdentifier": "com.apple.dt.Xcode",
+      "displayName": "Xcode",
+      "note": "Apple developer tools for iOS and macOS apps"
+    },
+    {
+      "bundleIdentifier": "com.apple.garageband10",
+      "displayName": "GarageBand",
+      "note": "Easy Apple music creation for recording and arranging"
+    },
+    {
+      "bundleIdentifier": "com.apple.FinalCut",
+      "displayName": "Final Cut Pro",
+      "note": "Pro Apple video editing for cuts, color, and export"
+    },
+    {
+      "bundleIdentifier": "com.apple.logic10",
+      "displayName": "Logic Pro",
+      "note": "Pro Apple music production for recording, arranging, and mixing"
+    },
+    {
+      "bundleIdentifier": "com.apple.TestFlight",
+      "displayName": "TestFlight",
+      "note": "Install and test beta versions of Apple apps"
+    }
+  ]
+}

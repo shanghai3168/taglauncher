@@ -46,10 +46,6 @@
       "note": "Používá se k ukládání a správě přihlašovacích údajů Git, vhodné pro přihlášení k"
     },
     {
-      "entryID": "com-apple-finder-2de1d8bbb107",
-      "note": "Systém macOS je dodáván s nástroji vhodnými pro dokončení odpovídající správy sy"
-    },
-    {
       "entryID": "com-mitchellh-ghostty-5194f8485e90",
       "note": "Vývojářské nástroje pro příkazový řádek, sestavení, ladění nebo správu projektů"
     },
@@ -72,10 +68,6 @@
     {
       "entryID": "1password-cli-85e1ca6fa403",
       "note": "Nástroj pro zabezpečení účtu pro správu hesel, ověřovacích kódů a přístupových k"
-    },
-    {
-      "entryID": "com-apple-safari-b2041c4573f8",
-      "note": "Oficiální prohlížeč Apple, úspora energie, soukromí a ekologické propojení jsou"
     },
     {
       "entryID": "com-anthropic-claudefordesktop-b2f723339fad",
@@ -102,10 +94,6 @@
       "note": "Lehký, ale výkonný editor kódu s velmi kompletním zásuvným ekosystémem"
     },
     {
-      "entryID": "com-apple-mail-9c1e969ca734",
-      "note": "Systémový poštovní klient, více schránek lze zpracovávat centrálně"
-    },
-    {
       "entryID": "md-obsidian-9f1625d466f0",
       "note": "Místní znalostní báze Markdown, vhodná pro dlouhodobé hromadění vašeho druhého m"
     },
@@ -128,10 +116,6 @@
     {
       "entryID": "com-tencent-meeting-5bd65448f293",
       "note": "Vstup na konferenci Tencent, čínská kancelář a spolupráce na dálku jsou velmi bě"
-    },
-    {
-      "entryID": "com-apple-mobilesms-a7066fed8087",
-      "note": "iMessage a SMS portál, odpovídejte na zprávy rychleji na Macu"
     },
     {
       "entryID": "com-mojang-minecraftlauncher-606072fb1e80",
@@ -174,10 +158,6 @@
       "note": "Oficiální IDE pro Android, nezbytné pro vývoj a ladění aplikací pro Android"
     },
     {
-      "entryID": "com-apple-facetime-96f99030aef8",
-      "note": "Vstup pro audio a video hovory v ekosystému Apple"
-    },
-    {
       "entryID": "maccy-0c7236cb0f2d",
       "note": "Nástroj historie schránky, zkopírovaný obsah lze kdykoli načíst"
     },
@@ -190,10 +170,6 @@
       "note": "Streamovací hudební přehrávač, můžete mít skladbu pro práci i odpočinek"
     },
     {
-      "entryID": "com-apple-ical-8e998503177c",
-      "note": "Vyhoďte rozvrh z hlavy a dejte času vizuální mapu"
-    },
-    {
       "entryID": "blackhole-2ch-0b7c58e0297a",
       "note": "Virtuální zvukový ovladač, vhodný pro nahrávání obrazovky, živé vysílání a směro"
     },
@@ -204,10 +180,6 @@
     {
       "entryID": "com-electron-lark-6559e48147f2",
       "note": "Portál spolupráce Feishu, kde jsou umístěny chaty, dokumenty a schůzky čínského"
-    },
-    {
-      "entryID": "com-apple-notes-aaf1d7cf1c90",
-      "note": "Lze shromáždit nejrychlejší systémové poznámky, text, obrázky a seznamy"
     },
     {
       "entryID": "com-electron-ollama-25be0e7340d2",
@@ -238,10 +210,6 @@
       "note": "Programování vývojových nástrojů pro psaní, čtení a údržbu kódu"
     },
     {
-      "entryID": "com-apple-reminders-92a9335b31bb",
-      "note": "Úkoly a upomínky, vhodné pro chytání malých denních úkolů"
-    },
-    {
       "entryID": "com-openai-chat-7c12a7107aad",
       "note": "Umístěte si asistenta umělé inteligence na plochu a pište, studujte a diskutujte"
     },
@@ -260,10 +228,6 @@
     {
       "entryID": "com-kingsoft-wpsoffice-mac-c371eb320d54",
       "note": "Kancelářský balík pro úpravu dokumentů, tabulek a prezentací"
-    },
-    {
-      "entryID": "com-apple-photos-9678510fed1e",
-      "note": "Systémová knihovna fotografií, hlavní vstup pro správu, úpravu a synchronizaci f"
     },
     {
       "entryID": "adobe-acrobat-reader-fb99f7bea88f",
@@ -290,14 +254,6 @@
       "note": "Webový prohlížeč, vhodný pro každodenní surfování na internetu a přístup k webov"
     },
     {
-      "entryID": "com-apple-music-63ea41e016ea",
-      "note": "Místní a streamovaný hudební přehrávač"
-    },
-    {
-      "entryID": "com-apple-terminal-77aba1385326",
-      "note": "Vstup z příkazového řádku, skrytý kokpit Macu"
-    },
-    {
       "entryID": "utm-f2a3e184ea9f",
       "note": "Nástroje pro virtualizaci nebo vzdálené připojení, vhodné pro běh systémových pr"
     },
@@ -310,260 +266,12 @@
       "note": "Hudební přehrávač, vhodný pro poslech skladeb, správu playlistů a používání služ"
     },
     {
-      "entryID": "com-apple-activitymonitor-1ca0c04d6757",
-      "note": "Ovládací panel Mac, abyste viděli, kdo spotřebovává energii, paměť a zpomaluje v"
-    },
-    {
-      "entryID": "com-apple-airport-airportutility-85b3849d7d98",
-      "note": "Staré síťové nástroje pro správu AirPortů a Time Capsules"
-    },
-    {
-      "entryID": "com-apple-appstore-0619ceddf32a",
-      "note": "Oficiální obchod se softwarem pro Mac, začněte zde, kde najdete aplikace, aktual"
-    },
-    {
-      "entryID": "com-apple-apps-launcher-c27c2e6c3e15",
-      "note": "Odlehčený aplikační portál, který vám pomůže rychle otevřít aplikace ze systémov"
-    },
-    {
-      "entryID": "com-apple-audio-audiomidisetup-8327be183cc9",
-      "note": "Audio zařízení a MIDI směrování, běžně používané hudebníky a debuggery"
-    },
-    {
-      "entryID": "com-apple-automator-3134734f076f",
-      "note": "Můžete řetězit dohromady řetězec automatizačních akcí Mac bez psaní kódu"
-    },
-    {
-      "entryID": "com-apple-bluetoothfileexchange-a83f24bdfabc",
-      "note": "Používání Bluetooth k odesílání a přijímání souborů je zastaralé, ale může vás z"
-    },
-    {
-      "entryID": "com-apple-ibooksx-61d0b1b4ae4c",
-      "note": "Vstupní bod pro čtení a správu elektronických knih, vhodný k přeměně vašeho Macu"
-    },
-    {
-      "entryID": "com-apple-bootcampassistant-e4ab0159032f",
-      "note": "Oficiální průvodce instalací Windows na Intel Mac"
-    },
-    {
-      "entryID": "com-apple-calculator-390516777a37",
-      "note": "Uvnitř se skrývá také malá kalkulačka, převod jednotek a programátorský režim"
-    },
-    {
-      "entryID": "com-apple-chess-8ccbf1801854",
-      "note": "Součástí systému jsou šachy, díky kterým je rybaření elegantnější než procházení"
-    },
-    {
-      "entryID": "com-apple-clock-f922597106e9",
-      "note": "Jednotný portál pro budíky, časovače, stopky a světové hodiny"
-    },
-    {
       "entryID": "cmux-3a661d84a58c",
       "note": "Ideální pro organizaci metadat médií, pojmenování nebo zapouzdření souborů"
     },
     {
-      "entryID": "com-apple-colorsyncutility-68af0cd69154",
-      "note": "Prohlížejte a opravujte barevné profily, zvládejte rozdíly v zobrazení a tisku"
-    },
-    {
-      "entryID": "com-apple-console-5e449417a9e8",
-      "note": "Okno pro zobrazení systémových protokolů je velmi užitečné při odstraňování abno"
-    },
-    {
-      "entryID": "com-apple-addressbook-0b4e2b893a86",
-      "note": "Centrum kontaktů pro Mail, Zprávy a FaceTime"
-    },
-    {
-      "entryID": "com-apple-dictionary-4625013af142",
-      "note": "Offline slovník a tezaurus, při psaní a vyhledávání slov není třeba otevírat pro"
-    },
-    {
-      "entryID": "com-apple-digitalcolormeter-fb99a6aa0c0b",
-      "note": "Výběr barvy obrazovky, malý artefakt pro návrháře k dočasnému výběru barev"
-    },
-    {
-      "entryID": "com-apple-diskutility-48d48cee3d46",
-      "note": "Disk, oddíl, formát a první pomoc, nezahrávejte si s tím, ale je to důležité"
-    },
-    {
-      "entryID": "com-apple-findmy-f15882533adf",
-      "note": "Najděte vybavení, najděte předměty a dejte svému ztracenému Macu vodítka, abyste"
-    },
-    {
-      "entryID": "com-apple-fontbook-83009f0e620e",
-      "note": "Centrum instalace a správy písem, spravujte písma před návrhem"
-    },
-    {
-      "entryID": "com-apple-freeform-c79ff8861497",
-      "note": "Neomezené tabule pro brainstorming, skicování a náhodné nápady"
-    },
-    {
-      "entryID": "com-apple-games-18b06d160812",
-      "note": "Herní portál Apple pro centrální správu hratelného obsahu Apple Arcade"
-    },
-    {
-      "entryID": "com-apple-grapher-dde725719597",
-      "note": "Grafové rovnice, skrytý nástroj pro matematickou vizualizaci"
-    },
-    {
-      "entryID": "com-apple-home-339f72ecc4b8",
-      "note": "Smart home control vchod dokáže řídit osvětlení, klimatizaci a další vybavení"
-    },
-    {
-      "entryID": "com-apple-image-capture-8de5b7375bed",
-      "note": "Import obrázků z fotoaparátu nebo skeneru, jednoduchý, ale stabilní"
-    },
-    {
-      "entryID": "com-apple-generativeplaygroundapp-05897f8dbe4c",
-      "note": "Vytvářejte obrázky s inteligencí Apple, ideální pro rychlé kreativní kreslení"
-    },
-    {
-      "entryID": "com-apple-imovieapp-00a9c7493d26",
-      "note": "Dostatečný pro základní úpravy videa, domácí videa a lehké krátké filmy"
-    },
-    {
-      "entryID": "com-apple-screencontinuity-867a48a76333",
-      "note": "Ovládejte svůj iPhone přímo na Macu, takže nemusíte sáhnout po telefonu jednou"
-    },
-    {
-      "entryID": "com-apple-journal-29ceb46d5ff5",
-      "note": "Zaznamenávejte denní úryvky a pomalu přeměňujte své myšlenky na osobní časovou o"
-    },
-    {
-      "entryID": "com-apple-iwork-keynote-e86356f31ec2",
-      "note": "Prezentační nástroj ve stylu Apple, snadné vytváření krásných snímků"
-    },
-    {
       "entryID": "com-riotgames-leagueoflegends-ee692e90efde",
       "note": "Klient League of Legends, vstup do klasických týmových soutěžních her"
-    },
-    {
-      "entryID": "com-apple-magnifier-c9044527cd0d",
-      "note": "Zvětšete detaily obrazovky, abyste pomohli s viděním a jemnou kontrolou"
-    },
-    {
-      "entryID": "com-apple-maps-310ca6c69cea",
-      "note": "Zkontrolujte trasy, zobrazte města a posílejte cíle do iPhone"
-    },
-    {
-      "entryID": "com-apple-migrateassistant-5f03ff480fe8",
-      "note": "Při přechodu na nový Mac přesuňte stará data do nového počítače"
-    },
-    {
-      "entryID": "com-apple-exposelauncher-62e07c598f71",
-      "note": "Letecký pohled na okno a plochu, stačí se na ni podívat, pokud je špinavá"
-    },
-    {
-      "entryID": "com-apple-news-7614a9b54b68",
-      "note": "Portál Apple News, vhodný pro prohlížení vybraného mediálního obsahu"
-    },
-    {
-      "entryID": "com-apple-iwork-numbers-361a6aaf7056",
-      "note": "Nástroj Apple Sheets, jednoduché sestavy jsou osvěžující než Excel"
-    },
-    {
-      "entryID": "com-apple-iwork-pages-d6f13bb4e29c",
-      "note": "Textový procesor Apple, krásný pro psaní dokumentů a sazbu"
-    },
-    {
-      "entryID": "com-apple-passwords-08719cef9f02",
-      "note": "Systémový správce hesel, centralizovaná správa účtů, ověřovacích kódů a přístupo"
-    },
-    {
-      "entryID": "com-apple-mobilephone-5739fb6f2a60",
-      "note": "Volejte na Macu pomocí telefonu"
-    },
-    {
-      "entryID": "com-apple-photobooth-9d976a9cdfcd",
-      "note": "Selfie fotoaparátu a malé speciální efekty jsou také vhodné pro testování fotoap"
-    },
-    {
-      "entryID": "com-apple-podcasts-4a2a186dcc8f",
-      "note": "Oficiální portál pro poslech podcastů, užitečný pro dojíždění a studium"
-    },
-    {
-      "entryID": "com-apple-preview-9ef385a7e445",
-      "note": "Nejvíce podceňovaný nástroj pro Mac: Prohlížejte si obrázky, přidávejte poznámky"
-    },
-    {
-      "entryID": "com-apple-printcenter-5a8f324fe84d",
-      "note": "Zobrazení a správa tiskových front. Úlohy zasekávání papíru viz nejprve zde"
-    },
-    {
-      "entryID": "com-apple-quicktimeplayerx-f2aee71b906d",
-      "note": "Dobře zavedený nástroj, který dokáže přehrávat, nahrávat obrazovku a nahrávat zv"
-    },
-    {
-      "entryID": "com-apple-screensharing-3d1e02ff893a",
-      "note": "Ovládejte na dálku jiný Mac, což je velmi výhodné pro pomoc lidem s opravou jeji"
-    },
-    {
-      "entryID": "com-apple-screenshot-launcher-f3c7a7a2c583",
-      "note": "Snímek obrazovky a portál pro nahrávání obrazovky za Shift-Command-5"
-    },
-    {
-      "entryID": "com-apple-scripteditor2-f8a19fe3d1d8",
-      "note": "Napište a spusťte AppleScript pro ovládání staré školy automatizace Mac"
-    },
-    {
-      "entryID": "com-apple-sfsymbols-9dc6c630daed",
-      "note": "Oficiální knihovna symbolů společnosti Apple, nezbytná pro nativní rozhraní"
-    },
-    {
-      "entryID": "com-apple-shortcuts-f629e5e3e216",
-      "note": "Řetězení více akcí do procesů na jedno kliknutí je moderní verzí Automatoru"
-    },
-    {
-      "entryID": "com-apple-siri-launcher-77250557ebe9",
-      "note": "Vstup hlasového asistenta, může kontrolovat informace, otevírat aplikace a ovlád"
-    },
-    {
-      "entryID": "com-apple-stickies-9ed4ed5e1103",
-      "note": "Lepicí poznámky na plochu, dočasné poznámky jsou zveřejněny přímo před vámi"
-    },
-    {
-      "entryID": "com-apple-stocks-6a1a80292efe",
-      "note": "Podívejte se na malé panely pro akcie a dynamiku trhu"
-    },
-    {
-      "entryID": "com-apple-systemprofiler-fdfe3344179e",
-      "note": "Prohlédněte si podrobnosti o hardwaru, softwaru a zařízení, abyste našli nejpřes"
-    },
-    {
-      "entryID": "com-apple-systempreferences-5632452dbd3d",
-      "note": "Mac nastavení hlavního vchodu, téměř všechny systémové přepínače jsou zde"
-    },
-    {
-      "entryID": "com-apple-textedit-64d314fbf2b9",
-      "note": "Nejjednodušší textový editor, velmi rychle otevřete TXT a RTF"
-    },
-    {
-      "entryID": "com-apple-backup-launcher-918b22a1257e",
-      "note": "Nástroj pro zálohování systému, spolehněte se na to, že připraví lék na lítost p"
-    },
-    {
-      "entryID": "com-apple-helpviewer-6e90a07b56cc",
-      "note": "Oficiální tipy společnosti Apple, jak příležitostně objevit funkce, které jste n"
-    },
-    {
-      "entryID": "com-apple-tv-28f9f8e2e47b",
-      "note": "Vstup pro přehrávání a správu filmového a televizního obsahu"
-    },
-    {
-      "entryID": "com-apple-voicememos-f4eb9f35a1b8",
-      "note": "Nejprve rychle nahrajte, uložte si inspiraci ze schůzek a materiály k rozhovorům"
-    },
-    {
-      "entryID": "com-apple-voiceoverutility-9623fe74d030",
-      "note": "Spravujte funkce usnadnění čtení obrazovky, aby byl váš Mac přístupnější pro uži"
-    },
-    {
-      "entryID": "com-apple-weather-a1b814774719",
-      "note": "Portál předpovědi počasí, zkontrolujte jej před odchodem, abyste získali větší s"
-    },
-    {
-      "entryID": "com-apple-dt-xcode-66da3f910767",
-      "note": "Apple vyvíjí FamilyMart, hlavní bojiště pro psaní aplikací pro iOS a macOS"
     },
     {
       "entryID": "com-github-githubclient-c94dd11b1995",
@@ -874,10 +582,6 @@
       "note": "Ideální pro pořizování snímků obrazovky, přidávání poznámek, rozpoznávání textu"
     },
     {
-      "entryID": "com-apple-garageband10-af435df6c94a",
-      "note": "Základní nástroj pro hudební produkci společnosti Apple, snadno použitelný pro n"
-    },
-    {
       "entryID": "com-microsoft-excel-2ff4add4000d",
       "note": "Spoléhá na něj veterán tabulek a analýzy dat, finance, operace a modely"
     },
@@ -914,10 +618,6 @@
       "note": "Odlehčený editor kódu vyvinutý pro macOS"
     },
     {
-      "entryID": "com-apple-finalcut-6383fea0b510",
-      "note": "Profesionální nástroj pro úpravu videa od společnosti Apple, stříhání, barvení a"
-    },
-    {
       "entryID": "github-copilot-for-xcode-60555f2d4d11",
       "note": "Zapojte AI do procesu vývoje, vhodné pro kódování, ladění a automatizaci"
     },
@@ -932,10 +632,6 @@
     {
       "entryID": "finetune-5431832269e6",
       "note": "Zvukové nástroje AI, vhodné pro organizaci, přepis nebo optimalizaci zvukového o"
-    },
-    {
-      "entryID": "com-apple-logic10-69f8eefc0ddf",
-      "note": "Profesionální nástroj pro hudební produkci společnosti Apple, výkonný při nahráv"
     },
     {
       "entryID": "com-getdropbox-dropbox-72c7db8f1763",
@@ -968,10 +664,6 @@
     {
       "entryID": "font-jetbrains-mono-nerd-font-4a662d68a338",
       "note": "Sada zdrojů písem, vhodná pro doplnění písem pro editory, terminály nebo designo"
-    },
-    {
-      "entryID": "com-apple-testflight-cfe027705d73",
-      "note": "Nástroj pro testování aplikací Apple, vhodný pro instalaci a používání beta apli"
     },
     {
       "entryID": "claude-code-latest-ba2522b660cf",
