@@ -1,0 +1,184 @@
+{
+  "product": "TagLauncher",
+  "version": "7.6.0",
+  "pdfCount": 29,
+  "defaultLanguage": "en",
+  "githubReleaseBaseURL": "https://github.com/shanghai3168/taglauncher/releases/download/v7.6.0",
+  "generatedAt": "2026-06-02T14:12:45.873Z",
+  "files": [
+    {
+      "language": "ar",
+      "file": "Taglauncher-help-ar.pdf",
+      "bytes": 3153536,
+      "sha256": "dd0fcd0467b30b3475533c2be8275eea519bb30cf6740f38f3ae26bacad20d31"
+    },
+    {
+      "language": "ar-Najdi",
+      "file": "Taglauncher-help-ar-Najdi.pdf",
+      "bytes": 3158315,
+      "sha256": "1f3039456af8dcf33a8064ee45fd359a493cb06889f3508682333d8b40fcadc8"
+    },
+    {
+      "language": "cs",
+      "file": "Taglauncher-help-cs.pdf",
+      "bytes": 3405162,
+      "sha256": "9625401a7d8f915029548d1aa16d14a58047ffcd3275ada7d6923c144181794d"
+    },
+    {
+      "language": "da",
+      "file": "Taglauncher-help-da.pdf",
+      "bytes": 3369910,
+      "sha256": "e1ad38b4cbc0002ec547488e302f0491ff9720a3795f1097d0b9ac243803430d"
+    },
+    {
+      "language": "de",
+      "file": "Taglauncher-help-de.pdf",
+      "bytes": 3382526,
+      "sha256": "085a2ee1eccfd1f9af25ee55735096eda99ef7196087f6ada1c07ef3bac4a35b"
+    },
+    {
+      "language": "en",
+      "file": "Taglauncher-help-en.pdf",
+      "bytes": 3356280,
+      "sha256": "65d0bcf10ed2e74564f124691b7c51cf4c4adee43096f15ca5efe384d0804c97"
+    },
+    {
+      "language": "es",
+      "file": "Taglauncher-help-es.pdf",
+      "bytes": 3378213,
+      "sha256": "6e34b4f09b8cbb58359f32991d6f351778a5ae2d315f6656e531d1c3dde85a83"
+    },
+    {
+      "language": "fr",
+      "file": "Taglauncher-help-fr.pdf",
+      "bytes": 3391506,
+      "sha256": "67bb01c6ee9a21e4f52437a4e44969b074cacbaa7ccfd8bcae3bd533f912bfe5"
+    },
+    {
+      "language": "id",
+      "file": "Taglauncher-help-id.pdf",
+      "bytes": 3357725,
+      "sha256": "9e7e506994ecdaba5663799f3b4fe36eec5344b1340feff7ac8dddc75b64148a"
+    },
+    {
+      "language": "it",
+      "file": "Taglauncher-help-it.pdf",
+      "bytes": 3365536,
+      "sha256": "bc70aff0827ab4693b3d6d6daaa45528628fb4f50c3b351ad9ac398394743d24"
+    },
+    {
+      "language": "ja",
+      "file": "Taglauncher-help-ja.pdf",
+      "bytes": 3366773,
+      "sha256": "71fec01ce9d256e817f0e998ddd0d1faeb1614b5c5c50853a996db32087f25d4"
+    },
+    {
+      "language": "ko",
+      "file": "Taglauncher-help-ko.pdf",
+      "bytes": 3265377,
+      "sha256": "b474289cdeb1801a05ee563e13f3984d3971bf34cecd2ee341911166c1cc3113"
+    },
+    {
+      "language": "ms",
+      "file": "Taglauncher-help-ms.pdf",
+      "bytes": 3338356,
+      "sha256": "dc4860b510129580d1e7473e7f83b7abd70244adb1cdb297ea20ebf11693dffd"
+    },
+    {
+      "language": "nb",
+      "file": "Taglauncher-help-nb.pdf",
+      "bytes": 3364059,
+      "sha256": "212324ad896f4c5ac8b3ad10c1944ef51c40f392386deee4196585170f573b2d"
+    },
+    {
+      "language": "nl",
+      "file": "Taglauncher-help-nl.pdf",
+      "bytes": 3363853,
+      "sha256": "38e662b19a1218c74cf3c5d8775239520034555a56967b197492e18175d12006"
+    },
+    {
+      "language": "nn",
+      "file": "Taglauncher-help-nn.pdf",
+      "bytes": 3359596,
+      "sha256": "9d1c36cb1c4531984445d2b8178db8c95efcfb4085aa7bf53e464d9cc4a61598"
+    },
+    {
+      "language": "no",
+      "file": "Taglauncher-help-no.pdf",
+      "bytes": 3364059,
+      "sha256": "da6041b3efa3381b7466ca62e830896f10035ebb36f7951bc2c2fc86070814d7"
+    },
+    {
+      "language": "pl",
+      "file": "Taglauncher-help-pl.pdf",
+      "bytes": 3419481,
+      "sha256": "1dbe3b70c9a03315d52cb2590e0fc261212910fdcea788169aa8978439f5b0b3"
+    },
+    {
+      "language": "pt-BR",
+      "file": "Taglauncher-help-pt-BR.pdf",
+      "bytes": 3358158,
+      "sha256": "d3c796d987267d0c0e7f06c5f910324132264c883c349f92dc7b902f6332a519"
+    },
+    {
+      "language": "ro",
+      "file": "Taglauncher-help-ro.pdf",
+      "bytes": 3411733,
+      "sha256": "76e6b2ae49a78e66c94b9707100c41df63b766cbe9cd0ec7eff06c3bfac46b6a"
+    },
+    {
+      "language": "ru",
+      "file": "Taglauncher-help-ru.pdf",
+      "bytes": 3341259,
+      "sha256": "0d42c2c3c5062a0756c7a0b817c82c50f176c14f6f650565d2fd71d0fae0f55f"
+    },
+    {
+      "language": "sr-Cyrl",
+      "file": "Taglauncher-help-sr-Cyrl.pdf",
+      "bytes": 3365477,
+      "sha256": "ff9f372f641a67bc305a9f20879c83636caa7fa89c87b6aa1acc666a68c4f010"
+    },
+    {
+      "language": "sv",
+      "file": "Taglauncher-help-sv.pdf",
+      "bytes": 3376045,
+      "sha256": "e57e59bf3bfae61b20f8f0e23bd30ba691ed52cf5577dce8650974dc1f69217f"
+    },
+    {
+      "language": "th",
+      "file": "Taglauncher-help-th.pdf",
+      "bytes": 3247760,
+      "sha256": "bd1f6a795f6d21503553d2f3ae47e34cab2af2164bc3d0024800c5f949976ab6"
+    },
+    {
+      "language": "tr",
+      "file": "Taglauncher-help-tr.pdf",
+      "bytes": 3379412,
+      "sha256": "063999a754a1adf2b4c8851e500d30e75a8a028426ac542b3ee1600fa79a5a0f"
+    },
+    {
+      "language": "uk",
+      "file": "Taglauncher-help-uk.pdf",
+      "bytes": 3328937,
+      "sha256": "8fc0fee93e351aa3b2597c8d20e8c5c79804937b5e69a60c56d7cae3927943c2"
+    },
+    {
+      "language": "vi",
+      "file": "Taglauncher-help-vi.pdf",
+      "bytes": 3369879,
+      "sha256": "2c29d02f3ef167fadd0a3cc34e705495d3eb6bab7a9e0a73526861945efe3389"
+    },
+    {
+      "language": "zh",
+      "file": "Taglauncher-help-zh.pdf",
+      "bytes": 3645895,
+      "sha256": "822cf6f28bce27281620f4012940690909b22468e810bc03e50bd11c507f59ef"
+    },
+    {
+      "language": "zh-Hant",
+      "file": "Taglauncher-help-zh-Hant.pdf",
+      "bytes": 3601623,
+      "sha256": "191b5d3703250c037bb1c20c837219a2e908b3d48e4b807509c90bad21bdaf89"
+    }
+  ]
+}

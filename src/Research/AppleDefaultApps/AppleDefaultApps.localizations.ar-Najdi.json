@@ -1,0 +1,453 @@
+{
+  "resourceFormatVersion": 1,
+  "catalogContentVersion": 1,
+  "language": "ar-Najdi",
+  "localizationsVersion": 2,
+  "entries": [
+    {
+      "bundleIdentifier": "com.apple.finder",
+      "displayName": "فايندر",
+      "note": "يأتي نظام macOS مزودًا بأدوات مناسبة لإكمال إدارة النظام المقابلة أو."
+    },
+    {
+      "bundleIdentifier": "com.apple.Safari",
+      "displayName": "Safari",
+      "note": "يعد متصفح Apple الرسمي وتوفير الطاقة والخصوصية والارتباط البيئي من نقاط قوتها"
+    },
+    {
+      "bundleIdentifier": "com.apple.mail",
+      "displayName": "البريد",
+      "note": "عميل بريد النظام، يمكن معالجة صناديق بريد متعددة مركزيًا"
+    },
+    {
+      "bundleIdentifier": "com.apple.MobileSMS",
+      "displayName": "الرسائل",
+      "note": "iMessage وبوابة الرسائل النصية القصيرة، يمكنك الرد على الرسائل بشكل."
+    },
+    {
+      "bundleIdentifier": "com.apple.FaceTime",
+      "displayName": "فيس تايم",
+      "note": "مدخل مكالمات الصوت والفيديو في نظام Apple البيئي"
+    },
+    {
+      "bundleIdentifier": "com.apple.iCal",
+      "displayName": "التقويم",
+      "note": "أخرج الجدول الزمني من رأسك وأعطي الوقت خريطة مرئية"
+    },
+    {
+      "bundleIdentifier": "com.apple.Notes",
+      "displayName": "الملاحظات",
+      "note": "يمكن جمع أسرع مذكرة النظام والنصوص والصور والقوائم"
+    },
+    {
+      "bundleIdentifier": "com.apple.reminders",
+      "displayName": "التذكيرات",
+      "note": "المهام والتذكيرات، مناسبة للقيام بالمهام اليومية الصغيرة"
+    },
+    {
+      "bundleIdentifier": "com.apple.Photos",
+      "displayName": "الصور",
+      "note": "مكتبة صور النظام لإدارة الصور وتحريرها ومزامنتها"
+    },
+    {
+      "bundleIdentifier": "com.apple.Music",
+      "displayName": "الموسيقى",
+      "note": "مشغل الموسيقى المحلي والمتدفق"
+    },
+    {
+      "bundleIdentifier": "com.apple.Terminal",
+      "displayName": "الوحدة الطرفية",
+      "note": "إدخال سطر الأوامر، قمرة القيادة المخفية لنظام Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.ActivityMonitor",
+      "displayName": "مراقب النشاط",
+      "note": "لوحة تحكم Mac لمعرفة من يستهلك الطاقة والذاكرة ويبطئ جهاز الكمبيوتر الخاص بك"
+    },
+    {
+      "bundleIdentifier": "com.apple.airport.airportutility",
+      "displayName": "أداة AirPort",
+      "note": "أدوات الشبكات القديمة لإدارة AirPorts وTime Capsules"
+    },
+    {
+      "bundleIdentifier": "com.apple.AppStore",
+      "displayName": "App Store",
+      "note": "متجر برامج Mac الرسمي، ابدأ هنا للعثور على التطبيقات والتحديثات والاشتراكات"
+    },
+    {
+      "bundleIdentifier": "com.apple.apps.launcher",
+      "displayName": "التطبيقات",
+      "note": "بوابة تطبيقات خفيفة الوزن تساعدك على فتح التطبيقات بسرعة من مستوى النظام"
+    },
+    {
+      "bundleIdentifier": "com.apple.audio.audiomidisetup",
+      "displayName": "إعداد صوت MIDI",
+      "note": "المعدات الصوتية وتوجيه MIDI، التي يشيع استخدامها من قبل الموسيقيين."
+    },
+    {
+      "bundleIdentifier": "com.apple.automator",
+      "displayName": "المؤتمت",
+      "note": "يمكنك تجميع سلسلة من إجراءات أتمتة Mac معًا دون كتابة تعليمات برمجية"
+    },
+    {
+      "bundleIdentifier": "com.apple.bluetoothfileexchange",
+      "displayName": "نقل الملفات بواسطة Bluetooth",
+      "note": "يعد استخدام تقنية Bluetooth لإرسال واستقبال الملفات أمرًا قديمًا ولكنه."
+    },
+    {
+      "bundleIdentifier": "com.apple.iBooksX",
+      "displayName": "الكتب",
+      "note": "مدخل لقراءة وإدارة الكتب الإلكترونية، مناسب لتحويل جهاز Mac الخاص بك إلى مكتب"
+    },
+    {
+      "bundleIdentifier": "com.apple.bootcampassistant",
+      "displayName": "مساعد منظم الإقلاع",
+      "note": "الدليل الرسمي لتثبيت Windows على Intel Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.calculator",
+      "displayName": "الحاسبة",
+      "note": "يتم أيضًا إخفاء الآلة الحاسبة الصغيرة وتحويل الوحدات ووضع المبرمج بالداخل"
+    },
+    {
+      "bundleIdentifier": "com.apple.chess",
+      "displayName": "الشطرنج",
+      "note": "لعبة شطرنج مدمجة للاستراحة القصيرة والتدريب"
+    },
+    {
+      "bundleIdentifier": "com.apple.clock",
+      "displayName": "الساعة",
+      "note": "بوابة موحدة للمنبهات والمؤقتات وساعات التوقف والساعات العالمية"
+    },
+    {
+      "bundleIdentifier": "com.apple.colorsyncutility",
+      "displayName": "أداة مزامنة الألوان المساعدة",
+      "note": "عرض وإصلاح ملفات تعريف الألوان والتعامل مع اختلافات ألوان العرض والطباعة"
+    },
+    {
+      "bundleIdentifier": "com.apple.console",
+      "displayName": "السِّجل",
+      "note": "تعد نافذة عرض سجلات النظام مفيدة جدًا عند استكشاف الأخطاء وإصلاحها"
+    },
+    {
+      "bundleIdentifier": "com.apple.addressbook",
+      "displayName": "جهات الاتصال",
+      "note": "مركز جهات الاتصال للبريد والرسائل وFaceTime"
+    },
+    {
+      "bundleIdentifier": "com.apple.dictionary",
+      "displayName": "القاموس",
+      "note": "قاموس وقاموس المرادفات غير متصل بالإنترنت، لا حاجة لفتح المتصفح عند."
+    },
+    {
+      "bundleIdentifier": "com.apple.digitalcolormeter",
+      "displayName": "مقياس اللون الرقمي",
+      "note": "منتقي ألوان الشاشة، أداة صغيرة للمصممين لاختيار الألوان مؤقتًا"
+    },
+    {
+      "bundleIdentifier": "com.apple.DiskUtility",
+      "displayName": "أداة القرص",
+      "note": "القرص والقسم والتنسيق والإسعافات الأولية، لا تعبث بها ولكنها مهمة"
+    },
+    {
+      "bundleIdentifier": "com.apple.findmy",
+      "displayName": "تحديد الموقع",
+      "note": "ابحث عن المعدات، وابحث عن العناصر، وقدم أدلة Mac المفقودة للوصول إلى المنزل"
+    },
+    {
+      "bundleIdentifier": "com.apple.fontbook",
+      "displayName": "دفتر الخطوط",
+      "note": "مركز تثبيت وإدارة الخطوط، وإدارة الخطوط قبل التصميم"
+    },
+    {
+      "bundleIdentifier": "com.apple.freeform",
+      "displayName": "المساحة الحرة",
+      "note": "ألواح معلومات غير محدودة للعصف الذهني والرسم والأفكار العشوائية"
+    },
+    {
+      "bundleIdentifier": "com.apple.games",
+      "displayName": "الألعاب",
+      "note": "بوابة ألعاب Apple لإدارة محتوى Apple Arcade القابل للتشغيل مركزيًا"
+    },
+    {
+      "bundleIdentifier": "com.apple.grapher",
+      "displayName": "Grapher",
+      "note": "معادلات الرسم البياني، أداة مخفية للتصور الرياضي"
+    },
+    {
+      "bundleIdentifier": "com.apple.home",
+      "displayName": "المنزل",
+      "note": "يمكن لمدخل التحكم في المنزل الذكي إدارة الإضاءة وتكييف الهواء وغيرها من."
+    },
+    {
+      "bundleIdentifier": "com.apple.image_capture",
+      "displayName": "التقاط الصور",
+      "note": "استيراد الصور من الكاميرا أو الماسح الضوئي، بسيط ولكنه مستقر"
+    },
+    {
+      "bundleIdentifier": "com.apple.generativeplaygroundapp",
+      "displayName": "عالم الصور",
+      "note": "أنشئ صورًا باستخدام ذكاء Apple، مما يجعلها مثالية للصياغة الإبداعية السريعة"
+    },
+    {
+      "bundleIdentifier": "com.apple.iMovieApp",
+      "displayName": "iMovie",
+      "note": "يكفي لتحرير الفيديو للمبتدئين ومقاطع الفيديو المنزلية والأفلام القصيرة."
+    },
+    {
+      "bundleIdentifier": "com.apple.screencontinuity",
+      "displayName": "محاكاة iPhone",
+      "note": "قم بتشغيل iPhone الخاص بك مباشرة على جهاز Mac الخاص بك، مما يلغي الحاجة."
+    },
+    {
+      "bundleIdentifier": "com.apple.journal",
+      "displayName": "اليوميات",
+      "note": "قم بتسجيل الأجزاء اليومية وقم بتحويل أفكارك ببطء إلى جدولك الزمني الشخصي"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Keynote",
+      "displayName": "Keynote",
+      "note": "أداة عرض بأسلوب Apple، سهلة لإنشاء شرائح جميلة"
+    },
+    {
+      "bundleIdentifier": "com.apple.magnifier",
+      "displayName": "المكبر",
+      "note": "تكبير تفاصيل الشاشة للمساعدة في الرؤية والفحص الدقيق"
+    },
+    {
+      "bundleIdentifier": "com.apple.Maps",
+      "displayName": "الخرائط",
+      "note": "تحقق من الطرق، واعرض المدن، وادفع الوجهات إلى iPhone"
+    },
+    {
+      "bundleIdentifier": "com.apple.migrateassistant",
+      "displayName": "مساعد نقل البيانات",
+      "note": "عند الانتقال إلى جهاز Mac جديد، انقل البيانات القديمة إلى الجهاز الجديد"
+    },
+    {
+      "bundleIdentifier": "com.apple.exposelauncher",
+      "displayName": "إدارة المهام",
+      "note": "منظر جوي للنافذة وسطح المكتب، فقط انظر إليها إذا كانت فوضوية"
+    },
+    {
+      "bundleIdentifier": "com.apple.news",
+      "displayName": "News",
+      "note": "بوابة أخبار Apple، مناسبة لعرض محتوى الوسائط المحدد"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Numbers",
+      "displayName": "Numbers",
+      "note": "أداة Apple Sheets، التقارير خفيفة الوزن أكثر تحديثًا من Excel"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Pages",
+      "displayName": "Pages",
+      "note": "معالج نصوص Apple، جميل لكتابة المستندات والتنضيد"
+    },
+    {
+      "bundleIdentifier": "com.apple.passwords",
+      "displayName": "كلمات السر",
+      "note": "مدير كلمات مرور النظام والإدارة المركزية للحسابات ورموز التحقق ومفاتيح المرور"
+    },
+    {
+      "bundleIdentifier": "com.apple.mobilephone",
+      "displayName": "الهاتف",
+      "note": "قم بإجراء مكالمات على جهاز Mac باستخدام هاتفك"
+    },
+    {
+      "bundleIdentifier": "com.apple.AboutThisMacLauncher",
+      "displayName": "حول هذا الـ Mac",
+      "note": "يعرض طراز Mac وإصدار النظام والرقم التسلسلي"
+    },
+    {
+      "bundleIdentifier": "com.apple.archiveutility",
+      "displayName": "أداة الأرشيف",
+      "note": "يضغط ملفات ZIP والأرشيفات ويفكها"
+    },
+    {
+      "bundleIdentifier": "com.apple.DeskCam",
+      "displayName": "العرض الرأسي",
+      "note": "يعرض سطح المكتب باستخدام كاميرا الاستمرارية"
+    },
+    {
+      "bundleIdentifier": "com.apple.DirectoryUtility",
+      "displayName": "أداة الدليل",
+      "note": "يضبط خدمات الدليل وLDAP وحسابات الشبكة"
+    },
+    {
+      "bundleIdentifier": "com.apple.DVDPlayer",
+      "displayName": "DVD Player",
+      "note": "يشغل أقراص DVD والمحتوى المحلي"
+    },
+    {
+      "bundleIdentifier": "com.apple.ExpansionSlotUtility",
+      "displayName": "أداة فتحة التوسيع",
+      "note": "يعرض ويضبط فتحات التوسعة في Mac Pro"
+    },
+    {
+      "bundleIdentifier": "com.apple.appleseed.FeedbackAssistant",
+      "displayName": "Feedback Assistant",
+      "note": "يرسل ملاحظات النظام والتشخيصات إلى Apple"
+    },
+    {
+      "bundleIdentifier": "com.apple.FolderActionsSetup",
+      "displayName": "إعداد إجراءات المجلد",
+      "note": "يربط المجلدات بإجراءات نصية تلقائية"
+    },
+    {
+      "bundleIdentifier": "com.apple.IPAInstaller",
+      "displayName": "مثبِّت تطبيق iOS",
+      "note": "يثبت حزم تطبيقات iOS بأداة النظام"
+    },
+    {
+      "bundleIdentifier": "com.apple.keychainaccess",
+      "displayName": "الوصول إلى سلسلة المفاتيح",
+      "note": "يدير كلمات السر والشهادات والمفاتيح والعناصر الآمنة"
+    },
+    {
+      "bundleIdentifier": "com.apple.Ticket-Viewer",
+      "displayName": "عارض التذاكر",
+      "note": "يعرض تذاكر Kerberos وحالة المصادقة"
+    },
+    {
+      "bundleIdentifier": "com.apple.wifi.diagnostics",
+      "displayName": "تشخيصات الشبكة اللاسلكية",
+      "note": "يشخص مشاكل Wi-Fi وينشئ تقارير لاسلكية"
+    },
+    {
+      "bundleIdentifier": "com.apple.photobooth",
+      "displayName": "كشك الصور",
+      "note": "تعتبر صور السيلفي بالكاميرا والمؤثرات الخاصة الصغيرة ملائمة أيضًا."
+    },
+    {
+      "bundleIdentifier": "com.apple.podcasts",
+      "displayName": "البودكاست",
+      "note": "البوابة الرسمية للاستماع للبودكاست، مفيدة للتنقل والدراسة"
+    },
+    {
+      "bundleIdentifier": "com.apple.Preview",
+      "displayName": "المعاينة",
+      "note": "أداة Mac الأقل تقديرًا: عرض الصور والتعليق على ملفات PDF وإجراء تعديلات."
+    },
+    {
+      "bundleIdentifier": "com.apple.printcenter",
+      "displayName": "مركز الطباعة",
+      "note": "عرض وإدارة قوائم انتظار الطباعة. بالنسبة لمهام انحشار الورق، راجع هنا أولاً"
+    },
+    {
+      "bundleIdentifier": "com.apple.quicktimeplayerx",
+      "displayName": "QuickTime Player",
+      "note": "أداة راسخة يمكنها تشغيل الشاشة وتسجيلها وتسجيل الصوت"
+    },
+    {
+      "bundleIdentifier": "com.apple.screensharing",
+      "displayName": "مشاركة الشاشة",
+      "note": "التحكم عن بعد بجهاز Mac آخر، وهو أمر مناسب جدًا لمساعدة الأشخاص على."
+    },
+    {
+      "bundleIdentifier": "com.apple.screenshot.launcher",
+      "displayName": "لقطة شاشة",
+      "note": "بوابة لقطة الشاشة وتسجيل الشاشة، خلف Shift-Command-5"
+    },
+    {
+      "bundleIdentifier": "com.apple.scripteditor2",
+      "displayName": "محرر البرامج النصية",
+      "note": "قم بكتابة AppleScript وتشغيله للتحكم في التشغيل الآلي لنظام Mac في."
+    },
+    {
+      "bundleIdentifier": "com.apple.sfsymbols",
+      "displayName": "SF Symbols",
+      "note": "مكتبة الرموز الرسمية لشركة Apple، وهي ضرورية للواجهات الأصلية"
+    },
+    {
+      "bundleIdentifier": "com.apple.shortcuts",
+      "displayName": "الاختصارات",
+      "note": "يعد تجميع إجراءات متعددة في عمليات بنقرة واحدة هو الإصدار الحديث من Automator"
+    },
+    {
+      "bundleIdentifier": "com.apple.siri.launcher",
+      "displayName": "Siri",
+      "note": "مدخل مساعد صوتي، يمكنه التحقق من المعلومات، وفتح التطبيقات، والتحكم في النظام"
+    },
+    {
+      "bundleIdentifier": "com.apple.stickies",
+      "displayName": "الملصقات",
+      "note": "يتم نشر الملاحظات اللاصقة لسطح المكتب والملاحظات المؤقتة أمامك مباشرةً"
+    },
+    {
+      "bundleIdentifier": "com.apple.stocks",
+      "displayName": "Stocks",
+      "note": "شاهد اللوحات الصغيرة للأسهم وديناميكيات السوق"
+    },
+    {
+      "bundleIdentifier": "com.apple.systemprofiler",
+      "displayName": "معلومات النظام",
+      "note": "قم بعرض تفاصيل الأجهزة والبرامج والأجهزة للعثور على التكوين الأكثر دقة"
+    },
+    {
+      "bundleIdentifier": "com.apple.systempreferences",
+      "displayName": "إعدادات النظام",
+      "note": "المدخل الرئيسي لإعدادات Mac، جميع مفاتيح النظام تقريبًا موجودة هنا"
+    },
+    {
+      "bundleIdentifier": "com.apple.textedit",
+      "displayName": "TextEdit",
+      "note": "أبسط محرر نصوص، يفتح TXT وRTF بسرعة كبيرة"
+    },
+    {
+      "bundleIdentifier": "com.apple.backup.launcher",
+      "displayName": "آلة الزمن",
+      "note": "نسخ احتياطي للنظام لاستعادة الملفات عند الحاجة"
+    },
+    {
+      "bundleIdentifier": "com.apple.helpviewer",
+      "displayName": "تلميحات",
+      "note": "نصائح Apple الرسمية لاكتشاف الميزات التي لم تستخدمها من حين لآخر"
+    },
+    {
+      "bundleIdentifier": "com.apple.TV",
+      "displayName": "التلفزيون",
+      "note": "مدخل تشغيل المحتوى السينمائي والتلفزيوني وإدارته"
+    },
+    {
+      "bundleIdentifier": "com.apple.voicememos",
+      "displayName": "مذكرات صوتية",
+      "note": "سجل بسرعة واحفظ إلهام الاجتماع ومواد المقابلة أولاً"
+    },
+    {
+      "bundleIdentifier": "com.apple.voiceoverutility",
+      "displayName": "أداة التعليق الصوتي",
+      "note": "قم بإدارة ميزات إمكانية وصول ذوي الاحتياجات الخاصة لقراءة الشاشة لتسهيل."
+    },
+    {
+      "bundleIdentifier": "com.apple.weather",
+      "displayName": "الطقس",
+      "note": "بوابة توقعات الطقس، تأكد منها قبل الخروج لمزيد من الاستقرار"
+    },
+    {
+      "bundleIdentifier": "com.apple.dt.Xcode",
+      "displayName": "Xcode",
+      "note": "أدوات تطوير Apple لإنشاء تطبيقات iOS وmacOS"
+    },
+    {
+      "bundleIdentifier": "com.apple.garageband10",
+      "displayName": "GarageBand",
+      "note": "أداة إنتاج الموسيقى للمبتدئين من Apple، سهلة الاستخدام للتسجيل والترتيب"
+    },
+    {
+      "bundleIdentifier": "com.apple.FinalCut",
+      "displayName": "Final Cut Pro",
+      "note": "إن أداة تحرير الفيديو الاحترافية من Apple، والقطع، والتلوين، والتصدير."
+    },
+    {
+      "bundleIdentifier": "com.apple.logic10",
+      "displayName": "Logic Pro",
+      "note": "أداة إنتاج الموسيقى الاحترافية من Apple، قوية في التسجيل والترتيب والمزج"
+    },
+    {
+      "bundleIdentifier": "com.apple.TestFlight",
+      "displayName": "TestFlight",
+      "note": "أداة اختبار تطبيقات Apple، وهي مناسبة لتثبيت التطبيقات التجريبية وتجربتها"
+    }
+  ]
+}

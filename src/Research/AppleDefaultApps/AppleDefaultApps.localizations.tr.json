@@ -1,0 +1,453 @@
+{
+  "resourceFormatVersion": 1,
+  "catalogContentVersion": 1,
+  "language": "tr",
+  "localizationsVersion": 2,
+  "entries": [
+    {
+      "bundleIdentifier": "com.apple.finder",
+      "displayName": "Finder",
+      "note": "MacOS sistemi, ilgili sistem yönetimini veya günlük işlemleri."
+    },
+    {
+      "bundleIdentifier": "com.apple.Safari",
+      "displayName": "Safari",
+      "note": "Apple'ın resmi tarayıcısı, güç tasarrufu."
+    },
+    {
+      "bundleIdentifier": "com.apple.mail",
+      "displayName": "Mail",
+      "note": "Sistem posta istemcisi, birden fazla posta kutusu merkezi olarak işlenebilir"
+    },
+    {
+      "bundleIdentifier": "com.apple.MobileSMS",
+      "displayName": "Mesajlar",
+      "note": "iMessage ve SMS portalı, Mac'te mesajları daha hızlı yanıtlayın"
+    },
+    {
+      "bundleIdentifier": "com.apple.FaceTime",
+      "displayName": "FaceTime",
+      "note": "Apple ekosistemine sesli ve görüntülü çağrı girişi"
+    },
+    {
+      "bundleIdentifier": "com.apple.iCal",
+      "displayName": "Takvim",
+      "note": "Programı kafanızdan çıkarın ve zamana görsel bir harita verin"
+    },
+    {
+      "bundleIdentifier": "com.apple.Notes",
+      "displayName": "Notlar",
+      "note": "The fastest system memo, text, pictures and lists can all be collected"
+    },
+    {
+      "bundleIdentifier": "com.apple.reminders",
+      "displayName": "Anımsatıcılar",
+      "note": "Küçük günlük görevleri yakalamak için uygun yapılacaklar ve hatırlatıcılar"
+    },
+    {
+      "bundleIdentifier": "com.apple.Photos",
+      "displayName": "Fotoğraflar",
+      "note": "Sistemin fotoğraf kitaplığı, fotoğrafları yönetmek."
+    },
+    {
+      "bundleIdentifier": "com.apple.Music",
+      "displayName": "Müzik",
+      "note": "Yerel ve akışlı müzik çalar"
+    },
+    {
+      "bundleIdentifier": "com.apple.Terminal",
+      "displayName": "Terminal",
+      "note": "Komut satırı girişi, Mac'in gizli kokpiti"
+    },
+    {
+      "bundleIdentifier": "com.apple.ActivityMonitor",
+      "displayName": "Etkinlik Monitörü",
+      "note": "Kimin güç ve bellek tükettiğini ve bilgisayarınızı yavaşlattığını."
+    },
+    {
+      "bundleIdentifier": "com.apple.airport.airportutility",
+      "displayName": "AirPort İzlencesi",
+      "note": "AirPort'ları ve Time Capsul'leri yönetmek için eski tarz ağ oluşturma."
+    },
+    {
+      "bundleIdentifier": "com.apple.AppStore",
+      "displayName": "App Store",
+      "note": "Resmi Mac yazılım mağazası; uygulamaları."
+    },
+    {
+      "bundleIdentifier": "com.apple.apps.launcher",
+      "displayName": "Uygulamalar",
+      "note": "Uygulamaları sistem düzeyinde hızla açmanıza yardımcı olacak hafif bir."
+    },
+    {
+      "bundleIdentifier": "com.apple.audio.audiomidisetup",
+      "displayName": "Ses/MIDI Ayarları",
+      "note": "Müzisyenler ve hata ayıklayıcılar tarafından yaygın olarak kullanılan."
+    },
+    {
+      "bundleIdentifier": "com.apple.automator",
+      "displayName": "Automator",
+      "note": "Kod yazmadan bir dizi Mac otomasyon eylemini bir araya getirebilirsiniz"
+    },
+    {
+      "bundleIdentifier": "com.apple.bluetoothfileexchange",
+      "displayName": "Bluetooth Dosya Alışverişi",
+      "note": "Dosya göndermek ve almak için Bluetooth'u kullanmak eski modadır ancak."
+    },
+    {
+      "bundleIdentifier": "com.apple.iBooksX",
+      "displayName": "Kitaplar",
+      "note": "Mac'inizi masaya dönüştürmeye uygun."
+    },
+    {
+      "bundleIdentifier": "com.apple.bootcampassistant",
+      "displayName": "Boot Camp Yardımcısı",
+      "note": "Windows'u Intel Mac'e yüklemek için resmi kılavuz"
+    },
+    {
+      "bundleIdentifier": "com.apple.calculator",
+      "displayName": "Hesap Makinesi",
+      "note": "Küçük hesap makinesi, birim dönüştürme ve programcı modu da içeride gizlidir"
+    },
+    {
+      "bundleIdentifier": "com.apple.chess",
+      "displayName": "Satranç",
+      "note": "Kısa molalar ve pratik için yerleşik satranç"
+    },
+    {
+      "bundleIdentifier": "com.apple.clock",
+      "displayName": "Saat",
+      "note": "Alarmlar, zamanlayıcılar."
+    },
+    {
+      "bundleIdentifier": "com.apple.colorsyncutility",
+      "displayName": "ColorSync İzlencesi",
+      "note": "Renk profillerini görüntüleyin ve onarın."
+    },
+    {
+      "bundleIdentifier": "com.apple.console",
+      "displayName": "Konsol",
+      "note": "Sistem günlüklerini görüntüleme penceresi."
+    },
+    {
+      "bundleIdentifier": "com.apple.addressbook",
+      "displayName": "Kişiler",
+      "note": "Mail, Mesajlar ve FaceTime için Kişiler merkezi"
+    },
+    {
+      "bundleIdentifier": "com.apple.dictionary",
+      "displayName": "Sözlük",
+      "note": "Çevrimdışı sözlük ve eş anlamlılar sözlüğü."
+    },
+    {
+      "bundleIdentifier": "com.apple.digitalcolormeter",
+      "displayName": "Sayısal Renk Ölçer",
+      "note": "Ekran rengi seçici, tasarımcıların renkleri geçici olarak seçmesine."
+    },
+    {
+      "bundleIdentifier": "com.apple.DiskUtility",
+      "displayName": "Disk İzlencesi",
+      "note": "Disk, bölüm, format ve ilk yardım, bunlarla uğraşmayın ama önemli"
+    },
+    {
+      "bundleIdentifier": "com.apple.findmy",
+      "displayName": "Bul",
+      "note": "Ekipman bulun, öğeleri bulun ve kayıp Mac'inize eve dönmeniz için."
+    },
+    {
+      "bundleIdentifier": "com.apple.fontbook",
+      "displayName": "Font İzlencesi",
+      "note": "Yazı tipi kurulum ve yönetim merkezi."
+    },
+    {
+      "bundleIdentifier": "com.apple.freeform",
+      "displayName": "Freeform",
+      "note": "Beyin fırtınası, eskiz ve rastgele fikirler için sınırsız beyaz tahta"
+    },
+    {
+      "bundleIdentifier": "com.apple.games",
+      "displayName": "Oyunlar",
+      "note": "Oynanabilir Apple Arcade içeriğini merkezi olarak yönetmek için Apple."
+    },
+    {
+      "bundleIdentifier": "com.apple.grapher",
+      "displayName": "Grafik Çizer",
+      "note": "Grafik denklemleri, matematiksel görselleştirme için gizli bir araç"
+    },
+    {
+      "bundleIdentifier": "com.apple.home",
+      "displayName": "Ev",
+      "note": "Akıllı ev kontrol girişi aydınlatmayı."
+    },
+    {
+      "bundleIdentifier": "com.apple.image_capture",
+      "displayName": "Görüntü Yakalama",
+      "note": "Resimleri kameradan veya tarayıcıdan içe aktarın; basit ama kararlı"
+    },
+    {
+      "bundleIdentifier": "com.apple.generativeplaygroundapp",
+      "displayName": "Playground",
+      "note": "Hızlı yaratıcı taslaklar oluşturmak için mükemmel olan Apple zekasıyla."
+    },
+    {
+      "bundleIdentifier": "com.apple.iMovieApp",
+      "displayName": "iMovie",
+      "note": "Giriş seviyesi video düzenleme."
+    },
+    {
+      "bundleIdentifier": "com.apple.screencontinuity",
+      "displayName": "iPhone Yansıtma",
+      "note": "iPhone'unuzu doğrudan Mac'iniz üzerinde çalıştırarak telefonunuza bir."
+    },
+    {
+      "bundleIdentifier": "com.apple.journal",
+      "displayName": "Günlük",
+      "note": "Günlük parçaları kaydedin ve düşüncelerinizi yavaş yavaş kişisel bir."
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Keynote",
+      "displayName": "Keynote",
+      "note": "Güzel slaytlar oluşturmak kolay, Apple tarzı sunum aracı"
+    },
+    {
+      "bundleIdentifier": "com.apple.magnifier",
+      "displayName": "Büyüteç",
+      "note": "Görüş ve ince incelemeye yardımcı olmak için ekran ayrıntılarını büyütün"
+    },
+    {
+      "bundleIdentifier": "com.apple.Maps",
+      "displayName": "Harita",
+      "note": "Rotaları kontrol edin, şehirleri görüntüleyin ve varış noktalarını."
+    },
+    {
+      "bundleIdentifier": "com.apple.migrateassistant",
+      "displayName": "Geçiş Yardımcısı",
+      "note": "Yeni bir Mac'e geçerken eski verileri yeni makineye taşıyın"
+    },
+    {
+      "bundleIdentifier": "com.apple.exposelauncher",
+      "displayName": "Mission Control",
+      "note": "Pencerenin ve masaüstünün havadan görünümü, eğer dağınıksa bir bakın"
+    },
+    {
+      "bundleIdentifier": "com.apple.news",
+      "displayName": "News",
+      "note": "Seçilen medya içeriğini görüntülemek için uygun Apple News portalı"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Numbers",
+      "displayName": "Numbers",
+      "note": "Apple E-Tablolar aracı, hafif raporlar Excel'den daha yenileyicidir"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Pages",
+      "displayName": "Pages",
+      "note": "Apple kelime işlemcisi, belge yazmak ve dizgi yapmak için güzel"
+    },
+    {
+      "bundleIdentifier": "com.apple.passwords",
+      "displayName": "Parolalar",
+      "note": "Sistem şifre yöneticisi, hesapların."
+    },
+    {
+      "bundleIdentifier": "com.apple.mobilephone",
+      "displayName": "Telefon",
+      "note": "Telefonunuzla Mac'te arama yapın"
+    },
+    {
+      "bundleIdentifier": "com.apple.AboutThisMacLauncher",
+      "displayName": "Bu Mac Hakkında",
+      "note": "Mac modelini, sistem sürümünü ve seri numarasını gösterir"
+    },
+    {
+      "bundleIdentifier": "com.apple.archiveutility",
+      "displayName": "Arşiv İzlencesi",
+      "note": "ZIP ve diğer arşiv dosyalarını sıkıştırır ve açar"
+    },
+    {
+      "bundleIdentifier": "com.apple.DeskCam",
+      "displayName": "Masa Görüntüsü",
+      "note": "Süreklilik Kamerası ile masa görüntüsünü gösterir"
+    },
+    {
+      "bundleIdentifier": "com.apple.DirectoryUtility",
+      "displayName": "Dizin İzlencesi",
+      "note": "Dizin servislerini, LDAP’ı ve ağ hesaplarını ayarlar"
+    },
+    {
+      "bundleIdentifier": "com.apple.DVDPlayer",
+      "displayName": "DVD Oynatıcı",
+      "note": "DVD disklerini ve yerel DVD içeriğini oynatır"
+    },
+    {
+      "bundleIdentifier": "com.apple.ExpansionSlotUtility",
+      "displayName": "Genişleme Yuvası İzlencesi",
+      "note": "Mac Pro genişleme yuvalarını gösterir ve ayarlar"
+    },
+    {
+      "bundleIdentifier": "com.apple.appleseed.FeedbackAssistant",
+      "displayName": "Geri Bildirim Yardımcısı",
+      "note": "Apple’a sistem geri bildirimi ve tanılama gönderir"
+    },
+    {
+      "bundleIdentifier": "com.apple.FolderActionsSetup",
+      "displayName": "Klasör İşlemleri Ayarı",
+      "note": "Klasörlere otomatik betik eylemleri ekler"
+    },
+    {
+      "bundleIdentifier": "com.apple.IPAInstaller",
+      "displayName": "iOS Uygulaması Yükleyici",
+      "note": "iOS uygulama paketlerini sistem aracıyla yükler"
+    },
+    {
+      "bundleIdentifier": "com.apple.keychainaccess",
+      "displayName": "Anahtar Zinciri Erişimi",
+      "note": "Parolaları, sertifikaları, anahtarları ve güvenli öğeleri yönetir"
+    },
+    {
+      "bundleIdentifier": "com.apple.Ticket-Viewer",
+      "displayName": "Bilet Görüntüleyici",
+      "note": "Kerberos biletlerini ve kimlik doğrulama durumunu gösterir"
+    },
+    {
+      "bundleIdentifier": "com.apple.wifi.diagnostics",
+      "displayName": "Kablosuz Ağ Tanıları",
+      "note": "Wi-Fi sorunlarını tanılar ve kablosuz rapor oluşturur"
+    },
+    {
+      "bundleIdentifier": "com.apple.photobooth",
+      "displayName": "Photo Booth",
+      "note": "Kamera özçekimleri ve küçük özel efektler de kamerayı test etmek için."
+    },
+    {
+      "bundleIdentifier": "com.apple.podcasts",
+      "displayName": "Podcast’ler",
+      "note": "İşe gidip gelirken ve ders çalışırken yararlı olan podcast'leri."
+    },
+    {
+      "bundleIdentifier": "com.apple.Preview",
+      "displayName": "Önizleme",
+      "note": "En az beğenilen Mac aracı: Resimleri görüntüleyin."
+    },
+    {
+      "bundleIdentifier": "com.apple.printcenter",
+      "displayName": "Yazıcı Merkezi",
+      "note": "Yazdırma kuyruklarını görüntüleyin ve yönetin."
+    },
+    {
+      "bundleIdentifier": "com.apple.quicktimeplayerx",
+      "displayName": "QuickTime Player",
+      "note": "Ekranı oynatabilen, kaydedebilen ve ses kaydedebilen köklü bir araç"
+    },
+    {
+      "bundleIdentifier": "com.apple.screensharing",
+      "displayName": "Ekran Paylaşma",
+      "note": "İnsanların bilgisayarlarını onarmalarına yardımcı olmak için çok."
+    },
+    {
+      "bundleIdentifier": "com.apple.screenshot.launcher",
+      "displayName": "Ekran Resmi",
+      "note": "Shift-Command-5'in arkasında ekran görüntüsü ve ekran kayıt portalı"
+    },
+    {
+      "bundleIdentifier": "com.apple.scripteditor2",
+      "displayName": "Betik Düzenleyici",
+      "note": "Eski tarz Mac otomasyonunu kontrol etmek için AppleScript yazın ve çalıştırın"
+    },
+    {
+      "bundleIdentifier": "com.apple.sfsymbols",
+      "displayName": "SF Symbols",
+      "note": "Apple'ın yerel arayüzler için gerekli olan resmi sembol kütüphanesi"
+    },
+    {
+      "bundleIdentifier": "com.apple.shortcuts",
+      "displayName": "Kestirmeler",
+      "note": "Birden fazla eylemi tek tıklatma süreçlerine sığdırmak."
+    },
+    {
+      "bundleIdentifier": "com.apple.siri.launcher",
+      "displayName": "Siri",
+      "note": "Sesli asistan girişi, bilgileri kontrol edebilir."
+    },
+    {
+      "bundleIdentifier": "com.apple.stickies",
+      "displayName": "Yapışkan Notlar",
+      "note": "Masaüstü yapışkan notlar, geçici notlar hemen önünüze gönderilir"
+    },
+    {
+      "bundleIdentifier": "com.apple.stocks",
+      "displayName": "Stocks",
+      "note": "Hisse senetleri ve piyasa dinamikleri için küçük panellere bakın"
+    },
+    {
+      "bundleIdentifier": "com.apple.systemprofiler",
+      "displayName": "Sistem Bilgileri",
+      "note": "En doğru yapılandırmayı bulmak için donanım."
+    },
+    {
+      "bundleIdentifier": "com.apple.systempreferences",
+      "displayName": "Sistem Ayarları",
+      "note": "Mac ayarları ana girişi, neredeyse tüm sistem anahtarları burada"
+    },
+    {
+      "bundleIdentifier": "com.apple.textedit",
+      "displayName": "TextEdit",
+      "note": "En basit metin editörü, TXT ve RTF'yi çok hızlı açar"
+    },
+    {
+      "bundleIdentifier": "com.apple.backup.launcher",
+      "displayName": "Time Machine",
+      "note": "Gerektiğinde dosyaları geri yükleyen sistem yedeği"
+    },
+    {
+      "bundleIdentifier": "com.apple.helpviewer",
+      "displayName": "İpuçları",
+      "note": "Apple'ın kullanmadığınız özellikleri zaman zaman keşfetmenize yönelik."
+    },
+    {
+      "bundleIdentifier": "com.apple.TV",
+      "displayName": "TV",
+      "note": "Film ve televizyon içeriği oynatma ve yönetimi girişi"
+    },
+    {
+      "bundleIdentifier": "com.apple.voicememos",
+      "displayName": "Sesli Notlar",
+      "note": "Önce toplantı ilhamlarını ve röportaj malzemelerini hızla kaydedin ve."
+    },
+    {
+      "bundleIdentifier": "com.apple.voiceoverutility",
+      "displayName": "VoiceOver İzlencesi",
+      "note": "Mac'inizin görme engelli kullanıcılar için daha erişilebilir olmasını."
+    },
+    {
+      "bundleIdentifier": "com.apple.weather",
+      "displayName": "Hava Durumu",
+      "note": "Hava tahmini portalı, daha fazla istikrar için dışarı çıkmadan önce."
+    },
+    {
+      "bundleIdentifier": "com.apple.dt.Xcode",
+      "displayName": "Xcode",
+      "note": "iOS ve macOS app geliştirmek için Apple araçları"
+    },
+    {
+      "bundleIdentifier": "com.apple.garageband10",
+      "displayName": "GarageBand",
+      "note": "Apple'ın kayıt ve düzenleme için kullanımı kolay giriş seviyesi müzik."
+    },
+    {
+      "bundleIdentifier": "com.apple.FinalCut",
+      "displayName": "Final Cut Pro",
+      "note": "Apple'ın profesyonel video düzenleme aracı, kesme."
+    },
+    {
+      "bundleIdentifier": "com.apple.logic10",
+      "displayName": "Logic Pro",
+      "note": "Apple'ın kaydetme, düzenleme ve mikslemede güçlü profesyonel müzik."
+    },
+    {
+      "bundleIdentifier": "com.apple.TestFlight",
+      "displayName": "TestFlight",
+      "note": "Beta uygulamaları yüklemek ve deneyimlemek için uygun Apple uygulama."
+    }
+  ]
+}

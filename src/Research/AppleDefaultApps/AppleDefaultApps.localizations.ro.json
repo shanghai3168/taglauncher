@@ -1,0 +1,453 @@
+{
+  "resourceFormatVersion": 1,
+  "catalogContentVersion": 1,
+  "language": "ro",
+  "localizationsVersion": 2,
+  "entries": [
+    {
+      "bundleIdentifier": "com.apple.finder",
+      "displayName": "Finder",
+      "note": "Sistemul macOS vine cu instrumente."
+    },
+    {
+      "bundleIdentifier": "com.apple.Safari",
+      "displayName": "Safari",
+      "note": "Browserul oficial Apple, economisirea energiei."
+    },
+    {
+      "bundleIdentifier": "com.apple.mail",
+      "displayName": "Mail",
+      "note": "Client de e-mail de sistem, mai multe cutii poștale pot fi procesate central"
+    },
+    {
+      "bundleIdentifier": "com.apple.MobileSMS",
+      "displayName": "Mesaje",
+      "note": "Portal iMessage și SMS, răspunde la mesaje mai rapid pe Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.FaceTime",
+      "displayName": "FaceTime",
+      "note": "Intrare apel audio și video în ecosistemul Apple"
+    },
+    {
+      "bundleIdentifier": "com.apple.iCal",
+      "displayName": "Calendar",
+      "note": "Scoate-ți programul din cap și oferă timpului o hartă vizuală"
+    },
+    {
+      "bundleIdentifier": "com.apple.Notes",
+      "displayName": "Notițe",
+      "note": "Cele mai rapide note de sistem, text, imagini și liste pot fi colectate"
+    },
+    {
+      "bundleIdentifier": "com.apple.reminders",
+      "displayName": "Mementouri",
+      "note": "Activități și mementouri."
+    },
+    {
+      "bundleIdentifier": "com.apple.Photos",
+      "displayName": "Poze",
+      "note": "Biblioteca foto de sistem, intrarea principală pentru gestionarea."
+    },
+    {
+      "bundleIdentifier": "com.apple.Music",
+      "displayName": "Muzică",
+      "note": "Player muzical local și în flux"
+    },
+    {
+      "bundleIdentifier": "com.apple.Terminal",
+      "displayName": "Terminal",
+      "note": "Intrare în linia de comandă, cabina ascunsă a Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.ActivityMonitor",
+      "displayName": "Monitor activitate",
+      "note": "Tabloul de bord al Mac pentru a vedea cine consumă energie."
+    },
+    {
+      "bundleIdentifier": "com.apple.airport.airportutility",
+      "displayName": "Utilitar AirPort",
+      "note": "Instrumente vechi de rețea pentru gestionarea AirPort-urilor și Time Capsules"
+    },
+    {
+      "bundleIdentifier": "com.apple.AppStore",
+      "displayName": "App Store",
+      "note": "Magazinul oficial de software pentru Mac."
+    },
+    {
+      "bundleIdentifier": "com.apple.apps.launcher",
+      "displayName": "Aplicații",
+      "note": "Un portal de aplicații ușor pentru a vă ajuta să deschideți rapid."
+    },
+    {
+      "bundleIdentifier": "com.apple.audio.audiomidisetup",
+      "displayName": "Configurare audio MIDI",
+      "note": "Echipamente audio și rutare MIDI."
+    },
+    {
+      "bundleIdentifier": "com.apple.automator",
+      "displayName": "Automator",
+      "note": "Puteți înșira un șir de acțiuni de automatizare Mac fără a scrie cod"
+    },
+    {
+      "bundleIdentifier": "com.apple.bluetoothfileexchange",
+      "displayName": "Schimb fișiere via Bluetooth",
+      "note": "Utilizarea Bluetooth pentru a trimite și a primi fișiere este de modă."
+    },
+    {
+      "bundleIdentifier": "com.apple.iBooksX",
+      "displayName": "Cărți",
+      "note": "Un punct de intrare pentru citirea și gestionarea cărților electronice."
+    },
+    {
+      "bundleIdentifier": "com.apple.bootcampassistant",
+      "displayName": "Asistent Boot Camp",
+      "note": "Ghid oficial pentru instalarea Windows pe Intel Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.calculator",
+      "displayName": "Calculator",
+      "note": "Calculatorul mic, conversia unității și modul programator sunt."
+    },
+    {
+      "bundleIdentifier": "com.apple.chess",
+      "displayName": "Șah",
+      "note": "Șah integrat pentru pauze scurte și exercițiu"
+    },
+    {
+      "bundleIdentifier": "com.apple.clock",
+      "displayName": "Ceas",
+      "note": "Un portal unificat pentru alarme, cronometre, cronometre și ceasuri mondiale"
+    },
+    {
+      "bundleIdentifier": "com.apple.colorsyncutility",
+      "displayName": "Utilitar ColorSync",
+      "note": "Vizualizați și reparați profilele de culoare."
+    },
+    {
+      "bundleIdentifier": "com.apple.console",
+      "displayName": "Consolă",
+      "note": "Fereastra de vizualizare a jurnalelor de sistem este foarte utilă la."
+    },
+    {
+      "bundleIdentifier": "com.apple.addressbook",
+      "displayName": "Contacte",
+      "note": "Centru de contacte pentru e-mail, mesaje și FaceTime"
+    },
+    {
+      "bundleIdentifier": "com.apple.dictionary",
+      "displayName": "Dicționar",
+      "note": "Dicționar și tezaur offline."
+    },
+    {
+      "bundleIdentifier": "com.apple.digitalcolormeter",
+      "displayName": "Colorimetru digital",
+      "note": "Selector de culori pentru ecran."
+    },
+    {
+      "bundleIdentifier": "com.apple.DiskUtility",
+      "displayName": "Utilitar disc",
+      "note": "Disc, partiție, formatare și prim ajutor, nu vă încurcați cu el."
+    },
+    {
+      "bundleIdentifier": "com.apple.findmy",
+      "displayName": "Găsire",
+      "note": "Găsiți echipament, găsiți obiecte și oferiți-vă Mac-ul pierdut indicii."
+    },
+    {
+      "bundleIdentifier": "com.apple.fontbook",
+      "displayName": "Font Book",
+      "note": "Centru de instalare și gestionare a fonturilor."
+    },
+    {
+      "bundleIdentifier": "com.apple.freeform",
+      "displayName": "Freeform",
+      "note": "Table albe nelimitate pentru brainstorming, schițe și idei aleatorii"
+    },
+    {
+      "bundleIdentifier": "com.apple.games",
+      "displayName": "Jocuri",
+      "note": "Portal de jocuri Apple pentru a gestiona centralizat conținutul Apple."
+    },
+    {
+      "bundleIdentifier": "com.apple.grapher",
+      "displayName": "Grapher",
+      "note": "Ecuații grafice, un instrument ascuns pentru vizualizarea matematică"
+    },
+    {
+      "bundleIdentifier": "com.apple.home",
+      "displayName": "Locuință",
+      "note": "Intrarea inteligentă pentru controlul casei poate gestiona iluminatul."
+    },
+    {
+      "bundleIdentifier": "com.apple.image_capture",
+      "displayName": "Transfer de imagini",
+      "note": "Importați imagini de pe cameră sau scaner, simplu, dar stabil"
+    },
+    {
+      "bundleIdentifier": "com.apple.generativeplaygroundapp",
+      "displayName": "Playground",
+      "note": "Generați imagini cu inteligența Apple, perfecte pentru o creație rapidă"
+    },
+    {
+      "bundleIdentifier": "com.apple.iMovieApp",
+      "displayName": "iMovie",
+      "note": "Suficient pentru editare video la nivel de intrare."
+    },
+    {
+      "bundleIdentifier": "com.apple.screencontinuity",
+      "displayName": "Oglindire iPhone",
+      "note": "Operați iPhone-ul direct pe Mac."
+    },
+    {
+      "bundleIdentifier": "com.apple.journal",
+      "displayName": "Jurnal",
+      "note": "Înregistrați fragmente zilnice și transformați-vă încet gândurile."
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Keynote",
+      "displayName": "Keynote",
+      "note": "Instrument de prezentare în stil Apple, ușor de creat diapozitive frumoase"
+    },
+    {
+      "bundleIdentifier": "com.apple.magnifier",
+      "displayName": "Lupă",
+      "note": "Măriți detaliile ecranului pentru a vă ajuta cu vederea și inspecția fină"
+    },
+    {
+      "bundleIdentifier": "com.apple.Maps",
+      "displayName": "Hărți",
+      "note": "Verificați rute, vizualizați orașe și trimiteți destinații pe iPhone"
+    },
+    {
+      "bundleIdentifier": "com.apple.migrateassistant",
+      "displayName": "Asistent de migrare",
+      "note": "Când vă mutați pe un nou Mac, mutați datele vechi pe noul computer"
+    },
+    {
+      "bundleIdentifier": "com.apple.exposelauncher",
+      "displayName": "Mission Control",
+      "note": "Vedere aeriană a ferestrei și a desktopului."
+    },
+    {
+      "bundleIdentifier": "com.apple.news",
+      "displayName": "News",
+      "note": "Portalul Apple News, potrivit pentru vizualizarea conținutului media selectat"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Numbers",
+      "displayName": "Numbers",
+      "note": "Instrumentul Apple Sheets, rapoartele ușoare sunt mai revigorante decât Excel"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Pages",
+      "displayName": "Pages",
+      "note": "Procesor de text Apple, frumos pentru scrierea documentelor și compoziție"
+    },
+    {
+      "bundleIdentifier": "com.apple.passwords",
+      "displayName": "Parole",
+      "note": "Manager de parole de sistem, management centralizat al conturilor."
+    },
+    {
+      "bundleIdentifier": "com.apple.mobilephone",
+      "displayName": "Telefon",
+      "note": "Efectuați apeluri pe Mac cu telefonul dvs"
+    },
+    {
+      "bundleIdentifier": "com.apple.AboutThisMacLauncher",
+      "displayName": "Despre acest Mac",
+      "note": "Afișează modelul Mac, versiunea sistemului și seria"
+    },
+    {
+      "bundleIdentifier": "com.apple.archiveutility",
+      "displayName": "Utilitar arhivare",
+      "note": "Comprimă și extrage ZIP și alte arhive"
+    },
+    {
+      "bundleIdentifier": "com.apple.DeskCam",
+      "displayName": "Vizualizare birou",
+      "note": "Afișează biroul cu Camera Continuitate"
+    },
+    {
+      "bundleIdentifier": "com.apple.DirectoryUtility",
+      "displayName": "Utilitar director",
+      "note": "Configurează servicii director, LDAP și conturi de rețea"
+    },
+    {
+      "bundleIdentifier": "com.apple.DVDPlayer",
+      "displayName": "DVD Player",
+      "note": "Redă discuri DVD și conținut DVD local"
+    },
+    {
+      "bundleIdentifier": "com.apple.ExpansionSlotUtility",
+      "displayName": "Utilitar Slot de extensie",
+      "note": "Afișează și configurează sloturile de extensie Mac Pro"
+    },
+    {
+      "bundleIdentifier": "com.apple.appleseed.FeedbackAssistant",
+      "displayName": "Feedback Assistant",
+      "note": "Trimite feedback de sistem și diagnostice către Apple"
+    },
+    {
+      "bundleIdentifier": "com.apple.FolderActionsSetup",
+      "displayName": "Configurare acțiuni de dosar",
+      "note": "Adaugă acțiuni script automate la dosare"
+    },
+    {
+      "bundleIdentifier": "com.apple.IPAInstaller",
+      "displayName": "Program de instalare aplicații iOS",
+      "note": "Instalează pachete de aplicații iOS cu instrumentul sistem"
+    },
+    {
+      "bundleIdentifier": "com.apple.keychainaccess",
+      "displayName": "Acces portchei",
+      "note": "Gestionează parole, certificate, chei și elemente sigure"
+    },
+    {
+      "bundleIdentifier": "com.apple.Ticket-Viewer",
+      "displayName": "Observator tichet",
+      "note": "Afișează tichete Kerberos și starea autentificării"
+    },
+    {
+      "bundleIdentifier": "com.apple.wifi.diagnostics",
+      "displayName": "Diagnoză wireless",
+      "note": "Diagnostichează Wi-Fi și creează rapoarte wireless"
+    },
+    {
+      "bundleIdentifier": "com.apple.photobooth",
+      "displayName": "Photo Booth",
+      "note": "Selfie-urile camerei și micile efecte speciale sunt, de asemenea."
+    },
+    {
+      "bundleIdentifier": "com.apple.podcasts",
+      "displayName": "Podcasturi",
+      "note": "Portalul oficial pentru ascultarea podcast-urilor."
+    },
+    {
+      "bundleIdentifier": "com.apple.Preview",
+      "displayName": "Previzualizare",
+      "note": "Cel mai subestimat instrument pentru Mac: vizualizați imagini."
+    },
+    {
+      "bundleIdentifier": "com.apple.printcenter",
+      "displayName": "Centru tipărire",
+      "note": "Vizualizați și gestionați cozile de imprimare."
+    },
+    {
+      "bundleIdentifier": "com.apple.quicktimeplayerx",
+      "displayName": "QuickTime Player",
+      "note": "Un instrument bine stabilit care poate reda."
+    },
+    {
+      "bundleIdentifier": "com.apple.screensharing",
+      "displayName": "Partajare ecran",
+      "note": "Controlați de la distanță un alt Mac."
+    },
+    {
+      "bundleIdentifier": "com.apple.screenshot.launcher",
+      "displayName": "Captură de ecran",
+      "note": "Captură de ecran și portal de înregistrare a ecranului."
+    },
+    {
+      "bundleIdentifier": "com.apple.scripteditor2",
+      "displayName": "Editor scripturi",
+      "note": "Scrieți și rulați AppleScript pentru a controla automatizarea Mac de."
+    },
+    {
+      "bundleIdentifier": "com.apple.sfsymbols",
+      "displayName": "SF Symbols",
+      "note": "Biblioteca oficială de simboluri a Apple, esențială pentru interfețele native"
+    },
+    {
+      "bundleIdentifier": "com.apple.shortcuts",
+      "displayName": "Scurtături",
+      "note": "Acordarea mai multor acțiuni în procese cu un singur clic este."
+    },
+    {
+      "bundleIdentifier": "com.apple.siri.launcher",
+      "displayName": "Siri",
+      "note": "Intrarea asistentului vocal, poate verifica informații."
+    },
+    {
+      "bundleIdentifier": "com.apple.stickies",
+      "displayName": "Note adezive",
+      "note": "Notele lipicioase de pe desktop."
+    },
+    {
+      "bundleIdentifier": "com.apple.stocks",
+      "displayName": "Stocks",
+      "note": "Vedeți panouri mici pentru acțiuni și dinamica pieței"
+    },
+    {
+      "bundleIdentifier": "com.apple.systemprofiler",
+      "displayName": "Informații sistem",
+      "note": "Vizualizați detaliile hardware."
+    },
+    {
+      "bundleIdentifier": "com.apple.systempreferences",
+      "displayName": "Configurări sistem",
+      "note": "Intrarea principală a setărilor Mac."
+    },
+    {
+      "bundleIdentifier": "com.apple.textedit",
+      "displayName": "TextEdit",
+      "note": "Cel mai simplu editor de text, deschide TXT și RTF foarte repede"
+    },
+    {
+      "bundleIdentifier": "com.apple.backup.launcher",
+      "displayName": "Time Machine",
+      "note": "Backup de sistem pentru restaurarea fișierelor la nevoie"
+    },
+    {
+      "bundleIdentifier": "com.apple.helpviewer",
+      "displayName": "Sfaturi",
+      "note": "Sfaturi oficiale Apple pentru a descoperi ocazional funcții pe care nu."
+    },
+    {
+      "bundleIdentifier": "com.apple.TV",
+      "displayName": "TV",
+      "note": "Redarea conținutului de film și televiziune și intrare de gestionare"
+    },
+    {
+      "bundleIdentifier": "com.apple.voicememos",
+      "displayName": "Reportofon",
+      "note": "Înregistrați rapid, salvați mai întâi materialele de inspirație pentru."
+    },
+    {
+      "bundleIdentifier": "com.apple.voiceoverutility",
+      "displayName": "Utilitar VoiceOver",
+      "note": "Gestionați funcțiile de accesibilitate pentru citirea ecranului pentru."
+    },
+    {
+      "bundleIdentifier": "com.apple.weather",
+      "displayName": "Vremea",
+      "note": "Portalul de prognoză meteo."
+    },
+    {
+      "bundleIdentifier": "com.apple.dt.Xcode",
+      "displayName": "Xcode",
+      "note": "Instrumente Apple pentru aplicații iOS și macOS"
+    },
+    {
+      "bundleIdentifier": "com.apple.garageband10",
+      "displayName": "GarageBand",
+      "note": "Instrumentul de producție muzicală de la Apple."
+    },
+    {
+      "bundleIdentifier": "com.apple.FinalCut",
+      "displayName": "Final Cut Pro",
+      "note": "Instrumentul profesional de editare video de la Apple, tăierea."
+    },
+    {
+      "bundleIdentifier": "com.apple.logic10",
+      "displayName": "Logic Pro",
+      "note": "Instrumentul profesional de producție muzicală Apple."
+    },
+    {
+      "bundleIdentifier": "com.apple.TestFlight",
+      "displayName": "TestFlight",
+      "note": "Instrument de testare a aplicațiilor Apple."
+    }
+  ]
+}

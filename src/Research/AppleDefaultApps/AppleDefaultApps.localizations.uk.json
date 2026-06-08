@@ -1,0 +1,453 @@
+{
+  "resourceFormatVersion": 1,
+  "catalogContentVersion": 1,
+  "language": "uk",
+  "localizationsVersion": 2,
+  "entries": [
+    {
+      "bundleIdentifier": "com.apple.finder",
+      "displayName": "Finder",
+      "note": "Система macOS постачається з інструментами."
+    },
+    {
+      "bundleIdentifier": "com.apple.Safari",
+      "displayName": "Safari",
+      "note": "Офіційний браузер Apple, енергозбереження."
+    },
+    {
+      "bundleIdentifier": "com.apple.mail",
+      "displayName": "Пошта",
+      "note": "Системний поштовий клієнт."
+    },
+    {
+      "bundleIdentifier": "com.apple.MobileSMS",
+      "displayName": "Повідомлення",
+      "note": "Портал iMessage і SMS, відповідайте на повідомлення швидше на Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.FaceTime",
+      "displayName": "FaceTime",
+      "note": "Вхід аудіо- та відеодзвінків в екосистему Apple"
+    },
+    {
+      "bundleIdentifier": "com.apple.iCal",
+      "displayName": "Календар",
+      "note": "Викиньте з голови розклад і створіть візуальну карту часу"
+    },
+    {
+      "bundleIdentifier": "com.apple.Notes",
+      "displayName": "Нотатки",
+      "note": "Системні нагадування, текст, зображення та списки можна зібрати найшвидше"
+    },
+    {
+      "bundleIdentifier": "com.apple.reminders",
+      "displayName": "Нагадування",
+      "note": "Справи та нагадування, які підходять для виконання невеликих щоденних справ"
+    },
+    {
+      "bundleIdentifier": "com.apple.Photos",
+      "displayName": "Фотографії",
+      "note": "Системна бібліотека фотографій, головний вхід для керування."
+    },
+    {
+      "bundleIdentifier": "com.apple.Music",
+      "displayName": "Музика",
+      "note": "Локальний і потоковий музичний плеєр"
+    },
+    {
+      "bundleIdentifier": "com.apple.Terminal",
+      "displayName": "Термінал",
+      "note": "Введення командного рядка, прихована кабіна Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.ActivityMonitor",
+      "displayName": "Монітор активності",
+      "note": "Інформаційна панель Mac, створена для того, щоб побачити."
+    },
+    {
+      "bundleIdentifier": "com.apple.airport.airportutility",
+      "displayName": "Утиліта AirPort",
+      "note": "Старі шкільні мережеві інструменти для керування AirPort і Time Capsule"
+    },
+    {
+      "bundleIdentifier": "com.apple.AppStore",
+      "displayName": "App Store",
+      "note": "Офіційний магазин програмного забезпечення Mac. Почніть тут."
+    },
+    {
+      "bundleIdentifier": "com.apple.apps.launcher",
+      "displayName": "Програми",
+      "note": "Легкий портал програм, який допоможе вам швидко відкривати програми на."
+    },
+    {
+      "bundleIdentifier": "com.apple.audio.audiomidisetup",
+      "displayName": "Конфігуратор Audio-MIDI",
+      "note": "Аудіообладнання та маршрутизація MIDI, як правило."
+    },
+    {
+      "bundleIdentifier": "com.apple.automator",
+      "displayName": "Automator",
+      "note": "Ви можете об’єднати рядок дій автоматизації Mac без написання коду"
+    },
+    {
+      "bundleIdentifier": "com.apple.bluetoothfileexchange",
+      "displayName": "Обмін по Bluetooth",
+      "note": "Використання Bluetooth для надсилання та отримання файлів є."
+    },
+    {
+      "bundleIdentifier": "com.apple.iBooksX",
+      "displayName": "Книги",
+      "note": "Читайте й керуйте електронними книгами на Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.bootcampassistant",
+      "displayName": "Асистент Boot Camp",
+      "note": "Офіційний посібник із встановлення Windows на Intel Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.calculator",
+      "displayName": "Калькулятор",
+      "note": "Невеликий калькулятор, конвертер одиниць і режим програміста також."
+    },
+    {
+      "bundleIdentifier": "com.apple.chess",
+      "displayName": "Шахи",
+      "note": "Вбудовані шахи для короткої перерви й тренування"
+    },
+    {
+      "bundleIdentifier": "com.apple.clock",
+      "displayName": "Годинник",
+      "note": "Єдиний портал для будильників, таймерів, секундомірів і світового годинника"
+    },
+    {
+      "bundleIdentifier": "com.apple.colorsyncutility",
+      "displayName": "Утиліта ColorSync",
+      "note": "Переглядайте та виправляйте профілі кольорів."
+    },
+    {
+      "bundleIdentifier": "com.apple.console",
+      "displayName": "Консоль",
+      "note": "Вікно для перегляду системних журналів дуже корисне під час усунення."
+    },
+    {
+      "bundleIdentifier": "com.apple.addressbook",
+      "displayName": "Контакти",
+      "note": "Центр контактів для пошти, повідомлень і FaceTime"
+    },
+    {
+      "bundleIdentifier": "com.apple.dictionary",
+      "displayName": "Словник",
+      "note": "Офлайн-словник і тезаурус."
+    },
+    {
+      "bundleIdentifier": "com.apple.digitalcolormeter",
+      "displayName": "Кольоромір",
+      "note": "Вибір кольорів екрана, невеликий артефакт для дизайнерів."
+    },
+    {
+      "bundleIdentifier": "com.apple.DiskUtility",
+      "displayName": "Дискова утиліта",
+      "note": "Диск, розділ, форматування та перша допомога, не возьтеся з цим."
+    },
+    {
+      "bundleIdentifier": "com.apple.findmy",
+      "displayName": "Локатор",
+      "note": "Знайдіть обладнання, знайдіть предмети та дайте своєму втраченому Mac."
+    },
+    {
+      "bundleIdentifier": "com.apple.fontbook",
+      "displayName": "Книга шрифтів",
+      "note": "Центр встановлення та керування шрифтами."
+    },
+    {
+      "bundleIdentifier": "com.apple.freeform",
+      "displayName": "Freeform",
+      "note": "Необмежена кількість дошок для мозкового штурму."
+    },
+    {
+      "bundleIdentifier": "com.apple.games",
+      "displayName": "Ігри",
+      "note": "Ігровий портал Apple для централізованого керування вмістом Apple Arcade"
+    },
+    {
+      "bundleIdentifier": "com.apple.grapher",
+      "displayName": "Графер",
+      "note": "Граф рівнянь, прихований інструмент для математичної візуалізації"
+    },
+    {
+      "bundleIdentifier": "com.apple.home",
+      "displayName": "Дім",
+      "note": "Контрольний вхід «Розумний будинок» може керувати освітленням."
+    },
+    {
+      "bundleIdentifier": "com.apple.image_capture",
+      "displayName": "Фотоприймач",
+      "note": "Імпортуйте зображення з камери чи сканера, просто, але стабільно"
+    },
+    {
+      "bundleIdentifier": "com.apple.generativeplaygroundapp",
+      "displayName": "Playground",
+      "note": "Створюйте швидкі чернетки зображень з Apple Intelligence"
+    },
+    {
+      "bundleIdentifier": "com.apple.iMovieApp",
+      "displayName": "iMovie",
+      "note": "Досить для редагування відео початкового рівня."
+    },
+    {
+      "bundleIdentifier": "com.apple.screencontinuity",
+      "displayName": "Дублювання iPhone",
+      "note": "Керуйте своїм iPhone безпосередньо на своєму Mac."
+    },
+    {
+      "bundleIdentifier": "com.apple.journal",
+      "displayName": "Щоденник",
+      "note": "Записуйте щоденні фрагменти та повільно перетворюйте свої думки на."
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Keynote",
+      "displayName": "Keynote",
+      "note": "Інструмент для презентацій у стилі Apple, який легко створює гарні слайди"
+    },
+    {
+      "bundleIdentifier": "com.apple.magnifier",
+      "displayName": "Лупа",
+      "note": "Збільшуйте деталі екрана, щоб полегшити зір і точний огляд"
+    },
+    {
+      "bundleIdentifier": "com.apple.Maps",
+      "displayName": "Карти",
+      "note": "Перевіряйте маршрути, переглядайте міста та надсилайте пункти."
+    },
+    {
+      "bundleIdentifier": "com.apple.migrateassistant",
+      "displayName": "Асистент міграції",
+      "note": "Переходячи на новий Mac, перемістіть старі дані на новий комп’ютер"
+    },
+    {
+      "bundleIdentifier": "com.apple.exposelauncher",
+      "displayName": "Mission Control",
+      "note": "Вигляд вікна та робочого столу з висоти пташиного польоту."
+    },
+    {
+      "bundleIdentifier": "com.apple.news",
+      "displayName": "News",
+      "note": "Портал Apple News, підходить для перегляду вибраного медіаконтенту"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Numbers",
+      "displayName": "Numbers",
+      "note": "Інструмент Apple Sheets, легкі звіти оновлюються краще, ніж Excel"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Pages",
+      "displayName": "Pages",
+      "note": "Текстовий процесор Apple, прекрасний для написання документів і верстки"
+    },
+    {
+      "bundleIdentifier": "com.apple.passwords",
+      "displayName": "Паролі",
+      "note": "Менеджер системних паролів."
+    },
+    {
+      "bundleIdentifier": "com.apple.mobilephone",
+      "displayName": "Телефон",
+      "note": "Телефонуйте на Mac за допомогою телефону"
+    },
+    {
+      "bundleIdentifier": "com.apple.AboutThisMacLauncher",
+      "displayName": "Про цей компʼютер",
+      "note": "Показує модель Mac, версію системи та серійний номер"
+    },
+    {
+      "bundleIdentifier": "com.apple.archiveutility",
+      "displayName": "Архіватор",
+      "note": "Стискає й розпаковує ZIP та інші архіви"
+    },
+    {
+      "bundleIdentifier": "com.apple.DeskCam",
+      "displayName": "Вид на стіл",
+      "note": "Показує стіл за допомогою камери Continuity"
+    },
+    {
+      "bundleIdentifier": "com.apple.DirectoryUtility",
+      "displayName": "Утиліта каталогів",
+      "note": "Налаштовує служби каталогів, LDAP і мережеві обліковки"
+    },
+    {
+      "bundleIdentifier": "com.apple.DVDPlayer",
+      "displayName": "DVD-плеєр",
+      "note": "Відтворює DVD-диски та локальний DVD-вміст"
+    },
+    {
+      "bundleIdentifier": "com.apple.ExpansionSlotUtility",
+      "displayName": "Утиліта слотів розширення",
+      "note": "Показує й налаштовує слоти розширення Mac Pro"
+    },
+    {
+      "bundleIdentifier": "com.apple.appleseed.FeedbackAssistant",
+      "displayName": "Асистент відгуків",
+      "note": "Надсилає Apple відгуки про систему та діагностику"
+    },
+    {
+      "bundleIdentifier": "com.apple.FolderActionsSetup",
+      "displayName": "Автоматизатор папок",
+      "note": "Додає автоматичні скрипти до папок"
+    },
+    {
+      "bundleIdentifier": "com.apple.IPAInstaller",
+      "displayName": "Інсталятор програм iOS",
+      "note": "Встановлює пакети iOS App системним помічником"
+    },
+    {
+      "bundleIdentifier": "com.apple.keychainaccess",
+      "displayName": "Ключар",
+      "note": "Керує паролями, сертифікатами, ключами та захищеними об’єктами"
+    },
+    {
+      "bundleIdentifier": "com.apple.Ticket-Viewer",
+      "displayName": "Переглядач квитків",
+      "note": "Показує квитки Kerberos і стан автентифікації"
+    },
+    {
+      "bundleIdentifier": "com.apple.wifi.diagnostics",
+      "displayName": "Діагностика бездротових мереж",
+      "note": "Діагностує Wi-Fi і створює бездротові звіти"
+    },
+    {
+      "bundleIdentifier": "com.apple.photobooth",
+      "displayName": "Photo Booth",
+      "note": "Селфі з камери і невеликі спецефекти також зручні для тестування камери"
+    },
+    {
+      "bundleIdentifier": "com.apple.podcasts",
+      "displayName": "Подкасти",
+      "note": "Офіційний портал для прослуховування подкастів."
+    },
+    {
+      "bundleIdentifier": "com.apple.Preview",
+      "displayName": "Оглядач",
+      "note": "Найбільш недооцінений інструмент для Mac: переглядайте зображення."
+    },
+    {
+      "bundleIdentifier": "com.apple.printcenter",
+      "displayName": "Центр друку",
+      "note": "Переглядайте черги друку та керуйте ними."
+    },
+    {
+      "bundleIdentifier": "com.apple.quicktimeplayerx",
+      "displayName": "QuickTime Player",
+      "note": "Добре перевірений інструмент, який може відтворювати."
+    },
+    {
+      "bundleIdentifier": "com.apple.screensharing",
+      "displayName": "Спільний екран",
+      "note": "Дистанційно керуйте іншим Mac."
+    },
+    {
+      "bundleIdentifier": "com.apple.screenshot.launcher",
+      "displayName": "Знімок екрана",
+      "note": "Скріншот і портал запису екрана, за Shift-Command-5"
+    },
+    {
+      "bundleIdentifier": "com.apple.scripteditor2",
+      "displayName": "Редактор скриптів",
+      "note": "Напишіть і запустіть AppleScript."
+    },
+    {
+      "bundleIdentifier": "com.apple.sfsymbols",
+      "displayName": "SF Symbols",
+      "note": "Офіційна бібліотека символів Apple, необхідна для власних інтерфейсів"
+    },
+    {
+      "bundleIdentifier": "com.apple.shortcuts",
+      "displayName": "Команди",
+      "note": "Сучасна версія Automator — об’єднання кількох дій у процеси одним."
+    },
+    {
+      "bundleIdentifier": "com.apple.siri.launcher",
+      "displayName": "Siri",
+      "note": "Вхід голосового помічника, який може перевіряти інформацію."
+    },
+    {
+      "bundleIdentifier": "com.apple.stickies",
+      "displayName": "Наліпки",
+      "note": "Настільні наліпки, тимчасові замітки розклеєні прямо перед вами"
+    },
+    {
+      "bundleIdentifier": "com.apple.stocks",
+      "displayName": "Stocks",
+      "note": "Перегляньте невеликі панелі акцій і ринкової динаміки"
+    },
+    {
+      "bundleIdentifier": "com.apple.systemprofiler",
+      "displayName": "Системна інформація",
+      "note": "Перегляньте деталі обладнання, програмного забезпечення та пристроїв."
+    },
+    {
+      "bundleIdentifier": "com.apple.systempreferences",
+      "displayName": "Системні параметри",
+      "note": "Налаштування Mac головний вхід, майже всі системні перемикачі тут"
+    },
+    {
+      "bundleIdentifier": "com.apple.textedit",
+      "displayName": "Мініредактор",
+      "note": "Найпростіший текстовий редактор, відкриває TXT і RTF дуже швидко"
+    },
+    {
+      "bundleIdentifier": "com.apple.backup.launcher",
+      "displayName": "Time Machine",
+      "note": "Системна копія для відновлення файлів за потреби"
+    },
+    {
+      "bundleIdentifier": "com.apple.helpviewer",
+      "displayName": "Поради",
+      "note": "Офіційні поради Apple, як час від часу відкривати функції."
+    },
+    {
+      "bundleIdentifier": "com.apple.TV",
+      "displayName": "TV",
+      "note": "Вхід для відтворення та керування контентом кіно та телебачення"
+    },
+    {
+      "bundleIdentifier": "com.apple.voicememos",
+      "displayName": "Диктофон",
+      "note": "Спершу швидко записуйте, зберігайте натхненні зустрічі та матеріали інтерв’ю"
+    },
+    {
+      "bundleIdentifier": "com.apple.voiceoverutility",
+      "displayName": "Утиліта VoiceOver",
+      "note": "Керуйте функціями доступності для читання з екрана."
+    },
+    {
+      "bundleIdentifier": "com.apple.weather",
+      "displayName": "Погода",
+      "note": "Портал прогнозу погоди, перевірте його перед виходом для більшої стабільності"
+    },
+    {
+      "bundleIdentifier": "com.apple.dt.Xcode",
+      "displayName": "Xcode",
+      "note": "Інструменти Apple для створення програм iOS і macOS"
+    },
+    {
+      "bundleIdentifier": "com.apple.garageband10",
+      "displayName": "GarageBand",
+      "note": "Простий у використанні інструмент для створення музики початкового."
+    },
+    {
+      "bundleIdentifier": "com.apple.FinalCut",
+      "displayName": "Final Cut Pro",
+      "note": "Професійний інструмент для редагування відео від Apple, обрізання."
+    },
+    {
+      "bundleIdentifier": "com.apple.logic10",
+      "displayName": "Logic Pro",
+      "note": "Професійний музичний інструмент від Apple, потужний для запису."
+    },
+    {
+      "bundleIdentifier": "com.apple.TestFlight",
+      "displayName": "TestFlight",
+      "note": "Інструмент тестування додатків Apple."
+    }
+  ]
+}

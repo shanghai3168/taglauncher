@@ -1,0 +1,963 @@
+rank,name,defaultTagIDs,defaultTagNamesEN,bundleIdentifier,normalizedName,oldCategoryCandidates,sourceEvidence,mergedCandidateRanks,tagReviewStatus,tagConfidence,regionHints,notes
+1,Google Chrome,browser,Browsers,com.google.Chrome,google-chrome,browser,global_manual_seed:1|icon_pack_signal_seed:1|homebrew_cask_30d:10,1|57,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=38,207;percent=1.62;cask=google-chrome"
+2,Microsoft Edge,browser,Browsers,com.microsoft.edgemac,microsoft-edge,browser,global_manual_seed:2|icon_pack_signal_seed:2|homebrew_cask_30d:118,2|218,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=3,760;percent=0.16;cask=microsoft-edge"
+3,Firefox,browser,Browsers,org.mozilla.firefox,firefox,browser,global_manual_seed:3|icon_pack_signal_seed:3|homebrew_cask_30d:23|icon_pack_signal_seed:22,3|89,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=17,437;percent=0.74;cask=firefox / appears in common macOS icon-pack style seed list"
+4,Brave Browser,browser,Browsers,com.brave.Browser,brave-browser,browser,global_manual_seed:4|icon_pack_signal_seed:4|homebrew_cask_30d:60|icon_pack_signal_seed:23,4|93,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=7,616;percent=0.32;cask=brave-browser / appears in common macOS icon-pack style seed list"
+5,Arc,browser,Browsers,company.thebrowser.Browser,arc,browser,global_manual_seed:5|icon_pack_signal_seed:5|homebrew_cask_30d:132,5|230,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=2,978;percent=0.13;cask=arc"
+6,Finder,file-management|system,File Management|System Apps,com.apple.finder,finder,system|other,apple_system_seed:1|icon_pack_signal_seed:1,6|19,top300_needs_human_review,0.82,,Apple system/pro app seed / appears in common macOS icon-pack style seed list
+7,Slack,communication|productivity,Communication|Productivity,com.tinyspeck.slackmacgap,slack,communication,global_manual_seed:6|icon_pack_signal_seed:6|homebrew_cask_30d:59|icon_pack_signal_seed:10,7|35,top300_needs_human_review,0.82,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=7,638;percent=0.32;cask=slack / appears in common macOS icon-pack style seed list"
+8,Docker Desktop,development,Development,com.docker.docker,docker-desktop,development,homebrew_cask_30d:4|icon_pack_signal_seed:26|global_manual_seed:15|icon_pack_signal_seed:15,8,top300_needs_human_review,0.78,,"homebrew_count=50,869;percent=2.15;cask=docker-desktop / appears in common macOS icon-pack style seed list / global high-frequency seed; bundle id should be verified before final catalog"
+9,WeChat,communication,Communication,com.tencent.xinWeChat,wechat,communication,china_manual_seed:1|homebrew_cask_30d:186,9|283,top300_needs_human_review,0.78,CN,"China/Asia high-frequency seed; bundle id should be verified before final catalog / homebrew_count=1,870;percent=0.08;cask=wechat"
+10,Safari,browser,Browsers,com.apple.Safari,safari,browser,apple_system_seed:2|icon_pack_signal_seed:2,10|24,top300_needs_human_review,0.78,,Apple system/pro app seed / appears in common macOS icon-pack style seed list
+11,Discord,communication,Communication,com.hnc.Discord,discord,communication,global_manual_seed:7|icon_pack_signal_seed:7|homebrew_cask_30d:53|icon_pack_signal_seed:11,11|38,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=8,722;percent=0.37;cask=discord / appears in common macOS icon-pack style seed list"
+12,QQ,communication,Communication,com.tencent.qq,qq,communication,china_manual_seed:2|homebrew_cask_30d:491,12|587,top300_needs_human_review,0.78,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog / homebrew_count=462;percent=0.02;cask=qq
+13,Visual Studio Code,development,Development,com.microsoft.VSCode,visual-studio-code,development,homebrew_cask_30d:5|icon_pack_signal_seed:8|global_manual_seed:13|icon_pack_signal_seed:13,13,top300_needs_human_review,0.78,,"homebrew_count=47,454;percent=2.01;cask=visual-studio-code / appears in common macOS icon-pack style seed list / global high-frequency seed; bundle id should be verified before final catalog"
+14,Mail,communication,Communication,com.apple.mail,mail,communication,apple_system_seed:3|icon_pack_signal_seed:3,14|28,top300_needs_human_review,0.78,,Apple system/pro app seed / appears in common macOS icon-pack style seed list
+15,Zoom,communication|productivity,Communication|Productivity,us.zoom.xos,zoom,communication,global_manual_seed:8|icon_pack_signal_seed:8|homebrew_cask_30d:86|icon_pack_signal_seed:29,15|118,top300_needs_human_review,0.82,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=5,151;percent=0.22;cask=zoom / appears in common macOS icon-pack style seed list"
+16,Claude Code,ai-tools|development,AI Tools|Development,,claude-code,ai-tools,homebrew_cask_30d:1,16,top300_needs_human_review,0.82,,"homebrew_count=125,989;percent=5.33;cask=claude-code"
+17,Tencent Meeting,communication|productivity,Communication|Productivity,com.tencent.meeting,tencent-meeting,communication,china_manual_seed:3|homebrew_cask_30d:443,17|540,top300_needs_human_review,0.82,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog / homebrew_count=540;percent=0.02;cask=tencent-meeting
+18,Messages,communication,Communication,com.apple.MobileSMS,messages,communication|other,apple_system_seed:4|icon_pack_signal_seed:4,18|32,top300_needs_human_review,0.78,,Apple system/pro app seed / appears in common macOS icon-pack style seed list
+20,Microsoft Teams,communication|productivity,Communication|Productivity,com.microsoft.teams2,microsoft-teams,communication,global_manual_seed:9|icon_pack_signal_seed:9|homebrew_cask_30d:107,20|209,top300_needs_human_review,0.82,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=4,298;percent=0.18;cask=microsoft-teams"
+21,Codex,ai-tools|development,AI Tools|Development,,codex,ai-tools,homebrew_cask_30d:2,21,top300_needs_human_review,0.82,,"homebrew_count=92,932;percent=3.93;cask=codex"
+22,DingTalk,communication|productivity,Communication|Productivity,com.alibaba.DingTalkMac,dingtalk,communication,china_manual_seed:4|homebrew_cask_30d:875,22|971,top300_needs_human_review,0.82,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog / homebrew_count=207;percent=0.01;cask=dingtalk
+23,FaceTime,communication,Communication,com.apple.FaceTime,facetime,communication,apple_system_seed:5,23,top300_needs_human_review,0.78,,Apple system/pro app seed
+25,Telegram,communication,Communication,ru.keepcoder.Telegram,telegram,communication,global_manual_seed:10|icon_pack_signal_seed:10|homebrew_cask_30d:100|icon_pack_signal_seed:28,25|115,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=4,478;percent=0.19;cask=telegram / appears in common macOS icon-pack style seed list"
+26,Gcloud CLI,development,Development,,gcloud-cli,development,homebrew_cask_30d:3,26,top300_needs_human_review,0.78,,"homebrew_count=57,761;percent=2.44;cask=gcloud-cli"
+27,Calendar,productivity,Productivity,com.apple.iCal,calendar,productivity,apple_system_seed:6|icon_pack_signal_seed:5,27|37,top300_needs_human_review,0.78,,Apple system/pro app seed / appears in common macOS icon-pack style seed list
+29,WhatsApp,communication,Communication,net.whatsapp.WhatsApp,whatsapp,communication,global_manual_seed:11|icon_pack_signal_seed:11|homebrew_cask_30d:80,29|183,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=5,502;percent=0.23;cask=whatsapp"
+30,Feishu,communication|productivity,Communication|Productivity,com.electron.lark,feishu,communication,china_manual_seed:6|homebrew_cask_30d:361,30|459,top300_needs_human_review,0.82,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog / China/Asia high-frequency seed; bundle id should be verified before final catalog / homebrew_count=714;percent=0.03;cask=feishu
+31,Notes,writing,Writing,com.apple.Notes,notes,writing,apple_system_seed:7|icon_pack_signal_seed:6,31|42,top300_needs_human_review,0.78,,Apple system/pro app seed / appears in common macOS icon-pack style seed list
+33,Signal,communication,Communication,org.whispersystems.signal-desktop,signal,communication,global_manual_seed:12|icon_pack_signal_seed:12|homebrew_cask_30d:136,33|236,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=2,851;percent=0.12;cask=signal"
+34,Baidu Netdisk,transfer,Uploads & Downloads,com.baidu.netdisk,baidu-netdisk,productivity,china_manual_seed:7,34,top300_needs_human_review,0.78,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog
+36,Reminders,productivity,Productivity,com.apple.reminders,reminders,productivity,apple_system_seed:8,36,top300_needs_human_review,0.78,,Apple system/pro app seed
+39,Ghostty,development,Development,com.mitchellh.ghostty,ghostty,development,homebrew_cask_30d:6|global_manual_seed:19|icon_pack_signal_seed:19,39,top300_needs_human_review,0.78,,"homebrew_count=42,210;percent=1.79;cask=ghostty / global high-frequency seed; bundle id should be verified before final catalog"
+40,WPS Office,productivity,Productivity,com.kingsoft.wpsoffice.mac,wps-office,productivity,china_manual_seed:8,40,top300_needs_human_review,0.78,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog
+41,Photos,picture-photo,Pictures & Photos,com.apple.Photos,photos,media,apple_system_seed:9,41,top300_needs_human_review,0.78,,Apple system/pro app seed
+43,Cursor,ai-tools|development,AI Tools|Development,com.todesktop.230313mzl4w4u92,cursor,ai-tools|development,global_manual_seed:14|icon_pack_signal_seed:14|homebrew_cask_30d:38,43|146,top300_needs_human_review,0.82,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=11,043;percent=0.47;cask=cursor"
+44,Figma,design|productivity,Design|Productivity,com.figma.Desktop,figma,design,homebrew_cask_30d:116|icon_pack_signal_seed:12|global_manual_seed:20|icon_pack_signal_seed:20,44,top300_needs_human_review,0.82,,"homebrew_count=3,795;percent=0.16;cask=figma / appears in common macOS icon-pack style seed list / global high-frequency seed; bundle id should be verified before final catalog"
+45,NetEase Cloud Music,audio|entertainment,Audio|Entertainment,com.netease.163music,netease-cloud-music,media,china_manual_seed:9,45,top300_needs_human_review,0.82,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog
+46,Music,audio|entertainment,Audio|Entertainment,com.apple.Music,music,media,apple_system_seed:10,46,top300_needs_human_review,0.82,,Apple system/pro app seed
+47,Terminal,development|system|utilities,Development|System Apps|Utilities,com.apple.Terminal,terminal,development,icon_pack_signal_seed:7|apple_system_seed:14,47,top300_needs_human_review,0.82,,appears in common macOS icon-pack style seed list / Apple system/pro app seed
+48,Iterm2,development,Development,com.googlecode.iterm2,iterm2,development,homebrew_cask_30d:13|icon_pack_signal_seed:27|global_manual_seed:18|icon_pack_signal_seed:18,48,top300_needs_human_review,0.78,,"homebrew_count=31,112;percent=1.32;cask=iterm2 / appears in common macOS icon-pack style seed list / global high-frequency seed; bundle id should be verified before final catalog"
+49,QQ Music,audio|entertainment,Audio|Entertainment,com.tencent.QQMusicMac,qq-music,media,china_manual_seed:10,49,top300_needs_human_review,0.82,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog
+50,TV,video|media|entertainment,Video|Media|Entertainment,com.apple.TV,tv,media,apple_system_seed:11,50,top300_needs_human_review,0.82,,Apple system/pro app seed
+51,GitHub Desktop,development,Development,com.github.GitHubClient,github-desktop,development,global_manual_seed:16|icon_pack_signal_seed:16|icon_pack_signal_seed:9,51|55,top300_needs_human_review,0.78,,global high-frequency seed; bundle id should be verified before final catalog / appears in common macOS icon-pack style seed list
+52,Tencent Video,video|media|entertainment,Video|Media|Entertainment,com.tencent.tenvideo,tencent-video,media,china_manual_seed:11,52,top300_needs_human_review,0.82,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog
+53,Ngrok,development,Development,,ngrok,other,homebrew_cask_30d:7,53,top300_needs_human_review,0.78,,"homebrew_count=40,118;percent=1.70;cask=ngrok"
+54,Podcasts,audio|entertainment,Audio|Entertainment,com.apple.podcasts,podcasts,media,apple_system_seed:12,54,top300_needs_human_review,0.82,,Apple system/pro app seed
+56,Postman,development,Development,com.postmanlabs.mac,postman,development,global_manual_seed:17|icon_pack_signal_seed:17|homebrew_cask_30d:31,56|136,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=12,369;percent=0.52;cask=postman"
+58,iQIYI,video|media|entertainment,Video|Media|Entertainment,com.iqiyi.player,iqiyi,media,china_manual_seed:12,58,top300_needs_human_review,0.82,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog
+59,Android Platform Tools,development,Development,,android-platform-tools,other,homebrew_cask_30d:8,59,top300_needs_human_review,0.78,,"homebrew_count=38,796;percent=1.64;cask=android-platform-tools"
+60,Preview,picture-photo|system|utilities,Pictures & Photos|System Apps|Utilities,com.apple.Preview,preview,utilities,apple_system_seed:13,60,top300_needs_human_review,0.82,,Apple system/pro app seed
+61,Notion,writing|productivity,Writing|Productivity,notion.id,notion,writing|productivity,homebrew_cask_30d:74|icon_pack_signal_seed:16|global_manual_seed:27|icon_pack_signal_seed:27,61,top300_needs_human_review,0.82,,"homebrew_count=5,737;percent=0.24;cask=notion / appears in common macOS icon-pack style seed list / global high-frequency seed; bundle id should be verified before final catalog"
+62,Youku,video|media|entertainment,Video|Media|Entertainment,com.youku.mac,youku,media,china_manual_seed:13,62,top300_needs_human_review,0.82,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog
+63,Libreoffice,productivity,Productivity,,libreoffice,other,homebrew_cask_30d:9,63,top300_needs_human_review,0.78,,"homebrew_count=38,795;percent=1.64;cask=libreoffice"
+64,Bilibili,video|media|entertainment,Video|Media|Entertainment,com.bilibili.bilibili,bilibili,media|other,china_manual_seed:14|homebrew_cask_30d:886,64|985,top300_needs_human_review,0.82,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog / homebrew_count=203;percent=0.01;cask=bilibili
+65,Obsidian,writing,Writing,md.obsidian,obsidian,writing,homebrew_cask_30d:18|icon_pack_signal_seed:17|global_manual_seed:28|icon_pack_signal_seed:28,65,top300_needs_human_review,0.78,,"homebrew_count=23,465;percent=0.99;cask=obsidian / appears in common macOS icon-pack style seed list / global high-frequency seed; bundle id should be verified before final catalog"
+66,Activity Monitor,system|utilities,System Apps|Utilities,com.apple.ActivityMonitor,activity-monitor,system,apple_system_seed:15,66,top300_needs_human_review,0.82,,Apple system/pro app seed
+67,Spotify,audio|entertainment,Audio|Entertainment,com.spotify.client,spotify,media,homebrew_cask_30d:55|icon_pack_signal_seed:18|global_manual_seed:37|icon_pack_signal_seed:37,67,top300_needs_human_review,0.82,,"homebrew_count=8,669;percent=0.37;cask=spotify / appears in common macOS icon-pack style seed list / global high-frequency seed; bundle id should be verified before final catalog"
+68,Ximalaya,audio|media|entertainment,Audio|Media|Entertainment,com.ximalaya.ting,ximalaya,media,china_manual_seed:15,68,top300_needs_human_review,0.82,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog
+69,Cc Switch,ai-tools|development,AI Tools|Development,,cc-switch,other,homebrew_cask_30d:11,69,top300_needs_human_review,0.82,,"homebrew_count=34,136;percent=1.44;cask=cc-switch"
+70,Disk Utility,system|utilities,System Apps|Utilities,com.apple.DiskUtility,disk-utility,system,apple_system_seed:16,70,top300_needs_human_review,0.82,,Apple system/pro app seed
+71,Sketch,design|productivity,Design|Productivity,com.bohemiancoding.sketch3,sketch,design,icon_pack_signal_seed:13|global_manual_seed:21|icon_pack_signal_seed:21,71,top300_needs_human_review,0.82,,appears in common macOS icon-pack style seed list / global high-frequency seed; bundle id should be verified before final catalog
+72,1password CLI,security|utilities,Security|Utilities,,1password-cli,productivity,homebrew_cask_30d:14,72,top300_needs_human_review,0.82,,"homebrew_count=30,099;percent=1.27;cask=1password-cli"
+73,Sogou Input,utilities,Utilities,com.sogou.inputmethod.sogou,sogou-input,utilities,china_manual_seed:16,73,top300_needs_human_review,0.78,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog
+74,VLC,video|media,Video|Media,org.videolan.vlc,vlc,media,homebrew_cask_30d:44|icon_pack_signal_seed:19|global_manual_seed:38|icon_pack_signal_seed:38,74,top300_needs_human_review,0.82,,"homebrew_count=10,229;percent=0.43;cask=vlc / appears in common macOS icon-pack style seed list / global high-frequency seed; bundle id should be verified before final catalog"
+75,Copilot CLI,ai-tools|development,AI Tools|Development,,copilot-cli,other,homebrew_cask_30d:12,75,top300_needs_human_review,0.82,,"homebrew_count=31,513;percent=1.33;cask=copilot-cli"
+76,System Settings,system|utilities,System Apps|Utilities,com.apple.systempreferences,system-settings,system,apple_system_seed:17,76,top300_needs_human_review,0.82,,Apple system/pro app seed
+77,Photoshop,design|picture-photo,Design|Pictures & Photos,,photoshop,design,icon_pack_signal_seed:14,77,top300_needs_human_review,0.82,,appears in common macOS icon-pack style seed list
+78,Adobe Photoshop,design|picture-photo,Design|Pictures & Photos,com.adobe.Photoshop,adobe-photoshop,design,global_manual_seed:22|icon_pack_signal_seed:22,78,top300_needs_human_review,0.82,,global high-frequency seed; bundle id should be verified before final catalog
+79,Steam,game|entertainment,Games|Entertainment,com.valvesoftware.steam,steam,entertainment,homebrew_cask_30d:112|icon_pack_signal_seed:20|global_manual_seed:41|icon_pack_signal_seed:41,79,top300_needs_human_review,0.82,,"homebrew_count=3,925;percent=0.17;cask=steam / appears in common macOS icon-pack style seed list / global high-frequency seed; bundle id should be verified before final catalog"
+80,Tencent Lemon Cleaner,utilities,Utilities,com.tencent.Lemon,tencent-lemon-cleaner,utilities,china_manual_seed:17,80,top300_needs_human_review,0.78,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog
+81,App Store,system|utilities,System Apps|Utilities,com.apple.AppStore,app-store,system,apple_system_seed:18,81,top300_needs_human_review,0.82,,Apple system/pro app seed
+82,Illustrator,design,Design,,illustrator,design,icon_pack_signal_seed:15,82,top300_needs_human_review,0.78,,appears in common macOS icon-pack style seed list
+83,Adobe Illustrator,design,Design,com.adobe.illustrator,adobe-illustrator,design,global_manual_seed:23|icon_pack_signal_seed:23,83,top300_needs_human_review,0.78,,global high-frequency seed; bundle id should be verified before final catalog
+84,Claude,ai-tools|productivity,AI Tools|Productivity,com.anthropic.claudefordesktop,claude,ai-tools,homebrew_cask_30d:16|global_manual_seed:44|icon_pack_signal_seed:44,84,top300_needs_human_review,0.82,,"homebrew_count=24,729;percent=1.05;cask=claude / global high-frequency seed; bundle id should be verified before final catalog"
+85,PicGo,utilities,Utilities,com.molunerfinn.PicGo,picgo,utilities,china_manual_seed:18,85,top300_needs_human_review,0.78,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog
+86,Maps,productivity,Productivity,com.apple.Maps,maps,productivity,apple_system_seed:19,86,top300_needs_human_review,0.78,,Apple system/pro app seed
+87,Adobe Lightroom,design|picture-photo,Design|Pictures & Photos,com.adobe.Lightroom,adobe-lightroom,design,global_manual_seed:24|icon_pack_signal_seed:24,87,top300_needs_human_review,0.82,,global high-frequency seed; bundle id should be verified before final catalog
+88,ClashX,utilities,Utilities,com.west2online.ClashX,clashx,utilities,china_manual_seed:19,88,top300_needs_human_review,0.78,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog
+90,Freeform,productivity,Productivity,com.apple.freeform,freeform,productivity,apple_system_seed:20,90,top300_needs_human_review,0.78,,Apple system/pro app seed
+91,Git Credential Manager,development,Development,,git-credential-manager,other,homebrew_cask_30d:15,91,top300_needs_human_review,0.78,,"homebrew_count=28,755;percent=1.22;cask=git-credential-manager"
+92,Blender,design,Design,org.blenderfoundation.blender,blender,design,global_manual_seed:25|icon_pack_signal_seed:25|homebrew_cask_30d:75,92|179,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=5,722;percent=0.24;cask=blender"
+94,Surge,security|utilities,Security|Utilities,com.nssurge.surge-mac,surge,utilities,china_manual_seed:20,94,top300_needs_human_review,0.82,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog
+95,Books,education,Education,com.apple.iBooksX,books,education,apple_system_seed:21,95,top300_needs_human_review,0.78,,Apple system/pro app seed
+96,Canva,design|productivity,Design|Productivity,com.canva.CanvaDesktop,canva,design|other,global_manual_seed:26|icon_pack_signal_seed:26|homebrew_cask_30d:623,96|721,top300_needs_human_review,0.82,,global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=336;percent=0.01;cask=canva
+97,Raycast,productivity|utilities|system-enhancement,Productivity|Utilities|System Enhancements,com.raycast.macos,raycast,productivity,homebrew_cask_30d:33|icon_pack_signal_seed:24|global_manual_seed:35|icon_pack_signal_seed:35,97,top300_needs_human_review,0.82,,"homebrew_count=12,016;percent=0.51;cask=raycast / appears in common macOS icon-pack style seed list / global high-frequency seed; bundle id should be verified before final catalog"
+98,Yuque,entertainment,Entertainment,com.alipay.hulu,yuque,writing,china_manual_seed:21,98,top300_needs_human_review,0.78,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog
+99,Keynote,productivity,Productivity,com.apple.iWork.Keynote,keynote,productivity,apple_system_seed:22,99,top300_needs_human_review,0.78,,Apple system/pro app seed
+100,Microsoft/git/microsoft Git,development,Development,,microsoft-git-microsoft-git,other,homebrew_cask_30d:17,100,top300_needs_human_review,0.78,,"homebrew_count=24,171;percent=1.02;cask=microsoft/git/microsoft-git"
+101,Alfred,productivity|utilities|system-enhancement,Productivity|Utilities|System Enhancements,com.runningwithcrayons.Alfred,alfred,productivity,homebrew_cask_30d:163|icon_pack_signal_seed:25|global_manual_seed:36|icon_pack_signal_seed:36,101,top300_needs_human_review,0.78,,"homebrew_count=2,269;percent=0.10;cask=alfred / appears in common macOS icon-pack style seed list / global high-frequency seed; bundle id should be verified before final catalog"
+102,Youdao Dictionary,education,Education,com.youdao.YoudaoDict,youdao-dictionary,education,china_manual_seed:22,102,top300_needs_human_review,0.78,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog
+103,Numbers,productivity,Productivity,com.apple.iWork.Numbers,numbers,productivity,apple_system_seed:23,103,top300_needs_human_review,0.78,,Apple system/pro app seed
+104,Chromedriver,browser,Browsers,,chromedriver,browser,homebrew_cask_30d:21,104,top300_needs_human_review,0.78,,"homebrew_count=21,563;percent=0.91;cask=chromedriver"
+105,Eudic,education,Education,com.eusoft.eudic,eudic,education,china_manual_seed:23,105,top300_needs_human_review,0.78,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog
+106,Orbstack,development,Development,,orbstack,other,homebrew_cask_30d:19,106,top300_needs_human_review,0.78,,"homebrew_count=23,411;percent=0.99;cask=orbstack"
+107,Pages,writing,Writing,com.apple.iWork.Pages,pages,writing,apple_system_seed:24,107,top300_needs_human_review,0.78,,Apple system/pro app seed
+108,Chrome,browser,Browsers,,chrome,browser,icon_pack_signal_seed:21,108,top300_needs_human_review,0.78,,appears in common macOS icon-pack style seed list
+109,Microsoft Word,writing,Writing,com.microsoft.Word,microsoft-word,writing|productivity,global_manual_seed:29|icon_pack_signal_seed:29|homebrew_cask_30d:228,109|325,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=1,521;percent=0.06;cask=microsoft-word"
+110,MWeb,writing,Writing,com.coderforart.MWeb3,mweb,writing,china_manual_seed:24,110,top300_needs_human_review,0.78,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog
+111,Android Commandlinetools,development,Development,,android-commandlinetools,other,homebrew_cask_30d:20,111,top300_needs_human_review,0.78,,"homebrew_count=22,475;percent=0.95;cask=android-commandlinetools"
+112,GarageBand,audio|media,Audio|Media,com.apple.garageband10,garageband,media,apple_system_seed:25,112,top300_needs_human_review,0.78,,Apple system/pro app seed
+113,Microsoft Excel,productivity,Productivity,com.microsoft.Excel,microsoft-excel,productivity,global_manual_seed:30|icon_pack_signal_seed:30|homebrew_cask_30d:233,113|330,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=1,463;percent=0.06;cask=microsoft-excel"
+114,MarginNote,education,Education,QReader.MarginStudyMac,marginnote,education,china_manual_seed:25,114,top300_needs_human_review,0.78,CN,China/Asia high-frequency seed; bundle id should be verified before final catalog
+116,iMovie,media,Media,com.apple.iMovieApp,imovie,media,apple_system_seed:26,116,top300_needs_human_review,0.78,,Apple system/pro app seed
+117,Microsoft PowerPoint,productivity,Productivity,com.microsoft.Powerpoint,microsoft-powerpoint,productivity,global_manual_seed:31|icon_pack_signal_seed:31|homebrew_cask_30d:269,117|365,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=1,166;percent=0.05;cask=microsoft-powerpoint"
+119,Final Cut Pro,video|media,Video|Media,com.apple.FinalCut,final-cut-pro,media,apple_system_seed:27,119,top300_needs_human_review,0.78,,Apple system/pro app seed
+120,Flutter,development,Development,,flutter,other,homebrew_cask_30d:22,120,top300_needs_human_review,0.78,,"homebrew_count=20,144;percent=0.85;cask=flutter"
+121,1Password,security|utilities,Security|Utilities,com.1password.1password,1password,productivity,global_manual_seed:32|icon_pack_signal_seed:32|homebrew_cask_30d:73|icon_pack_signal_seed:30,121|122,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=5,763;percent=0.24;cask=1password / appears in common macOS icon-pack style seed list"
+123,Logic Pro,audio|media,Audio|Media,com.apple.logic10,logic-pro,media,apple_system_seed:28,123,top300_needs_human_review,0.78,,Apple system/pro app seed
+124,Dropbox,productivity|transfer,Productivity|Uploads & Downloads,com.getdropbox.dropbox,dropbox,productivity,global_manual_seed:33|icon_pack_signal_seed:33|homebrew_cask_30d:235|icon_pack_signal_seed:31,124|125,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=1,443;percent=0.06;cask=dropbox / appears in common macOS icon-pack style seed list"
+126,Tailscale App,security|utilities,Security|Utilities,,tailscale-app,utilities,homebrew_cask_30d:26,126,top300_needs_human_review,0.78,,"homebrew_count=16,462;percent=0.70;cask=tailscale-app"
+127,Temurin@17,development,Development,,temurin-17,other,homebrew_cask_30d:24,127,top300_needs_human_review,0.78,,"homebrew_count=17,341;percent=0.73;cask=temurin@17"
+128,Xcode,development,Development,com.apple.dt.Xcode,xcode,development,apple_system_seed:29,128,top300_needs_human_review,0.78,,Apple system/pro app seed
+129,Google Drive,productivity|transfer,Productivity|Uploads & Downloads,com.google.drivefs,google-drive,productivity,global_manual_seed:34|icon_pack_signal_seed:34|homebrew_cask_30d:121,129|220,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=3,468;percent=0.15;cask=google-drive"
+130,Font Jetbrains Mono Nerd Font,development|utilities,Development|Utilities,,font-jetbrains-mono-nerd-font,other,homebrew_cask_30d:25,130,top300_needs_human_review,0.78,,"homebrew_count=17,089;percent=0.72;cask=font-jetbrains-mono-nerd-font"
+131,TestFlight,development,Development,com.apple.TestFlight,testflight,development,apple_system_seed:30,131,top300_needs_human_review,0.78,,Apple system/pro app seed
+132,Claude Code@latest,ai-tools|development,AI Tools|Development,,claude-code-latest,ai-tools,homebrew_cask_30d:28,132,top300_needs_human_review,0.78,,"homebrew_count=14,865;percent=0.63;cask=claude-code@latest"
+133,Stats,utilities,Utilities,,stats,utilities,homebrew_cask_30d:29,133,top300_needs_human_review,0.78,,"homebrew_count=14,324;percent=0.61;cask=stats"
+134,Warp,development,Development,,warp,other,homebrew_cask_30d:27,134,top300_needs_human_review,0.78,,"homebrew_count=16,349;percent=0.69;cask=warp"
+135,Zed,development,Development,,zed,development,homebrew_cask_30d:30,135,top300_needs_human_review,0.78,,"homebrew_count=13,979;percent=0.59;cask=zed"
+137,IINA,video|media,Video|Media,com.colliderli.iina,iina,media,global_manual_seed:39|icon_pack_signal_seed:39|homebrew_cask_30d:62,137|167,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=6,984;percent=0.30;cask=iina"
+138,OBS Studio,video|media,Video|Media,com.obsproject.obs-studio,obs-studio,media,global_manual_seed:40|icon_pack_signal_seed:40,138,top300_needs_human_review,0.78,,global high-frequency seed; bundle id should be verified before final catalog
+139,Xdevplatform/tap/xurl,development,Development,,xdevplatform-tap-xurl,development,homebrew_cask_30d:34,139,top300_needs_human_review,0.78,,"homebrew_count=11,995;percent=0.51;cask=xdevplatform/tap/xurl"
+140,Temurin@21,development,Development,,temurin-21,other,homebrew_cask_30d:32,140,top300_needs_human_review,0.78,,"homebrew_count=12,257;percent=0.52;cask=temurin@21"
+141,Epic Games Launcher,game|entertainment,Games|Entertainment,com.epicgames.EpicGamesLauncher,epic-games-launcher,entertainment,global_manual_seed:42|icon_pack_signal_seed:42,141,top300_needs_human_review,0.78,,global high-frequency seed; bundle id should be verified before final catalog
+142,Android Studio,development,Development,,android-studio,development,homebrew_cask_30d:35,142,top300_needs_human_review,0.78,,"homebrew_count=11,972;percent=0.51;cask=android-studio"
+143,ChatGPT,ai-tools|productivity,AI Tools|Productivity,com.openai.chat,chatgpt,ai-tools,global_manual_seed:43|icon_pack_signal_seed:43|homebrew_cask_30d:65,143|169,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=6,478;percent=0.27;cask=chatgpt"
+144,Rectangle,utilities|system-enhancement,Utilities|System Enhancements,,rectangle,productivity,homebrew_cask_30d:37,144,top300_needs_human_review,0.78,,"homebrew_count=11,392;percent=0.48;cask=rectangle"
+145,Perplexity,ai-tools|productivity,AI Tools|Productivity,ai.perplexity.mac,perplexity,ai-tools,global_manual_seed:45|icon_pack_signal_seed:45,145,top300_needs_human_review,0.78,,global high-frequency seed; bundle id should be verified before final catalog
+147,Macfuse,utilities,Utilities,,macfuse,other,homebrew_cask_30d:36,147,top300_needs_human_review,0.78,,"homebrew_count=11,874;percent=0.50;cask=macfuse"
+148,LM Studio,ai-tools|development,AI Tools|Development,ai.lmstudio.app,lm-studio,ai-tools,global_manual_seed:46|icon_pack_signal_seed:46|homebrew_cask_30d:66,148|171,top300_needs_human_review,0.78,,"global high-frequency seed; bundle id should be verified before final catalog / homebrew_count=6,386;percent=0.27;cask=lm-studio"
+149,Dbeaver Community,development,Development,,dbeaver-community,development,homebrew_cask_30d:39,149,top300_needs_human_review,0.78,,"homebrew_count=10,967;percent=0.46;cask=dbeaver-community"
+150,Ollama,ai-tools|development,AI Tools|Development,com.electron.ollama,ollama,ai-tools,global_manual_seed:47|icon_pack_signal_seed:47,150,top300_needs_human_review,0.78,,global high-frequency seed; bundle id should be verified before final catalog
+151,Dotnet SDK,development,Development,,dotnet-sdk,other,homebrew_cask_30d:40,151,top300_needs_human_review,0.78,,"homebrew_count=10,721;percent=0.45;cask=dotnet-sdk"
+152,Ngrok/ngrok/ngrok,development,Development,,ngrok-ngrok-ngrok,other,homebrew_cask_30d:41,152,top300_needs_human_review,0.78,,"homebrew_count=10,700;percent=0.45;cask=ngrok/ngrok/ngrok"
+153,Opencode Desktop,ai-tools|development,AI Tools|Development,,opencode-desktop,other,homebrew_cask_30d:42,153,top300_needs_human_review,0.78,,"homebrew_count=10,478;percent=0.44;cask=opencode-desktop"
+154,Maccy,utilities|system-enhancement,Utilities|System Enhancements,,maccy,utilities,homebrew_cask_30d:45,154,top300_needs_human_review,0.78,,"homebrew_count=9,986;percent=0.42;cask=maccy"
+155,Blackhole 2ch,audio|media|utilities,Audio|Media|Utilities,,blackhole-2ch,other,homebrew_cask_30d:43,155,top300_needs_human_review,0.78,,"homebrew_count=10,362;percent=0.44;cask=blackhole-2ch"
+156,Codex App,ai-tools|development,AI Tools|Development,,codex-app,ai-tools,homebrew_cask_30d:47,156,top300_needs_human_review,0.78,,"homebrew_count=9,449;percent=0.40;cask=codex-app"
+157,Ollama App,ai-tools|development,AI Tools|Development,,ollama-app,ai-tools,homebrew_cask_30d:48,157,top300_needs_human_review,0.78,,"homebrew_count=9,317;percent=0.39;cask=ollama-app"
+158,Session Manager Plugin,development,Development,,session-manager-plugin,other,homebrew_cask_30d:46,158,top300_needs_human_review,0.78,,"homebrew_count=9,850;percent=0.42;cask=session-manager-plugin"
+159,Temurin,development,Development,,temurin,other,homebrew_cask_30d:49,159,top300_needs_human_review,0.78,,"homebrew_count=9,157;percent=0.39;cask=temurin"
+160,Wine Stable,utilities,Utilities,,wine-stable,other,homebrew_cask_30d:50,160,top300_needs_human_review,0.78,,"homebrew_count=8,926;percent=0.38;cask=wine-stable"
+161,Betterdisplay,utilities|system-enhancement,Utilities|System Enhancements,,betterdisplay,other,homebrew_cask_30d:51,161,top300_needs_human_review,0.78,,"homebrew_count=8,865;percent=0.37;cask=betterdisplay"
+162,Mitmproxy,security|utilities,Security|Utilities,,mitmproxy,other,homebrew_cask_30d:52,162,top300_needs_human_review,0.78,,"homebrew_count=8,751;percent=0.37;cask=mitmproxy"
+163,Font Meslo Lg Nerd Font,utilities,Utilities,,font-meslo-lg-nerd-font,other,homebrew_cask_30d:54,163,top300_needs_human_review,0.78,,"homebrew_count=8,673;percent=0.37;cask=font-meslo-lg-nerd-font"
+164,Steipete/tap/codexbar,ai-tools|development,AI Tools|Development,,steipete-tap-codexbar,other,homebrew_cask_30d:56,164,top300_needs_human_review,0.78,,"homebrew_count=8,470;percent=0.36;cask=steipete/tap/codexbar"
+165,Gstreamer Runtime,development,Development,,gstreamer-runtime,other,homebrew_cask_30d:57,165,top300_needs_human_review,0.78,,"homebrew_count=8,316;percent=0.35;cask=gstreamer-runtime"
+166,Basictex,development,Development,,basictex,other,homebrew_cask_30d:58,166,top300_needs_human_review,0.78,,"homebrew_count=8,138;percent=0.34;cask=basictex"
+168,Cmux,development,Development,,cmux,other,homebrew_cask_30d:61,168,top300_needs_human_review,0.78,,"homebrew_count=7,307;percent=0.31;cask=cmux"
+170,Zulu@17,development,Development,,zulu-17,other,homebrew_cask_30d:63,170,top300_needs_human_review,0.78,,"homebrew_count=6,739;percent=0.29;cask=zulu@17"
+172,Xquartz,development|utilities,Development|Utilities,,xquartz,other,homebrew_cask_30d:64,172,top300_needs_human_review,0.78,,"homebrew_count=6,708;percent=0.28;cask=xquartz"
+173,Miniconda,development,Development,,miniconda,other,homebrew_cask_30d:67,173,top300_needs_human_review,0.78,,"homebrew_count=6,257;percent=0.26;cask=miniconda"
+174,Warrensbox/tap/tfswitch,development,Development,,warrensbox-tap-tfswitch,other,homebrew_cask_30d:68,174,top300_needs_human_review,0.78,,"homebrew_count=6,145;percent=0.26;cask=warrensbox/tap/tfswitch"
+175,Jordanbaird Ice,utilities|system-enhancement,Utilities|System Enhancements,,jordanbaird-ice,other,homebrew_cask_30d:69,175,top300_needs_human_review,0.78,,"homebrew_count=6,076;percent=0.26;cask=jordanbaird-ice"
+176,Sublime Text,development,Development,,sublime-text,development,homebrew_cask_30d:72,176,top300_needs_human_review,0.78,,"homebrew_count=5,818;percent=0.25;cask=sublime-text"
+177,Localsend,transfer|utilities,Uploads & Downloads|Utilities,,localsend,other,homebrew_cask_30d:70,177,top300_needs_human_review,0.78,,"homebrew_count=5,860;percent=0.25;cask=localsend"
+178,Sikarugir App/sikarugir/sikarugir,other,Other,,sikarugir-app-sikarugir-sikarugir,other,homebrew_cask_30d:71,178,needs_classification,0.30,,"homebrew_count=5,833;percent=0.25;cask=sikarugir-app/sikarugir/sikarugir"
+180,Alt Tab,utilities|system-enhancement,Utilities|System Enhancements,,alt-tab,utilities,homebrew_cask_30d:76,180,top300_needs_human_review,0.78,,"homebrew_count=5,664;percent=0.24;cask=alt-tab"
+181,Karabiner Elements,utilities|system-enhancement,Utilities|System Enhancements,,karabiner-elements,utilities,homebrew_cask_30d:78,181,top300_needs_human_review,0.78,,"homebrew_count=5,557;percent=0.24;cask=karabiner-elements"
+182,Hammerspoon,development|system-enhancement|utilities,Development|System Enhancements|Utilities,,hammerspoon,other,homebrew_cask_30d:77,182,top300_needs_human_review,0.78,,"homebrew_count=5,566;percent=0.24;cask=hammerspoon"
+184,Font Fira Code Nerd Font,development|utilities,Development|Utilities,,font-fira-code-nerd-font,other,homebrew_cask_30d:79,184,top300_needs_human_review,0.78,,"homebrew_count=5,520;percent=0.23;cask=font-fira-code-nerd-font"
+185,Utm,development,Development,,utm,other,homebrew_cask_30d:81,185,top300_needs_human_review,0.78,,"homebrew_count=5,477;percent=0.23;cask=utm"
+186,Openclaw,other,Other,,openclaw,other,homebrew_cask_30d:82,186,needs_classification,0.30,,"homebrew_count=5,456;percent=0.23;cask=openclaw"
+187,Adobe Acrobat Reader,design,Design,,adobe-acrobat-reader,design,homebrew_cask_30d:85,187,top300_needs_human_review,0.78,,"homebrew_count=5,165;percent=0.22;cask=adobe-acrobat-reader"
+188,Font Hack Nerd Font,utilities,Utilities,,font-hack-nerd-font,other,homebrew_cask_30d:83,188,top300_needs_human_review,0.78,,"homebrew_count=5,338;percent=0.23;cask=font-hack-nerd-font"
+189,Bruno,development,Development,,bruno,other,homebrew_cask_30d:84,189,top300_needs_human_review,0.78,,"homebrew_count=5,218;percent=0.22;cask=bruno"
+190,Bitwarden,security|utilities,Security|Utilities,,bitwarden,productivity,homebrew_cask_30d:87,190,top300_needs_human_review,0.78,,"homebrew_count=5,147;percent=0.22;cask=bitwarden"
+191,DB Browser For Sqlite,browser,Browsers,,db-browser-for-sqlite,browser,homebrew_cask_30d:90,191,top300_needs_human_review,0.78,,"homebrew_count=4,891;percent=0.21;cask=db-browser-for-sqlite"
+192,Nikitabobko/tap/aerospace,utilities|system-enhancement,Utilities|System Enhancements,,nikitabobko-tap-aerospace,other,homebrew_cask_30d:88,192,top300_needs_human_review,0.78,,"homebrew_count=5,139;percent=0.22;cask=nikitabobko/tap/aerospace"
+193,Chromium,browser,Browsers,,chromium,browser,homebrew_cask_30d:91,193,top300_needs_human_review,0.78,,"homebrew_count=4,865;percent=0.21;cask=chromium"
+194,Inkscape,design,Design,,inkscape,other,homebrew_cask_30d:89,194,top300_needs_human_review,0.78,,"homebrew_count=5,135;percent=0.22;cask=inkscape"
+195,Font Jetbrains Mono,development|utilities,Development|Utilities,,font-jetbrains-mono,other,homebrew_cask_30d:92,195,top300_needs_human_review,0.78,,"homebrew_count=4,836;percent=0.20;cask=font-jetbrains-mono"
+196,Drawio,design,Design,,drawio,other,homebrew_cask_30d:93,196,top300_needs_human_review,0.78,,"homebrew_count=4,802;percent=0.20;cask=drawio"
+197,Github,development,Development,,github,development,homebrew_cask_30d:96,197,top300_needs_human_review,0.78,,"homebrew_count=4,736;percent=0.20;cask=github"
+198,Mactex,development,Development,,mactex,other,homebrew_cask_30d:94,198,top300_needs_human_review,0.78,,"homebrew_count=4,751;percent=0.20;cask=mactex"
+199,Linearmouse,productivity,Productivity,,linearmouse,productivity,homebrew_cask_30d:97,199,top300_needs_human_review,0.78,,"homebrew_count=4,734;percent=0.20;cask=linearmouse"
+200,Miniforge,development,Development,,miniforge,other,homebrew_cask_30d:95,200,top300_needs_human_review,0.78,,"homebrew_count=4,744;percent=0.20;cask=miniforge"
+201,Pearcleaner,browser,Browsers,,pearcleaner,browser,homebrew_cask_30d:99,201,top300_needs_human_review,0.78,,"homebrew_count=4,657;percent=0.20;cask=pearcleaner"
+202,Dockdoor,utilities|system-enhancement,Utilities|System Enhancements,,dockdoor,other,homebrew_cask_30d:98,202,top300_needs_human_review,0.78,,"homebrew_count=4,680;percent=0.20;cask=dockdoor"
+203,Appcleaner,utilities,Utilities,,appcleaner,utilities,homebrew_cask_30d:103,203,top300_needs_human_review,0.78,,"homebrew_count=4,411;percent=0.19;cask=appcleaner"
+204,Google Gemini,ai-tools|productivity,AI Tools|Productivity,,google-gemini,other,homebrew_cask_30d:101,204,top300_needs_human_review,0.78,,"homebrew_count=4,447;percent=0.19;cask=google-gemini"
+205,Puremac,utilities,Utilities,,puremac,other,homebrew_cask_30d:102,205,top300_needs_human_review,0.78,,"homebrew_count=4,445;percent=0.19;cask=puremac"
+206,Wireshark App,utilities,Utilities,,wireshark-app,utilities,homebrew_cask_30d:105,206,top300_needs_human_review,0.78,,"homebrew_count=4,404;percent=0.19;cask=wireshark-app"
+207,OBS,video|media,Video|Media,,obs,media,homebrew_cask_30d:106,207,top300_needs_human_review,0.78,,"homebrew_count=4,362;percent=0.18;cask=obs"
+208,Rar,utilities,Utilities,,rar,other,homebrew_cask_30d:104,208,top300_needs_human_review,0.78,,"homebrew_count=4,408;percent=0.19;cask=rar"
+210,Keka,utilities,Utilities,,keka,utilities,homebrew_cask_30d:108,210,top300_needs_human_review,0.78,,"homebrew_count=4,189;percent=0.18;cask=keka"
+211,Tuist,development,Development,,tuist,other,homebrew_cask_30d:109,211,top300_needs_human_review,0.78,,"homebrew_count=4,175;percent=0.18;cask=tuist"
+212,Gimp,design|picture-photo,Design|Pictures & Photos,,gimp,other,homebrew_cask_30d:110,212,top300_needs_human_review,0.78,,"homebrew_count=3,999;percent=0.17;cask=gimp"
+213,Kitty,development,Development,,kitty,development,homebrew_cask_30d:113,213,top300_needs_human_review,0.78,,"homebrew_count=3,874;percent=0.16;cask=kitty"
+214,Pgadmin4,development,Development,,pgadmin4,other,homebrew_cask_30d:111,214,top300_needs_human_review,0.78,,"homebrew_count=3,981;percent=0.17;cask=pgadmin4"
+215,Thaw,utilities,Utilities,,thaw,other,homebrew_cask_30d:114,215,top300_needs_human_review,0.78,,"homebrew_count=3,849;percent=0.16;cask=thaw"
+216,Qlmarkdown,writing,Writing,,qlmarkdown,writing,homebrew_cask_30d:117,216,top300_needs_human_review,0.78,,"homebrew_count=3,774;percent=0.16;cask=qlmarkdown"
+217,Farion1231/ccswitch/cc Switch,ai-tools|development,AI Tools|Development,,farion1231-ccswitch-cc-switch,other,homebrew_cask_30d:115,217,top300_needs_human_review,0.78,,"homebrew_count=3,828;percent=0.16;cask=farion1231/ccswitch/cc-switch"
+219,Ublue Os/tap/visual Studio Code Linux,development,Development,,ublue-os-tap-visual-studio-code-linux,development,homebrew_cask_30d:120,219,top300_needs_human_review,0.78,,"homebrew_count=3,472;percent=0.15;cask=ublue-os/tap/visual-studio-code-linux"
+221,Antigravity,ai-tools|development,AI Tools|Development,,antigravity,other,homebrew_cask_30d:119,221,top300_needs_human_review,0.78,,"homebrew_count=3,621;percent=0.15;cask=antigravity"
+222,Wezterm,development,Development,,wezterm,development,homebrew_cask_30d:123,222,top300_needs_human_review,0.78,,"homebrew_count=3,436;percent=0.15;cask=wezterm"
+223,Vscodium,development,Development,,vscodium,other,homebrew_cask_30d:122,223,top300_needs_human_review,0.78,,"homebrew_count=3,453;percent=0.15;cask=vscodium"
+224,Calibre,education,Education,,calibre,education,homebrew_cask_30d:125,224,top300_needs_human_review,0.78,,"homebrew_count=3,412;percent=0.14;cask=calibre"
+225,Tableplus,development,Development,,tableplus,development,homebrew_cask_30d:126,225,top300_needs_human_review,0.78,,"homebrew_count=3,348;percent=0.14;cask=tableplus"
+226,Font Symbols Only Nerd Font,utilities,Utilities,,font-symbols-only-nerd-font,other,homebrew_cask_30d:124,226,top300_needs_human_review,0.78,,"homebrew_count=3,419;percent=0.14;cask=font-symbols-only-nerd-font"
+227,Librewolf,browser,Browsers,,librewolf,other,homebrew_cask_30d:127,227,top300_needs_human_review,0.78,,"homebrew_count=3,298;percent=0.14;cask=librewolf"
+228,Mos,utilities,Utilities,,mos,other,homebrew_cask_30d:128,228,top300_needs_human_review,0.78,,"homebrew_count=3,257;percent=0.14;cask=mos"
+229,Caffeine,utilities|system-enhancement,Utilities|System Enhancements,,caffeine,other,homebrew_cask_30d:129,229,top300_needs_human_review,0.78,,"homebrew_count=3,134;percent=0.13;cask=caffeine"
+231,Podman Desktop,development,Development,,podman-desktop,other,homebrew_cask_30d:130,231,top300_needs_human_review,0.78,,"homebrew_count=3,094;percent=0.13;cask=podman-desktop"
+232,Mongodb Compass,development,Development,,mongodb-compass,development,homebrew_cask_30d:133,232,top300_needs_human_review,0.78,,"homebrew_count=2,886;percent=0.12;cask=mongodb-compass"
+233,Balenaetcher,utilities,Utilities,,balenaetcher,other,homebrew_cask_30d:131,233,top300_needs_human_review,0.78,,"homebrew_count=2,979;percent=0.13;cask=balenaetcher"
+234,Monitorcontrol,utilities|system-enhancement,Utilities|System Enhancements,,monitorcontrol,utilities,homebrew_cask_30d:134,234,top300_needs_human_review,0.78,,"homebrew_count=2,881;percent=0.12;cask=monitorcontrol"
+235,Intellij Idea,development,Development,,intellij-idea,development,homebrew_cask_30d:135,235,top300_needs_human_review,0.78,,"homebrew_count=2,864;percent=0.12;cask=intellij-idea"
+237,Temurin@8,development,Development,,temurin-8,other,homebrew_cask_30d:137,237,top300_needs_human_review,0.78,,"homebrew_count=2,827;percent=0.12;cask=temurin@8"
+238,Whisky,game|entertainment,Games|Entertainment,,whisky,other,homebrew_cask_30d:138,238,top300_needs_human_review,0.78,,"homebrew_count=2,799;percent=0.12;cask=whisky"
+239,Temurin@25,development,Development,,temurin-25,other,homebrew_cask_30d:139,239,top300_needs_human_review,0.78,,"homebrew_count=2,764;percent=0.12;cask=temurin@25"
+240,Audacity,audio|media,Audio|Media,,audacity,media,homebrew_cask_30d:142,240,top300_needs_human_review,0.78,,"homebrew_count=2,688;percent=0.11;cask=audacity"
+241,Godot,development|game|entertainment,Development|Games|Entertainment,,godot,other,homebrew_cask_30d:140,241,top300_needs_human_review,0.78,,"homebrew_count=2,753;percent=0.12;cask=godot"
+242,Windows App,utilities,Utilities,,windows-app,other,homebrew_cask_30d:141,242,top300_needs_human_review,0.78,,"homebrew_count=2,725;percent=0.12;cask=windows-app"
+243,Rustdesk,utilities,Utilities,,rustdesk,other,homebrew_cask_30d:143,243,top300_needs_human_review,0.78,,"homebrew_count=2,630;percent=0.11;cask=rustdesk"
+244,Hiddenbar,utilities,Utilities,,hiddenbar,utilities,homebrew_cask_30d:146,244,top300_needs_human_review,0.78,,"homebrew_count=2,569;percent=0.11;cask=hiddenbar"
+245,Mounty,file-management|utilities,File Management|Utilities,,mounty,other,homebrew_cask_30d:144,245,top300_needs_human_review,0.78,,"homebrew_count=2,617;percent=0.11;cask=mounty"
+246,Gemini,ai-tools|productivity,AI Tools|Productivity,,gemini,other,homebrew_cask_30d:145,246,top300_needs_human_review,0.78,,"homebrew_count=2,603;percent=0.11;cask=gemini"
+247,Cyberduck,transfer|utilities,Uploads & Downloads|Utilities,,cyberduck,utilities,homebrew_cask_30d:149,247,top300_needs_human_review,0.78,,"homebrew_count=2,505;percent=0.11;cask=cyberduck"
+248,Swiftbar,development|system-enhancement|utilities,Development|System Enhancements|Utilities,,swiftbar,other,homebrew_cask_30d:147,248,top300_needs_human_review,0.78,,"homebrew_count=2,561;percent=0.11;cask=swiftbar"
+249,Shottr,utilities,Utilities,,shottr,utilities,homebrew_cask_30d:150,249,top300_needs_human_review,0.78,,"homebrew_count=2,493;percent=0.11;cask=shottr"
+250,Mactex No Gui,development,Development,,mactex-no-gui,other,homebrew_cask_30d:148,250,top300_needs_human_review,0.78,,"homebrew_count=2,538;percent=0.11;cask=mactex-no-gui"
+251,Ungoogled Chromium,browser,Browsers,,ungoogled-chromium,browser,homebrew_cask_30d:151,251,top300_needs_human_review,0.78,,"homebrew_count=2,482;percent=0.10;cask=ungoogled-chromium"
+252,Logi Options+,utilities|system-enhancement,Utilities|System Enhancements,,logi-options,utilities,homebrew_cask_30d:153,252,top300_needs_human_review,0.78,,"homebrew_count=2,429;percent=0.10;cask=logi-options+"
+253,Freecad,design,Design,,freecad,other,homebrew_cask_30d:152,253,top300_needs_human_review,0.78,,"homebrew_count=2,459;percent=0.10;cask=freecad"
+254,Keepassxc,security|utilities,Security|Utilities,,keepassxc,other,homebrew_cask_30d:154,254,top300_needs_human_review,0.78,,"homebrew_count=2,408;percent=0.10;cask=keepassxc"
+255,Bluebubbles,communication,Communication,,bluebubbles,other,homebrew_cask_30d:155,255,top300_needs_human_review,0.78,,"homebrew_count=2,407;percent=0.10;cask=bluebubbles"
+256,Markedit,writing,Writing,,markedit,other,homebrew_cask_30d:156,256,top300_needs_human_review,0.78,,"homebrew_count=2,407;percent=0.10;cask=markedit"
+257,Kiro CLI,ai-tools|development,AI Tools|Development,,kiro-cli,other,homebrew_cask_30d:157,257,top300_needs_human_review,0.78,,"homebrew_count=2,395;percent=0.10;cask=kiro-cli"
+258,Jetbrains Toolbox,development,Development,,jetbrains-toolbox,other,homebrew_cask_30d:158,258,top300_needs_human_review,0.78,,"homebrew_count=2,387;percent=0.10;cask=jetbrains-toolbox"
+259,Finetune,ai-tools|productivity,AI Tools|Productivity,,finetune,other,homebrew_cask_30d:159,259,top300_needs_human_review,0.78,,"homebrew_count=2,387;percent=0.10;cask=finetune"
+260,Rancher,development,Development,,rancher,other,homebrew_cask_30d:160,260,top300_needs_human_review,0.78,,"homebrew_count=2,366;percent=0.10;cask=rancher"
+261,Mark Text,writing,Writing,,mark-text,other,homebrew_cask_30d:161,261,top300_needs_human_review,0.78,,"homebrew_count=2,346;percent=0.10;cask=mark-text"
+262,Docker/tap/sbx,development,Development,,docker-tap-sbx,development,homebrew_cask_30d:164,262,top300_needs_human_review,0.78,,"homebrew_count=2,258;percent=0.10;cask=docker/tap/sbx"
+263,Font Fira Code,development|utilities,Development|Utilities,,font-fira-code,other,homebrew_cask_30d:162,263,top300_needs_human_review,0.78,,"homebrew_count=2,325;percent=0.10;cask=font-fira-code"
+264,The Unarchiver,utilities,Utilities,,the-unarchiver,browser,homebrew_cask_30d:165,264,top300_needs_human_review,0.78,,"homebrew_count=2,252;percent=0.10;cask=the-unarchiver"
+265,Transmission,transfer|utilities,Uploads & Downloads|Utilities,,transmission,other,homebrew_cask_30d:166,265,top300_needs_human_review,0.78,,"homebrew_count=2,215;percent=0.09;cask=transmission"
+266,Zen,browser,Browsers,,zen,other,homebrew_cask_30d:167,266,top300_needs_human_review,0.78,,"homebrew_count=2,210;percent=0.09;cask=zen"
+267,Xykong/tap/flux Markdown,writing,Writing,,xykong-tap-flux-markdown,writing,homebrew_cask_30d:170,267,top300_needs_human_review,0.78,,"homebrew_count=2,094;percent=0.09;cask=xykong/tap/flux-markdown"
+268,Darrylmorley/whatcable/whatcable,utilities,Utilities,,darrylmorley-whatcable-whatcable,other,homebrew_cask_30d:168,268,top300_needs_human_review,0.78,,"homebrew_count=2,135;percent=0.09;cask=darrylmorley/whatcable/whatcable"
+269,Coteditor,development,Development,,coteditor,other,homebrew_cask_30d:169,269,top300_needs_human_review,0.78,,"homebrew_count=2,125;percent=0.09;cask=coteditor"
+270,Multipass,development,Development,,multipass,other,homebrew_cask_30d:171,270,top300_needs_human_review,0.78,,"homebrew_count=2,070;percent=0.09;cask=multipass"
+271,Emacs App,development,Development,,emacs-app,development,homebrew_cask_30d:174,271,top300_needs_human_review,0.78,,"homebrew_count=1,987;percent=0.08;cask=emacs-app"
+272,Qbittorrent,transfer|utilities,Uploads & Downloads|Utilities,,qbittorrent,other,homebrew_cask_30d:172,272,top300_needs_human_review,0.78,,"homebrew_count=2,043;percent=0.09;cask=qbittorrent"
+273,Fuse T,utilities,Utilities,,fuse-t,other,homebrew_cask_30d:173,273,top300_needs_human_review,0.78,,"homebrew_count=2,022;percent=0.09;cask=fuse-t"
+274,Macdown,writing,Writing,,macdown,other,homebrew_cask_30d:175,274,top300_needs_human_review,0.78,,"homebrew_count=1,967;percent=0.08;cask=macdown"
+275,Alacritty,development,Development,,alacritty,other,homebrew_cask_30d:176,275,top300_needs_human_review,0.78,,"homebrew_count=1,945;percent=0.08;cask=alacritty"
+276,Sequel Ace,development,Development,,sequel-ace,development,homebrew_cask_30d:179,276,top300_needs_human_review,0.78,,"homebrew_count=1,940;percent=0.08;cask=sequel-ace"
+277,Corretto@21,development,Development,,corretto-21,other,homebrew_cask_30d:177,277,top300_needs_human_review,0.78,,"homebrew_count=1,942;percent=0.08;cask=corretto@21"
+278,Font Source Code Pro,development|utilities,Development|Utilities,,font-source-code-pro,other,homebrew_cask_30d:178,278,top300_needs_human_review,0.78,,"homebrew_count=1,941;percent=0.08;cask=font-source-code-pro"
+279,Protonvpn,utilities,Utilities,,protonvpn,utilities,homebrew_cask_30d:181,279,top300_needs_human_review,0.78,,"homebrew_count=1,921;percent=0.08;cask=protonvpn"
+280,Openscad,design,Design,,openscad,other,homebrew_cask_30d:180,280,top300_needs_human_review,0.78,,"homebrew_count=1,937;percent=0.08;cask=openscad"
+281,Anaconda,development,Development,,anaconda,other,homebrew_cask_30d:182,281,top300_needs_human_review,0.78,,"homebrew_count=1,917;percent=0.08;cask=anaconda"
+282,Meld,development,Development,,meld,other,homebrew_cask_30d:183,282,top300_needs_human_review,0.78,,"homebrew_count=1,910;percent=0.08;cask=meld"
+284,Openmtp,file-management|transfer|utilities,File Management|Uploads & Downloads|Utilities,,openmtp,other,homebrew_cask_30d:184,284,top300_needs_human_review,0.78,,"homebrew_count=1,907;percent=0.08;cask=openmtp"
+285,Dotnet Sdk@8,development,Development,,dotnet-sdk-8,other,homebrew_cask_30d:185,285,top300_needs_human_review,0.78,,"homebrew_count=1,904;percent=0.08;cask=dotnet-sdk@8"
+286,Tor Browser,browser,Browsers,,tor-browser,browser,homebrew_cask_30d:188,286,top300_needs_human_review,0.78,,"homebrew_count=1,837;percent=0.08;cask=tor-browser"
+287,Cloudflare Warp,development,Development,,cloudflare-warp,other,homebrew_cask_30d:187,287,top300_needs_human_review,0.78,,"homebrew_count=1,851;percent=0.08;cask=cloudflare-warp"
+288,Temurin@11,development,Development,,temurin-11,other,homebrew_cask_30d:189,288,top300_needs_human_review,0.78,,"homebrew_count=1,811;percent=0.08;cask=temurin@11"
+289,Helium Browser,browser,Browsers,,helium-browser,browser,homebrew_cask_30d:192,289,top300_needs_human_review,0.78,,"homebrew_count=1,802;percent=0.08;cask=helium-browser"
+290,Zulu@8,development,Development,,zulu-8,other,homebrew_cask_30d:190,290,top300_needs_human_review,0.78,,"homebrew_count=1,809;percent=0.08;cask=zulu@8"
+291,Font Sauce Code Pro Nerd Font,utilities,Utilities,,font-sauce-code-pro-nerd-font,other,homebrew_cask_30d:191,291,top300_needs_human_review,0.78,,"homebrew_count=1,807;percent=0.08;cask=font-sauce-code-pro-nerd-font"
+292,Microsoft Office,productivity,Productivity,,microsoft-office,productivity,homebrew_cask_30d:194,292,top300_needs_human_review,0.78,,"homebrew_count=1,784;percent=0.08;cask=microsoft-office"
+293,Font Blex Mono Nerd Font,utilities,Utilities,,font-blex-mono-nerd-font,other,homebrew_cask_30d:193,293,top300_needs_human_review,0.78,,"homebrew_count=1,793;percent=0.08;cask=font-blex-mono-nerd-font"
+294,Virtualbox,development,Development,,virtualbox,other,homebrew_cask_30d:195,294,top300_needs_human_review,0.78,,"homebrew_count=1,778;percent=0.08;cask=virtualbox"
+295,Ublue Os/tap/jetbrains Toolbox Linux,development,Development,,ublue-os-tap-jetbrains-toolbox-linux,other,homebrew_cask_30d:196,295,top300_needs_human_review,0.78,,"homebrew_count=1,767;percent=0.07;cask=ublue-os/tap/jetbrains-toolbox-linux"
+296,Font Maple Mono Nf Cn,utilities,Utilities,,font-maple-mono-nf-cn,other,homebrew_cask_30d:197,296,top300_needs_human_review,0.78,,"homebrew_count=1,765;percent=0.07;cask=font-maple-mono-nf-cn"
+297,Theboredteam/boring Notch/boring Notch,utilities|system-enhancement,Utilities|System Enhancements,,theboredteam-boring-notch-boring-notch,other,homebrew_cask_30d:198,297,top300_needs_human_review,0.78,,"homebrew_count=1,759;percent=0.07;cask=theboredteam/boring-notch/boring-notch"
+298,Zotero,education,Education,,zotero,writing,homebrew_cask_30d:201,298,top300_needs_human_review,0.78,,"homebrew_count=1,741;percent=0.07;cask=zotero"
+299,Raspberry Pi Imager,utilities,Utilities,,raspberry-pi-imager,other,homebrew_cask_30d:199,299,top300_needs_human_review,0.78,,"homebrew_count=1,750;percent=0.07;cask=raspberry-pi-imager"
+300,Font 0xproto Nerd Font,utilities,Utilities,,font-0xproto-nerd-font,other,homebrew_cask_30d:200,300,top300_needs_human_review,0.78,,"homebrew_count=1,748;percent=0.07;cask=font-0xproto-nerd-font"
+301,Handbrake App,video|media,Video|Media,,handbrake-app,media,homebrew_cask_30d:204,301,multi_tag_heuristic_review,0.70,,"homebrew_count=1,681;percent=0.07;cask=handbrake-app"
+302,Scroll Reverser,other,Other,,scroll-reverser,other,homebrew_cask_30d:202,302,needs_classification,0.30,,"homebrew_count=1,726;percent=0.07;cask=scroll-reverser"
+303,Xcodes App,development,Development,,xcodes-app,development,homebrew_cask_30d:205,303,single_tag_heuristic_review,0.62,,"homebrew_count=1,677;percent=0.07;cask=xcodes-app"
+304,Unity Hub,development,Development,,unity-hub,other,homebrew_cask_30d:203,304,single_tag_heuristic_review,0.62,,"homebrew_count=1,708;percent=0.07;cask=unity-hub"
+305,T3 Code,other,Other,,t3-code,other,homebrew_cask_30d:206,305,needs_classification,0.30,,"homebrew_count=1,673;percent=0.07;cask=t3-code"
+306,Clash Verge Rev,security|utilities,Security|Utilities,,clash-verge-rev,utilities,homebrew_cask_30d:209,306,multi_tag_heuristic_review,0.70,,"homebrew_count=1,648;percent=0.07;cask=clash-verge-rev"
+307,Lulu,security|utilities,Security|Utilities,,lulu,other,homebrew_cask_30d:207,307,multi_tag_heuristic_review,0.70,,"homebrew_count=1,659;percent=0.07;cask=lulu"
+308,Anydesk,other,Other,,anydesk,other,homebrew_cask_30d:208,308,needs_classification,0.30,,"homebrew_count=1,657;percent=0.07;cask=anydesk"
+309,Comfyui,ai-tools|development,AI Tools|Development,,comfyui,ai-tools,homebrew_cask_30d:211,309,multi_tag_heuristic_review,0.70,,"homebrew_count=1,635;percent=0.07;cask=comfyui"
+310,Mac Mouse Fix,utilities,Utilities,,mac-mouse-fix,utilities,homebrew_cask_30d:212,310,single_tag_heuristic_review,0.62,,"homebrew_count=1,619;percent=0.07;cask=mac-mouse-fix"
+311,Anthropics/tap/ant,other,Other,,anthropics-tap-ant,other,homebrew_cask_30d:210,311,needs_classification,0.30,,"homebrew_count=1,643;percent=0.07;cask=anthropics/tap/ant"
+312,Background Music,audio|entertainment,Audio|Entertainment,,background-music,media,homebrew_cask_30d:214,312,multi_tag_heuristic_review,0.70,,"homebrew_count=1,618;percent=0.07;cask=background-music"
+313,Flameshot,other,Other,,flameshot,other,homebrew_cask_30d:213,313,needs_classification,0.30,,"homebrew_count=1,618;percent=0.07;cask=flameshot"
+314,Thunderbird,communication,Communication,,thunderbird,communication,homebrew_cask_30d:217,314,single_tag_heuristic_review,0.62,,"homebrew_count=1,590;percent=0.07;cask=thunderbird"
+315,Deskflow/tap/deskflow,other,Other,,deskflow-tap-deskflow,other,homebrew_cask_30d:215,315,needs_classification,0.30,,"homebrew_count=1,614;percent=0.07;cask=deskflow/tap/deskflow"
+316,Font Caskaydia Mono Nerd Font,utilities,Utilities,,font-caskaydia-mono-nerd-font,other,homebrew_cask_30d:216,316,single_tag_heuristic_review,0.62,,"homebrew_count=1,604;percent=0.07;cask=font-caskaydia-mono-nerd-font"
+317,Intellij Idea Ce,development,Development,,intellij-idea-ce,development,homebrew_cask_30d:220,317,single_tag_heuristic_review,0.62,,"homebrew_count=1,559;percent=0.07;cask=intellij-idea-ce"
+318,Tigervnc,other,Other,,tigervnc,other,homebrew_cask_30d:218,318,needs_classification,0.30,,"homebrew_count=1,584;percent=0.07;cask=tigervnc"
+319,Clickhouse,other,Other,,clickhouse,other,homebrew_cask_30d:219,319,needs_classification,0.30,,"homebrew_count=1,580;percent=0.07;cask=clickhouse"
+320,Cursor CLI,ai-tools|development,AI Tools|Development,,cursor-cli,ai-tools,homebrew_cask_30d:223,320,multi_tag_heuristic_review,0.70,,"homebrew_count=1,545;percent=0.07;cask=cursor-cli"
+321,Font Droid Sans Mono Nerd Font,utilities,Utilities,,font-droid-sans-mono-nerd-font,other,homebrew_cask_30d:221,321,single_tag_heuristic_review,0.62,,"homebrew_count=1,548;percent=0.07;cask=font-droid-sans-mono-nerd-font"
+322,Font Ubuntu Nerd Font,utilities,Utilities,,font-ubuntu-nerd-font,other,homebrew_cask_30d:222,322,single_tag_heuristic_review,0.62,,"homebrew_count=1,545;percent=0.07;cask=font-ubuntu-nerd-font"
+323,Dail8859/notepadnext/notepadnext,other,Other,,dail8859-notepadnext-notepadnext,other,homebrew_cask_30d:224,323,needs_classification,0.30,,"homebrew_count=1,541;percent=0.07;cask=dail8859/notepadnext/notepadnext"
+324,Font Go Mono Nerd Font,utilities,Utilities,,font-go-mono-nerd-font,other,homebrew_cask_30d:225,324,single_tag_heuristic_review,0.62,,"homebrew_count=1,534;percent=0.06;cask=font-go-mono-nerd-font"
+326,Openscad@snapshot,design,Design,,openscad-snapshot,other,homebrew_cask_30d:226,326,single_tag_heuristic_review,0.62,,"homebrew_count=1,532;percent=0.06;cask=openscad@snapshot"
+327,Mysqlworkbench,other,Other,,mysqlworkbench,other,homebrew_cask_30d:227,327,needs_classification,0.30,,"homebrew_count=1,525;percent=0.06;cask=mysqlworkbench"
+328,Proxyman,development,Development,,proxyman,utilities,homebrew_cask_30d:230,328,single_tag_heuristic_review,0.62,,"homebrew_count=1,508;percent=0.06;cask=proxyman"
+329,Font Comic Shanns Mono Nerd Font,utilities,Utilities,,font-comic-shanns-mono-nerd-font,other,homebrew_cask_30d:229,329,single_tag_heuristic_review,0.62,,"homebrew_count=1,508;percent=0.06;cask=font-comic-shanns-mono-nerd-font"
+331,Kicad,other,Other,,kicad,other,homebrew_cask_30d:231,331,needs_classification,0.30,,"homebrew_count=1,502;percent=0.06;cask=kicad"
+332,Openlens,other,Other,,openlens,other,homebrew_cask_30d:232,332,needs_classification,0.30,,"homebrew_count=1,482;percent=0.06;cask=openlens"
+333,Bettertouchtool,utilities|system-enhancement,Utilities|System Enhancements,,bettertouchtool,productivity,homebrew_cask_30d:236,333,multi_tag_heuristic_review,0.70,,"homebrew_count=1,441;percent=0.06;cask=bettertouchtool"
+334,Font Inter,utilities,Utilities,,font-inter,other,homebrew_cask_30d:234,334,single_tag_heuristic_review,0.62,,"homebrew_count=1,451;percent=0.06;cask=font-inter"
+335,Syncthing App,transfer|utilities,Uploads & Downloads|Utilities,,syncthing-app,other,homebrew_cask_30d:237,335,multi_tag_heuristic_review,0.70,,"homebrew_count=1,433;percent=0.06;cask=syncthing-app"
+336,Grandperspective,utilities,Utilities,,grandperspective,other,homebrew_cask_30d:238,336,single_tag_heuristic_review,0.62,,"homebrew_count=1,431;percent=0.06;cask=grandperspective"
+337,Pycharm,development,Development,,pycharm,development,homebrew_cask_30d:241,337,single_tag_heuristic_review,0.62,,"homebrew_count=1,397;percent=0.06;cask=pycharm"
+338,Aldente,other,Other,,aldente,other,homebrew_cask_30d:239,338,needs_classification,0.30,,"homebrew_count=1,407;percent=0.06;cask=aldente"
+339,Notunes,other,Other,,notunes,other,homebrew_cask_30d:240,339,needs_classification,0.30,,"homebrew_count=1,397;percent=0.06;cask=notunes"
+340,Headlamp,other,Other,,headlamp,other,homebrew_cask_30d:242,340,needs_classification,0.30,,"homebrew_count=1,387;percent=0.06;cask=headlamp"
+341,Redis Insight,development,Development,,redis-insight,development,homebrew_cask_30d:245,341,single_tag_heuristic_review,0.62,,"homebrew_count=1,362;percent=0.06;cask=redis-insight"
+342,Libreoffice Language Pack,productivity,Productivity,,libreoffice-language-pack,other,homebrew_cask_30d:243,342,single_tag_heuristic_review,0.62,,"homebrew_count=1,376;percent=0.06;cask=libreoffice-language-pack"
+343,Typora,writing,Writing,,typora,writing,homebrew_cask_30d:246,343,single_tag_heuristic_review,0.62,,"homebrew_count=1,359;percent=0.06;cask=typora"
+344,Applite,other,Other,,applite,other,homebrew_cask_30d:244,344,needs_classification,0.30,,"homebrew_count=1,374;percent=0.06;cask=applite"
+345,Visual Studio Code@insiders,development,Development,,visual-studio-code-insiders,development,homebrew_cask_30d:248,345,single_tag_heuristic_review,0.62,,"homebrew_count=1,357;percent=0.06;cask=visual-studio-code@insiders"
+346,Vivaldi,browser,Browsers,,vivaldi,browser,homebrew_cask_30d:249,346,single_tag_heuristic_review,0.62,,"homebrew_count=1,355;percent=0.06;cask=vivaldi"
+347,Tolaria,other,Other,,tolaria,other,homebrew_cask_30d:247,347,needs_classification,0.30,,"homebrew_count=1,358;percent=0.06;cask=tolaria"
+348,Anki,education,Education,,anki,education,homebrew_cask_30d:252,348,single_tag_heuristic_review,0.62,,"homebrew_count=1,335;percent=0.06;cask=anki"
+349,Termius,other,Other,,termius,other,homebrew_cask_30d:250,349,needs_classification,0.30,,"homebrew_count=1,345;percent=0.06;cask=termius"
+350,Openvpn Connect,utilities,Utilities,,openvpn-connect,utilities,homebrew_cask_30d:253,350,single_tag_heuristic_review,0.62,,"homebrew_count=1,334;percent=0.06;cask=openvpn-connect"
+351,Opencoworkai/tap/open Codesign,other,Other,,opencoworkai-tap-open-codesign,other,homebrew_cask_30d:251,351,needs_classification,0.30,,"homebrew_count=1,337;percent=0.06;cask=opencoworkai/tap/open-codesign"
+352,Vagrant,other,Other,,vagrant,other,homebrew_cask_30d:254,352,needs_classification,0.30,,"homebrew_count=1,308;percent=0.06;cask=vagrant"
+353,Skim,other,Other,,skim,other,homebrew_cask_30d:255,353,needs_classification,0.30,,"homebrew_count=1,297;percent=0.05;cask=skim"
+354,Kiro,ai-tools|development,AI Tools|Development,,kiro,other,homebrew_cask_30d:256,354,multi_tag_heuristic_review,0.70,,"homebrew_count=1,295;percent=0.05;cask=kiro"
+355,Keepingyouawake,utilities|system-enhancement,Utilities|System Enhancements,,keepingyouawake,utilities,homebrew_cask_30d:259,355,multi_tag_heuristic_review,0.70,,"homebrew_count=1,256;percent=0.05;cask=keepingyouawake"
+356,Blackhole 16ch,audio|media|utilities,Audio|Media|Utilities,,blackhole-16ch,other,homebrew_cask_30d:257,356,multi_tag_heuristic_review,0.70,,"homebrew_count=1,293;percent=0.05;cask=blackhole-16ch"
+357,Handy,other,Other,,handy,other,homebrew_cask_30d:258,357,needs_classification,0.30,,"homebrew_count=1,258;percent=0.05;cask=handy"
+358,Microsoft Outlook,communication,Communication,,microsoft-outlook,communication,homebrew_cask_30d:262,358,single_tag_heuristic_review,0.62,,"homebrew_count=1,209;percent=0.05;cask=microsoft-outlook"
+359,Quarto,other,Other,,quarto,other,homebrew_cask_30d:260,359,needs_classification,0.30,,"homebrew_count=1,242;percent=0.05;cask=quarto"
+360,Wispr Flow,other,Other,,wispr-flow,other,homebrew_cask_30d:261,360,needs_classification,0.30,,"homebrew_count=1,217;percent=0.05;cask=wispr-flow"
+361,Sourcetree,development,Development,,sourcetree,development,homebrew_cask_30d:264,361,single_tag_heuristic_review,0.62,,"homebrew_count=1,202;percent=0.05;cask=sourcetree"
+362,Tunnelblick,security|utilities,Security|Utilities,,tunnelblick,other,homebrew_cask_30d:263,362,multi_tag_heuristic_review,0.70,,"homebrew_count=1,202;percent=0.05;cask=tunnelblick"
+363,Github Copilot For Xcode,ai-tools|development,AI Tools|Development,,github-copilot-for-xcode,development,homebrew_cask_30d:266,363,multi_tag_heuristic_review,0.70,,"homebrew_count=1,191;percent=0.05;cask=github-copilot-for-xcode"
+364,Macos Fuse T/cask/fuse T,utilities,Utilities,,macos-fuse-t-cask-fuse-t,other,homebrew_cask_30d:265,364,single_tag_heuristic_review,0.62,,"homebrew_count=1,193;percent=0.05;cask=macos-fuse-t/cask/fuse-t"
+366,Vnc Viewer,other,Other,,vnc-viewer,other,homebrew_cask_30d:267,366,needs_classification,0.30,,"homebrew_count=1,190;percent=0.05;cask=vnc-viewer"
+367,Gcc Arm Embedded,other,Other,,gcc-arm-embedded,other,homebrew_cask_30d:268,367,needs_classification,0.30,,"homebrew_count=1,175;percent=0.05;cask=gcc-arm-embedded"
+368,Wave,other,Other,,wave,other,homebrew_cask_30d:270,368,needs_classification,0.30,,"homebrew_count=1,157;percent=0.05;cask=wave"
+369,Macs Fan Control,other,Other,,macs-fan-control,other,homebrew_cask_30d:271,369,needs_classification,0.30,,"homebrew_count=1,156;percent=0.05;cask=macs-fan-control"
+370,Onyx,utilities,Utilities,,onyx,utilities,homebrew_cask_30d:274,370,single_tag_heuristic_review,0.62,,"homebrew_count=1,143;percent=0.05;cask=onyx"
+371,Hermes,other,Other,,hermes,other,homebrew_cask_30d:272,371,needs_classification,0.30,,"homebrew_count=1,149;percent=0.05;cask=hermes"
+372,Fork,development,Development,,fork,other,homebrew_cask_30d:273,372,single_tag_heuristic_review,0.62,,"homebrew_count=1,147;percent=0.05;cask=fork"
+373,Insomnia,development,Development,,insomnia,development,homebrew_cask_30d:277,373,single_tag_heuristic_review,0.62,,"homebrew_count=1,121;percent=0.05;cask=insomnia"
+374,Gtkwave,other,Other,,gtkwave,other,homebrew_cask_30d:275,374,needs_classification,0.30,,"homebrew_count=1,136;percent=0.05;cask=gtkwave"
+375,Rstudio,other,Other,,rstudio,other,homebrew_cask_30d:276,375,needs_classification,0.30,,"homebrew_count=1,127;percent=0.05;cask=rstudio"
+376,Nordvpn,security|utilities,Security|Utilities,,nordvpn,utilities,homebrew_cask_30d:279,376,multi_tag_heuristic_review,0.70,,"homebrew_count=1,114;percent=0.05;cask=nordvpn"
+377,Freelens,other,Other,,freelens,other,homebrew_cask_30d:278,377,needs_classification,0.30,,"homebrew_count=1,118;percent=0.05;cask=freelens"
+378,Codexbar,ai-tools|development,AI Tools|Development,,codexbar,other,homebrew_cask_30d:280,378,multi_tag_heuristic_review,0.70,,"homebrew_count=1,114;percent=0.05;cask=codexbar"
+379,Tabby,development,Development,,tabby,other,homebrew_cask_30d:281,379,single_tag_heuristic_review,0.62,,"homebrew_count=1,099;percent=0.05;cask=tabby"
+380,Maestro,other,Other,,maestro,other,homebrew_cask_30d:282,380,needs_classification,0.30,,"homebrew_count=1,090;percent=0.05;cask=maestro"
+381,R App,other,Other,,r-app,other,homebrew_cask_30d:283,381,needs_classification,0.30,,"homebrew_count=1,087;percent=0.05;cask=r-app"
+382,Tablepro,other,Other,,tablepro,other,homebrew_cask_30d:284,382,needs_classification,0.30,,"homebrew_count=1,081;percent=0.05;cask=tablepro"
+383,Moonlight,other,Other,,moonlight,other,homebrew_cask_30d:285,383,needs_classification,0.30,,"homebrew_count=1,072;percent=0.05;cask=moonlight"
+384,Upscayl,other,Other,,upscayl,other,homebrew_cask_30d:286,384,needs_classification,0.30,,"homebrew_count=1,071;percent=0.05;cask=upscayl"
+385,Another Redis Desktop Manager,development,Development,,another-redis-desktop-manager,development,homebrew_cask_30d:289,385,single_tag_heuristic_review,0.62,,"homebrew_count=1,059;percent=0.04;cask=another-redis-desktop-manager"
+386,Hamed Elfayome/claude Usage/claude Usage Tracker,ai-tools|productivity,AI Tools|Productivity,,hamed-elfayome-claude-usage-claude-usage-tracker,other,homebrew_cask_30d:287,386,multi_tag_heuristic_review,0.70,,"homebrew_count=1,069;percent=0.05;cask=hamed-elfayome/claude-usage/claude-usage-tracker"
+387,Cherry Studio,other,Other,,cherry-studio,other,homebrew_cask_30d:288,387,needs_classification,0.30,,"homebrew_count=1,060;percent=0.04;cask=cherry-studio"
+388,Onedrive,productivity|transfer,Productivity|Uploads & Downloads,,onedrive,productivity,homebrew_cask_30d:291,388,multi_tag_heuristic_review,0.70,,"homebrew_count=1,024;percent=0.04;cask=onedrive"
+389,Windsurf,ai-tools|development,AI Tools|Development,,windsurf,ai-tools,homebrew_cask_30d:292,389,multi_tag_heuristic_review,0.70,,"homebrew_count=1,021;percent=0.04;cask=windsurf"
+390,Aionui,other,Other,,aionui,other,homebrew_cask_30d:290,390,needs_classification,0.30,,"homebrew_count=1,029;percent=0.04;cask=aionui"
+391,Block Goose,other,Other,,block-goose,other,homebrew_cask_30d:293,391,needs_classification,0.30,,"homebrew_count=1,013;percent=0.04;cask=block-goose"
+392,Microsoft Remote Desktop,other,Other,,microsoft-remote-desktop,other,homebrew_cask_30d:294,392,needs_classification,0.30,,"homebrew_count=1,009;percent=0.04;cask=microsoft-remote-desktop"
+393,Powershell@preview,picture-photo|system|utilities,Pictures & Photos|System Apps|Utilities,,powershell-preview,other,homebrew_cask_30d:295,393,multi_tag_heuristic_review,0.70,,"homebrew_count=1,000;percent=0.04;cask=powershell@preview"
+394,Espanso,other,Other,,espanso,other,homebrew_cask_30d:296,394,needs_classification,0.30,,homebrew_count=998;percent=0.04;cask=espanso
+395,Middleclick,other,Other,,middleclick,other,homebrew_cask_30d:297,395,needs_classification,0.30,,homebrew_count=990;percent=0.04;cask=middleclick
+396,Zulu@21,development,Development,,zulu-21,other,homebrew_cask_30d:298,396,single_tag_heuristic_review,0.62,,homebrew_count=990;percent=0.04;cask=zulu@21
+397,Ublue Os/tap/vscodium Linux,development,Development,,ublue-os-tap-vscodium-linux,other,homebrew_cask_30d:299,397,single_tag_heuristic_review,0.62,,homebrew_count=989;percent=0.04;cask=ublue-os/tap/vscodium-linux
+398,Macshot,other,Other,,macshot,other,homebrew_cask_30d:300,398,needs_classification,0.30,,homebrew_count=984;percent=0.04;cask=macshot
+399,Android File Transfer,transfer,Uploads & Downloads,,android-file-transfer,other,homebrew_cask_30d:301,399,single_tag_heuristic_review,0.62,,homebrew_count=976;percent=0.04;cask=android-file-transfer
+400,Burp Suite,other,Other,,burp-suite,other,homebrew_cask_30d:302,400,needs_classification,0.30,,homebrew_count=968;percent=0.04;cask=burp-suite
+401,Crossover,game|entertainment,Games|Entertainment,,crossover,other,homebrew_cask_30d:303,401,multi_tag_heuristic_review,0.70,,homebrew_count=964;percent=0.04;cask=crossover
+402,Voiceink,other,Other,,voiceink,other,homebrew_cask_30d:304,402,needs_classification,0.30,,homebrew_count=961;percent=0.04;cask=voiceink
+403,Teamviewer,other,Other,,teamviewer,other,homebrew_cask_30d:305,403,needs_classification,0.30,,homebrew_count=956;percent=0.04;cask=teamviewer
+404,Wailbrew,other,Other,,wailbrew,other,homebrew_cask_30d:306,404,needs_classification,0.30,,homebrew_count=955;percent=0.04;cask=wailbrew
+405,Keycastr,utilities,Utilities,,keycastr,other,homebrew_cask_30d:307,405,single_tag_heuristic_review,0.62,,homebrew_count=954;percent=0.04;cask=keycastr
+406,Affinity,design,Design,,affinity,design,homebrew_cask_30d:310,406,single_tag_heuristic_review,0.62,,homebrew_count=936;percent=0.04;cask=affinity
+407,Superwhisper,other,Other,,superwhisper,other,homebrew_cask_30d:308,407,needs_classification,0.30,,homebrew_count=949;percent=0.04;cask=superwhisper
+408,Datagrip,development,Development,,datagrip,other,homebrew_cask_30d:309,408,single_tag_heuristic_review,0.62,,homebrew_count=941;percent=0.04;cask=datagrip
+409,Espressif/eim/eim Gui,other,Other,,espressif-eim-eim-gui,other,homebrew_cask_30d:311,409,needs_classification,0.30,,homebrew_count=932;percent=0.04;cask=espressif/eim/eim-gui
+410,Nextcloud,other,Other,,nextcloud,other,homebrew_cask_30d:312,410,needs_classification,0.30,,homebrew_count=932;percent=0.04;cask=nextcloud
+411,Anythingllm,other,Other,,anythingllm,other,homebrew_cask_30d:313,411,needs_classification,0.30,,homebrew_count=922;percent=0.04;cask=anythingllm
+412,Prismlauncher,other,Other,,prismlauncher,other,homebrew_cask_30d:314,412,needs_classification,0.30,,homebrew_count=922;percent=0.04;cask=prismlauncher
+413,Lunar,other,Other,,lunar,other,homebrew_cask_30d:315,413,needs_classification,0.30,,homebrew_count=922;percent=0.04;cask=lunar
+414,Font D2coding,utilities,Utilities,,font-d2coding,other,homebrew_cask_30d:316,414,single_tag_heuristic_review,0.62,,homebrew_count=918;percent=0.04;cask=font-d2coding
+415,Clipy,other,Other,,clipy,other,homebrew_cask_30d:317,415,needs_classification,0.30,,homebrew_count=913;percent=0.04;cask=clipy
+416,Font Caskaydia Cove Nerd Font,utilities,Utilities,,font-caskaydia-cove-nerd-font,other,homebrew_cask_30d:318,416,single_tag_heuristic_review,0.62,,homebrew_count=912;percent=0.04;cask=font-caskaydia-cove-nerd-font
+417,Telegram Desktop,communication,Communication,,telegram-desktop,communication,homebrew_cask_30d:321,417,single_tag_heuristic_review,0.62,,homebrew_count=875;percent=0.04;cask=telegram-desktop
+418,Macwhisper,other,Other,,macwhisper,other,homebrew_cask_30d:319,418,needs_classification,0.30,,homebrew_count=889;percent=0.04;cask=macwhisper
+419,Easydict,other,Other,,easydict,other,homebrew_cask_30d:320,419,needs_classification,0.30,,homebrew_count=882;percent=0.04;cask=easydict
+420,Tw93/tap/kakuku,other,Other,,tw93-tap-kakuku,other,homebrew_cask_30d:322,420,needs_classification,0.30,,homebrew_count=875;percent=0.04;cask=tw93/tap/kakuku
+421,Bambu Studio,other,Other,,bambu-studio,other,homebrew_cask_30d:323,421,needs_classification,0.30,,homebrew_count=872;percent=0.04;cask=bambu-studio
+422,Gcenx/wine/game Porting Toolkit,utilities,Utilities,,gcenx-wine-game-porting-toolkit,entertainment,homebrew_cask_30d:326,422,single_tag_heuristic_review,0.62,,homebrew_count=839;percent=0.04;cask=gcenx/wine/game-porting-toolkit
+423,Corretto@17,development,Development,,corretto-17,other,homebrew_cask_30d:324,423,single_tag_heuristic_review,0.62,,homebrew_count=864;percent=0.04;cask=corretto@17
+424,Firefox@developer Edition,browser,Browsers,,firefox-developer-edition,browser,homebrew_cask_30d:327,424,single_tag_heuristic_review,0.62,,homebrew_count=829;percent=0.04;cask=firefox@developer-edition
+425,Detachhead/tap/rebased,other,Other,,detachhead-tap-rebased,other,homebrew_cask_30d:325,425,needs_classification,0.30,,homebrew_count=852;percent=0.04;cask=detachhead/tap/rebased
+426,Itsycal,other,Other,,itsycal,other,homebrew_cask_30d:328,426,needs_classification,0.30,,homebrew_count=818;percent=0.03;cask=itsycal
+427,Unnaturalscrollwheels,other,Other,,unnaturalscrollwheels,other,homebrew_cask_30d:329,427,needs_classification,0.30,,homebrew_count=818;percent=0.03;cask=unnaturalscrollwheels
+428,Yubico Authenticator,security|utilities,Security|Utilities,,yubico-authenticator,other,homebrew_cask_30d:330,428,multi_tag_heuristic_review,0.70,,homebrew_count=817;percent=0.03;cask=yubico-authenticator
+429,Macos Fuse T/cask/fuse T Sshfs,utilities,Utilities,,macos-fuse-t-cask-fuse-t-sshfs,other,homebrew_cask_30d:331,429,single_tag_heuristic_review,0.62,,homebrew_count=816;percent=0.03;cask=macos-fuse-t/cask/fuse-t-sshfs
+430,Librecad,other,Other,,librecad,other,homebrew_cask_30d:332,430,needs_classification,0.30,,homebrew_count=813;percent=0.03;cask=librecad
+431,Darktable,picture-photo,Pictures & Photos,,darktable,other,homebrew_cask_30d:333,431,single_tag_heuristic_review,0.62,,homebrew_count=807;percent=0.03;cask=darktable
+432,Macdown 3000,writing,Writing,,macdown-3000,other,homebrew_cask_30d:334,432,single_tag_heuristic_review,0.62,,homebrew_count=800;percent=0.03;cask=macdown-3000
+433,Onlyoffice,other,Other,,onlyoffice,other,homebrew_cask_30d:335,433,needs_classification,0.30,,homebrew_count=798;percent=0.03;cask=onlyoffice
+434,Font Monaspace,utilities,Utilities,,font-monaspace,other,homebrew_cask_30d:336,434,single_tag_heuristic_review,0.62,,homebrew_count=797;percent=0.03;cask=font-monaspace
+435,Chatgpt Atlas,ai-tools|productivity,AI Tools|Productivity,,chatgpt-atlas,ai-tools,homebrew_cask_30d:339,435,multi_tag_heuristic_review,0.70,,homebrew_count=786;percent=0.03;cask=chatgpt-atlas
+436,Netbirdio/tap/netbird UI,other,Other,,netbirdio-tap-netbird-ui,other,homebrew_cask_30d:337,436,needs_classification,0.30,,homebrew_count=789;percent=0.03;cask=netbirdio/tap/netbird-ui
+437,Cleanshot,utilities,Utilities,,cleanshot,utilities,homebrew_cask_30d:340,437,single_tag_heuristic_review,0.62,,homebrew_count=786;percent=0.03;cask=cleanshot
+438,Zap,other,Other,,zap,other,homebrew_cask_30d:338,438,needs_classification,0.30,,homebrew_count=786;percent=0.03;cask=zap
+439,Istat Menus,utilities,Utilities,,istat-menus,utilities,homebrew_cask_30d:342,439,single_tag_heuristic_review,0.62,,homebrew_count=782;percent=0.03;cask=istat-menus
+440,Syntax Highlight,other,Other,,syntax-highlight,other,homebrew_cask_30d:341,440,needs_classification,0.30,,homebrew_count=784;percent=0.03;cask=syntax-highlight
+441,Beekeeper Studio,development,Development,,beekeeper-studio,other,homebrew_cask_30d:343,441,single_tag_heuristic_review,0.62,,homebrew_count=777;percent=0.03;cask=beekeeper-studio
+442,AWS Vault Binary,development,Development,,aws-vault-binary,development,homebrew_cask_30d:346,442,single_tag_heuristic_review,0.62,,homebrew_count=768;percent=0.03;cask=aws-vault-binary
+443,Lens,development,Development,,lens,other,homebrew_cask_30d:344,443,single_tag_heuristic_review,0.62,,homebrew_count=777;percent=0.03;cask=lens
+444,Font Sarasa Gothic,utilities,Utilities,,font-sarasa-gothic,other,homebrew_cask_30d:345,444,single_tag_heuristic_review,0.62,,homebrew_count=769;percent=0.03;cask=font-sarasa-gothic
+445,Hop,other,Other,,hop,other,homebrew_cask_30d:347,445,needs_classification,0.30,,homebrew_count=765;percent=0.03;cask=hop
+446,Arduino IDE,other,Other,,arduino-ide,other,homebrew_cask_30d:348,446,needs_classification,0.30,,homebrew_count=758;percent=0.03;cask=arduino-ide
+447,Snowflake Snowsql,other,Other,,snowflake-snowsql,other,homebrew_cask_30d:349,447,needs_classification,0.30,,homebrew_count=755;percent=0.03;cask=snowflake-snowsql
+448,Microsoft Auto Update,other,Other,,microsoft-auto-update,other,homebrew_cask_30d:350,448,needs_classification,0.30,,homebrew_count=754;percent=0.03;cask=microsoft-auto-update
+449,Coderabbit,other,Other,,coderabbit,other,homebrew_cask_30d:351,449,needs_classification,0.30,,homebrew_count=753;percent=0.03;cask=coderabbit
+450,Font Maple Mono Nf,utilities,Utilities,,font-maple-mono-nf,other,homebrew_cask_30d:352,450,single_tag_heuristic_review,0.62,,homebrew_count=752;percent=0.03;cask=font-maple-mono-nf
+451,Keyclu,other,Other,,keyclu,other,homebrew_cask_30d:353,451,needs_classification,0.30,,homebrew_count=750;percent=0.03;cask=keyclu
+452,Spacelift Io/spacelift/spacectl,other,Other,,spacelift-io-spacelift-spacectl,other,homebrew_cask_30d:354,452,needs_classification,0.30,,homebrew_count=747;percent=0.03;cask=spacelift-io/spacelift/spacectl
+453,Opera,browser,Browsers,,opera,browser,homebrew_cask_30d:357,453,single_tag_heuristic_review,0.62,,homebrew_count=731;percent=0.03;cask=opera
+454,Muxy App/tap/muxy,other,Other,,muxy-app-tap-muxy,other,homebrew_cask_30d:355,454,needs_classification,0.30,,homebrew_count=747;percent=0.03;cask=muxy-app/tap/muxy
+455,Squirrel App,other,Other,,squirrel-app,other,homebrew_cask_30d:356,455,needs_classification,0.30,,homebrew_count=740;percent=0.03;cask=squirrel-app
+456,Quicklook Video,media,Media,,quicklook-video,media,homebrew_cask_30d:359,456,single_tag_heuristic_review,0.62,,homebrew_count=724;percent=0.03;cask=quicklook-video
+457,Orion,browser,Browsers,,orion,browser,homebrew_cask_30d:360,457,single_tag_heuristic_review,0.62,,homebrew_count=718;percent=0.03;cask=orion
+458,Amethyst,other,Other,,amethyst,other,homebrew_cask_30d:358,458,needs_classification,0.30,,homebrew_count=727;percent=0.03;cask=amethyst
+460,Bartender,utilities|system-enhancement,Utilities|System Enhancements,,bartender,productivity,homebrew_cask_30d:362,460,multi_tag_heuristic_review,0.70,,homebrew_count=713;percent=0.03;cask=bartender
+461,Jellyfin,entertainment,Entertainment,,jellyfin,media,homebrew_cask_30d:363,461,single_tag_heuristic_review,0.62,,homebrew_count=710;percent=0.03;cask=jellyfin
+462,Conductor,other,Other,,conductor,other,homebrew_cask_30d:364,462,needs_classification,0.30,,homebrew_count=706;percent=0.03;cask=conductor
+463,Stremio,other,Other,,stremio,other,homebrew_cask_30d:365,463,needs_classification,0.30,,homebrew_count=704;percent=0.03;cask=stremio
+464,Adobe Creative Cloud,design,Design,,adobe-creative-cloud,design,homebrew_cask_30d:368,464,single_tag_heuristic_review,0.62,,homebrew_count=694;percent=0.03;cask=adobe-creative-cloud
+465,Open Webui,ai-tools|development,AI Tools|Development,,open-webui,other,homebrew_cask_30d:366,465,multi_tag_heuristic_review,0.70,,homebrew_count=703;percent=0.03;cask=open-webui
+466,Pear Devs/pear/pear Desktop,development,Development,,pear-devs-pear-pear-desktop,development,homebrew_cask_30d:369,466,single_tag_heuristic_review,0.62,,homebrew_count=691;percent=0.03;cask=pear-devs/pear/pear-desktop
+467,Typewhisper/tap/typewhisper,other,Other,,typewhisper-tap-typewhisper,other,homebrew_cask_30d:367,467,needs_classification,0.30,,homebrew_count=699;percent=0.03;cask=typewhisper/tap/typewhisper
+468,Redis/redis/redis,development,Development,,redis-redis-redis,development,homebrew_cask_30d:371,468,single_tag_heuristic_review,0.62,,homebrew_count=688;percent=0.03;cask=redis/redis/redis
+469,Marta,other,Other,,marta,other,homebrew_cask_30d:370,469,needs_classification,0.30,,homebrew_count=690;percent=0.03;cask=marta
+470,Capcut,video|media,Video|Media,,capcut,other,homebrew_cask_30d:372,470,multi_tag_heuristic_review,0.70,,homebrew_count=681;percent=0.03;cask=capcut
+471,Displaylink,other,Other,,displaylink,other,homebrew_cask_30d:373,471,needs_classification,0.30,,homebrew_count=678;percent=0.03;cask=displaylink
+472,Repobar,other,Other,,repobar,other,homebrew_cask_30d:374,472,needs_classification,0.30,,homebrew_count=674;percent=0.03;cask=repobar
+473,Openusage,other,Other,,openusage,other,homebrew_cask_30d:375,473,needs_classification,0.30,,homebrew_count=673;percent=0.03;cask=openusage
+474,Joplin,writing|productivity,Writing|Productivity,,joplin,other,homebrew_cask_30d:376,474,multi_tag_heuristic_review,0.70,,homebrew_count=672;percent=0.03;cask=joplin
+475,Mullvad VPN,security|utilities,Security|Utilities,,mullvad-vpn,utilities,homebrew_cask_30d:379,475,multi_tag_heuristic_review,0.70,,homebrew_count=670;percent=0.03;cask=mullvad-vpn
+476,Loop,other,Other,,loop,other,homebrew_cask_30d:377,476,needs_classification,0.30,,homebrew_count=671;percent=0.03;cask=loop
+477,Slack CLI,communication|productivity,Communication|Productivity,,slack-cli,communication,homebrew_cask_30d:380,477,multi_tag_heuristic_review,0.70,,homebrew_count=665;percent=0.03;cask=slack-cli
+478,Font Iosevka Nerd Font,utilities,Utilities,,font-iosevka-nerd-font,other,homebrew_cask_30d:378,478,single_tag_heuristic_review,0.62,,homebrew_count=671;percent=0.03;cask=font-iosevka-nerd-font
+479,Linear,productivity,Productivity,,linear,productivity,homebrew_cask_30d:383,479,single_tag_heuristic_review,0.62,,homebrew_count=655;percent=0.03;cask=linear
+480,Mono Mdk,other,Other,,mono-mdk,other,homebrew_cask_30d:381,480,needs_classification,0.30,,homebrew_count=662;percent=0.03;cask=mono-mdk
+481,Gitkraken,development,Development,,gitkraken,development,homebrew_cask_30d:384,481,single_tag_heuristic_review,0.62,,homebrew_count=653;percent=0.03;cask=gitkraken
+482,Android Ndk,other,Other,,android-ndk,other,homebrew_cask_30d:382,482,needs_classification,0.30,,homebrew_count=660;percent=0.03;cask=android-ndk
+483,Devtunnel,development,Development,,devtunnel,development,homebrew_cask_30d:386,483,single_tag_heuristic_review,0.62,,homebrew_count=649;percent=0.03;cask=devtunnel
+484,Snipaste,utilities,Utilities,,snipaste,utilities,homebrew_cask_30d:387,484,single_tag_heuristic_review,0.62,,homebrew_count=646;percent=0.03;cask=snipaste
+485,Bunch,other,Other,,bunch,other,homebrew_cask_30d:385,485,needs_classification,0.30,,homebrew_count=650;percent=0.03;cask=bunch
+486,Dotnet Sdk@9,development,Development,,dotnet-sdk-9,other,homebrew_cask_30d:388,486,single_tag_heuristic_review,0.62,,homebrew_count=643;percent=0.03;cask=dotnet-sdk@9
+487,Grishka/grishka/neardrop,other,Other,,grishka-grishka-neardrop,other,homebrew_cask_30d:389,487,needs_classification,0.30,,homebrew_count=642;percent=0.03;cask=grishka/grishka/neardrop
+488,Sf Symbols,other,Other,,sf-symbols,other,homebrew_cask_30d:390,488,needs_classification,0.30,,homebrew_count=638;percent=0.03;cask=sf-symbols
+489,Font Maple Mono,utilities,Utilities,,font-maple-mono,other,homebrew_cask_30d:391,489,single_tag_heuristic_review,0.62,,homebrew_count=636;percent=0.03;cask=font-maple-mono
+490,Pycharm Ce,development,Development,,pycharm-ce,development,homebrew_cask_30d:394,490,single_tag_heuristic_review,0.62,,homebrew_count=634;percent=0.03;cask=pycharm-ce
+491,Coconutbattery,utilities,Utilities,,coconutbattery,other,homebrew_cask_30d:392,491,single_tag_heuristic_review,0.62,,homebrew_count=636;percent=0.03;cask=coconutbattery
+492,Zettlr,writing,Writing,,zettlr,other,homebrew_cask_30d:393,492,single_tag_heuristic_review,0.62,,homebrew_count=635;percent=0.03;cask=zettlr
+493,Dotnet Runtime,other,Other,,dotnet-runtime,other,homebrew_cask_30d:395,493,needs_classification,0.30,,homebrew_count=630;percent=0.03;cask=dotnet-runtime
+494,Ubersicht,other,Other,,ubersicht,other,homebrew_cask_30d:396,494,needs_classification,0.30,,homebrew_count=630;percent=0.03;cask=ubersicht
+495,Libndi,other,Other,,libndi,other,homebrew_cask_30d:397,495,needs_classification,0.30,,homebrew_count=627;percent=0.03;cask=libndi
+496,Hashicorp/tap/hashicorp Vagrant,other,Other,,hashicorp-tap-hashicorp-vagrant,other,homebrew_cask_30d:398,496,needs_classification,0.30,,homebrew_count=625;percent=0.03;cask=hashicorp/tap/hashicorp-vagrant
+497,Wine@staging,utilities,Utilities,,wine-staging,other,homebrew_cask_30d:399,497,single_tag_heuristic_review,0.62,,homebrew_count=625;percent=0.03;cask=wine@staging
+498,Salesforce CLI,other,Other,,salesforce-cli,other,homebrew_cask_30d:400,498,needs_classification,0.30,,homebrew_count=625;percent=0.03;cask=salesforce-cli
+499,Qgis,other,Other,,qgis,other,homebrew_cask_30d:401,499,needs_classification,0.30,,homebrew_count=623;percent=0.03;cask=qgis
+500,Omnidisksweeper,other,Other,,omnidisksweeper,other,homebrew_cask_30d:402,500,needs_classification,0.30,,homebrew_count=623;percent=0.03;cask=omnidisksweeper
+501,Sqlcl,other,Other,,sqlcl,other,homebrew_cask_30d:403,501,needs_classification,0.30,,homebrew_count=620;percent=0.03;cask=sqlcl
+502,Skiptools/skip/skip,other,Other,,skiptools-skip-skip,other,homebrew_cask_30d:404,502,needs_classification,0.30,,homebrew_count=618;percent=0.03;cask=skiptools/skip/skip
+503,Font Ibm Plex Mono,video|media|entertainment|utilities,Video|Media|Entertainment|Utilities,,font-ibm-plex-mono,media,homebrew_cask_30d:407,503,multi_tag_heuristic_review,0.70,,homebrew_count=604;percent=0.03;cask=font-ibm-plex-mono
+504,Daisydisk,utilities,Utilities,,daisydisk,other,homebrew_cask_30d:405,504,single_tag_heuristic_review,0.62,,homebrew_count=615;percent=0.03;cask=daisydisk
+505,Little Snitch,security|utilities,Security|Utilities,,little-snitch,other,homebrew_cask_30d:406,505,multi_tag_heuristic_review,0.70,,homebrew_count=604;percent=0.03;cask=little-snitch
+506,Gstreamer Development,development,Development,,gstreamer-development,development,homebrew_cask_30d:409,506,single_tag_heuristic_review,0.62,,homebrew_count=598;percent=0.03;cask=gstreamer-development
+507,Krita,design|picture-photo,Design|Pictures & Photos,,krita,other,homebrew_cask_30d:408,507,multi_tag_heuristic_review,0.70,,homebrew_count=602;percent=0.03;cask=krita
+508,Charles,utilities,Utilities,,charles,utilities,homebrew_cask_30d:412,508,single_tag_heuristic_review,0.62,,homebrew_count=592;percent=0.03;cask=charles
+509,Postgres App,other,Other,,postgres-app,other,homebrew_cask_30d:410,509,needs_classification,0.30,,homebrew_count=594;percent=0.03;cask=postgres-app
+510,Imageoptim,picture-photo,Pictures & Photos,,imageoptim,design,homebrew_cask_30d:413,510,single_tag_heuristic_review,0.62,,homebrew_count=591;percent=0.02;cask=imageoptim
+511,Hot,other,Other,,hot,other,homebrew_cask_30d:411,511,needs_classification,0.30,,homebrew_count=594;percent=0.03;cask=hot
+512,Logseq,writing|productivity,Writing|Productivity,,logseq,writing,homebrew_cask_30d:415,512,multi_tag_heuristic_review,0.70,,homebrew_count=589;percent=0.02;cask=logseq
+513,Barutsrb/tap/omniwm,other,Other,,barutsrb-tap-omniwm,other,homebrew_cask_30d:414,513,needs_classification,0.30,,homebrew_count=590;percent=0.02;cask=barutsrb/tap/omniwm
+514,Notion Calendar,writing|productivity,Writing|Productivity,,notion-calendar,writing,homebrew_cask_30d:418,514,multi_tag_heuristic_review,0.70,,homebrew_count=586;percent=0.02;cask=notion-calendar
+515,Font Iosevka,utilities,Utilities,,font-iosevka,other,homebrew_cask_30d:416,515,single_tag_heuristic_review,0.62,,homebrew_count=589;percent=0.02;cask=font-iosevka
+516,Granola,other,Other,,granola,other,homebrew_cask_30d:417,516,needs_classification,0.30,,homebrew_count=587;percent=0.02;cask=granola
+517,Google Chrome@canary,browser,Browsers,,google-chrome-canary,browser,homebrew_cask_30d:421,517,single_tag_heuristic_review,0.62,,homebrew_count=582;percent=0.02;cask=google-chrome@canary
+518,Bbedit,development,Development,,bbedit,other,homebrew_cask_30d:419,518,single_tag_heuristic_review,0.62,,homebrew_count=584;percent=0.02;cask=bbedit
+519,Wch Ch34x Usb Serial Driver,other,Other,,wch-ch34x-usb-serial-driver,other,homebrew_cask_30d:420,519,needs_classification,0.30,,homebrew_count=583;percent=0.02;cask=wch-ch34x-usb-serial-driver
+520,Wezterm@nightly,development,Development,,wezterm-nightly,development,homebrew_cask_30d:423,520,single_tag_heuristic_review,0.62,,homebrew_count=580;percent=0.02;cask=wezterm@nightly
+521,Wallspace,other,Other,,wallspace,other,homebrew_cask_30d:422,521,needs_classification,0.30,,homebrew_count=580;percent=0.02;cask=wallspace
+522,Steamcmd,entertainment,Entertainment,,steamcmd,entertainment,homebrew_cask_30d:425,522,single_tag_heuristic_review,0.62,,homebrew_count=578;percent=0.02;cask=steamcmd
+523,Kamillobinski/thock/thock,other,Other,,kamillobinski-thock-thock,other,homebrew_cask_30d:424,523,needs_classification,0.30,,homebrew_count=578;percent=0.02;cask=kamillobinski/thock/thock
+524,Meetingbar,communication,Communication,,meetingbar,communication,homebrew_cask_30d:428,524,single_tag_heuristic_review,0.62,,homebrew_count=576;percent=0.02;cask=meetingbar
+525,Orcaslicer,other,Other,,orcaslicer,other,homebrew_cask_30d:426,525,needs_classification,0.30,,homebrew_count=577;percent=0.02;cask=orcaslicer
+526,Font Cascadia Code,utilities,Utilities,,font-cascadia-code,other,homebrew_cask_30d:427,526,single_tag_heuristic_review,0.62,,homebrew_count=576;percent=0.02;cask=font-cascadia-code
+527,Crystalfetch,other,Other,,crystalfetch,other,homebrew_cask_30d:429,527,needs_classification,0.30,,homebrew_count=574;percent=0.02;cask=crystalfetch
+528,Kap,utilities,Utilities,,kap,other,homebrew_cask_30d:430,528,single_tag_heuristic_review,0.62,,homebrew_count=569;percent=0.02;cask=kap
+529,Font Iosevka Term Nerd Font,utilities,Utilities,,font-iosevka-term-nerd-font,other,homebrew_cask_30d:431,529,single_tag_heuristic_review,0.62,,homebrew_count=566;percent=0.02;cask=font-iosevka-term-nerd-font
+530,Netnewswire,other,Other,,netnewswire,other,homebrew_cask_30d:432,530,needs_classification,0.30,,homebrew_count=564;percent=0.02;cask=netnewswire
+531,Vesktop,other,Other,,vesktop,other,homebrew_cask_30d:433,531,needs_classification,0.30,,homebrew_count=562;percent=0.02;cask=vesktop
+532,Krishkrosh/apps/trackweight,other,Other,,krishkrosh-apps-trackweight,other,homebrew_cask_30d:434,532,needs_classification,0.30,,homebrew_count=560;percent=0.02;cask=krishkrosh/apps/trackweight
+533,Tomatobar,other,Other,,tomatobar,other,homebrew_cask_30d:435,533,needs_classification,0.30,,homebrew_count=559;percent=0.02;cask=tomatobar
+534,Dynamodb Local,other,Other,,dynamodb-local,other,homebrew_cask_30d:436,534,needs_classification,0.30,,homebrew_count=557;percent=0.02;cask=dynamodb-local
+535,Thebrowsercompany Dia,browser,Browsers,,thebrowsercompany-dia,browser,homebrew_cask_30d:439,535,single_tag_heuristic_review,0.62,,homebrew_count=551;percent=0.02;cask=thebrowsercompany-dia
+536,Neovide App,other,Other,,neovide-app,other,homebrew_cask_30d:437,536,needs_classification,0.30,,homebrew_count=553;percent=0.02;cask=neovide-app
+537,Claudebar,other,Other,,claudebar,other,homebrew_cask_30d:438,537,needs_classification,0.30,,homebrew_count=553;percent=0.02;cask=claudebar
+538,Webstorm,development,Development,,webstorm,development,homebrew_cask_30d:442,538,single_tag_heuristic_review,0.62,,homebrew_count=545;percent=0.02;cask=webstorm
+539,Codeql,other,Other,,codeql,other,homebrew_cask_30d:440,539,needs_classification,0.30,,homebrew_count=545;percent=0.02;cask=codeql
+541,Stolendata Mpv,video|media,Video|Media,,stolendata-mpv,other,homebrew_cask_30d:441,541,multi_tag_heuristic_review,0.70,,homebrew_count=545;percent=0.02;cask=stolendata-mpv
+542,Keyboardcleantool,utilities,Utilities,,keyboardcleantool,utilities,homebrew_cask_30d:446,542,single_tag_heuristic_review,0.62,,homebrew_count=537;percent=0.02;cask=keyboardcleantool
+543,Knockknock,other,Other,,knockknock,other,homebrew_cask_30d:444,543,needs_classification,0.30,,homebrew_count=538;percent=0.02;cask=knockknock
+544,Daveshanley/vacuum/vacuum,other,Other,,daveshanley-vacuum-vacuum,other,homebrew_cask_30d:445,544,needs_classification,0.30,,homebrew_count=537;percent=0.02;cask=daveshanley/vacuum/vacuum
+545,D12frosted/emacs Plus/emacs Plus App,development,Development,,d12frosted-emacs-plus-emacs-plus-app,development,homebrew_cask_30d:449,545,single_tag_heuristic_review,0.62,,homebrew_count=532;percent=0.02;cask=d12frosted/emacs-plus/emacs-plus-app
+546,Osaurus,other,Other,,osaurus,other,homebrew_cask_30d:447,546,needs_classification,0.30,,homebrew_count=537;percent=0.02;cask=osaurus
+547,Todoist App,productivity,Productivity,,todoist-app,productivity,homebrew_cask_30d:450,547,single_tag_heuristic_review,0.62,,homebrew_count=530;percent=0.02;cask=todoist-app
+548,Corretto@8,development,Development,,corretto-8,other,homebrew_cask_30d:448,548,single_tag_heuristic_review,0.62,,homebrew_count=534;percent=0.02;cask=corretto@8
+549,Claude Devtools,ai-tools|productivity,AI Tools|Productivity,,claude-devtools,ai-tools,homebrew_cask_30d:452,549,multi_tag_heuristic_review,0.70,,homebrew_count=527;percent=0.02;cask=claude-devtools
+550,Latest,other,Other,,latest,other,homebrew_cask_30d:451,550,needs_classification,0.30,,homebrew_count=529;percent=0.02;cask=latest
+551,Ublue Os/tap/asusctl Linux,other,Other,,ublue-os-tap-asusctl-linux,other,homebrew_cask_30d:453,551,needs_classification,0.30,,homebrew_count=526;percent=0.02;cask=ublue-os/tap/asusctl-linux
+552,Proton Pass,other,Other,,proton-pass,other,homebrew_cask_30d:454,552,needs_classification,0.30,,homebrew_count=525;percent=0.02;cask=proton-pass
+553,Proton Mail,communication,Communication,,proton-mail,communication,homebrew_cask_30d:457,553,single_tag_heuristic_review,0.62,,homebrew_count=522;percent=0.02;cask=proton-mail
+554,Input Source Pro,other,Other,,input-source-pro,other,homebrew_cask_30d:455,554,needs_classification,0.30,,homebrew_count=524;percent=0.02;cask=input-source-pro
+555,Memo,other,Other,,memo,other,homebrew_cask_30d:456,555,needs_classification,0.30,,homebrew_count=523;percent=0.02;cask=memo
+556,Battery,other,Other,,battery,other,homebrew_cask_30d:458,556,needs_classification,0.30,,homebrew_count=522;percent=0.02;cask=battery
+557,Font Fira Mono Nerd Font,utilities,Utilities,,font-fira-mono-nerd-font,other,homebrew_cask_30d:459,557,single_tag_heuristic_review,0.62,,homebrew_count=520;percent=0.02;cask=font-fira-mono-nerd-font
+558,Parsec,other,Other,,parsec,other,homebrew_cask_30d:460,558,needs_classification,0.30,,homebrew_count=518;percent=0.02;cask=parsec
+559,Font Monaspice Nerd Font,utilities,Utilities,,font-monaspice-nerd-font,other,homebrew_cask_30d:461,559,single_tag_heuristic_review,0.62,,homebrew_count=515;percent=0.02;cask=font-monaspice-nerd-font
+560,Ublue Os/tap/rog Control Center Linux,other,Other,,ublue-os-tap-rog-control-center-linux,other,homebrew_cask_30d:462,560,needs_classification,0.30,,homebrew_count=510;percent=0.02;cask=ublue-os/tap/rog-control-center-linux
+561,AWS VPN Client,development,Development,,aws-vpn-client,development,homebrew_cask_30d:465,561,single_tag_heuristic_review,0.62,,homebrew_count=504;percent=0.02;cask=aws-vpn-client
+562,Eqmac,other,Other,,eqmac,other,homebrew_cask_30d:463,562,needs_classification,0.30,,homebrew_count=508;percent=0.02;cask=eqmac
+563,Corretto@25,development,Development,,corretto-25,other,homebrew_cask_30d:464,563,single_tag_heuristic_review,0.62,,homebrew_count=506;percent=0.02;cask=corretto@25
+564,Gpg Suite,security|utilities,Security|Utilities,,gpg-suite,other,homebrew_cask_30d:466,564,multi_tag_heuristic_review,0.70,,homebrew_count=503;percent=0.02;cask=gpg-suite
+565,Termora,other,Other,,termora,other,homebrew_cask_30d:467,565,needs_classification,0.30,,homebrew_count=502;percent=0.02;cask=termora
+566,Element,communication,Communication,,element,other,homebrew_cask_30d:468,566,single_tag_heuristic_review,0.62,,homebrew_count=502;percent=0.02;cask=element
+567,Metasploit,other,Other,,metasploit,other,homebrew_cask_30d:469,567,needs_classification,0.30,,homebrew_count=501;percent=0.02;cask=metasploit
+568,Blackhole 64ch,audio|media|utilities,Audio|Media|Utilities,,blackhole-64ch,other,homebrew_cask_30d:470,568,multi_tag_heuristic_review,0.70,,homebrew_count=500;percent=0.02;cask=blackhole-64ch
+569,F/textream/textream,other,Other,,f-textream-textream,other,homebrew_cask_30d:471,569,needs_classification,0.30,,homebrew_count=497;percent=0.02;cask=f/textream/textream
+570,Wxtsky/tap/codeisland,other,Other,,wxtsky-tap-codeisland,other,homebrew_cask_30d:472,570,needs_classification,0.30,,homebrew_count=495;percent=0.02;cask=wxtsky/tap/codeisland
+571,Oracle Jdk,other,Other,,oracle-jdk,other,homebrew_cask_30d:473,571,needs_classification,0.30,,homebrew_count=495;percent=0.02;cask=oracle-jdk
+572,Jdownloader,transfer,Uploads & Downloads,,jdownloader,other,homebrew_cask_30d:474,572,single_tag_heuristic_review,0.62,,homebrew_count=494;percent=0.02;cask=jdownloader
+573,Wpsoffice Cn,other,Other,,wpsoffice-cn,other,homebrew_cask_30d:475,573,needs_classification,0.30,,homebrew_count=494;percent=0.02;cask=wpsoffice-cn
+574,Font Dejavu,utilities,Utilities,,font-dejavu,other,homebrew_cask_30d:476,574,single_tag_heuristic_review,0.62,,homebrew_count=491;percent=0.02;cask=font-dejavu
+575,Baidunetdisk,other,Other,,baidunetdisk,other,homebrew_cask_30d:477,575,needs_classification,0.30,,homebrew_count=490;percent=0.02;cask=baidunetdisk
+576,Prince,other,Other,,prince,other,homebrew_cask_30d:478,576,needs_classification,0.30,,homebrew_count=490;percent=0.02;cask=prince
+577,Zerotier One,other,Other,,zerotier-one,other,homebrew_cask_30d:479,577,needs_classification,0.30,,homebrew_count=488;percent=0.02;cask=zerotier-one
+578,Loom,video|media,Video|Media,,loom,other,homebrew_cask_30d:480,578,multi_tag_heuristic_review,0.70,,homebrew_count=487;percent=0.02;cask=loom
+579,Sfm,other,Other,,sfm,other,homebrew_cask_30d:481,579,needs_classification,0.30,,homebrew_count=482;percent=0.02;cask=sfm
+580,Pika,other,Other,,pika,other,homebrew_cask_30d:482,580,needs_classification,0.30,,homebrew_count=480;percent=0.02;cask=pika
+581,Proton Drive,other,Other,,proton-drive,other,homebrew_cask_30d:483,581,needs_classification,0.30,,homebrew_count=480;percent=0.02;cask=proton-drive
+582,Font D2coding Nerd Font,utilities,Utilities,,font-d2coding-nerd-font,other,homebrew_cask_30d:484,582,single_tag_heuristic_review,0.62,,homebrew_count=477;percent=0.02;cask=font-d2coding-nerd-font
+583,Grammarly Desktop,writing,Writing,,grammarly-desktop,writing,homebrew_cask_30d:487,583,single_tag_heuristic_review,0.62,,homebrew_count=470;percent=0.02;cask=grammarly-desktop
+584,Peripheryapp/periphery/periphery,other,Other,,peripheryapp-periphery-periphery,other,homebrew_cask_30d:485,584,needs_classification,0.30,,homebrew_count=476;percent=0.02;cask=peripheryapp/periphery/periphery
+585,Finicky,other,Other,,finicky,other,homebrew_cask_30d:486,585,needs_classification,0.30,,homebrew_count=475;percent=0.02;cask=finicky
+586,Comet,other,Other,,comet,other,homebrew_cask_30d:488,586,needs_classification,0.30,,homebrew_count=467;percent=0.02;cask=comet
+588,Appium Inspector,other,Other,,appium-inspector,other,homebrew_cask_30d:489,588,needs_classification,0.30,,homebrew_count=463;percent=0.02;cask=appium-inspector
+589,Motrix,transfer,Uploads & Downloads,,motrix,other,homebrew_cask_30d:490,589,single_tag_heuristic_review,0.62,,homebrew_count=462;percent=0.02;cask=motrix
+590,Epic Games,game|entertainment,Games|Entertainment,,epic-games,entertainment,homebrew_cask_30d:493,590,multi_tag_heuristic_review,0.70,,homebrew_count=458;percent=0.02;cask=epic-games
+591,Chatbox,other,Other,,chatbox,other,homebrew_cask_30d:492,591,needs_classification,0.30,,homebrew_count=461;percent=0.02;cask=chatbox
+592,Plex,video|media|entertainment,Video|Media|Entertainment,,plex,media,homebrew_cask_30d:495,592,multi_tag_heuristic_review,0.70,,homebrew_count=454;percent=0.02;cask=plex
+593,Openinterminal,development,Development,,openinterminal,development,homebrew_cask_30d:496,593,single_tag_heuristic_review,0.62,,homebrew_count=451;percent=0.02;cask=openinterminal
+594,Font Roboto,utilities,Utilities,,font-roboto,other,homebrew_cask_30d:494,594,single_tag_heuristic_review,0.62,,homebrew_count=458;percent=0.02;cask=font-roboto
+595,Goland,development,Development,,goland,development,homebrew_cask_30d:499,595,single_tag_heuristic_review,0.62,,homebrew_count=447;percent=0.02;cask=goland
+596,Wizcli,other,Other,,wizcli,other,homebrew_cask_30d:497,596,needs_classification,0.30,,homebrew_count=450;percent=0.02;cask=wizcli
+597,Duckduckgo,browser,Browsers,,duckduckgo,other,homebrew_cask_30d:498,597,single_tag_heuristic_review,0.62,,homebrew_count=448;percent=0.02;cask=duckduckgo
+598,Cardinal Search,browser,Browsers,,cardinal-search,browser,homebrew_cask_30d:501,598,single_tag_heuristic_review,0.62,,homebrew_count=444;percent=0.02;cask=cardinal-search
+599,Tradingview,finance,Finance,,tradingview,finance,homebrew_cask_30d:502,599,single_tag_heuristic_review,0.62,,homebrew_count=442;percent=0.02;cask=tradingview
+600,Supacode,other,Other,,supacode,other,homebrew_cask_30d:500,600,needs_classification,0.30,,homebrew_count=445;percent=0.02;cask=supacode
+601,Mullvad Browser,browser|security|utilities,Browsers|Security|Utilities,,mullvad-browser,browser,homebrew_cask_30d:504,601,multi_tag_heuristic_review,0.70,,homebrew_count=439;percent=0.02;cask=mullvad-browser
+602,Textmate,development,Development,,textmate,other,homebrew_cask_30d:503,602,single_tag_heuristic_review,0.62,,homebrew_count=442;percent=0.02;cask=textmate
+603,Parallels,development,Development,,parallels,other,homebrew_cask_30d:505,603,single_tag_heuristic_review,0.62,,homebrew_count=437;percent=0.02;cask=parallels
+604,Font Geist Mono Nerd Font,utilities,Utilities,,font-geist-mono-nerd-font,other,homebrew_cask_30d:506,604,single_tag_heuristic_review,0.62,,homebrew_count=437;percent=0.02;cask=font-geist-mono-nerd-font
+605,Webex,communication|productivity,Communication|Productivity,,webex,other,homebrew_cask_30d:507,605,multi_tag_heuristic_review,0.70,,homebrew_count=436;percent=0.02;cask=webex
+606,Deepl,other,Other,,deepl,other,homebrew_cask_30d:508,606,needs_classification,0.30,,homebrew_count=435;percent=0.02;cask=deepl
+607,Wechatwebdevtools,communication,Communication,,wechatwebdevtools,communication,homebrew_cask_30d:511,607,single_tag_heuristic_review,0.62,,homebrew_count=431;percent=0.02;cask=wechatwebdevtools
+608,Secretive,other,Other,,secretive,other,homebrew_cask_30d:509,608,needs_classification,0.30,,homebrew_count=433;percent=0.02;cask=secretive
+609,Wine@devel,utilities,Utilities,,wine-devel,development,homebrew_cask_30d:512,609,single_tag_heuristic_review,0.62,,homebrew_count=430;percent=0.02;cask=wine@devel
+610,Mist,other,Other,,mist,other,homebrew_cask_30d:510,610,needs_classification,0.30,,homebrew_count=433;percent=0.02;cask=mist
+611,Microsoft Azure Storage Explorer,development,Development,,microsoft-azure-storage-explorer,development,homebrew_cask_30d:514,611,single_tag_heuristic_review,0.62,,homebrew_count=425;percent=0.02;cask=microsoft-azure-storage-explorer
+612,UI Tars,other,Other,,ui-tars,other,homebrew_cask_30d:513,612,needs_classification,0.30,,homebrew_count=427;percent=0.02;cask=ui-tars
+613,Minecraft,productivity|game|entertainment,Productivity|Games|Entertainment,,minecraft,writing,homebrew_cask_30d:517,613,multi_tag_heuristic_review,0.70,,homebrew_count=423;percent=0.02;cask=minecraft
+614,Corretto@11,development,Development,,corretto-11,other,homebrew_cask_30d:515,614,single_tag_heuristic_review,0.62,,homebrew_count=425;percent=0.02;cask=corretto@11
+615,Zed@preview,development|picture-photo|system|utilities,Development|Pictures & Photos|System Apps|Utilities,,zed-preview,development,homebrew_cask_30d:518,615,multi_tag_heuristic_review,0.70,,homebrew_count=422;percent=0.02;cask=zed@preview
+616,Droid,other,Other,,droid,other,homebrew_cask_30d:516,616,needs_classification,0.30,,homebrew_count=424;percent=0.02;cask=droid
+617,Trae,other,Other,,trae,other,homebrew_cask_30d:519,617,needs_classification,0.30,,homebrew_count=421;percent=0.02;cask=trae
+618,Rider,development,Development,,rider,other,homebrew_cask_30d:520,618,single_tag_heuristic_review,0.62,,homebrew_count=420;percent=0.02;cask=rider
+619,Nomachine,other,Other,,nomachine,other,homebrew_cask_30d:521,619,needs_classification,0.30,,homebrew_count=419;percent=0.02;cask=nomachine
+620,Musescore,other,Other,,musescore,other,homebrew_cask_30d:522,620,needs_classification,0.30,,homebrew_count=418;percent=0.02;cask=musescore
+621,Wpsoffice,other,Other,,wpsoffice,other,homebrew_cask_30d:523,621,needs_classification,0.30,,homebrew_count=417;percent=0.02;cask=wpsoffice
+622,HTTP Toolkit,other,Other,,http-toolkit,other,homebrew_cask_30d:524,622,needs_classification,0.30,,homebrew_count=416;percent=0.02;cask=http-toolkit
+623,Draw Things,productivity,Productivity,,draw-things,productivity,homebrew_cask_30d:527,623,single_tag_heuristic_review,0.62,,homebrew_count=413;percent=0.02;cask=draw-things
+624,Wetype,other,Other,,wetype,other,homebrew_cask_30d:525,624,needs_classification,0.30,,homebrew_count=416;percent=0.02;cask=wetype
+625,Font Sf Pro,utilities,Utilities,,font-sf-pro,other,homebrew_cask_30d:526,625,single_tag_heuristic_review,0.62,,homebrew_count=415;percent=0.02;cask=font-sf-pro
+626,Forklift,file-management|transfer|utilities,File Management|Uploads & Downloads|Utilities,,forklift,utilities,homebrew_cask_30d:529,626,multi_tag_heuristic_review,0.70,,homebrew_count=413;percent=0.02;cask=forklift
+627,Qoderai/qoder/qodercli,other,Other,,qoderai-qoder-qodercli,other,homebrew_cask_30d:528,627,needs_classification,0.30,,homebrew_count=413;percent=0.02;cask=qoderai/qoder/qodercli
+628,Longbridge/tap/longbridge Terminal,development|system|utilities,Development|System Apps|Utilities,,longbridge-tap-longbridge-terminal,development,homebrew_cask_30d:531,628,multi_tag_heuristic_review,0.70,,homebrew_count=407;percent=0.02;cask=longbridge/tap/longbridge-terminal
+629,Barrier,other,Other,,barrier,other,homebrew_cask_30d:530,629,needs_classification,0.30,,homebrew_count=412;percent=0.02;cask=barrier
+630,Mockoon,other,Other,,mockoon,other,homebrew_cask_30d:532,630,needs_classification,0.30,,homebrew_count=407;percent=0.02;cask=mockoon
+631,Beyond Compare,development,Development,,beyond-compare,other,homebrew_cask_30d:533,631,single_tag_heuristic_review,0.62,,homebrew_count=406;percent=0.02;cask=beyond-compare
+632,Macvim App,development,Development,,macvim-app,development,homebrew_cask_30d:536,632,single_tag_heuristic_review,0.62,,homebrew_count=401;percent=0.02;cask=macvim-app
+633,Zulu,development,Development,,zulu,other,homebrew_cask_30d:534,633,single_tag_heuristic_review,0.62,,homebrew_count=403;percent=0.02;cask=zulu
+634,Typeless,other,Other,,typeless,other,homebrew_cask_30d:535,634,needs_classification,0.30,,homebrew_count=402;percent=0.02;cask=typeless
+635,Authzed/tap/spicedb,development,Development,,authzed-tap-spicedb,development,homebrew_cask_30d:538,635,single_tag_heuristic_review,0.62,,homebrew_count=396;percent=0.02;cask=authzed/tap/spicedb
+636,Corretto,development,Development,,corretto,other,homebrew_cask_30d:537,636,single_tag_heuristic_review,0.62,,homebrew_count=397;percent=0.02;cask=corretto
+637,Devtoys,development,Development,,devtoys,development,homebrew_cask_30d:540,637,single_tag_heuristic_review,0.62,,homebrew_count=396;percent=0.02;cask=devtoys
+638,Playcover Community,game|entertainment,Games|Entertainment,,playcover-community,other,homebrew_cask_30d:539,638,multi_tag_heuristic_review,0.70,,homebrew_count=396;percent=0.02;cask=playcover-community
+639,Sublime Merge,development,Development,,sublime-merge,development,homebrew_cask_30d:543,639,single_tag_heuristic_review,0.62,,homebrew_count=392;percent=0.02;cask=sublime-merge
+640,Visualvm,other,Other,,visualvm,other,homebrew_cask_30d:541,640,needs_classification,0.30,,homebrew_count=395;percent=0.02;cask=visualvm
+641,Logitech G Hub,utilities,Utilities,,logitech-g-hub,utilities,homebrew_cask_30d:544,641,single_tag_heuristic_review,0.62,,homebrew_count=392;percent=0.02;cask=logitech-g-hub
+642,Jan,ai-tools|productivity,AI Tools|Productivity,,jan,other,homebrew_cask_30d:542,642,multi_tag_heuristic_review,0.70,,homebrew_count=395;percent=0.02;cask=jan
+643,Cryptomator,finance,Finance,,cryptomator,finance,homebrew_cask_30d:545,643,single_tag_heuristic_review,0.62,,homebrew_count=388;percent=0.02;cask=cryptomator
+644,Postico,other,Other,,postico,other,homebrew_cask_30d:546,644,needs_classification,0.30,,homebrew_count=388;percent=0.02;cask=postico
+645,Font Hackgen Nerd,utilities,Utilities,,font-hackgen-nerd,other,homebrew_cask_30d:547,645,single_tag_heuristic_review,0.62,,homebrew_count=386;percent=0.02;cask=font-hackgen-nerd
+646,Kotlin Lsp,other,Other,,kotlin-lsp,other,homebrew_cask_30d:548,646,needs_classification,0.30,,homebrew_count=384;percent=0.02;cask=kotlin-lsp
+647,Openwebstart,other,Other,,openwebstart,other,homebrew_cask_30d:549,647,needs_classification,0.30,,homebrew_count=383;percent=0.02;cask=openwebstart
+648,Zulu@11,development,Development,,zulu-11,other,homebrew_cask_30d:550,648,single_tag_heuristic_review,0.62,,homebrew_count=382;percent=0.02;cask=zulu@11
+649,Qcad,other,Other,,qcad,other,homebrew_cask_30d:551,649,needs_classification,0.30,,homebrew_count=382;percent=0.02;cask=qcad
+650,Cmake App,other,Other,,cmake-app,other,homebrew_cask_30d:552,650,needs_classification,0.30,,homebrew_count=382;percent=0.02;cask=cmake-app
+651,Microsoft Openjdk@17,other,Other,,microsoft-openjdk-17,other,homebrew_cask_30d:553,651,needs_classification,0.30,,homebrew_count=382;percent=0.02;cask=microsoft-openjdk@17
+652,Gitkraken CLI,development,Development,,gitkraken-cli,development,homebrew_cask_30d:556,652,single_tag_heuristic_review,0.62,,homebrew_count=381;percent=0.02;cask=gitkraken-cli
+653,Qt Creator,other,Other,,qt-creator,other,homebrew_cask_30d:554,653,needs_classification,0.30,,homebrew_count=382;percent=0.02;cask=qt-creator
+654,Microsoft Onenote,writing|productivity,Writing|Productivity,,microsoft-onenote,writing,homebrew_cask_30d:557,654,multi_tag_heuristic_review,0.70,,homebrew_count=380;percent=0.02;cask=microsoft-onenote
+655,Superset,other,Other,,superset,other,homebrew_cask_30d:555,655,needs_classification,0.30,,homebrew_count=381;percent=0.02;cask=superset
+656,Aninsomniacy/motrix Next/motrix Next,transfer,Uploads & Downloads,,aninsomniacy-motrix-next-motrix-next,development,homebrew_cask_30d:559,656,single_tag_heuristic_review,0.62,,homebrew_count=379;percent=0.02;cask=aninsomniacy/motrix-next/motrix-next
+657,Autodesk Fusion,other,Other,,autodesk-fusion,other,homebrew_cask_30d:558,657,needs_classification,0.30,,homebrew_count=379;percent=0.02;cask=autodesk-fusion
+658,Devantler Tech/formulas/ksail,development,Development,,devantler-tech-formulas-ksail,development,homebrew_cask_30d:561,658,single_tag_heuristic_review,0.62,,homebrew_count=377;percent=0.02;cask=devantler-tech/formulas/ksail
+659,Wireshark Chmodbpf,utilities,Utilities,,wireshark-chmodbpf,utilities,homebrew_cask_30d:562,659,single_tag_heuristic_review,0.62,,homebrew_count=376;percent=0.02;cask=wireshark-chmodbpf
+660,Apifox,other,Other,,apifox,other,homebrew_cask_30d:560,660,needs_classification,0.30,,homebrew_count=377;percent=0.02;cask=apifox
+661,Amneziavpn,utilities,Utilities,,amneziavpn,utilities,homebrew_cask_30d:564,661,single_tag_heuristic_review,0.62,,homebrew_count=374;percent=0.02;cask=amneziavpn
+662,Kitlangton Hex,other,Other,,kitlangton-hex,other,homebrew_cask_30d:563,662,needs_classification,0.30,,homebrew_count=375;percent=0.02;cask=kitlangton-hex
+663,Downie,transfer,Uploads & Downloads,,downie,other,homebrew_cask_30d:565,663,single_tag_heuristic_review,0.62,,homebrew_count=373;percent=0.02;cask=downie
+664,Veracrypt,other,Other,,veracrypt,other,homebrew_cask_30d:566,664,needs_classification,0.30,,homebrew_count=371;percent=0.02;cask=veracrypt
+665,Hyperkey,other,Other,,hyperkey,other,homebrew_cask_30d:567,665,needs_classification,0.30,,homebrew_count=369;percent=0.02;cask=hyperkey
+666,Geekbench,other,Other,,geekbench,other,homebrew_cask_30d:568,666,needs_classification,0.30,,homebrew_count=369;percent=0.02;cask=geekbench
+667,Adguard,other,Other,,adguard,other,homebrew_cask_30d:569,667,needs_classification,0.30,,homebrew_count=369;percent=0.02;cask=adguard
+668,Font Noto Sans Cjk Sc,utilities,Utilities,,font-noto-sans-cjk-sc,other,homebrew_cask_30d:570,668,single_tag_heuristic_review,0.62,,homebrew_count=368;percent=0.02;cask=font-noto-sans-cjk-sc
+669,Xld,other,Other,,xld,other,homebrew_cask_30d:571,669,needs_classification,0.30,,homebrew_count=368;percent=0.02;cask=xld
+670,Herd,other,Other,,herd,other,homebrew_cask_30d:572,670,needs_classification,0.30,,homebrew_count=367;percent=0.02;cask=herd
+671,Kate,other,Other,,kate,other,homebrew_cask_30d:573,671,needs_classification,0.30,,homebrew_count=366;percent=0.02;cask=kate
+672,Zulu@25,development,Development,,zulu-25,other,homebrew_cask_30d:574,672,single_tag_heuristic_review,0.62,,homebrew_count=364;percent=0.02;cask=zulu@25
+673,Mattermost,communication,Communication,,mattermost,other,homebrew_cask_30d:575,673,single_tag_heuristic_review,0.62,,homebrew_count=363;percent=0.02;cask=mattermost
+674,Losslesscut,video|media,Video|Media,,losslesscut,other,homebrew_cask_30d:576,674,multi_tag_heuristic_review,0.70,,homebrew_count=363;percent=0.02;cask=losslesscut
+675,Tsh,other,Other,,tsh,other,homebrew_cask_30d:577,675,needs_classification,0.30,,homebrew_count=363;percent=0.02;cask=tsh
+676,Kid3,other,Other,,kid3,other,homebrew_cask_30d:578,676,needs_classification,0.30,,homebrew_count=362;percent=0.02;cask=kid3
+677,Linear Linear,productivity,Productivity,,linear-linear,productivity,homebrew_cask_30d:581,677,single_tag_heuristic_review,0.62,,homebrew_count=361;percent=0.02;cask=linear-linear
+678,Malwarebytes,security|utilities,Security|Utilities,,malwarebytes,other,homebrew_cask_30d:579,678,multi_tag_heuristic_review,0.70,,homebrew_count=362;percent=0.02;cask=malwarebytes
+679,Paseo,other,Other,,paseo,other,homebrew_cask_30d:580,679,needs_classification,0.30,,homebrew_count=362;percent=0.02;cask=paseo
+680,Copyclip,other,Other,,copyclip,other,homebrew_cask_30d:582,680,needs_classification,0.30,,homebrew_count=360;percent=0.02;cask=copyclip
+681,Jellyfin Media Player,entertainment,Entertainment,,jellyfin-media-player,media,homebrew_cask_30d:585,681,single_tag_heuristic_review,0.62,,homebrew_count=359;percent=0.02;cask=jellyfin-media-player
+682,Copyq,other,Other,,copyq,other,homebrew_cask_30d:583,682,needs_classification,0.30,,homebrew_count=360;percent=0.02;cask=copyq
+683,Makemkv,other,Other,,makemkv,other,homebrew_cask_30d:584,683,needs_classification,0.30,,homebrew_count=359;percent=0.02;cask=makemkv
+684,Rectangle Pro,utilities|system-enhancement,Utilities|System Enhancements,,rectangle-pro,productivity,homebrew_cask_30d:587,684,multi_tag_heuristic_review,0.70,,homebrew_count=356;percent=0.02;cask=rectangle-pro
+685,Google Japanese Ime,other,Other,,google-japanese-ime,other,homebrew_cask_30d:586,685,needs_classification,0.30,,homebrew_count=359;percent=0.02;cask=google-japanese-ime
+686,Font Sf Mono Nerd Font Ligaturized,utilities,Utilities,,font-sf-mono-nerd-font-ligaturized,development,homebrew_cask_30d:590,686,single_tag_heuristic_review,0.62,,homebrew_count=354;percent=0.01;cask=font-sf-mono-nerd-font-ligaturized
+687,Hex Fiend,other,Other,,hex-fiend,other,homebrew_cask_30d:588,687,needs_classification,0.30,,homebrew_count=355;percent=0.02;cask=hex-fiend
+688,Plex Media Server,video|media|entertainment,Video|Media|Entertainment,,plex-media-server,media,homebrew_cask_30d:591,688,multi_tag_heuristic_review,0.70,,homebrew_count=353;percent=0.01;cask=plex-media-server
+689,Readdle Spark,communication,Communication,,readdle-spark,other,homebrew_cask_30d:589,689,single_tag_heuristic_review,0.62,,homebrew_count=354;percent=0.01;cask=readdle-spark
+690,Xbar,other,Other,,xbar,other,homebrew_cask_30d:592,690,needs_classification,0.30,,homebrew_count=353;percent=0.01;cask=xbar
+691,Font Noto Sans Cjk,utilities,Utilities,,font-noto-sans-cjk,other,homebrew_cask_30d:593,691,single_tag_heuristic_review,0.62,,homebrew_count=353;percent=0.01;cask=font-noto-sans-cjk
+692,Roblox,game|entertainment,Games|Entertainment,,roblox,entertainment,homebrew_cask_30d:596,692,multi_tag_heuristic_review,0.70,,homebrew_count=349;percent=0.01;cask=roblox
+693,Jhlee0409/tap/claude Code History Viewer,ai-tools|development,AI Tools|Development,,jhlee0409-tap-claude-code-history-viewer,other,homebrew_cask_30d:594,693,multi_tag_heuristic_review,0.70,,homebrew_count=352;percent=0.01;cask=jhlee0409/tap/claude-code-history-viewer
+694,Font Noto Sans,utilities,Utilities,,font-noto-sans,other,homebrew_cask_30d:595,694,single_tag_heuristic_review,0.62,,homebrew_count=350;percent=0.01;cask=font-noto-sans
+695,Bettermouse,utilities,Utilities,,bettermouse,utilities,homebrew_cask_30d:599,695,single_tag_heuristic_review,0.62,,homebrew_count=347;percent=0.01;cask=bettermouse
+696,Font Ubuntu Mono Nerd Font,utilities,Utilities,,font-ubuntu-mono-nerd-font,other,homebrew_cask_30d:597,696,single_tag_heuristic_review,0.62,,homebrew_count=349;percent=0.01;cask=font-ubuntu-mono-nerd-font
+697,Font Roboto Mono Nerd Font,utilities,Utilities,,font-roboto-mono-nerd-font,other,homebrew_cask_30d:598,697,single_tag_heuristic_review,0.62,,homebrew_count=348;percent=0.01;cask=font-roboto-mono-nerd-font
+698,Oracle Jdk@25,other,Other,,oracle-jdk-25,other,homebrew_cask_30d:600,698,needs_classification,0.30,,homebrew_count=346;percent=0.01;cask=oracle-jdk@25
+699,Musicbrainz Picard,media,Media,,musicbrainz-picard,media,homebrew_cask_30d:603,699,single_tag_heuristic_review,0.62,,homebrew_count=345;percent=0.01;cask=musicbrainz-picard
+700,Distroav/distroav/distroav,other,Other,,distroav-distroav-distroav,other,homebrew_cask_30d:601,700,needs_classification,0.30,,homebrew_count=346;percent=0.01;cask=distroav/distroav/distroav
+701,Qview,other,Other,,qview,other,homebrew_cask_30d:602,701,needs_classification,0.30,,homebrew_count=345;percent=0.01;cask=qview
+702,Bluesnooze,other,Other,,bluesnooze,other,homebrew_cask_30d:604,702,needs_classification,0.30,,homebrew_count=345;percent=0.01;cask=bluesnooze
+703,Paintbrush,other,Other,,paintbrush,other,homebrew_cask_30d:605,703,needs_classification,0.30,,homebrew_count=344;percent=0.01;cask=paintbrush
+704,Transmit,file-management|transfer,File Management|Uploads & Downloads,,transmit,utilities,homebrew_cask_30d:608,704,multi_tag_heuristic_review,0.70,,homebrew_count=342;percent=0.01;cask=transmit
+705,Xmind,productivity,Productivity,,xmind,other,homebrew_cask_30d:606,705,single_tag_heuristic_review,0.62,,homebrew_count=343;percent=0.01;cask=xmind
+706,Kdiff3,other,Other,,kdiff3,other,homebrew_cask_30d:607,706,needs_classification,0.30,,homebrew_count=343;percent=0.01;cask=kdiff3
+707,Mos@beta,utilities,Utilities,,mos-beta,other,homebrew_cask_30d:609,707,single_tag_heuristic_review,0.62,,homebrew_count=341;percent=0.01;cask=mos@beta
+708,Updatest,other,Other,,updatest,other,homebrew_cask_30d:610,708,needs_classification,0.30,,homebrew_count=341;percent=0.01;cask=updatest
+709,Ghostty@tip,development,Development,,ghostty-tip,development,homebrew_cask_30d:613,709,single_tag_heuristic_review,0.62,,homebrew_count=340;percent=0.01;cask=ghostty@tip
+710,Citrix Workspace,other,Other,,citrix-workspace,other,homebrew_cask_30d:611,710,needs_classification,0.30,,homebrew_count=340;percent=0.01;cask=citrix-workspace
+711,Xnviewmp,other,Other,,xnviewmp,other,homebrew_cask_30d:612,711,needs_classification,0.30,,homebrew_count=340;percent=0.01;cask=xnviewmp
+712,Platypus,other,Other,,platypus,other,homebrew_cask_30d:614,712,needs_classification,0.30,,homebrew_count=339;percent=0.01;cask=platypus
+713,Mqttx,other,Other,,mqttx,other,homebrew_cask_30d:615,713,needs_classification,0.30,,homebrew_count=339;percent=0.01;cask=mqttx
+714,Youtube Downloader,video|media|entertainment,Video|Media|Entertainment,,youtube-downloader,media,homebrew_cask_30d:618,714,multi_tag_heuristic_review,0.70,,homebrew_count=337;percent=0.01;cask=youtube-downloader
+715,Font Geist Mono,utilities,Utilities,,font-geist-mono,other,homebrew_cask_30d:616,715,single_tag_heuristic_review,0.62,,homebrew_count=339;percent=0.01;cask=font-geist-mono
+716,Bettercapture,other,Other,,bettercapture,other,homebrew_cask_30d:617,716,needs_classification,0.30,,homebrew_count=338;percent=0.01;cask=bettercapture
+717,Blip,other,Other,,blip,other,homebrew_cask_30d:619,717,needs_classification,0.30,,homebrew_count=337;percent=0.01;cask=blip
+718,Cork,other,Other,,cork,other,homebrew_cask_30d:620,718,needs_classification,0.30,,homebrew_count=336;percent=0.01;cask=cork
+719,Expo Orbit,other,Other,,expo-orbit,other,homebrew_cask_30d:621,719,needs_classification,0.30,,homebrew_count=336;percent=0.01;cask=expo-orbit
+720,Font Victor Mono Nerd Font,utilities,Utilities,,font-victor-mono-nerd-font,other,homebrew_cask_30d:622,720,single_tag_heuristic_review,0.62,,homebrew_count=336;percent=0.01;cask=font-victor-mono-nerd-font
+722,Font Sketchybar App Font,utilities,Utilities,,font-sketchybar-app-font,design,homebrew_cask_30d:626,722,single_tag_heuristic_review,0.62,,homebrew_count=332;percent=0.01;cask=font-sketchybar-app-font
+723,Miro,productivity,Productivity,,miro,other,homebrew_cask_30d:624,723,single_tag_heuristic_review,0.62,,homebrew_count=332;percent=0.01;cask=miro
+724,Dot,other,Other,,dot,other,homebrew_cask_30d:625,724,needs_classification,0.30,,homebrew_count=332;percent=0.01;cask=dot
+725,Panda,other,Other,,panda,other,homebrew_cask_30d:627,725,needs_classification,0.30,,homebrew_count=331;percent=0.01;cask=panda
+726,Rio,other,Other,,rio,other,homebrew_cask_30d:628,726,needs_classification,0.30,,homebrew_count=331;percent=0.01;cask=rio
+727,Paraview,other,Other,,paraview,other,homebrew_cask_30d:629,727,needs_classification,0.30,,homebrew_count=329;percent=0.01;cask=paraview
+728,0 Ad,other,Other,,0-ad,other,homebrew_cask_30d:630,728,needs_classification,0.30,,homebrew_count=329;percent=0.01;cask=0-ad
+729,Trae Cn,other,Other,,trae-cn,other,homebrew_cask_30d:631,729,needs_classification,0.30,,homebrew_count=328;percent=0.01;cask=trae-cn
+730,Proton Mail Bridge,communication,Communication,,proton-mail-bridge,communication,homebrew_cask_30d:634,730,single_tag_heuristic_review,0.62,,homebrew_count=326;percent=0.01;cask=proton-mail-bridge
+731,Gqrx,other,Other,,gqrx,other,homebrew_cask_30d:632,731,needs_classification,0.30,,homebrew_count=327;percent=0.01;cask=gqrx
+732,Fluidvoice,other,Other,,fluidvoice,other,homebrew_cask_30d:633,732,needs_classification,0.30,,homebrew_count=326;percent=0.01;cask=fluidvoice
+733,Privileges,other,Other,,privileges,other,homebrew_cask_30d:635,733,needs_classification,0.30,,homebrew_count=325;percent=0.01;cask=privileges
+734,Ticktick,other,Other,,ticktick,other,homebrew_cask_30d:636,734,needs_classification,0.30,,homebrew_count=325;percent=0.01;cask=ticktick
+735,Finch,other,Other,,finch,other,homebrew_cask_30d:637,735,needs_classification,0.30,,homebrew_count=325;percent=0.01;cask=finch
+736,Electerm,other,Other,,electerm,other,homebrew_cask_30d:638,736,needs_classification,0.30,,homebrew_count=325;percent=0.01;cask=electerm
+737,Cleanmymac,utilities,Utilities,,cleanmymac,productivity,homebrew_cask_30d:641,737,single_tag_heuristic_review,0.62,,homebrew_count=324;percent=0.01;cask=cleanmymac
+738,Ilspy,other,Other,,ilspy,other,homebrew_cask_30d:639,738,needs_classification,0.30,,homebrew_count=325;percent=0.01;cask=ilspy
+739,Openemu,other,Other,,openemu,other,homebrew_cask_30d:640,739,needs_classification,0.30,,homebrew_count=325;percent=0.01;cask=openemu
+740,Font Montserrat,utilities,Utilities,,font-montserrat,other,homebrew_cask_30d:642,740,single_tag_heuristic_review,0.62,,homebrew_count=324;percent=0.01;cask=font-montserrat
+741,Font Inconsolata Nerd Font,utilities,Utilities,,font-inconsolata-nerd-font,other,homebrew_cask_30d:643,741,single_tag_heuristic_review,0.62,,homebrew_count=324;percent=0.01;cask=font-inconsolata-nerd-font
+742,Royal Tsx,other,Other,,royal-tsx,other,homebrew_cask_30d:644,742,needs_classification,0.30,,homebrew_count=323;percent=0.01;cask=royal-tsx
+743,Commander One,file-management,File Management,,commander-one,other,homebrew_cask_30d:645,743,single_tag_heuristic_review,0.62,,homebrew_count=322;percent=0.01;cask=commander-one
+744,Soundsource,other,Other,,soundsource,other,homebrew_cask_30d:646,744,needs_classification,0.30,,homebrew_count=322;percent=0.01;cask=soundsource
+745,Setapp,other,Other,,setapp,other,homebrew_cask_30d:647,745,needs_classification,0.30,,homebrew_count=322;percent=0.01;cask=setapp
+746,Nvidia Geforce Now,game|entertainment,Games|Entertainment,,nvidia-geforce-now,other,homebrew_cask_30d:648,746,multi_tag_heuristic_review,0.70,,homebrew_count=319;percent=0.01;cask=nvidia-geforce-now
+747,Entireio/tap/entire,other,Other,,entireio-tap-entire,other,homebrew_cask_30d:649,747,needs_classification,0.30,,homebrew_count=319;percent=0.01;cask=entireio/tap/entire
+748,Sol,other,Other,,sol,other,homebrew_cask_30d:650,748,needs_classification,0.30,,homebrew_count=318;percent=0.01;cask=sol
+749,Reqable,other,Other,,reqable,other,homebrew_cask_30d:651,749,needs_classification,0.30,,homebrew_count=317;percent=0.01;cask=reqable
+750,Firefox@nightly,browser,Browsers,,firefox-nightly,browser,homebrew_cask_30d:654,750,single_tag_heuristic_review,0.62,,homebrew_count=315;percent=0.01;cask=firefox@nightly
+751,Gram,other,Other,,gram,other,homebrew_cask_30d:652,751,needs_classification,0.30,,homebrew_count=317;percent=0.01;cask=gram
+752,Jd Gui,other,Other,,jd-gui,other,homebrew_cask_30d:653,752,needs_classification,0.30,,homebrew_count=316;percent=0.01;cask=jd-gui
+753,Sozercan/repo/kaset,other,Other,,sozercan-repo-kaset,other,homebrew_cask_30d:655,753,needs_classification,0.30,,homebrew_count=314;percent=0.01;cask=sozercan/repo/kaset
+754,Font Sf Mono,utilities,Utilities,,font-sf-mono,other,homebrew_cask_30d:656,754,single_tag_heuristic_review,0.62,,homebrew_count=314;percent=0.01;cask=font-sf-mono
+755,V2rayu,other,Other,,v2rayu,other,homebrew_cask_30d:657,755,needs_classification,0.30,,homebrew_count=314;percent=0.01;cask=v2rayu
+756,Miaoyan,other,Other,,miaoyan,other,homebrew_cask_30d:658,756,needs_classification,0.30,,homebrew_count=313;percent=0.01;cask=miaoyan
+757,Tofu,other,Other,,tofu,other,homebrew_cask_30d:659,757,needs_classification,0.30,,homebrew_count=313;percent=0.01;cask=tofu
+758,Font Dejavu Sans Mono Nerd Font,utilities,Utilities,,font-dejavu-sans-mono-nerd-font,other,homebrew_cask_30d:660,758,single_tag_heuristic_review,0.62,,homebrew_count=312;percent=0.01;cask=font-dejavu-sans-mono-nerd-font
+759,Local,other,Other,,local,other,homebrew_cask_30d:661,759,needs_classification,0.30,,homebrew_count=312;percent=0.01;cask=local
+760,Doubao,other,Other,,doubao,other,homebrew_cask_30d:662,760,needs_classification,0.30,,homebrew_count=310;percent=0.01;cask=doubao
+761,Smcfancontrol,other,Other,,smcfancontrol,other,homebrew_cask_30d:663,761,needs_classification,0.30,,homebrew_count=310;percent=0.01;cask=smcfancontrol
+762,Texstudio,other,Other,,texstudio,other,homebrew_cask_30d:664,762,needs_classification,0.30,,homebrew_count=308;percent=0.01;cask=texstudio
+763,Love,other,Other,,love,other,homebrew_cask_30d:665,763,needs_classification,0.30,,homebrew_count=307;percent=0.01;cask=love
+764,Font Hack,utilities,Utilities,,font-hack,other,homebrew_cask_30d:666,764,single_tag_heuristic_review,0.62,,homebrew_count=306;percent=0.01;cask=font-hack
+765,Openlp,other,Other,,openlp,other,homebrew_cask_30d:667,765,needs_classification,0.30,,homebrew_count=306;percent=0.01;cask=openlp
+766,Imazing,other,Other,,imazing,other,homebrew_cask_30d:668,766,needs_classification,0.30,,homebrew_count=306;percent=0.01;cask=imazing
+767,Flux App,other,Other,,flux-app,other,homebrew_cask_30d:669,767,needs_classification,0.30,,homebrew_count=306;percent=0.01;cask=flux-app
+768,Font Source Sans 3,utilities,Utilities,,font-source-sans-3,other,homebrew_cask_30d:670,768,single_tag_heuristic_review,0.62,,homebrew_count=305;percent=0.01;cask=font-source-sans-3
+769,Jurplel/tap/instant Space Switcher,other,Other,,jurplel-tap-instant-space-switcher,other,homebrew_cask_30d:671,769,needs_classification,0.30,,homebrew_count=305;percent=0.01;cask=jurplel/tap/instant-space-switcher
+770,Only Switch,other,Other,,only-switch,other,homebrew_cask_30d:672,770,needs_classification,0.30,,homebrew_count=304;percent=0.01;cask=only-switch
+771,Flycut,other,Other,,flycut,other,homebrew_cask_30d:673,771,needs_classification,0.30,,homebrew_count=304;percent=0.01;cask=flycut
+772,Modern Csv,other,Other,,modern-csv,other,homebrew_cask_30d:674,772,needs_classification,0.30,,homebrew_count=304;percent=0.01;cask=modern-csv
+773,Sioyek,other,Other,,sioyek,other,homebrew_cask_30d:675,773,needs_classification,0.30,,homebrew_count=303;percent=0.01;cask=sioyek
+774,Switchhosts,other,Other,,switchhosts,other,homebrew_cask_30d:676,774,needs_classification,0.30,,homebrew_count=303;percent=0.01;cask=switchhosts
+775,Neteasemusic,media,Media,,neteasemusic,media,homebrew_cask_30d:679,775,single_tag_heuristic_review,0.62,,homebrew_count=302;percent=0.01;cask=neteasemusic
+776,Mysql Shell,other,Other,,mysql-shell,other,homebrew_cask_30d:677,776,needs_classification,0.30,,homebrew_count=303;percent=0.01;cask=mysql-shell
+777,Paragon Ntfs,other,Other,,paragon-ntfs,other,homebrew_cask_30d:678,777,needs_classification,0.30,,homebrew_count=303;percent=0.01;cask=paragon-ntfs
+778,Thaw@beta,utilities,Utilities,,thaw-beta,other,homebrew_cask_30d:680,778,single_tag_heuristic_review,0.62,,homebrew_count=302;percent=0.01;cask=thaw@beta
+779,Thusvill/livewallpaper/livewallpaper,other,Other,,thusvill-livewallpaper-livewallpaper,other,homebrew_cask_30d:681,779,needs_classification,0.30,,homebrew_count=301;percent=0.01;cask=thusvill/livewallpaper/livewallpaper
+780,Apache Directory Studio,other,Other,,apache-directory-studio,other,homebrew_cask_30d:682,780,needs_classification,0.30,,homebrew_count=301;percent=0.01;cask=apache-directory-studio
+781,Qlstephen,other,Other,,qlstephen,other,homebrew_cask_30d:683,781,needs_classification,0.30,,homebrew_count=297;percent=0.01;cask=qlstephen
+782,Halloy,other,Other,,halloy,other,homebrew_cask_30d:684,782,needs_classification,0.30,,homebrew_count=293;percent=0.01;cask=halloy
+783,Font Roboto Mono,utilities,Utilities,,font-roboto-mono,other,homebrew_cask_30d:685,783,single_tag_heuristic_review,0.62,,homebrew_count=293;percent=0.01;cask=font-roboto-mono
+784,Floorp,browser,Browsers,,floorp,other,homebrew_cask_30d:686,784,single_tag_heuristic_review,0.62,,homebrew_count=293;percent=0.01;cask=floorp
+785,Blockblock,other,Other,,blockblock,other,homebrew_cask_30d:687,785,needs_classification,0.30,,homebrew_count=293;percent=0.01;cask=blockblock
+786,1password Cli@beta,security|utilities,Security|Utilities,,1password-cli-beta,productivity,homebrew_cask_30d:690,786,multi_tag_heuristic_review,0.70,,homebrew_count=290;percent=0.01;cask=1password-cli@beta
+787,Lidanglesensor,other,Other,,lidanglesensor,other,homebrew_cask_30d:688,787,needs_classification,0.30,,homebrew_count=291;percent=0.01;cask=lidanglesensor
+788,Synology Drive,other,Other,,synology-drive,other,homebrew_cask_30d:689,788,needs_classification,0.30,,homebrew_count=290;percent=0.01;cask=synology-drive
+789,Pluk Inc/tap/markdown Preview,writing|picture-photo|system|utilities,Writing|Pictures & Photos|System Apps|Utilities,,pluk-inc-tap-markdown-preview,writing,homebrew_cask_30d:693,789,multi_tag_heuristic_review,0.70,,homebrew_count=286;percent=0.01;cask=pluk-inc/tap/markdown-preview
+790,Awesomedog/tap/maxlaunchpad,other,Other,,awesomedog-tap-maxlaunchpad,other,homebrew_cask_30d:691,790,needs_classification,0.30,,homebrew_count=289;percent=0.01;cask=awesomedog/tap/maxlaunchpad
+791,Reactotron,other,Other,,reactotron,other,homebrew_cask_30d:692,791,needs_classification,0.30,,homebrew_count=288;percent=0.01;cask=reactotron
+792,Tencent Lemon,other,Other,,tencent-lemon,other,homebrew_cask_30d:694,792,needs_classification,0.30,,homebrew_count=286;percent=0.01;cask=tencent-lemon
+793,Super Productivity,other,Other,,super-productivity,other,homebrew_cask_30d:695,793,needs_classification,0.30,,homebrew_count=286;percent=0.01;cask=super-productivity
+794,Jordanbaird Ice@beta,utilities|system-enhancement,Utilities|System Enhancements,,jordanbaird-ice-beta,other,homebrew_cask_30d:696,794,multi_tag_heuristic_review,0.70,,homebrew_count=285;percent=0.01;cask=jordanbaird-ice@beta
+795,Font Code New Roman Nerd Font,utilities,Utilities,,font-code-new-roman-nerd-font,other,homebrew_cask_30d:697,795,single_tag_heuristic_review,0.62,,homebrew_count=285;percent=0.01;cask=font-code-new-roman-nerd-font
+796,Winbox,other,Other,,winbox,other,homebrew_cask_30d:698,796,needs_classification,0.30,,homebrew_count=284;percent=0.01;cask=winbox
+797,Font Eb Garamond,utilities,Utilities,,font-eb-garamond,other,homebrew_cask_30d:699,797,single_tag_heuristic_review,0.62,,homebrew_count=282;percent=0.01;cask=font-eb-garamond
+798,Thonny,other,Other,,thonny,other,homebrew_cask_30d:700,798,needs_classification,0.30,,homebrew_count=282;percent=0.01;cask=thonny
+799,Kdenlive,other,Other,,kdenlive,other,homebrew_cask_30d:701,799,needs_classification,0.30,,homebrew_count=282;percent=0.01;cask=kdenlive
+800,Cameracontroller,other,Other,,cameracontroller,other,homebrew_cask_30d:702,800,needs_classification,0.30,,homebrew_count=281;percent=0.01;cask=cameracontroller
+801,The Wineskin Project/wineskin/wineskin,other,Other,,the-wineskin-project-wineskin-wineskin,other,homebrew_cask_30d:703,801,needs_classification,0.30,,homebrew_count=281;percent=0.01;cask=the-wineskin-project/wineskin/wineskin
+802,Disk Drill,other,Other,,disk-drill,other,homebrew_cask_30d:704,802,needs_classification,0.30,,homebrew_count=280;percent=0.01;cask=disk-drill
+803,Reaper,audio|media,Audio|Media,,reaper,media,homebrew_cask_30d:707,803,multi_tag_heuristic_review,0.70,,homebrew_count=280;percent=0.01;cask=reaper
+804,Notepadexe,other,Other,,notepadexe,other,homebrew_cask_30d:705,804,needs_classification,0.30,,homebrew_count=280;percent=0.01;cask=notepadexe
+805,Gitbutler,other,Other,,gitbutler,other,homebrew_cask_30d:706,805,needs_classification,0.30,,homebrew_count=280;percent=0.01;cask=gitbutler
+806,Ytmdesktop Youtube Music,video|media|audio|entertainment,Video|Media|Audio|Entertainment,,ytmdesktop-youtube-music,media,homebrew_cask_30d:709,806,multi_tag_heuristic_review,0.70,,homebrew_count=279;percent=0.01;cask=ytmdesktop-youtube-music
+807,Heroic,other,Other,,heroic,other,homebrew_cask_30d:708,807,needs_classification,0.30,,homebrew_count=279;percent=0.01;cask=heroic
+808,Battle Net,game|entertainment,Games|Entertainment,,battle-net,entertainment,homebrew_cask_30d:711,808,multi_tag_heuristic_review,0.70,,homebrew_count=279;percent=0.01;cask=battle-net
+809,Clash Party,security|utilities,Security|Utilities,,clash-party,utilities,homebrew_cask_30d:712,809,multi_tag_heuristic_review,0.70,,homebrew_count=278;percent=0.01;cask=clash-party
+810,Swift Quit,other,Other,,swift-quit,other,homebrew_cask_30d:710,810,needs_classification,0.30,,homebrew_count=279;percent=0.01;cask=swift-quit
+811,Dosbox,other,Other,,dosbox,other,homebrew_cask_30d:713,811,needs_classification,0.30,,homebrew_count=275;percent=0.01;cask=dosbox
+812,Phpstorm,development,Development,,phpstorm,development,homebrew_cask_30d:716,812,single_tag_heuristic_review,0.62,,homebrew_count=275;percent=0.01;cask=phpstorm
+813,Mkvtoolnix App,video|media,Video|Media,,mkvtoolnix-app,other,homebrew_cask_30d:714,813,multi_tag_heuristic_review,0.70,,homebrew_count=275;percent=0.01;cask=mkvtoolnix-app
+814,Qqmusic,audio|entertainment,Audio|Entertainment,,qqmusic,communication,homebrew_cask_30d:717,814,multi_tag_heuristic_review,0.70,,homebrew_count=274;percent=0.01;cask=qqmusic
+815,Siddharthvaddem/openscreen/openscreen,other,Other,,siddharthvaddem-openscreen-openscreen,other,homebrew_cask_30d:715,815,needs_classification,0.30,,homebrew_count=275;percent=0.01;cask=siddharthvaddem/openscreen/openscreen
+816,Gswitch,other,Other,,gswitch,other,homebrew_cask_30d:718,816,needs_classification,0.30,,homebrew_count=274;percent=0.01;cask=gswitch
+817,Font Zed Mono Nerd Font,development|utilities,Development|Utilities,,font-zed-mono-nerd-font,development,homebrew_cask_30d:721,817,multi_tag_heuristic_review,0.70,,homebrew_count=273;percent=0.01;cask=font-zed-mono-nerd-font
+818,Font 3270 Nerd Font,utilities,Utilities,,font-3270-nerd-font,other,homebrew_cask_30d:719,818,single_tag_heuristic_review,0.62,,homebrew_count=274;percent=0.01;cask=font-3270-nerd-font
+819,Porting Kit,other,Other,,porting-kit,other,homebrew_cask_30d:720,819,needs_classification,0.30,,homebrew_count=273;percent=0.01;cask=porting-kit
+820,Google Chrome@beta,browser,Browsers,,google-chrome-beta,browser,homebrew_cask_30d:724,820,single_tag_heuristic_review,0.62,,homebrew_count=271;percent=0.01;cask=google-chrome@beta
+821,Elgato Stream Deck,other,Other,,elgato-stream-deck,other,homebrew_cask_30d:722,821,needs_classification,0.30,,homebrew_count=272;percent=0.01;cask=elgato-stream-deck
+822,PDF Expert,writing,Writing,,pdf-expert,writing,homebrew_cask_30d:725,822,single_tag_heuristic_review,0.62,,homebrew_count=270;percent=0.01;cask=pdf-expert
+823,Beeper,other,Other,,beeper,other,homebrew_cask_30d:723,823,needs_classification,0.30,,homebrew_count=272;percent=0.01;cask=beeper
+824,Redis Stack/redis Stack/redis Stack Server,development,Development,,redis-stack-redis-stack-redis-stack-server,development,homebrew_cask_30d:726,824,single_tag_heuristic_review,0.62,,homebrew_count=270;percent=0.01;cask=redis-stack/redis-stack/redis-stack-server
+825,Meshlab,other,Other,,meshlab,other,homebrew_cask_30d:727,825,needs_classification,0.30,,homebrew_count=269;percent=0.01;cask=meshlab
+826,Font Meslo For Powerlevel10k,utilities,Utilities,,font-meslo-for-powerlevel10k,other,homebrew_cask_30d:728,826,single_tag_heuristic_review,0.62,,homebrew_count=269;percent=0.01;cask=font-meslo-for-powerlevel10k
+827,Font Agave Nerd Font,utilities,Utilities,,font-agave-nerd-font,other,homebrew_cask_30d:729,827,single_tag_heuristic_review,0.62,,homebrew_count=269;percent=0.01;cask=font-agave-nerd-font
+828,Postman CLI,development,Development,,postman-cli,development,homebrew_cask_30d:732,828,single_tag_heuristic_review,0.62,,homebrew_count=269;percent=0.01;cask=postman-cli
+829,Openai/tools/openai,other,Other,,openai-tools-openai,other,homebrew_cask_30d:730,829,needs_classification,0.30,,homebrew_count=269;percent=0.01;cask=openai/tools/openai
+830,Font Pretendard,utilities,Utilities,,font-pretendard,other,homebrew_cask_30d:731,830,single_tag_heuristic_review,0.62,,homebrew_count=269;percent=0.01;cask=font-pretendard
+831,Font Mononoki Nerd Font,utilities,Utilities,,font-mononoki-nerd-font,other,homebrew_cask_30d:733,831,single_tag_heuristic_review,0.62,,homebrew_count=268;percent=0.01;cask=font-mononoki-nerd-font
+832,Font Noto Sans Cjk Kr,utilities,Utilities,,font-noto-sans-cjk-kr,other,homebrew_cask_30d:734,832,single_tag_heuristic_review,0.62,,homebrew_count=268;percent=0.01;cask=font-noto-sans-cjk-kr
+833,Shotcut,other,Other,,shotcut,other,homebrew_cask_30d:735,833,needs_classification,0.30,,homebrew_count=268;percent=0.01;cask=shotcut
+834,Clion,development,Development,,clion,development,homebrew_cask_30d:738,834,single_tag_heuristic_review,0.62,,homebrew_count=266;percent=0.01;cask=clion
+835,Google Earth Pro,other,Other,,google-earth-pro,other,homebrew_cask_30d:736,835,needs_classification,0.30,,homebrew_count=267;percent=0.01;cask=google-earth-pro
+836,Osquery,other,Other,,osquery,other,homebrew_cask_30d:737,836,needs_classification,0.30,,homebrew_count=266;percent=0.01;cask=osquery
+837,Sage,other,Other,,sage,other,homebrew_cask_30d:739,837,needs_classification,0.30,,homebrew_count=266;percent=0.01;cask=sage
+838,Prusaslicer,other,Other,,prusaslicer,other,homebrew_cask_30d:740,838,needs_classification,0.30,,homebrew_count=265;percent=0.01;cask=prusaslicer
+839,Edouard Claude/tap/snip,ai-tools|productivity,AI Tools|Productivity,,edouard-claude-tap-snip,other,homebrew_cask_30d:741,839,multi_tag_heuristic_review,0.70,,homebrew_count=265;percent=0.01;cask=edouard-claude/tap/snip
+840,Microsoft Openjdk@25,other,Other,,microsoft-openjdk-25,other,homebrew_cask_30d:742,840,needs_classification,0.30,,homebrew_count=265;percent=0.01;cask=microsoft-openjdk@25
+841,Memoryanalyzer,other,Other,,memoryanalyzer,other,homebrew_cask_30d:743,841,needs_classification,0.30,,homebrew_count=264;percent=0.01;cask=memoryanalyzer
+842,Surfshark,other,Other,,surfshark,other,homebrew_cask_30d:744,842,needs_classification,0.30,,homebrew_count=264;percent=0.01;cask=surfshark
+843,Remoteviewer,other,Other,,remoteviewer,other,homebrew_cask_30d:745,843,needs_classification,0.30,,homebrew_count=264;percent=0.01;cask=remoteviewer
+844,Anytype,other,Other,,anytype,other,homebrew_cask_30d:746,844,needs_classification,0.30,,homebrew_count=264;percent=0.01;cask=anytype
+845,Suspicious Package,other,Other,,suspicious-package,other,homebrew_cask_30d:747,845,needs_classification,0.30,,homebrew_count=264;percent=0.01;cask=suspicious-package
+846,Font Lxgw Wenkai,utilities,Utilities,,font-lxgw-wenkai,other,homebrew_cask_30d:748,846,single_tag_heuristic_review,0.62,,homebrew_count=263;percent=0.01;cask=font-lxgw-wenkai
+847,Lark,communication|productivity,Communication|Productivity,,lark,communication,homebrew_cask_30d:751,847,multi_tag_heuristic_review,0.70,,homebrew_count=261;percent=0.01;cask=lark
+848,Dolphin,other,Other,,dolphin,other,homebrew_cask_30d:749,848,needs_classification,0.30,,homebrew_count=263;percent=0.01;cask=dolphin
+849,Ublue Os/tap/antigravity Linux,ai-tools|development,AI Tools|Development,,ublue-os-tap-antigravity-linux,other,homebrew_cask_30d:750,849,multi_tag_heuristic_review,0.70,,homebrew_count=262;percent=0.01;cask=ublue-os/tap/antigravity-linux
+850,Azure/azure Cli/azure CLI Preview,picture-photo|system|utilities,Pictures & Photos|System Apps|Utilities,,azure-azure-cli-azure-cli-preview,development,homebrew_cask_30d:754,850,multi_tag_heuristic_review,0.70,,homebrew_count=260;percent=0.01;cask=azure/azure-cli/azure-cli-preview
+851,Font Commit Mono Nerd Font,utilities,Utilities,,font-commit-mono-nerd-font,other,homebrew_cask_30d:752,851,single_tag_heuristic_review,0.62,,homebrew_count=261;percent=0.01;cask=font-commit-mono-nerd-font
+852,Font Open Sans,utilities,Utilities,,font-open-sans,other,homebrew_cask_30d:753,852,single_tag_heuristic_review,0.62,,homebrew_count=260;percent=0.01;cask=font-open-sans
+853,Goreleaser/tap/goreleaser,other,Other,,goreleaser-tap-goreleaser,other,homebrew_cask_30d:755,853,needs_classification,0.30,,homebrew_count=260;percent=0.01;cask=goreleaser/tap/goreleaser
+854,Home Assistant,other,Other,,home-assistant,other,homebrew_cask_30d:756,854,needs_classification,0.30,,homebrew_count=259;percent=0.01;cask=home-assistant
+855,Sourcegit,other,Other,,sourcegit,other,homebrew_cask_30d:757,855,needs_classification,0.30,,homebrew_count=259;percent=0.01;cask=sourcegit
+856,Altserver,other,Other,,altserver,other,homebrew_cask_30d:758,856,needs_classification,0.30,,homebrew_count=258;percent=0.01;cask=altserver
+857,Google Cloud SDK,other,Other,,google-cloud-sdk,other,homebrew_cask_30d:759,857,needs_classification,0.30,,homebrew_count=258;percent=0.01;cask=google-cloud-sdk
+858,Copilot Cli@prerelease,ai-tools|development,AI Tools|Development,,copilot-cli-prerelease,other,homebrew_cask_30d:760,858,multi_tag_heuristic_review,0.70,,homebrew_count=257;percent=0.01;cask=copilot-cli@prerelease
+859,Gureumkim,other,Other,,gureumkim,other,homebrew_cask_30d:761,859,needs_classification,0.30,,homebrew_count=256;percent=0.01;cask=gureumkim
+860,Free Download Manager,transfer,Uploads & Downloads,,free-download-manager,other,homebrew_cask_30d:762,860,single_tag_heuristic_review,0.62,,homebrew_count=256;percent=0.01;cask=free-download-manager
+861,Pixpin,other,Other,,pixpin,other,homebrew_cask_30d:763,861,needs_classification,0.30,,homebrew_count=255;percent=0.01;cask=pixpin
+862,Double Commander,file-management,File Management,,double-commander,other,homebrew_cask_30d:764,862,single_tag_heuristic_review,0.62,,homebrew_count=255;percent=0.01;cask=double-commander
+863,Llamabarn,other,Other,,llamabarn,other,homebrew_cask_30d:765,863,needs_classification,0.30,,homebrew_count=253;percent=0.01;cask=llamabarn
+864,Activitywatch,other,Other,,activitywatch,other,homebrew_cask_30d:766,864,needs_classification,0.30,,homebrew_count=252;percent=0.01;cask=activitywatch
+865,Segger Jlink,other,Other,,segger-jlink,other,homebrew_cask_30d:767,865,needs_classification,0.30,,homebrew_count=252;percent=0.01;cask=segger-jlink
+866,Flowvision,other,Other,,flowvision,other,homebrew_cask_30d:768,866,needs_classification,0.30,,homebrew_count=251;percent=0.01;cask=flowvision
+867,R Lib/rig/rig,other,Other,,r-lib-rig-rig,other,homebrew_cask_30d:769,867,needs_classification,0.30,,homebrew_count=251;percent=0.01;cask=r-lib/rig/rig
+868,Font Ibm Plex Sans,video|media|entertainment|utilities,Video|Media|Entertainment|Utilities,,font-ibm-plex-sans,media,homebrew_cask_30d:772,868,multi_tag_heuristic_review,0.70,,homebrew_count=250;percent=0.01;cask=font-ibm-plex-sans
+869,Bloom,other,Other,,bloom,other,homebrew_cask_30d:770,869,needs_classification,0.30,,homebrew_count=250;percent=0.01;cask=bloom
+870,Waterfox,browser,Browsers,,waterfox,other,homebrew_cask_30d:771,870,single_tag_heuristic_review,0.62,,homebrew_count=250;percent=0.01;cask=waterfox
+871,Horos,other,Other,,horos,other,homebrew_cask_30d:773,871,needs_classification,0.30,,homebrew_count=249;percent=0.01;cask=horos
+872,Windscribe,other,Other,,windscribe,other,homebrew_cask_30d:774,872,needs_classification,0.30,,homebrew_count=249;percent=0.01;cask=windscribe
+873,1password/tap/1password CLI,security|utilities,Security|Utilities,,1password-tap-1password-cli,productivity,homebrew_cask_30d:777,873,multi_tag_heuristic_review,0.70,,homebrew_count=249;percent=0.01;cask=1password/tap/1password-cli
+874,Ghdl,other,Other,,ghdl,other,homebrew_cask_30d:775,874,needs_classification,0.30,,homebrew_count=249;percent=0.01;cask=ghdl
+875,Iptvnator,other,Other,,iptvnator,other,homebrew_cask_30d:776,875,needs_classification,0.30,,homebrew_count=249;percent=0.01;cask=iptvnator
+876,Opensc App,other,Other,,opensc-app,other,homebrew_cask_30d:778,876,needs_classification,0.30,,homebrew_count=248;percent=0.01;cask=opensc-app
+877,Silicon Labs Vcp Driver,other,Other,,silicon-labs-vcp-driver,other,homebrew_cask_30d:779,877,needs_classification,0.30,,homebrew_count=246;percent=0.01;cask=silicon-labs-vcp-driver
+878,Dynatrace Oss/tap/dtctl,other,Other,,dynatrace-oss-tap-dtctl,other,homebrew_cask_30d:780,878,needs_classification,0.30,,homebrew_count=245;percent=0.01;cask=dynatrace-oss/tap/dtctl
+879,Popclip,other,Other,,popclip,other,homebrew_cask_30d:781,879,needs_classification,0.30,,homebrew_count=245;percent=0.01;cask=popclip
+880,Spokenly,other,Other,,spokenly,other,homebrew_cask_30d:782,880,needs_classification,0.30,,homebrew_count=245;percent=0.01;cask=spokenly
+881,Font Terminess Ttf Nerd Font,utilities,Utilities,,font-terminess-ttf-nerd-font,other,homebrew_cask_30d:783,881,single_tag_heuristic_review,0.62,,homebrew_count=245;percent=0.01;cask=font-terminess-ttf-nerd-font
+882,Font Space Mono Nerd Font,utilities,Utilities,,font-space-mono-nerd-font,other,homebrew_cask_30d:784,882,single_tag_heuristic_review,0.62,,homebrew_count=244;percent=0.01;cask=font-space-mono-nerd-font
+883,Qmk Toolbox,other,Other,,qmk-toolbox,other,homebrew_cask_30d:785,883,needs_classification,0.30,,homebrew_count=243;percent=0.01;cask=qmk-toolbox
+884,Font Hackgen,utilities,Utilities,,font-hackgen,other,homebrew_cask_30d:786,884,single_tag_heuristic_review,0.62,,homebrew_count=243;percent=0.01;cask=font-hackgen
+885,Alcove,other,Other,,alcove,other,homebrew_cask_30d:787,885,needs_classification,0.30,,homebrew_count=242;percent=0.01;cask=alcove
+886,Font Noto Nerd Font,utilities,Utilities,,font-noto-nerd-font,other,homebrew_cask_30d:788,886,single_tag_heuristic_review,0.62,,homebrew_count=240;percent=0.01;cask=font-noto-nerd-font
+887,Font Lilex Nerd Font,utilities,Utilities,,font-lilex-nerd-font,other,homebrew_cask_30d:789,887,single_tag_heuristic_review,0.62,,homebrew_count=240;percent=0.01;cask=font-lilex-nerd-font
+888,Hyper,development,Development,,hyper,other,homebrew_cask_30d:790,888,single_tag_heuristic_review,0.62,,homebrew_count=239;percent=0.01;cask=hyper
+889,Aerial,other,Other,,aerial,other,homebrew_cask_30d:791,889,needs_classification,0.30,,homebrew_count=239;percent=0.01;cask=aerial
+890,Font Anonymice Nerd Font,utilities,Utilities,,font-anonymice-nerd-font,other,homebrew_cask_30d:792,890,single_tag_heuristic_review,0.62,,homebrew_count=239;percent=0.01;cask=font-anonymice-nerd-font
+891,Fantastical,productivity,Productivity,,fantastical,productivity,homebrew_cask_30d:795,891,single_tag_heuristic_review,0.62,,homebrew_count=237;percent=0.01;cask=fantastical
+892,Zenmap,other,Other,,zenmap,other,homebrew_cask_30d:793,892,needs_classification,0.30,,homebrew_count=238;percent=0.01;cask=zenmap
+893,Yuzeguitarist/deck/deckclip,other,Other,,yuzeguitarist-deck-deckclip,other,homebrew_cask_30d:794,893,needs_classification,0.30,,homebrew_count=238;percent=0.01;cask=yuzeguitarist/deck/deckclip
+894,Megasync,other,Other,,megasync,other,homebrew_cask_30d:796,894,needs_classification,0.30,,homebrew_count=237;percent=0.01;cask=megasync
+895,Retroarch,browser,Browsers,,retroarch,browser,homebrew_cask_30d:799,895,single_tag_heuristic_review,0.62,,homebrew_count=236;percent=0.01;cask=retroarch
+896,Yaak,other,Other,,yaak,other,homebrew_cask_30d:797,896,needs_classification,0.30,,homebrew_count=237;percent=0.01;cask=yaak
+897,Adobe Acrobat Pro,design,Design,,adobe-acrobat-pro,design,homebrew_cask_30d:800,897,single_tag_heuristic_review,0.62,,homebrew_count=235;percent=0.01;cask=adobe-acrobat-pro
+898,Rsyncui,other,Other,,rsyncui,other,homebrew_cask_30d:798,898,needs_classification,0.30,,homebrew_count=236;percent=0.01;cask=rsyncui
+899,Font Source Serif 4,utilities,Utilities,,font-source-serif-4,other,homebrew_cask_30d:801,899,single_tag_heuristic_review,0.62,,homebrew_count=235;percent=0.01;cask=font-source-serif-4
+900,Betterzip,utilities,Utilities,,betterzip,utilities,homebrew_cask_30d:804,900,single_tag_heuristic_review,0.62,,homebrew_count=234;percent=0.01;cask=betterzip
+901,Sanesidebuttons,other,Other,,sanesidebuttons,other,homebrew_cask_30d:802,901,needs_classification,0.30,,homebrew_count=235;percent=0.01;cask=sanesidebuttons
+902,Rafaelswi/menubarusb/menubarusb,other,Other,,rafaelswi-menubarusb-menubarusb,other,homebrew_cask_30d:803,902,needs_classification,0.30,,homebrew_count=234;percent=0.01;cask=rafaelswi/menubarusb/menubarusb
+903,Corelocationcli,other,Other,,corelocationcli,other,homebrew_cask_30d:805,903,needs_classification,0.30,,homebrew_count=233;percent=0.01;cask=corelocationcli
+904,Flashspace,other,Other,,flashspace,other,homebrew_cask_30d:806,904,needs_classification,0.30,,homebrew_count=233;percent=0.01;cask=flashspace
+905,Wifiman,other,Other,,wifiman,other,homebrew_cask_30d:807,905,needs_classification,0.30,,homebrew_count=233;percent=0.01;cask=wifiman
+906,Xamarin Ios,other,Other,,xamarin-ios,other,homebrew_cask_30d:808,906,needs_classification,0.30,,homebrew_count=232;percent=0.01;cask=xamarin-ios
+907,Launchos,other,Other,,launchos,other,homebrew_cask_30d:809,907,needs_classification,0.30,,homebrew_count=229;percent=0.01;cask=launchos
+908,Excalidrawz,other,Other,,excalidrawz,other,homebrew_cask_30d:810,908,needs_classification,0.30,,homebrew_count=229;percent=0.01;cask=excalidrawz
+909,Font Noto Sans Cjk Jp,utilities,Utilities,,font-noto-sans-cjk-jp,other,homebrew_cask_30d:811,909,single_tag_heuristic_review,0.62,,homebrew_count=228;percent=0.01;cask=font-noto-sans-cjk-jp
+910,Popsql,other,Other,,popsql,other,homebrew_cask_30d:812,910,needs_classification,0.30,,homebrew_count=228;percent=0.01;cask=popsql
+911,Ayugram,other,Other,,ayugram,other,homebrew_cask_30d:813,911,needs_classification,0.30,,homebrew_count=228;percent=0.01;cask=ayugram
+912,Font Lato,utilities,Utilities,,font-lato,other,homebrew_cask_30d:814,912,single_tag_heuristic_review,0.62,,homebrew_count=228;percent=0.01;cask=font-lato
+913,Hoppscotch,other,Other,,hoppscotch,other,homebrew_cask_30d:815,913,needs_classification,0.30,,homebrew_count=228;percent=0.01;cask=hoppscotch
+914,Devpod,development,Development,,devpod,development,homebrew_cask_30d:818,914,single_tag_heuristic_review,0.62,,homebrew_count=226;percent=0.01;cask=devpod
+915,Pinta,other,Other,,pinta,other,homebrew_cask_30d:816,915,needs_classification,0.30,,homebrew_count=227;percent=0.01;cask=pinta
+916,Font Gohufont Nerd Font,utilities,Utilities,,font-gohufont-nerd-font,other,homebrew_cask_30d:817,916,single_tag_heuristic_review,0.62,,homebrew_count=227;percent=0.01;cask=font-gohufont-nerd-font
+917,Dupeguru,other,Other,,dupeguru,other,homebrew_cask_30d:819,917,needs_classification,0.30,,homebrew_count=226;percent=0.01;cask=dupeguru
+918,Nguyenphutrong/tap/quotio,other,Other,,nguyenphutrong-tap-quotio,other,homebrew_cask_30d:820,918,needs_classification,0.30,,homebrew_count=226;percent=0.01;cask=nguyenphutrong/tap/quotio
+919,Fontforge App,other,Other,,fontforge-app,other,homebrew_cask_30d:821,919,needs_classification,0.30,,homebrew_count=226;percent=0.01;cask=fontforge-app
+920,Raindropio,other,Other,,raindropio,other,homebrew_cask_30d:822,920,needs_classification,0.30,,homebrew_count=225;percent=0.01;cask=raindropio
+921,Eclipse Java,development,Development,,eclipse-java,other,homebrew_cask_30d:823,921,single_tag_heuristic_review,0.62,,homebrew_count=225;percent=0.01;cask=eclipse-java
+922,Font Adwaita Mono Nerd Font,utilities,Utilities,,font-adwaita-mono-nerd-font,other,homebrew_cask_30d:824,922,single_tag_heuristic_review,0.62,,homebrew_count=225;percent=0.01;cask=font-adwaita-mono-nerd-font
+923,Wechatwork,communication,Communication,,wechatwork,communication,homebrew_cask_30d:827,923,single_tag_heuristic_review,0.62,,homebrew_count=224;percent=0.01;cask=wechatwork
+924,Font Cousine Nerd Font,utilities,Utilities,,font-cousine-nerd-font,other,homebrew_cask_30d:825,924,single_tag_heuristic_review,0.62,,homebrew_count=225;percent=0.01;cask=font-cousine-nerd-font
+925,Openinterminal Lite,development,Development,,openinterminal-lite,development,homebrew_cask_30d:828,925,single_tag_heuristic_review,0.62,,homebrew_count=224;percent=0.01;cask=openinterminal-lite
+926,Microsoft Openjdk@21,other,Other,,microsoft-openjdk-21,other,homebrew_cask_30d:826,926,needs_classification,0.30,,homebrew_count=224;percent=0.01;cask=microsoft-openjdk@21
+927,Mhaeuser/mhaeuser/battery Toolkit,other,Other,,mhaeuser-mhaeuser-battery-toolkit,other,homebrew_cask_30d:829,927,needs_classification,0.30,,homebrew_count=223;percent=0.01;cask=mhaeuser/mhaeuser/battery-toolkit
+928,Helium,other,Other,,helium,other,homebrew_cask_30d:830,928,needs_classification,0.30,,homebrew_count=223;percent=0.01;cask=helium
+929,Pritunl,other,Other,,pritunl,other,homebrew_cask_30d:831,929,needs_classification,0.30,,homebrew_count=223;percent=0.01;cask=pritunl
+930,Numi,utilities,Utilities,,numi,other,homebrew_cask_30d:832,930,single_tag_heuristic_review,0.62,,homebrew_count=222;percent=0.01;cask=numi
+931,App Cleaner,utilities,Utilities,,app-cleaner,utilities,homebrew_cask_30d:835,931,single_tag_heuristic_review,0.62,,homebrew_count=221;percent=0.01;cask=app-cleaner
+932,Deskpad,other,Other,,deskpad,other,homebrew_cask_30d:833,932,needs_classification,0.30,,homebrew_count=222;percent=0.01;cask=deskpad
+933,Font Fontawesome,utilities,Utilities,,font-fontawesome,other,homebrew_cask_30d:834,933,single_tag_heuristic_review,0.62,,homebrew_count=222;percent=0.01;cask=font-fontawesome
+934,Macdroid,other,Other,,macdroid,other,homebrew_cask_30d:836,934,needs_classification,0.30,,homebrew_count=221;percent=0.01;cask=macdroid
+935,Font Hasklug Nerd Font,utilities,Utilities,,font-hasklug-nerd-font,other,homebrew_cask_30d:837,935,single_tag_heuristic_review,0.62,,homebrew_count=221;percent=0.01;cask=font-hasklug-nerd-font
+936,Roversx/tap/launchnext,other,Other,,roversx-tap-launchnext,other,homebrew_cask_30d:838,936,needs_classification,0.30,,homebrew_count=221;percent=0.01;cask=roversx/tap/launchnext
+937,Sonos,other,Other,,sonos,other,homebrew_cask_30d:839,937,needs_classification,0.30,,homebrew_count=221;percent=0.01;cask=sonos
+938,Grafana/grafana/grafana Assistant,other,Other,,grafana-grafana-grafana-assistant,other,homebrew_cask_30d:840,938,needs_classification,0.30,,homebrew_count=220;percent=0.01;cask=grafana/grafana/grafana-assistant
+939,Jump Desktop Connect,other,Other,,jump-desktop-connect,other,homebrew_cask_30d:841,939,needs_classification,0.30,,homebrew_count=220;percent=0.01;cask=jump-desktop-connect
+940,Ledger Wallet,finance,Finance,,ledger-wallet,browser,homebrew_cask_30d:844,940,single_tag_heuristic_review,0.62,,homebrew_count=219;percent=0.01;cask=ledger-wallet
+941,Bluestacks,other,Other,,bluestacks,other,homebrew_cask_30d:842,941,needs_classification,0.30,,homebrew_count=220;percent=0.01;cask=bluestacks
+942,Tidal,audio|entertainment,Audio|Entertainment,,tidal,other,homebrew_cask_30d:843,942,multi_tag_heuristic_review,0.70,,homebrew_count=219;percent=0.01;cask=tidal
+943,Font Bigblue Terminal Nerd Font,development|utilities|system,Development|Utilities|System Apps,,font-bigblue-terminal-nerd-font,development,homebrew_cask_30d:847,943,multi_tag_heuristic_review,0.70,,homebrew_count=218;percent=0.01;cask=font-bigblue-terminal-nerd-font
+944,Cap,other,Other,,cap,other,homebrew_cask_30d:845,944,needs_classification,0.30,,homebrew_count=219;percent=0.01;cask=cap
+945,Antinote,other,Other,,antinote,other,homebrew_cask_30d:846,945,needs_classification,0.30,,homebrew_count=219;percent=0.01;cask=antinote
+946,Reader,writing,Writing,,reader,writing,homebrew_cask_30d:849,946,single_tag_heuristic_review,0.62,,homebrew_count=216;percent=0.01;cask=reader
+947,Lihaoyun6/tap/quickrecorder,other,Other,,lihaoyun6-tap-quickrecorder,other,homebrew_cask_30d:848,947,needs_classification,0.30,,homebrew_count=217;percent=0.01;cask=lihaoyun6/tap/quickrecorder
+948,Happ,other,Other,,happ,other,homebrew_cask_30d:850,948,needs_classification,0.30,,homebrew_count=216;percent=0.01;cask=happ
+949,Oracle Jdk@21,other,Other,,oracle-jdk-21,other,homebrew_cask_30d:851,949,needs_classification,0.30,,homebrew_count=215;percent=0.01;cask=oracle-jdk@21
+950,T8y2/tap/dbx,other,Other,,t8y2-tap-dbx,other,homebrew_cask_30d:852,950,needs_classification,0.30,,homebrew_count=215;percent=0.01;cask=t8y2/tap/dbx
+951,Freefilesync,other,Other,,freefilesync,other,homebrew_cask_30d:853,951,needs_classification,0.30,,homebrew_count=215;percent=0.01;cask=freefilesync
+952,Clash Mi,security|utilities,Security|Utilities,,clash-mi,utilities,homebrew_cask_30d:856,952,multi_tag_heuristic_review,0.70,,homebrew_count=214;percent=0.01;cask=clash-mi
+953,Lzhgus/tap/capso,other,Other,,lzhgus-tap-capso,other,homebrew_cask_30d:854,953,needs_classification,0.30,,homebrew_count=215;percent=0.01;cask=lzhgus/tap/capso
+954,Font Fantasque Sans Mono Nerd Font,utilities,Utilities,,font-fantasque-sans-mono-nerd-font,other,homebrew_cask_30d:855,954,single_tag_heuristic_review,0.62,,homebrew_count=214;percent=0.01;cask=font-fantasque-sans-mono-nerd-font
+955,Stirling PDF,writing,Writing,,stirling-pdf,writing,homebrew_cask_30d:858,955,single_tag_heuristic_review,0.62,,homebrew_count=213;percent=0.01;cask=stirling-pdf
+956,Remote Desktop Manager,other,Other,,remote-desktop-manager,other,homebrew_cask_30d:857,956,needs_classification,0.30,,homebrew_count=213;percent=0.01;cask=remote-desktop-manager
+957,Cool Retro Term,other,Other,,cool-retro-term,other,homebrew_cask_30d:859,957,needs_classification,0.30,,homebrew_count=212;percent=0.01;cask=cool-retro-term
+958,Viber,other,Other,,viber,other,homebrew_cask_30d:860,958,needs_classification,0.30,,homebrew_count=212;percent=0.01;cask=viber
+959,Font Noto Color Emoji,utilities,Utilities,,font-noto-color-emoji,other,homebrew_cask_30d:861,959,single_tag_heuristic_review,0.62,,homebrew_count=212;percent=0.01;cask=font-noto-color-emoji
+960,Launchcontrol,other,Other,,launchcontrol,other,homebrew_cask_30d:862,960,needs_classification,0.30,,homebrew_count=212;percent=0.01;cask=launchcontrol
+961,Shortcat,other,Other,,shortcat,other,homebrew_cask_30d:863,961,needs_classification,0.30,,homebrew_count=211;percent=0.01;cask=shortcat
+962,Foobar2000,audio|media,Audio|Media,,foobar2000,other,homebrew_cask_30d:864,962,multi_tag_heuristic_review,0.70,,homebrew_count=211;percent=0.01;cask=foobar2000
+963,Rawtherapee,picture-photo,Pictures & Photos,,rawtherapee,other,homebrew_cask_30d:865,963,single_tag_heuristic_review,0.62,,homebrew_count=211;percent=0.01;cask=rawtherapee
+964,Fedora Media Writer,writing,Writing,,fedora-media-writer,writing,homebrew_cask_30d:868,964,single_tag_heuristic_review,0.62,,homebrew_count=210;percent=0.01;cask=fedora-media-writer
+965,Lyricsx,other,Other,,lyricsx,other,homebrew_cask_30d:866,965,needs_classification,0.30,,homebrew_count=211;percent=0.01;cask=lyricsx
+966,Taphouse,other,Other,,taphouse,other,homebrew_cask_30d:867,966,needs_classification,0.30,,homebrew_count=210;percent=0.01;cask=taphouse
+967,Rapidapi,development,Development,,rapidapi,other,homebrew_cask_30d:869,967,single_tag_heuristic_review,0.62,,homebrew_count=210;percent=0.01;cask=rapidapi
+968,Streetpea/streetpea/chiaki Ng,other,Other,,streetpea-streetpea-chiaki-ng,other,homebrew_cask_30d:870,968,needs_classification,0.30,,homebrew_count=210;percent=0.01;cask=streetpea/streetpea/chiaki-ng
+969,Netbeans,development,Development,,netbeans,other,homebrew_cask_30d:871,969,single_tag_heuristic_review,0.62,,homebrew_count=209;percent=0.01;cask=netbeans
+970,Kopiaui,other,Other,,kopiaui,other,homebrew_cask_30d:872,970,needs_classification,0.30,,homebrew_count=209;percent=0.01;cask=kopiaui
+972,Nrfutil,other,Other,,nrfutil,other,homebrew_cask_30d:873,972,needs_classification,0.30,,homebrew_count=208;percent=0.01;cask=nrfutil
+973,Eddmann/tap/claudemeter,other,Other,,eddmann-tap-claudemeter,other,homebrew_cask_30d:874,973,needs_classification,0.30,,homebrew_count=208;percent=0.01;cask=eddmann/tap/claudemeter
+974,Yacreader,writing,Writing,,yacreader,writing,homebrew_cask_30d:877,974,single_tag_heuristic_review,0.62,,homebrew_count=206;percent=0.01;cask=yacreader
+975,Font Inconsolata,utilities,Utilities,,font-inconsolata,other,homebrew_cask_30d:876,975,single_tag_heuristic_review,0.62,,homebrew_count=206;percent=0.01;cask=font-inconsolata
+976,Ericjypark/tap/codexisland,other,Other,,ericjypark-tap-codexisland,other,homebrew_cask_30d:878,976,needs_classification,0.30,,homebrew_count=205;percent=0.01;cask=ericjypark/tap/codexisland
+977,Positron,other,Other,,positron,other,homebrew_cask_30d:879,977,needs_classification,0.30,,homebrew_count=205;percent=0.01;cask=positron
+978,Angry Ip Scanner,other,Other,,angry-ip-scanner,other,homebrew_cask_30d:880,978,needs_classification,0.30,,homebrew_count=205;percent=0.01;cask=angry-ip-scanner
+979,Keyboard Maestro,utilities,Utilities,,keyboard-maestro,utilities,homebrew_cask_30d:883,979,single_tag_heuristic_review,0.62,,homebrew_count=204;percent=0.01;cask=keyboard-maestro
+980,Swiftdefaultappsprefpane,other,Other,,swiftdefaultappsprefpane,other,homebrew_cask_30d:881,980,needs_classification,0.30,,homebrew_count=205;percent=0.01;cask=swiftdefaultappsprefpane
+981,Mediainfo,other,Other,,mediainfo,other,homebrew_cask_30d:882,981,needs_classification,0.30,,homebrew_count=204;percent=0.01;cask=mediainfo
+982,Font Powerline Symbols,utilities,Utilities,,font-powerline-symbols,other,homebrew_cask_30d:884,982,single_tag_heuristic_review,0.62,,homebrew_count=204;percent=0.01;cask=font-powerline-symbols
+983,Shortcutdetective,other,Other,,shortcutdetective,other,homebrew_cask_30d:885,983,needs_classification,0.30,,homebrew_count=203;percent=0.01;cask=shortcutdetective
+984,Firefox@esr,browser,Browsers,,firefox-esr,browser,homebrew_cask_30d:888,984,single_tag_heuristic_review,0.62,,homebrew_count=202;percent=0.01;cask=firefox@esr
+986,Legcord,other,Other,,legcord,other,homebrew_cask_30d:887,986,needs_classification,0.30,,homebrew_count=202;percent=0.01;cask=legcord
+987,Copilot FOR Xcode,ai-tools|development,AI Tools|Development,,copilot-for-xcode,development,homebrew_cask_30d:889,987,multi_tag_heuristic_review,0.70,,homebrew_count=201;percent=0.01;cask=copilot-for-xcode
+988,Open Pencil/tap/open Pencil,other,Other,,open-pencil-tap-open-pencil,other,homebrew_cask_30d:890,988,needs_classification,0.30,,homebrew_count=201;percent=0.01;cask=open-pencil/tap/open-pencil
+989,JDK Mission Control,other,Other,,jdk-mission-control,other,homebrew_cask_30d:891,989,needs_classification,0.30,,homebrew_count=200;percent=0.01;cask=jdk-mission-control
+990,Hazel,utilities|system-enhancement,Utilities|System Enhancements,,hazel,other,homebrew_cask_30d:892,990,multi_tag_heuristic_review,0.70,,homebrew_count=200;percent=0.01;cask=hazel
+991,Font Opendyslexic Nerd Font,utilities,Utilities,,font-opendyslexic-nerd-font,other,homebrew_cask_30d:893,991,single_tag_heuristic_review,0.62,,homebrew_count=199;percent=0.01;cask=font-opendyslexic-nerd-font
+992,Font Hurmit Nerd Font,utilities,Utilities,,font-hurmit-nerd-font,other,homebrew_cask_30d:894,992,single_tag_heuristic_review,0.62,,homebrew_count=199;percent=0.01;cask=font-hurmit-nerd-font
+993,Homerow,other,Other,,homerow,other,homebrew_cask_30d:895,993,needs_classification,0.30,,homebrew_count=198;percent=0.01;cask=homerow
+994,FLY,other,Other,,fly,other,homebrew_cask_30d:896,994,needs_classification,0.30,,homebrew_count=197;percent=0.01;cask=fly
+995,React Native Debugger,other,Other,,react-native-debugger,other,homebrew_cask_30d:897,995,needs_classification,0.30,,homebrew_count=197;percent=0.01;cask=react-native-debugger
+996,Godot Mono,development|game|entertainment,Development|Games|Entertainment,,godot-mono,development,homebrew_cask_30d:898,996,multi_tag_heuristic_review,0.70,,homebrew_count=197;percent=0.01;cask=godot-mono
+997,Font Bitstream Vera Sans Mono Nerd Font,utilities,Utilities,,font-bitstream-vera-sans-mono-nerd-font,other,homebrew_cask_30d:899,997,single_tag_heuristic_review,0.62,,homebrew_count=197;percent=0.01;cask=font-bitstream-vera-sans-mono-nerd-font
+998,Consul,other,Other,,consul,other,homebrew_cask_30d:900,998,needs_classification,0.30,,homebrew_count=196;percent=0.01;cask=consul
+999,Libreoffice Still,productivity,Productivity,,libreoffice-still,productivity,homebrew_cask_30d:901,999,single_tag_heuristic_review,0.62,,homebrew_count=196;percent=0.01;cask=libreoffice-still
+1000,Font Monofur Nerd Font,utilities,Utilities,,font-monofur-nerd-font,other,homebrew_cask_30d:902,1000,single_tag_heuristic_review,0.62,,homebrew_count=196;percent=0.01;cask=font-monofur-nerd-font

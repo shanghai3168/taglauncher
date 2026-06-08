@@ -1,0 +1,453 @@
+{
+  "resourceFormatVersion": 1,
+  "catalogContentVersion": 1,
+  "language": "da",
+  "localizationsVersion": 2,
+  "entries": [
+    {
+      "bundleIdentifier": "com.apple.finder",
+      "displayName": "Finder",
+      "note": "MacOS-systemet leveres med værktøjer."
+    },
+    {
+      "bundleIdentifier": "com.apple.Safari",
+      "displayName": "Safari",
+      "note": "Apples officielle browser, strømbesparelse."
+    },
+    {
+      "bundleIdentifier": "com.apple.mail",
+      "displayName": "Mail",
+      "note": "System mail-klient, flere postkasser kan behandles centralt"
+    },
+    {
+      "bundleIdentifier": "com.apple.MobileSMS",
+      "displayName": "Beskeder",
+      "note": "iMessage og SMS-portal, svar beskeder hurtigere på Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.FaceTime",
+      "displayName": "FaceTime",
+      "note": "Indgang til lyd- og videoopkald i Apple-økosystemet"
+    },
+    {
+      "bundleIdentifier": "com.apple.iCal",
+      "displayName": "Kalender",
+      "note": "Få tidsplanen ud af dit hoved og giv tiden et visuelt kort"
+    },
+    {
+      "bundleIdentifier": "com.apple.Notes",
+      "displayName": "Noter",
+      "note": "Det hurtigste systemmemo, tekst, billeder og lister kan alle indsamles"
+    },
+    {
+      "bundleIdentifier": "com.apple.reminders",
+      "displayName": "Påmindelser",
+      "note": "Gøremål og påmindelser, velegnet til at fange små daglige opgaver"
+    },
+    {
+      "bundleIdentifier": "com.apple.Photos",
+      "displayName": "Fotos",
+      "note": "Systemfotobibliotek, hovedindgangen til at administrere."
+    },
+    {
+      "bundleIdentifier": "com.apple.Music",
+      "displayName": "Musik",
+      "note": "Lokal og streaming musikafspiller"
+    },
+    {
+      "bundleIdentifier": "com.apple.Terminal",
+      "displayName": "Terminal",
+      "note": "Kommandolinjeindtastning, Macs skjulte cockpit"
+    },
+    {
+      "bundleIdentifier": "com.apple.ActivityMonitor",
+      "displayName": "Aktivitets­overvågning",
+      "note": "Macs dashboard for at se, hvem der bruger strøm."
+    },
+    {
+      "bundleIdentifier": "com.apple.airport.airportutility",
+      "displayName": "AirPort-værktøj",
+      "note": "Gammeldags netværksværktøjer til styring af AirPorts og Time Capsules"
+    },
+    {
+      "bundleIdentifier": "com.apple.AppStore",
+      "displayName": "App Store",
+      "note": "Den officielle Mac-softwarebutik, start her for at finde app."
+    },
+    {
+      "bundleIdentifier": "com.apple.apps.launcher",
+      "displayName": "Apps",
+      "note": "En let applikationsportal."
+    },
+    {
+      "bundleIdentifier": "com.apple.audio.audiomidisetup",
+      "displayName": "Indstil lyd og MIDI",
+      "note": "Lydudstyr og MIDI-routing, almindeligvis brugt af musikere og debuggere"
+    },
+    {
+      "bundleIdentifier": "com.apple.automator",
+      "displayName": "Automator",
+      "note": "Du kan sammensætte en række Mac-automatiseringshandlinger uden at skrive kode"
+    },
+    {
+      "bundleIdentifier": "com.apple.bluetoothfileexchange",
+      "displayName": "Bluetooth-arkivudveksling",
+      "note": "Brug af Bluetooth til at sende og modtage filer er gammeldag."
+    },
+    {
+      "bundleIdentifier": "com.apple.iBooksX",
+      "displayName": "Bøger",
+      "note": "Et indgangspunkt til at læse og administrere e-bøger."
+    },
+    {
+      "bundleIdentifier": "com.apple.bootcampassistant",
+      "displayName": "Boot Camp-assistent",
+      "note": "Officiel guide til installation af Windows på Intel Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.calculator",
+      "displayName": "Lommeregner",
+      "note": "Lille lommeregner, enhedskonvertering og programmeringstilstand er også."
+    },
+    {
+      "bundleIdentifier": "com.apple.chess",
+      "displayName": "Skak",
+      "note": "Indbygget skak til korte pauser og øvelse"
+    },
+    {
+      "bundleIdentifier": "com.apple.clock",
+      "displayName": "Ur",
+      "note": "En samlet portal til alarmer, timere, stopure og verdensure"
+    },
+    {
+      "bundleIdentifier": "com.apple.colorsyncutility",
+      "displayName": "ColorSync-hjælpefunktion",
+      "note": "Se og reparer farveprofiler, håndter display og udskriv farveforskelle"
+    },
+    {
+      "bundleIdentifier": "com.apple.console",
+      "displayName": "Konsol",
+      "note": "Vinduet til at se systemlogfiler er meget nyttigt ved fejlfinding af."
+    },
+    {
+      "bundleIdentifier": "com.apple.addressbook",
+      "displayName": "Kontakter",
+      "note": "Kontakthub til Mail, Beskeder og FaceTime"
+    },
+    {
+      "bundleIdentifier": "com.apple.dictionary",
+      "displayName": "Ordbog",
+      "note": "Offline ordbog og synonymordbog, ingen grund til at åbne en browser."
+    },
+    {
+      "bundleIdentifier": "com.apple.digitalcolormeter",
+      "displayName": "Digital farvemåler",
+      "note": "Skærmfarvevælger, en lille artefakt for designere til midlertidigt at."
+    },
+    {
+      "bundleIdentifier": "com.apple.DiskUtility",
+      "displayName": "Diskværktøj",
+      "note": "Disk, partition, formatering og førstehjælp, roder ikke med det."
+    },
+    {
+      "bundleIdentifier": "com.apple.findmy",
+      "displayName": "Find",
+      "note": "Find udstyr, find genstande."
+    },
+    {
+      "bundleIdentifier": "com.apple.fontbook",
+      "displayName": "Skriftbog",
+      "note": "Font installations- og administrationscenter."
+    },
+    {
+      "bundleIdentifier": "com.apple.freeform",
+      "displayName": "Freeform",
+      "note": "Ubegrænsede whiteboards til brainstorming, skitsering og tilfældige ideer"
+    },
+    {
+      "bundleIdentifier": "com.apple.games",
+      "displayName": "Spil",
+      "note": "Apple-spilportal til central administration af spilbart Apple Arcade-indhold"
+    },
+    {
+      "bundleIdentifier": "com.apple.grapher",
+      "displayName": "Grapher",
+      "note": "Grafligninger, et skjult værktøj til matematisk visualisering"
+    },
+    {
+      "bundleIdentifier": "com.apple.home",
+      "displayName": "Hjem",
+      "note": "Smart home control-indgang kan styre belysning, aircondition og andet udstyr"
+    },
+    {
+      "bundleIdentifier": "com.apple.image_capture",
+      "displayName": "Billedoverførsel",
+      "note": "Importer billeder fra kamera eller scanner, enkelt men stabilt"
+    },
+    {
+      "bundleIdentifier": "com.apple.generativeplaygroundapp",
+      "displayName": "Playground",
+      "note": "Generer billeder med Apple-intelligens, perfekt til hurtig kreativ udkast"
+    },
+    {
+      "bundleIdentifier": "com.apple.iMovieApp",
+      "displayName": "iMovie",
+      "note": "Tilstrækkelig til videoredigering på begynderniveau."
+    },
+    {
+      "bundleIdentifier": "com.apple.screencontinuity",
+      "displayName": "iPhone-skærmdublering",
+      "note": "Betjen din iPhone direkte på din Mac."
+    },
+    {
+      "bundleIdentifier": "com.apple.journal",
+      "displayName": "Dagbog",
+      "note": "Optag daglige fragmenter og forvandl langsomt dine tanker til en."
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Keynote",
+      "displayName": "Keynote",
+      "note": "Præsentationsværktøj i Apple-stil, nemt at skabe smukke dias"
+    },
+    {
+      "bundleIdentifier": "com.apple.magnifier",
+      "displayName": "Forstørrelsesglas",
+      "note": "Forstør skærmdetaljerne for at hjælpe med syn og fin inspektion"
+    },
+    {
+      "bundleIdentifier": "com.apple.Maps",
+      "displayName": "Kort",
+      "note": "Tjek ruter, se byer, og send destinationer til iPhone"
+    },
+    {
+      "bundleIdentifier": "com.apple.migrateassistant",
+      "displayName": "Overførsels­assistent",
+      "note": "Når du flytter til en ny Mac, skal du flytte gamle data til den nye maskine"
+    },
+    {
+      "bundleIdentifier": "com.apple.exposelauncher",
+      "displayName": "Mission Control",
+      "note": "Luftfoto af vinduet og skrivebordet, se bare på det, hvis det er rodet"
+    },
+    {
+      "bundleIdentifier": "com.apple.news",
+      "displayName": "News",
+      "note": "Apple News portal, velegnet til at se udvalgt medieindhold"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Numbers",
+      "displayName": "Numbers",
+      "note": "Apple Sheets-værktøj, lette rapporter er mere forfriskende end Excel"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Pages",
+      "displayName": "Pages",
+      "note": "Apple tekstbehandlingsprogram, smuk til at skrive dokumenter og sætte på"
+    },
+    {
+      "bundleIdentifier": "com.apple.passwords",
+      "displayName": "Adgangskoder",
+      "note": "Systemadgangskodeadministrator, centraliseret styring af konti."
+    },
+    {
+      "bundleIdentifier": "com.apple.mobilephone",
+      "displayName": "Telefon",
+      "note": "Foretag opkald på Mac med din telefon"
+    },
+    {
+      "bundleIdentifier": "com.apple.AboutThisMacLauncher",
+      "displayName": "Om denne Mac",
+      "note": "Viser Mac-model, systemversion og serienummer"
+    },
+    {
+      "bundleIdentifier": "com.apple.archiveutility",
+      "displayName": "Komprimeringsværktøj",
+      "note": "Komprimerer og udpakker ZIP og andre arkiver"
+    },
+    {
+      "bundleIdentifier": "com.apple.DeskCam",
+      "displayName": "Visning af skrivebord",
+      "note": "Viser skrivebordet med Kontinuitetskamera"
+    },
+    {
+      "bundleIdentifier": "com.apple.DirectoryUtility",
+      "displayName": "Biblioteksværktøj",
+      "note": "Indstiller bibliotekstjenester, LDAP og netværkskonti"
+    },
+    {
+      "bundleIdentifier": "com.apple.DVDPlayer",
+      "displayName": "Dvd-afspiller",
+      "note": "Afspiller DVD-diske og lokalt DVD-indhold"
+    },
+    {
+      "bundleIdentifier": "com.apple.ExpansionSlotUtility",
+      "displayName": "Værktøj til udvidelsesplads",
+      "note": "Viser og indstiller udvidelsespladser i Mac Pro"
+    },
+    {
+      "bundleIdentifier": "com.apple.appleseed.FeedbackAssistant",
+      "displayName": "Feedback Assistant",
+      "note": "Sender systemfeedback og diagnostik til Apple"
+    },
+    {
+      "bundleIdentifier": "com.apple.FolderActionsSetup",
+      "displayName": "Indstil mappekommandoer",
+      "note": "Føjer automatiske script-handlinger til mapper"
+    },
+    {
+      "bundleIdentifier": "com.apple.IPAInstaller",
+      "displayName": "Installering af iOS-apps",
+      "note": "Installerer iOS-app-pakker med et systemværktøj"
+    },
+    {
+      "bundleIdentifier": "com.apple.keychainaccess",
+      "displayName": "Hovednøglering",
+      "note": "Administrerer adgangskoder, certifikater, nøgler og sikre emner"
+    },
+    {
+      "bundleIdentifier": "com.apple.Ticket-Viewer",
+      "displayName": "Billetfremviser",
+      "note": "Viser Kerberos-billetter og godkendelsesstatus"
+    },
+    {
+      "bundleIdentifier": "com.apple.wifi.diagnostics",
+      "displayName": "Trådløs diagnostik",
+      "note": "Diagnosticerer Wi-Fi og opretter trådløse rapporter"
+    },
+    {
+      "bundleIdentifier": "com.apple.photobooth",
+      "displayName": "Photo Booth",
+      "note": "Kamera-selfies og små specialeffekter er også praktiske til at teste kameraet"
+    },
+    {
+      "bundleIdentifier": "com.apple.podcasts",
+      "displayName": "Podcasts",
+      "note": "Den officielle portal til at lytte til podcast."
+    },
+    {
+      "bundleIdentifier": "com.apple.Preview",
+      "displayName": "Billedfremviser",
+      "note": "Det mest undervurderede Mac-værktøj: Se billeder, anmærk PDF-filer."
+    },
+    {
+      "bundleIdentifier": "com.apple.printcenter",
+      "displayName": "Printercentral",
+      "note": "Se og administrer printkøer. For papirstop-opgaver, se her først"
+    },
+    {
+      "bundleIdentifier": "com.apple.quicktimeplayerx",
+      "displayName": "QuickTime Player",
+      "note": "Et veletableret værktøj, der kan afspille, optage skærm og optage lyd"
+    },
+    {
+      "bundleIdentifier": "com.apple.screensharing",
+      "displayName": "Skærmdeling",
+      "note": "Fjernstyr en anden Mac, hvilket er meget praktisk til at hjælpe folk."
+    },
+    {
+      "bundleIdentifier": "com.apple.screenshot.launcher",
+      "displayName": "Skærmbillede",
+      "note": "Skærmbillede og skærmoptagelsesportal, bag Shift-Command-5"
+    },
+    {
+      "bundleIdentifier": "com.apple.scripteditor2",
+      "displayName": "Instruksværktøj",
+      "note": "Skriv og kør AppleScript for at styre gammeldags Mac-automatisering"
+    },
+    {
+      "bundleIdentifier": "com.apple.sfsymbols",
+      "displayName": "SF Symbols",
+      "note": "Apples officielle symbolbibliotek, afgørende for native grænseflader"
+    },
+    {
+      "bundleIdentifier": "com.apple.shortcuts",
+      "displayName": "Genveje",
+      "note": "At sammenkæde flere handlinger i processer med ét klik er den moderne."
+    },
+    {
+      "bundleIdentifier": "com.apple.siri.launcher",
+      "displayName": "Siri",
+      "note": "Stemmeassistent indgang, kan tjekke oplysninger, åbne apps og styre systemet"
+    },
+    {
+      "bundleIdentifier": "com.apple.stickies",
+      "displayName": "Huskesedler",
+      "note": "Sticky notes på skrivebordet, midlertidige noter er lagt op lige foran dig"
+    },
+    {
+      "bundleIdentifier": "com.apple.stocks",
+      "displayName": "Stocks",
+      "note": "Se små paneler for aktier og markedsdynamik"
+    },
+    {
+      "bundleIdentifier": "com.apple.systemprofiler",
+      "displayName": "Oplysninger om system",
+      "note": "Se hardware, software og enhedsdetaljer for at finde den mest nøjagtige."
+    },
+    {
+      "bundleIdentifier": "com.apple.systempreferences",
+      "displayName": "System­indstillinger",
+      "note": "Mac-indstillinger hovedindgang, næsten alle systemkontakter er her"
+    },
+    {
+      "bundleIdentifier": "com.apple.textedit",
+      "displayName": "TextEdit",
+      "note": "Den enkleste teksteditor, åbne TXT og RTF meget hurtigt"
+    },
+    {
+      "bundleIdentifier": "com.apple.backup.launcher",
+      "displayName": "Time Machine",
+      "note": "Systembackup til gendannelse af filer efter behov"
+    },
+    {
+      "bundleIdentifier": "com.apple.helpviewer",
+      "displayName": "Tips",
+      "note": "Apples officielle tips til lejlighedsvis at opdage funktioner."
+    },
+    {
+      "bundleIdentifier": "com.apple.TV",
+      "displayName": "TV",
+      "note": "Afspilning af film- og tv-indhold og indgang til administration"
+    },
+    {
+      "bundleIdentifier": "com.apple.voicememos",
+      "displayName": "Memoer",
+      "note": "Optag hurtigt, gem mødeinspiration og interviewmateriale først"
+    },
+    {
+      "bundleIdentifier": "com.apple.voiceoverutility",
+      "displayName": "VoiceOver-værktøj",
+      "note": "Administrer skærmlæsende tilgængelighedsfunktioner for at gøre din Mac."
+    },
+    {
+      "bundleIdentifier": "com.apple.weather",
+      "displayName": "Vejr",
+      "note": "Vejrudsigtsportal, tjek den før du går ud for mere stabilitet"
+    },
+    {
+      "bundleIdentifier": "com.apple.dt.Xcode",
+      "displayName": "Xcode",
+      "note": "Apples udviklingsværktøjer til iOS- og macOS-apps"
+    },
+    {
+      "bundleIdentifier": "com.apple.garageband10",
+      "displayName": "GarageBand",
+      "note": "Apples musikproduktionsværktøj på begynderniveau."
+    },
+    {
+      "bundleIdentifier": "com.apple.FinalCut",
+      "displayName": "Final Cut Pro",
+      "note": "Apples professionelle videoredigeringsværktøj, klipning."
+    },
+    {
+      "bundleIdentifier": "com.apple.logic10",
+      "displayName": "Logic Pro",
+      "note": "Apples professionelle musikproduktionsværktøj."
+    },
+    {
+      "bundleIdentifier": "com.apple.TestFlight",
+      "displayName": "TestFlight",
+      "note": "Apple app testværktøj, velegnet til at installere og opleve beta apps"
+    }
+  ]
+}

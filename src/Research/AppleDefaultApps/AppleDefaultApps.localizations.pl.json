@@ -1,0 +1,453 @@
+{
+  "resourceFormatVersion": 1,
+  "catalogContentVersion": 1,
+  "language": "pl",
+  "localizationsVersion": 2,
+  "entries": [
+    {
+      "bundleIdentifier": "com.apple.finder",
+      "displayName": "Finder",
+      "note": "System macOS jest wyposażony w narzędzia odpowiednie do odpowiedniego."
+    },
+    {
+      "bundleIdentifier": "com.apple.Safari",
+      "displayName": "Safari",
+      "note": "Oficjalna przeglądarka Apple, oszczędność energii."
+    },
+    {
+      "bundleIdentifier": "com.apple.mail",
+      "displayName": "Poczta",
+      "note": "Systemowy klient poczty, wiele skrzynek pocztowych może być."
+    },
+    {
+      "bundleIdentifier": "com.apple.MobileSMS",
+      "displayName": "Wiadomości",
+      "note": "Portal iMessage i SMS, szybciej odpowiadaj na wiadomości na komputerze Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.FaceTime",
+      "displayName": "FaceTime",
+      "note": "Wejście do rozmów audio i wideo w ekosystemie Apple"
+    },
+    {
+      "bundleIdentifier": "com.apple.iCal",
+      "displayName": "Kalendarz",
+      "note": "Wyrzuć harmonogram z głowy i daj czasowi wizualną mapę"
+    },
+    {
+      "bundleIdentifier": "com.apple.Notes",
+      "displayName": "Notatki",
+      "note": "Można gromadzić najszybsze notatki systemowe, tekst, obrazy i listy"
+    },
+    {
+      "bundleIdentifier": "com.apple.reminders",
+      "displayName": "Przypomnienia",
+      "note": "Zadania i przypomnienia, odpowiednie do łapania małych codziennych zadań"
+    },
+    {
+      "bundleIdentifier": "com.apple.Photos",
+      "displayName": "Zdjęcia",
+      "note": "Systemowa biblioteka zdjęć, główne wejście do zarządzania."
+    },
+    {
+      "bundleIdentifier": "com.apple.Music",
+      "displayName": "Muzyka",
+      "note": "Lokalny i strumieniowy odtwarzacz muzyki"
+    },
+    {
+      "bundleIdentifier": "com.apple.Terminal",
+      "displayName": "Terminal",
+      "note": "Wpis w wierszu poleceń, ukryty kokpit Maca"
+    },
+    {
+      "bundleIdentifier": "com.apple.ActivityMonitor",
+      "displayName": "Monitor aktywności",
+      "note": "Pulpit nawigacyjny komputera Mac, aby zobaczyć, kto zużywa energię."
+    },
+    {
+      "bundleIdentifier": "com.apple.airport.airportutility",
+      "displayName": "Narzędzie AirPort",
+      "note": "Oldschoolowe narzędzia sieciowe do zarządzania portami AirPort i Time."
+    },
+    {
+      "bundleIdentifier": "com.apple.AppStore",
+      "displayName": "App Store",
+      "note": "Oficjalny sklep z oprogramowaniem dla komputerów Mac. Zacznij tutaj."
+    },
+    {
+      "bundleIdentifier": "com.apple.apps.launcher",
+      "displayName": "Aplikacje",
+      "note": "Lekki portal aplikacji, który pomoże Ci szybko otwierać aplikacje z."
+    },
+    {
+      "bundleIdentifier": "com.apple.audio.audiomidisetup",
+      "displayName": "Konfigurator MIDI Audio",
+      "note": "Sprzęt audio i routing MIDI, powszechnie używane przez muzyków i debugerów"
+    },
+    {
+      "bundleIdentifier": "com.apple.automator",
+      "displayName": "Automator",
+      "note": "Możesz połączyć ciąg działań automatyzujących komputer Mac bez pisania kodu"
+    },
+    {
+      "bundleIdentifier": "com.apple.bluetoothfileexchange",
+      "displayName": "Wymiana plików przez Bluetooth",
+      "note": "Używanie Bluetooth do wysyłania i odbierania plików jest przestarzałe."
+    },
+    {
+      "bundleIdentifier": "com.apple.iBooksX",
+      "displayName": "Książki",
+      "note": "Punkt wejścia do czytania e-booków i zarządzania nimi."
+    },
+    {
+      "bundleIdentifier": "com.apple.bootcampassistant",
+      "displayName": "Asystent Boot Camp",
+      "note": "Oficjalny przewodnik dotyczący instalacji systemu Windows na komputerze."
+    },
+    {
+      "bundleIdentifier": "com.apple.calculator",
+      "displayName": "Kalkulator",
+      "note": "W środku ukryty jest także mały kalkulator."
+    },
+    {
+      "bundleIdentifier": "com.apple.chess",
+      "displayName": "Szachy",
+      "note": "Wbudowane szachy do krótkiej przerwy i treningu"
+    },
+    {
+      "bundleIdentifier": "com.apple.clock",
+      "displayName": "Zegar",
+      "note": "Ujednolicony portal alarmów, timerów, stoperów i zegarów światowych"
+    },
+    {
+      "bundleIdentifier": "com.apple.colorsyncutility",
+      "displayName": "Narzędzie ColorSync",
+      "note": "Przeglądaj i naprawiaj profile kolorów."
+    },
+    {
+      "bundleIdentifier": "com.apple.console",
+      "displayName": "Konsola",
+      "note": "Okno przeglądania logów systemowych jest bardzo przydatne przy."
+    },
+    {
+      "bundleIdentifier": "com.apple.addressbook",
+      "displayName": "Kontakty",
+      "note": "Centrum kontaktów dla poczty, wiadomości i FaceTime"
+    },
+    {
+      "bundleIdentifier": "com.apple.dictionary",
+      "displayName": "Słownik",
+      "note": "Słownik i tezaurus offline."
+    },
+    {
+      "bundleIdentifier": "com.apple.digitalcolormeter",
+      "displayName": "Kolorymetr cyfrowy",
+      "note": "Selektor kolorów ekranu, mały artefakt dla projektantów umożliwiający."
+    },
+    {
+      "bundleIdentifier": "com.apple.DiskUtility",
+      "displayName": "Narzędzie dyskowe",
+      "note": "Dysk, partycja, format i pierwsza pomoc, nie zadzieraj z tym, ale to ważne"
+    },
+    {
+      "bundleIdentifier": "com.apple.findmy",
+      "displayName": "Znajdź",
+      "note": "Znajdź sprzęt, znajdź przedmioty i daj zgubionemu Macowi wskazówki."
+    },
+    {
+      "bundleIdentifier": "com.apple.fontbook",
+      "displayName": "Album z czcionkami",
+      "note": "Centrum instalacji i zarządzania czcionkami."
+    },
+    {
+      "bundleIdentifier": "com.apple.freeform",
+      "displayName": "Freeform",
+      "note": "Nieograniczone tablice do burzy mózgów, szkicowania i przypadkowych pomysłów"
+    },
+    {
+      "bundleIdentifier": "com.apple.games",
+      "displayName": "Gry",
+      "note": "Portal gier Apple do centralnego zarządzania grywalną zawartością Apple."
+    },
+    {
+      "bundleIdentifier": "com.apple.grapher",
+      "displayName": "Grapher",
+      "note": "Równania wykresu, ukryte narzędzie do wizualizacji matematycznej"
+    },
+    {
+      "bundleIdentifier": "com.apple.home",
+      "displayName": "Dom",
+      "note": "Inteligentne wejście do domu może zarządzać oświetleniem."
+    },
+    {
+      "bundleIdentifier": "com.apple.image_capture",
+      "displayName": "Pobieranie obrazów",
+      "note": "Importuj zdjęcia z aparatu lub skanera, proste, ale stabilne"
+    },
+    {
+      "bundleIdentifier": "com.apple.generativeplaygroundapp",
+      "displayName": "Playground",
+      "note": "Generuj obrazy dzięki inteligencji Apple, idealnej do szybkiego."
+    },
+    {
+      "bundleIdentifier": "com.apple.iMovieApp",
+      "displayName": "iMovie",
+      "note": "Wystarczający do podstawowej edycji wideo."
+    },
+    {
+      "bundleIdentifier": "com.apple.screencontinuity",
+      "displayName": "Klonowanie iPhone’a",
+      "note": "Obsługuj iPhone'a bezpośrednio na komputerze Mac."
+    },
+    {
+      "bundleIdentifier": "com.apple.journal",
+      "displayName": "Dziennik",
+      "note": "Nagrywaj codzienne fragmenty i powoli przekształcaj swoje myśli w."
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Keynote",
+      "displayName": "Keynote",
+      "note": "Narzędzie do prezentacji w stylu Apple."
+    },
+    {
+      "bundleIdentifier": "com.apple.magnifier",
+      "displayName": "Lupa",
+      "note": "Powiększ szczegóły ekranu, aby ułatwić widzenie i dokładną kontrolę"
+    },
+    {
+      "bundleIdentifier": "com.apple.Maps",
+      "displayName": "Mapy",
+      "note": "Sprawdzaj trasy, przeglądaj miasta i przesyłaj miejsca docelowe do iPhone'a"
+    },
+    {
+      "bundleIdentifier": "com.apple.migrateassistant",
+      "displayName": "Asystent migracji",
+      "note": "Przenosząc się na nowy komputer Mac, przenieś stare dane na nowy komputer"
+    },
+    {
+      "bundleIdentifier": "com.apple.exposelauncher",
+      "displayName": "Mission Control",
+      "note": "Widok z lotu ptaka na okno i pulpit, po prostu spójrz, jeśli jest bałagan"
+    },
+    {
+      "bundleIdentifier": "com.apple.news",
+      "displayName": "News",
+      "note": "Portal Apple News, odpowiedni do przeglądania wybranych treści."
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Numbers",
+      "displayName": "Numbers",
+      "note": "Narzędzie Apple Sheets, lekkie raporty są bardziej odświeżające niż Excel"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Pages",
+      "displayName": "Pages",
+      "note": "Procesor tekstu Apple, piękny do pisania dokumentów i składu"
+    },
+    {
+      "bundleIdentifier": "com.apple.passwords",
+      "displayName": "Hasła",
+      "note": "Systemowy menedżer haseł, scentralizowane zarządzanie kontami."
+    },
+    {
+      "bundleIdentifier": "com.apple.mobilephone",
+      "displayName": "Telefon",
+      "note": "Dzwoń na komputerze Mac za pomocą telefonu"
+    },
+    {
+      "bundleIdentifier": "com.apple.AboutThisMacLauncher",
+      "displayName": "Ten Mac…",
+      "note": "Pokazuje model Maca, wersję systemu i numer seryjny"
+    },
+    {
+      "bundleIdentifier": "com.apple.archiveutility",
+      "displayName": "Narzędzie archiwizujące",
+      "note": "Kompresuje i rozpakowuje ZIP oraz inne archiwa"
+    },
+    {
+      "bundleIdentifier": "com.apple.DeskCam",
+      "displayName": "Widok blatu",
+      "note": "Pokazuje biurko przez Kamerę Continuity"
+    },
+    {
+      "bundleIdentifier": "com.apple.DirectoryUtility",
+      "displayName": "Narzędzie katalogowe",
+      "note": "Konfiguruje usługi katalogowe, LDAP i konta sieciowe"
+    },
+    {
+      "bundleIdentifier": "com.apple.DVDPlayer",
+      "displayName": "Odtwarzacz DVD",
+      "note": "Odtwarza płyty DVD i lokalne treści DVD"
+    },
+    {
+      "bundleIdentifier": "com.apple.ExpansionSlotUtility",
+      "displayName": "Narzędzie gniazd rozszerzeń",
+      "note": "Pokazuje i konfiguruje gniazda rozszerzeń Mac Pro"
+    },
+    {
+      "bundleIdentifier": "com.apple.appleseed.FeedbackAssistant",
+      "displayName": "Asystent opinii",
+      "note": "Wysyła do Apple opinie systemowe i diagnostykę"
+    },
+    {
+      "bundleIdentifier": "com.apple.FolderActionsSetup",
+      "displayName": "Ustawienia czynności folderów",
+      "note": "Dodaje automatyczne skrypty do folderów"
+    },
+    {
+      "bundleIdentifier": "com.apple.IPAInstaller",
+      "displayName": "Instalator aplikacji iOS",
+      "note": "Instaluje pakiety aplikacji iOS narzędziem systemowym"
+    },
+    {
+      "bundleIdentifier": "com.apple.keychainaccess",
+      "displayName": "Dostęp do pęku kluczy",
+      "note": "Zarządza hasłami, certyfikatami, kluczami i bezpiecznymi elementami"
+    },
+    {
+      "bundleIdentifier": "com.apple.Ticket-Viewer",
+      "displayName": "Podgląd biletów",
+      "note": "Pokazuje bilety Kerberos i stan uwierzytelnienia"
+    },
+    {
+      "bundleIdentifier": "com.apple.wifi.diagnostics",
+      "displayName": "Diagnostyka sieci bezprzewodowej",
+      "note": "Diagnozuje Wi-Fi i tworzy raporty sieci bezprzewodowej"
+    },
+    {
+      "bundleIdentifier": "com.apple.photobooth",
+      "displayName": "Photo Booth",
+      "note": "Selfie z aparatu i małe efekty specjalne są również wygodne do."
+    },
+    {
+      "bundleIdentifier": "com.apple.podcasts",
+      "displayName": "Podcasty",
+      "note": "Oficjalny portal do słuchania podcastów."
+    },
+    {
+      "bundleIdentifier": "com.apple.Preview",
+      "displayName": "Podgląd",
+      "note": "Najbardziej niedoceniane narzędzie dla komputerów Mac."
+    },
+    {
+      "bundleIdentifier": "com.apple.printcenter",
+      "displayName": "Centrum drukowania",
+      "note": "Przeglądaj i zarządzaj kolejkami druku."
+    },
+    {
+      "bundleIdentifier": "com.apple.quicktimeplayerx",
+      "displayName": "QuickTime Player",
+      "note": "Sprawdzone narzędzie, które może odtwarzać, nagrywać ekran i nagrywać dźwięk"
+    },
+    {
+      "bundleIdentifier": "com.apple.screensharing",
+      "displayName": "Udostępnianie ekranu",
+      "note": "Zdalnie steruj innym komputerem Mac, co jest bardzo wygodne."
+    },
+    {
+      "bundleIdentifier": "com.apple.screenshot.launcher",
+      "displayName": "Zrzut ekranu",
+      "note": "Portal do zrzutów ekranu i nagrywania ekranu, za Shift-Command-5"
+    },
+    {
+      "bundleIdentifier": "com.apple.scripteditor2",
+      "displayName": "Edytor skryptów",
+      "note": "Napisz i uruchom AppleScript."
+    },
+    {
+      "bundleIdentifier": "com.apple.sfsymbols",
+      "displayName": "SF Symbols",
+      "note": "Oficjalna biblioteka symboli Apple, niezbędna dla natywnych interfejsów"
+    },
+    {
+      "bundleIdentifier": "com.apple.shortcuts",
+      "displayName": "Skróty",
+      "note": "Łączenie wielu działań w procesy realizowane jednym kliknięciem to."
+    },
+    {
+      "bundleIdentifier": "com.apple.siri.launcher",
+      "displayName": "Siri",
+      "note": "Wejście asystenta głosowego, może sprawdzać informacje."
+    },
+    {
+      "bundleIdentifier": "com.apple.stickies",
+      "displayName": "Nalepki",
+      "note": "Notatki samoprzylepne na pulpicie."
+    },
+    {
+      "bundleIdentifier": "com.apple.stocks",
+      "displayName": "Stocks",
+      "note": "Zobacz małe panele dotyczące akcji i dynamiki rynku"
+    },
+    {
+      "bundleIdentifier": "com.apple.systemprofiler",
+      "displayName": "Informacje o systemie",
+      "note": "Wyświetl szczegóły sprzętu, oprogramowania i urządzeń."
+    },
+    {
+      "bundleIdentifier": "com.apple.systempreferences",
+      "displayName": "Ustawienia systemowe",
+      "note": "Ustawienia komputera Mac, główne wejście."
+    },
+    {
+      "bundleIdentifier": "com.apple.textedit",
+      "displayName": "TextEdit",
+      "note": "Najprostszy edytor tekstu, bardzo szybko otwiera TXT i RTF"
+    },
+    {
+      "bundleIdentifier": "com.apple.backup.launcher",
+      "displayName": "Time Machine",
+      "note": "Kopia systemu do przywracania plików w razie potrzeby"
+    },
+    {
+      "bundleIdentifier": "com.apple.helpviewer",
+      "displayName": "Porady",
+      "note": "Oficjalne wskazówki Apple dotyczące okazjonalnego odkrywania funkcji."
+    },
+    {
+      "bundleIdentifier": "com.apple.TV",
+      "displayName": "TV",
+      "note": "Wejście do odtwarzania i zarządzania treściami filmowymi i telewizyjnymi"
+    },
+    {
+      "bundleIdentifier": "com.apple.voicememos",
+      "displayName": "Dyktafon",
+      "note": "Najpierw szybko nagrywaj."
+    },
+    {
+      "bundleIdentifier": "com.apple.voiceoverutility",
+      "displayName": "Narzędzie VoiceOver",
+      "note": "Zarządzaj funkcjami ułatwień dostępu poprzez czytanie ekranu."
+    },
+    {
+      "bundleIdentifier": "com.apple.weather",
+      "displayName": "Pogoda",
+      "note": "Portal prognozy pogody, sprawdź go przed wyjściem."
+    },
+    {
+      "bundleIdentifier": "com.apple.dt.Xcode",
+      "displayName": "Xcode",
+      "note": "Narzędzia Apple do tworzenia aplikacji iOS i macOS"
+    },
+    {
+      "bundleIdentifier": "com.apple.garageband10",
+      "displayName": "GarageBand",
+      "note": "Podstawowe narzędzie Apple do produkcji muzyki."
+    },
+    {
+      "bundleIdentifier": "com.apple.FinalCut",
+      "displayName": "Final Cut Pro",
+      "note": "Profesjonalne narzędzie do edycji wideo firmy Apple umożliwia."
+    },
+    {
+      "bundleIdentifier": "com.apple.logic10",
+      "displayName": "Logic Pro",
+      "note": "Profesjonalne narzędzie Apple do produkcji muzyki."
+    },
+    {
+      "bundleIdentifier": "com.apple.TestFlight",
+      "displayName": "TestFlight",
+      "note": "Narzędzie do testowania aplikacji Apple."
+    }
+  ]
+}

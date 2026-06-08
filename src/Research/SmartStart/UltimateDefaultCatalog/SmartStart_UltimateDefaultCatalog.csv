@@ -1,0 +1,3454 @@
+normalizedName,tager,bundleIdentifier,defaultNote-ZH
+claude-code,ai-tools|terminal-tools,null,把 AI 带进开发流程，适合写代码、调试和自动化
+google-chrome,browser,com.google.Chrome,插件生态最强的浏览器，调试网页和日常上网都稳
+codex,ai-tools|terminal-tools,null,把 AI 带进开发流程，适合写代码、调试和自动化
+microsoft-edge,browser,com.microsoft.edgemac,网页调试和浏览工具，适合开发者检查页面细节
+docker-desktop,devops,com.docker.docker,在 Mac 上运行容器和微服务，本地开发环境更容易复现
+firefox,browser,org.mozilla.firefox,开源浏览器，重视隐私和扩展自由
+brave-browser,browser|security,com.brave.Browser,主打隐私和广告拦截的 Chromium 浏览器
+ngrok,api-tools,null,适合调试接口、网络请求和开发环境
+arc,browser,company.thebrowser.Browser,工作流式浏览器，把网页、空间和资料组织得更清楚
+git-credential-manager,devops,null,用于保存和管理 Git 凭据，适合多个代码托管平台登录
+ghostty,terminal-tools,com.mitchellh.ghostty,开发者工具，适合命令行、构建、调试或工程管理
+slack,communication,com.tinyspeck.slackmacgap,团队聊天和工作流入口，项目沟通不必埋在邮件里
+iterm2,terminal-tools,com.googlecode.iterm2,增强版终端，开发者常用的命令行工作台
+libreoffice,office,null,开源 Office 套件，文档、表格和演示都能编辑
+wechat,communication,com.tencent.xinWeChat,即时通讯和通话工具，适合聊天、语音和视频沟通
+1password-cli,security|terminal-tools,null,账号安全工具，适合管理密码、验证码和通行密钥
+claude,ai-tools,com.anthropic.claudefordesktop,桌面入口，适合长文阅读、写作和思考辅助
+discord,communication|entertainment,com.hnc.Discord,语音和社区聊天工具，游戏和创作者圈子很常用
+cc-switch,ai-tools,null,把 AI 带进开发流程，适合写代码、调试和自动化
+qq,communication,com.tencent.qq,沟通工具，适合聊天、邮件、通话或团队交流
+orbstack,devops,null,轻量容器和 Linux 环境，替代 Docker Desktop 很顺手
+visual-studio-code,ide,com.microsoft.VSCode,轻量但强大的代码编辑器，插件生态非常完整
+obsidian,Notes,md.obsidian,本地 Markdown 知识库，适合长期沉淀自己的第二大脑
+chromedriver,browser|api-tools,null,Chrome WebDriver 工具，适合自动化测试网页应用
+zoom,Meeting,us.zoom.xos,视频会议常用入口，远程沟通和线上课程都离不开
+warp,ai-tools|terminal-tools,null,现代终端，把命令行、搜索和 AI 辅助结合起来
+postman,api-tools,com.postmanlabs.mac,适合调试接口、网络请求和开发环境
+tencent-meeting,Meeting,com.tencent.meeting,腾讯会议入口，中文办公和远程协作很常见
+minecraft,game,com.mojang.minecraftlauncher,开放世界沙盒游戏，建造、探索和模组玩法都很丰富
+stats,system-maintenance,null,位于macOS菜单栏的系统监控工具，它能让用户实时监控多项macOS系统指标
+macfuse,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+microsoft-teams,Meeting,com.microsoft.teams2,微软系团队协作中心，聊天、会议和文件集中处理
+zed,ide,null,高性能代码编辑器，适合追求速度和协作体验
+cursor,ai-tools|ide,com.todesktop.230313mzl4w4u92,把 AI 带进开发流程，适合写代码、调试和自动化
+roblox,game,com.roblox.Roblox,游戏平台，玩社区创作的多人游戏和体验
+dingtalk,Meeting,com.alibaba.DingTalkMac,钉钉桌面端，中文团队的沟通、会议和审批入口
+raycast,Automation,com.raycast.macos,键盘驱动的效率入口，启动 App、脚本和搜索都很快
+android-studio,ide,null,Android 官方 IDE，开发和调试 Android App 必备
+maccy,Automation,null,剪贴板历史工具，复制过的内容随时找回来
+telegram,communication|security,ru.keepcoder.Telegram,即时通讯工具，主打速度和安全
+spotify,audio,com.spotify.client,流媒体音乐播放器，工作和放松都能配一首歌
+blackhole-2ch,audio|device-management,null,虚拟音频驱动，适合录屏、直播和音频路由
+whatsapp,communication,net.whatsapp.WhatsApp,沟通工具，适合聊天、邮件、通话或团队交流
+feishu,Meeting,com.electron.lark,飞书协作入口，中文团队的聊天、文档和会议都在这
+ollama,ai-tools,com.electron.ollama,把 AI 带进开发流程，适合写代码、调试和自动化
+basictex,runtime-sdk,null,TeX/LaTeX 工具，适合论文、公式和专业排版
+signal,communication|security,org.whispersystems.signal-desktop,重视隐私的加密聊天工具
+baidu-netdisk,transfer,com.baidu.netdisk,百度网盘客户端，适合云端备份、同步和分享文件
+miniconda,runtime-sdk,null,轻量 Python 环境管理工具，做数据和开发更干净
+mitmproxy,security|network-tools,null,网络调试工具，适合抓包、代理和排查连接问题
+bruno,api-tools,null,编程开发工具，适合编写、阅读和维护代码
+chatgpt,ai-tools|Notes,com.openai.chat,把 AI 助手放到桌面，写作、学习和头脑风暴随手就来
+iina,video,com.colliderli.iina,现代 Mac 视频播放器，界面清爽、格式兼容好
+sublime-text,ide,null,轻快的代码与文本编辑器，写代码、改配置和记草稿都顺手
+notion,GTD|Notes,notion.id,把笔记、文档、数据库和项目管理收进一个团队工作台
+wps-office,office,com.kingsoft.wpsoffice.mac,办公套件，适合编辑文档、表格和演示稿
+adobe-acrobat-reader,PDF,null,PDF 阅读和批注工具，合同、论文和表单都能处理
+1password,security,com.1password.1password,密码和密钥管理器，账号安全的核心保险箱
+figma,ui-prototyping,com.figma.Desktop,在线协作设计工具，界面、原型和设计系统都能做
+localsend,transfer,null,跨平台应用，支持设备间的安全通信，使用REST API和HTTPS加密
+netease-cloud-music,audio,com.netease.163music,网易云音乐桌面端，听歌、歌单和中文音乐社区都方便
+chromium,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+utm,devops,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+lm-studio,ai-tools,ai.lmstudio.app,本地大模型运行工具，适合下载、测试和调用开源模型
+qq-music,audio,com.tencent.QQMusicMac,音乐播放器，适合听歌、管理歌单和使用腾讯音乐服务
+cmux,ai-tools,null,适合整理媒体元数据、命名或封装文件
+league-of-legends,game,com.riotgames.leagueoflegends,英雄联盟客户端，经典团队竞技游戏入口
+github-desktop,terminal-tools|devops,com.github.GitHubClient,GitHub 官方桌面客户端，提交和同步仓库更直观
+mactex,runtime-sdk,null,TeX/LaTeX 工具，适合论文、公式和专业排版
+db-browser-for-sqlite,database-tools,null,数据库工具，适合连接、查询和管理数据库
+tencent-video,video,com.tencent.tenvideo,腾讯视频客户端，适合观看影视、综艺和在线视频内容
+bitwarden,security,null,开源密码管理器，跨平台保存账号和验证码
+inkscape,diagramming,null,开源矢量绘图工具，适合 Logo、插画和 SVG 编辑
+pgadmin4,database-tools,null,数据库工具，适合连接、查询和管理数据库
+kitty,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+hammerspoon,Automation|runtime-sdk,null,用 Lua 自动化 Mac，键盘、窗口和脚本都能接管
+iqiyi,video,com.iqiyi.player,爱奇艺视频客户端，适合观看影视、综艺和在线视频内容
+android-platform-tools,terminal-tools|runtime-sdk,null,开发者工具，适合命令行、构建、调试或工程管理
+openclaw,ai-tools,null,个人 AI 助手
+blender,3d-cad,org.blenderfoundation.blender,开源 3D 创作工具，建模、动画和渲染都能做
+youku,video,com.youku.mac,视频工具，适合播放、录制、剪辑或转换视频
+obs,video,null,直播和录屏工具，课程、演示和游戏录制都很常用
+bilibili,video,com.bilibili.bilibili,视频工具，适合播放、录制、剪辑或转换视频
+librewolf,browser,null,网页浏览器，适合日常上网、访问网页和使用 Web 服务
+pearcleaner,system-maintenance,null,macOS 应用卸载工具，适合删除 App 并清理残留文件
+steam,game,com.valvesoftware.steam,PC 游戏平台核心入口，买游戏、更新和启动都靠它
+gimp,picture-photo,null,开源图像编辑器，修图和简单设计不必上重型套件
+ximalaya,audio,com.ximalaya.ting,音频工具，适合播放、制作、编辑或管理声音内容
+google-cloud-cli,terminal-tools|devops,null,Google Cloud 命令行工具，适合管理云资源和部署应用
+keka,file-management,null,压缩解压工具，处理 ZIP、7z 和 RAR 很方便
+linearmouse,device-management,null,鼠标和触控板调校工具，滚动、加速度和按键更顺手
+sketch,ui-prototyping,com.bohemiancoding.sketch3,经典 Mac 界面设计工具，适合 UI 和图标设计
+wezterm,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+podman-desktop,devops,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+sogou-input,input-tools,com.sogou.inputmethod.sogou,中文输入法，适合拼音输入和中文打字
+vlc,video,org.videolan.vlc,万能播放器，格式再冷门也多半能打开
+dockdoor,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+google-drive,transfer,com.google.drivefs,云端文件同步和协作入口，跨设备找资料很省心
+photoshop,picture-photo,null,专业图像编辑工具，修图、合成和设计都绕不开
+adobe-photoshop,picture-photo,com.adobe.Photoshop,专业图像编辑工具，修图、合成和商业设计都很强
+calibre,education,null,电子书管理器，适合整理、转换和同步书库
+mongodb-compass,database-tools,null,用于查看、查询和管理数据库
+tencent-lemon-cleaner,file-management|system-maintenance,com.tencent.Lemon,Mac 清理工具，适合清理垃圾文件和管理存储空间
+illustrator,diagramming,null,矢量图形设计工具，Logo、图标和插画很专业
+adobe-illustrator,diagramming,com.adobe.illustrator,矢量图形设计工具，适合插画、Logo 和视觉设计
+tableplus,database-tools,null,用于查看、查询和管理数据库
+picgo,picture-photo|transfer,com.molunerfinn.PicGo,图床上传工具，写文档和发博客时传图很快
+alacritty,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+adobe-lightroom,picture-photo,com.adobe.Lightroom,照片管理和调色工具，处理 RAW 与批量照片很顺
+cyberduck,transfer|network-tools,null,FTP/SFTP 和云存储客户端，传文件很方便
+clashx,security|network-tools,com.west2online.ClashX,代理客户端，适合管理规则代理和网络访问策略
+jetbrains-toolbox,ide,null,IDE 管理器，适合安装和更新开发工具
+gemini,file-management|system-maintenance,null,重复和相似文件查找工具，可帮助释放磁盘空间
+puremac,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+windows-app,network-tools,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+keepassxc,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+audacity,audio,null,开源音频编辑器，录音、剪辑和降噪都能做
+surge,security|network-tools,com.nssurge.surge-mac,网络调试工具，适合抓包、代理和排查连接问题
+whisky,game,null,在 Mac 上运行 Windows 游戏和应用的轻量工具
+canva,picture-photo|office,com.canva.CanvaDesktop,模板化设计工具，海报、社媒图和演示稿都能快速出图
+rustdesk,network-tools,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+ungoogled-chromium,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+transmission,transfer,null,传输工具，适合下载、同步或在设备间传文件
+yuque,entertainment,com.alipay.hulu,写作和笔记工具，适合记录、编辑和整理文本内容
+multipass,devops,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+microsoft-git-microsoft-git,terminal-tools|devops,null,Git 发行版，适合代码版本管理和命令行协作
+shottr,picture-photo,null,截图和标注工具，做产品反馈和视觉说明很利索
+alfred,Automation,com.runningwithcrayons.Alfred,老牌效率启动器，搜索、工作流和剪贴板都很强
+qbittorrent,transfer,null,传输工具，适合下载、同步或在设备间传文件
+youdao-dictionary,education,com.youdao.YoudaoDict,词典翻译工具，适合查词、翻译和语言学习
+microsoft-auto-update,system-maintenance,null,用于更新 Microsoft 应用，适合保持 Office 等软件为最新版本
+sequel-ace,database-tools,null,数据库工具，适合连接、查询和管理数据库
+eudic,education,com.eusoft.eudic,欧路词典是一款在Mac系统中卓越、权威的词典软件
+the-unarchiver,file-management,null,轻量解压工具，打开各种压缩包很省事
+openscad,3d-cad,null,适合建模、渲染和三维设计工作
+fuse-t,file-management,null,FUSE 文件系统组件，适合让 macOS 挂载和访问扩展文件系统
+bluebubbles,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+chrome,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+microsoft-word,writing|office,com.microsoft.Word,经典文字处理器，正式文档和审阅协作都很稳
+tuist,ide|runtime-sdk,null,编程开发工具，适合编写、阅读和维护代码
+freecad,3d-cad,null,适合建模、渲染和三维设计工作
+mweb,writing,com.coderforart.MWeb3,Markdown 写作工具，适合写博客、笔记和技术文档
+android-commandlinetools,terminal-tools|runtime-sdk,null,开发者工具，适合命令行、构建、调试或工程管理
+flameshot,picture-photo,null,适合截图、标注、识别文字或制作视觉反馈
+microsoft-excel,office,com.microsoft.Excel,表格和数据分析老将，财务、运营和模型都靠它
+tor-browser,browser|security,null,安全工具，适合保护隐私、控制访问或加密数据
+marginnote,writing|education,QReader.MarginStudyMac,读书和论文标注工具，适合把阅读变成知识网络
+protonvpn,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+background-music,audio|Automation,null,按 App 调节音量，还能把系统声音录进工作流
+kiro-cli,ai-tools|terminal-tools|ide,null,把 AI 带进开发流程，适合写代码、调试和自动化
+microsoft-powerpoint,office,com.microsoft.Powerpoint,经典演示工具，商务汇报和课程课件都常用
+macdown,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+coteditor,ide,null,针对 macOS 开发的轻量级代码编辑器
+github-copilot-for-xcode,ai-tools|devops|ide,null,把 AI 带进开发流程，适合写代码、调试和自动化
+microsoft-office,office,null,办公套件，适合处理文档、表格和演示稿
+openlens,devops|ide,null,编程开发工具，适合编写、阅读和维护代码
+finetune,ai-tools|audio,null,AI 音频工具，适合整理、转写或优化声音内容
+dropbox,transfer,com.getdropbox.dropbox,老牌云同步工具，跨设备和团队共享文件很稳定
+openmtp,transfer|device-management,null,文件管理工具，适合整理、传输、清理或备份文件
+markedit,writing,null,Markdown 编辑器，适合写作、整理文档和发布内容
+anydesk,network-tools,null,远程桌面工具，适合远程访问和协助操作电脑
+raspberry-pi-imager,picture-photo,null,树莓派系统写盘工具，制作启动卡很省事
+temurin-17,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+zotero,writing|education,null,文献管理工具，收集论文、引用和参考文献很省心
+font-jetbrains-mono-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+claude-code-latest,ai-tools|terminal-tools,null,Claude 相关工具，适合 AI 辅助开发或内容处理
+insomnia,api-tools,null,API 调试工具，测试接口和管理请求集合很顺
+pycharm,ide,null,编程开发工具，适合编写、阅读和维护代码
+headlamp,devops,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+vivaldi,browser,null,邮件客户端，适合集中收发和管理邮箱
+lulu,security,null,安全工具，适合保护隐私、控制访问或加密数据
+obs-studio,video,com.obsproject.obs-studio,开源直播和录屏工具，适合录制视频、直播和采集画面
+temurin-21,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+comfyui,ai-tools|picture-photo,null,节点式 AI 绘图工作流，适合精细控制生成过程
+epic-games-launcher,game,com.epicgames.EpicGamesLauncher,Epic 游戏启动器，领取、下载和更新游戏都靠它
+kiro,ai-tools|ide|runtime-sdk,null,AI 编码工具，适合用自然语言推进代码实现和调试
+gcc-arm-embedded,device-management,null,ARM 嵌入式开发工具链，适合交叉编译固件
+unity-hub,ide,null,Unity 项目和编辑器版本管理入口
+microsoft-visual-studio-code,ide,null,代码编辑器，适合开发、调试和扩展工作流
+perplexity,ai-tools,ai.perplexity.mac,AI 搜索和问答入口，适合快速查资料和追来源
+redis-insight,database-tools,null,数据库工具，适合连接、查询和管理数据库
+anki,education,null,间隔重复记忆工具，背词、考试和长期学习都很强
+dbeaver-community,database-tools,null,数据库工具，适合连接、查询和管理数据库
+notunes,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+bettertouchtool,device-management|Automation,null,macOS 输入增强工具，适合自定义触控板、鼠标和快捷操作
+ngrok-ngrok-ngrok,api-tools,null,内网穿透工具，适合把本地服务暴露给外部调试访问
+helium,browser,null,Chromium 内核网页浏览器
+termius,network-tools|terminal-tools,null,SSH 客户端，适合管理服务器连接和远程终端会话
+proxyman,api-tools,null,网络抓包工具，调试 App 和网页请求很清楚
+onyx,system-maintenance,null,macOS 维护工具，适合清理缓存、调整系统选项和排查问题
+gtkwave,utilities,null,波形查看工具，适合查看和分析数字电路仿真波形
+session-manager-plugin,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+skim,PDF,null,PDF 阅读和批注工具，适合看论文和做研究标注
+grandperspective,file-management|system-maintenance,null,文件管理工具，适合整理、传输、清理或备份文件
+microsoft-outlook,communication,null,邮件客户端，适合集中收发和管理邮箱
+wine-stable,utilities,null,用于在 macOS 上运行部分 Windows 应用，适合兼容性测试
+freelens,devops|ide,null,编程开发工具，适合编写、阅读和维护代码
+tunnelblick,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+another-redis-desktop-manager,database-tools,null,数据库工具，适合连接、查询和管理数据库
+font-meslo-lg-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+steipete-tap-codexbar,ai-tools|terminal-tools,null,Codex 相关工具，适合 AI 辅助开发和命令行工作流
+windsurf,ai-tools|ide,null,AI 原生代码编辑器，适合边写边让助手理解工程上下文
+typora,writing,null,所见即所得 Markdown 编辑器，写作体验很顺
+rstudio,ide|runtime-sdk,null,R 语言 IDE，统计分析和数据可视化常用
+fork,devops,null,漂亮的 Git 客户端，分支、提交和冲突处理更轻松
+android-file-transfer,transfer|device-management,null,文件管理工具，适合整理、传输或清理文件
+microsoft-remote-desktop,network-tools,null,远程桌面客户端，适合连接和操作远程电脑
+zulu-17,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+nordvpn,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+teamviewer,security|network-tools,null,安全工具，适合保护隐私、控制访问或加密数据
+kicad,3d-cad,null,开源电路设计工具，画原理图和 PCB 很专业
+warrensbox-tap-tfswitch,devops,null,Terraform 版本切换工具，适合管理不同项目的 Terraform 版本
+onedrive,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+blackhole-16ch,audio|device-management,null,多通道虚拟音频驱动，适合复杂录音和直播
+quarto,office,null,科学与技术写作发布工具，适合生成文档、报告和网站
+keycastr,Automation,null,开源的按键可视化工具，能够在进行录屏、演示或协作时实时展示用户的按键操作
+tigervnc,network-tools,null,远程桌面工具，适合通过 VNC 连接和控制远程电脑
+alt-tab,window-management,null,窗口切换工具，适合用键盘快速切换和预览窗口
+clipy,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+macs-fan-control,system-maintenance,null,风扇控制工具，适合监控温度并调整风扇转速
+tabby,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+t3-code,ai-tools,null,把 AI 带进开发流程，适合写代码、调试和自动化
+cherry-studio,ai-tools,null,AI 客户端，适合连接多种大模型进行对话和内容生成
+font-fira-code-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+espanso,Automation,null,文本扩展工具，适合用缩写快速输入常用短语
+chatgpt-atlas,browser|ai-tools,null,带 AI 助手的浏览器，边看网页边提问、整理和行动
+font-hack-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+lens,devops|ide,null,编程开发工具，适合编写、阅读和维护代码
+moonlight,game,null,串流游戏客户端，把远端 PC 游戏流畅投到 Mac 上玩
+datagrip,database-tools,null,编程开发工具，适合编写、阅读和维护代码
+nikitabobko-tap-aerospace,window-management,null,平铺窗口管理工具，适合用键盘组织 macOS 窗口
+darktable,picture-photo,null,开源 RAW 照片处理工具，适合摄影后期
+itsycal,communication|GTD|system-maintenance,null,菜单栏小日历，快速看日期和日程
+font-jetbrains-mono,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+telegram-desktop,communication|security,null,沟通工具，适合聊天、邮件、通话或团队交流
+drawio,picture-photo|diagramming,null,流程图和架构图工具，画清楚系统关系很方便
+handy,Automation,null,语音转文字工具，可通过快捷键听写并自动输入文本
+crossover,game,null,在 Mac 上运行 Windows 软件和游戏，不必完整装虚拟机
+nextcloud,transfer,null,传输工具，适合下载、同步或共享文件
+upscayl,ai-tools|picture-photo,null,AI 图片放大工具，低清图片也能变得更清晰
+affinity,picture-photo,null,设计套件入口，适合替代订阅制设计工具
+maestro,ai-tools,null,AI 智能体指挥中心
+unnaturalscrollwheels,device-management,null,鼠标滚轮方向反转工具
+appcleaner,file-management|system-maintenance,null,文件管理工具，适合整理、传输、清理或备份文件
+bartender,picture-photo|window-management|system-maintenance,null,菜单栏整理工具，把杂乱图标收得干干净净
+wailbrew,devops,null,Homebrew 图形界面工具，适合查看和管理本机软件包
+opera,browser,null,网页浏览器，适合日常上网、访问网页和使用 Web 服务
+wispr-flow,ai-tools,null,AI 语音输入工具，适合用语音快速转写和输入文本
+macwhisper,audio,null,语音转文字工具，适合本地转录音频和整理文字稿
+beekeeper-studio,database-tools,null,数据库工具，适合连接、查询和管理数据库
+rar,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+codexbar,ai-tools|Automation|terminal-tools,null,菜单栏 AI 编码助手入口，把开发提示放到手边
+superwhisper,ai-tools,null,让你通过语音输入，无需动手即可写作速度提高3倍
+battery,system-maintenance|terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+voiceink,input-tools,null,语音输入工具，适合把口述内容转成文本
+tolaria,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+easydict,education,null,划词翻译和词典工具，读外文资料时很省心
+anythingllm,ai-tools|communication,null,把文档和知识库接入 AI 问答，适合私有资料助手
+qlmarkdown,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+cleanshot,picture-photo|system-maintenance,null,截图、录屏和标注工具，做反馈和教程很利索
+aionui,ai-tools|terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+ublue-os-tap-visual-studio-code-linux,ide,null,代码编辑器，适合开发、调试和扩展工作流
+antigravity,ai-tools|ide,null,编程开发工具，适合编写、阅读和维护代码
+stremio,video,null,媒体中心应用，适合聚合和观看在线视频内容
+syntax-highlight,utilities,null,源码文件快速预览扩展，可为 Quick Look 添加语法高亮
+keyclu,Automation,null,专为macOS设计的免费工具，其主要功能是显示当前运行软件的快捷键
+clickhouse,database-tools|terminal-tools,null,数据库工具，适合连接、查询和管理数据库
+onlyoffice,writing|office,null,本地 Office 套件，适合编辑文档、表格和演示稿
+font-symbols-only-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+mullvad-vpn,security|network-tools,null,VPN 客户端，适合加密网络连接和保护上网隐私
+coconutbattery,device-management|system-maintenance,null,电池监控工具，适合查看 Mac 和 iOS 设备电池健康
+adobe-creative-cloud,video|picture-photo,null,Adobe 全家桶管理器，装插件和更新设计工具都靠它
+jellyfin,entertainment,null,媒体服务器客户端，适合访问和播放自建媒体库
+tablepro,database-tools,null,数据库工具，适合连接、查询和管理数据库
+balenaetcher,utilities,null,图片工具，适合浏览、编辑、转换或管理图片
+yubico-authenticator,security,null,安全相关工具，适合隐私保护、访问控制或账号防护
+intellij-idea,ide,null,编程开发工具，适合编写、阅读和维护代码
+daisydisk,file-management|system-maintenance,null,文件管理工具，适合整理、传输、清理或备份文件
+temurin-8,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+loop,window-management,null,窗口管理工具，适合快速排列、移动和调整窗口
+temurin-25,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+joplin,transfer|GTD|Notes,null,开源笔记和待办工具，适合同步自己的 Markdown 资料
+godot,game|ide,null,开源游戏引擎，适合快速制作 2D 和 3D 游戏
+imageoptim,picture-photo,null,图片压缩工具，减小体积但尽量保住画质
+webstorm,ide,null,编程开发工具，适合编写、阅读和维护代码
+qgis,utilities,null,地理信息系统工具，适合查看、编辑和分析地图数据
+hiddenbar,system-maintenance,null,编程开发工具，适合编写、阅读和维护代码
+meetingbar,GTD|Meeting|system-maintenance,null,菜单栏显示下一场会议，一键加入不再翻日历
+mounty,file-management,null,文件管理工具，适合整理、传输或清理文件
+logseq,Notes,null,大纲式知识库，用双链组织笔记和研究脉络
+snipaste,picture-photo,null,截图加贴图工具，适合把参考内容固定在屏幕上
+notion-calendar,GTD|Notes,null,把日历和 Notion 工作流连起来，安排时间更顺
+krita,picture-photo|diagramming,null,开源绘画工具，插画、概念图和数字绘画很强
+capcut,video|audio,null,轻量视频剪辑工具，做短视频和社媒内容很顺手
+mactex-no-gui,runtime-sdk,null,TeX/LaTeX 工具，适合论文、公式和专业排版
+little-snitch,security,null,安全工具，适合保护隐私、控制访问或加密数据
+logi-options,device-management,null,罗技设备管理工具，适合配置鼠标、键盘和快捷操作
+google-chrome-canary,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+charles,network-tools|security,null,网页抓包代理，调试接口、证书和网络请求很清楚
+gpg-suite,communication|security,null,邮件客户端，适合集中收发和管理邮箱
+omnidisksweeper,system-maintenance,null,磁盘空间清理工具，适合找出并删除大文件
+zettlr,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+macshot,video|picture-photo,null,适合截图、标注、识别文字或制作视觉反馈
+netnewswire,utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+rancher,devops,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+deepl,ai-tools,null,翻译工具，适合高质量文本翻译和多语言写作辅助
+mark-text,writing,null,Markdown 编辑器，适合写作、整理文档和发布内容
+docker-tap-sbx,devops|runtime-sdk,null,容器开发辅助工具，适合本地环境管理
+trae,ai-tools|ide,null,AI 编程 IDE，适合让智能体帮你写代码和改项目
+font-fira-code,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+kap,video,null,开源录屏工具，快速录制屏幕并导出 GIF 或视频
+macdown-3000,picture-photo|writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+conductor,ai-tools,null,把 AI 带进开发流程，适合写代码、调试和自动化
+zen,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+mockoon,api-tools,null,API 调试工具，适合测试接口、请求和开发流程
+proton-mail,communication,null,重视隐私的邮件客户端，适合安全收发邮件
+bunch,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+emacs-app,ide,null,文本编辑器，适合编辑纯文本、配置和轻量写作
+proton-pass,security,null,密码管理器，适合保存账号、密码和验证码
+sfm,network-tools,null,网络调试工具，适合抓包、代理和排查连接问题
+goland,ide,null,Go 集成开发环境，适合专业 Go 开发
+visualvm,system-maintenance|runtime-sdk,null,Java 性能分析工具，适合监控、分析和调试 JVM 应用
+corretto-21,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+font-source-code-pro,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+devtoys,ide,null,开发者小工具箱，编码转换、哈希和格式化一站解决
+element,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+anaconda,runtime-sdk,null,Python 数据科学发行版，环境和包管理更省心
+jdownloader,transfer,null,下载管理器，适合集中管理和加速文件下载
+parsec,network-tools,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+zerotier-one,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+dotnet-sdk-8,runtime-sdk,null,构建和运行 .NET 8 应用的开发工具包
+duckduckgo,browser|security,null,安全工具，适合保护隐私、控制访问或加密数据
+plex,video,null,家庭媒体库中心，把电影、剧集和音乐整理后跨设备播放
+beyond-compare,devops,null,广受欢迎的数据比较工具，能够比较文件夹、文本文件、图片和表格
+temurin-11,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+helium-browser,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+textmate,ide,null,著名的文本编辑器，主要用于编写代码和脚本
+motrix,transfer,null,for mac版是一款全能的下载工具
+zulu-8,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+font-sauce-code-pro-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+osaurus,ai-tools,null,基于 MLX 的 LLM 服务器
+font-blex-mono-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+vesktop,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+knockknock,security,null,macOS 安全检查工具，适合发现持久化启动项和可疑组件
+virtualbox,devops,null,由德国Innotek公司开发的免费开源虚拟机软件，现由Oracle公司维护
+salesforce-cli,terminal-tools|devops,null,开发者工具，适合命令行、构建、调试或工程管理
+font-maple-mono-nf-cn,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+proton-drive,transfer,null,加密云盘客户端，适合同步和保存隐私文件
+downie,video|transfer,null,在线视频下载工具，适合保存课程、演讲和公开素材
+font-0xproto-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+jd-gui,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+finicky,browser,null,macOS应用程序，能够让用户根据特定规则决定每个网址打开的浏览器
+granola,ai-tools|writing|Meeting,null,自动记录会议重点，把对话变成可追踪的行动项
+webex,Meeting,null,企业级视频会议工具，适合正式远程沟通
+barrier,device-management,null,键鼠共享工具，适合在多台电脑间共用键盘和鼠标
+qt-creator,ide,null,编程开发工具，适合编写、阅读和维护代码
+mist,transfer,null,传输工具，适合下载、同步或共享文件
+eqmac,audio,null,编程开发工具，适合编写、阅读和维护代码
+quicklook-video,video|picture-photo,null,给 Finder 预览更多视频格式，选片找素材更快
+apifox,writing,null,API 调试工具，适合测试接口、请求和开发流程
+copyq,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+thunderbird,communication,null,邮件客户端，适合集中收发和管理邮箱
+deskflow-tap-deskflow,device-management,null,键鼠共享工具，适合在多台电脑之间共用键盘和鼠标
+youtube-downloader,video|transfer,null,轻量视频下载工具，适合把在线素材保存到本地
+font-caskaydia-mono-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+hop,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+intellij-idea-ce,ide,null,编程开发工具，适合编写、阅读和维护代码
+react-native-debugger,api-tools,null,React Native 调试工具，适合检查应用状态和网络请求
+sublime-merge,devops,null,Git 客户端，适合管理代码仓库、提交和分支
+cursor-cli,ai-tools|terminal-tools|ide,null,把 AI 带进开发流程，适合写代码、调试和自动化
+forklift,transfer,null,传输工具，适合下载、同步或在设备间传文件
+font-droid-sans-mono-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-ubuntu-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+wireshark-chmodbpf,network-tools,null,网络协议分析工具，适合抓包、排查和分析网络问题
+mullvad-browser,browser|security,null,安全工具，适合保护隐私、控制访问或加密数据
+font-go-mono-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+platypus,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+comet,browser|ai-tools,null,网页浏览器，适合日常上网和访问 Web 服务
+claudebar,ai-tools,null,菜单栏 Claude 入口，随手提问和处理文本更快
+openscad-snapshot,3d-cad,null,参数化 3D 建模工具预览版，适合用代码创建模型
+cryptomator,security|finance,null,给云盘文件加密，敏感资料同步前先锁起来
+mysqlworkbench,database-tools,null,数据库工具，适合连接、查询和管理数据库
+reactotron,api-tools,null,应用调试工具，适合调试 React Native 和相关开发流程
+claude-devtools,ai-tools|api-tools,null,把 AI 带进开发流程，适合写代码、调试和自动化
+font-comic-shanns-mono-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+adguard,security,null,广告拦截和隐私保护工具，适合过滤网页广告和追踪器
+veracrypt,security,null,安全工具，适合保护隐私、控制访问或加密数据
+open-webui,ai-tools,null,本地 AI 模型网页界面，适合统一管理聊天和模型
+secretive,network-tools,null,SSH 密钥管理工具，适合把私钥存入 Secure Enclave
+font-inter,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+pika,picture-photo,null,取色工具，适合从屏幕上拾取和管理颜色
+lidanglesensor,audio|device-management|Automation,null,读取笔记本开合角度的小工具，适合自动化和硬件实验
+cleanmymac,system-maintenance,null,Mac 清理维护工具，适合清理垃圾、卸载应用和优化系统
+postico,database-tools,null,数据库工具，适合连接、查询和管理数据库
+chatbox,ai-tools|communication,null,API 调试工具，适合测试接口、请求和开发流程
+zed-preview,ide,null,高性能协作代码编辑器，适合尝鲜新版 Zed 功能
+soundsource,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+mattermost,communication,null,自部署团队聊天工具，适合重视数据控制的团队
+visual-studio-code-insiders,ide,null,代码编辑器预览版，适合提前体验新开发功能
+setapp,utilities,null,Mac 应用订阅平台，适合集中安装和管理订阅内 App
+hex-fiend,file-management,null,十六进制编辑器，适合查看和编辑二进制文件
+openusage,ai-tools|terminal-tools,null,把 AI 带进开发流程，适合写代码、调试和自动化
+linear,ide,null,面向产品和研发团队的问题追踪工具
+openvpn-connect,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+copyclip,Automation,null,轻量剪贴板历史工具，常驻菜单栏保存复制记录
+http-toolkit,network-tools,null,网络调试工具，适合抓包、代理和排查连接问题
+musescore,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+blackhole-64ch,audio|device-management,null,高通道虚拟音频驱动，适合专业音频路由
+rectangle-pro,window-management|Automation,null,窗口管理工具，适合用快捷键和布局快速整理窗口
+citrix-workspace,network-tools,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+kid3,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+nvidia-geforce-now,game,null,云游戏入口，低配置 Mac 也能玩高性能游戏
+flycut,Automation,null,开源剪贴板历史工具，复制过的文字随时找回来
+transmit,transfer|network-tools,null,经典文件传输客户端，FTP、SFTP 和云端文件管理都很稳
+miro,Notes,null,在线白板，适合头脑风暴、流程图和远程共创
+sourcetree,devops,null,图形化 Git 客户端，提交、分支和冲突更直观
+qview,picture-photo,null,图片查看器，适合浏览和管理图片文件
+macos-fuse-t-cask-fuse-t,file-management,null,FUSE 文件系统组件，适合让 macOS 挂载和访问扩展文件系统
+commander-one,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+jan,ai-tools|communication,null,本地 AI 聊天工具，把模型运行在自己的电脑上
+vnc-viewer,network-tools,null,安全工具，适合保护隐私、控制访问或加密数据
+nomachine,network-tools,null,远程桌面工具，适合远程访问和控制电脑
+thonny,ide,null,编程开发工具，适合编写、阅读和维护代码
+wave,terminal-tools,null,终端模拟器，适合命令行开发和日常 Shell 工作
+paintbrush,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+microsoft-onenote,Notes,null,微软笔记本，适合课堂记录、项目资料和手写内容
+openwebstart,runtime-sdk,null,Java Web Start 运行工具，适合启动和管理 JNLP 应用
+wallspace,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+mqttx,api-tools,null,MQTT 客户端，适合调试、测试和管理 MQTT 消息连接
+xnviewmp,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+rio,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+losslesscut,video|audio,null,无损剪切音视频，不重新编码也能快速裁片段
+geekbench,system-maintenance,null,跨平台基准测试工具，可测试处理器和内存性能
+dosbox,runtime-sdk,null,兼容运行环境，适合运行部分 Windows 或经典 DOS 应用
+pdf-expert,PDF,null,PDF 阅读、批注和编辑工具，处理合同论文都方便
+mysql-shell,database-tools|terminal-tools,null,数据库工具，适合连接、查询和管理数据库
+hamed-elfayome-claude-usage-claude-usage-tracker,ai-tools,null,Claude 相关工具，适合 AI 辅助开发或内容处理
+wetype,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+texstudio,office,null,LaTeX 编辑器，适合撰写论文、公式和排版文档
+yaak,network-tools|Automation,null,API 客户端，适合调试 HTTP 请求和管理接口工作流
+openemu,game,null,复古游戏模拟器，把多平台游戏库统一管理起来
+block-goose,ai-tools,null,AI 桌面助手，适合在桌面上获得轻量陪伴和提醒
+love,game,null,Lua 2D 游戏框架，适合快速做轻量游戏原型
+ticktick,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+powershell-preview,terminal-tools,null,跨平台脚本和命令行管理工具预览版
+xmind,Notes,null,适合画流程图、结构图或头脑风暴草图
+draw-things,ai-tools|picture-photo,null,本地 AI 绘图工具，直接在 Mac 上跑图像生成
+zulu-21,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+kate,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+ublue-os-tap-vscodium-linux,ide,null,代码编辑器，适合开发、调试和扩展工作流
+imazing,device-management,null,iPhone 管理工具，适合备份、传输和管理 iOS 设备数据
+v2rayu,network-tools|security,null,沟通工具，适合聊天、邮件、通话或团队交流
+burp-suite,security,null,安全工具，适合保护隐私、控制访问或加密数据
+reqable,network-tools,null,网络调试工具，适合抓包、代理和排查连接问题
+termora,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+qmk-toolbox,device-management,null,机械键盘固件工具，适合刷写和调试 QMK 固件
+bloom,file-management,null,提升生产力的Finder替代应用，旨在为用户提供更精简、高效的文件管理体验
+finch,devops,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+musicbrainz-picard,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+tofu,utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+smcfancontrol,device-management|system-maintenance,null,电池或硬件状态工具，适合查看设备状态并辅助维护
+hyper,terminal-tools,null,免费的开源终端模拟器，可以在 Mac、Windows 和 Linux 上使用
+proton-mail-bridge,communication,null,邮件客户端，适合集中收发和管理邮箱
+zenmap,security,null,安全工具，适合保护隐私、控制访问或加密数据
+paraview,utilities,null,科学可视化工具，适合分析和展示三维数据
+clion,terminal-tools|ide,null,编程开发工具，适合编写、阅读和维护代码
+anytype,security|writing,null,本地优先的知识库和资料管理工具，强调隐私和结构化
+font-d2coding,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+ilspy,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+font-caskaydia-cove-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+suspicious-package,Automation,null,安装包检查工具，适合查看 pkg 安装内容和脚本
+modern-csv,office,null,CSV 编辑器，适合查看、编辑和整理表格数据
+winbox,network-tools|device-management,null,MikroTik 路由器管理工具，适合配置和维护 RouterOS 设备
+cardinal-search,file-management,null,文件管理工具，适合整理、传输或清理文件
+electerm,transfer|terminal-tools,null,传输工具，适合下载、同步或在设备间传文件
+royal-tsx,network-tools,null,远程连接管理器，适合集中管理 SSH、RDP、VNC 等连接
+gitbutler,Automation|devops,null,效率增强工具，适合快速启动、自动化或管理常用操作
+corretto-17,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+elgato-stream-deck,device-management|Automation,null,快捷控制面板工具，适合直播、剪辑和自动化操作
+firefox-developer-edition,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+cameracontroller,device-management,null,图片工具，适合浏览、编辑、转换或管理图片
+trae-cn,ai-tools|ide,null,Trae 中文版 AI 编程工具，适合中文开发工作流
+blip,transfer,null,跨设备文件传输工具
+hyperkey,Automation,null,快捷键增强工具，适合把 Caps Lock 改造成组合修饰键
+beeper,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+macos-fuse-t-cask-fuse-t-sshfs,file-management,null,FUSE 文件系统组件，适合让 macOS 挂载和访问扩展文件系统
+deskpad,network-tools|window-management,null,虚拟显示器工具，适合为屏幕共享或演示创建独立桌面
+disk-drill,system-maintenance,null,数据恢复工具，适合扫描和恢复误删文件
+switchhosts,system-maintenance,null,hosts 管理工具，适合切换和维护本地域名配置
+font-monaspace,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+sioyek,education|PDF,null,办公文档工具，适合阅读、编辑或管理文档资料
+typeless,ai-tools,null,将语音整理成文本的 AI 听写工具
+flashspace,window-management,null,虚拟工作区管理工具
+kdenlive,video,null,视频工具，适合播放、录制、剪辑或转换视频
+synology-drive,transfer|device-management,null,文件管理工具，适合整理、传输、清理或备份文件
+halloy,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+hoppscotch,api-tools,null,适合调试接口、网络请求和开发环境
+font-sarasa-gothic,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+shotcut,video,null,视频编辑工具，适合剪辑、处理和导出视频
+betterzip,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+snowflake-snowsql,database-tools|terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+surfshark,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+coderabbit,ai-tools,null,把 AI 带进开发流程，适合写代码、调试和自动化
+popclip,Automation,null,划词快捷操作工具，可对选中文本快速执行搜索、复制、翻译等动作
+double-commander,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+font-maple-mono-nf,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+sanesidebuttons,device-management,null,编程开发工具，适合编写、阅读和维护代码
+qcad,3d-cad,null,2D CAD 绘图工具，适合工程制图和图纸编辑
+google-chrome-beta,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+orion,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+osquery,database-tools,null,数据库工具，适合连接、查询和管理数据库
+rapidapi,api-tools,null,适合调试接口、网络请求和开发环境
+iptvnator,video,null,视频播放器应用程序，支持IPTV播放列表（m3u、m3u8）的播放
+super-productivity,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+reaper,audio,null,专业数字音频工作站，录音、剪辑、编曲和混音都很灵活
+free-download-manager,transfer,null,传输工具，适合下载、同步或共享文件
+waterfox,browser,null,网页浏览器，适合日常上网、访问网页和使用 Web 服务
+porting-kit,game,null,把 Windows 游戏移植到 Mac，少折腾一点兼容层配置
+meshlab,system-maintenance,null,3D 网格处理工具，适合查看、清理和处理三维模型
+fantastical,communication|GTD,null,高级日历工具，用自然语言快速安排日程
+redis-redis-redis,database-tools,null,Redis 相关工具，适合开发、测试或管理 Redis 服务
+tidal,video|audio,null,高音质流媒体音乐服务，适合认真听歌的人
+copilot-for-xcode,ai-tools|ide,null,把 AI 带进开发流程，适合写代码、调试和自动化
+marta,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+angry-ip-scanner,network-tools,null,局域网扫描工具，适合快速发现和检查网络设备
+flowvision,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+bluestacks,game,null,安卓模拟器，适合在 Mac 上运行手机游戏和应用
+cool-retro-term,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+blockblock,system-maintenance,null,macOS 持久化监控工具，适合发现可疑启动项和后台组件
+openlp,office,null,办公文档工具，适合阅读、编辑或管理文档资料
+slack-cli,communication,null,用命令行操作 Slack，适合把团队消息接进脚本流程
+font-iosevka-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+popsql,database-tools,null,数据库工具，适合连接、查询和管理数据库
+swift-quit,window-management,null,所有窗口关闭时自动退出应用的工具
+clash-party,security|network-tools,null,安全相关工具，适合隐私保护、访问控制或账号防护
+ayugram,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+foobar2000,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+dolphin,game,null,任天堂 GameCube 和 Wii 模拟器，老游戏重温很方便
+numi,utilities,null,计算器和文本计算工具，适合用自然语言做日常计算
+dotnet-sdk-9,runtime-sdk,null,构建和运行 .NET 9 应用的开发工具包
+windscribe,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+doubao,ai-tools|communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+altserver,device-management,null,iOS 侧载辅助工具，适合安装和管理 AltStore 应用
+font-maple-mono,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+pritunl,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+pycharm-ce,ide,null,编程开发工具，适合编写、阅读和维护代码
+remote-desktop-manager,network-tools,null,远程连接管理工具，适合集中管理服务器和远程桌面
+home-assistant,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+dotnet-runtime,runtime-sdk,null,Microsoft .NET 应用运行时
+viber,communication|security,null,沟通工具，适合聊天、邮件、通话或团队交流
+fedora-media-writer,picture-photo|writing,null,图片工具，适合浏览、编辑、转换或管理图片
+jdk-mission-control,window-management|runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+pinta,picture-photo,null,简单绘图工具
+pixpin,picture-photo,null,截图工具，适合快速截屏、标注和分享画面
+wine-staging,runtime-sdk,null,Windows 应用兼容层测试版，适合尝试新功能
+paseo,ai-tools,null,AI 辅助开发工具，适合把模型接进代码工作流
+devpod,devops,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+miaoyan,writing,null,轻量级的Markdown笔记本应用，旨在帮助用户轻松写出优美的句子
+dot,communication,null,菜单栏小工具入口，适合把常用动作收得更近
+sqlcl,database-tools|terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+dupeguru,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+font-ibm-plex-mono,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+lark,Meeting,null,协作入口，聊天、文档、会议和审批放在一起
+megasync,transfer,null,传输工具，适合下载、同步或共享文件
+retroarch,game,null,统一模拟器前端，把复古游戏、核心和手柄配置收一起
+keyboard-maestro,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+bettercapture,video,null,屏幕录制工具，适合录制教程、演示和操作过程
+rawtherapee,picture-photo,null,开源 RAW 照片处理工具，适合摄影调色和细节恢复
+postgres-app,database-tools,null,数据库工具，适合连接、查询和管理数据库
+hazel,Automation,null,为 Mac 设计的自动化文件组织工具
+mediainfo,video|audio,null,查看媒体文件编码、码率和轨道信息的工具
+legcord,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+launchos,utilities,null,启动台替代工具
+privileges,utilities,null,权限切换工具，适合在管理员和普通权限之间快速切换
+font-iosevka,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+macdroid,device-management|transfer,null,Android 与 Mac 文件传输工具
+horos,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+gram,ai-tools,null,AI 开发工具，适合把智能能力嵌进产品和流程
+excalidrawz,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+launchcontrol,devops,null,launchd 管理工具，适合创建、编辑和调试启动任务
+steamcmd,game,null,Steam 命令行工具，适合管理游戏服务器和批量下载
+activitywatch,utilities,null,时间追踪工具，适合记录工作时长和分析时间分配
+kopiaui,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+cap,video,null,开源的Loom替代工具，旨在快速录制、编辑和分享屏幕视频
+font-cascadia-code,Font|3d-cad,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+lyricsx,audio,null,桌面歌词工具，听歌时同步显示歌词很舒服
+font-iosevka-term-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+freefilesync,transfer,null,传输工具，适合下载、同步或共享文件
+positron,ide,null,编程开发工具，适合编写、阅读和维护代码
+antinote,writing,null,专为高效工作设计的笔记应用程序，适合临时笔记、计算和快速文本处理
+dynamodb-local,database-tools|devops,null,本地 DynamoDB 环境，适合开发和测试 AWS 数据库应用
+fluidvoice,ai-tools,null,带 AI 增强的离线语音转文字工具
+thebrowsercompany-dia,browser,null,网页浏览器，适合日常上网、访问网页和使用 Web 服务
+yacreader,writing,null,办公文档工具，适合阅读、编辑或管理文档资料
+jump-desktop-connect,network-tools,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+neovide-app,ide,null,编程开发工具，适合编写、阅读和维护代码
+ledger-wallet,finance,null,硬件钱包管理工具，适合查看和签署加密资产交易
+stirling-pdf,PDF,null,办公文档工具，适合阅读、编辑或管理文档资料
+spokenly,ai-tools,null,带 AI 编辑的听写和转录工具
+libreoffice-still,office,null,办公文档工具，适合阅读、编辑或管理文档资料
+stolendata-mpv,video,null,视频工具，适合播放、录制、剪辑或转换视频
+happ,network-tools|security,null,代理构建和网络限制绕过工具
+todoist-app,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+corretto-8,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+font-fira-mono-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+prince,writing,null,办公文档工具，适合阅读、编辑或管理文档资料
+font-monaspice-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+gitkraken-cli,terminal-tools|devops,null,开发者工具，适合命令行、构建、调试或工程管理
+aws-vpn-client,security|network-tools|terminal-tools|devops,null,VPN 工具，适合加密连接、远程组网和保护隐私
+corretto-25,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+postman-cli,terminal-tools|api-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+fly,education,null,开发者工具，适合命令行、构建、调试或工程管理
+metasploit,utilities,null,安全测试框架，适合渗透测试学习和漏洞验证
+nrfutil,terminal-tools|runtime-sdk,null,开发者工具，适合命令行、构建、调试或工程管理
+oracle-jdk,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+font-dejavu,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+baidunetdisk,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+font-d2coding-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+epic-games,game,null,Epic 游戏平台入口，管理游戏库和启动游戏
+font-roboto,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+wizcli,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+tradingview,finance,null,行情图表和交易分析工具，适合盯盘和画策略
+parallels,devops,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+font-geist-mono-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+wechatwebdevtools,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+wine-devel,runtime-sdk,null,Windows 应用兼容层开发版，适合测试兼容性
+corretto-11,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+rider,ide,null,编程开发工具，适合编写、阅读和维护代码
+wpsoffice,office,null,办公文档工具，适合阅读、编辑或管理文档资料
+font-sf-pro,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+macvim-app,ide,null,文本编辑器，适合编辑纯文本、配置和轻量写作
+font-hackgen-nerd,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+zulu-11,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+cmake-app,utilities,null,CMake 构建工具，适合配置和生成跨平台工程
+microsoft-openjdk-17,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+amneziavpn,security|network-tools,null,VPN 客户端，适合加密网络连接和保护上网隐私
+font-noto-sans-cjk-sc,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+xld,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+zulu-25,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+linear-linear,GTD,null,编程开发工具，适合编写、阅读和维护代码
+malwarebytes,security,null,安全工具，适合保护隐私、控制访问或加密数据
+font-sf-mono-nerd-font-ligaturized,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+readdle-spark,communication,null,邮件客户端，适合集中收发和管理邮箱
+font-noto-sans-cjk,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+jhlee0409-tap-claude-code-history-viewer,ai-tools|terminal-tools,null,Claude 相关工具，适合 AI 辅助开发或内容处理
+font-noto-sans,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-ubuntu-mono-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-roboto-mono-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+oracle-jdk-25,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+font-geist-mono,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-victor-mono-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-sketchybar-app-font,Font|ui-prototyping,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-montserrat,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-inconsolata-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+firefox-nightly,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+font-sf-mono,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-dejavu-sans-mono-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-hack,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-source-sans-3,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+neteasemusic,audio,null,视频工具，适合播放、录制、剪辑或转换视频
+paragon-ntfs,utilities,null,NTFS 磁盘读写工具，适合在 Mac 上访问 Windows 磁盘
+font-roboto-mono,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+floorp,browser|security,null,安全工具，适合保护隐私、控制访问或加密数据
+1password-cli-beta,security,null,命令行密钥和凭据管理工具测试版
+font-code-new-roman-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-eb-garamond,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+the-wineskin-project-wineskin-wineskin,runtime-sdk,null,兼容运行环境，适合运行部分 Windows 或经典 DOS 应用
+notepadexe,ide,null,轻量代码编辑器，适合编写和修改代码
+ytmdesktop-youtube-music,video|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+battle-net,game,null,暴雪游戏启动器，管理战网游戏和更新
+phpstorm,ide|runtime-sdk,null,编程开发工具，适合编写、阅读和维护代码
+qqmusic,audio,null,视频工具，适合播放、录制、剪辑或转换视频
+font-zed-mono-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-3270-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+redis-stack-redis-stack-redis-stack-server,database-tools,null,Redis 相关工具，适合开发、测试或管理 Redis 服务
+font-meslo-for-powerlevel10k,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-agave-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+openai-tools-openai,ai-tools|terminal-tools,null,命令行开发工具，适合调用和管理 AI 服务
+font-pretendard,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-mononoki-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-noto-sans-cjk-kr,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+edouard-claude-tap-snip,ai-tools,null,Claude 相关工具，适合 AI 辅助开发或内容处理
+microsoft-openjdk-25,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+remoteviewer,network-tools,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+font-lxgw-wenkai,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+azure-azure-cli-azure-cli-preview,Automation|terminal-tools|devops,null,云资源命令行管理和自动化部署工具预览版
+font-commit-mono-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-open-sans,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+google-cloud-sdk,terminal-tools|devops|runtime-sdk,null,Google Cloud 命令行工具集，适合管理云资源和部署应用
+segger-jlink,utilities,null,写作和笔记工具，适合记录、编辑和整理文本内容
+font-ibm-plex-sans,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-terminess-ttf-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-space-mono-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-hackgen,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-noto-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-lilex-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-anonymice-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+adobe-acrobat-pro,diagramming,null,写作和笔记工具，适合记录、编辑和整理文本内容
+font-source-serif-4,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-noto-sans-cjk-jp,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-lato,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-gohufont-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+eclipse-java,terminal-tools|ide|runtime-sdk,null,编程开发工具，适合编写、阅读和维护代码
+font-adwaita-mono-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+wechatwork,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+font-cousine-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+microsoft-openjdk-21,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+mhaeuser-mhaeuser-battery-toolkit,device-management|system-maintenance,null,电池或硬件状态工具，适合查看设备状态并辅助维护
+app-cleaner,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+font-fontawesome,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-hasklug-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-bigblue-terminal-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+reader,writing,null,快速且设计简约的PDF文件查看器，配备了强大的控制功能
+oracle-jdk-21,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+font-fantasque-sans-mono-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-noto-color-emoji,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-inconsolata,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-powerline-symbols,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+firefox-esr,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+font-opendyslexic-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-hurmit-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+godot-mono,diagramming,null,带 C# 支持的 Godot 版本，适合用 .NET 开发游戏
+font-bitstream-vera-sans-mono-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+font-monofur-nerd-font,Font,null,字体资源包，适合为编辑器、终端或设计工作补充字体
+android-sdk-platform-tools,device-management|runtime-sdk,null,Android 开发工具，适合 adb 调试和设备管理
+github-copilot-cli,ai-tools|terminal-tools|devops,null,把 AI 带进开发流程，适合写代码、调试和自动化
+flutter-sdk,runtime-sdk,null,跨平台应用开发工具包，适合构建移动、桌面和 Web 应用
+android-sdk-command-line-tools,terminal-tools|runtime-sdk,null,Android 命令行开发工具，适合构建和调试应用
+mozilla-firefox,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+eclipse-temurin-java-development-kit,terminal-tools|ide|runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+tailscale,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+dbeaver-community-edition,database-tools,null,数据库客户端，适合连接、查询和管理多种数据库
+eclipse-temurin-21,terminal-tools|ide|runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+winehq-stable,runtime-sdk,null,兼容运行环境，适合运行部分 Windows 或经典 DOS 应用
+vlc-media-player,video,null,多格式媒体播放器，适合播放本地视频和音频文件
+net-sdk,runtime-sdk,null,Microsoft .NET 开发工具包，适合构建、运行和发布 .NET 应用
+brave,browser|security,null,网页调试和浏览工具，适合开发者检查页面细节
+azul-zulu-java-standard-edition-development-kit,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+opencode,ai-tools|terminal-tools,null,把 AI 带进开发流程，适合写代码、调试和自动化
+alttab,window-management,null,窗口切换工具，可预览并快速切换窗口
+ice,window-management|system-maintenance,null,菜单栏管理工具
+eclipse-temurin-8,terminal-tools|ide|runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+wireshark,network-tools,null,网络协议分析工具，适合抓包、排查和分析网络问题
+freemacsoft-appcleaner,system-maintenance|ide,null,应用卸载工具
+draw-io-desktop,picture-photo|diagramming,null,流程图和架构图工具，适合把系统关系画清楚
+google-antigravity,ai-tools|ide,null,Google AI 开发工具，适合探索智能体式编码流程
+etcher,picture-photo,null,系统镜像写盘工具，制作启动 U 盘直观可靠
+sbarex-qlmarkdown,writing,null,Markdown 文件快速预览插件
+intellij-idea-ultimate,ide|runtime-sdk,null,Java 集成开发环境
+microsoft-build-of-openjdk,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+zen-browser,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+hidden-bar,window-management|system-maintenance,null,macOS 菜单栏图标隐藏工具
+mounty-for-ntfs,file-management,null,NTFS 磁盘读写挂载工具
+rancher-desktop,devops,null,桌面 Kubernetes 和容器管理工具
+emacs,ide,null,文本编辑器，适合编辑纯文本、配置和轻量写作
+godot-engine,game,null,开源游戏引擎，适合制作 2D、3D 和独立游戏
+eclipse-temurin-11,terminal-tools|ide|runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+eclipse-temurin-25,terminal-tools|ide|runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+handbrake,video,null,视频转码工具，压缩和转换格式很稳
+azul-zulu-java-8-standard-edition-development-kit,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+mysql-workbench,3d-cad|database-tools,null,MySQL 官方图形工具，建模、查询和管理数据库
+mozilla-thunderbird,communication,null,可定制邮件客户端
+aws-corretto-jdk,devops|runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+atlassian-sourcetree,devops,null,Git 图形客户端
+syncthing,transfer,null,传输工具，适合下载、同步或共享文件
+microsoft-visual-studio-code-insiders,ide,null,代码编辑器，适合开发、调试和扩展工作流
+real-vnc-viewer,security|network-tools,null,安全远程桌面客户端
+wave-terminal,terminal-tools,null,终端模拟器
+goose,ai-tools|terminal-tools,null,把 AI 带进开发流程，适合写代码、调试和自动化
+mozilla-firefox-developer-edition,browser,null,面向开发者的 Firefox，网页调试功能更前沿
+burp-suite-community-edition,security,null,Web 安全测试工具包
+prism-launcher,game,null,Minecraft 启动器，管理模组和多个游戏实例很方便
+istats-menus,system-maintenance,null,系统监控工具
+orion-browser,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+winehq-staging,runtime-sdk,null,兼容运行环境，适合运行部分 Windows 或经典 DOS 应用
+marta-file-manager,file-management,null,可扩展双栏文件管理器
+mpv,video,null,轻量播放器，键盘控制和格式兼容都很强
+metasploit-framework,utilities,null,安全测试框架，适合渗透测试学习和漏洞验证
+dia,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+neovide,ide,null,编程开发工具，适合编写、阅读和维护代码
+todoist,GTD,null,清爽的任务管理工具，适合收集待办和安排优先级
+orca-slicer,utilities,null,3D 打印 G-code 生成工具
+parallels-desktop,devops,null,Mac 桌面虚拟机软件，可运行 Windows 等系统
+onlyswitch,utilities,null,系统开关工具
+amazon-corretto-jdk,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+winehq-devel,runtime-sdk,null,兼容运行环境，适合运行部分 Windows 或经典 DOS 应用
+jetbrains-rider,ide,null,Microsoft .NET 集成开发环境
+macvim,ide,null,文本编辑器，适合编辑纯文本、配置和轻量写作
+teleport-tsh,communication,null,Teleport 命令行入口，适合安全登录服务器和集群
+cmake,utilities,null,跨平台工程配置和构建工具
+x-lossless-decoder,audio,null,Mac 上转换/解码/播放各种无损音频的工具，可用来 CD 抓轨和刻录
+0-a-d,game,null,开源即时战略游戏，适合喜欢历史题材和基地建设的人
+tradingview-desktop,finance,null,桌面行情图表工具，盯盘、画线和分析策略更专注
+postgres,database-tools,null,数据库桌面封装应用
+playcover,game,null,让部分 iOS 游戏在 Apple Silicon Mac 上运行
+wechat-devtools,communication,null,微信公众号和小程序开发工具
+laravel-herd,runtime-sdk,null,Laravel 和 PHP 开发环境管理器
+f-lux,window-management,null,屏幕色温调节工具
+spark,communication,null,现代邮件客户端，适合把多个邮箱集中处理
+jetbrains-phpstorm,ide|runtime-sdk,null,PHP 集成开发环境
+floorp-browser,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+remote-viewer,network-tools,null,通过 SPICE 连接虚拟机的工具
+blizzard-battle-net,game,null,暴雪游戏平台入口，管理战网游戏、更新和好友
+youtube-music-desktop-app,audio,null,YouTube Music 桌面封装，听歌时不用一直开浏览器
+opensc,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+mozilla-firefox-nightly,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+sproutcube-shortcat,Automation|device-management,null,无需鼠标的界面操作工具
+stretchly,GTD,null,开源的桌面应用程序，旨在帮助用户保持健康的工作和休息习惯
+eclipse-ide-for-java-developers,terminal-tools|ide|runtime-sdk,null,面向 Java 开发者的 Eclipse IDE
+heroic-games-launcher,game,null,GOG、Epic 等游戏库的开源启动器，跨平台管理更轻
+nektony-app-cleaner-and-uninstaller,file-management|system-maintenance,null,应用卸载和清理助手
+medis,database-tools,null,现代化、令人愉悦且专业的Redis图形用户界面工具
+freetube,security|entertainment,null,安全工具，适合保护隐私、控制访问或加密数据
+eclipse-memory-analyzer,system-maintenance,null,Java 堆内存分析工具
+hex,utilities,null,语音转文字和粘贴工具
+requestly,network-tools,null,网络调试工具，适合抓包、代理和排查连接问题
+bleunlock,device-management,null,通过蓝牙低功耗设备距离锁定或解锁 Mac 的工具
+readwise-reader,writing,null,文章稍后读、划线和笔记整理工具
+sonos-s2,utilities,null,Sonos 系统控制器
+raindrop-io,utilities,null,一体化书签管理器
+reminders-menubar,GTD|window-management|system-maintenance,null,功能齐全的提醒事项管理工具，只有1 MB大小
+qutebrowser,browser,null,键盘驱动的浏览器，适合喜欢 Vim 操作的人
+jumpcut,Automation,null,剪贴板管理器，适合保存和找回复制历史
+proxy-audio-device,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+azure-data-studio,database-tools,null,数据库工具，适合连接、查询和管理数据库
+notepad-exe,ide,null,轻量级代码编辑器
+geany,ide,null,编程开发工具，适合编写、阅读和维护代码
+disk-inventory-x,file-management|system-maintenance,null,磁盘空间分析工具，适合查看和清理空间占用
+folx,transfer,null,传输工具，适合下载、同步或在设备间传文件
+ollamac,ai-tools,null,Ollama 的 Mac 客户端，管理本地模型和聊天更直观
+time-out,utilities,null,旨在帮助用户定时休息的应用，旨在缓解长时间使用电脑带来的不适
+wechat-work,communication,null,消息和通话应用
+core-location-cli,utilities,null,CoreLocation 位置信息输出工具
+neohtop,system-maintenance,null,高级系统监控工具
+dash,writing|api-tools,null,API 调试工具，适合测试接口、请求和开发流程
+topnotch,window-management|system-maintenance|ide,null,编程开发工具，适合编写、阅读和维护代码
+kodi,video,null,视频工具，适合播放、录制、剪辑或转换视频
+clickup,communication|GTD,null,项目和任务管理平台，适合把团队执行过程管清楚
+lookaway,GTD,null,休息提醒工具，适合定时提醒休息和保护用眼
+mp3tag,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+httpie-for-desktop,network-tools,null,REST、GraphQL 和 HTTP API 测试客户端
+moom,communication|window-management,null,窗口管理工具，快速排列和保存窗口布局
+google-chrome-dev,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+carbon-copy-cloner,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+easy-move-resize,window-management,null,通过修饰键和鼠标拖拽移动缩放窗口的工具
+leader-key,GTD,null,应用启动器，适合快速打开 App、文件和工作流
+jiggler,utilities,null,防止电脑睡眠工具
+diffusion-bee,ai-tools|devops,null,本地 AI 绘图工具，不上云也能生成图片
+altair-graphql-client,api-tools,null,GraphQL 客户端
+openttd,game,null,经典交通经营游戏，规划铁路、公路和城市物流
+rustrover,ide|runtime-sdk,null,编程开发工具，适合编写、阅读和维护代码
+serial,device-management,null,串口连接工具
+iterm2-ai-plugin,ai-tools|terminal-tools,null,为 iTerm2 启用生成式 AI 功能的插件
+mountain-duck,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+mamp,database-tools|devops,null,数据库工具，适合连接、查询和管理数据库
+virtualbuddy,devops,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+burn,utilities,null,光盘刻录工具
+opensuperwhisper,audio,null,基于 Whisper 的语音听写和转录工具
+studio-3t,database-tools,null,编程开发工具，适合编写、阅读和维护代码
+mozilla-firefox-esr,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+iterm2-browser-plugin,browser,null,网页调试和浏览工具，适合开发者检查页面细节
+locationsimulator,device-management,null,iOS/iPadOS 和模拟器位置模拟工具
+ente-auth,security,null,双因素验证码桌面客户端
+gog-galaxy,game,null,GOG 游戏平台入口，管理 DRM-free 游戏很方便
+loopback,audio,null,虚拟音频路由工具，把不同 App 的声音灵活串起来
+audio-hijack,audio,null,录制和处理 Mac 音频流，播客和直播很常用
+apparency,utilities,null,应用包检查工具
+ukelele,input-tools,null,键盘布局编辑器，适合自定义输入法和键位
+vimr,ide,null,编程开发工具，适合编写、阅读和维护代码
+keystore-explorer,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+plexamp,audio,null,Plex 音乐播放器，适合管理和播放自己的音乐库
+chrome-remote-desktop,network-tools,null,通过 Chrome 远程访问其他电脑的工具
+latexit,office,null,TeX/LaTeX 工具，适合论文、公式和专业排版
+perforce-helix-visual-client,devops,null,Helix Core 图形客户端
+ferdium,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+dbngin,database-tools,null,数据库工具，适合连接、查询和管理数据库
+logitune,communication|device-management,null,管理罗技摄像头和耳机，开会前调设备很方便
+klogg,system-maintenance,null,快速高级日志查看工具
+gnucash,finance,null,开源财务记账工具，个人和小团队账本都能管
+applepi-baker,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+asana,GTD,null,团队项目管理工具，适合跟踪任务、责任人和进度
+readest,education,null,电子书阅读器，适合阅读和管理电子书
+microsoft-office-businesspro,office,null,办公套件，适合处理文档、表格和演示稿
+neo4j-desktop,database-tools,null,编程开发工具，适合编写、阅读和维护代码
+pcsx2,game,null,PlayStation 2 模拟器，重温老游戏很方便
+linphone,ide,null,沟通工具，适合聊天、邮件、通话或团队交流
+notion-mail,communication|Notes,null,Notion 风格邮件工具，适合把邮件变成可整理的信息流
+oversight,system-maintenance,null,视频工具，适合播放、录制、剪辑或转换视频
+permute,video|audio|picture-photo,null,媒体格式转换工具，视频、音频和图片都能批量处理
+drivedx,education|system-maintenance,null,硬盘健康监测工具，提前发现磁盘风险
+clop,video|picture-photo,null,自动压缩图片、视频和 PDF，拖进去就能瘦身文件
+weasis,picture-photo,null,医学影像 DICOM 查看器，适合浏览和分析医疗影像
+trex,utilities,null,易用文字提取工具
+supercollider,audio|ide,null,编程开发工具，适合编写、阅读和维护代码
+asset-catalog-tinkerer,picture-photo,null,查看和导出 Xcode 资源目录，处理 App 素材很方便
+racket,ide|runtime-sdk,null,编程开发工具，适合编写、阅读和维护代码
+vorta,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+sweet-home-3d,3d-cad,null,室内设计软件
+mimestream,communication,null,Gmail 原生风格邮件客户端，Mac 上收发 Gmail 很顺
+ibm-cloud-cli,terminal-tools|devops,null,开发者工具，适合命令行、构建、调试或工程管理
+elasticvue,utilities,null,Elasticsearch 图形客户端
+tg-pro,system-maintenance,null,风扇控制和温度监测工具
+menumeters-for-el-capitan-and-later,network-tools|system-maintenance,null,CPU、内存、磁盘和网络监控工具
+webcatalog,utilities,null,网页应用桌面化工具
+eclipse-ide-for-eclipse-committers,terminal-tools|ide|runtime-sdk,null,Eclipse 集成开发环境
+yandex-browser,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+keybase,security,null,安全工具，适合保护隐私、控制访问或加密数据
+digikam,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+naps2,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+whispering,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+affinity-photo-2,picture-photo,null,专业修图工具，适合照片编辑、合成和精细调色
+rocket,utilities,null,面向视障用户优化的表情选择器
+licecap,picture-photo,null,视频工具，适合播放、录制、剪辑或转换视频
+maczip,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+soulseek,transfer,null,文件分享网络客户端
+garmin-express,transfer,null,传输工具，适合下载、同步或共享文件
+jump-desktop,network-tools,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+keka-external-helper,file-management,null,Keka 压缩工具辅助应用
+timemachineeditor,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+eul,system-maintenance,null,系统状态监控工具
+nimble-commander,file-management,null,双栏文件管理器，适合高效浏览、复制和整理文件
+webtorrent-desktop,transfer|entertainment|network-tools,null,BT 客户端，可边下载边播放种子和磁力链接内容
+teleport-connect,ide,null,网页调试和浏览工具，适合开发者检查页面细节
+010-editor,writing,null,文本编辑器，适合编辑纯文本、配置和轻量写作
+dbgate,database-tools,null,数据库工具，适合连接、查询和管理数据库
+elmedia-player,video|audio,null,Mac 媒体播放器，视频、音频和投屏播放都方便
+youtube-music,audio,null,YouTube 音乐客户端，适合听歌、歌单和音乐视频
+macpass,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+macupdater,system-maintenance,null,能够自动跟踪您Mac上所有安装应用程序最新更新的软件
+curseforge,transfer,null,传输工具，适合下载、同步或共享文件
+screen-studio,video,null,录屏和编辑工具，适合录制并剪辑屏幕内容
+viscosity,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+cutter,utilities,null,基于 Rizin 的逆向工程平台
+jupyterlab-app,utilities,null,JupyterLab 桌面客户端
+sparkle,runtime-sdk,null,网站建设工具，适合轻松创建网站和博客
+appflowy,Notes,null,开源项目和知识管理工具
+openshot-video-editor,video,null,视频工具，适合播放、录制、剪辑或转换视频
+pulsar,writing,null,文本编辑器，适合编辑纯文本、配置和轻量写作
+chatwise,ai-tools|communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+sonarr,transfer,null,传输工具，适合下载、同步或在设备间传文件
+texshop,picture-photo,null,TeX/LaTeX 工具，适合论文、公式和专业排版
+speedify,security|network-tools,null,VPN 客户端，适合加密网络连接和保护上网隐私
+realvnc-connect,network-tools,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+responsively,browser|api-tools,null,网页调试和浏览工具，适合开发者检查页面细节
+josm,utilities,null,地图数据可扩展编辑器
+radarr,video,null,视频工具，适合播放、录制、剪辑或转换视频
+craft,writing,null,漂亮的文档和笔记工具，适合写知识卡片和项目资料
+apidog,api-tools,null,API 调试工具，适合测试接口、请求和开发流程
+douyin,video|audio,null,抖音桌面端，浏览、发布和管理短视频内容更方便
+thorium-reader,education,null,ePub 阅读器
+msty,ai-tools,null,多模型 AI 客户端，适合统一管理本地和云端模型
+browserosaurus,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+ntfstool,utilities,null,为 macOS 提供 NTFS 读写支持的磁盘工具
+backblaze,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+whatsapp-beta,communication,null,WhatsApp 原生桌面客户端
+siyuan,Notes,null,本地优先个人知识管理系统
+subler,utilities,null,给 MP4 封装、加字幕和改元数据，整理影片很方便
+cog,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+prowlarr,network-tools,null,网络调试工具，适合抓包、代理和排查连接问题
+bitfocus-companion,utilities,null,Stream Deck 扩展和模拟软件
+glance,picture-photo,null,Quick Look 扩展，让代码、图片和文档预览更好用
+superhuman,communication,null,邮件客户端，适合集中收发和管理邮箱
+atv-remote,device-management,null,桌面端 Apple TV 遥控工具
+wifi-explorer,network-tools,null,Wi-Fi 扫描、监控和排障工具
+cinebench,device-management|system-maintenance,null,硬件基准测试工具
+mucommander,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+lapce,ide,null,编程开发工具，适合编写、阅读和维护代码
+company-portal,utilities,null,企业应用、数据和资源访问管理工具
+fsnotes,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+hugin,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+veracrypt-fuse-t,security,null,安全工具，适合保护隐私、控制访问或加密数据
+datadog-agent,security,null,安全工具，适合保护隐私、控制访问或加密数据
+easyfind,file-management,null,文件、文件夹和全文搜索工具
+omnissa-horizon-client,network-tools,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+fuse-studio,file-management,null,FUSE 文件系统组件，适合让 macOS 挂载和访问扩展文件系统
+qflipper,device-management,null,Flipper Zero 配套应用
+uu-remote,network-tools,null,网易 UU 远程桌面控制工具
+airbuddy,utilities,null,AirPods 辅助管理工具
+leapp,devops,null,云凭据管理工具
+qspace-pro,file-management,null,文件管理工具，适合整理、传输或清理文件
+hbuilderx,utilities,null,HTML 编辑器
+mactracker,device-management,null,Apple 产品资料库，可查询历代 Mac、iPhone 等设备信息
+expressvpn,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+snagit,picture-photo|devops,null,视频工具，适合播放、录制、剪辑或转换视频
+private-internet-access,security|network-tools,null,VPN 客户端，适合加密网络连接和保护上网隐私
+windterm,transfer|terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+camunda-modeler,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+deluge,transfer,null,传输工具，适合下载、同步或在设备间传文件
+hopper-disassembler,utilities,null,可反汇编、反编译和调试应用的逆向工程工具
+better-shot,utilities,null,截图和标注编辑工具
+awa,audio,null,日本流媒体音乐服务，适合听歌和发现日系音乐
+petrichor,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+avidemux,video,null,视频编辑工具，适合剪辑、处理和导出视频
+dosbox-x,runtime-sdk,null,兼容运行环境，适合运行部分 Windows 或经典 DOS 应用
+spyder,ide,null,编程开发工具，适合编写、阅读和维护代码
+camo-studio,picture-photo,null,视频工具，适合播放、录制、剪辑或转换视频
+genymotion,utilities,null,Android 模拟器
+pdfsam-basic,PDF,null,办公文档工具，适合阅读、编辑或管理文档资料
+clocker,communication|GTD|system-maintenance,null,菜单栏世界时钟，跨时区协作时很省心
+delta-chat,communication,null,安全可靠的去中心化即时通讯工具
+teleport,communication,null,沟通工具，适合消息、邮件、通话或团队交流
+languagetool-for-desktop,writing,null,写作语法、拼写和风格检查工具
+shutter-encoder,video|audio|picture-photo,null,音视频转码工具，格式转换、压缩和批处理很稳
+netspot,network-tools,null,专业的Wi-Fi网络规划和无线调查应用，旨在帮助用户创建和分析无线网络
+orchard,devops,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+vysor,network-tools|device-management,null,手机投屏和控制工具
+tiled,utilities,null,关卡编辑器
+path-finder,file-management,null,功能强大的文件管理器和Finder的替代品，适用于Mac操作系统
+turbo-boost-switcher,utilities,null,Intel Turbo Boost 开关工具
+fiji,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+uninstallpkg,system-maintenance,null,PKG 软件包卸载工具
+resilio-sync,transfer,null,传输工具，适合下载、同步或共享文件
+clipgrab,video|transfer,null,在线视频下载工具，适合保存公开视频素材
+keeper-password-manager,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+turbovnc,system-maintenance,null,远程显示系统
+navicat-premium,database-tools,null,数据库管理与开发工具，适合维护、查询和调试数据库
+evernote,Notes,null,老牌笔记工具，适合收集网页、文件和日常记录
+rekordbox,audio,null,DJ 音乐管理和演出准备工具，整理歌库和歌单很专业
+qdirstat,utilities,null,磁盘占用可视化工具
+macsyzones,window-management,null,窗口管理工具
+adobe-digital-editions,devops,null,办公文档工具，适合阅读、编辑或管理文档资料
+codeedit,ide,null,代码编辑器，适合编写、阅读和维护代码
+ghostpepper,communication|GTD,null,轻量日程提醒工具，适合把重要时间放在菜单栏
+brave-nightly,browser|security,null,网页浏览器，适合日常上网和访问 Web 服务
+brave-beta,browser|security,null,网页浏览器，适合日常上网和访问 Web 服务
+androidtool,device-management,null,iOS 和 Android 设备录屏与应用安装工具
+notesnook,security|writing,null,适合写作、记录和处理文档
+impactor,device-management,null,iOS/tvOS 侧载工具
+yandex-cloud-cli,terminal-tools|devops,null,开发者工具，适合命令行、构建、调试或工程管理
+maltego,utilities,null,开源情报和关系图分析工具
+opera-gx,browser|entertainment,null,网页浏览器，适合日常上网和访问 Web 服务
+vibetunnel,terminal-tools,null,把本地开发服务安全暴露出去，方便远程预览和调试
+lastpass,security,null,密码管理器，适合保存账号、密码和敏感信息
+mx-power-gadget,system-maintenance,null,Apple M 系列处理器功耗监控工具
+luanti,game,null,开源方块沙盒游戏平台，适合玩和制作类 Minecraft 世界
+ps-remote-play,network-tools,null,PlayStation 4/5 远程控制工具
+session,utilities,null,番茄钟专注计时器，用于管理专注与休息时间
+alma,ai-tools|communication,null,优雅的AI提供商编排桌面应用程序，为macOS用户带来统一且流畅的AI体验
+kaleidoscope,picture-photo|devops,null,图片工具，适合浏览、编辑、转换或管理图片
+deezer,audio,null,音乐播放器，适合播放和管理本地或在线音乐
+command-x,file-management,null,文件管理工具，适合整理、传输或清理文件
+yandex-music,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+fastmail,communication,null,邮件客户端，适合集中收发和管理邮箱
+msty-studio,ai-tools,null,支持本地和在线模型的 AI 平台
+foxit-reader,PDF,null,PDF 阅读器
+bob,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+electrum,security|finance,null,轻量比特币钱包，适合管理和签署 BTC 交易
+dbvisualizer,database-tools,null,数据库工具，适合连接、查询和管理数据库
+ocenaudio,audio,null,音频编辑器，适合剪辑、修整和处理声音文件
+zalo,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+iloader,device-management,null,iOS 侧载辅助工具
+paste,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+marked,picture-photo|writing,null,Markdown 和纯文本预览工具，适合写作时快速查看效果
+texmaker,office,null,LaTeX 编辑器，适合撰写论文、公式和排版文档
+hazeover,window-management,null,专注辅助工具，可降低后台窗口亮度突出当前窗口
+mumu-player-pro,utilities,null,Android 模拟器
+sabnzbd,transfer,null,办公文档工具，适合阅读、编辑或管理文档资料
+triliumnext-notes,writing,null,文件管理工具，适合整理、传输、清理或备份文件
+box-drive,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+nosql-workbench,database-tools,null,编程开发工具，适合编写、阅读和维护代码
+kiwix,education,null,写作和笔记工具，适合记录、编辑和整理文本内容
+textual,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+fre-ac,audio,null,音频转换和 CD 抓轨工具
+insta360-studio,video|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+sqlitestudio,database-tools,null,数据库工具，适合连接、查询和管理数据库
+macusb,utilities,null,可启动 USB 安装盘制作工具
+arq,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+karing,network-tools,null,网络调试工具，适合抓包、代理和排查连接问题
+rubymine,ide|runtime-sdk,null,编程开发工具，适合编写、阅读和维护代码
+redis-pro,database-tools,null,数据库工具，适合连接、查询和管理数据库
+caido,security,null,安全工具，适合保护隐私、控制访问或加密数据
+glide,window-management|ui-prototyping,null,从表格快速生成应用，适合无代码原型和内部工具
+standard-notes,security|writing,null,端到端加密笔记工具，适合保存私密文字和资料
+fluor,utilities,null,按当前应用切换 Fn 键行为的工具
+openineditor-lite,file-management,null,文件管理工具，适合整理、传输或清理文件
+mediahuman-youtube-to-mp3-converter,audio|transfer,null,把在线视频转成 MP3，适合保存音乐和播客音频
+proxifier,network-tools,null,网络调试工具，适合抓包、代理和排查连接问题
+adze,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+roblox-studio,game,null,Roblox 创作工具，用来制作和发布 Roblox 体验
+lyx,writing,null,TeX/LaTeX 工具，适合论文、公式和专业排版
+mgba,game,null,游戏模拟器，适合运行和管理经典游戏
+tex-live-utility,office,null,TeX/LaTeX 工具，适合论文、公式和专业排版
+navicat-premium-lite,database-tools,null,数据库管理与开发工具，适合维护、查询和调试数据库
+github-copilot,ai-tools|devops,null,AI 编程辅助客户端
+bluetility,device-management,null,蓝牙低功耗设备浏览工具
+find-any-file,file-management,null,文件管理工具，适合整理、传输或清理文件
+zulip,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+gephi,utilities,null,大规模图谱可视化和分析平台
+stash,security,null,安全相关工具，适合隐私保护、访问控制或账号防护
+ace-link,video,null,视频工具，适合播放、录制、剪辑或转换视频
+vanilla,window-management|system-maintenance|ide,null,编程开发工具，适合编写、阅读和维护代码
+strawberry,audio,null,网页浏览器，适合日常上网和访问 Web 服务
+vmware-fusion,devops,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+aegisub,video,null,视频工具，适合播放、录制、剪辑或转换视频
+utools,Automation,null,高效的工作助手，结合了人工智能技术，为用户提供一个多功能的入口
+spacedrive,file-management,null,开源跨平台文件管理器
+filefillet,file-management,null,文件整理工具
+dockflow,window-management,null,Dock 图标组合管理工具，可按场景一键切换程序坞布局
+filebot,video|audio,null,自动重命名影视文件，剧集、字幕和媒体库更整齐
+airflow,video,null,可以在 Apple TV 和 Chromecast 上播放视频的桌面应用程序
+spectra,writing,null,OpenSpec 文档管理桌面应用
+julia,ide|runtime-sdk,null,编程开发工具，适合编写、阅读和维护代码
+qownnotes,Notes,null,开源 Markdown 笔记工具，适合本地资料和云同步
+mozilla-firefox-beta,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+fing-desktop,network-tools,null,网络扫描工具
+eclipse-ide-for-java-ee-developers,terminal-tools|ide|runtime-sdk,null,面向 Java EE 开发者的 Eclipse IDE
+deskreen,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+pdf-squeezer,PDF,null,办公文档工具，适合阅读、编辑或管理文档资料
+stillcolor,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+qobuz,audio,null,高解析音乐服务，适合认真听歌和管理高音质曲库
+sigil,utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+choosy,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+yuanbao,ai-tools,null,腾讯混元和 DeepSeek AI 助手
+kubecontext,Automation|devops,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+macai,ai-tools|communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+swiftdialog,communication|terminal-tools|runtime-sdk,null,开发者工具，适合命令行、构建、调试或工程管理
+gzdoom,utilities,null,为 ZDoom 添加 OpenGL 渲染的游戏引擎
+sdm,utilities,null,StrongDM 客户端
+spotmenu,audio|system-maintenance,null,菜单栏 Spotify 控制器，当前播放和切歌都更顺手
+textsniper,writing|picture-photo,null,截图识别文字工具，屏幕上的文字可以一键复制
+brewy,devops,null,Homebrew 图形管理工具
+swift-shift,window-management,null,窗口管理工具，适合快速排列、移动和调整窗口
+4k-video-downloader-plus,video|transfer,null,下载在线视频和播放列表，保存素材更直接
+pap-er,picture-photo,null,4K/5K 高清壁纸应用
+gpt4all,utilities,null,用于在本机运行大语言模型，适合本地 AI 实验和推理
+pluginval,utilities,null,跨平台插件验证和测试工具
+nice-dcv-viewer,system-maintenance,null,NICE DCV 远程显示客户端
+amazon-workspaces,network-tools,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+megacmd,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+qgis-ltr,utilities,null,地理信息系统
+pronotes,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+mailspring,communication,null,沟通工具，适合消息、邮件、通话或团队交流
+mixxx,utilities,null,开源 DJ 软件
+amical,ai-tools,null,AI 听写工具
+tuple,ide,null,编程开发工具，适合编写、阅读和维护代码
+sketchup,ui-prototyping|3d-cad,null,适合建模、渲染和三维设计工作
+burp-suite-professional,security,null,安全工具，适合保护隐私、控制访问或加密数据
+pot,utilities,null,跨平台划词翻译和 OCR 识别工具
+lobehub,ai-tools|communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+portfolio-performance,finance,null,投资组合分析工具，适合复盘收益、资产和风险
+tint,picture-photo,null,Tailwind CSS 颜色选择器
+rwts-pdfwriter,PDF|Notes,null,写作和笔记工具，适合记录、编辑和整理文本内容
+shadowsocksx-ng,network-tools,null,网络调试工具，适合抓包、代理和排查连接问题
+octarine,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+open-video-downloader,video|transfer,null,开源视频下载器，适合保存公开视频素材
+nextcloud-talk-desktop,communication,null,Nextcloud Talk 官方桌面客户端
+macpacker,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+keepassx,security,null,安全工具，适合保护隐私、控制访问或加密数据
+cleanclip,system-maintenance|Automation,null,剪贴板管理器，适合保存和找回复制历史
+discord-canary,communication|entertainment,null,语音和文字聊天软件
+hdfview,file-management,null,HDF 文件浏览和编辑工具
+selfcontrol,utilities,null,自我限制分心网站访问的工具
+sempliva-tiles,window-management,null,窗口管理器
+ableton-live-suite,audio,null,声音和音乐编辑工具，适合处理音频素材
+notchi,ai-tools|window-management|system-maintenance,null,刘海区域美化工具，让菜单栏视觉更有趣
+omnifocus,GTD,null,GTD 任务管理工具，适合把复杂个人待办梳理清楚
+vuescan,device-management,null,扫描仪驱动和扫描软件，常用于支持旧款扫描仪
+finalshell,terminal-tools|devops,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+hey,communication,null,邮件客户端，适合集中收发和管理邮箱
+gather-town,video,null,虚拟视频会议空间
+rocket-chat,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+passepartout,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+music-presence,video|audio,null,把正在播放的音乐同步到状态，适合展示听歌动态
+calendr,communication|GTD|system-maintenance,null,菜单栏日历工具，不打开日历也能看安排
+seafile-client,transfer,null,传输工具，适合下载、同步或共享文件
+smplayer,video,null,视频工具，适合播放、录制、剪辑或转换视频
+synology-assistant,device-management,null,局域网 Synology NAS 管理工具
+tunnelbear,security|writing|network-tools,null,轻量 VPN 工具，适合保护网络连接和临时换区
+sigmaos,browser,null,网页浏览器，适合日常上网、访问网页和使用 Web 服务
+devonthink,PDF|Notes,null,个人知识资料库，适合收纳 PDF、网页和研究材料
+elgato-wave-link,device-management,null,面向内容创作的音频控制软件
+fresh,utilities,null,最近修改文件快速访问工具
+xca,security,null,安全工具，适合保护隐私、控制访问或加密数据
+graphql-playground,api-tools,null,编程开发工具，适合编写、阅读和维护代码
+koodo-reader,education,null,办公文档工具，适合阅读、编辑或管理文档资料
+insta360-link-controller,device-management,null,视频工具，适合播放、录制、剪辑或转换视频
+panic-nova,ide,null,原生代码编辑器
+safari-technology-preview,browser,null,网页浏览器，适合日常上网、访问网页和使用 Web 服务
+nordpass,security,null,密码管理器，适合保存账号、密码和敏感信息
+zoom-for-it-admins,Meeting,null,给 IT 管理员部署 Zoom，批量配置会议客户端更方便
+connectmenow,file-management,null,快速挂载网络共享的工具
+workflowy,GTD|Notes,null,无限大纲工具，适合把复杂想法拆成清晰层级
+tad,office,null,表格数据查看和分析工具
+void,ai-tools|ide,null,编程开发工具，适合编写、阅读和维护代码
+enpass,security,null,安全相关工具，适合隐私保护、访问控制或账号防护
+transnomino,file-management,null,批量重命名工具
+maestral,transfer,null,传输工具，适合下载、同步或共享文件
+bose-device-updater,device-management,null,Bose 产品固件更新工具
+doxygen,ide|runtime-sdk,null,编程开发工具，适合编写、阅读和维护代码
+elgato-control-center,device-management,null,Elgato 灯光控制工具
+gramps,utilities,null,家谱管理软件
+sunlogin-client,network-tools,null,远程桌面控制和监控工具
+desktoppr,picture-photo|terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+tabula,GTD,null,编程开发工具，适合编写、阅读和维护代码
+piclist,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+supasidebar,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+miktex,system,null,TeX 发行版管理工具
+blender-lts,3d-cad,null,3D 创作套件
+processspy,system-maintenance,null,专为macOS设计的强大进程监控工具，提供深入的进程监控功能和高级特性
+spring-tools-for-eclipse,utilities,null,Spring Boot 下一代开发工具
+vox,audio,null,高音质音乐播放器，适合播放本地无损音乐
+a-better-finder-rename,file-management,null,批量重命名工具，整理照片和文件特别省时间
+send-to-kindle,writing|education,null,把文档发送到 Kindle，长文阅读更舒服
+vcmi,utilities,null,英雄无敌 III 开源引擎
+smoothcsv,office,null,CSV 编辑器
+craft-agents,ai-tools|writing,null,适合写作、记录和处理文档
+sensible-side-buttons,system-maintenance,null,鼠标侧键增强工具
+browseros,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+foxglove,utilities,null,机器人可视化和调试工具
+updf,PDF,null,PDF 编辑工具，适合编辑、标注和处理 PDF 文档
+zen-twilight,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+studio-3t-community-edition,database-tools,null,MongoDB IDE、客户端和图形工具
+streamlabs-desktop,entertainment,null,一体化直播推流软件
+microsoft-edge-dev,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+clipbook,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+clockify,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+hp-easy-start,device-management,null,HP 打印机设置工具
+launchie,Automation,null,快速高效的应用启动器，专为macOS用户设计，旨在提升工作流程的效率
+actual,finance,null,本地优先的预算记账工具，适合认真管理个人现金流
+json-viewer,ide,null,JSON 数据可视化、校验和格式化工具
+teamspeak-client,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+icon-composer,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+duet,window-management,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+acorn,picture-photo,null,轻量图像编辑器，修图、标注和简单设计都很快
+fannywidget,system-maintenance,null,风扇状态监控菜单栏和通知中心工具
+warp-preview,picture-photo|terminal-tools|runtime-sdk,null,Rust 终端应用
+psychopy,utilities,null,行为科学实验创建工具
+tuta-mail,communication,null,邮件客户端，适合集中收发和管理邮箱
+ibkr-desktop,finance,null,盈透证券桌面端，适合交易、行情和账户管理
+naver-whale,browser,null,网页浏览器，适合日常上网、访问网页和使用 Web 服务
+dayflow,ai-tools|video,null,低频录屏并用 AI 生成每日活动时间线
+plistedit-pro,ide,null,plist 和 JSON 编辑器
+winzip,file-management,null,文件压缩归档工具
+trezor-suite,finance|device-management,null,Trezor 硬件钱包管理器，安全查看和签署交易
+aliyundrive,transfer,null,智能云存储客户端
+pocket-casts,audio,null,播客客户端，订阅、收听和同步节目都很顺
+moneymoney,finance,null,德国常用财务管理工具，适合聚合银行账户和账单
+kando,Automation,null,开源环形菜单启动器，用于快速执行应用和系统操作
+min,browser|security,null,安全工具，适合保护隐私、控制访问或加密数据
+qqlive,video,null,视频工具，适合播放、录制、剪辑或转换视频
+radiola,audio|system-maintenance,null,网络电台播放器，适合在菜单栏收听在线广播
+tinymediamanager,utilities,null,媒体资料管理工具
+t3-code-nightly,ai-tools,null,AI 代码智能体轻量图形界面
+stellarium,utilities,null,实时星空模拟工具
+contexts,window-management,null,应用窗口切换工具
+picview,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+prefs-editor,utilities,null,defaults 命令图形界面
+real-vnc-server,network-tools,null,远程桌面服务器
+whatsize,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+donut-browser,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+krisp,communication|audio,null,会议降噪工具，可用 AI 降低通话背景噪音
+nosqlbooster-for-mongodb,database-tools,null,编程开发工具，适合编写、阅读和维护代码
+scrivener,writing,null,长文写作工具，小说、论文和大纲管理很强
+derivative-touchdesigner,ide,null,动态数字艺术创作工具
+xnsoft-xnconvert,picture-photo,null,图片转换和缩放工具
+native-access,utilities,null,Native Instruments 产品管理工具
+proton-meet,Meeting|security,null,加密视频会议桌面客户端
+openrefine,utilities,null,数据清洗和整理工具
+ksnip,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+superduper,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+eagle,picture-photo|file-management|3d-cad,null,设计素材管理器，图片、截图和灵感图都能收好
+cocktail,system-maintenance,null,面向macOS的多功能实用程序，它可以帮助你清理、修复和优化你的Mac
+connect-iq-sdk-manager,transfer|runtime-sdk,null,Garmin Connect IQ SDK 和设备定义管理工具
+ausweisapp,utilities,null,德国联邦政府官方电子身份证客户端
+adguard-vpn,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+commander,ai-tools|file-management,null,文件管理工具，适合整理、传输或清理文件
+vibe-island,ai-tools,null,动态岛 AI 智能体工具
+binary-ninja,utilities,null,逆向工程平台
+pieces,picture-photo,null,效率增强工具，适合快速启动、自动化或管理常用操作
+keyboard-cleaner,network-tools|device-management,null,网络调试工具，适合抓包、代理和排查连接问题
+omnigraffle,utilities,null,沟通工具，适合聊天、邮件、通话或团队交流
+enjoyable,device-management,null,手柄映射工具，把游戏控制器变成键盘鼠标输入
+busycal,communication|GTD,null,高级日历工具，适合管理复杂日程和多账号安排
+tuxera-ntfs,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+nutstore,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+nuclear,audio,null,开源音乐播放器，从多个在线来源聚合音乐
+clementine,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+binance,finance,null,币安桌面入口，适合管理加密资产、行情和交易
+fontbase,Font,null,适合管理字体、预览字形和整理设计字库
+4k-video-downloader,video|transfer,null,在线视频下载工具，适合保存课程、素材和播放列表
+yworks-yed,diagramming,null,图表绘制和数据导入分析工具
+minisim,utilities,null,iOS 和 Android 模拟器启动工具
+86box,utilities,null,基于 PCem 的 x86 机器模拟器
+remanager,utilities,null,reMarkable 平板模组管理工具
+istat-server,file-management|system-maintenance,null,文件管理工具，适合整理、传输或清理文件
+macsvg,picture-photo|diagramming,null,SVG 矢量编辑器，适合轻量修改图标和网页矢量图
+lmms,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+yubiswitch,security,null,Yubikey Nano 开关菜单栏工具
+monero-wallet,finance,null,门罗币钱包，适合重视隐私的 XMR 收付款
+aptakube,devops,null,Kubernetes 桌面客户端，适合管理和查看集群资源
+nheko,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+fission,audio,null,音频编辑器，适合剪辑、修整和处理声音文件
+extradock,window-management,null,可自定义额外 Dock 的工具
+mediahuman-audio-converter,audio,null,音频转换工具，适合转换和处理音频格式
+runelite,utilities,null,Old School RuneScape 客户端
+frescobaldi,utilities,null,LilyPond 乐谱编辑器
+lyric-fever,audio,null,动态歌词显示工具，让听歌时的歌词更醒目
+labplot,utilities,null,数据可视化和分析软件
+mediamate,utilities,null,专为macOS用户设计的工具，旨在为音量、亮度和键盘背光提供全新的视觉体验
+bitcoin-core,finance,null,财务工具，适合记账、发票、资产或交易管理
+silentknight,security,null,安全工具，适合保护隐私、控制访问或加密数据
+nvidia-nsight-systems,ide,null,编程开发工具，适合编写、阅读和维护代码
+ente,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+dataflare,database-tools,null,数据库工具，适合连接、查询和管理数据库
+texifier,utilities,null,LaTeX 编辑器，适合撰写论文、公式和排版文档
+shichizip,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+opencat,ai-tools|communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+ppsspp,game,null,游戏模拟器，适合运行和管理经典游戏
+classicftp,transfer,null,传输工具，适合下载、同步或在设备间传文件
+macx-youtube-downloader,video|transfer,null,YouTube 视频下载工具，适合保存公开视频素材
+screenkite,video,null,录屏和编辑工具，适合录制并剪辑屏幕内容
+polypane,browser,null,网页调试和浏览工具，适合开发者检查页面细节
+one-switch,utilities,null,系统开关聚合工具
+powerphotos,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+mac-monitor,security|education|device-management|system-maintenance,null,系统状态监控工具，查看硬件和性能信息更直观
+sunlogincontrol,system-maintenance,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+xattred,utilities,null,扩展属性编辑器
+avogadro,utilities,null,分子编辑和可视化工具
+dorso,window-management,null,坐姿监测工具
+caprine,communication,null,办公文档工具，适合阅读、编辑或管理文档资料
+mediathekview,utilities,null,德奥瑞公共广播媒体库管理工具
+backdrop,picture-photo,null,为macOS量身打造的动态壁纸应用程序，能够将您的桌面转变为美丽的动画背景
+windsurf-next-beta,ai-tools|ide,null,AI Flow 驱动的智能体 IDE
+pomatez,utilities,null,番茄钟工具
+etrecheck,system-maintenance,null,系统问题检测和修复工具
+simplex-chat,communication|entertainment,null,SimpleX 协议即时通讯客户端
+pairpods,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+packet-sender,network-tools,null,TCP、UDP、SSL 网络收发测试工具
+fvim,ide,null,编程开发工具，适合编写、阅读和维护代码
+yandex-disk,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+netiquette,network-tools,null,网络监控工具，适合查看连接状态和排查网络问题
+screaming-frog-seo-spider,utilities,null,SEO 站点审计工具
+exifcleaner,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+copilot,ai-tools|finance,null,财务工具，适合记账、发票、资产或交易管理
+goneovim,ide,null,编程开发工具，适合编写、阅读和维护代码
+tla-toolbox,runtime-sdk,null,TLA+ 规格语言开发环境
+owncloud,transfer,null,传输工具，适合下载、同步或共享文件
+sonic-pi,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+4k-youtube-to-mp3,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+xemu,utilities,null,初代 Xbox 模拟器
+descript,video|audio,null,用编辑文字的方式剪音视频，播客和短视频很省力
+universal-media-server,network-tools,null,支持 DLNA、UPnP 和 HTTP(S) 的媒体服务器
+music-decoy,audio|Automation,null,音乐占位工具，适合配合媒体键和播放状态工作流
+librepcb,utilities,null,沟通工具，适合聊天、邮件、通话或团队交流
+openaudible,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+thorium,browser,null,办公文档工具，适合阅读、编辑或管理文档资料
+videofusion,video,null,视频工具，适合播放、录制、剪辑或转换视频
+1clipboard,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+micro-snitch,system-maintenance,null,图片工具，适合浏览、编辑、转换或管理图片
+xdeck,utilities,null,TweetDeck 风格 X/Twitter 客户端
+langflow-desktop,ai-tools|GTD,null,可视化搭建 AI 工作流，把模型、工具和数据连起来
+phoenix-slides,utilities,null,全屏幻灯片播放工具
+sensei,system-maintenance,null,系统监控和性能优化工具
+simple-comic,entertainment,null,办公文档工具，适合阅读、编辑或管理文档资料
+crosspaste,Automation,null,跨设备通用剪贴板工具
+poedit,utilities,null,翻译编辑工具，适合处理本地化和多语言文本
+codebuddy-cn,ai-tools|ide,null,编程开发工具，适合编写、阅读和维护代码
+neo-network-utility,utilities,null,网络信息和诊断工具
+eltima-cloudmounter,transfer,null,将云存储挂载为本地磁盘的工具
+jupyter-notebook-viewer,writing,null,办公文档工具，适合阅读、编辑或管理文档资料
+adapter,video|audio|picture-photo,null,媒体转换工具，视频、音频和图片格式批量转换很轻松
+usbimager,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+mumble,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+yattee,security|entertainment,null,安全工具，适合保护隐私、控制访问或加密数据
+gopher64,utilities,null,N64 模拟器
+mac-media-key-forwarder,audio,null,把媒体键转发给指定播放器，控制音乐更稳定
+maciasl,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+5ire,ai-tools,null,AI 助手和 MCP 客户端
+sonic-visualiser,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+framer,communication|ui-prototyping,null,交互原型和网站设计工具，适合把想法快速做成可体验页面
+lunarbar,communication|window-management,null,菜单栏月相工具，适合快速查看月亮状态和天文节律
+kobo,education,null,办公文档工具，适合阅读、编辑或管理文档资料
+roon,audio,null,音乐播放器，适合播放和管理本地或在线音乐
+soduto,device-management,null,跨设备通信和分享工具
+hapigo,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+cemu,utilities,null,TI-84 Plus CE 和 TI-83 Premium CE 计算器模拟器
+master-pdf-editor,PDF,null,PDF 编辑工具，适合编辑、标注和处理 PDF 文档
+atuin-desktop,terminal-tools,null,效率增强工具，适合快速启动、自动化或管理常用操作
+mendeley-reference-manager,writing|education,null,文献管理器，适合整理论文库和生成引用
+cabal,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+microsoft-edge-beta,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+wirecast,video,null,视频工具，适合播放、录制、剪辑或转换视频
+ganttproject,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+salt,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+trader-workstation,finance,null,财务工具，适合记账、发票、资产或交易管理
+au-lab,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+thecommander,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+smartgit,devops,null,Git 客户端，适合管理代码仓库、提交和分支
+discord-ptb,communication|entertainment,null,语音和文字聊天软件
+splice,audio|picture-photo,null,音频工具，适合播放、制作、编辑或管理声音内容
+whichspace,picture-photo|window-management,null,图片工具，适合浏览、编辑、转换或管理图片
+idevice-pair,device-management,null,iOS 设备配对记录生成工具
+maintenance,system-maintenance,null,系统维护和清理工具
+teamviewer-quicksupport,network-tools,null,电脑和移动设备远程支持工具
+vienna,utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+mongodb-compass-readonly,database-tools,null,数据库工具，适合连接、查询和管理数据库
+namechanger,file-management,null,批量文件重命名工具
+snes9x,game,null,Super Nintendo 模拟器，适合重温经典主机游戏
+unifi-identity-endpoint,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+cardhop,utilities,null,适用于macOS的智能联系人管理应用
+nordlayer,security,null,安全工具，适合保护隐私、控制访问或加密数据
+midi-monitor,audio|device-management|system-maintenance,null,查看 MIDI 事件的小工具，调试键盘和控制器很清楚
+qgroundcontrol,utilities,null,无人机地面控制站
+sparrow-bitcoin-wallet,finance,null,Bitcoin 钱包应用
+jitsi-meet,video|communication,null,沟通工具，适合消息、邮件、通话或团队交流
+futubull,finance,null,财务工具，适合记账、发票、资产或交易管理
+siliconmotion-instantview,device-management,null,SM76x 驱动和图形界面
+yoink,utilities,null,拖拽暂存工具
+huggingchat,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+filen,file-management,null,云存储桌面客户端
+staruml,utilities,null,视觉建模工具，支持标准化的统一建模语言（UML）图形描述，用于系统和软件建模
+plaud,ai-tools|writing|Meeting,null,把录音、转写和 AI 总结连起来，会议复盘省很多力
+repo-prompt,utilities,null,强大的AI编码助手，旨在提升现代开发者的工作效率
+intellidock,window-management,null,Dock 自动隐藏工具，可在窗口接近 Dock 时自动收起
+zedis,database-tools,null,数据库工具，适合连接、查询和管理数据库
+8bitdo-ultimate-software,device-management,null,游戏手柄配置工具
+breaktimer,utilities,null,定时休息管理工具
+chime,ide,null,编程开发工具，适合编写、阅读和维护代码
+dockfix,window-management,null,Dock 替代工具
+postman-agent,api-tools,null,API 调试工具，适合测试接口、请求和开发流程
+movist-pro,video,null,媒体播放器，适合播放视频、音频等多媒体文件
+network-radar,network-tools,null,网络扫描和监控工具
+swinsian,audio,null,音乐播放器，适合播放和管理本地或在线音乐
+smartsvn,utilities,null,Subversion 客户端
+dosbox-staging,game,null,游戏模拟器，适合运行和管理经典游戏
+image2icon,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+unison,transfer,null,传输工具，适合下载、同步或共享文件
+notebooks,writing,null,全能的笔记应用，能够满足您所有记录的需求
+manus,ai-tools,null,效率增强工具，适合快速启动、自动化或管理常用操作
+dbeaver-lite-edition,database-tools,null,通用数据库工具和 SQL 客户端
+wins,window-management,null,窗口管理工具，提供类 Windows 的窗口操作
+sameboy,game,null,游戏模拟器，适合运行和管理经典游戏
+duplicati,security|transfer,null,安全工具，适合保护隐私、控制访问或加密数据
+ssh-config-editor,network-tools,null,OpenSSH 客户端配置管理工具
+imagej,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+airfoil,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+transfer,transfer,null,为Mac设计的多协议文件服务器，现代且可靠
+codebuddy,ai-tools|ide,null,编程开发工具，适合编写、阅读和维护代码
+outline,writing,null,笔记应用，适合记录想法、资料和日常内容
+ultimate-vocal-remover,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+browserstack-local-testing,browser|devops|api-tools,null,网页浏览器，适合日常上网和访问 Web 服务
+forecast,audio,null,播客章节编辑工具，给音频节目加章节和元数据
+graphpad-prism,utilities,null,统计分析和绘图软件
+amiberry,utilities,null,Amiga 模拟器
+brain-fm,audio,null,专注音乐桌面客户端
+tablecruncher,utilities,null,轻量 CSV 编辑器
+pacifist,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+foxit-pdf-editor,PDF,null,PDF 编辑器，适合修改、批注、签署和整理 PDF
+outline-manager,utilities,null,Outline 服务器创建和管理工具
+ankerwork,audio,null,视频工具，适合播放、录制、剪辑或转换视频
+coderunner,ide,null,编程开发工具，适合编写、阅读和维护代码
+blankie,audio|education,null,音频工具，适合播放、制作、编辑或管理声音内容
+pdfify,PDF,null,办公文档工具，适合阅读、编辑或管理文档资料
+focusrite-control,device-management,null,第四代及更新 Focusrite 声卡控制工具
+navicat-for-mysql,database-tools,null,数据库管理与开发工具，适合维护、查询和调试数据库
+replacicon,picture-photo,null,针对macOS的应用程序，旨在帮助用户轻松找到和更换Mac应用图标
+poe,ai-tools|communication,null,AI 聊天客户端，适合和大模型对话、整理和生成内容
+airserver,network-tools,null,屏幕镜像接收器
+avast-security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+qnap-qfinder-pro,file-management|device-management,null,NAS 管理工具
+paper,ui-prototyping|diagramming,null,专为专注写作而设计的应用程序，提供简洁的界面，帮助用户在无干扰的环境中创作
+uefitool,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+nrf-connect-for-desktop,ide,null,BLE 设备开发框架
+displaybuddy,window-management,null,显示器设置管理工具，适合调整分辨率和屏幕参数
+menial-base,database-tools,null,SQLite 3 数据库创建、设计和浏览工具
+pixelsnap,utilities,null,屏幕像素测量工具
+amazon-chime,utilities,null,沟通工具，适合聊天、邮件、通话或团队交流
+imazing-profile-editor,device-management,null,Apple 设备配置描述文件编辑器
+netflix,video,null,影音流媒体桌面客户端
+qr-journal,writing,null,图片工具，适合浏览、编辑、转换或管理图片
+cyberghost,security|network-tools,null,VPN 客户端
+textexpander,Automation,null,文本片段扩展工具
+gotiengviet,utilities,null,越南语输入工具
+k6-studio,Automation,null,k6 测试脚本生成工具
+ares,utilities,null,注重准确性和保存的跨平台多系统模拟器
+kindle-previewer,picture-photo|education,null,办公文档工具，适合阅读、编辑或管理文档资料
+restfox,network-tools,null,离线优先 HTTP 客户端
+switch-audio-converter,audio,null,多格式音频转换工具
+cleanmymac-x-chinese,system-maintenance,null,磁盘垃圾清理工具中文版
+dadroit-json-viewer,ide,null,JSON 查看器
+hepta,writing|education,null,卡片式知识管理工具，适合把阅读和研究连成图谱
+threema,communication|security,null,端到端加密即时通讯工具，适合安全聊天
+airdroid,device-management,null,移动设备管理套件
+pd,ide,null,编程开发工具，适合编写、阅读和维护代码
+signal-beta,communication|security,null,注重安全的即时通讯应用
+scene-builder,ui-prototyping,null,JavaFX 拖拽式 GUI 设计器
+jollysfastvnc,network-tools,null,安全快速远程控制电脑的工具
+audiorelay,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+clamxav,security,null,安全工具，适合保护隐私、控制访问或加密数据
+container-ps,Automation|devops,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+115browser,browser,null,网页浏览器，适合日常上网、访问网页和使用 Web 服务
+nook,GTD,null,专注式浏览器工作区，适合把网页资料按项目整理
+free-ruler,utilities,null,屏幕水平和垂直标尺
+kindle-comic-converter,education,null,办公文档工具，适合阅读、编辑或管理文档资料
+prettyclean,system-maintenance,null,易用磁盘清理工具
+a-better-finder-attributes,picture-photo|file-management,null,图片工具，适合浏览、编辑、转换或管理图片
+capacities,utilities,null,想法写作和整理应用
+apptamer,system-maintenance,null,CPU 资源管理工具
+thor,Automation,null,应用快速切换工具
+livebook,writing,null,办公文档工具，适合阅读、编辑或管理文档资料
+mailmate,communication,null,邮件客户端，适合集中收发和管理邮箱
+monocle,window-management,null,窗口变暗专注工具
+hyperwhisper,ai-tools,null,AI 语音转文字工具
+adobe-creative-cloud-cleaner-tool,file-management,null,清理 Adobe 安装残留，修复 Creative Cloud 玄学问题
+codelite,ide,null,编程开发工具，适合编写、阅读和维护代码
+fleet,ide,null,编程开发工具，适合编写、阅读和维护代码
+servo,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+integrative-genomics-viewer-igv,utilities,null,基因组数据可视化浏览工具
+nani-translate,ai-tools,null,AI 翻译工具
+submariner,utilities,null,Subsonic 客户端
+wordpress-studio,devops,null,WordPress 本地开发环境
+fathom,ai-tools|Meeting,null,AI 会议记录工具，自动生成纪要和行动项
+ovito,utilities,null,科学数据可视化和分析软件
+airtool,network-tools,null,网络调试工具，适合抓包、代理和排查连接问题
+equibop,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+itch,game,null,独立游戏平台入口，发现、下载和管理小众游戏
+keycue,Automation|device-management,null,用于macOS的实用软件，它可以帮助用户更轻松地找到和使用键盘快捷键
+monarch,utilities,null,Spotlight 搜索增强工具
+pangolin,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+rode-central,device-management,null,RØDE 设备配套应用
+contour,terminal-tools,null,终端模拟器，适合命令行开发和日常 Shell 工作
+ddpm,device-management|window-management,null,显示器和外设管理工具
+teamviewer-host,network-tools,null,远程连接工具
+dockside,window-management,null,Dock 辅助工具
+refine,utilities,null,语法检查工具
+hyperconnect,device-management,null,小米生态跨设备互联工具
+apipost,writing,null,API 调试工具，适合测试接口、请求和开发流程
+crystal,ai-tools|devops|runtime-sdk,null,多实例编码工具，可通过 git worktree 并行工作
+qtpass,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+monal,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+quicken,finance,null,财务工具，适合记账、发票、资产或交易管理
+vesta,utilities,null,电子和结构分析可视化工具
+zotero-beta,writing|education,null,Zotero 测试版，适合提前体验新的文献管理功能
+activedock,window-management,null,Dock 替代工具，提供窗口预览和应用管理增强
+ray,utilities,null,调试辅助工具
+deeper,file-management,null,文件管理工具，适合整理、传输或清理文件
+bibdesk,utilities,null,文献书目编辑和管理工具
+batteryboi,system-maintenance,null,用于替代macOS菜单栏上的电池指示器的工具
+better-and-better,device-management,null,键盘、鼠标和触控板手势工具
+llamachat,communication,null,沟通工具，适合消息、邮件、通话或团队交流
+gpgfrontend,security|finance,null,GPG 图形界面，适合加密、签名和管理密钥
+pine,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+amazon-photos,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+fbreader,utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+mcp-bundler,utilities,null,MCP 服务器和 Agent 技能管理工具
+tripmode,utilities,null,热点和慢速网络流量控制工具
+mujoco,utilities,null,通用物理引擎
+saleae-logic2,communication,null,Saleae 设备信号分析工具
+bing-wallpaper,picture-photo,null,应用让您每天通过一张图片探索世界的美好
+stoplight-studio,writing,null,API 调试工具，适合测试接口、请求和开发流程
+camtasia,video,null,录屏和视频教程制作工具，适合课程与演示
+mission-control-plus,window-management,null,Mission Control 窗口管理工具
+core-tunnel,network-tools,null,SSH 隧道管理器
+sonobus,audio,null,低延迟网络音频工具，远程合奏和实时传声很实用
+izip,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+default-folder-x,utilities,null,增强打开和保存对话框的工具
+grayjay-desktop,video,null,跨平台视频播放器
+ibm-semeru-runtime-jdk-8-open-edition,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+google-ads-editor,utilities,null,Google Ads 广告系列管理工具
+xnapper,picture-photo,null,截图工具，适合快速截屏、标注和分享画面
+oka-unarchiver,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+frappe-books,utilities,null,面向小企业和自由职业者的记账软件
+mouseless-preview-channel,picture-photo|device-management,null,键盘控制鼠标工具
+sync,transfer,null,传输工具，适合下载、同步或共享文件
+ios-app-signer,security,null,iOS 应用重签名和打包工具
+scrapp,picture-photo|transfer,null,适合截图、标注、识别文字或制作视觉反馈
+screenflow,video,null,录屏剪辑工具，做教程、演示和产品视频很顺
+endnote,writing|education,null,文献管理工具，适合论文引用和参考文献整理
+kimi,ai-tools|communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+mi,writing,null,文本编辑器，适合编辑纯文本、配置和轻量写作
+sitesucker-pro,transfer,null,传输工具，适合下载、同步或在设备间传文件
+viz,video|picture-photo,null,轻量图像查看工具，适合快速翻看图片素材
+airtable,ide,null,沟通工具，适合聊天、邮件、通话或团队交流
+dyad,ai-tools,null,AI 应用构建工具
+qlab,video|audio,null,现场演出音视频控制台，剧场、舞台和活动常用
+geekbench-ai,ai-tools,null,跨平台 AI 性能基准测试工具
+athas,ide,null,轻量代码编辑器，适合编写和修改代码
+nuage,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+realm-studio,ai-tools|database-tools,null,Realm 数据库查看工具，适合调试移动端本地数据
+remnote,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+autopkgr,utilities,null,AutoPkg 安装和配置工具
+deepchat,ai-tools|communication,null,沟通工具，适合消息、邮件、通话或团队交流
+beamer,entertainment,null,视频工具，适合播放、录制、剪辑或转换视频
+equinox,education,null,图片工具，适合浏览、编辑、转换或管理图片
+re-amp,utilities,null,SwiftUI 编写的 WinAMP 复刻播放器
+table-tool,utilities,null,CSV 文件编辑器
+sidequest,utilities,null,VR 内容平台
+surge-xt,security,null,安全相关工具，适合隐私保护、访问控制或账号防护
+context,utilities,null,MCP 客户端和检查器
+vibeproxy,ai-tools|Automation,null,AI 开发代理工具，适合把模型接进本地工作流
+serverbox,transfer|network-tools|devops,null,带 SSH、SFTP 和容器管理的服务器监控工具
+xampp,database-tools|devops,null,数据库工具，适合连接、查询和管理数据库
+kubenav,devops,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+wakatime,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+quitter,utilities,null,闲置后自动隐藏或退出应用的工具
+systhist,security,null,安全工具，适合保护隐私、控制访问或加密数据
+memory-cleaner,file-management,null,文件管理工具，适合整理、传输或清理文件
+openin,communication,null,为 macOS 用户设计的高级链接处理工具，旨在改善用户的工作流程
+freedom,utilities,null,应用和网站屏蔽工具
+orka3-cli,terminal-tools|devops,null,Apple 平台 Kubernetes 编排工具
+garmin-connect-iq-sdk,runtime-sdk,null,可穿戴设备应用开发工具
+rescuetime,utilities,null,时间效率分析工具
+paletro,diagramming,null,macOS 应用，提供快速访问当前使用应用菜单命令的功能
+sidekick,browser,null,工作流浏览器，适合把常用 SaaS 和网页应用放一起
+orange,utilities,null,可视化数据挖掘工具，拖拽节点做分析和建模
+witsy,ai-tools,null,自带密钥的 AI 助手
+screens-connect,network-tools,null,远程桌面工具，适合远程访问和控制电脑
+blueharvest,system-maintenance,null,外置磁盘元数据清理工具
+tabtab,transfer,null,专为Mac设计的强大窗口和标签页管理工具，旨在提升用户生产力
+pictogram,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+boom-3d,utilities,null,音量增强和均衡器软件
+dangerzone,PDF,null,把可疑文档转成安全 PDF，适合处理不可信附件
+splashtop-business,network-tools,null,远程访问软件
+splashtop-streamer,network-tools,null,跨桌面和移动设备远程控制电脑的工具
+logitech-camera-settings,devops,null,图片工具，适合浏览、编辑、转换或管理图片
+mozilla-thunderbird-esr,communication,null,可定制邮件客户端
+duplicate-file-finder,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+rotki,finance,null,财务工具，适合记账、发票、资产或交易管理
+jamovi,utilities,null,统计软件
+opera-air,browser,null,网页浏览器，适合日常上网、访问网页和使用 Web 服务
+chatwork,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+qianwen,ai-tools|communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+unite,utilities,null,网页转桌面应用工具
+canon-eos-utility,device-management,null,沟通工具，适合聊天、邮件、通话或团队交流
+pale-moon,browser,null,网页浏览器，适合日常上网、访问网页和使用 Web 服务
+webex-meetings,Meeting,null,Webex 会议客户端，适合企业远程会议和线上沟通
+weka,ai-tools|education,null,机器学习教学和实验工具，拖拽就能做数据挖掘
+openboard,utilities,null,交互式白板应用
+vieb,browser,null,Vim 风格浏览器，键盘浏览和网页操作效率很高
+conar,ai-tools|database-tools,null,数据库工具，适合连接、查询和管理数据库
+clip-studio-paint,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+blurred,window-management,null,专注辅助工具，可降低非活动窗口亮度以减少干扰
+chatterino,communication|entertainment,null,沟通工具，适合聊天、邮件、通话或团队交流
+waveforms,device-management,null,Digilent 测试测量设备虚拟仪器套件
+clearance,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+motion,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+eclipse-ide-for-c-c-developers,terminal-tools|ide|runtime-sdk,null,面向 C/C++ 开发者的 Eclipse IDE
+phoenix,window-management|Automation,null,可用 JavaScript 脚本化的窗口和应用管理器
+atext,Automation,null,功能强大的文本工具，集文本模板、文本快捷方式、文本宏以及文本自动化于一身
+superkey,Automation,null,屏幕文字搜索和点击工具
+yate,utilities,null,媒体文件标签编辑器
+picture-view,picture-photo,null,轻量看图工具，支持瀑布流浏览和长图查看
+lando,Automation|devops,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+glide-browser,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+ibm-semeru-runtime-jdk-21-open-edition,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+aloha-browser,browser|security,null,安全工具，适合保护隐私、控制访问或加密数据
+grandtotal,utilities,null,财务工具，适合记账、发票、资产或交易管理
+serial-studio,device-management,null,嵌入式设备数据可视化工具
+cpu-info,device-management|system-maintenance,null,设备硬件和软件信息查看工具
+ipe,picture-photo,null,办公文档工具，适合阅读、编辑或管理文档资料
+my-touchbar-my-rules,utilities,null,Touch Bar 自定义工具
+ableton-live-lite,audio,null,声音和音乐编辑工具，适合处理音频素材
+beaver-notes,security|writing,null,适合写作、记录和处理文档
+knime-analytics-platform,utilities,null,数据科学流程构建和生产化平台
+ok-json,Automation,null,可脚本化 JSON 格式化和编辑工具
+audiobook-builder,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+ivpn,security|network-tools,null,VPN 客户端，适合加密网络连接和保护上网隐私
+jiba,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+hook,utilities,null,信息链接和检索工具
+zipic,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+basecamp,utilities,null,远程协作综合工具
+dbschema,writing|3d-cad|database-tools,null,数据库工具，适合连接、查询和管理数据库
+factory,ai-tools,null,软件构建、管理和发布 AI 智能体客户端
+franz,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+syncplay,video|transfer,null,多人同步观影工具，让不同电脑上的视频一起播放
+captain-s-deck,file-management,null,双栏文件管理器
+panoply-netcdf-hdf-and-grib-data-viewer,utilities,null,netCDF、HDF 和 GRIB 地理数据绘图工具
+pareto-security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+aircall,utilities,null,云呼叫中心和电话系统
+anylist,utilities,null,购物清单工具
+emby,entertainment,null,媒体服务器客户端
+losslessswitcher,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+figma-beta,ui-prototyping,null,团队协作工具
+graphicconverter,picture-photo,null,功能强大的图像处理软件，支持多种图像格式的转换和编辑
+hush,browser|security,null,安全工具，适合保护隐私、控制访问或加密数据
+lingon-x,system,null,强大的工具，允许用户完全控制系统中程序的自动启动
+structured-log-viewer,system-maintenance,null,MSBuild 结构化日志查看器
+davmail,communication,null,把 Exchange 服务转成标准协议，方便老客户端接入
+netease-mail-master,communication,null,邮件客户端
+yandex-telemost,video|Meeting,null,Yandex 视频会议工具，适合远程通话和线上协作
+last-window-quits,window-management,null,最后一个窗口关闭时自动退出应用的工具
+menuwhere,utilities,null,专为macOS用户打造的实用工具软件
+orca-slicer-nightly,utilities,null,3D 打印 G-code 生成工具
+prosys-opc-ua-browser,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+pingplotter,network-tools,null,网络监控工具
+disk-expert,file-management|system-maintenance,null,文件管理工具，适合整理、传输、清理或备份文件
+edfbrowser,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+philips-hue-sync,transfer,null,传输工具，适合下载、同步或共享文件
+yakit,security,null,安全工具，适合保护隐私、控制访问或加密数据
+startup-folder,utilities,null,开机启动项目管理工具
+orka-vm-tools,devops,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+oss-browser,browser|security,null,网页浏览器，适合日常上网和访问 Web 服务
+safe-exam-browser,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+purevpn,security|network-tools,null,VPN 客户端，适合加密网络连接和保护上网隐私
+lidarr,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+voiden,api-tools,null,API 调试工具，适合测试接口、请求和开发流程
+yippy,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+jettison,utilities,null,可以在您的Mac电脑进入休眠模式之前自动弹出外部磁盘的软件
+mediahuman-youtube-downloader,video|transfer,null,传输工具，适合下载、同步或在设备间传文件
+ibm-aspera-connect,transfer,null,传输工具，适合下载、同步或在设备间传文件
+magiccap,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+kubernetic,devops,null,Kubernetes 桌面客户端，适合管理和查看集群资源
+agentkube,ai-tools|devops|ide,null,编程开发工具，适合编写、阅读和维护代码
+deltawalker,transfer,null,传输工具，适合下载、同步或共享文件
+meta,audio,null,专为macOS设计的智能音乐标签编辑器，旨在简化音频元数据的编辑过程
+scilab,utilities,null,数值计算软件
+dmenu-mac,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+gifox,utilities,null,GIF 录制和分享工具
+hearthstone-deck-tracker,utilities,null,炉石传说卡组追踪和管理工具
+sidenotes,writing,null,适用于 macOS 的侧边栏笔记应用程序
+wire,security,null,沟通工具，适合聊天、邮件、通话或团队交流
+adium,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+banking-4,finance|education,null,财务工具，适合记账、发票、资产或交易管理
+shadow,utilities,null,云端虚拟电脑客户端
+firebird,utilities,null,TI Nspire 计算器模拟器
+gnu-texmacs,utilities,null,科学文档编辑平台
+outguess,picture-photo|writing,null,编程开发工具，适合编写、阅读和维护代码
+ua-connect,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+airparrot,network-tools,null,无线投屏和媒体串流工具
+freepdf,PDF|Notes,null,写作和笔记工具，适合记录、编辑和整理文本内容
+box-tools,file-management,null,网页浏览器，适合日常上网和访问 Web 服务
+vivaldi-snapshot,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+jedit,writing,null,文本编辑器，适合编辑纯文本、配置和轻量写作
+phoenix-code,ide,null,代码编辑器，适合编写、阅读和维护代码
+freeze,transfer,null,传输工具，适合下载、同步或在设备间传文件
+asciidocfx,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+morgen,communication|GTD,null,日历和任务统一规划工具，适合安排一天的时间块
+aya,utilities,null,Android ADB 桌面工具
+thumbhost3mf,file-management,null,文件管理工具，适合整理、传输或清理文件
+wavebox,browser,null,网页浏览器，适合日常上网、访问网页和使用 Web 服务
+dbeaver-enterprise-edition,database-tools,null,通用数据库工具和 SQL 客户端
+virtualhere,device-management|network-tools,null,网络远程 USB 设备访问工具
+texworks,utilities,null,LaTeX 编辑器，适合撰写论文、公式和排版文档
+vibe-notch,ai-tools|window-management|system-maintenance,null,把 Mac 刘海变成动态状态区，给桌面加一点趣味
+things-helper,GTD,null,Things 辅助应用
+macforge,utilities,null,插件、应用和主题管理商店
+whimsical,diagramming,null,流程图、线框图和白板工具，产品讨论很快出图
+mochi,writing|education,null,间隔重复记忆卡片工具，适合背词和长期学习
+codexmonitor,system-maintenance,null,Codex 活动监控工具
+microsoft-edge-canary,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+superlist,utilities,null,效率管理工具，适合安排任务、日程或跟踪时间
+replit,ide,null,编程开发工具，适合编写、阅读和维护代码
+workbench,transfer,null,传输工具，适合下载、同步或共享文件
+tiptoi-manager,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+usb-overdrive,device-management,null,USB 和蓝牙设备驱动工具
+jasp,utilities,null,统计分析应用
+webull,utilities,null,股票和投资交易桌面客户端
+timescribe,utilities,null,效率管理工具，适合安排任务、日程或跟踪时间
+wiso-steuer-2026,finance,null,财务工具，适合记账、发票、资产或交易管理
+sharemouse,device-management,null,多电脑共享键鼠外设工具
+zspace,device-management,null,NAS 客户端
+spamsieve,communication,null,可靠的垃圾邮件过滤器，适用于主要邮件客户端，采用先进的贝叶斯垃圾邮件过滤技术
+deckset,writing|office,null,用 Markdown 做演示文稿，写完文字就能出幻灯片
+breitbandmessung,utilities,null,德国联邦网络局官方网速测试工具
+dataspell,ide,null,编程开发工具，适合编写、阅读和维护代码
+keyguard,security,null,安全相关工具，适合隐私保护、访问控制或账号防护
+droidcam-obs,video,null,图片工具，适合浏览、编辑、转换或管理图片
+voicemod,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+foxmail,communication,null,邮件客户端，适合集中收发和管理邮箱
+nvidia-sync,transfer|Automation|devops,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+satdump,utilities,null,卫星数据处理软件
+qnap-qsync,transfer|device-management,null,自动文件同步工具
+progressive-downloader,transfer,null,下载管理器，适合集中管理和加速文件下载
+unclutter,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+arm-performance-libraries,runtime-sdk,null,文件管理工具，适合整理、传输、清理或备份文件
+munki,utilities,null,软件安装管理器
+combine-pdfs,PDF,null,办公文档工具，适合阅读、编辑或管理文档资料
+emby-server,entertainment,null,跨设备个人媒体服务器
+kdrive,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+waves-central,utilities,null,Waves 产品安装和激活客户端
+alchemy,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+fastrawviewer,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+chipmunk-log-analyzer-and-viewer,system-maintenance,null,日志分析工具
+dylib-hijack-scanner,utilities,null,dylib 劫持扫描工具
+orca,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+pikpak,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+sleek,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+1password-nightly,security,null,密码管理器
+coscreen,utilities,null,沟通工具，适合聊天、邮件、通话或团队交流
+expandrive,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+pastebot,Automation,null,针对频繁使用复制粘贴功能的用户设计的提高工作效率的必备工具
+chronosync,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+itk-snap,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+logmein-hamachi,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+linqpad,database-tools|runtime-sdk,null,数据库工具，适合连接、查询和管理数据库
+voov-meeting,Meeting,null,腾讯会议国际版，适合跨地区视频会议和协作
+mechvibes,audio|device-management,null,键盘音效工具，让普通键盘模拟机械键盘声音
+moves,window-management,null,窗口管理工具，适合快速排列、移动和调整窗口
+onionshare,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+oscar,utilities,null,CPAP 睡眠呼吸数据分析工具
+aiderdesk,ai-tools|terminal-tools|ide,null,Aider AI 结对编程桌面 GUI
+runjs,utilities,null,实时执行的 JavaScript 代码练习工具
+houdahspot,file-management,null,文件搜索工具
+sqlpro-for-mssql,database-tools,null,数据库工具，适合连接、查询和管理数据库
+chatall,ai-tools|communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+diskspace,file-management|system-maintenance,null,文件管理工具，适合整理、传输、清理或备份文件
+pdf-reader-pro,picture-photo|PDF,null,办公文档工具，适合阅读、编辑或管理文档资料
+bowtie,audio|system-maintenance,null,桌面音乐控制器，显示封面并控制播放器
+multiviewer,utilities,null,F1 TV 非官方桌面客户端
+noxappplayer,game,null,游戏模拟器，适合运行和管理经典游戏
+flightgear,utilities,null,飞行模拟器
+dropshare,utilities,null,文件分享工具
+mindmac,ai-tools|communication,null,为macOS用户提供了一个无缝连接并轻松与ChatGPT交流的平台
+chromium-gost,browser|security,null,带 GOST 加密支持的 Chromium，适合特定合规浏览需求
+android-studio-preview-canary,picture-photo|ide,null,Android 应用开发工具
+zappy,picture-photo|communication,null,视频工具，适合播放、录制、剪辑或转换视频
+focus,utilities,null,为Mac设计的应用程序，帮助用户提高生产力，通过屏蔽分散注意力的网站和应用
+hive,ai-tools,null,跨项目并行编码 AI 智能体编排工具
+jubler,video,null,视频工具，适合播放、录制、剪辑或转换视频
+versions,utilities,null,Subversion 客户端
+gray,utilities,null,按应用设置明暗外观的工具
+mweb-pro,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+keeweb,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+unpkg,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+feather,finance,null,财务工具，适合记账、发票、资产或交易管理
+reflector,network-tools,null,无线屏幕镜像工具
+zoc,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+monokle,devops|ide,null,编程开发工具，适合编写、阅读和维护代码
+radio-silence,security,null,出站防火墙工具，阻止 App 悄悄联网
+element-nightly,communication,null,Matrix 协作客户端
+klatexformula,picture-photo,null,TeX/LaTeX 工具，适合论文、公式和专业排版
+geomapapp,utilities,null,地球科学数据浏览和分析工具
+museeks,audio,null,音乐播放器，适合播放和管理本地或在线音乐
+magicquit,utilities,null,自动关闭闲置应用的效率工具
+bitwig-studio,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+the-time-machine-mechanic,system,null,Time Machine 日志和状态检查工具
+tencent-docs,writing|office,null,腾讯文档桌面入口，适合中文团队在线协作
+sonixd,audio,null,Subsonic 音乐客户端，适合播放自建音乐库
+pop,ide,null,编程开发工具，适合编写、阅读和维护代码
+luxury-yacht,devops,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+pastenow,Automation,null,Mac剪贴板管理工具，支持多设备数据同步和历史数据的重复使用
+tickeys,audio,null,给键盘输入加打字音效，让敲字更有仪式感
+reflex,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+pdf-toolbox,PDF,null,办公文档工具，适合阅读、编辑或管理文档资料
+tag-editor,audio,null,电子表格式音频标签编辑器
+ioquake3,utilities,null,第一人称射击游戏引擎
+fastdmg,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+multi,utilities,null,将多个网站组合成桌面应用的工具
+multi-mc,game,null,Minecraft 多实例启动器，模组管理更清楚
+jami,communication|transfer,null,传输工具，适合下载、同步或在设备间传文件
+sound-control,audio,null,独特的应用程序，可为您的 Mac 添加高级音频控件
+mozilla-vpn,security|network-tools,null,VPN 客户端，适合加密网络连接和保护上网隐私
+insync,transfer,null,传输工具，适合下载、同步或共享文件
+tachidesk-sorayomi,utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+j,ide,null,编程开发工具，适合编写、阅读和维护代码
+mdb-accdb-viewer,database-tools,null,数据库工具，适合连接、查询和管理数据库
+squidman,network-tools,null,网络调试工具，适合抓包、代理和排查连接问题
+factor,ide|runtime-sdk,null,编程开发工具，适合编写、阅读和维护代码
+nx-studio,video|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+telegram-a,communication|security,null,沟通工具，适合聊天、邮件、通话或团队交流
+privadovpn,security|network-tools,null,VPN 客户端，适合加密网络连接和保护上网隐私
+wealthfolio,utilities,null,投资组合追踪工具
+bean,writing,null,文字处理工具，适合撰写、编辑和排版文档
+sodamusic,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+astro-editor,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+hakuneko,transfer,null,办公文档工具，适合阅读、编辑或管理文档资料
+sizeup,window-management,null,窗口缩放和定位工具
+nvidia-nsight-compute,utilities,null,CUDA 和 NVIDIA OptiX 交互式性能分析工具
+virtualc64,utilities,null,精准周期 C64 模拟器
+drata-agent,security,null,安全工具，适合保护隐私、控制访问或加密数据
+orka-desktop,picture-photo,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+renameclick,ai-tools,null,本地优先的 AI 文件重命名和整理工具
+theiaide,ide,null,编程开发工具，适合编写、阅读和维护代码
+aquamacs,ide,null,写作和笔记工具，适合记录、编辑和整理文本内容
+pencil2d,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+approf,utilities,null,pprof 图形分析工具
+eigent,ai-tools,null,桌面 AI 智能体
+multipatch,utilities,null,文件补丁工具
+vlc-remote-setup-helper,video,null,VLC Remote 设置辅助工具
+portx,network-tools,null,SSH 客户端
+landrop,transfer,null,局域网跨设备文件传输工具
+screens,network-tools,null,Mac屏幕共享工具
+couchbase-server,database-tools,null,分布式 NoSQL 数据库
+softmaker-freeoffice,office,null,办公套件，适合处理文档、表格和演示稿
+silicon,system-maintenance,null,Intel-only 应用识别工具
+jalview,utilities,null,多序列比对编辑、可视化和分析工具
+showyedge,input-tools,null,当前输入法可视化提示工具
+nestopia,entertainment,null,NES 模拟器
+slite,utilities,null,团队沟通协作工具，适合聊天、会议和项目协作
+wondershare-filmora,video,null,视频编辑工具，适合剪辑、处理和导出视频
+murus-firewall,security,null,防火墙工具
+bootstrap-studio,ui-prototyping,null,桌面应用，旨在帮助用户轻松创建美观的网站
+sqlitemanager,database-tools,null,数据库工具，适合连接、查询和管理数据库
+abbyy-finereader-pdf,picture-photo|PDF,null,写作和笔记工具，适合记录、编辑和整理文本内容
+coconutid,utilities,null,Mac 和 iPhone 生产日期查询工具
+devknife,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+plover,utilities,null,速记输入引擎
+kubeterm,terminal-tools|devops,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+mumu,utilities,null,表情符号选择器
+chessx,database-tools,null,数据库工具，适合连接、查询和管理数据库
+gamemaker,game,null,2D 游戏制作工具，适合快速做原型和发布小游戏
+advanced-renamer,file-management,null,批量文件重命名工具
+cookie,utilities,null,防跟踪和在线画像保护工具
+ibm-semeru-runtime-jdk-17-open-edition,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+processmonitor,system-maintenance,null,进程活动监控工具
+calendar-366-ii,communication|GTD,null,菜单栏日历和日程工具，适合快速查看安排
+localcan,utilities,null,带公开 URL 和 .local 域名的本地开发工具
+monologue,ai-tools|writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+dropshelf,utilities,null,拖拽暂存工具
+nugget,education,null,图片工具，适合浏览、编辑、转换或管理图片
+osxfuse,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+milkytracker,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+fujifilm-x-raw-studio,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+gpodder,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+djv,utilities,null,VFX、动画和影视审片工具
+subethaedit,utilities,null,纯文本和源码编辑器
+alloy,ide|runtime-sdk,null,编程开发工具，适合编写、阅读和维护代码
+eez-studio,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+name-mangler,file-management,null,批量文件重命名工具
+assinador-serpro,writing,null,安全工具，适合保护隐私、控制访问或加密数据
+izotope-product-portal,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+defold,game,null,轻量游戏引擎，适合跨平台 2D 游戏开发
+displays,window-management,null,显示器设置管理工具，适合调整分辨率和屏幕参数
+propresenter,office,null,跨平台（Mac和Windows）的演示软件和现场活动制作应用程序
+tempbox,communication,null,邮件客户端，适合集中收发和管理邮箱
+anypoint-studio,terminal-tools|ide|runtime-sdk,null,用于设计和测试 Mule 应用的 Eclipse IDE
+planet,utilities,null,基于 IPFS 和 ENS 的去中心化博客工具
+epic-privacy-browser,browser|security,null,网页浏览器，适合日常上网和访问 Web 服务
+unified-remote,utilities,null,手机通用遥控器工具
+sip,picture-photo,null,设计师取色工具，管理调色板和屏幕颜色很方便
+zoho-mail,communication,null,邮件客户端，适合集中收发和管理邮箱
+rnote,writing|diagramming,null,写作和笔记工具，适合记录、编辑和整理文本内容
+ace-studio,ai-tools,null,AI 歌声生成工具
+install-disk-creator,utilities,null,可启动系统安装盘制作工具
+rhinoceros,utilities,null,专业 3D 建模工具，工业设计和建筑建模常用
+tana,ai-tools,null,带 AI 大纲的知识管理工作区
+zeplin,ui-prototyping,null,设计交付工具，把设计稿转换成开发可读的规格
+exifrenamer,file-management|picture-photo,null,按 EXIF 信息批量重命名照片和视频，整理素材更快
+paranoia-file-and-text-encryption,security|finance,null,文件和文本加密工具，适合临时保护敏感内容
+launchpad-manager,utilities,null,启动台管理工具
+flacon,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+jitsi,video|communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+status,finance,null,财务工具，适合记账、发票、资产或交易管理
+protokol,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+navicat-for-postgresql,database-tools,null,数据库工具，适合连接、查询和管理数据库
+tunetag,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+fmail3,communication,null,沟通工具，适合消息、邮件、通话或团队交流
+opencomic,utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+luminance-hdr,GTD,null,效率增强工具，适合快速启动、自动化或管理常用操作
+shureplus-motiv,device-management,null,Shure MV7 和 MV88+ 麦克风控制工具
+photosweeper-x,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+simple-web-server,utilities,null,本地 Web 服务器创建工具
+orka-cli,terminal-tools|devops,null,Apple 平台 Kubernetes 编排工具
+synology-image-assistant,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+autodesk-eagle,3d-cad,null,电路设计工具，适合画原理图和 PCB
+hp-easy-admin,transfer|device-management,null,传输工具，适合下载、同步或共享文件
+macast,network-tools,null,开源 DLNA 投屏工具，可把视频、图片和音乐投送到多平台设备
+xprocheck,security,null,安全工具，适合保护隐私、控制访问或加密数据
+gingko,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+softraid,utilities,null,软件 RAID 管理工具
+farrago,audio,null,视频工具，适合播放、录制、剪辑或转换视频
+straight-flush,finance,null,股票交易软件
+dungeon-crawl-stone-soup,game,null,硬核 Roguelike 地牢游戏，适合喜欢策略探索的人
+jprofiler,utilities,null,Java 性能分析工具
+profind,file-management,null,文件搜索应用
+transocks,video|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+piezo,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+sky,utilities,null,去中心化社交网络客户端
+tresorit,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+longbridge-pro,finance,null,财务工具，适合记账、发票、资产或交易管理
+rockxy,network-tools,null,网络调试工具，适合抓包、代理和排查连接问题
+iplay,video,null,视频工具，适合播放、录制、剪辑或转换视频
+beardedspice,video|writing,null,视频工具，适合播放、录制、剪辑或转换视频
+tev,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+yggdrasil,security,null,安全工具，适合保护隐私、控制访问或加密数据
+millie,utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+blender-open-data-benchmark,3d-cad,null,3D 性能基准测试工具
+flclashx,security|network-tools,null,基于 ClashMeta 的跨平台代理客户端
+idrive,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+bezel,utilities,null,iOS 屏幕输出录制工具
+biglybt,transfer,null,传输工具，适合下载、同步或在设备间传文件
+artisan,utilities,null,咖啡烘焙曲线可视化工具
+macwinzipper,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+clicker-for-netflix,entertainment,null,独立 Netflix 播放器
+muzzle,network-tools,null,屏幕共享时静音敏感通知的工具
+publii,utilities,null,静态网站生成器
+fluent-reader,utilities,null,开源 RSS 阅读器，支持多平台订阅和网页加载阅读
+jclasslib-bytecode-viewer,utilities,null,Java class 文件和字节码查看工具
+lookin,utilities,null,iOS 视图调试工具
+nvalt,writing,null,笔记应用，适合记录想法、资料和日常内容
+remove-bg,utilities,null,批量自动抠图工具
+runway,ai-tools|education,null,AI 视频和创意生成工具，适合快速制作视觉素材
+spacewalker,window-management,null,Viture XR 眼镜虚拟显示器工具
+qctools,video|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+komet,communication,null,沟通工具，适合消息、邮件、通话或团队交流
+shortwave,communication,null,邮件客户端，适合集中收发和管理邮箱
+midi-view,audio|device-management|system-maintenance,null,MIDI 输入输出监控工具
+play,utilities,null,PlayStation 2 模拟器
+altair-ai-studio,ai-tools,null,数据科学平台
+chronycontrol,utilities,null,chronyd 安装和配置工具
+eaglefiler,communication|writing|file-management,null,写作和笔记工具，适合记录、编辑和整理文本内容
+sunsama,communication|GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+topaz-gigapixel,ai-tools|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+virtual-desktop-streamer,utilities,null,VR 虚拟桌面串流工具
+iconchanger,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+xppen-pentablet,picture-photo|device-management,null,图片工具，适合浏览、编辑、转换或管理图片
+panwriter,picture-photo|writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+mozilla-thunderbird-beta,communication,null,可定制邮件客户端
+script-kit,Automation,null,脚本创建和运行工具
+clearvpn,security|network-tools,null,VPN 客户端，适合加密网络连接和保护上网隐私
+hubstaff,utilities,null,效率管理工具，适合安排任务、日程或跟踪时间
+omniplan,utilities,null,项目计划和管理软件
+vrew,video,null,视频编辑工具，适合剪辑、处理和导出视频
+glkvm,device-management,null,GL.iNet KVM 设备控制工具
+sqlectron,database-tools,null,数据库工具，适合连接、查询和管理数据库
+steinberg-download-assistant,transfer,null,传输工具，适合下载、同步或共享文件
+sherlock,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+dd-utility,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+dnsmonitor,network-tools|system-maintenance,null,DNS 活动监控工具
+piphero,picture-photo|window-management,null,图片工具，适合浏览、编辑、转换或管理图片
+coq-platform,utilities,null,形式化证明管理系统
+ibm-semeru-runtime-jdk-25-open-edition,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+aks-desktop,devops,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+kstars,utilities,null,天文软件
+tartelet,devops,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+mini-vmac,utilities,null,早期 Apple 电脑软件模拟器
+charmstone,Automation,null,小而强大的生产力工具，能够显著提升用户的工作效率
+colour-contrast-analyser,utilities,null,颜色对比度检查工具
+meld-studio,entertainment,null,视频工具，适合播放、录制、剪辑或转换视频
+screenflick,video|audio,null,视频工具，适合播放、录制、剪辑或转换视频
+espresso,utilities,null,高效网站编辑器
+istherenet,utilities,null,网络连接状态查看工具
+label-live,diagramming,null,标签设计和打印工具，适合电商、仓储和物流贴纸
+diskcatalogmaker,system-maintenance,null,磁盘管理工具
+xscope,ui-prototyping,null,Mac上的设计工具，提供了多种工具和功能，帮助用户快速测量、排版和审查设计
+sejda-pdf-desktop,PDF,null,PDF 编辑器
+mutedeck,Meeting,null,菜单栏会议控制器，静音和摄像头状态一眼可见
+rewritebar,ai-tools|writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+mem,utilities,null,信息捕获和访问工具
+cord,network-tools,null,远程桌面客户端，适合连接和操作远程电脑
+gotomeeting,Meeting,null,在线会议工具，适合远程沟通和商务演示
+voicenotes,ai-tools|writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+yam-display,window-management,null,扩展显示器工具
+broadcast-using-this-tool,entertainment,null,Shoutcast 和 Icecast 串流客户端
+filemonitor,system-maintenance,null,文件管理工具，适合整理、传输、清理或备份文件
+codebolt,ai-tools|ide,null,编程开发工具，适合编写、阅读和维护代码
+electron-fiddle,utilities,null,Electron 小实验创建和调试工具
+fastscripts,Automation,null,快捷脚本运行工具
+ik-product-manager,transfer,null,传输工具，适合下载、同步或共享文件
+dbeaver-ultimate-edition,database-tools,null,高级数据库管理工具，适合处理和分析大量数据
+bananas-screen-sharing,network-tools,null,跨平台屏幕共享工具
+ccmenu,system-maintenance,null,持续集成服务器监控工具
+vamiga,utilities,null,Amiga 500/1000/2000 模拟器
+mylio,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+shift,GTD,null,效率增强工具，适合快速启动、自动化或管理常用操作
+talon,utilities,null,语音、眼动和声音控制电脑的工具
+canon-ufr-ii-ufrii-lt-lipslx-carps2-printer-driver,picture-photo|device-management,null,佳能打印驱动包，保证办公打印机在 Mac 上正常工作
+4k-stogram,picture-photo|transfer,null,Instagram 下载工具，适合保存照片、视频和账号内容
+5kplayer,video|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+geneious-prime,utilities,null,生物信息学软件平台
+birdfont,Font,null,字体编辑工具，适合设计、修改和检查字体
+feedflow,utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+minitube,entertainment,null,YouTube 客户端
+mints,system-maintenance,null,日志工具套件
+posture-pal,utilities,null,坐姿提醒工具
+vellum,utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+archaeology,utilities,null,二进制文件分析工具
+outerbase-studio-desktop,database-tools,null,数据库图形客户端
+prisma-studio,database-tools,null,数据库工具，适合连接、查询和管理数据库
+roam-research,writing|education,null,双链笔记工具，适合把研究想法织成网络
+codekit,utilities,null,网站构建工具
+gpg-suite-pinentry,security,null,安全工具，适合保护隐私、控制访问或加密数据
+reflect-notes,communication|writing|education|GTD,null,轻量笔记加日程回顾，适合把想法按时间串起来
+accord,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+ia-presenter,writing|office,null,用文本结构生成演示稿，适合先想清楚再做幻灯片
+rowboat,ai-tools,null,带记忆的开源 AI 协作助手
+cocoa-packet-analyzer,network-tools,null,网络协议分析和抓包工具
+fellow,writing|Meeting,null,会议议程、纪要和跟进事项的团队协作台
+slidepad,browser,null,编程开发工具，适合编写、阅读和维护代码
+ableton-live-standard,audio,null,声音和音乐编辑工具，适合处理音频素材
+fspy,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+overlayed,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+topaz-video-ai,ai-tools|video,null,采用革命性的人工智能技术来提升和扩大视频分辨率的工具
+jet-pilot,devops,null,Kubernetes 桌面客户端，适合管理和查看集群资源
+quitall,system-maintenance,null,位于菜单栏的实用工具，旨在帮助用户同时管理多个应用程序
+wallpaper-wizard,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+eset-cyber-security,communication|security,null,邮件客户端，适合集中收发和管理邮箱
+pppc-utility,utilities,null,PPPC 配置描述文件创建工具
+ringcentral,Meeting,null,企业通信平台，电话、消息和视频会议集中处理
+bookends,utilities,null,强大的应用程序，为学生和专业人士提供全功能的、经济实惠的参考信息系统
+rode-connect,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+tagspaces,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+wifispoof,network-tools,null,MAC 地址修改工具
+castr,entertainment,null,视频工具，适合播放、录制、剪辑或转换视频
+appgridmac,ai-tools,null,AI 辅助的启动台替代工具
+commandpost,video,null,效率增强工具，适合快速启动、自动化或管理常用操作
+clone-hero,game,null,Guitar Hero 类音乐游戏
+digital,devops,null,沟通工具，适合聊天、邮件、通话或团队交流
+atlauncher,game,null,Minecraft 启动器，管理整合包、模组和多个实例
+gologin,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+freeshow,office,null,演示工具，适合制作展示内容或现场演示
+pyzo,ide,null,编程开发工具，适合编写、阅读和维护代码
+riverside-studio,video|audio,null,远程录音录像工具，适合播客、访谈和视频节目
+chainner,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+get-iplayer-automator,transfer,null,传输工具，适合下载、同步或共享文件
+scidavis,utilities,null,科学数据分析和可视化应用
+topaz-photo,ai-tools|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+google-analytics-opt-out,utilities,null,阻止 Google Analytics 收集访问数据的工具
+nitro-pdf-pro,PDF,null,允许用户轻松编辑PDF文件
+wordpress-com,utilities,null,WordPress 客户端
+quip,communication|writing|office,null,文档、表格和团队讨论放在同一个协作空间
+typeface,Font,null,适合管理字体、预览字形和整理设计字库
+ssdreporter-free,system-maintenance,null,SSD 健康监控工具
+gopanda,utilities,null,Pandanet 围棋客户端
+opal,utilities,null,视频工具，适合播放、录制、剪辑或转换视频
+opera-developer,browser,null,网页调试和浏览工具，适合开发者检查页面细节
+coherence-x,utilities,null,网页转桌面应用工具
+rightfont,picture-photo|transfer|Font,null,字体管理工具，设计时找字、启用字都更快
+singlebox,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+chatglm,ai-tools|communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+photosrevive,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+pokerstars,utilities,null,免费在线扑克游戏
+shell360,transfer|terminal-tools,null,传输工具，适合下载、同步或在设备间传文件
+cellprofiler,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+dock-mate,picture-photo|window-management,null,Dock 窗口预览和控制工具
+lychee-slicer,utilities,null,树脂 3D 打印切片工具
+midikeys,audio|device-management,null,音频工具，适合播放、制作、编辑或管理声音内容
+glyphs,Font,null,字体编辑工具，适合设计、修改和检查字体
+jetbrains-mps,runtime-sdk,null,领域专用语言创建工具
+optimage,picture-photo,null,先进的图像优化工具，能够自动压缩图像，以实现最高的压缩比和一致的图像质量
+zoho-cliq,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+brilliant,diagramming,null,沟通工具，适合聊天、邮件、通话或团队交流
+cadran,utilities,null,图片工具，适合浏览、编辑、转换或管理图片
+crypter,security,null,安全工具，适合保护隐私、控制访问或加密数据
+inkdrop,writing,null,Markdown 编辑器，适合写作、整理文档和发布内容
+pdf-converter-master,PDF|Notes,null,写作和笔记工具，适合记录、编辑和整理文本内容
+busycontacts,utilities,null,高效联系人管理工具
+axure-rp,ide,null,UX 原型设计工具，适合制作高保真交互原型
+dj-studio-next,audio,null,DJ 数字音频工作站
+fsmonitor,system-maintenance,null,文件管理工具，适合整理、传输、清理或备份文件
+novabench,system-maintenance,null,电脑性能快速基准测试工具
+open-sound-meter,audio,null,实时音响调校测量工具
+vmpk,audio|device-management,null,音频工具，适合播放、制作、编辑或管理声音内容
+apache-couchdb,transfer|database-tools,null,数据库工具，适合连接、查询和管理数据库
+fire-alpaca,ide,null,数字绘画软件
+jottacloud,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+meru,communication,null,沟通工具，适合消息、邮件、通话或团队交流
+rclone-browser,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+rize,ai-tools,null,效率管理工具，适合安排任务、日程或跟踪时间
+muteme,utilities,null,实体静音按钮配套应用
+sipgate,communication,null,VoIP 电话服务客户端，适合网络电话和商务通信
+devilutionx,utilities,null,适配现代系统的 Diablo 游戏引擎
+koharu,utilities,null,机器学习漫画翻译工具
+notable,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+visit,utilities,null,网格科学数据可视化和分析工具
+plex-htpc,video,null,视频工具，适合播放、录制、剪辑或转换视频
+acronis-true-image,picture-photo|transfer,null,备份和恢复工具，适合保护整机、磁盘和重要文件
+liteicon,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+thinlinc,network-tools,null,Linux 远程桌面服务器
+autodmg,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+bino,video,null,视频工具，适合播放、录制、剪辑或转换视频
+jitouch,utilities,null,多点触控手势编辑工具
+reverso,utilities,null,文本翻译应用
+notesollama,ai-tools|writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+itunes-producer,utilities,null,Apple Books 图书提交工具
+k8studio,devops,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+wiso-steuer-2025,finance,null,财务工具，适合记账、发票、资产或交易管理
+defguard-client,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+egnyte,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+front,utilities,null,沟通工具，适合聊天、邮件、通话或团队交流
+istatistica-core,system-maintenance,null,图片工具，适合浏览、编辑、转换或管理图片
+nektony-vsd-viewer,picture-photo,null,Visio 图纸预览工具
+transcribe,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+tribler,security|transfer,null,安全工具，适合保护隐私、控制访问或加密数据
+balsamiq-wireframes,ui-prototyping,null,独一无二的数字化项目，采用创新方法，充当一种交互式虚拟白板
+pdfpen,PDF,null,办公文档工具，适合阅读、编辑或管理文档资料
+pitch,office,null,办公文档工具，适合阅读、编辑或管理文档资料
+cadreader,picture-photo|3d-cad,null,图片工具，适合浏览、编辑、转换或管理图片
+gimp-development-version,picture-photo,null,免费开源图像编辑器
+synology-note-station-client,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+termius-beta,network-tools|terminal-tools,null,终端或 SSH 客户端
+biscuit,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+pia,security,null,安全工具，适合保护隐私、控制访问或加密数据
+meridiem,writing,null,Markdown 编辑器，适合写作、整理文档和发布内容
+soundanchor,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+almighty,utilities,null,提供 50 多种 Mac 调整工具的应用，旨在优化你的使用体验
+flowdown,ai-tools,null,AI 智能体客户端
+versatility,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+kui,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+lifesize,video|communication,null,沟通工具，适合消息、邮件、通话或团队交流
+kvirc,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+logdna-cli,terminal-tools|devops,null,开发者工具，适合命令行、构建、调试或工程管理
+rotato,utilities,null,3D 样机生成和动画工具
+swiftplantumlapp,diagramming|runtime-sdk,null,适合画流程图、结构图或头脑风暴草图
+ipvanish,security|network-tools,null,VPN 客户端
+whodb,ai-tools|database-tools,null,数据库工具，适合连接、查询和管理数据库
+bike,utilities,null,想法记录和整理工具
+vyprvpn,security|network-tools,null,VPN 客户端，适合加密网络连接和保护上网隐私
+catch,utilities,null,订阅式下载管理工具
+guitar-pro,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+steinberg-activation-manager,utilities,null,Steinberg 授权管理器
+archiver,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+clariti,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+wireless-workbench,utilities,null,无线系统射频协调和管理工具
+intellij-idea-eap,ide,null,IntelliJ IDEA 早期访问版 IDE
+keet,video|communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+skint,security,null,安全工具，适合保护隐私、控制访问或加密数据
+tiny-shield,system-maintenance,null,网络连接控制和监控工具
+dcommander,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+eclipse-sdk,terminal-tools|ide|runtime-sdk,null,集成开发环境 SDK
+pxplay,system,null,PlayStation 主机第三方远程游玩客户端
+timemator,utilities,null,自动时间追踪应用
+bespoke-synth,utilities,null,软件模块合成器
+db-browser-for-sqlcipher-nightly,database-tools,null,SQLCipher 数据库浏览器，适合查看加密 SQLite 数据
+lazycat,device-management,null,硬件设备客户端
+metamer,utilities,null,Spotlight 扩展属性元数据编辑器
+tmpdisk,utilities,null,RAM 磁盘管理工具
+banksiagui,finance,null,财务工具，适合账务、预算或资产相关管理
+fuse-for-mac-os-x,file-management,null,FUSE 文件系统组件，适合让 macOS 挂载和访问扩展文件系统
+miniwol,network-tools,null,网络调试工具，适合抓包、代理和排查连接问题
+splashtop-personal,network-tools,null,跨桌面和移动设备远程控制电脑的工具
+subsync,video|transfer,null,视频工具，适合播放、录制、剪辑或转换视频
+filomail,ai-tools|communication,null,邮件工具，适合集中处理收件箱和通信
+getapi,network-tools,null,HTTP 客户端
+inform,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+celestia,utilities,null,三维宇宙探索模拟器
+creative,device-management,null,声卡和音频设备控制面板
+funter,file-management,null,文件管理工具，适合整理、传输或清理文件
+iexplorer,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+notion-enhanced,Notes,null,适合整理笔记、文档和长期知识资料
+ao,utilities,null,效率管理工具，适合安排任务、日程或跟踪时间
+mixed-in-key,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+mixing-station,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+postbird,database-tools,null,数据库工具，适合连接、查询和管理数据库
+securityspy,security,null,图片工具，适合浏览、编辑、转换或管理图片
+compositor,utilities,null,TeX/LaTeX 工具，适合论文、公式和专业排版
+iconchamp,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+lego-spike,utilities,null,积木机器人 Scratch 和 Python 开发工具
+topaz-photo-ai,ai-tools|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+mozilla-thunderbird-daily,communication,null,可定制邮件客户端
+no-ip-duc,transfer,null,传输工具，适合下载、同步或共享文件
+yellow-dot,security,null,隐藏隐私指示点的工具
+airtame,network-tools,null,无线屏幕共享平台
+gama-platform-with-embedded-jdk,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+ishare,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+lazarus,ide,null,编程开发工具，适合编写、阅读和维护代码
+onecast,utilities,null,Xbox 远程游玩工具
+sequential,picture-photo,null,办公文档工具，适合阅读、编辑或管理文档资料
+unblocked,ai-tools,null,沟通工具，适合聊天、邮件、通话或团队交流
+ape-a-plasmid-editor,utilities,null,DNA 序列分析和注释软件
+lantern,utilities,null,网络代理访问工具
+retrobatch,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+textadept,writing,null,文本编辑器，适合编辑纯文本、配置和轻量写作
+eclipse-ide-for-java-and-dsl-developers,terminal-tools|ide|runtime-sdk,null,面向 Java 和 DSL 开发者的 Eclipse IDE
+ridibooks,utilities,null,电子书阅读器，适合阅读和管理电子书
+usenapp,utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+adobe-air,game,null,运行 AIR 应用的运行时，常见于旧游戏和跨平台桌面工具
+autogram,security,null,电子签名应用
+specter,finance|device-management|Automation,null,比特币钱包管理工具，适合多签和硬件钱包工作流
+tablen,database-tools,null,数据库工具，适合连接、查询和管理数据库
+send-anywhere,utilities,null,文件分享应用
+infra,devops,null,Kubernetes 桌面客户端，适合管理和查看集群资源
+shattered-pixel-dungeon,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+spitfire-audio,audio|transfer,null,音频工具，适合播放、制作、编辑或管理声音内容
+nteract,utilities,null,交互式计算套件
+onlook,utilities,null,React 应用开源可视化编辑器
+optimus-player,video,null,媒体播放器，适合播放视频、音频等多媒体文件
+ulaa-browser,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+write,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+simpletex,utilities,null,公式截图识别工具
+linkandroid,utilities,null,开源 Android 辅助工具
+tourbox-console,system,null,TourBox 设备配置工具
+workspaces,utilities,null,工作区整理工具
+banktivity,finance,null,财务工具，适合记账、发票、资产或交易管理
+ibm-semeru-runtime-jdk-11-open-edition,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+wonder-unit-storyboarder,picture-photo,null,故事板快速绘制工具
+mailbird,communication,null,邮件客户端，适合集中收发和管理邮箱
+padloc,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+agi,utilities,null,Android GPU 调试分析工具
+doughnut,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+boom,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+epson-print-layout,picture-photo|device-management,null,爱普生照片打印排版工具，适合控制纸张和色彩输出
+bookmacster,utilities,null,书签管理器
+fman,file-management,null,双栏文件管理器，适合高效浏览、复制和整理文件
+qsyncthingtray,transfer,null,传输工具，适合下载、同步或共享文件
+torguard,security|network-tools,null,VPN 客户端，适合加密网络连接和保护上网隐私
+ibm-semeru-runtime-jdk-open-edition,runtime-sdk,null,Java JDK/运行时组件，适合开发或运行 Java 应用
+musaicfm-screensaver,audio,null,把音乐信息做成屏保，闲置时也能展示正在播放
+hma-vpn,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+mindforger,ide,null,编程开发工具，适合编写、阅读和维护代码
+nota,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+sim-daltonism,video|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+vuze,transfer,null,传输工具，适合下载、同步或在设备间传文件
+4k-image-compressor,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+all-in-one-messenger,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+lunatask,security|GTD|Notes,null,把任务、习惯和笔记放一起的个人效率系统
+onekey,finance,null,财务工具，适合记账、发票、资产或交易管理
+gplates,utilities,null,板块构造模拟工具
+opal-composer,utilities,null,视频工具，适合播放、录制、剪辑或转换视频
+stremio-service,utilities,null,Stremio Web 配套应用
+ultimate-hacking-keyboard-agent,device-management,null,Ultimate Hacking Keyboard 配置工具
+zerobrane-studio,ide|runtime-sdk,null,Lua 集成开发环境
+cirrus,utilities,null,iCloud Drive 文件夹检查工具
+file-juicer,picture-photo,null,办公文档工具，适合阅读、编辑或管理文档资料
+low-profile,utilities,null,Apple 配置描述文件载荷检查工具
+sipgate-softphone,communication,null,软电话客户端，直接在 Mac 上拨打和接听 VoIP
+boss,ai-tools|entertainment,null,面向复杂业务流程的 AI 工作空间
+buckets,finance,null,财务工具，适合记账、发票、资产或交易管理
+darkmodebuddy,utilities,null,基于环境光自动切换明暗模式的工具
+testfully,system-maintenance,null,API 调试工具，适合测试接口、请求和开发流程
+touch-portal,network-tools|Automation,null,宏命令远程控制工具
+hyperbackupexplorer,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+pingnoo,utilities,null,开源跨平台 traceroute/ping 分析工具
+slidepilot,office,null,办公文档工具，适合阅读、编辑或管理文档资料
+vitalsource-bookshelf,utilities,null,电子教材阅读工具
+cinderella,utilities,null,交互式几何软件
+fabric,writing,null,个人知识管理和笔记应用
+trimmy,file-management,null,效率增强工具，适合快速启动、自动化或管理常用操作
+oracledatamodeler,GTD,null,数据建模图形工具
+advantagescope,utilities,null,FRC 日志分析工具
+bluewallet,finance,null,财务工具，适合记账、发票、资产或交易管理
+devonagent-pro,utilities,null,高效网页搜索助手
+doppler,audio,null,音乐播放器，适合播放和管理本地或在线音乐
+dropdmg,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+fishing-funds,system-maintenance,null,适用于 macOS 的开源基金类应用
+elgato-capture-device-utility,device-management,null,Elgato 采集设备更新和配置工具
+helpwire-operator,utilities,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+mate-translate,utilities,null,划词翻译工具
+mosaic,window-management,null,窗口大小和位置调整工具
+openlist-desktop,utilities,null,OpenList 桌面客户端
+audirvana,audio,null,视频工具，适合播放、录制、剪辑或转换视频
+synthesia,writing|education,null,写作和笔记工具，适合记录、编辑和整理文本内容
+direqual,file-management,null,目录比较工具
+renamer,file-management,null,批量文件重命名工具
+avtouchbar,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+disk-diet,file-management|system-maintenance,null,macOS上最初的磁盘清理应用程序，首次发布于2011年，并不断进行改进
+gpg-suite-nightly,communication|security,null,邮件和文件加密保护工具
+macsymbolicator,utilities,null,Apple 崩溃报告符号化工具
+discord-development,communication|entertainment,null,语音和文字聊天软件
+goodsync,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+rave,entertainment,null,视频工具，适合播放、录制、剪辑或转换视频
+captain,Automation|devops,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+usage,system-maintenance,null,应用使用情况追踪工具
+chalk,utilities,null,计算器软件
+liteide,ide,null,编程开发工具，适合编写、阅读和维护代码
+presentation,GTD,null,办公文档工具，适合阅读、编辑或管理文档资料
+splayer,video,null,媒体播放器，适合播放视频、音频等多媒体文件
+spundle,file-management,null,稀疏包创建、调整和压缩工具
+sqlpro-studio,database-tools,null,数据库工具，适合连接、查询和管理数据库
+electrum-ltc,security|finance,null,莱特币轻钱包，适合管理和签署 LTC 交易
+ghost-browser,browser,null,网页浏览器，适合日常上网、访问网页和使用 Web 服务
+nano,finance,null,财务工具，适合记账、发票、资产或交易管理
+aigcpanel,ai-tools|video|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+miditrail,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+blisk-browser,browser,null,网页调试和浏览工具，适合开发者检查页面细节
+doxie,device-management,null,扫描仪硬件配套应用
+meteorologist,utilities,null,天气查看工具
+enfusegui,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+geotag,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+missive,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+nomachine-enterprise-client,network-tools,null,远程桌面工具，适合远程访问和控制电脑
+the-clock,utilities,null,时钟和时区应用
+accordance-bible-software,education,null,圣经学习软件
+backblaze-downloader,transfer,null,传输工具，适合下载、同步或共享文件
+cisdem-data-recovery,system-maintenance,null,数据恢复工具
+extraterm,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+shield,system-maintenance,null,进程注入防护工具
+yaak-beta,api-tools,null,REST、GraphQL 和 gRPC 客户端
+ipaverse,transfer,null,传输工具，适合下载、同步或共享文件
+pdfshaver,PDF,null,办公文档工具，适合阅读、编辑或管理文档资料
+rayon,ai-tools|picture-photo|3d-cad,null,建筑和室内平面图工具，适合快速绘制空间方案
+retroarch-metal-nightly,game,null,RetroArch 的 Metal 测试版，适合尝鲜复古模拟性能
+swisscom-mycloud-desktop,transfer,null,Swisscom myCloud 桌面客户端
+whalebird,communication|GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+integrity,utilities,null,网站死链扫描工具
+lazpaint,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+minstaller,transfer,null,传输工具，适合下载、同步或在设备间传文件
+rocket-typist,Automation,null,常用短语文本扩展工具
+whatroute,network-tools,null,网络诊断工具
+photosync-companion,video|picture-photo|transfer,null,照片和视频传输助手，手机与 Mac 互传更顺
+minizincide,ide,null,编程开发工具，适合编写、阅读和维护代码
+jumpcloud-password-manager,security,null,安全相关工具，适合隐私保护、访问控制或账号防护
+visual-paradigm-community-edition,utilities,null,UML、SysML、BPMN 建模平台
+q-light-controller,device-management,null,DMX 和模拟灯光控制工具
+readcube-papers,education,null,研究者文献管理软件
+viable,utilities,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+zight,utilities,null,沟通工具，适合聊天、邮件、通话或团队交流
+android-studio-preview-beta,picture-photo|ide,null,Android 应用开发工具
+vpn-tracker-365,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+incident-io,utilities,null,事故响应管理平台
+logitech-presentation,devops,null,演示工具，适合制作展示内容或现场演示
+backblaze-restore,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+datovka,communication|database-tools,null,数据库工具，适合连接、查询和管理数据库
+default-handler,utilities,null,默认 URL 协议处理器切换工具
+parallels-virtualization-sdk,devops|runtime-sdk,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+sysex-librarian,audio|communication,null,音频工具，适合播放、制作、编辑或管理声音内容
+webkinz-classic,utilities,null,虚拟宠物 MMO 游戏
+alcom,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+dialpad,utilities,null,沟通工具，适合聊天、邮件、通话或团队交流
+change-vision-astah-uml,Notes|diagramming,null,适合画流程图、结构图或头脑风暴草图
+balance-lock,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+geph,utilities,null,沟通工具，适合聊天、邮件、通话或团队交流
+historyhound,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+quickwhisper,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+butterkit,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+dbvr,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+frame0,utilities,null,线框图工具
+screenmemory,utilities,null,屏幕历史记录工具
+the-archive,file-management|writing,null,文件管理工具，适合整理、传输或清理文件
+hoppscotch-selfhost,api-tools,null,API 调试工具，适合测试接口、请求和开发流程
+islide,utilities,null,PPT 插件工具
+shimo,security|network-tools,null,功能强大的 VPN 客户端，主要针对企业和个人用户提供安全可靠的 VPN 连接
+taobao,utilities,null,网购客户端
+virtualhereserver,utilities,null,网络远程 USB 设备访问服务器
+runtimeviewer,runtime-sdk,null,Objective-C 和 Swift 运行时接口检查工具
+satellite-eyes,utilities,null,图片工具，适合浏览、编辑、转换或管理图片
+tableflip,writing,null,TeX/LaTeX 工具，适合论文、公式和专业排版
+twist,utilities,null,团队沟通协作工具，适合聊天、会议和项目协作
+crushftp,transfer,null,传输工具，适合下载、同步或在设备间传文件
+hdrmerge,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+internxt-drive,utilities,null,Internxt 文件存储服务客户端
+retrace,video,null,视频工具，适合播放、录制、剪辑或转换视频
+steinberg-library-manager,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+aliwangwang,utilities,null,沟通工具，适合聊天、邮件、通话或团队交流
+anka-virtualization,terminal-tools|devops,null,开发者工具，适合命令行、构建、调试或工程管理
+clicker-for-youtube,entertainment,null,独立 YouTube 客户端
+jetbrains-space,ide,null,团队沟通协作工具，适合聊天、会议和项目协作
+treesheets,Notes,null,办公文档工具，适合阅读、编辑或管理文档资料
+fuwari,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+gdevelop,game,null,无代码游戏制作工具，适合快速做 2D 游戏原型
+znote,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+batteries,device-management|system-maintenance,null,多设备电量追踪工具
+elgato-game-capture-hd,game,null,游戏采集工具，录制和直播主机画面很方便
+retro-virtual-machine,utilities,null,ZX Spectrum 和 Amstrad CPC 模拟器
+swiftpm-catalog,transfer,null,文件管理工具，适合整理、传输或清理文件
+timelapze,system-maintenance,null,图片工具，适合浏览、编辑、转换或管理图片
+vnote,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+actual-odbc-driver-pack,finance|device-management,null,Actual 的 ODBC 驱动包，方便旧数据库接入 Mac 应用
+macro-recorder,Automation,null,鼠标和键盘操作录制工具
+money-manager-ex,finance,null,个人财务管理工具
+smultron,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+tropy,picture-photo|education,null,图片工具，适合浏览、编辑、转换或管理图片
+4k-slideshow-maker,utilities,null,幻灯片制作工具
+archiveweb-page,writing,null,网页浏览时手动归档为 WARC 或 WACZ 的工具
+roboform,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+openrocket,utilities,null,模型火箭模拟器
+routine,communication|GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+cloudash,system-maintenance,null,Serverless 架构监控和排障工具
+katalon-studio,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+nanoleaf-desktop,device-management,null,Nanoleaf 灯光控制工具
+synology-surveillance-station-client,device-management,null,Synology 监控站桌面客户端
+as-timer,utilities,null,计时器应用
+atomic-wallet,finance,null,财务工具，适合账务、预算或资产相关管理
+omnidb,database-tools,null,数据库工具，适合连接、查询和管理数据库
+squash,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+bluefish,ide,null,编程开发工具，适合编写、阅读和维护代码
+eve-online,GTD,null,太空题材 MMO 游戏客户端
+lyn,picture-photo,null,轻量媒体浏览器，适合摄影和设计素材查看
+mobster,ide,null,编程开发工具，适合编写、阅读和维护代码
+pdf-over,PDF,null,办公文档工具，适合阅读、编辑或管理文档资料
+tella,video,null,屏幕录制工具，适合录制教程、演示和操作过程
+detectx-swift,utilities,null,搜索和故障排查工具
+edrawmax,picture-photo|diagramming,null,综合绘图工具，流程图、组织图和信息图都能画
+filefaker,utilities,null,测试文件生成工具
+happymac,system-maintenance,null,监测并暂停拖慢系统的后台进程的工具
+mongodb-compass-isolated,database-tools,null,MongoDB 数据分析图形工具
+password-gorilla,security|database-tools,null,数据库工具，适合连接、查询和管理数据库
+gitfiend,devops,null,Git 客户端，适合管理代码仓库、提交和分支
+grid,window-management,null,窗口管理工具，适合快速排列、移动和调整窗口
+macpar-deluxe,transfer,null,传输工具，适合下载、同步或共享文件
+themeengine,utilities,null,已编译 .car 文件编辑工具
+intiface-central,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+mqtt-fx,utilities,null,IoT 路由测试工具
+quickbooks-desktop,finance,null,会计软件
+synology-chat,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+chirp,audio|ide,null,编程开发工具，适合编写、阅读和维护代码
+elgato-studio,device-management,null,内容创作设备采集和管理工具
+godspeed,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+grids,utilities,null,Instagram 桌面客户端
+ibackup-viewer,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+to-audio-converter,audio,null,音频转换工具，适合转换和处理音频格式
+clipaste,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+filepane,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+go64,system-maintenance,null,32 位应用扫描工具
+mesh,utilities,null,个人关系资料管理工具
+flying-carpet,transfer,null,传输工具，适合下载、同步或在设备间传文件
+paulxstretch,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+plug,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+sonos-s1,utilities,null,第一代 Sonos 产品控制器
+airy,video|transfer,null,音频工具，适合播放、制作、编辑或管理声音内容
+coverload,video|audio,null,媒体封面下载工具，适合整理影视和音乐资料
+droplr,video|picture-photo,null,视频工具，适合播放、录制、剪辑或转换视频
+highlight,ai-tools,null,跨平台的AI助手，适用于Mac和Windows，用户可以免费下载
+opensubtitles-flixtools-lite,video|transfer,null,电影字幕下载工具
+steinberg-mediabay,utilities,null,Steinberg 软件内容管理器
+unifi-identity-enterprise,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+amazing-marvin,GTD,null,个人效率管理应用
+calhash,utilities,null,文件校验和计算与比较工具
+post-haste,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+printopia,utilities,null,AirPrint 打印共享工具
+trojanx,security,null,安全工具，适合保护隐私、控制访问或加密数据
+weiyun,writing|transfer,null,写作和笔记工具，适合记录、编辑和整理文本内容
+cacher,utilities,null,代码片段管理工具
+filemaker-pro,api-tools,null,API 调试工具，适合测试接口、请求和开发流程
+jasper,ide,null,办公文档工具，适合阅读、编辑或管理文档资料
+nucleo,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+popchar-x,input-tools,null,字体字符查看工具
+amore,utilities,null,支持 Sparkle、代码签名和公证的应用分发平台
+polyphone,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+rivet,ai-tools|ide,null,编程开发工具，适合编写、阅读和维护代码
+subsurface,utilities,null,开源潜水日志工具
+topaz-gigapixel-ai,ai-tools|picture-photo,null,独特的、使用人工智能技术扩大图像的工具
+bdash,database-tools,null,数据库工具，适合连接、查询和管理数据库
+elegooslicer,utilities,null,开源 FDM 3D 打印切片工具
+kontur-talk,video|communication,null,沟通工具，适合消息、邮件、通话或团队交流
+squeak,ide|runtime-sdk,null,编程开发工具，适合编写、阅读和维护代码
+wordservice,Automation,null,选中文本处理命令工具
+mpluginmanager,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+texts,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+cocoarestclient,network-tools,null,HTTP/REST 接口测试工具
+onyx-beta,system-maintenance,null,系统文件结构验证和维护工具
+seam,window-management,null,刘海屏动态岛效率工具
+vv,ide,null,编程开发工具，适合编写、阅读和维护代码
+audius,audio,null,视频工具，适合播放、录制、剪辑或转换视频
+clock-signal,communication|security,null,安全相关工具，适合隐私保护、访问控制或账号防护
+motu-m-series,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+bankid-security-application-sweden,security|finance|education,null,瑞典 BankID 安全组件，用来完成银行和身份认证
+cinder,ide,null,文件管理工具，适合整理、传输、清理或备份文件
+commandq,utilities,null,防止误退出应用的工具
+treeviewer,utilities,null,系统发育树查看器
+bookletcreator,PDF,null,办公文档工具，适合阅读、编辑或管理文档资料
+dj-studio,audio,null,DJ 数字音频工作站
+elan,video|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+moneydance,security|finance,null,适合管理钱包、资产或安全相关的金融操作
+mural,utilities,null,沟通工具，适合聊天、邮件、通话或团队交流
+phoenix-firestorm-viewer-for-second-life,utilities,null,虚拟世界访问客户端
+rouvy,utilities,null,室内骑行训练应用
+ugit,devops,null,腾讯 Git 图形客户端
+advanced-rest-client,api-tools,null,API 测试工具
+forkgram,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+jamie,ai-tools|writing|communication|GTD,null,AI 会议记录员，自动整理纪要和待办
+x32-edit,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+bbackupp,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+bitrix24,utilities,null,企业管理平台
+yandex-music-unofficial,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+latexdraw,picture-photo,null,TeX/LaTeX 工具，适合论文、公式和专业排版
+ableton-live-intro,audio,null,声音和音乐编辑工具，适合处理音频素材
+audio-modeling-software-center,audio|transfer,null,音频工具，适合播放、制作、编辑或管理声音内容
+jcryptool,finance,null,财务工具，适合记账、发票、资产或交易管理
+muse,audio,null,思维画布应用，适合整理灵感和团队协作
+sirimote,device-management,null,用 Apple TV Siri Remote 控制电脑的工具
+blockstream-green,finance,null,财务工具，适合记账、发票、资产或交易管理
+molotov,entertainment,null,视频工具，适合播放、录制、剪辑或转换视频
+soqlxplorer,utilities,null,Salesforce 平台桌面客户端
+webplotdigitizer,picture-photo|devops,null,图片工具，适合浏览、编辑、转换或管理图片
+blitz,utilities,null,性能分析软件
+noto,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+ovice,Meeting,null,沟通工具，适合消息、邮件、通话或团队交流
+timelane,transfer,null,传输工具，适合下载、同步或共享文件
+db-browser-for-sqlite-nightly,database-tools,null,SQLite 数据库浏览器测试版，适合查看和编辑本地库
+electorrent,transfer,null,传输工具，适合下载、同步或在设备间传文件
+radial,GTD,null,通过美观的径向菜单让用户瞬间访问应用、快捷方式、表情符号和自定义动作的工具
+seamly2d,utilities,null,服装制版软件
+smartreporter-free,system-maintenance,null,硬盘故障监控工具
+bluos-controller,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+headset,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+serverbuddy,utilities,null,Linux 服务器管理工具
+any-do,communication|GTD,null,待办提醒、计划和日历工具
+ugene,utilities,null,免费开源跨平台生物信息学软件
+uniconverter,video,null,视频编辑软件
+wasabi-wallet,security|finance|Automation,null,重视隐私的比特币钱包，适合 CoinJoin 工作流
+ifunbox,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+mplayerx,video,null,媒体播放器，适合播放视频、音频等多媒体文件
+wrike,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+cisdem-pdf-converter-ocr,picture-photo|PDF,null,办公文档工具，适合阅读、编辑或管理文档资料
+hancom-docs,writing,null,文字处理工具，适合撰写、编辑和排版文档
+nessie,ai-tools|communication,null,AI 对话知识库工具
+bdinfo,video|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+cleaneronepro,file-management|system-maintenance,null,文件管理工具，适合整理、传输、清理或备份文件
+heaven-benchmark,device-management|system-maintenance,null,硬件性能和稳定性测试工具
+sqlpro-for-postgres,database-tools,null,数据库工具，适合连接、查询和管理数据库
+yousician,audio|education,null,音频工具，适合播放、制作、编辑或管理声音内容
+eclipse-ide-for-php-developers,terminal-tools|ide|runtime-sdk,null,面向 PHP 开发者的 Eclipse IDE
+litecoin,finance,null,财务工具，适合记账、发票、资产或交易管理
+starnet2,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+touchosc,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+xmplify,utilities,null,XML 编辑器
+backyard-ai,ai-tools,null,本地 AI 模型运行工具
+drivethrurpg-library-app,transfer,null,DriveThruRPG 资料库同步工具
+macx-dvd-ripper-pro,utilities,null,DVD 提取工具
+iris,utilities,null,护眼和蓝光过滤工具
+streammusic,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+uu-booster,utilities,null,网络加速器
+air-vpn,security|network-tools,null,OpenVPN 图形客户端
+avast-secure-browser,browser|security,null,安全工具，适合保护隐私、控制访问或加密数据
+badlion-client,game,null,Minecraft PvP 客户端，内置性能优化和竞技辅助
+find-empty-folders,utilities,null,空文件夹查找工具
+goldenpassport,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+taskade,communication|GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+firecamp,api-tools,null,API 调试工具，适合测试接口、请求和开发流程
+flirc,device-management,null,红外 USB 接收器配置工具
+motionik,video,null,屏幕录制软件，适合录制操作、课程和演示视频
+vallum,security,null,安全工具，适合保护隐私、控制访问或加密数据
+cisdem-duplicate-finder,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+fujifilm-tether-app,utilities,null,图片工具，适合浏览、编辑、转换或管理图片
+mia-for-gmail,communication,null,强大的电子邮件通知软件，让你在Mac上更好地访问Gmail邮件
+stratoshark,communication,null,沟通工具，适合消息、邮件、通话或团队交流
+dbeaver-team-edition,database-tools,null,通用数据库工具和 SQL 客户端
+metaimage,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+swifty,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+tiger-trade,finance,null,财务工具，适合记账、发票、资产或交易管理
+appbox,utilities,null,iOS 应用分发工具
+imagex,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+nulloy,audio,null,音乐播放器，适合播放和管理本地或在线音乐
+quo,communication,null,沟通工具，适合消息、邮件、通话或团队交流
+sena-bluetooth-device-manager,device-management,null,SENA 设备管理工具
+spybuster,utilities,null,反间谍软件工具
+astropad-studio,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+gargoyle,utilities,null,互动小说播放器 IO 层工具
+mp3gain-express,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+acreom,ide,null,写作和笔记工具，适合记录、编辑和整理文本内容
+redcine-x-pro,video|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+vcam,utilities,null,视频工具，适合播放、录制、剪辑或转换视频
+sakuralauncher,Automation,null,SakuraFrp 启动器
+spaceradar,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+teensy,device-management,null,固件刷写工具
+adobe-connect,Meeting,null,企业线上会议和课堂工具，适合培训、会议和网络研讨会
+helo,communication,null,邮件客户端，适合集中收发和管理邮箱
+lyrics-finder,transfer,null,歌词查找和下载工具
+obscura-vpn,security|network-tools,null,VPN 客户端，适合加密网络连接和保护上网隐私
+plamo-translate,utilities,null,日语翻译工具
+swift,utilities,null,XMPP 即时通讯客户端
+thumbsup,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+aimersoft-video-converter-ultimate,video,null,视频工具，适合播放、录制、剪辑或转换视频
+dcp-o-matic,video|audio,null,把影片、字幕和音频打包成影院放映用的 DCP
+kiwi-for-gmail,communication,null,沟通工具，适合消息、邮件、通话或团队交流
+mcloud,file-management,null,中国移动云盘客户端
+munkiadmin,utilities,null,Munki 仓库管理工具
+robofont,Font,null,字体编辑工具，适合设计、修改和检查字体
+electron-cash,utilities,null,Bitcoin Cash 轻钱包客户端
+marathon,utilities,null,第一人称射击游戏
+skype,video|communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+syncovery,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+teamviewer-quickjoin,Meeting,null,办公文档工具，适合阅读、编辑或管理文档资料
+freesurfer,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+energiza-pro,system-maintenance,null,用于控制MacBook电池充电的应用程序
+kameleo,browser|security,null,网页浏览器，适合日常上网和访问 Web 服务
+navigraph-charts,utilities,null,飞行模拟 Jeppesen 航图查看工具
+sleep-aid,system-maintenance,null,专为监控Mac电脑睡眠习惯而设计的应用，旨在识别和减少能源浪费
+cardo-update,utilities,null,Packtalk 和 Freecom 摩托车对讲设备更新工具
+mellel,writing|entertainment,null,写作和笔记工具，适合记录、编辑和整理文本内容
+wd-security,security,null,安全工具，适合保护隐私、控制访问或加密数据
+jamulus,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+spectrolite,utilities,null,Risograph 印刷制作工具
+sqlpro-for-sqlite,database-tools,null,数据库工具，适合连接、查询和管理数据库
+ultdata,system-maintenance,null,iPhone 数据恢复工具
+volume-control,audio,null,音量控制工具，适合更细地管理系统声音输出
+x-air-edit,network-tools,null,Behringer X AIR 调音台远程控制工具
+appexindexer,utilities,null,已安装应用扩展查看工具
+eclipse-modeling-tools,device-management,null,模型驱动应用开发工具和运行时
+genesis-plus,utilities,null,Sega Genesis/MegaDrive 模拟器
+gitfox,devops,null,Git 客户端，适合管理代码仓库、提交和分支
+folder-colorizer,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+odrive,security|transfer,null,安全工具，适合保护隐私、控制访问或加密数据
+smartsheet,GTD,null,办公文档工具，适合阅读、编辑或管理文档资料
+calmly-writer,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+enclave,security,null,安全工具，适合保护隐私、控制访问或加密数据
+lock-rattler,security,null,系统安全检查工具
+ontime,utilities,null,现场活动计时工具
+soundtoys,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+astrofox,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+aviatrix-vpn-client,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+capto,video|picture-photo,null,视频工具，适合播放、录制、剪辑或转换视频
+fake,browser,null,效率增强工具，适合快速启动、自动化或管理常用操作
+paperpile,utilities,null,Microsoft Word 引文插件
+textgrabber2,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+touchswitcher,window-management|device-management,null,用 Touch Bar 切换应用的工具
+crunch,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+flotato,utilities,null,把网页封装成 macOS 桌面应用的轻量工具
+multifirefox,browser,null,编程开发工具，适合编写、阅读和维护代码
+readwise-ibooks,utilities,null,Apple Books 划线导入 Readwise 工具
+sqlpro-for-mysql,database-tools,null,数据库工具，适合连接、查询和管理数据库
+tastytrade,finance,null,财务工具，适合记账、发票、资产或交易管理
+app-buddy,utilities,null,Sindre Sorhus 应用辅助工具
+bria,communication|transfer,null,传输工具，适合下载、同步或在设备间传文件
+mycrypto,finance,null,财务工具，适合记账、发票、资产或交易管理
+nudge,utilities,null,系统更新强制执行工具
+psi,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+vram-pro,system-maintenance,null,统一内存 VRAM 分配控制工具
+karafun,utilities,null,卡拉 OK 播放软件
+moneymanager,finance,null,财务工具，适合记账、发票、资产或交易管理
+packetproxy,network-tools,null,网络调试工具，适合抓包、代理和排查连接问题
+rstudio-daily,utilities,null,面向 R 和 Python 的数据科学软件
+tandem,Meeting,null,沟通工具，适合消息、邮件、通话或团队交流
+airdash,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+helio,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+noun-project,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+photostickies,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+diagnostics,system-maintenance,null,崩溃诊断报告查看器
+elephas,ai-tools|writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+nethlink,ide,null,编程开发工具，适合编写、阅读和维护代码
+the-archive-browser,browser,null,文件管理工具，适合整理、传输、清理或备份文件
+videoduke,video|transfer,null,传输工具，适合下载、同步或在设备间传文件
+chatty,communication|entertainment,null,沟通工具，适合聊天、邮件、通话或团队交流
+vlc-streamer,video,null,通过 VLC 向移动设备串流视频的工具
+cilicon,utilities,null,图片工具，适合浏览、编辑、转换或管理图片
+douyin-chat,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+exactscan,writing|device-management,null,支持多种专业文档扫描仪的现代扫描解决方案，能够帮助用户实现无纸化办公
+openchrom,utilities,null,分析化学数据分析工具
+adobe-photoshop-patterns-quicklook-plugin,picture-photo,null,给 Photoshop 图案文件加预览，找素材更快
+bitbox,finance|device-management,null,硬件钱包套件，适合安全管理加密资产
+devonsphere-express,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+gopass-ui,communication|security,null,gopass 密码库图形界面，适合安全管理团队密钥
+infinidesk,utilities,null,图片工具，适合浏览、编辑、转换或管理图片
+mace,utilities,null,合规基线创建、审计和管理工具
+supernotes,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+support-app,system-maintenance,null,用户与技术支持菜单栏工具
+belgian-eid-viewer,utilities,null,比利时身份证读取工具
+dnclient,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+nao,ai-tools|ide,null,编程开发工具，适合编写、阅读和维护代码
+satyrn,utilities,null,Jupyter 客户端
+amazon-music,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+color-studio,utilities,null,配色方案生成工具
+ears,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+slab,Notes,null,团队知识管理工具
+tableau-reader,utilities,null,数据可视化查看工具
+wavesurfer,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+caldigit-thunderbolt-station-usb-charging-and-superdrive-support-driver,device-management|devops,null,Apple 设备支持驱动
+omegat,utilities,null,翻译记忆工具
+precize,utilities,null,文件、应用包和文件夹详细信息查看工具
+typefully,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+free42-decimal,utilities,null,HP-42S 计算器模拟器
+m32-edit,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+rippling,utilities,null,企业 MDM 客户端
+xiaomi-cloud,picture-photo|transfer,null,小米云服务入口，适合同步和管理小米生态资料
+cuda-z,security,null,安全工具，适合保护隐私、控制访问或加密数据
+micro-sniff,system-maintenance,null,麦克风活动监控工具
+pimosa,video|audio|picture-photo,null,媒体小工具，适合处理特定的视频、音频或图片任务
+ripcord,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+sitala,utilities,null,鼓采样器插件和独立应用
+dmg-canvas,picture-photo,null,DMG 安装包设计工具，适合做漂亮的 Mac 分发镜像
+duplicate-annihilator-for-photos,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+moment,utilities,null,倒计时应用
+dremel-digilab-3d-slicer,utilities,null,CAD 文件 3D 打印切片工具
+icloud-control,transfer,null,传输工具，适合下载、同步或共享文件
+kakapo,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+ball,window-management,null,为 Dock 添加动态小球的工具
+cornerstone,utilities,null,Subversion 客户端
+flexoptix-app,utilities,null,FLEXBOX 无线连接和光模块配置工具
+ireal-pro,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+markright,picture-photo|writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+remember-the-milk,utilities,null,效率管理工具，适合安排任务、日程或跟踪时间
+typeit4me,utilities,null,文字片段扩展工具
+4k-video-to-mp3,video|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+expressions,utilities,null,用于创建和测试正则表达式的软件
+fetch,transfer,null,传输工具，适合下载、同步或在设备间传文件
+freeyourmusic,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+gosign-desktop,ide,null,数字签名和时间戳工具
+lolgato,utilities,null,Elgato 灯光增强控制工具
+macjournal,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+roku-remote-tool,utilities,null,配置工具
+amie,communication|GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+zo,utilities,null,个人服务器工具
+ammonite,utilities,null,标签可视化和搜索工具
+arctic,video,null,文件管理工具，适合整理、传输、清理或备份文件
+furtherance,utilities,null,时间追踪工具，适合记录工作时长和分析时间分配
+lexicon,utilities,null,专业 DJ 曲库管理工具
+medibang-paint-pro,ide,null,数字绘画和漫画创作工具
+unicodechecker,utilities,null,Unicode 查看和转换工具
+manila,file-management,null,文件管理工具，适合整理、传输或清理文件
+pinegrow,utilities,null,网页编辑器
+beardie,writing,null,视频工具，适合播放、录制、剪辑或转换视频
+codux,ui-prototyping|ide,null,编程开发工具，适合编写、阅读和维护代码
+playdate-mirror,game|video,null,把 Playdate 掌机画面镜像到 Mac，录制演示更方便
+alifix,utilities,null,别名刷新和损坏别名检测工具
+app-fair,utilities,null,原生桌面应用目录工具
+bookwright,utilities,null,配合 Blurb 打印服务制作图书的工具
+eclipse-for-rcp-and-rap-developers,terminal-tools|ide|runtime-sdk,null,面向 RCP 和 RAP 开发者的 Eclipse IDE
+deadbolt,security,null,安全工具，适合保护隐私、控制访问或加密数据
+winclone,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+doomsday-engine,utilities,null,Doom、Heretic 和 Hexen 的增强源码移植版
+affinity-designer,diagramming,null,矢量设计工具，适合图标、插画和品牌视觉
+replayweb-page,file-management,null,WARC 和 WACZ 网页归档查看器
+tumult-hype,utilities,null,动画和交互网页内容创作工具
+widgettoggler,utilities,null,桌面小组件显示切换工具
+bitfocus-satellite,utilities,null,Bitfocus Companion 卫星连接客户端
+camera-live,utilities,null,图片工具，适合浏览、编辑、转换或管理图片
+codespace,utilities,null,代码片段管理器
+icollections,utilities,null,桌面整理工具
+kodelife,utilities,null,实时 GPU 着色器编辑器
+strongvpn,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+affinity-photo,picture-photo,null,一次性买断的专业修图工具，照片编辑和合成都很强
+jazzup,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+logmein-client,network-tools,null,远程访问工具
+mailsteward,communication,null,邮件客户端，适合集中收发和管理邮箱
+mindmanager,Notes,null,思维导图工具
+tyme,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+viso,picture-photo,null,图片查看器，适合浏览和管理图片文件
+emailchemy,communication,null,邮件客户端，适合集中收发和管理邮箱
+inmusic-software-center,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+invisor-lite,utilities,null,媒体文件信息检查工具
+synalyze-it-pro,utilities,null,十六进制编辑和二进制分析工具
+textbuddy,Automation,null,文本转换、过滤、排序和处理工具
+dogecoin,finance,null,财务工具，适合记账、发票、资产或交易管理
+gauntlet,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+beatunes,audio,null,先进的音乐应用，它不仅能播放音乐，还能听懂音乐
+ibackupbot,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+mobirise,utilities,null,无代码网站制作工具
+nordlocker,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+caption,video,null,视频工具，适合播放、录制、剪辑或转换视频
+memory-tracker-by-timely,utilities,null,时间追踪软件
+tracker,video|education,null,视频运动分析工具，适合物理教学和实验研究
+tv-browser,browser,null,编程开发工具，适合编写、阅读和维护代码
+algodoo,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+amadeus-pro,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+stringz,utilities,null,本地化文件编辑器
+adlock,network-tools,null,网络调试工具，适合抓包、代理和排查连接问题
+plus42-decimal,utilities,null,基于 HP-42S 的 RPN 计算器
+razorsql,database-tools,null,数据库工具，适合连接、查询和管理数据库
+scrub,utilities,null,敏感数据泄露防护清理工具
+trim-enabler,utilities,null,SSD TRIM 启用工具
+zeronet,transfer|finance,null,去中心化网络客户端，适合访问和托管点对点网站
+berrycast,video,null,屏幕录制工具，适合录制教程、演示和操作过程
+lynx-whiteboard-by-clevertouch,GTD,null,跨平台演示和效率工具
+open-data-editor,utilities,null,无代码数据探索、校验和发布工具
+paparazzi,picture-photo|writing,null,图片工具，适合浏览、编辑、转换或管理图片
+polymail,communication,null,邮件客户端，适合集中收发和管理邮箱
+baretorrent,transfer,null,传输工具，适合下载、同步或在设备间传文件
+disk-jockey,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+alfaview,video|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+idagio,audio,null,视频工具，适合播放、录制、剪辑或转换视频
+mds,utilities,null,图片工具，适合浏览、编辑、转换或管理图片
+pally,ai-tools,null,AI 关系管理工具
+schism-tracker,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+bathyscaphe,communication,null,沟通工具，适合消息、邮件、通话或团队交流
+lyrics-master,transfer,null,音频工具，适合播放、制作、编辑或管理声音内容
+musictube,audio,null,视频工具，适合播放、录制、剪辑或转换视频
+principle,ui-prototyping,null,交互动效原型工具，适合做 App 转场和微交互演示
+datagraph,utilities,null,科学和统计绘图软件
+electronmail,communication,null,沟通工具，适合消息、邮件、通话或团队交流
+keymanager,security,null,安全工具，适合保护隐私、控制访问或加密数据
+skype-for-business,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+deco,ide,null,编程开发工具，适合编写、阅读和维护代码
+firezone,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+lectrote,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+sixtyforce,utilities,null,N64 模拟器
+snapndrag,picture-photo,null,视频工具，适合播放、录制、剪辑或转换视频
+sparsity,utilities,null,APFS 稀疏文件创建和查找工具
+sqlight,database-tools,null,数据库工具，适合连接、查询和管理数据库
+website-watchman,system-maintenance,null,网站变更监控工具
+audiocupcake,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+fabfilter-pro-mb,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+focused,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+iconscout,utilities,null,图片工具，适合浏览、编辑、转换或管理图片
+kilohearts-installer,utilities,null,Kilohearts 产品管理工具
+meituxiuxiu,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+mellow,network-tools,null,网络调试工具，适合抓包、代理和排查连接问题
+psiphon-conduit,picture-photo,null,网络调试工具，适合抓包、代理和排查连接问题
+shapes,diagramming,null,运行于 macOS 系统上的流程图绘制软件
+wiznote,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+daruma,utilities,null,目标追踪工具
+gdlauncher,game,null,Minecraft 启动器，安装和切换模组包很方便
+id3-editor,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+itau,finance|education,null,财务工具，适合记账、发票、资产或交易管理
+pdf-pals,ai-tools|communication|PDF,null,沟通工具，适合聊天、邮件、通话或团队交流
+quaternion,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+flock,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+jdiskreport,file-management|system-maintenance,null,磁盘空间分析工具，适合查看和清理空间占用
+lightproxy,security,null,网络调试工具，适合抓包、代理和排查连接问题
+olive,video,null,视频工具，适合播放、录制、剪辑或转换视频
+ua-midi-control,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+vk-messenger,utilities,null,即时通讯客户端
+glaze,ai-tools,null,防止 AI 模仿画风的保护工具
+nightshade,ai-tools|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+receipts,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+signet,security,null,应用签名扫描和检查工具
+crashplan,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+ecamm-live,video,null,视频工具，适合播放、录制、剪辑或转换视频
+garagesale,utilities,null,专为macOS用户设计的工具，它极大地简化了在EBay上发布和管理拍卖的过程
+lehreroffice,education|office,null,教师办公工具，适合管理班级、成绩和教学资料
+lockdown,security,null,安全工具，适合保护隐私、控制访问或加密数据
+space-capsule,window-management,null,桌面空间管理工具
+zoho-workdrive,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+curio,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+fabfilter-pro-c,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+pym-player,video,null,视频工具，适合播放、录制、剪辑或转换视频
+abstract,ui-prototyping,null,设计版本协作工具，适合管理 Sketch 文件和设计交付
+calcservice,utilities,null,在支持服务菜单的应用中输入计算结果的工具
+codeexpander,writing|input-tools,null,效率增强工具，适合快速启动、自动化或管理常用操作
+dante-via,audio,null,Dante 网络音频连接工具
+graphql-ide,api-tools,null,编程开发工具，适合编写、阅读和维护代码
+navicat-for-sqlite,database-tools,null,数据库工具，适合连接、查询和管理数据库
+owocr,utilities,null,日文 OCR 识别工具
+todometer,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+babeledit,utilities,null,翻译编辑工具，适合处理本地化和多语言文本
+cardpresso,utilities,null,专业卡片制作工具
+coin-wallet,finance,null,财务工具，适合记账、发票、资产或交易管理
+falcon-sql-client,database-tools|terminal-tools,null,数据库工具，适合连接、查询和管理数据库
+iconjar,picture-photo,null,图标素材管理器，设计系统和图标库都能收好
+liviable,utilities,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+pile,Notes,null,写作和笔记工具，适合记录、编辑和整理文本内容
+writer,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+aria-maestosa,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+contraste,utilities,null,文本可访问性对比检查工具
+denemo,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+monofocus,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+keep-it,writing,null,办公文档工具，适合阅读、编辑或管理文档资料
+replicator,utilities,null,Jamf Pro 服务器数据迁移工具
+xact,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+active-trader-pro,finance,null,财务工具，适合记账、发票、资产或交易管理
+big-mean-folder-machine,utilities,null,文件和文件夹管理工具
+cumulus,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+greenery,finance,null,财务工具，适合记账、发票、资产或交易管理
+pichon,utilities,null,图片工具，适合浏览、编辑、转换或管理图片
+antconc,utilities,null,语料库检索和文本分析工具
+elpass,security,null,密码管理器，适合保存账号、密码和敏感信息
+iconset,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+orcasheets,utilities,null,本地优先数据分析工具
+silnite,security,null,安全工具，适合保护隐私、控制访问或加密数据
+snapmotion,video|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+turtl,writing,null,办公文档工具，适合阅读、编辑或管理文档资料
+baoliandeng,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+box-sync,security|transfer,null,沟通工具，适合聊天、邮件、通话或团队交流
+daedalus-mainnet,finance,null,财务工具，适合记账、发票、资产或交易管理
+favro,utilities,null,协作计划管理工具
+olympus,game,null,游戏模组管理工具，适合管理 Celeste 等游戏内容
+alternote,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+jaikoz,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+mixed-in-key-live,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+nkoda,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+novation-components,device-management,null,Novation 硬件管理和更新工具
+opera-beta,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+parsify,utilities,null,支持单位和汇率换算的可扩展计算器
+powder-player,video,null,视频工具，适合播放、录制、剪辑或转换视频
+quassel,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+veepn,security|network-tools,null,VPN 客户端，适合加密网络连接和保护上网隐私
+aurora-hdr,picture-photo,null,由Skylum公司开发的Mac照片编辑软件
+ballast,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+fmail,communication,null,沟通工具，适合消息、邮件、通话或团队交流
+html-mangareader,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+icab,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+iridium-browser,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+isubtitle,video,null,视频工具，适合播放、录制、剪辑或转换视频
+longplay,audio,null,专辑导向音乐播放器，适合连续聆听完整专辑
+loungy,GTD,null,应用启动器，适合快速打开 App、文件和工作流
+macintosh-js,utilities,null,基于 Electron 的 Mac OS 8 模拟器
+proclaim,GTD,null,办公文档工具，适合阅读、编辑或管理文档资料
+proxygen,network-tools,null,HTTP 代理工具
+anka-build-cloud-controller,device-management|devops|api-tools,null,API 调试工具，适合测试接口、请求和开发流程
+detexify,utilities,null,TeX/LaTeX 工具，适合论文、公式和专业排版
+leech,transfer,null,轻量级但功能强大的下载管理器，它能帮你掌控下载过程
+navicat-for-sql-server,database-tools,null,数据库工具，适合连接、查询和管理数据库
+overflow,GTD|Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+roon-bridge,audio,null,Roon 音乐播放器网络扩展工具
+trainerroad,utilities,null,骑行训练系统
+aifun,ai-tools|communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+alpha,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+cables,ide,null,编程开发工具，适合编写、阅读和维护代码
+duckietv,transfer,null,传输工具，适合下载、同步或在设备间传文件
+freetex,utilities,null,智能公式识别工具
+invoker,utilities,null,Laravel 应用管理工具
+revisionist,utilities,null,macOS 版本系统管理工具
+waltr-heic-converter,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+xamarin-mac,api-tools|runtime-sdk,null,API 调试工具，适合测试接口、请求和开发流程
+atlassian-sourctree,devops,null,Git 图形客户端
+cisdem-document-reader,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+licensed,utilities,null,软件许可证管理工具
+loading,network-tools|system-maintenance,null,菜单栏网络监控工具，可显示正在使用网络的应用
+digiexam,utilities,null,带设备锁定的在线考试平台
+remote-wake-up,network-tools,null,一键唤醒网络设备的工具
+screaming-frog-log-file-analyser,utilities,null,SEO 日志审计工具
+tentacle-sync-studio,video|audio|transfer,null,同步多机位音视频时间码，拍摄现场对齐素材更省心
+yojimbo,utilities,null,个人信息整理工具
+beutl,video,null,视频编辑工具，适合剪辑、处理和导出视频
+marathon-infinity,utilities,null,第一人称射击游戏
+omnipresence,writing|transfer,null,写作和笔记工具，适合记录、编辑和整理文本内容
+apidog-europe,api-tools,null,API 调试工具，适合测试接口、请求和开发流程
+navicat-for-mariadb,database-tools,null,数据库工具，适合连接、查询和管理数据库
+usmart-trade,finance,null,财务工具，适合记账、发票、资产或交易管理
+black-ink,transfer,null,传输工具，适合下载、同步或共享文件
+datasette,utilities,null,数据集发布与浏览桌面封装应用
+gamma-control,utilities,null,按屏幕独立调节颜色的工具
+gitkraken-serverless,devops,null,高效 Git 客户端
+qbserve,utilities,null,效率管理工具，适合安排任务、日程或跟踪时间
+turbotax-2024,finance,null,财务工具，适合记账、发票、资产或交易管理
+brickstore,utilities,null,BrickLink 离线管理工具
+eme,writing,null,Markdown 编辑器，适合写作、整理文档和发布内容
+feem,transfer,null,完整功能的多平台共享软件，可以在多手机多电脑之间直接传送文本和文件
+postbox,communication|security,null,邮件客户端，适合集中收发和管理邮箱
+smartsynchronize,transfer,null,强大的文件比较，合并和同步的多平台工具
+toolreleases,utilities,null,Apple 工具新版发布提醒工具
+astro-command-center,device-management,null,ASTRO 设备设置配置工具
+chatmate-for-whatsapp,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+colorchecker-camera-calibration,utilities,null,图片工具，适合浏览、编辑、转换或管理图片
+crystalmaker,utilities,null,晶体和分子结构能量建模工具
+deepgit,devops|ide,null,编程开发工具，适合编写、阅读和维护代码
+geoda,utilities,null,空间分析、统计和回归分析工具
+nifty-file-lists,utilities,null,文件元数据表格导出工具
+softorino-youtube-converter,video|transfer,null,传输工具，适合下载、同步或在设备间传文件
+opensong,office,null,演示工具，适合制作展示内容或现场演示
+overbridge,audio|device-management,null,Elektron 硬件与音乐软件集成工具
+songkong,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+supremo,network-tools,null,远程桌面工具，适合远程访问和控制电脑
+yes24ebook,utilities,null,YES24 Crema 电子书阅读器
+deep-hiarcs-chess-explorer,game,null,国际象棋数据库和分析工具，适合研究棋局与开局
+crescendo,utilities,null,实时事件查看器
+flic,device-management,null,蓝牙按钮驱动工具
+locu,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+massreplaceit,utilities,null,查找替换工具
+pretzel,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+recut,video,null,自动视频剪辑工具，可快速移除静音片段
+wiso-steuer-2024,finance,null,财务工具，适合记账、发票、资产或交易管理
+aquafold-aqua-data-studio,database-tools,null,集数据管理和可视化分析于一体的数据库 IDE
+ondesoft-audible-audiobook-converter,audio,null,有声书转换工具
+weektodo,security|GTD,null,安全工具，适合保护隐私、控制访问或加密数据
+apptrap,system-maintenance,null,应用卸载辅助工具，会在删除应用时提示清理相关偏好和残留文件
+bright-vpn,security|network-tools,null,VPN 服务客户端
+fireworks,utilities,null,粒子特效编辑器
+flanders-ip-remote-utility,device-management,null,Flanders Scientific 硬件管理工具
+huly,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+mysterium-vpn,security|network-tools,null,VPN 客户端
+nitroshare,transfer,null,传输工具，适合下载、同步或在设备间传文件
+sengi,communication|GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+sysdig-inspect,security|devops,null,安全工具，适合保护隐私、控制访问或加密数据
+toptracker,finance|GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+vero,utilities,null,无广告无算法社交客户端
+drawpile,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+encryptme,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+msgfiler,communication,null,邮件客户端，适合集中收发和管理邮箱
+nimbus,utilities,null,沟通工具，适合聊天、邮件、通话或团队交流
+prowritingaid,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+qdslrdashboard,utilities,null,图片工具，适合浏览、编辑、转换或管理图片
+raze,utilities,null,基于 GZDoom 技术的 Build 引擎移植版
+securesafe,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+starsector,finance,null,财务工具，适合记账、发票、资产或交易管理
+syncmate,transfer,null,传输工具，适合下载、同步或共享文件
+trolcommander,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+aliworkbench,utilities,null,淘宝和天猫商家工作台
+anchor-wallet,security|finance,null,EOS 系钱包客户端，适合管理账号和签署交易
+drovio,ide,null,沟通工具，适合聊天、邮件、通话或团队交流
+flickr-uploadr,picture-photo|transfer,null,图片工具，适合浏览、编辑、转换或管理图片
+nuclino,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+safeincloud-password-manager,security,null,账号安全工具，适合管理密码、验证码和通行密钥
+fedistar,communication|GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+free42-binary,utilities,null,HP-42S 计算器模拟器
+mini-program-studio,ide,null,编程开发工具，适合编写、阅读和维护代码
+navicat-data-modeler,3d-cad|database-tools,null,数据库工具，适合连接、查询和管理数据库
+oscilloscope,utilities,null,示波器风格视觉效果工具
+pdfkey-pro,security,null,办公文档工具，适合阅读、编辑或管理文档资料
+productive,utilities,null,代理机构管理系统
+simpholders,utilities,null,iPhone 模拟器应用访问工具
+warcraft-logs-uploader,writing|transfer,null,传输工具，适合下载、同步或在设备间传文件
+dmidiplayer,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+fastmarks,browser|Automation,null,网页浏览器，适合日常上网和访问 Web 服务
+merlin-project,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+pd-l2ork,audio|ide,null,编程开发工具，适合编写、阅读和维护代码
+wiso-steuer-2022,finance,null,财务工具，适合记账、发票、资产或交易管理
+yep,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+chia-blockchain,utilities,null,Chia 区块链图形客户端
+chronoagent,transfer,null,传输工具，适合下载、同步或共享文件
+hasselblad-phocus,picture-photo,null,哈苏相机 RAW 图像处理工具
+m3unify,utilities,null,文件导出和 M3U 播放列表生成工具
+makeracam,utilities,null,Makera CNC 的 CAM 软件
+manictime,utilities,null,效率管理工具，适合安排任务、日程或跟踪时间
+paintcode,picture-photo|ui-prototyping|diagramming,null,把矢量设计转成代码，适合开发可复用界面图形
+vocaster-hub,device-management,null,Focusrite Vocaster 声卡控制工具
+bitmessage,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+camerabag,picture-photo,null,照片滤镜和编辑工具
+gluemotion,video,null,视频工具，适合播放、录制、剪辑或转换视频
+greenfoot,utilities,null,Java 面向对象教学工具
+inkdown,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+ishowu-instant,video,null,视频工具，适合播放、录制、剪辑或转换视频
+macgdbp,utilities,null,PHP 应用实时交互调试工具
+ppduck,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+qt-creator-dev,ide,null,应用开发 IDE
+raider-io-client,writing,null,魔兽世界 Mythic+ 和团本进度追踪客户端
+tinderbox,writing,null,强大的信息组织和分析工具，旨在帮助用户管理思想和计划
+archipelago,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+fromscratch,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+micro-blog,utilities,null,微博客社交客户端
+reunion,utilities,null,家谱管理应用
+taccy,security,null,安全工具，适合保护隐私、控制访问或加密数据
+altar-ai,ai-tools|Meeting,null,用 AI 帮你处理沟通、会议或信息整理
+boxcryptor,security|file-management,null,云盘文件加密工具，同步前先给敏感资料上锁
+clion-eap,terminal-tools|ide,null,CLion 早期访问版 IDE
+cloudup,utilities,null,安全即时分享工具
+desktop-composer,utilities,null,系统和应用外观管理工具
+pdfpenpro,PDF,null,办公文档工具，适合阅读、编辑或管理文档资料
+raw-photo-processor,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+strawberry-wallpaper,picture-photo|education,null,图片工具，适合浏览、编辑、转换或管理图片
+chemdoodle,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+dcp-o-matic-kdm-creator,video|audio,null,为 DCP 生成影院密钥，适合数字电影发行流程
+dintch,utilities,null,文件完整性检查工具
+hackmd,writing,null,沟通工具，适合聊天、邮件、通话或团队交流
+ibored,utilities,null,十六进制编辑器
+parsehub,api-tools,null,API 调试工具，适合测试接口、请求和开发流程
+picfindr,picture-photo|finance,null,图片工具，适合浏览、编辑、转换或管理图片
+rewind,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+thebrain,Notes,null,写作和笔记工具，适合记录、编辑和整理文本内容
+waltr-pro,utilities,null,Apple 设备媒体转换和直传工具
+attachecase,security,null,安全工具，适合保护隐私、控制访问或加密数据
+jukebox,system-maintenance,null,音频工具，适合播放、制作、编辑或管理声音内容
+mindmaster,Notes,null,思维导图软件
+texts-com,utilities,null,私信聚合管理器
+cloud189,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+rapidweaver,diagramming,null,网页设计工具，适合创建网站和博客
+shimonote,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+bome-network,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+netease-popo,communication,null,即时通讯平台
+nifty,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+playmemories-home,video|picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+plus42-binary,utilities,null,基于 HP-42S 的 RPN 计算器
+quicktune,video|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+retroshare,utilities,null,沟通工具，适合聊天、邮件、通话或团队交流
+stand,utilities,null,每小时站立提醒工具
+ankama-launcher,game,null,Ankama 游戏启动器，管理 Dofus 等游戏和账号
+editaro,writing,null,文本编辑器，适合编辑纯文本、配置和轻量写作
+quiet,communication|GTD,null,沟通工具，适合聊天、邮件、通话或团队交流
+thedesk,communication|GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+linden-lab-second-life-viewer,utilities,null,Second Life 3D 虚拟世界客户端
+mailplane,communication,null,邮件客户端，适合集中收发和管理邮箱
+restapia,api-tools,null,API 调试工具，适合测试接口、请求和开发流程
+captain-plugins-epic,audio,null,音乐理论工具
+excire-foto,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+honer,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+katana,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+klokki,utilities,null,自动时间追踪工具
+remotix-agent,system-maintenance,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+social-stream,communication,null,直播社交消息聚合和控制工具
+touchosc-bridge,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+twake-desktop,transfer,null,Twake Workplace 文件同步工具
+vimy,devops,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+volt,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+flow,GTD,null,旨在提升专注力和生产效率的小巧应用
+halion-sonic,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+northern-softworks-cache-cleaner,file-management,null,文件管理工具，适合整理、传输或清理文件
+now-tv-player,video,null,视频工具，适合播放、录制、剪辑或转换视频
+ricoh-theta,utilities,null,图片工具，适合浏览、编辑、转换或管理图片
+roaringapps,system-maintenance,null,已安装应用兼容性查看工具
+rodeo,ide,null,编程开发工具，适合编写、阅读和维护代码
+bfxr,game,null,复古游戏音效生成器，快速做 8-bit 风格声音
+boxy-suite,communication|GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+fmail2,communication,null,沟通工具，适合消息、邮件、通话或团队交流
+ieasemusic,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+messenger-native,utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+mjolnir,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+navicat-data-modeler-essentials,3d-cad|database-tools,null,数据库工具，适合连接、查询和管理数据库
+navigraph-simlink,utilities,null,飞行模拟器 Navigraph 账户连接工具
+opera-neon,browser,null,网页浏览器，适合日常上网、访问网页和使用 Web 服务
+partdesigner,3d-cad,null,LEGO 零件设计工具
+proscoreboard,utilities,null,记分牌软件
+xsplit-vcam,utilities,null,视频工具，适合播放、录制、剪辑或转换视频
+arctype,database-tools,null,数据库工具，适合连接、查询和管理数据库
+decentr,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+duplicacy-web-edition,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+focusany,utilities,null,开源桌面工具箱
+guilded,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+i1profiler,picture-photo,null,显示器和打印色彩校准工具，适合严肃影像工作流
+kogiqa,Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+mymonero,finance,null,财务工具，适合记账、发票、资产或交易管理
+tdr-molotok,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+touchosc-editor,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+confectionery,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+digicheck-ng,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+envkey,transfer,null,传输工具，适合下载、同步或共享文件
+mumu-x,ai-tools,null,用 AI 同义词查找表情和符号的工具
+openshot-video-editor-daily-build,video,null,跨平台视频编辑器
+qqnews,utilities,null,腾讯新闻客户端
+airtrash,transfer,null,传输工具，适合下载、同步或在设备间传文件
+beersmith,utilities,null,啤酒酿造管理软件
+command-pad,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+decloner,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+fujifilm-pixel-shift-combiner,picture-photo,null,富士相机联机拍摄和像素位移合成工具
+gyazmail,communication,null,邮件客户端，适合集中收发和管理邮箱
+kkbox,audio,null,视频工具，适合播放、录制、剪辑或转换视频
+labymod-launcher,game,null,LabyMod 启动器，管理 Minecraft 模组和服务器体验
+nektony-vsdx-annotator,picture-photo,null,Visio 图纸预览、编辑和转换工具
+packet-peeper,network-tools,null,网络协议分析工具，适合抓包、排查和分析网络问题
+sms-plus,game,null,游戏模拟器，适合运行和管理经典游戏
+8x8-work,video|communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+candybar,utilities,null,图片工具，适合浏览、编辑、转换或管理图片
+jriver-media-center,utilities,null,媒体管理和播放工具
+nisus-thesaurus,utilities,null,服务菜单同义词工具
+rowmote-helper,network-tools,null,Rowmote Pro 远程控制辅助工具
+space-saver,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+toneprint,utilities,null,效果器音色调整工具
+wewechat,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+btcpayserver-vault,finance|device-management|transfer,null,BTCPay 硬件钱包桥接工具，帮助安全签署付款
+fontcreator,Font,null,字体编辑工具，适合设计、修改和检查字体
+hamrs-pro,utilities,null,便携日志记录工具
+kigb,game,null,游戏模拟器，适合运行和管理经典游戏
+todour,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+waltr,utilities,null,Apple 设备媒体直传工具
+writerside,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+crypto-native-app-ng,security|finance,null,加密资产工具入口，适合处理钱包和链上操作
+dcp-o-matic-disk-writer,video,null,把 DCP 写入放映介质，适合影院交付前检查
+express-scribe-transcription-software,audio,null,脚踏控制的转录音频播放器
+jgrasp,ide,null,编程开发工具，适合编写、阅读和维护代码
+local-beta,ide,null,Flywheel WordPress 本地开发工具测试版
+sofa,utilities,null,休闲内容清单工具，可整理电影、剧集、游戏和书籍的待看待玩列表
+tag,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+xmlmind-xml-editor,utilities,null,强校验近似所见即所得 XML 编辑器
+fitbit-os-simulator,utilities,null,Fitbit 应用和表盘开发工具
+jumpshare,video|picture-photo,null,视频工具，适合播放、录制、剪辑或转换视频
+ossapp,utilities,null,统一软件包管理器
+enzymex,utilities,null,DNA 序列文件可视化与编辑工具
+foldingtext,Notes,null,大纲式文本编辑器，适合用层级结构整理写作思路
+nault,finance,null,Nano 钱包客户端，适合管理和发送 Nano 资产
+ossia-score,utilities,null,跨媒介艺术交互式音序器
+tabtopus,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+tiktok-effect-house,utilities,null,TikTok AR 特效创作工具
+virtualhostx,utilities,null,本地服务器环境
+black-light,utilities,null,屏幕视觉效果工具，可调节显示效果以护眼或娱乐
+blink1control,utilities,null,blink(1) USB RGB LED 控制工具
+canon-my-image-garden,picture-photo,null,照片编辑和打印工具
+cleartext,writing,null,文本编辑器，适合编辑纯文本、配置和轻量写作
+cloud-pbx,utilities,null,云电话系统
+ivacy,security|network-tools,null,VPN 客户端，适合加密网络连接和保护上网隐私
+sanctum,utilities,null,用于在本机运行大语言模型，适合本地 AI 实验和推理
+sessionrestore,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+sqleditor,3d-cad|database-tools,null,数据库工具，适合连接、查询和管理数据库
+vernier-spectral-analysis,utilities,null,光谱仪数据分析工具
+4peaks,utilities,null,DNA 测序轨迹文件可视化与编辑工具
+aqua,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+droidid,device-management,null,用 Android 设备指纹解锁 Mac 的工具
+focus-will,audio,null,个性化专注音乐应用
+ivolume,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+moose,transfer,null,开源的 bT 下载客户端，支持 macOS 与 Linux 系统
+pagico,GTD|Notes,null,适合整理笔记、文档和长期知识资料
+pynsource,diagramming|ide,null,编程开发工具，适合编写、阅读和维护代码
+retrospective,utilities,null,日志分析工具
+ricochet-refresh,communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+ripx,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+voodoopad,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+exist-db,database-tools,null,数据库工具，适合连接、查询和管理数据库
+fixkey,ai-tools|writing|device-management,null,写作和笔记工具，适合记录、编辑和整理文本内容
+hides,ide,null,编程开发工具，适合编写、阅读和维护代码
+mbed-studio,ide,null,编程开发工具，适合编写、阅读和维护代码
+wrkspace,Automation|devops,null,容器和集群管理工具，适合本地开发、镜像和 Kubernetes 工作流
+boltai,ai-tools|communication,null,AI 聊天客户端，适合和大模型对话、整理和生成内容
+mora-downloader,video|audio|transfer,null,mora 音乐下载工具，适合保存购买的高音质曲目
+preference-manager,system-maintenance,null,视频工具，适合播放、录制、剪辑或转换视频
+sleipnir,browser,null,网页浏览器，适合日常上网、访问网页和使用 Web 服务
+soundsiphon,audio|picture-photo,null,应用音频捕获工具
+tritium,utilities,null,法律从业者文书起草环境
+apple-store-time-machine,ide,null,Apple Store 开业日 3D 重建浏览工具
+honto-view-app,utilities,null,honto 商店电子书阅读器
+mipony,transfer,null,下载管理器，适合集中管理和加速文件下载
+mixin-messenger-desktop,finance,null,加密货币钱包
+scitools-understand,utilities,null,代码可视化和浏览工具
+slimbatterymonitor,device-management|system-maintenance,null,电池或硬件状态工具，适合查看设备状态并辅助维护
+time-lapse-assembler,video|picture-photo,null,视频工具，适合播放、录制、剪辑或转换视频
+timeular,GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+vienna-assistant,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+warsaw,security|finance|education,null,银行安全组件，常见于巴西网银登录和交易保护
+wiso-steuer-2023,finance,null,财务工具，适合记账、发票、资产或交易管理
+yealink-meeting,Meeting,null,亿联会议客户端，适合连接会议室设备和远程会议
+chordpotion,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+cinco,ide,null,编程开发工具，适合编写、阅读和维护代码
+gridea,writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+haroopad,writing,null,Markdown 编辑器，适合写作、整理文档和发布内容
+hedy-ai,ai-tools|Meeting,null,用 AI 帮你处理沟通、会议或信息整理
+music-remote,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+sharepod,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+spires,utilities,null,inspire-hep 和 arXiv 前端工具
+volanta,utilities,null,个人飞行记录工具
+zeitgeist,devops,null,Vercel 部署监控工具
+baritone,audio,null,Minecraft 自动寻路工具，适合研究和辅助复杂移动
+brightauthor-connected,device-management,null,BrightSign 设备配置和管理工具
+energia,utilities,null,电子原型开发平台
+gearsystem,game,null,游戏模拟器，适合运行和管理经典游戏
+livebook-nightly,writing,null,Elixir 开发者代码笔记本
+malus,network-tools,null,网络调试工具，适合抓包、代理和排查连接问题
+trezor-bridge,security,null,沟通工具，适合聊天、邮件、通话或团队交流
+ipsecuritas,utilities,null,IPSec 客户端
+ovito-pro,utilities,null,科学数据可视化和分析软件
+simplysign-desktop,finance,null,proCertum SmartSign 虚拟加密卡读卡器
+banana-cake-pop,api-tools,null,编程开发工具，适合编写、阅读和维护代码
+dcp-o-matic-playlist-editor,video,null,编辑 DCP 放映列表，整理影院播放顺序更清楚
+dropbox-dash,transfer,null,传输工具，适合下载、同步或共享文件
+icon-shelf,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+netxms-management-console,system-maintenance,null,网络和基础设施监控管理系统
+coffitivity-offline,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+dcp-o-matic-batch-converter,video|audio,null,批量转换影片到 DCP，处理多条片源时很省事
+dcp-o-matic-encode-server,video|audio,null,分担 DCP 编码任务，让电影打包速度更快
+desktime,utilities,null,效率管理工具，适合安排任务、日程或跟踪时间
+invisiblix,file-management,null,文件管理工具，适合整理、传输或清理文件
+neat-reader,utilities,null,ePub 阅读、批注和管理工具
+restream-chat,communication|entertainment,null,沟通工具，适合聊天、邮件、通话或团队交流
+syncalicious,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+techsmith-capture,picture-photo,null,视频工具，适合播放、录制、剪辑或转换视频
+threema-work,communication|security,null,端到端加密即时通讯工具，适合安全聊天
+clover-chord-systems,utilities,null,节奏与和弦谱编辑器
+duplicate-audio-finder,audio|file-management,null,批量音频指纹和相似度检测工具
+hola-vpn,security|network-tools,null,点对点 VPN 客户端
+infinity,utilities,null,可定制工作管理平台
+mkchromecast,video|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+poker-copilot,finance,null,财务工具，适合账务、预算或资产相关管理
+privatevpn,security|network-tools,null,VPN 工具，适合加密连接、远程组网和保护隐私
+pulse-sms,utilities,null,短信桌面客户端
+sql-tabs,database-tools,null,数据库工具，适合连接、查询和管理数据库
+waterfox-classic,browser,null,网页浏览器，适合日常上网、访问网页和使用 Web 服务
+dataiku-data-science-studio,education,null,机器学习实验和生产化平台
+deepstream,transfer,null,传输工具，适合下载、同步或共享文件
+vimcal,communication|GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+ivideon-client,video|security,null,Ivideon 账号监控视频查看工具
+marvel,utilities,null,原型、测试和交付工具
+raven-reader,utilities,null,办公文档工具，适合阅读、编辑或管理文档资料
+toontown-rewritten,entertainment,null,迪士尼 Toontown Online 粉丝复兴版游戏
+uncrustifyx,runtime-sdk,null,写作和笔记工具，适合记录、编辑和整理文本内容
+vimediamanager,video,null,视频工具，适合播放、录制、剪辑或转换视频
+writemapper,Notes,null,把思维导图变成写作大纲，适合文章和报告起草
+cisco-proximity,Meeting,null,连接会议室设备共享屏幕，适合企业会议和演示
+dcp-o-matic-combiner,video,null,视频工具，适合播放、录制、剪辑或转换视频
+free-podcast-transcription,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+gearboy,game,null,游戏模拟器，适合运行和管理经典游戏
+shiba,picture-photo|writing,null,写作和笔记工具，适合记录、编辑和整理文本内容
+trivial,transfer,null,传输工具，适合下载、同步或在设备间传文件
+metarename,utilities,null,需要定期管理大量文件的摄影师和摄像师的首选工具
+viables,utilities,null,虚拟化或远程连接工具，适合运行系统环境和访问远程电脑
+agisoft-metashape-standard-edition,picture-photo,null,数字图像处理和 3D 空间数据生成工具
+batchoutput-pdf,PDF,null,办公文档工具，适合阅读、编辑或管理文档资料
+ipepresenter,office,null,办公文档工具，适合阅读、编辑或管理文档资料
+james,network-tools,null,网络调试工具，适合抓包、代理和排查连接问题
+mitti,video,null,视频工具，适合播放、录制、剪辑或转换视频
+pdfelement-express,PDF,null,PDF 编辑工具，适合编辑、标注和处理 PDF 文档
+podcastmenu,audio|system-maintenance,null,菜单栏播客工具，不打开主应用也能收听节目
+ringcentral-meetings,Meeting,null,RingCentral 会议客户端，适合远程视频沟通
+weakauras-companion,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+bison-wallet,finance,null,财务工具，适合记账、发票、资产或交易管理
+gama-platform,ide|runtime-sdk,null,编程开发工具，适合编写、阅读和维护代码
+mail-assistant,communication,null,邮件客户端，适合集中收发和管理邮箱
+statusfy,finance,null,财务工具，适合账务、预算或资产相关管理
+time-sink,utilities,null,Mac 使用时间追踪工具，用于统计应用和窗口耗时
+electrocrud,database-tools,null,数据库工具，适合连接、查询和管理数据库
+macmorpheus,video,null,视频工具，适合播放、录制、剪辑或转换视频
+paragon-camptune,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+profit,finance,null,财务工具，适合记账、发票、资产或交易管理
+provideoplayer,video,null,演示工具，适合制作展示内容或现场演示
+twobird,communication|writing,null,邮件客户端，适合集中收发和管理邮箱
+zenbeats,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+fractal-bot,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+kuaitie,transfer|Automation,null,效率增强工具，适合快速启动、自动化或管理常用操作
+macbreakz,utilities,null,人体工学休息提醒工具
+wing-personal,ide,null,编程开发工具，适合编写、阅读和维护代码
+winx-hd-video-converter,video,null,视频工具，适合播放、录制、剪辑或转换视频
+affinity-publisher,diagramming,null,专业排版工具，杂志、手册和宣传册都能做
+dex,utilities,null,提醒你维护关系的个人 CRM
+firefox-cn,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+liclipse,utilities,null,Eclipse 轻量编辑器和主题增强工具
+readmo-reading,utilities,null,繁体中文电子书服务客户端
+splitshow,office,null,办公文档工具，适合阅读、编辑或管理文档资料
+billings-pro,utilities,null,财务工具，适合记账、发票、资产或交易管理
+cloudpouch,utilities,null,AWS 云成本管理工具
+dixa,utilities,null,客服平台
+epoccam,utilities,null,视频工具，适合播放、录制、剪辑或转换视频
+studio-link-standalone,audio|picture-photo,null,高质量 AoIP 音频连接工具
+utterly,video|audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+vsee,video|communication,null,沟通工具，适合聊天、邮件、通话或团队交流
+wiso-steuer-2021,finance,null,财务工具，适合记账、发票、资产或交易管理
+miln-movie-splitter,video,null,视频工具，适合播放、录制、剪辑或转换视频
+sc-menu,utilities,null,智能卡菜单栏工具
+showhiddenfiles,file-management,null,文件管理工具，适合整理、传输或清理文件
+tuck,window-management,null,窗口管理工具，适合快速排列、移动和调整窗口
+tune-instructor,audio,null,Apple Music 菜单栏控制工具
+donut-browser-nightly,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+firefly-shimmer,finance,null,财务工具，适合记账、发票、资产或交易管理
+home-inventory,writing,null,针对macOS平台的房屋及物品清单软件
+iphoto-library-manager,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+jamkazam,utilities,null,低延迟在线排练和演出工具
+jandi,utilities,null,沟通工具，适合聊天、邮件、通话或团队交流
+playback,video,null,视频工具，适合播放、录制、剪辑或转换视频
+sococo,utilities,null,在线办公空间客户端
+stationtv-link,utilities,null,DVR 和媒体服务器
+wiso-steuer-2020,finance,null,财务工具，适合记账、发票、资产或交易管理
+arq-cloud-backup,transfer,null,文件管理工具，适合整理、传输、清理或备份文件
+convert3dgui,picture-photo|terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+ethui,finance,null,财务工具，适合记账、发票、资产或交易管理
+isyncer,audio|transfer,null,音频工具，适合播放、制作、编辑或管理声音内容
+private-eye,network-tools|system-maintenance,null,网络监控工具，适合查看连接状态和排查网络问题
+tigerjython,education|ide,null,编程开发工具，适合编写、阅读和维护代码
+hermit-crab,terminal-tools,null,开发者工具，适合命令行、构建、调试或工程管理
+looking-glass-studio,video|picture-photo,null,Looking Glass 3D 图像和视频查看编辑工具
+lynkeos,picture-photo,null,视频工具，适合播放、录制、剪辑或转换视频
+pecunia,finance|education,null,财务工具，适合记账、发票、资产或交易管理
+ringcentral-classic,communication,null,沟通工具，适合消息、邮件、通话或团队交流
+elemental,database-tools,null,数据库工具，适合连接、查询和管理数据库
+ferdium-nightly,communication,null,多平台聚合消息客户端
+get-lyrical,audio,null,音频工具，适合播放、制作、编辑或管理声音内容
+loaf,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+mmhmm-studio,video|Meeting,null,办公文档工具，适合阅读、编辑或管理文档资料
+oryoki,browser,null,网页浏览器，适合日常上网和访问 Web 服务
+photozoom-pro,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+plan,communication|GTD,null,效率管理工具，适合安排任务、日程或跟踪时间
+prudent,finance,null,财务工具，适合账务、预算或资产相关管理
+ryver,utilities,null,团队沟通协作工具，适合聊天、会议和项目协作
+screenfocus,window-management,null,多屏幕管理工具
+shearwater-cloud,system-maintenance,null,潜水日志查看、编辑和分享工具
+skychart,picture-photo,null,图片工具，适合浏览、编辑、转换或管理图片
+tng-digital-mini-program-studio,devops|ide,null,编程开发工具，适合编写、阅读和维护代码
+arkiwi,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+betwixt,security,null,网络调试工具，适合抓包、代理和排查连接问题
+cashnotify,finance|system-maintenance,null,菜单栏收款提醒工具，适合关注支付和收入动态
+iit-certification-signature,security,null,乌克兰税务电子签名浏览器组件
+mac2imgur,picture-photo|transfer,null,图片工具，适合浏览、编辑、转换或管理图片
+machacha,file-management,null,文件管理工具，适合整理、传输、清理或备份文件
+mycard,utilities,null,游戏王卡片模拟器
+scatter,finance,null,财务工具，适合记账、发票、资产或交易管理
+xliff-editor,system-maintenance,null,加载迅速、使用简便且内存占用低的编辑工具，专为处理XLIFF文件而设计
+criptext,communication|security,null,邮件客户端，适合集中收发和管理邮箱
+cura-lulzbot-edition,utilities,null,3D 打印切片方案
+groestlcoin-core,finance,null,财务工具，适合记账、发票、资产或交易管理
+ludwig,utilities,null,辅助英文写作的例句搜索工具
+scenica-player,utilities,null,片场播放工具
+suunto-dm5,utilities,null,潜水计划和日志分析工具
+taskforge,GTD,com.azhard.taskforge,任务管理工具，适合规划待办、项目和执行节奏
+quarkclouddrive,transfer|ai-tools,com.quark.clouddrive.desktop,网盘客户端，适合同步文件、云端资料和 AI 辅助查找
+moraya,ai-tools|PDF,com.moraya.app,用 AI 辅助阅读和处理 Markdown、PDF 文档
+marginnote-4,PDF|education,QReader.MarginStudy.easy,阅读和标注 PDF，适合把学习资料整理成知识网络
+wondershare-miaoying,video|audio|ai-tools,cn.wondershare.miaoying,视频剪辑工具，适合短片制作、音频处理和 AI 辅助创作
+excalidraw,diagramming,com.pake.a6a972f,手绘风白板工具，适合画流程图、草图和结构图
+qli,video,com.wolfrosch.Qli,视频播放器，支持触控缩放画面，适合快速预览视频
+vmark,Notes|writing,app.vmark,Markdown 编辑工具，适合写作、预览和整理文档
+voicebox,ai-tools,sh.voicebox.app,AI 语音工具，适合语音处理和转写辅助
+developer,education,developer.apple.wwdc-Release,Apple 开发者资料入口，适合查看 WWDC、文档和示例
+hitpaw-watermark-remover,picture-photo,com.HitPaw.watermarkRemover,图片去水印工具，适合清理照片和素材里的干扰元素
+giffun,picture-photo,com.nara.gifCreator,GIF 制作工具，适合把图片或短片做成动图
+permute-3,video|audio,com.charliemonroe.Permute-3,媒体格式转换工具，适合批量转换视频和音频文件
+apptag,Automation,null,管理本地 App 标签，适合维护启动器分类方案
+shift-browser,browser,com.shift.browser,多账号浏览器，适合把网页应用和工作区集中管理
+iconfly,ui-prototyping|picture-photo,com.Aperio-Lux.IconFly,图标制作工具，适合生成和调整 App 图标素材
+disk-space-analyzer,system-maintenance|file-management,com.iokf.we,分析磁盘空间，适合找出大文件和清理存储
+windowshelf,window-management,com.windowshelf.app,窗口收纳工具，适合把窗口暂存到屏幕边缘
+小米互联服务,transfer|device-management,com.xiaomi.hyperConnect,小米设备互联工具，适合在 Mac 与手机间同步协作
+tomito,GTD,com.tomito.tomito,番茄钟工具，适合专注计时和安排工作节奏
+vocotype,audio|writing,null,语音输入工具，适合把口述内容快速转成文字
+openvox-local-voice-ai,audio|ai-tools,com.theoracleguy.openvox,本地语音 AI 工具，适合离线语音识别和处理
+dinky,file-management,com.dinky.app,压缩工具，适合打包和解压常见归档文件
+vidbee,transfer|video,com.vidbee,视频下载工具，适合保存在线视频素材
+audio-stem-separator,audio|ai-tools,beijaflor-io.Audio-Stem-Separator,音频分轨工具，适合从歌曲里提取人声或伴奏
+thor-launcher,Automation,me.alvinzhu.Thor,快捷启动器，适合用键盘快速打开 App 和命令
+不背单词,education,null,英语词汇学习工具，适合背单词和复习记忆
+轻听英语,education|audio,null,英语听力学习工具，适合精听和日常听力训练
+vibe,ai-tools|audio,github.com.thewh1teagle.vibe,本地语音转文字工具，适合转写录音和会议内容
+tabbit-browser,ai-tools|browser,com.tab-browser.Tabbit,AI 浏览器，适合用智能助手辅助网页阅读和搜索
+taglauncher,Automation,com.taglauncher.app,本地 App 启动和分类工具，适合按标签管理常用应用
+50音起源,education,kevinzhow.KanaOrigin,日语五十音学习工具，适合入门假名和发音记忆
+clean-text,writing,com.apimac.CleanText,文本清理工具，适合整理空格、换行和格式杂质
+quickrecorder,video,com.lihaoyun6.QuickRecorder,轻量录屏工具，适合快速录制屏幕和导出视频
+nxpowerlite-desktop,file-management,com.NeuxPower.NXPowerLite-Desktop,文件压缩工具，适合缩小 Office、PDF 和图片体积
+peekx,file-management|writing,altic.PeekX,预览 Markdown 和文件夹内容，适合快速查看资料
+123云盘,transfer,com.mac123.mfy,云盘客户端，适合同步、备份和分享文件
+macos-assistant,system-maintenance,cn.com.macwk.macOS-Assistant,系统辅助工具，适合查看和调整 macOS 常用设置
+liuhai,window-management,cn.better365.HideLiuHai,隐藏刘海区域的小工具，适合优化菜单栏和屏幕观感
+词根词缀字典,education,null,英语词根词缀词典，适合查词和扩展词汇记忆
+gopeed,transfer,com.gopeed.gopeed,开源下载器，适合管理多线程下载任务
+omnizip,file-management,com.shrek.omnizip,压缩解压工具，适合处理 ZIP、RAR 等归档文件
+folder-peek,file-management,com.sindresorhus.Folder-Peek,菜单栏文件夹入口，适合快速访问常用目录
+downie-4,transfer|video,com.charliemonroe.Downie-4,视频下载工具，适合保存网页视频和媒体资源
+tembo,file-management,com.houdah.Tembo3,文件搜索工具，适合快速定位 Mac 上的资料
+immersive-translate,education|browser,com.immersivetranslate.Immersive-Translate,沉浸式翻译工具，适合双语阅读网页和文档
+mole,system-maintenance,com.tw93.MoleApp,系统清理工具，适合释放空间和处理缓存文件
+heptabase,Notes|diagramming,app.projectmeta.projectmeta,视觉化知识库，适合用白板和卡片整理思考

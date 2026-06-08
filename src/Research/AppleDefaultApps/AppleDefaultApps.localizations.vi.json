@@ -1,0 +1,453 @@
+{
+  "resourceFormatVersion": 1,
+  "catalogContentVersion": 1,
+  "language": "vi",
+  "localizationsVersion": 2,
+  "entries": [
+    {
+      "bundleIdentifier": "com.apple.finder",
+      "displayName": "Finder",
+      "note": "Hệ thống macOS đi kèm với các công cụ phù hợp để hoàn thành việc quản."
+    },
+    {
+      "bundleIdentifier": "com.apple.Safari",
+      "displayName": "Safari",
+      "note": "Trình duyệt chính thức của Apple, tiết kiệm năng lượng."
+    },
+    {
+      "bundleIdentifier": "com.apple.mail",
+      "displayName": "Mail",
+      "note": "Ứng dụng thư hệ thống, nhiều hộp thư có thể được xử lý tập trung"
+    },
+    {
+      "bundleIdentifier": "com.apple.MobileSMS",
+      "displayName": "Tin nhắn",
+      "note": "Cổng iMessage và SMS, trả lời tin nhắn nhanh hơn trên Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.FaceTime",
+      "displayName": "FaceTime",
+      "note": "Lối vào cuộc gọi âm thanh và video trong hệ sinh thái Apple"
+    },
+    {
+      "bundleIdentifier": "com.apple.iCal",
+      "displayName": "Lịch",
+      "note": "Hãy loại bỏ lịch trình ra khỏi đầu và dành thời gian cho một bản đồ trực quan"
+    },
+    {
+      "bundleIdentifier": "com.apple.Notes",
+      "displayName": "Ghi chú",
+      "note": "Tất cả các bản ghi nhớ, văn bản."
+    },
+    {
+      "bundleIdentifier": "com.apple.reminders",
+      "displayName": "Lời nhắc",
+      "note": "Việc cần làm và lời nhắc, thích hợp để nắm bắt các công việc nhỏ hàng ngày"
+    },
+    {
+      "bundleIdentifier": "com.apple.Photos",
+      "displayName": "Ảnh",
+      "note": "Hệ thống thư viện ảnh, cổng chính quản lý, chỉnh sửa và đồng bộ ảnh"
+    },
+    {
+      "bundleIdentifier": "com.apple.Music",
+      "displayName": "Nhạc",
+      "note": "Trình phát nhạc cục bộ và phát trực tuyến"
+    },
+    {
+      "bundleIdentifier": "com.apple.Terminal",
+      "displayName": "Terminal",
+      "note": "Mục nhập dòng lệnh, buồng lái ẩn của Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.ActivityMonitor",
+      "displayName": "Giám sát hoạt động",
+      "note": "Bảng điều khiển của Mac để xem ai đang tiêu thụ năng lượng."
+    },
+    {
+      "bundleIdentifier": "com.apple.airport.airportutility",
+      "displayName": "Tiện ích AirPort",
+      "note": "Các công cụ kết nối mạng kiểu cũ để quản lý AirPort và Time Capsules"
+    },
+    {
+      "bundleIdentifier": "com.apple.AppStore",
+      "displayName": "App Store",
+      "note": "Cửa hàng phần mềm Mac chính thức, bắt đầu tại đây để tìm ứng dụng."
+    },
+    {
+      "bundleIdentifier": "com.apple.apps.launcher",
+      "displayName": "Ứng dụng",
+      "note": "Cổng ứng dụng nhẹ giúp bạn nhanh chóng mở ứng dụng từ cấp hệ thống"
+    },
+    {
+      "bundleIdentifier": "com.apple.audio.audiomidisetup",
+      "displayName": "Thiết lập MIDI Âm thanh",
+      "note": "Thiết bị âm thanh và định tuyến MIDI."
+    },
+    {
+      "bundleIdentifier": "com.apple.automator",
+      "displayName": "Automator",
+      "note": "Bạn có thể xâu chuỗi các hành động tự động hóa máy Mac lại với nhau mà."
+    },
+    {
+      "bundleIdentifier": "com.apple.bluetoothfileexchange",
+      "displayName": "Trao đổi tệp qua Bluetooth",
+      "note": "Sử dụng Bluetooth để gửi và nhận file đã lỗi thời nhưng có thể cứu bạn."
+    },
+    {
+      "bundleIdentifier": "com.apple.iBooksX",
+      "displayName": "Sách",
+      "note": "Một điểm truy cập để đọc và quản lý sách điện tử."
+    },
+    {
+      "bundleIdentifier": "com.apple.bootcampassistant",
+      "displayName": "Trợ lý Boot Camp",
+      "note": "Hướng dẫn chính thức cài đặt Windows trên Intel Mac"
+    },
+    {
+      "bundleIdentifier": "com.apple.calculator",
+      "displayName": "Máy tính",
+      "note": "Máy tính nhỏ, chuyển đổi đơn vị và chế độ lập trình viên cũng được ẩn."
+    },
+    {
+      "bundleIdentifier": "com.apple.chess",
+      "displayName": "Cờ vua",
+      "note": "Cờ vua tích hợp để nghỉ ngắn và luyện tập"
+    },
+    {
+      "bundleIdentifier": "com.apple.clock",
+      "displayName": "Đồng hồ",
+      "note": "Cổng thông tin thống nhất dành cho báo thức, hẹn giờ."
+    },
+    {
+      "bundleIdentifier": "com.apple.colorsyncutility",
+      "displayName": "Tiện ích ColorSync",
+      "note": "Xem và sửa chữa cấu hình màu, xử lý sự khác biệt về màu sắc hiển thị và in ấn"
+    },
+    {
+      "bundleIdentifier": "com.apple.console",
+      "displayName": "Bảng điều khiển",
+      "note": "Cửa sổ xem nhật ký hệ thống rất hữu ích khi khắc phục sự cố bất thường"
+    },
+    {
+      "bundleIdentifier": "com.apple.addressbook",
+      "displayName": "Danh bạ",
+      "note": "Trung tâm liên hệ dành cho Thư, Tin nhắn và FaceTime"
+    },
+    {
+      "bundleIdentifier": "com.apple.dictionary",
+      "displayName": "Từ điển",
+      "note": "Từ điển và từ điển đồng nghĩa ngoại tuyến."
+    },
+    {
+      "bundleIdentifier": "com.apple.digitalcolormeter",
+      "displayName": "Đồng hồ đo Giá trị màu Số",
+      "note": "Công cụ chọn màu màn hình."
+    },
+    {
+      "bundleIdentifier": "com.apple.DiskUtility",
+      "displayName": "Tiện ích ổ đĩa",
+      "note": "Đĩa, phân vùng, định dạng và sơ cứu, đừng lộn xộn với nó nhưng nó quan trọng"
+    },
+    {
+      "bundleIdentifier": "com.apple.findmy",
+      "displayName": "Tìm",
+      "note": "Tìm thiết bị, tìm vật phẩm và cung cấp manh mối cho máy Mac bị mất của."
+    },
+    {
+      "bundleIdentifier": "com.apple.fontbook",
+      "displayName": "Sổ quản lý Phông chữ",
+      "note": "Trung tâm cài đặt và quản lý font chữ, quản lý font chữ trước khi thiết kế"
+    },
+    {
+      "bundleIdentifier": "com.apple.freeform",
+      "displayName": "Freeform",
+      "note": "Bảng trắng không giới hạn để động não, phác thảo và các ý tưởng ngẫu nhiên"
+    },
+    {
+      "bundleIdentifier": "com.apple.games",
+      "displayName": "Trò chơi",
+      "note": "Cổng trò chơi của Apple để quản lý tập trung nội dung Apple Arcade có."
+    },
+    {
+      "bundleIdentifier": "com.apple.grapher",
+      "displayName": "Trình vẽ đồ thị",
+      "note": "Phương trình đồ thị, một công cụ ẩn để trực quan hóa toán học"
+    },
+    {
+      "bundleIdentifier": "com.apple.home",
+      "displayName": "Nhà",
+      "note": "Lối vào điều khiển nhà thông minh có thể quản lý hệ thống chiếu sáng."
+    },
+    {
+      "bundleIdentifier": "com.apple.image_capture",
+      "displayName": "Trình lấy ảnh",
+      "note": "Nhập ảnh từ máy ảnh hoặc máy quét, đơn giản nhưng ổn định"
+    },
+    {
+      "bundleIdentifier": "com.apple.generativeplaygroundapp",
+      "displayName": "Playground",
+      "note": "Tạo hình ảnh bằng trí thông minh của Apple."
+    },
+    {
+      "bundleIdentifier": "com.apple.iMovieApp",
+      "displayName": "iMovie",
+      "note": "Đủ để chỉnh sửa video ở cấp độ đầu vào, video gia đình và phim ngắn nhẹ"
+    },
+    {
+      "bundleIdentifier": "com.apple.screencontinuity",
+      "displayName": "Phản chiếu iPhone",
+      "note": "Vận hành iPhone của bạn trực tiếp trên máy Mac."
+    },
+    {
+      "bundleIdentifier": "com.apple.journal",
+      "displayName": "Nhật ký",
+      "note": "Ghi lại những khoảnh khắc hàng ngày và từ từ biến suy nghĩ của bạn."
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Keynote",
+      "displayName": "Keynote",
+      "note": "Công cụ trình chiếu phong cách Apple, dễ dàng tạo slide đẹp mắt"
+    },
+    {
+      "bundleIdentifier": "com.apple.magnifier",
+      "displayName": "Kính lúp",
+      "note": "Phóng to các chi tiết màn hình để giúp quan sát và kiểm tra tốt"
+    },
+    {
+      "bundleIdentifier": "com.apple.Maps",
+      "displayName": "Bản đồ",
+      "note": "Kiểm tra tuyến đường, xem thành phố và đẩy điểm đến vào iPhone"
+    },
+    {
+      "bundleIdentifier": "com.apple.migrateassistant",
+      "displayName": "Trợ lý Di chuyển",
+      "note": "Khi chuyển sang máy Mac mới, chuyển dữ liệu cũ sang máy mới"
+    },
+    {
+      "bundleIdentifier": "com.apple.exposelauncher",
+      "displayName": "Mission Control",
+      "note": "Cửa sổ và màn hình nhìn từ trên cao, nếu lộn xộn thì chỉ cần nhìn thôi"
+    },
+    {
+      "bundleIdentifier": "com.apple.news",
+      "displayName": "News",
+      "note": "Cổng thông tin Apple News, thích hợp để xem nội dung phương tiện đã chọn"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Numbers",
+      "displayName": "Numbers",
+      "note": "Công cụ Apple Sheets, báo cáo gọn nhẹ sảng khoái hơn Excel"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Pages",
+      "displayName": "Pages",
+      "note": "Trình xử lý văn bản của Apple, tuyệt vời để viết tài liệu và sắp chữ"
+    },
+    {
+      "bundleIdentifier": "com.apple.passwords",
+      "displayName": "Mật khẩu",
+      "note": "Trình quản lý mật khẩu hệ thống, quản lý tài khoản tập trung."
+    },
+    {
+      "bundleIdentifier": "com.apple.mobilephone",
+      "displayName": "Điện thoại",
+      "note": "Thực hiện cuộc gọi trên máy Mac bằng điện thoại của bạn"
+    },
+    {
+      "bundleIdentifier": "com.apple.AboutThisMacLauncher",
+      "displayName": "Giới thiệu về máy Mac này",
+      "note": "Xem kiểu máy Mac, phiên bản hệ thống và số sê-ri"
+    },
+    {
+      "bundleIdentifier": "com.apple.archiveutility",
+      "displayName": "Tiện ích Lưu trữ",
+      "note": "Nén và giải nén ZIP cùng các tệp lưu trữ"
+    },
+    {
+      "bundleIdentifier": "com.apple.DeskCam",
+      "displayName": "Desk View",
+      "note": "Hiển thị mặt bàn bằng Camera thông suốt"
+    },
+    {
+      "bundleIdentifier": "com.apple.DirectoryUtility",
+      "displayName": "Tiện ích Thư mục",
+      "note": "Cấu hình dịch vụ thư mục, LDAP và tài khoản mạng"
+    },
+    {
+      "bundleIdentifier": "com.apple.DVDPlayer",
+      "displayName": "Trình phát DVD",
+      "note": "Phát đĩa DVD và nội dung DVD cục bộ"
+    },
+    {
+      "bundleIdentifier": "com.apple.ExpansionSlotUtility",
+      "displayName": "Tiện ích Khe Mở rộng",
+      "note": "Xem và cấu hình khe mở rộng của Mac Pro"
+    },
+    {
+      "bundleIdentifier": "com.apple.appleseed.FeedbackAssistant",
+      "displayName": "Trợ lý phản hồi",
+      "note": "Gửi phản hồi hệ thống và chẩn đoán cho Apple"
+    },
+    {
+      "bundleIdentifier": "com.apple.FolderActionsSetup",
+      "displayName": "Thiết lập Tác vụ Thư mục",
+      "note": "Gắn hành động script tự động cho thư mục"
+    },
+    {
+      "bundleIdentifier": "com.apple.IPAInstaller",
+      "displayName": "Trình cài đặt ứng dụng iOS",
+      "note": "Cài gói ứng dụng iOS bằng công cụ hệ thống"
+    },
+    {
+      "bundleIdentifier": "com.apple.keychainaccess",
+      "displayName": "Truy cập chuỗi khóa",
+      "note": "Quản lý mật khẩu, chứng chỉ, khóa và mục bảo mật"
+    },
+    {
+      "bundleIdentifier": "com.apple.Ticket-Viewer",
+      "displayName": "Trình xem Vé",
+      "note": "Xem vé Kerberos và trạng thái xác thực"
+    },
+    {
+      "bundleIdentifier": "com.apple.wifi.diagnostics",
+      "displayName": "Chẩn đoán không dây",
+      "note": "Chẩn đoán Wi-Fi và tạo báo cáo không dây"
+    },
+    {
+      "bundleIdentifier": "com.apple.photobooth",
+      "displayName": "Photo Booth",
+      "note": "Ảnh selfie của camera và các hiệu ứng đặc biệt nhỏ cũng thuận tiện cho."
+    },
+    {
+      "bundleIdentifier": "com.apple.podcasts",
+      "displayName": "Podcast",
+      "note": "Cổng chính thức để nghe podcast, hữu ích cho việc đi lại và học tập"
+    },
+    {
+      "bundleIdentifier": "com.apple.Preview",
+      "displayName": "Xem trước",
+      "note": "Công cụ Mac bị đánh giá thấp nhất: Xem ảnh."
+    },
+    {
+      "bundleIdentifier": "com.apple.printcenter",
+      "displayName": "Trung tâm In",
+      "note": "Xem và quản lý hàng đợi in. Đối với các tác vụ kẹt giấy."
+    },
+    {
+      "bundleIdentifier": "com.apple.quicktimeplayerx",
+      "displayName": "QuickTime Player",
+      "note": "Một công cụ được thiết lập tốt có thể phát, ghi màn hình và ghi âm"
+    },
+    {
+      "bundleIdentifier": "com.apple.screensharing",
+      "displayName": "Chia sẻ màn hình",
+      "note": "Điều khiển từ xa một máy Mac khác."
+    },
+    {
+      "bundleIdentifier": "com.apple.screenshot.launcher",
+      "displayName": "Ảnh chụp màn hình",
+      "note": "Cổng chụp ảnh màn hình và ghi màn hình, đằng sau Shift-Command-5"
+    },
+    {
+      "bundleIdentifier": "com.apple.scripteditor2",
+      "displayName": "Trình soạn thảo tập lệnh",
+      "note": "Viết và chạy AppleScript để kiểm soát quá trình tự động hóa máy Mac kiểu cũ"
+    },
+    {
+      "bundleIdentifier": "com.apple.sfsymbols",
+      "displayName": "SF Symbols",
+      "note": "Thư viện biểu tượng chính thức của Apple, cần thiết cho giao diện gốc"
+    },
+    {
+      "bundleIdentifier": "com.apple.shortcuts",
+      "displayName": "Phím tắt",
+      "note": "Xâu chuỗi nhiều hành động thành quy trình bằng một cú nhấp chuột là."
+    },
+    {
+      "bundleIdentifier": "com.apple.siri.launcher",
+      "displayName": "Siri",
+      "note": "Lối vào trợ lý giọng nói, có thể kiểm tra thông tin."
+    },
+    {
+      "bundleIdentifier": "com.apple.stickies",
+      "displayName": "Giấy ghi chú",
+      "note": "Ghi chú dán trên màn hình, ghi chú tạm thời được dán ngay trước mặt bạn"
+    },
+    {
+      "bundleIdentifier": "com.apple.stocks",
+      "displayName": "Stocks",
+      "note": "Xem bảng nhỏ về cổ phiếu và động lực thị trường"
+    },
+    {
+      "bundleIdentifier": "com.apple.systemprofiler",
+      "displayName": "Thông tin Hệ thống",
+      "note": "Xem chi tiết phần cứng, phần mềm và thiết bị để tìm cấu hình chính xác nhất"
+    },
+    {
+      "bundleIdentifier": "com.apple.systempreferences",
+      "displayName": "Cài đặt hệ thống",
+      "note": "Lối vào chính của cài đặt Mac."
+    },
+    {
+      "bundleIdentifier": "com.apple.textedit",
+      "displayName": "TextEdit",
+      "note": "Trình soạn thảo văn bản đơn giản nhất, mở TXT và RTF rất nhanh"
+    },
+    {
+      "bundleIdentifier": "com.apple.backup.launcher",
+      "displayName": "Time Machine",
+      "note": "Sao lưu hệ thống để khôi phục tệp khi cần"
+    },
+    {
+      "bundleIdentifier": "com.apple.helpviewer",
+      "displayName": "Mẹo",
+      "note": "Mẹo chính thức của Apple để thỉnh thoảng khám phá các tính năng bạn."
+    },
+    {
+      "bundleIdentifier": "com.apple.TV",
+      "displayName": "TV",
+      "note": "Lối vào quản lý và phát lại nội dung phim và truyền hình"
+    },
+    {
+      "bundleIdentifier": "com.apple.voicememos",
+      "displayName": "Ghi âm",
+      "note": "Ghi nhanh, lưu lại cảm hứng họp và tài liệu phỏng vấn trước"
+    },
+    {
+      "bundleIdentifier": "com.apple.voiceoverutility",
+      "displayName": "Tiện ích VoiceOver",
+      "note": "Quản lý các tính năng trợ năng đọc màn hình để giúp máy Mac của bạn dễ."
+    },
+    {
+      "bundleIdentifier": "com.apple.weather",
+      "displayName": "Thời tiết",
+      "note": "Cổng dự báo thời tiết, kiểm tra trước khi ra ngoài để ổn định hơn"
+    },
+    {
+      "bundleIdentifier": "com.apple.dt.Xcode",
+      "displayName": "Xcode",
+      "note": "Công cụ Apple để tạo ứng dụng iOS và macOS"
+    },
+    {
+      "bundleIdentifier": "com.apple.garageband10",
+      "displayName": "GarageBand",
+      "note": "Công cụ sản xuất âm nhạc cấp thấp của Apple, dễ sử dụng để ghi và sắp xếp"
+    },
+    {
+      "bundleIdentifier": "com.apple.FinalCut",
+      "displayName": "Final Cut Pro",
+      "note": "Công cụ chỉnh sửa, cắt, tô màu và xuất video chuyên nghiệp của Apple."
+    },
+    {
+      "bundleIdentifier": "com.apple.logic10",
+      "displayName": "Logic Pro",
+      "note": "Công cụ sản xuất âm nhạc chuyên nghiệp của Apple."
+    },
+    {
+      "bundleIdentifier": "com.apple.TestFlight",
+      "displayName": "TestFlight",
+      "note": "Công cụ kiểm tra ứng dụng của Apple."
+    }
+  ]
+}

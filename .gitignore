@@ -1,0 +1,20 @@
+.DS_Store
+
+# Root-local runtime/build byproducts. App build outputs are generated under src/build/.
+/build/
+/LocalDataBackups/
+
+# Certificates and local release staging do not belong in source control.
+/Release/证书/
+/Release/_archive/
+/Release/X-存档/
+/Release/**/*.p12
+/Release/**/*.cer
+/Release/**/*.certSigningRequest
+/Release/**/*.provisionprofile
+
+# Duplicate generated help package copied outside the canonical source tree.
+/Docs/Help/
+
+# Local scratch notes.
+/项目管理规范.md

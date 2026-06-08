@@ -1,0 +1,1215 @@
+{
+  "resourceFormatVersion": 1,
+  "catalogContentVersion": 1,
+  "noteLimit": 80,
+  "supportedLanguages": [
+    "en",
+    "fr",
+    "it",
+    "de",
+    "es",
+    "pt-BR",
+    "zh-Hans",
+    "zh-Hant",
+    "ko",
+    "ja",
+    "ru",
+    "sr-Cyrl",
+    "uk",
+    "th",
+    "vi",
+    "ar",
+    "ar-Najdi",
+    "tr",
+    "id",
+    "cs",
+    "da",
+    "nl",
+    "no",
+    "nn",
+    "nb",
+    "ms",
+    "pl",
+    "ro",
+    "sv"
+  ],
+  "entries": [
+    {
+      "bundleIdentifier": "com.apple.finder",
+      "normalizedName": "finder",
+      "canonicalName": "Finder",
+      "defaultTag": [
+        "file-management"
+      ],
+      "familiar": false,
+      "aliases": [
+        "finder",
+        "Finder"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.Safari",
+      "normalizedName": "safari",
+      "canonicalName": "Safari",
+      "defaultTag": [
+        "browser"
+      ],
+      "familiar": true,
+      "aliases": [
+        "safari",
+        "Safari"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.mail",
+      "normalizedName": "mail",
+      "canonicalName": "Mail",
+      "defaultTag": [
+        "communication"
+      ],
+      "familiar": true,
+      "aliases": [
+        "mail",
+        "Mail"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.MobileSMS",
+      "normalizedName": "messages",
+      "canonicalName": "Messages",
+      "defaultTag": [
+        "communication"
+      ],
+      "familiar": true,
+      "aliases": [
+        "messages",
+        "Messages"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.FaceTime",
+      "normalizedName": "facetime",
+      "canonicalName": "FaceTime",
+      "defaultTag": [
+        "communication",
+        "video"
+      ],
+      "familiar": true,
+      "aliases": [
+        "facetime",
+        "FaceTime"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.iCal",
+      "normalizedName": "calendar",
+      "canonicalName": "Calendar",
+      "defaultTag": [
+        "communication",
+        "GTD"
+      ],
+      "familiar": true,
+      "aliases": [
+        "calendar",
+        "Calendar"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.Notes",
+      "normalizedName": "notes",
+      "canonicalName": "Notes",
+      "defaultTag": [
+        "Notes"
+      ],
+      "familiar": true,
+      "aliases": [
+        "notes",
+        "Notes"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.reminders",
+      "normalizedName": "reminders",
+      "canonicalName": "Reminders",
+      "defaultTag": [
+        "GTD"
+      ],
+      "familiar": false,
+      "aliases": [
+        "reminders",
+        "Reminders"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.Photos",
+      "normalizedName": "photos",
+      "canonicalName": "Photos",
+      "defaultTag": [
+        "picture-photo"
+      ],
+      "familiar": true,
+      "aliases": [
+        "photos",
+        "Photos"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.Music",
+      "normalizedName": "music",
+      "canonicalName": "Music",
+      "defaultTag": [
+        "audio"
+      ],
+      "familiar": true,
+      "aliases": [
+        "music",
+        "Music"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.Terminal",
+      "normalizedName": "terminal",
+      "canonicalName": "Terminal",
+      "defaultTag": [
+        "terminal-tools"
+      ],
+      "familiar": false,
+      "aliases": [
+        "terminal",
+        "Terminal"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.ActivityMonitor",
+      "normalizedName": "activity-monitor",
+      "canonicalName": "Activity Monitor",
+      "defaultTag": [
+        "system-maintenance"
+      ],
+      "familiar": false,
+      "aliases": [
+        "activity-monitor",
+        "Activity Monitor"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.airport.airportutility",
+      "normalizedName": "airport-utility",
+      "canonicalName": "AirPort Utility",
+      "defaultTag": [
+        "system"
+      ],
+      "familiar": false,
+      "aliases": [
+        "airport-utility",
+        "AirPort Utility"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.AppStore",
+      "normalizedName": "app-store",
+      "canonicalName": "App Store",
+      "defaultTag": [
+        "system"
+      ],
+      "familiar": true,
+      "aliases": [
+        "app-store",
+        "App Store"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.apps.launcher",
+      "normalizedName": "apps",
+      "canonicalName": "Apps",
+      "defaultTag": [
+        "system"
+      ],
+      "familiar": false,
+      "aliases": [
+        "apps",
+        "Apps"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.audio.audiomidisetup",
+      "normalizedName": "audio-midi-setup",
+      "canonicalName": "Audio MIDI Setup",
+      "defaultTag": [
+        "audio",
+        "device-management"
+      ],
+      "familiar": false,
+      "aliases": [
+        "audio-midi-setup",
+        "Audio MIDI Setup"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.automator",
+      "normalizedName": "automator",
+      "canonicalName": "Automator",
+      "defaultTag": [
+        "Automation"
+      ],
+      "familiar": false,
+      "aliases": [
+        "automator",
+        "Automator"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.bluetoothfileexchange",
+      "normalizedName": "bluetooth-file-exchange",
+      "canonicalName": "Bluetooth File Exchange",
+      "defaultTag": [
+        "transfer",
+        "device-management"
+      ],
+      "familiar": false,
+      "aliases": [
+        "bluetooth-file-exchange",
+        "Bluetooth File Exchange"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.iBooksX",
+      "normalizedName": "books",
+      "canonicalName": "Books",
+      "defaultTag": [
+        "writing",
+        "education"
+      ],
+      "familiar": false,
+      "aliases": [
+        "books",
+        "Books"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.bootcampassistant",
+      "normalizedName": "boot-camp-assistant",
+      "canonicalName": "Boot Camp Assistant",
+      "defaultTag": [
+        "system"
+      ],
+      "familiar": false,
+      "aliases": [
+        "boot-camp-assistant",
+        "Boot Camp Assistant"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.calculator",
+      "normalizedName": "calculator",
+      "canonicalName": "Calculator",
+      "defaultTag": [
+        "utilities"
+      ],
+      "familiar": true,
+      "aliases": [
+        "calculator",
+        "Calculator"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.chess",
+      "normalizedName": "chess",
+      "canonicalName": "Chess",
+      "defaultTag": [
+        "game"
+      ],
+      "familiar": false,
+      "aliases": [
+        "chess",
+        "Chess"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.clock",
+      "normalizedName": "clock",
+      "canonicalName": "Clock",
+      "defaultTag": [
+        "GTD"
+      ],
+      "familiar": false,
+      "aliases": [
+        "clock",
+        "Clock"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.colorsyncutility",
+      "normalizedName": "colorsync-utility",
+      "canonicalName": "ColorSync Utility",
+      "defaultTag": [
+        "picture-photo"
+      ],
+      "familiar": false,
+      "aliases": [
+        "colorsync-utility",
+        "ColorSync Utility"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.console",
+      "normalizedName": "console",
+      "canonicalName": "Console",
+      "defaultTag": [
+        "system-maintenance"
+      ],
+      "familiar": false,
+      "aliases": [
+        "console",
+        "Console"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.addressbook",
+      "normalizedName": "contacts",
+      "canonicalName": "Contacts",
+      "defaultTag": [
+        "communication"
+      ],
+      "familiar": false,
+      "aliases": [
+        "contacts",
+        "Contacts"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.dictionary",
+      "normalizedName": "dictionary",
+      "canonicalName": "Dictionary",
+      "defaultTag": [
+        "writing",
+        "education"
+      ],
+      "familiar": false,
+      "aliases": [
+        "dictionary",
+        "Dictionary"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.digitalcolormeter",
+      "normalizedName": "digital-color-meter",
+      "canonicalName": "Digital Color Meter",
+      "defaultTag": [
+        "picture-photo"
+      ],
+      "familiar": false,
+      "aliases": [
+        "digital-color-meter",
+        "Digital Color Meter"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.DiskUtility",
+      "normalizedName": "disk-utility",
+      "canonicalName": "Disk Utility",
+      "defaultTag": [
+        "system-maintenance"
+      ],
+      "familiar": false,
+      "aliases": [
+        "disk-utility",
+        "Disk Utility"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.findmy",
+      "normalizedName": "find-my",
+      "canonicalName": "Find My",
+      "defaultTag": [
+        "system"
+      ],
+      "familiar": false,
+      "aliases": [
+        "find-my",
+        "Find My"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.fontbook",
+      "normalizedName": "font-book",
+      "canonicalName": "Font Book",
+      "defaultTag": [
+        "Font"
+      ],
+      "familiar": false,
+      "aliases": [
+        "font-book",
+        "Font Book"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.freeform",
+      "normalizedName": "freeform",
+      "canonicalName": "Freeform",
+      "defaultTag": [
+        "Notes"
+      ],
+      "familiar": false,
+      "aliases": [
+        "freeform",
+        "Freeform"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.games",
+      "normalizedName": "games",
+      "canonicalName": "Games",
+      "defaultTag": [
+        "game"
+      ],
+      "familiar": false,
+      "aliases": [
+        "games",
+        "Games"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.grapher",
+      "normalizedName": "grapher",
+      "canonicalName": "Grapher",
+      "defaultTag": [
+        "education"
+      ],
+      "familiar": false,
+      "aliases": [
+        "grapher",
+        "Grapher"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.home",
+      "normalizedName": "home",
+      "canonicalName": "Home",
+      "defaultTag": [
+        "system"
+      ],
+      "familiar": false,
+      "aliases": [
+        "home",
+        "Home"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.image_capture",
+      "normalizedName": "image-capture",
+      "canonicalName": "Image Capture",
+      "defaultTag": [
+        "picture-photo",
+        "transfer",
+        "device-management"
+      ],
+      "familiar": false,
+      "aliases": [
+        "image-capture",
+        "Image Capture"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.generativeplaygroundapp",
+      "normalizedName": "image-playground",
+      "canonicalName": "Image Playground",
+      "defaultTag": [
+        "ai-tools",
+        "picture-photo"
+      ],
+      "familiar": false,
+      "aliases": [
+        "image-playground",
+        "Image Playground"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.iMovieApp",
+      "normalizedName": "imovie",
+      "canonicalName": "iMovie",
+      "defaultTag": [
+        "video"
+      ],
+      "familiar": false,
+      "aliases": [
+        "imovie",
+        "iMovie"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.screencontinuity",
+      "normalizedName": "iphone-mirroring",
+      "canonicalName": "iPhone Mirroring",
+      "defaultTag": [
+        "device-management"
+      ],
+      "familiar": false,
+      "aliases": [
+        "iphone-mirroring",
+        "iPhone Mirroring"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.journal",
+      "normalizedName": "journal",
+      "canonicalName": "Journal",
+      "defaultTag": [
+        "Notes"
+      ],
+      "familiar": false,
+      "aliases": [
+        "journal",
+        "Journal"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Keynote",
+      "normalizedName": "keynote",
+      "canonicalName": "Keynote",
+      "defaultTag": [
+        "office"
+      ],
+      "familiar": false,
+      "aliases": [
+        "keynote",
+        "Keynote"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.magnifier",
+      "normalizedName": "magnifier",
+      "canonicalName": "Magnifier",
+      "defaultTag": [
+        "system"
+      ],
+      "familiar": false,
+      "aliases": [
+        "magnifier",
+        "Magnifier"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.Maps",
+      "normalizedName": "maps",
+      "canonicalName": "Maps",
+      "defaultTag": [
+        "GTD"
+      ],
+      "familiar": true,
+      "aliases": [
+        "maps",
+        "Maps"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.migrateassistant",
+      "normalizedName": "migration-assistant",
+      "canonicalName": "Migration Assistant",
+      "defaultTag": [
+        "transfer"
+      ],
+      "familiar": false,
+      "aliases": [
+        "migration-assistant",
+        "Migration Assistant"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.exposelauncher",
+      "normalizedName": "mission-control",
+      "canonicalName": "Mission Control",
+      "defaultTag": [
+        "system"
+      ],
+      "familiar": false,
+      "aliases": [
+        "mission-control",
+        "Mission Control"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.news",
+      "normalizedName": "news",
+      "canonicalName": "News",
+      "defaultTag": [
+        "media"
+      ],
+      "familiar": false,
+      "aliases": [
+        "news",
+        "News"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Numbers",
+      "normalizedName": "numbers",
+      "canonicalName": "Numbers",
+      "defaultTag": [
+        "office"
+      ],
+      "familiar": false,
+      "aliases": [
+        "numbers",
+        "Numbers"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Pages",
+      "normalizedName": "pages",
+      "canonicalName": "Pages",
+      "defaultTag": [
+        "writing",
+        "office"
+      ],
+      "familiar": false,
+      "aliases": [
+        "pages",
+        "Pages"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.passwords",
+      "normalizedName": "passwords",
+      "canonicalName": "Passwords",
+      "defaultTag": [
+        "security"
+      ],
+      "familiar": false,
+      "aliases": [
+        "passwords",
+        "Passwords"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.mobilephone",
+      "normalizedName": "phone",
+      "canonicalName": "Phone",
+      "defaultTag": [
+        "communication"
+      ],
+      "familiar": false,
+      "aliases": [
+        "phone",
+        "Phone"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.AboutThisMacLauncher",
+      "normalizedName": "about-this-mac",
+      "canonicalName": "About This Mac",
+      "defaultTag": [
+        "system"
+      ],
+      "familiar": false,
+      "aliases": [
+        "about-this-mac",
+        "About This Mac"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.archiveutility",
+      "normalizedName": "archive-utility",
+      "canonicalName": "Archive Utility",
+      "defaultTag": [
+        "file-management",
+        "utilities"
+      ],
+      "familiar": false,
+      "aliases": [
+        "archive-utility",
+        "Archive Utility"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.DeskCam",
+      "normalizedName": "desk-view",
+      "canonicalName": "Desk View",
+      "defaultTag": [
+        "video",
+        "device-management"
+      ],
+      "familiar": false,
+      "aliases": [
+        "desk-view",
+        "Desk View"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.DirectoryUtility",
+      "normalizedName": "directory-utility",
+      "canonicalName": "Directory Utility",
+      "defaultTag": [
+        "system",
+        "network-tools"
+      ],
+      "familiar": false,
+      "aliases": [
+        "directory-utility",
+        "Directory Utility"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.DVDPlayer",
+      "normalizedName": "dvd-player",
+      "canonicalName": "DVD Player",
+      "defaultTag": [
+        "video"
+      ],
+      "familiar": false,
+      "aliases": [
+        "dvd-player",
+        "DVD Player"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.ExpansionSlotUtility",
+      "normalizedName": "expansion-slot-utility",
+      "canonicalName": "Expansion Slot Utility",
+      "defaultTag": [
+        "device-management",
+        "system"
+      ],
+      "familiar": false,
+      "aliases": [
+        "expansion-slot-utility",
+        "Expansion Slot Utility"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.appleseed.FeedbackAssistant",
+      "normalizedName": "feedback-assistant",
+      "canonicalName": "Feedback Assistant",
+      "defaultTag": [
+        "system"
+      ],
+      "familiar": false,
+      "aliases": [
+        "feedback-assistant",
+        "Feedback Assistant"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.FolderActionsSetup",
+      "normalizedName": "folder-actions-setup",
+      "canonicalName": "Folder Actions Setup",
+      "defaultTag": [
+        "Automation"
+      ],
+      "familiar": false,
+      "aliases": [
+        "folder-actions-setup",
+        "Folder Actions Setup"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.IPAInstaller",
+      "normalizedName": "ios-app-installer",
+      "canonicalName": "iOS App Installer",
+      "defaultTag": [
+        "utilities"
+      ],
+      "familiar": false,
+      "aliases": [
+        "ios-app-installer",
+        "iOS App Installer"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.keychainaccess",
+      "normalizedName": "keychain-access",
+      "canonicalName": "Keychain Access",
+      "defaultTag": [
+        "security"
+      ],
+      "familiar": false,
+      "aliases": [
+        "keychain-access",
+        "Keychain Access"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.Ticket-Viewer",
+      "normalizedName": "ticket-viewer",
+      "canonicalName": "Ticket Viewer",
+      "defaultTag": [
+        "security",
+        "network-tools"
+      ],
+      "familiar": false,
+      "aliases": [
+        "ticket-viewer",
+        "Ticket Viewer"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.wifi.diagnostics",
+      "normalizedName": "wireless-diagnostics",
+      "canonicalName": "Wireless Diagnostics",
+      "defaultTag": [
+        "network-tools",
+        "system-maintenance"
+      ],
+      "familiar": false,
+      "aliases": [
+        "wireless-diagnostics",
+        "Wireless Diagnostics"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.photobooth",
+      "normalizedName": "photo-booth",
+      "canonicalName": "Photo Booth",
+      "defaultTag": [
+        "picture-photo"
+      ],
+      "familiar": false,
+      "aliases": [
+        "photo-booth",
+        "Photo Booth"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.podcasts",
+      "normalizedName": "podcasts",
+      "canonicalName": "Podcasts",
+      "defaultTag": [
+        "audio"
+      ],
+      "familiar": false,
+      "aliases": [
+        "podcasts",
+        "Podcasts"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.Preview",
+      "normalizedName": "preview",
+      "canonicalName": "Preview",
+      "defaultTag": [
+        "picture-photo",
+        "PDF"
+      ],
+      "familiar": false,
+      "aliases": [
+        "preview",
+        "Preview"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.printcenter",
+      "normalizedName": "print-center",
+      "canonicalName": "Print Center",
+      "defaultTag": [
+        "system"
+      ],
+      "familiar": false,
+      "aliases": [
+        "print-center",
+        "Print Center"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.quicktimeplayerx",
+      "normalizedName": "quicktime-player",
+      "canonicalName": "QuickTime Player",
+      "defaultTag": [
+        "video",
+        "audio"
+      ],
+      "familiar": false,
+      "aliases": [
+        "quicktime-player",
+        "QuickTime Player"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.screensharing",
+      "normalizedName": "screen-sharing",
+      "canonicalName": "Screen Sharing",
+      "defaultTag": [
+        "communication",
+        "network-tools"
+      ],
+      "familiar": false,
+      "aliases": [
+        "screen-sharing",
+        "Screen Sharing"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.screenshot.launcher",
+      "normalizedName": "screenshot",
+      "canonicalName": "Screenshot",
+      "defaultTag": [
+        "video",
+        "picture-photo"
+      ],
+      "familiar": false,
+      "aliases": [
+        "screenshot",
+        "Screenshot"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.scripteditor2",
+      "normalizedName": "script-editor",
+      "canonicalName": "Script Editor",
+      "defaultTag": [
+        "Automation"
+      ],
+      "familiar": false,
+      "aliases": [
+        "script-editor",
+        "Script Editor"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.sfsymbols",
+      "normalizedName": "sf-symbols",
+      "canonicalName": "SF Symbols",
+      "defaultTag": [
+        "ui-prototyping"
+      ],
+      "familiar": false,
+      "aliases": [
+        "sf-symbols",
+        "SF Symbols"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.shortcuts",
+      "normalizedName": "shortcuts",
+      "canonicalName": "Shortcuts",
+      "defaultTag": [
+        "Automation"
+      ],
+      "familiar": false,
+      "aliases": [
+        "shortcuts",
+        "Shortcuts"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.siri.launcher",
+      "normalizedName": "siri",
+      "canonicalName": "Siri",
+      "defaultTag": [
+        "system"
+      ],
+      "familiar": false,
+      "aliases": [
+        "siri",
+        "Siri"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.stickies",
+      "normalizedName": "stickies",
+      "canonicalName": "Stickies",
+      "defaultTag": [
+        "Notes"
+      ],
+      "familiar": false,
+      "aliases": [
+        "stickies",
+        "Stickies"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.stocks",
+      "normalizedName": "stocks",
+      "canonicalName": "Stocks",
+      "defaultTag": [
+        "finance"
+      ],
+      "familiar": false,
+      "aliases": [
+        "stocks",
+        "Stocks"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.systemprofiler",
+      "normalizedName": "system-information",
+      "canonicalName": "System Information",
+      "defaultTag": [
+        "device-management"
+      ],
+      "familiar": false,
+      "aliases": [
+        "system-information",
+        "System Information"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.systempreferences",
+      "normalizedName": "system-settings",
+      "canonicalName": "System Settings",
+      "defaultTag": [
+        "system"
+      ],
+      "familiar": true,
+      "aliases": [
+        "system-settings",
+        "System Settings"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.textedit",
+      "normalizedName": "textedit",
+      "canonicalName": "TextEdit",
+      "defaultTag": [
+        "writing"
+      ],
+      "familiar": false,
+      "aliases": [
+        "textedit",
+        "TextEdit"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.backup.launcher",
+      "normalizedName": "time-machine",
+      "canonicalName": "Time Machine",
+      "defaultTag": [
+        "system"
+      ],
+      "familiar": false,
+      "aliases": [
+        "time-machine",
+        "Time Machine"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.helpviewer",
+      "normalizedName": "tips",
+      "canonicalName": "Tips",
+      "defaultTag": [
+        "education"
+      ],
+      "familiar": false,
+      "aliases": [
+        "tips",
+        "Tips"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.TV",
+      "normalizedName": "tv",
+      "canonicalName": "TV",
+      "defaultTag": [
+        "video"
+      ],
+      "familiar": false,
+      "aliases": [
+        "tv",
+        "TV"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.voicememos",
+      "normalizedName": "voice-memos",
+      "canonicalName": "Voice Memos",
+      "defaultTag": [
+        "audio"
+      ],
+      "familiar": false,
+      "aliases": [
+        "voice-memos",
+        "Voice Memos"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.voiceoverutility",
+      "normalizedName": "voiceover-utility",
+      "canonicalName": "VoiceOver Utility",
+      "defaultTag": [
+        "system"
+      ],
+      "familiar": false,
+      "aliases": [
+        "voiceover-utility",
+        "VoiceOver Utility"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.weather",
+      "normalizedName": "weather",
+      "canonicalName": "Weather",
+      "defaultTag": [
+        "utilities"
+      ],
+      "familiar": false,
+      "aliases": [
+        "weather",
+        "Weather"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.dt.Xcode",
+      "normalizedName": "xcode",
+      "canonicalName": "Xcode",
+      "defaultTag": [
+        "ide"
+      ],
+      "familiar": false,
+      "aliases": [
+        "xcode",
+        "Xcode"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.garageband10",
+      "normalizedName": "garageband",
+      "canonicalName": "GarageBand",
+      "defaultTag": [
+        "audio"
+      ],
+      "familiar": false,
+      "aliases": [
+        "garageband",
+        "GarageBand"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.FinalCut",
+      "normalizedName": "final-cut-pro",
+      "canonicalName": "Final Cut Pro",
+      "defaultTag": [
+        "video"
+      ],
+      "familiar": false,
+      "aliases": [
+        "final-cut-pro",
+        "Final Cut Pro"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.logic10",
+      "normalizedName": "logic-pro",
+      "canonicalName": "Logic Pro",
+      "defaultTag": [
+        "audio"
+      ],
+      "familiar": false,
+      "aliases": [
+        "logic-pro",
+        "Logic Pro"
+      ]
+    },
+    {
+      "bundleIdentifier": "com.apple.TestFlight",
+      "normalizedName": "testflight",
+      "canonicalName": "TestFlight",
+      "defaultTag": [
+        "ide"
+      ],
+      "familiar": false,
+      "aliases": [
+        "testflight",
+        "TestFlight"
+      ]
+    }
+  ]
+}

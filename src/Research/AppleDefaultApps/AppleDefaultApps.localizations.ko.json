@@ -1,0 +1,453 @@
+{
+  "resourceFormatVersion": 1,
+  "catalogContentVersion": 1,
+  "language": "ko",
+  "localizationsVersion": 2,
+  "entries": [
+    {
+      "bundleIdentifier": "com.apple.finder",
+      "displayName": "Finder",
+      "note": "macOS 시스템에는 해당 시스템 관리 또는 일상 작업을 완료하는 데 적합한 도구가 함께 제공됩니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.Safari",
+      "displayName": "Safari",
+      "note": "Apple의 공식 브라우저, 절전, 개인 정보 보호 및 생태적 연계가 강점입니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.mail",
+      "displayName": "Mail",
+      "note": "여러 메일함을 한곳에서 관리하는 기본 메일 앱"
+    },
+    {
+      "bundleIdentifier": "com.apple.MobileSMS",
+      "displayName": "메시지",
+      "note": "iMessage 및 SMS 포털, Mac에서 더 빠르게 메시지에 답장"
+    },
+    {
+      "bundleIdentifier": "com.apple.FaceTime",
+      "displayName": "FaceTime",
+      "note": "Apple 생태계의 오디오 및 비디오 통화 입장"
+    },
+    {
+      "bundleIdentifier": "com.apple.iCal",
+      "displayName": "캘린더",
+      "note": "머릿속에서 일정을 꺼내어 시간에 시각적 지도를 제공하세요"
+    },
+    {
+      "bundleIdentifier": "com.apple.Notes",
+      "displayName": "메모",
+      "note": "가장 빠른 시스템 메모, 텍스트, 사진, 목록을 모두 수집 가능"
+    },
+    {
+      "bundleIdentifier": "com.apple.reminders",
+      "displayName": "미리 알림",
+      "note": "할 일과 미리 알림, 작은 일상 업무를 처리하는 데 적합"
+    },
+    {
+      "bundleIdentifier": "com.apple.Photos",
+      "displayName": "사진",
+      "note": "사진을 관리, 편집, 동기화하는 주요 출입구인 시스템 사진 라이브러리"
+    },
+    {
+      "bundleIdentifier": "com.apple.Music",
+      "displayName": "음악",
+      "note": "로컬 및 스트리밍 음악 플레이어"
+    },
+    {
+      "bundleIdentifier": "com.apple.Terminal",
+      "displayName": "터미널",
+      "note": "명령줄 입력 창으로 Mac을 세밀하게 제어합니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.ActivityMonitor",
+      "displayName": "활성 상태 보기",
+      "note": "누가 전력, 메모리를 소비하고 컴퓨터 속도를 늦추고 있는지 확인할 수 있는 Mac 대시보드"
+    },
+    {
+      "bundleIdentifier": "com.apple.airport.airportutility",
+      "displayName": "AirPort 유틸리티",
+      "note": "AirPort 및 Time Capsule 관리를 위한 구식 네트워킹 도구"
+    },
+    {
+      "bundleIdentifier": "com.apple.AppStore",
+      "displayName": "App Store",
+      "note": "공식 Mac 소프트웨어 스토어, 여기에서 시작하여 앱, 업데이트, 구독을 찾아보세요"
+    },
+    {
+      "bundleIdentifier": "com.apple.apps.launcher",
+      "displayName": "앱",
+      "note": "시스템 수준에서 앱을 빠르게 열 수 있도록 도와주는 경량 애플리케이션 포털"
+    },
+    {
+      "bundleIdentifier": "com.apple.audio.audiomidisetup",
+      "displayName": "오디오 MIDI 설정",
+      "note": "음악가와 디버거가 일반적으로 사용하는 오디오 장비 및 MIDI 라우팅"
+    },
+    {
+      "bundleIdentifier": "com.apple.automator",
+      "displayName": "Automator",
+      "note": "코드를 작성하지 않고도 일련의 Mac 자동화 작업을 연결할 수 있습니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.bluetoothfileexchange",
+      "displayName": "Bluetooth 파일 교환",
+      "note": "필요할 때 Bluetooth로 파일을 보내고 받습니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.iBooksX",
+      "displayName": "도서",
+      "note": "전자책을 읽고 관리해 Mac을 책상처럼 활용합니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.bootcampassistant",
+      "displayName": "Boot Camp 지원",
+      "note": "Intel Mac에 Windows를 설치하기 위한 공식 가이드"
+    },
+    {
+      "bundleIdentifier": "com.apple.calculator",
+      "displayName": "계산기",
+      "note": "작은 계산기, 단위 변환 및 프로그래머 모드도 내부에 숨겨져 있습니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.chess",
+      "displayName": "체스",
+      "note": "Mac에 기본 제공되는 체스 게임, 잠깐 쉬어 갈 때 좋습니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.clock",
+      "displayName": "시계",
+      "note": "알람, 타이머, 스톱워치, 세계 시계를 위한 통합 포털"
+    },
+    {
+      "bundleIdentifier": "com.apple.colorsyncutility",
+      "displayName": "ColorSync 유틸리티",
+      "note": "색상 프로필 보기 및 복구, 색상 차이 표시 및 인쇄 처리"
+    },
+    {
+      "bundleIdentifier": "com.apple.console",
+      "displayName": "콘솔",
+      "note": "시스템 로그를 보는 창은 이상 현상을 해결할 때 매우 유용합니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.addressbook",
+      "displayName": "연락처",
+      "note": "메일, 메시지, FaceTime용 연락처 허브"
+    },
+    {
+      "bundleIdentifier": "com.apple.dictionary",
+      "displayName": "사전",
+      "note": "오프라인 사전 및 동의어 사전, 단어를 쓰거나 찾을 때 브라우저를 열 필요가 없습니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.digitalcolormeter",
+      "displayName": "디지털 컬러 측정기",
+      "note": "화면 색상 선택기, 디자이너가 일시적으로 색상을 선택할 수 있는 작은 아티팩트"
+    },
+    {
+      "bundleIdentifier": "com.apple.DiskUtility",
+      "displayName": "디스크 유틸리티",
+      "note": "디스크, 파티션, 포맷, 응급처치, 건들지 말고 중요해요"
+    },
+    {
+      "bundleIdentifier": "com.apple.findmy",
+      "displayName": "나의 찾기",
+      "note": "장비를 찾고, 물건을 찾고, 잃어버린 Mac에 단서를 제공하여 집으로 돌아가세요"
+    },
+    {
+      "bundleIdentifier": "com.apple.fontbook",
+      "displayName": "서체 관리자",
+      "note": "디자인 전에 서체를 설치하고 관리하는 도구"
+    },
+    {
+      "bundleIdentifier": "com.apple.freeform",
+      "displayName": "Freeform",
+      "note": "브레인스토밍, 스케치 및 무작위 아이디어를 위한 무제한 화이트보드"
+    },
+    {
+      "bundleIdentifier": "com.apple.games",
+      "displayName": "Games",
+      "note": "플레이 가능한 Apple Arcade 콘텐츠를 중앙에서 관리하는 Apple 게임 포털"
+    },
+    {
+      "bundleIdentifier": "com.apple.grapher",
+      "displayName": "Grapher",
+      "note": "수학적 시각화를 위한 숨겨진 도구인 그래프 방정식"
+    },
+    {
+      "bundleIdentifier": "com.apple.home",
+      "displayName": "홈",
+      "note": "스마트 홈 제어 출입구는 조명, 에어컨 및 기타 장비를 관리할 수 있습니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.image_capture",
+      "displayName": "이미지 캡처",
+      "note": "간단하지만 안정적으로 카메라나 스캐너에서 사진 가져오기"
+    },
+    {
+      "bundleIdentifier": "com.apple.generativeplaygroundapp",
+      "displayName": "Playground",
+      "note": "빠른 창의적 제도에 적합한 Apple 인텔리전스를 사용하여 이미지를 생성하세요"
+    },
+    {
+      "bundleIdentifier": "com.apple.iMovieApp",
+      "displayName": "iMovie",
+      "note": "초보자 수준의 비디오 편집, 홈 비디오 및 경량 단편 영화에 충분합니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.screencontinuity",
+      "displayName": "iPhone 미러링",
+      "note": "Mac에서 iPhone을 바로 조작할 수 있습니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.journal",
+      "displayName": "일기",
+      "note": "일상을 기록해 개인 타임라인으로 남기는 앱"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Keynote",
+      "displayName": "Keynote",
+      "note": "아름다운 슬라이드를 쉽게 만들 수 있는 Apple 스타일 프레젠테이션 도구"
+    },
+    {
+      "bundleIdentifier": "com.apple.magnifier",
+      "displayName": "확대기",
+      "note": "시력 및 정밀 검사에 도움이 되도록 화면 세부정보를 확대하세요"
+    },
+    {
+      "bundleIdentifier": "com.apple.Maps",
+      "displayName": "지도",
+      "note": "경로를 확인하고, 도시를 보고, 목적지를 iPhone으로 푸시하세요"
+    },
+    {
+      "bundleIdentifier": "com.apple.migrateassistant",
+      "displayName": "마이그레이션 지원",
+      "note": "새 Mac으로 이동할 때 기존 데이터를 새 컴퓨터로 이동하세요"
+    },
+    {
+      "bundleIdentifier": "com.apple.exposelauncher",
+      "displayName": "Mission Control",
+      "note": "창문과 데스크탑의 조감도, 지저분하면 그냥 보세요"
+    },
+    {
+      "bundleIdentifier": "com.apple.news",
+      "displayName": "News",
+      "note": "선택한 미디어 콘텐츠를 보는 데 적합한 Apple 뉴스 포털"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Numbers",
+      "displayName": "Numbers",
+      "note": "Apple Sheets 도구, 경량 보고서가 Excel보다 더 새로워졌습니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Pages",
+      "displayName": "Pages",
+      "note": "문서 작성 및 조판에 아름다운 Apple 워드 프로세서"
+    },
+    {
+      "bundleIdentifier": "com.apple.passwords",
+      "displayName": "암호",
+      "note": "계정, 확인 코드, 패스키를 한곳에서 관리하는 암호 관리자"
+    },
+    {
+      "bundleIdentifier": "com.apple.mobilephone",
+      "displayName": "전화",
+      "note": "휴대폰으로 Mac에서 전화 걸기"
+    },
+    {
+      "bundleIdentifier": "com.apple.AboutThisMacLauncher",
+      "displayName": "이 Mac에 관하여",
+      "note": "Mac 모델, 시스템 버전, 일련번호를 확인합니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.archiveutility",
+      "displayName": "아카이브 유틸리티",
+      "note": "ZIP 등 압축 파일을 만들고 풉니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.DeskCam",
+      "displayName": "데스크뷰",
+      "note": "연속성 카메라로 책상 화면을 보여줍니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.DirectoryUtility",
+      "displayName": "디렉토리 유틸리티",
+      "note": "디렉토리 서비스, LDAP, 네트워크 계정을 설정합니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.DVDPlayer",
+      "displayName": "DVD 플레이어",
+      "note": "DVD 디스크와 로컬 DVD 콘텐츠를 재생합니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.ExpansionSlotUtility",
+      "displayName": "확장 슬롯 유틸리티",
+      "note": "Mac Pro 확장 슬롯을 확인하고 설정합니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.appleseed.FeedbackAssistant",
+      "displayName": "피드백 지원",
+      "note": "시스템 피드백과 진단 정보를 Apple에 보냅니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.FolderActionsSetup",
+      "displayName": "폴더 적용 스크립트 설정",
+      "note": "폴더에 자동 스크립트 동작을 연결합니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.IPAInstaller",
+      "displayName": "iOS 앱 설치 프로그램",
+      "note": "iOS 앱 패키지를 설치하는 시스템 도구입니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.keychainaccess",
+      "displayName": "키체인 접근",
+      "note": "암호, 인증서, 키와 보안 항목을 관리합니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.Ticket-Viewer",
+      "displayName": "티켓 뷰어",
+      "note": "Kerberos 티켓과 인증 상태를 확인합니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.wifi.diagnostics",
+      "displayName": "무선 진단",
+      "note": "Wi-Fi 문제를 진단하고 무선 보고서를 만듭니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.photobooth",
+      "displayName": "Photo Booth",
+      "note": "카메라 셀카와 작은 특수 효과도 카메라 테스트에 편리합니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.podcasts",
+      "displayName": "팟캐스트",
+      "note": "출퇴근, 공부에 유용한 팟캐스트 청취 공식 포털"
+    },
+    {
+      "bundleIdentifier": "com.apple.Preview",
+      "displayName": "미리보기",
+      "note": "이미지 보기, PDF 주석, 간단한 편집을 처리하는 기본 도구"
+    },
+    {
+      "bundleIdentifier": "com.apple.printcenter",
+      "displayName": "프린트 센터",
+      "note": "인쇄 대기열을 보고 관리합니다. 용지 걸림 작업에 대해서는 먼저 여기를 참조하십시오"
+    },
+    {
+      "bundleIdentifier": "com.apple.quicktimeplayerx",
+      "displayName": "QuickTime Player",
+      "note": "화면을 재생하고, 녹음하고, 오디오를 녹음할 수 있는 탄탄한 도구"
+    },
+    {
+      "bundleIdentifier": "com.apple.screensharing",
+      "displayName": "화면 공유",
+      "note": "사람들이 컴퓨터를 수리하는 데 매우 편리하게 다른 Mac을 원격으로 제어할 수 있습니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.screenshot.launcher",
+      "displayName": "스크린샷",
+      "note": "Shift-Command-5 뒤에 있는 스크린샷 및 화면 녹화 포털"
+    },
+    {
+      "bundleIdentifier": "com.apple.scripteditor2",
+      "displayName": "스크립트 편집기",
+      "note": "AppleScript를 작성하고 실행하여 기존 Mac 자동화 제어"
+    },
+    {
+      "bundleIdentifier": "com.apple.sfsymbols",
+      "displayName": "SF Symbols",
+      "note": "기본 인터페이스에 필수적인 Apple의 공식 기호 라이브러리"
+    },
+    {
+      "bundleIdentifier": "com.apple.shortcuts",
+      "displayName": "단축어",
+      "note": "여러 동작을 한 번의 워크플로로 묶는 현대식 Automator"
+    },
+    {
+      "bundleIdentifier": "com.apple.siri.launcher",
+      "displayName": "Siri",
+      "note": "음성비서 출입, 정보 확인, 앱 실행, 시스템 제어 가능"
+    },
+    {
+      "bundleIdentifier": "com.apple.stickies",
+      "displayName": "스티커",
+      "note": "데스크탑 스티커 메모, 임시 메모가 바로 앞에 게시됩니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.stocks",
+      "displayName": "Stocks",
+      "note": "주식 및 시장 역학에 대한 작은 패널 보기"
+    },
+    {
+      "bundleIdentifier": "com.apple.systemprofiler",
+      "displayName": "시스템 정보",
+      "note": "가장 정확한 구성을 찾으려면 하드웨어, 소프트웨어 및 장치 세부 정보를 확인하세요"
+    },
+    {
+      "bundleIdentifier": "com.apple.systempreferences",
+      "displayName": "시스템 설정",
+      "note": "Mac 설정과 시스템 옵션을 한곳에서 관리합니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.textedit",
+      "displayName": "텍스트 편집기",
+      "note": "가장 간단한 텍스트 편집기로 TXT 및 RTF를 매우 빠르게 엽니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.backup.launcher",
+      "displayName": "Time Machine",
+      "note": "필요할 때 파일을 되돌리는 시스템 백업 도구"
+    },
+    {
+      "bundleIdentifier": "com.apple.helpviewer",
+      "displayName": "팁",
+      "note": "가끔 사용하지 않은 기능을 발견하기 위한 Apple의 공식 팁"
+    },
+    {
+      "bundleIdentifier": "com.apple.TV",
+      "displayName": "TV",
+      "note": "영화 및 TV 콘텐츠 재생 및 관리 입구"
+    },
+    {
+      "bundleIdentifier": "com.apple.voicememos",
+      "displayName": "음성 메모",
+      "note": "회의 영감과 인터뷰 자료를 먼저 빠르게 녹음하고 저장하세요"
+    },
+    {
+      "bundleIdentifier": "com.apple.voiceoverutility",
+      "displayName": "VoiceOver 유틸리티",
+      "note": "VoiceOver 화면 읽기 손쉬운 사용 설정을 관리합니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.weather",
+      "displayName": "날씨",
+      "note": "일기예보 포털, 외출 전 확인하면 더욱 안정적"
+    },
+    {
+      "bundleIdentifier": "com.apple.dt.Xcode",
+      "displayName": "Xcode",
+      "note": "iOS와 macOS 앱을 만드는 Apple 개발 도구 모음"
+    },
+    {
+      "bundleIdentifier": "com.apple.garageband10",
+      "displayName": "GarageBand",
+      "note": "녹음과 편곡을 쉽게 시작하는 Apple 음악 제작 도구"
+    },
+    {
+      "bundleIdentifier": "com.apple.FinalCut",
+      "displayName": "Final Cut Pro",
+      "note": "Apple의 전문 비디오 편집 도구, 자르기, 색칠하기, 내보내기가 모두 매우 빠릅니다"
+    },
+    {
+      "bundleIdentifier": "com.apple.logic10",
+      "displayName": "Logic Pro",
+      "note": "녹음, 편곡, 믹싱에 강한 Apple 전문가용 음악 제작 도구"
+    },
+    {
+      "bundleIdentifier": "com.apple.TestFlight",
+      "displayName": "TestFlight",
+      "note": "Apple 앱 베타 버전을 설치하고 체험하는 도구"
+    }
+  ]
+}

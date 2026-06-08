@@ -1,0 +1,453 @@
+{
+  "resourceFormatVersion": 1,
+  "catalogContentVersion": 1,
+  "language": "ja",
+  "localizationsVersion": 2,
+  "entries": [
+    {
+      "bundleIdentifier": "com.apple.finder",
+      "displayName": "Finder",
+      "note": "Macのファイル、フォルダ、ディスク、接続デバイスを管理"
+    },
+    {
+      "bundleIdentifier": "com.apple.Safari",
+      "displayName": "Safari",
+      "note": "高速で省電力、プライバシー重視のApple公式ブラウザ"
+    },
+    {
+      "bundleIdentifier": "com.apple.mail",
+      "displayName": "メール",
+      "note": "複数のメールアカウントをまとめて管理する標準メールアプリ"
+    },
+    {
+      "bundleIdentifier": "com.apple.MobileSMS",
+      "displayName": "メッセージ",
+      "note": "MacからiMessageやSMSをすばやく送受信"
+    },
+    {
+      "bundleIdentifier": "com.apple.FaceTime",
+      "displayName": "FaceTime",
+      "note": "Appleデバイス間の音声通話とビデオ通話"
+    },
+    {
+      "bundleIdentifier": "com.apple.iCal",
+      "displayName": "カレンダー",
+      "note": "予定を整理し、時間を見やすく管理"
+    },
+    {
+      "bundleIdentifier": "com.apple.Notes",
+      "displayName": "メモ",
+      "note": "テキスト、画像、リストをすばやく残せる標準メモ"
+    },
+    {
+      "bundleIdentifier": "com.apple.reminders",
+      "displayName": "リマインダー",
+      "note": "日々のToDoや小さな用事を忘れず管理"
+    },
+    {
+      "bundleIdentifier": "com.apple.Photos",
+      "displayName": "写真",
+      "note": "写真ライブラリの管理、編集、同期の入口"
+    },
+    {
+      "bundleIdentifier": "com.apple.Music",
+      "displayName": "ミュージック",
+      "note": "Macでローカル音楽やストリーミングを再生"
+    },
+    {
+      "bundleIdentifier": "com.apple.Terminal",
+      "displayName": "ターミナル",
+      "note": "コマンド入力でMacを細かく操作"
+    },
+    {
+      "bundleIdentifier": "com.apple.ActivityMonitor",
+      "displayName": "アクティビティモニタ",
+      "note": "CPU、メモリ、電力、重いプロセスを一覧確認"
+    },
+    {
+      "bundleIdentifier": "com.apple.airport.airportutility",
+      "displayName": "AirMacユーティリティ",
+      "note": "AirPortやTime Capsuleを管理するネットワークツール"
+    },
+    {
+      "bundleIdentifier": "com.apple.AppStore",
+      "displayName": "App Store",
+      "note": "Macアプリ、アップデート、サブスクを探す公式ストア"
+    },
+    {
+      "bundleIdentifier": "com.apple.apps.launcher",
+      "displayName": "アプリ",
+      "note": "インストール済みアプリをすばやく開くシステム入口"
+    },
+    {
+      "bundleIdentifier": "com.apple.audio.audiomidisetup",
+      "displayName": "Audio MIDI設定",
+      "note": "オーディオ機器とMIDIルーティングを設定"
+    },
+    {
+      "bundleIdentifier": "com.apple.automator",
+      "displayName": "Automator",
+      "note": "コードなしでMacの自動化ワークフローを作成"
+    },
+    {
+      "bundleIdentifier": "com.apple.bluetoothfileexchange",
+      "displayName": "Bluetoothファイル交換",
+      "note": "必要なときにBluetoothでファイルを送受信"
+    },
+    {
+      "bundleIdentifier": "com.apple.iBooksX",
+      "displayName": "ブック",
+      "note": "Macで電子書籍を読んで管理"
+    },
+    {
+      "bundleIdentifier": "com.apple.bootcampassistant",
+      "displayName": "Boot Campアシスタント",
+      "note": "Intel MacにWindowsを入れる公式ガイド"
+    },
+    {
+      "bundleIdentifier": "com.apple.calculator",
+      "displayName": "計算機",
+      "note": "単位換算やプログラマーモードも備えた計算機"
+    },
+    {
+      "bundleIdentifier": "com.apple.chess",
+      "displayName": "チェス",
+      "note": "Mac内蔵のチェスゲーム。短い休憩や練習に便利"
+    },
+    {
+      "bundleIdentifier": "com.apple.clock",
+      "displayName": "時計",
+      "note": "アラーム、タイマー、ストップウォッチ、世界時計を一括管理"
+    },
+    {
+      "bundleIdentifier": "com.apple.colorsyncutility",
+      "displayName": "ColorSyncユーティリティ",
+      "note": "画面と印刷の色差に使うカラープロファイル管理"
+    },
+    {
+      "bundleIdentifier": "com.apple.console",
+      "displayName": "コンソール",
+      "note": "問題調査に使うシステムログ表示ツール"
+    },
+    {
+      "bundleIdentifier": "com.apple.addressbook",
+      "displayName": "連絡先",
+      "note": "メール、メッセージ、FaceTimeで使う連絡先の中心"
+    },
+    {
+      "bundleIdentifier": "com.apple.dictionary",
+      "displayName": "辞書",
+      "note": "オフライン辞書と類語辞典で言葉をすばやく確認"
+    },
+    {
+      "bundleIdentifier": "com.apple.digitalcolormeter",
+      "displayName": "Digital Color Meter",
+      "note": "画面上の色を正確に取得するツール"
+    },
+    {
+      "bundleIdentifier": "com.apple.DiskUtility",
+      "displayName": "ディスクユーティリティ",
+      "note": "ディスク、パーティション、フォーマット、First Aidを管理"
+    },
+    {
+      "bundleIdentifier": "com.apple.findmy",
+      "displayName": "探す",
+      "note": "デバイス、持ち物、なくしたMacを探す"
+    },
+    {
+      "bundleIdentifier": "com.apple.fontbook",
+      "displayName": "Font Book",
+      "note": "フォントのインストール、プレビュー、管理"
+    },
+    {
+      "bundleIdentifier": "com.apple.freeform",
+      "displayName": "フリーボード",
+      "note": "アイデア、スケッチ、ブレストに使える無限ホワイトボード"
+    },
+    {
+      "bundleIdentifier": "com.apple.games",
+      "displayName": "ゲーム",
+      "note": "Apple Arcadeなどのゲームをまとめて管理"
+    },
+    {
+      "bundleIdentifier": "com.apple.grapher",
+      "displayName": "Grapher",
+      "note": "方程式をグラフ化し、数学を視覚化"
+    },
+    {
+      "bundleIdentifier": "com.apple.home",
+      "displayName": "ホーム",
+      "note": "照明、空調、スマートホーム機器を操作"
+    },
+    {
+      "bundleIdentifier": "com.apple.image_capture",
+      "displayName": "イメージキャプチャ",
+      "note": "カメラやスキャナから画像を取り込む"
+    },
+    {
+      "bundleIdentifier": "com.apple.generativeplaygroundapp",
+      "displayName": "Playground",
+      "note": "Apple Intelligenceで画像案をすばやく作成"
+    },
+    {
+      "bundleIdentifier": "com.apple.iMovieApp",
+      "displayName": "iMovie",
+      "note": "家庭動画や軽い作品向けのシンプルな動画編集"
+    },
+    {
+      "bundleIdentifier": "com.apple.screencontinuity",
+      "displayName": "iPhoneミラーリング",
+      "note": "MacからiPhoneを直接操作"
+    },
+    {
+      "bundleIdentifier": "com.apple.journal",
+      "displayName": "ジャーナル",
+      "note": "日々の出来事を自分だけのタイムラインに記録"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Keynote",
+      "displayName": "Keynote",
+      "note": "Appleらしい美しいプレゼンを作成"
+    },
+    {
+      "bundleIdentifier": "com.apple.magnifier",
+      "displayName": "拡大鏡",
+      "note": "画面の細部を拡大して読み取りや確認を補助"
+    },
+    {
+      "bundleIdentifier": "com.apple.Maps",
+      "displayName": "マップ",
+      "note": "経路や街を確認し、目的地をiPhoneへ送信"
+    },
+    {
+      "bundleIdentifier": "com.apple.migrateassistant",
+      "displayName": "移行アシスタント",
+      "note": "古いMacのデータを新しいMacへ移行"
+    },
+    {
+      "bundleIdentifier": "com.apple.exposelauncher",
+      "displayName": "Mission Control",
+      "note": "混み合ったウインドウとデスクトップを一覧表示"
+    },
+    {
+      "bundleIdentifier": "com.apple.news",
+      "displayName": "News",
+      "note": "Apple Newsの記事やメディアを読む"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Numbers",
+      "displayName": "Numbers",
+      "note": "軽いレポート作成に向いたAppleの表計算アプリ"
+    },
+    {
+      "bundleIdentifier": "com.apple.iWork.Pages",
+      "displayName": "Pages",
+      "note": "文書作成とレイアウトに使うAppleのワープロ"
+    },
+    {
+      "bundleIdentifier": "com.apple.passwords",
+      "displayName": "パスワード",
+      "note": "パスワード、確認コード、パスキーをまとめて管理"
+    },
+    {
+      "bundleIdentifier": "com.apple.mobilephone",
+      "displayName": "電話",
+      "note": "iPhone経由でMacから電話を発着信"
+    },
+    {
+      "bundleIdentifier": "com.apple.AboutThisMacLauncher",
+      "displayName": "このMacについて",
+      "note": "Macのモデル、システムバージョン、シリアル番号を確認"
+    },
+    {
+      "bundleIdentifier": "com.apple.archiveutility",
+      "displayName": "アーカイブユーティリティ",
+      "note": "ZIPなどのアーカイブを圧縮・展開"
+    },
+    {
+      "bundleIdentifier": "com.apple.DeskCam",
+      "displayName": "デスクビュー",
+      "note": "連係カメラでデスク上の映像を表示"
+    },
+    {
+      "bundleIdentifier": "com.apple.DirectoryUtility",
+      "displayName": "ディレクトリユーティリティ",
+      "note": "ディレクトリサービス、LDAP、ネットワークアカウントを設定"
+    },
+    {
+      "bundleIdentifier": "com.apple.DVDPlayer",
+      "displayName": "DVDプレーヤー",
+      "note": "DVDディスクやローカルDVDコンテンツを再生"
+    },
+    {
+      "bundleIdentifier": "com.apple.ExpansionSlotUtility",
+      "displayName": "拡張スロットユーティリティ",
+      "note": "Mac Proの拡張スロットを確認・設定"
+    },
+    {
+      "bundleIdentifier": "com.apple.appleseed.FeedbackAssistant",
+      "displayName": "フィードバックアシスタント",
+      "note": "システムのフィードバックと診断をAppleへ送信"
+    },
+    {
+      "bundleIdentifier": "com.apple.FolderActionsSetup",
+      "displayName": "フォルダアクション設定",
+      "note": "フォルダに自動実行スクリプトを割り当て"
+    },
+    {
+      "bundleIdentifier": "com.apple.IPAInstaller",
+      "displayName": "iOSアプリインストーラ",
+      "note": "iOS Appパッケージをインストールするシステム補助ツール"
+    },
+    {
+      "bundleIdentifier": "com.apple.keychainaccess",
+      "displayName": "キーチェーンアクセス",
+      "note": "パスワード、証明書、鍵、安全項目を管理"
+    },
+    {
+      "bundleIdentifier": "com.apple.Ticket-Viewer",
+      "displayName": "チケットビューア",
+      "note": "Kerberosチケットと認証状態を確認"
+    },
+    {
+      "bundleIdentifier": "com.apple.wifi.diagnostics",
+      "displayName": "ワイヤレス診断",
+      "note": "Wi-Fi問題を診断し、無線レポートを作成"
+    },
+    {
+      "bundleIdentifier": "com.apple.photobooth",
+      "displayName": "Photo Booth",
+      "note": "カメラの自撮りや楽しいエフェクトを試す"
+    },
+    {
+      "bundleIdentifier": "com.apple.podcasts",
+      "displayName": "ポッドキャスト",
+      "note": "通勤、勉強、休憩にポッドキャストを再生"
+    },
+    {
+      "bundleIdentifier": "com.apple.Preview",
+      "displayName": "プレビュー",
+      "note": "画像表示、PDF注釈、簡単な編集に使える標準ツール"
+    },
+    {
+      "bundleIdentifier": "com.apple.printcenter",
+      "displayName": "プリントセンター",
+      "note": "印刷キューや止まった印刷ジョブを管理"
+    },
+    {
+      "bundleIdentifier": "com.apple.quicktimeplayerx",
+      "displayName": "QuickTime Player",
+      "note": "メディア再生、画面収録、音声録音に対応"
+    },
+    {
+      "bundleIdentifier": "com.apple.screensharing",
+      "displayName": "画面共有",
+      "note": "別のMacを遠隔操作して支援や確認を行う"
+    },
+    {
+      "bundleIdentifier": "com.apple.screenshot.launcher",
+      "displayName": "スクリーンショット",
+      "note": "スクリーンショットと画面収録を開始"
+    },
+    {
+      "bundleIdentifier": "com.apple.scripteditor2",
+      "displayName": "スクリプトエディタ",
+      "note": "AppleScriptを書いて実行する自動化ツール"
+    },
+    {
+      "bundleIdentifier": "com.apple.sfsymbols",
+      "displayName": "SF Symbols",
+      "note": "ネイティブUI用のApple公式シンボルを閲覧"
+    },
+    {
+      "bundleIdentifier": "com.apple.shortcuts",
+      "displayName": "ショートカット",
+      "note": "複数の操作をすばやいワークフローにまとめる"
+    },
+    {
+      "bundleIdentifier": "com.apple.siri.launcher",
+      "displayName": "Siri",
+      "note": "検索、アプリ起動、システム操作に使う音声アシスタント"
+    },
+    {
+      "bundleIdentifier": "com.apple.stickies",
+      "displayName": "スティッキーズ",
+      "note": "一時的なメモをデスクトップに貼れる付箋"
+    },
+    {
+      "bundleIdentifier": "com.apple.stocks",
+      "displayName": "Stocks",
+      "note": "株価と市場の動きを小さなパネルで確認"
+    },
+    {
+      "bundleIdentifier": "com.apple.systemprofiler",
+      "displayName": "システム情報",
+      "note": "ハードウェア、ソフトウェア、デバイス情報を詳しく表示"
+    },
+    {
+      "bundleIdentifier": "com.apple.systempreferences",
+      "displayName": "システム設定",
+      "note": "Macの設定とシステム項目をまとめて管理"
+    },
+    {
+      "bundleIdentifier": "com.apple.textedit",
+      "displayName": "テキストエディット",
+      "note": "TXTやRTFをすばやく開けるシンプルなテキストエディタ"
+    },
+    {
+      "bundleIdentifier": "com.apple.backup.launcher",
+      "displayName": "Time Machine",
+      "note": "後でファイルを戻せるシステムバックアップ"
+    },
+    {
+      "bundleIdentifier": "com.apple.helpviewer",
+      "displayName": "ヒント",
+      "note": "macOSの便利な機能を見つけるApple公式ヒント"
+    },
+    {
+      "bundleIdentifier": "com.apple.TV",
+      "displayName": "TV",
+      "note": "映画やテレビ番組の再生と管理"
+    },
+    {
+      "bundleIdentifier": "com.apple.voicememos",
+      "displayName": "ボイスメモ",
+      "note": "アイデア、会議、インタビューをすばやく録音"
+    },
+    {
+      "bundleIdentifier": "com.apple.voiceoverutility",
+      "displayName": "VoiceOverユーティリティ",
+      "note": "VoiceOverなど読み上げ支援の設定を管理"
+    },
+    {
+      "bundleIdentifier": "com.apple.weather",
+      "displayName": "天気",
+      "note": "外出前に天気予報を確認"
+    },
+    {
+      "bundleIdentifier": "com.apple.dt.Xcode",
+      "displayName": "Xcode",
+      "note": "iOSやmacOSアプリ開発向けのApple公式ツール"
+    },
+    {
+      "bundleIdentifier": "com.apple.garageband10",
+      "displayName": "GarageBand",
+      "note": "録音や編曲を始めやすいAppleの音楽制作アプリ"
+    },
+    {
+      "bundleIdentifier": "com.apple.FinalCut",
+      "displayName": "Final Cut Pro",
+      "note": "カット、カラー、書き出しに強いAppleのプロ動画編集"
+    },
+    {
+      "bundleIdentifier": "com.apple.logic10",
+      "displayName": "Logic Pro",
+      "note": "録音、編曲、ミックスに強いAppleのプロ音楽制作"
+    },
+    {
+      "bundleIdentifier": "com.apple.TestFlight",
+      "displayName": "TestFlight",
+      "note": "Appleアプリのベータ版をインストールして試用"
+    }
+  ]
+}
