@@ -7,6 +7,14 @@
 
 这是 AI Agent 进入 `/Users/ar/Projects/Taglauncher` 后应先读的入口文件。
 
+## 代码治理入口
+
+开始任何代码、Git、迁移、构建、发布或 QA 工作前，必须读取并遵守：
+
+`/Users/ar/Projects/Taglauncher/CODE_GOVERNANCE.md`
+
+本入口文件只保留高优先级硬约束；完整执行标准以 `CODE_GOVERNANCE.md` 为准。若两者冲突，以更严格、项目本地、更具体的规则为准。
+
 ## 源码根目录
 
 唯一源码根目录：`/Users/ar/Projects/Taglauncher/src`

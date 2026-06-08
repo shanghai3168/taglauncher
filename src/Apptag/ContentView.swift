@@ -319,8 +319,6 @@ private struct AppGridInteractionState {
     var bubbleDraftNote = ""
     var tagNavigationHoveredGroupName: String? = nil
     var tagNavigationAppDropTargetName: String? = nil
-    var tagNavigationLastHoverScrollID: String? = nil
-    var tagNavigationLastHoverScrollAt: Date? = nil
 }
 
 private struct EditActionFeedback: Identifiable {
@@ -432,8 +430,6 @@ struct ContentView: View {
             ?? (isColorlessContainerMode ? filledColorlessContainer : nil)
     }
     private let rightSidebarFloatingClearance: CGFloat = 44
-    private let tagNavigationHoverScrollInterval: TimeInterval = 0.22
-
     private var floatingButtonSurfaceColor: Color {
         colorScheme == .dark
             ? Color.white.opacity(0.10)
@@ -2001,7 +1997,6 @@ struct ContentView: View {
 
         appGridInteraction.tagNavigationHoveredGroupName = id
         fillColorlessContainer(id)
-        scrollToTagFromHover(id)
     }
 
     private func handleTagNavigationAppDropHover(_ id: String, active: Bool) {
@@ -2020,18 +2015,6 @@ struct ContentView: View {
         }
 
         appGridInteraction.tagNavigationAppDropTargetName = id
-    }
-
-    private func scrollToTagFromHover(_ id: String) {
-        let now = Date()
-        if appGridInteraction.tagNavigationLastHoverScrollID == id,
-           let lastScrollAt = appGridInteraction.tagNavigationLastHoverScrollAt,
-           now.timeIntervalSince(lastScrollAt) < tagNavigationHoverScrollInterval {
-            return
-        }
-        appGridInteraction.tagNavigationLastHoverScrollID = id
-        appGridInteraction.tagNavigationLastHoverScrollAt = now
-        scrollTo(id)
     }
 
     private func fillColorlessContainer(_ id: String) {

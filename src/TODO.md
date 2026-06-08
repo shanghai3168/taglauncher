@@ -23,6 +23,11 @@
 
 ## Done
 
+- [2026-06-08] 修复 App Grid 顶部 tag hover 触发自动滚动导致的抖动。
+  - 结果: hover 只保留 tag 高亮/填色，不再自动滚动；点击 tag 仍滚动到对应分组。
+  - 范围: 只改 `Apptag/ContentView.swift` 的 tag hover 处理，不改 App Grid 布局算法、不改拖拽、不改点击导航语义。
+  - 验证: `bash build.sh` 和 `codesign --verify --deep --strict build/TagLauncher.app` 通过；用户使用新版后确认仍有轻微小抖，但效果可接受，本轮不继续扩大修复范围。
+
 - [2026-06-04] 修复新安装 App 后 App Grid / Quick Search 不能立即检索到的问题。
   - 提交: 本次提交
   - 结果: App Grid / Quick Search 打开时先轻量检查标准应用目录签名；签名未变化时不刷新也不重建界面，目录变化时才后台重扫应用索引。
