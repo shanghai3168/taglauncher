@@ -24,10 +24,10 @@
 ## Done
 
 - [2026-06-09] 多语种 App 显示名通用加固。
-  - 结果: 新增统一 `AppDisplayNameResolver`；App Grid 与 Quick Search 标题优先走当前语种/同语系/系统可见名/英文官方名/基础 bundle 名 fallback，内部 bundle 名和 bundle id 只作为搜索别名。
-  - 范围: `AppInfo` 增加系统显示名与 bundle 显示名候选；Quick Search 文档使用 resolver 生成别名并二次过滤嵌套 `.app`；版本更新为 `7.8.25 (20260609.1741)`。
+  - 结果: 新增统一 `AppDisplayNameResolver`；App Grid 与 Quick Search 标题优先走当前语种/同语系/系统可见名/英文官方名/基础 bundle 名 fallback，内部 bundle 名和 bundle id 只作为搜索别名；`7.8.26` 进一步加固 `/Wrapper/`、`/Contents/Helpers/`、`.app/.../*.app` 内部 helper 过滤。
+  - 范围: `AppInfo` 增加系统显示名与 bundle 显示名候选；App 扫描层和 Quick Search 文档层都过滤内部 helper；Quick Search 文档使用 resolver 生成别名；版本更新为 `7.8.26 (20260609.2004)`。
   - 不改范围: 未做第三方 App 名称机器翻译，未改 Quick Search 排名算法、App Grid 布局、窗口层级或 Smart Start 分类规则。
-  - 验证: `APP_BUILD=20260609.1741 bash build.sh`、`codesign --verify --deep --strict src/build/TagLauncher.app`、`Scripts/quick_search_app_name_qa.sh`、`Scripts/quick_search_system_app_qa.sh` 通过；构建产物 Info.plist 为 `7.8.25 (20260609.1741)`。
+  - 验证: `APP_BUILD=20260609.2004 bash build.sh`、`codesign --verify --deep --strict src/build/TagLauncher.app`、`Scripts/quick_search_app_name_qa.sh`、`Scripts/quick_search_system_app_qa.sh` 通过；构建产物 Info.plist 为 `7.8.26 (20260609.2004)`。
 
 - [2026-06-09] 修复首安 Smart Start 提示确认后 App Grid 消失的问题。
   - 结果: Smart Start 自动整理完成提示出现期间会抑制 AppKit 级 backdrop dismiss；点击“OK/好的”只关闭提示弹窗，不再关闭整个 App Grid。

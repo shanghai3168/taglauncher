@@ -11,9 +11,10 @@ rg -Fq 'systemDisplayNames' "$DATA_LAYER"
 rg -Fq 'bundleDisplayNames' "$DATA_LAYER"
 rg -Fq '.localizedNameKey' "$DATA_LAYER"
 rg -Fq 'isNestedInsideAppBundle' "$DATA_LAYER"
+rg -Fq 'isInternalHelperAppPath' "$DATA_LAYER"
 rg -Fq '.skipsPackageDescendants' "$DATA_LAYER"
 rg -Fq 'AppDisplayNameResolver.searchAliases' "$QUICK_SEARCH"
-rg -Fq 'AppIndexer.isNestedInsideAppBundle($0.path)' "$QUICK_SEARCH"
+rg -Fq 'AppIndexer.isInternalHelperAppPath($0.path)' "$QUICK_SEARCH"
 
 swift - "$SUNLOGIN_APP" <<'SWIFT'
 import Foundation
@@ -189,11 +190,29 @@ func searchAliases(_ profile: NameProfile) -> [String] {
 }
 
 func isNestedInsideAppBundle(_ url: URL) -> Bool {
-    let components = url.standardizedFileURL.pathComponents
-    guard let lastAppIndex = components.lastIndex(where: { $0.lowercased().hasSuffix(".app") }) else {
+    isNestedInsideAppBundlePath(url.standardizedFileURL.path)
+}
+
+func isInternalHelperAppPath(_ url: URL) -> Bool {
+    let path = url.standardizedFileURL.path
+    let lowercasedPath = path.lowercased()
+    return isNestedInsideAppBundlePath(path)
+        || lowercasedPath.contains("/contents/helpers/")
+        || lowercasedPath.contains("/contents/xpcservices/")
+        || lowercasedPath.contains("/wrapper/")
+}
+
+func isNestedInsideAppBundlePath(_ path: String) -> Bool {
+    let lowercasedPath = path.lowercased()
+    guard lowercasedPath.hasSuffix(".app") else { return false }
+    let components = lowercasedPath.split(separator: "/", omittingEmptySubsequences: true)
+    guard let lastAppIndex = components.lastIndex(where: { $0.hasSuffix(".app") }) else {
         return false
     }
-    return components[..<lastAppIndex].contains { $0.lowercased().hasSuffix(".app") }
+    if components[..<lastAppIndex].contains(where: { $0.hasSuffix(".app") }) {
+        return true
+    }
+    return lowercasedPath.range(of: ".app/", options: .caseInsensitive) != nil
 }
 
 func spotlightDisplayName(for url: URL) -> String? {
@@ -215,7 +234,7 @@ func bundleDisplayName(for url: URL) -> String? {
 
 func makeDocumentPaths(appPaths: [URL]) -> [String] {
     appPaths
-        .filter { !isNestedInsideAppBundle($0) }
+        .filter { !isInternalHelperAppPath($0) }
         .map(\.path)
 }
 
@@ -290,8 +309,22 @@ if FileManager.default.fileExists(atPath: nestedURL.path) {
     guard isNestedInsideAppBundle(nestedURL) else {
         fail("nested helper app was not classified as nested: \(nestedURL.path)")
     }
+    guard isInternalHelperAppPath(nestedURL) else {
+        fail("nested helper app was not classified as internal helper: \(nestedURL.path)")
+    }
     guard bundleDisplayName(for: nestedURL) == expectedDisplayName else {
         fail("nested helper bundle display name did not expose localized name")
+    }
+}
+
+let helperPathFixtures = [
+    "/Applications/Outer.app/Contents/Helpers/Inner.app",
+    "/Applications/Outer.app/Contents/XPCServices/Inner.app",
+    "/Applications/Outer.app/Wrapper/Inner.app"
+]
+for helperPath in helperPathFixtures {
+    guard isInternalHelperAppPath(URL(fileURLWithPath: helperPath)) else {
+        fail("helper path fixture was not filtered: \(helperPath)")
     }
 }
 

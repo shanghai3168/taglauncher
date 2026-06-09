@@ -295,7 +295,7 @@ struct QuickSearchResult: Identifiable {
 enum QuickSearchEngine {
     static func makeDocuments(apps: [AppInfo], store: TagDatabase.Store) -> [QuickSearchDocument] {
         apps
-            .filter { !AppIndexer.isNestedInsideAppBundle($0.path) }
+            .filter { !AppIndexer.isInternalHelperAppPath($0.path) }
             .map { app in
                 let localizedNames = uniqueOrdered(AppDisplayNameResolver.searchAliases(for: app))
                 let internalBundleNames = internalBundleNames(for: app)

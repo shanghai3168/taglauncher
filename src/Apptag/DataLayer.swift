@@ -334,7 +334,7 @@ enum AppIndexer {
             }
         }
 
-        return deduplicated(apps).sorted {
+        return deduplicated(apps.filter { !isInternalHelperAppPath($0.path) }).sorted {
             $0.name.localizedStandardCompare($1.name) == .orderedAscending
         }
     }
@@ -363,10 +363,10 @@ enum AppIndexer {
         guard url.pathExtension.lowercased() == "app" else { return }
 
         let displayURL = url.standardizedFileURL
-        guard !isNestedInsideAppBundle(displayURL) else { return }
+        guard !isInternalHelperAppPath(displayURL) else { return }
 
         let resolvedURL = displayURL.resolvingSymlinksInPath().standardizedFileURL
-        guard !isNestedInsideAppBundle(resolvedURL) else { return }
+        guard !isInternalHelperAppPath(resolvedURL) else { return }
         guard seenResolvedPaths.insert(resolvedURL.path).inserted else { return }
 
         let bundle = Bundle(url: displayURL) ?? Bundle(url: resolvedURL)
@@ -624,11 +624,29 @@ enum AppIndexer {
     }
 
     static func isNestedInsideAppBundle(_ url: URL) -> Bool {
-        let components = url.standardizedFileURL.pathComponents
-        guard let lastAppIndex = components.lastIndex(where: { $0.lowercased().hasSuffix(".app") }) else {
+        isNestedInsideAppBundlePath(url.standardizedFileURL.path)
+    }
+
+    static func isInternalHelperAppPath(_ url: URL) -> Bool {
+        let path = url.standardizedFileURL.path
+        let lowercasedPath = path.lowercased()
+        return isNestedInsideAppBundlePath(path)
+            || lowercasedPath.contains("/contents/helpers/")
+            || lowercasedPath.contains("/contents/xpcservices/")
+            || lowercasedPath.contains("/wrapper/")
+    }
+
+    private static func isNestedInsideAppBundlePath(_ path: String) -> Bool {
+        let lowercasedPath = path.lowercased()
+        guard lowercasedPath.hasSuffix(".app") else { return false }
+        let components = lowercasedPath.split(separator: "/", omittingEmptySubsequences: true)
+        guard let lastAppIndex = components.lastIndex(where: { $0.hasSuffix(".app") }) else {
             return false
         }
-        return components[..<lastAppIndex].contains { $0.lowercased().hasSuffix(".app") }
+        if components[..<lastAppIndex].contains(where: { $0.hasSuffix(".app") }) {
+            return true
+        }
+        return lowercasedPath.range(of: ".app/", options: .caseInsensitive) != nil
     }
 
     private static func deduplicated(_ apps: [AppInfo]) -> [AppInfo] {

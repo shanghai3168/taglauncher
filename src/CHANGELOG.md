@@ -1,5 +1,12 @@
 # TagLauncher Changelog
 
+## [7.8.26] — 2026-06-09
+
+- 加固 Quick Search wrapper/helper 过滤：除 URL 组件判断外，直接识别 `.app/.../*.app`、`/Wrapper/`、`/Contents/Helpers/`、`/Contents/XPCServices/` 等内部 app 路径，避免内层 helper 继续作为独立搜索结果显示
+- App 扫描层和 Quick Search 文档层同时应用内部 helper 过滤，确保“贝锐向日葵被控 / isunclient”这类 iOS-on-Mac wrapper 不再漏出内部英文技术名
+- Quick Search 名称 QA 增加 helper path fixture，覆盖 `/Wrapper/`、`/Contents/Helpers/` 和 XPCServices 内部 app
+- 版本号更新为 `7.8.26`，Build 更新为 `20260609.2004`
+
 ## [7.8.25] — 2026-06-09
 
 - 新增统一 App 显示名解析策略：App Grid 和 Quick Search 标题优先使用当前语种的官方本地化名，再按同语系、系统/Finder/Spotlight 可见名、英文官方名和基础 bundle 名逐级 fallback
