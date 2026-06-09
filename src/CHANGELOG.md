@@ -1,5 +1,11 @@
 # TagLauncher Changelog
 
+## [7.8.24] — 2026-06-09
+
+- 修复全新用户首次安装后，Smart Start 自动整理完成提示中点击“OK/好的”可能把整个 App Grid 关闭的问题；确认提示现在只关闭 Smart Start 弹窗，App Grid 会继续留在当前页面
+- Smart Start 提示弹窗纳入 modal interaction 抑制范围，避免 AppKit 级 backdrop 关闭兜底把弹窗按钮点击误判为关闭整个 overlay
+- 版本号更新为 `7.8.24`，Build 更新为 `20260609.1221`
+
 ## [7.8.23] — 2026-06-08
 
 - 收敛 App Grid 顶部/侧边 tag hover 交互：鼠标悬停 tag 只保留高亮/填色，不再自动滚动到分组，避免 hover 与内容滚动互相触发造成可感知抖动

@@ -619,6 +619,9 @@ struct ContentView: View {
         .onChange(of: appGridInteraction.pendingTagRemovalDrop != nil) { _, _ in
             publishModalInteractionState()
         }
+        .onChange(of: smartStartNotice != nil) { _, _ in
+            publishModalInteractionState()
+        }
         .onDisappear {
             NotificationCenter.default.post(
                 name: .tagLauncherModalInteractionChanged,
@@ -632,7 +635,11 @@ struct ContentView: View {
         NotificationCenter.default.post(
             name: .tagLauncherModalInteractionChanged,
             object: nil,
-            userInfo: ["active": appGridInteraction.pendingUncategorizedDrop != nil || appGridInteraction.pendingTagRemovalDrop != nil]
+            userInfo: [
+                "active": smartStartNotice != nil
+                    || appGridInteraction.pendingUncategorizedDrop != nil
+                    || appGridInteraction.pendingTagRemovalDrop != nil
+            ]
         )
     }
 

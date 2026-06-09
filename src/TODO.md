@@ -23,6 +23,11 @@
 
 ## Done
 
+- [2026-06-09] 修复首安 Smart Start 提示确认后 App Grid 消失的问题。
+  - 结果: Smart Start 自动整理完成提示出现期间会抑制 AppKit 级 backdrop dismiss；点击“OK/好的”只关闭提示弹窗，不再关闭整个 App Grid。
+  - 范围: 只改 `ContentView.swift` 的 modal interaction 发布状态，不改 Smart Start 分类规则、不改 App Grid 布局、不改窗口层级。
+  - 验证: `APP_BUILD=20260609.1221 bash build.sh`、`codesign --verify --deep --strict build/TagLauncher.app`、版本/build/category 检查、Apple 默认资源 QA、SmartStart catalog QA 通过；首安真实点击路径待最终视觉验收。
+
 - [2026-06-08] 修复 App Grid 顶部 tag hover 触发自动滚动导致的抖动。
   - 结果: hover 只保留 tag 高亮/填色，不再自动滚动；点击 tag 仍滚动到对应分组。
   - 范围: 只改 `Apptag/ContentView.swift` 的 tag hover 处理，不改 App Grid 布局算法、不改拖拽、不改点击导航语义。
