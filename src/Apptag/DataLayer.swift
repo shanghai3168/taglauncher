@@ -12,46 +12,18 @@ struct AppInfo: Identifiable, Hashable {
     let bundleIdentifier: String?
     let localizedNames: [String]
     let localizedNamesByLanguage: [String: String]
+    let systemDisplayNames: [String]
+    let bundleDisplayNames: [String]
     let icon: NSImage  // Pre-loaded during background scan
     var isUncommon: Bool = false
     var note: String? = nil
 
     var displayName: String {
-        localizedDisplayName(for: L10n.currentCode)
+        AppDisplayNameResolver.displayName(for: self, languageCode: L10n.currentCode)
     }
 
     func localizedDisplayName(for languageCode: String) -> String {
-        let candidates = AppInfo.displayLanguageFallbacks(for: languageCode)
-        for code in candidates {
-            if let localizedName = localizedNamesByLanguage[code],
-               !localizedName.isEmpty {
-                return localizedName
-            }
-        }
-        if let localizedName = localizedNames.first, !localizedName.isEmpty {
-            return localizedName
-        }
-        return name
-    }
-
-    private static func displayLanguageFallbacks(for languageCode: String) -> [String] {
-        var candidates = [languageCode]
-        switch languageCode {
-        case "zh-Hans":
-            candidates.append("zh-Hant")
-        case "zh-Hant":
-            candidates.append("zh-Hans")
-        case "nb":
-            candidates.append("no")
-        case "nn":
-            candidates.append("no")
-        case "no":
-            candidates.append(contentsOf: ["nb", "nn"])
-        default:
-            break
-        }
-        candidates.append("en")
-        return uniqueLanguageCodes(candidates)
+        AppDisplayNameResolver.displayName(for: self, languageCode: languageCode)
     }
 
     fileprivate static func uniqueLanguageCodes(_ codes: [String]) -> [String] {
@@ -67,6 +39,141 @@ struct AppInfo: Identifiable, Hashable {
 
     func hash(into hasher: inout Hasher) { hasher.combine(path) }
     static func == (lhs: AppInfo, rhs: AppInfo) -> Bool { lhs.path == rhs.path }
+}
+
+enum AppDisplayNameResolver {
+    static func displayName(for app: AppInfo, languageCode: String) -> String {
+        let languageFallbacks = displayLanguageFallbacks(for: languageCode, includeEnglish: false)
+
+        if let localizedName = firstLocalizedName(
+            for: languageFallbacks,
+            in: app.localizedNamesByLanguage
+        ) {
+            return localizedName
+        }
+
+        if languageCode == "en",
+           let englishBaseName = firstDisplayCandidate([app.name] + app.bundleDisplayNames) {
+            return englishBaseName
+        }
+
+        if let systemDisplayName = firstDisplayCandidate(app.systemDisplayNames) {
+            return systemDisplayName
+        }
+
+        if let englishName = firstLocalizedName(for: ["en"], in: app.localizedNamesByLanguage) {
+            return englishName
+        }
+
+        if let bundleDisplayName = firstDisplayCandidate(app.bundleDisplayNames) {
+            return bundleDisplayName
+        }
+
+        let skippedLanguageCodes = Set(languageFallbacks + ["en"])
+        let remainingLocalizedNames = L10n.supported.compactMap { language -> String? in
+            guard !skippedLanguageCodes.contains(language.code) else { return nil }
+            return app.localizedNamesByLanguage[language.code]
+        }
+        if let localizedName = firstDisplayCandidate(remainingLocalizedNames) {
+            return localizedName
+        }
+
+        if let alias = firstDisplayCandidate(app.localizedNames) {
+            return alias
+        }
+
+        return app.name
+    }
+
+    static func searchAliases(for app: AppInfo) -> [String] {
+        uniqueDisplayNames(
+            L10n.supported.compactMap { app.localizedNamesByLanguage[$0.code] }
+                + app.systemDisplayNames
+                + app.bundleDisplayNames
+                + app.localizedNames
+                + [app.displayName],
+            excluding: app.name
+        )
+    }
+
+    private static func displayLanguageFallbacks(
+        for languageCode: String,
+        includeEnglish: Bool
+    ) -> [String] {
+        var candidates = [
+            languageCode,
+            languageCode.replacingOccurrences(of: "_", with: "-")
+        ]
+
+        switch languageCode {
+        case "zh-Hans":
+            candidates.append("zh-Hant")
+        case "zh-Hant":
+            candidates.append("zh-Hans")
+        case "pt-BR":
+            candidates.append("pt")
+        case "sr-Cyrl":
+            candidates.append("sr")
+        case "ar-Najdi":
+            candidates.append("ar")
+        case "nb":
+            candidates.append(contentsOf: ["no", "nn"])
+        case "nn":
+            candidates.append(contentsOf: ["no", "nb"])
+        case "no":
+            candidates.append(contentsOf: ["nb", "nn"])
+        default:
+            if let base = languageCode.split(separator: "-").first.map(String.init) {
+                candidates.append(base)
+            }
+        }
+
+        if includeEnglish {
+            candidates.append("en")
+        }
+        return AppInfo.uniqueLanguageCodes(candidates)
+    }
+
+    private static func firstLocalizedName(
+        for languageCodes: [String],
+        in localizedNamesByLanguage: [String: String]
+    ) -> String? {
+        firstDisplayCandidate(languageCodes.compactMap { localizedNamesByLanguage[$0] })
+    }
+
+    private static func firstDisplayCandidate(_ values: [String]) -> String? {
+        values.lazy.compactMap(normalizedDisplayName).first
+    }
+
+    private static func uniqueDisplayNames(_ values: [String], excluding excludedValue: String) -> [String] {
+        let normalizedExcluded = normalizedKey(excludedValue)
+        var seen = Set<String>()
+        var result: [String] = []
+
+        for value in values {
+            guard let trimmed = normalizedDisplayName(value) else { continue }
+            let normalized = normalizedKey(trimmed)
+            guard normalized != normalizedExcluded,
+                  seen.insert(normalized).inserted
+            else { continue }
+            result.append(trimmed)
+        }
+        return result
+    }
+
+    private static func normalizedDisplayName(_ value: String) -> String? {
+        let trimmed = value
+            .replacingOccurrences(of: ".app", with: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? nil : trimmed
+    }
+
+    private static func normalizedKey(_ value: String) -> String {
+        value
+            .folding(options: [.diacriticInsensitive, .caseInsensitive], locale: .current)
+            .lowercased()
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 }
 
 struct TagGroup: Identifiable {
@@ -282,10 +389,13 @@ enum AppIndexer {
                 }
             }
         }
+        let systemDisplayNames = systemDisplayNames(for: displayURL, fallbackName: name)
+        let bundleDisplayNames = bundleDisplayNames(bundle: bundle, fallbackName: name)
         let localizedNames = localizedAppNames(
-            for: displayURL,
             fallbackName: name,
-            localizedNamesByLanguage: localizedNamesByLanguage
+            localizedNamesByLanguage: localizedNamesByLanguage,
+            systemDisplayNames: systemDisplayNames,
+            bundleDisplayNames: bundleDisplayNames
         )
 
         apps.append(AppInfo(
@@ -295,6 +405,8 @@ enum AppIndexer {
             bundleIdentifier: bundleId,
             localizedNames: localizedNames,
             localizedNamesByLanguage: localizedNamesByLanguage,
+            systemDisplayNames: systemDisplayNames,
+            bundleDisplayNames: bundleDisplayNames,
             icon: icon
         ))
     }
@@ -325,16 +437,39 @@ enum AppIndexer {
     }
 
     private static func localizedAppNames(
-        for appURL: URL,
         fallbackName: String,
-        localizedNamesByLanguage: [String: String]
+        localizedNamesByLanguage: [String: String],
+        systemDisplayNames: [String],
+        bundleDisplayNames: [String]
     ) -> [String] {
         var values = L10n.supported.map { localizedNamesByLanguage[$0.code] }
-        values.append(resourceLocalizedName(for: appURL))
-        values.append(spotlightDisplayName(for: appURL))
-        values.append(FileManager.default.displayName(atPath: appURL.path).replacingOccurrences(of: ".app", with: ""))
+        values.append(contentsOf: systemDisplayNames.map { Optional($0) })
+        values.append(contentsOf: bundleDisplayNames.map { Optional($0) })
 
         return uniqueLocalizedNames(values, excluding: fallbackName)
+    }
+
+    private static func systemDisplayNames(for appURL: URL, fallbackName: String) -> [String] {
+        uniqueLocalizedNames(
+            [
+                resourceLocalizedName(for: appURL),
+                spotlightDisplayName(for: appURL),
+                FileManager.default.displayName(atPath: appURL.path)
+            ],
+            excluding: fallbackName
+        )
+    }
+
+    private static func bundleDisplayNames(bundle: Bundle?, fallbackName: String) -> [String] {
+        uniqueLocalizedNames(
+            [
+                bundle?.localizedInfoDictionary?["CFBundleDisplayName"] as? String,
+                bundle?.localizedInfoDictionary?["CFBundleName"] as? String,
+                bundle?.infoDictionary?["CFBundleDisplayName"] as? String,
+                bundle?.infoDictionary?["CFBundleName"] as? String
+            ],
+            excluding: fallbackName
+        )
     }
 
     private static func localizedAppName(
@@ -488,7 +623,7 @@ enum AppIndexer {
             .trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
-    private static func isNestedInsideAppBundle(_ url: URL) -> Bool {
+    static func isNestedInsideAppBundle(_ url: URL) -> Bool {
         let components = url.standardizedFileURL.pathComponents
         guard let lastAppIndex = components.lastIndex(where: { $0.lowercased().hasSuffix(".app") }) else {
             return false
@@ -1325,6 +1460,8 @@ enum TagEditor {
                 bundleIdentifier: app.bundleIdentifier,
                 localizedNames: app.localizedNames,
                 localizedNamesByLanguage: app.localizedNamesByLanguage,
+                systemDisplayNames: app.systemDisplayNames,
+                bundleDisplayNames: app.bundleDisplayNames,
                 icon: app.icon,
                 isUncommon: uncommonPaths.contains(app.path.path),
                 note: store.appNotes[app.path.path]

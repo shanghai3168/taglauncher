@@ -294,31 +294,33 @@ struct QuickSearchResult: Identifiable {
 
 enum QuickSearchEngine {
     static func makeDocuments(apps: [AppInfo], store: TagDatabase.Store) -> [QuickSearchDocument] {
-        apps.map { app in
-            let localizedNames = uniqueOrdered(app.localizedNames)
-            let internalBundleNames = internalBundleNames(for: app)
-            let note = store.appNotes[app.path.path] ?? app.note ?? ""
-            let bundleIdentifier = app.bundleIdentifier ?? ""
-            let searchableFields = makeSearchableFields(
-                appName: app.name,
-                localizedNames: localizedNames,
-                internalBundleNames: internalBundleNames,
-                tagNames: app.tags,
-                note: note,
-                bundleIdentifier: bundleIdentifier
-            )
-            return QuickSearchDocument(
-                app: app,
-                localizedNames: localizedNames,
-                internalBundleNames: internalBundleNames,
-                tagNames: app.tags,
-                note: note,
-                bundleIdentifier: bundleIdentifier,
-                lastOpenedAt: store.appLastOpenedAt[app.path.path],
-                openCount: store.appOpenCounts[app.path.path] ?? 0,
-                searchableFields: searchableFields
-            )
-        }
+        apps
+            .filter { !AppIndexer.isNestedInsideAppBundle($0.path) }
+            .map { app in
+                let localizedNames = uniqueOrdered(AppDisplayNameResolver.searchAliases(for: app))
+                let internalBundleNames = internalBundleNames(for: app)
+                let note = store.appNotes[app.path.path] ?? app.note ?? ""
+                let bundleIdentifier = app.bundleIdentifier ?? ""
+                let searchableFields = makeSearchableFields(
+                    appName: app.name,
+                    localizedNames: localizedNames,
+                    internalBundleNames: internalBundleNames,
+                    tagNames: app.tags,
+                    note: note,
+                    bundleIdentifier: bundleIdentifier
+                )
+                return QuickSearchDocument(
+                    app: app,
+                    localizedNames: localizedNames,
+                    internalBundleNames: internalBundleNames,
+                    tagNames: app.tags,
+                    note: note,
+                    bundleIdentifier: bundleIdentifier,
+                    lastOpenedAt: store.appLastOpenedAt[app.path.path],
+                    openCount: store.appOpenCounts[app.path.path] ?? 0,
+                    searchableFields: searchableFields
+                )
+            }
     }
 
     static func search(_ query: String, documents: [QuickSearchDocument], limit: Int = 50) -> [QuickSearchResult] {
@@ -688,19 +690,6 @@ enum QuickSearchEngine {
             previousWasLowercase = isLowercase
         }
         return normalizeField(String(parts))
-    }
-
-    private static func localizedNames(for app: AppInfo) -> [String] {
-        guard let bundle = Bundle(url: app.path) else { return [] }
-        let values = [
-            bundle.localizedInfoDictionary?["CFBundleDisplayName"] as? String,
-            bundle.infoDictionary?["CFBundleDisplayName"] as? String,
-            FileManager.default.displayName(atPath: app.path.path).replacingOccurrences(of: ".app", with: "")
-        ]
-        return uniqueOrdered(values.compactMap { $0 }.compactMap { value in
-            let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
-            return trimmed.isEmpty || trimmed == app.name ? nil : trimmed
-        })
     }
 
     private static func internalBundleNames(for app: AppInfo) -> [String] {

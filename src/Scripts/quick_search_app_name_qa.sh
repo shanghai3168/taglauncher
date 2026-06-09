@@ -3,12 +3,17 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DATA_LAYER="$ROOT_DIR/Apptag/DataLayer.swift"
+QUICK_SEARCH="$ROOT_DIR/Apptag/QuickSearch.swift"
 SUNLOGIN_APP="${1:-/Applications/贝锐向日葵被控.app}"
 
-rg -Fq 'localizedNames.first' "$DATA_LAYER"
+rg -Fq 'AppDisplayNameResolver.displayName' "$DATA_LAYER"
+rg -Fq 'systemDisplayNames' "$DATA_LAYER"
+rg -Fq 'bundleDisplayNames' "$DATA_LAYER"
 rg -Fq '.localizedNameKey' "$DATA_LAYER"
 rg -Fq 'isNestedInsideAppBundle' "$DATA_LAYER"
 rg -Fq '.skipsPackageDescendants' "$DATA_LAYER"
+rg -Fq 'AppDisplayNameResolver.searchAliases' "$QUICK_SEARCH"
+rg -Fq 'AppIndexer.isNestedInsideAppBundle($0.path)' "$QUICK_SEARCH"
 
 swift - "$SUNLOGIN_APP" <<'SWIFT'
 import Foundation
@@ -54,6 +59,135 @@ func uniqueLocalizedNames(_ values: [String?], excluding excludedValue: String) 
     return result
 }
 
+func uniqueDisplayNames(_ values: [String], excluding excludedValue: String) -> [String] {
+    let excluded = normalized(excludedValue)
+    var seen = Set<String>()
+    var result: [String] = []
+    for value in values {
+        guard let trimmed = trim(value) else { continue }
+        let key = normalized(trimmed)
+        guard key != excluded, seen.insert(key).inserted else { continue }
+        result.append(trimmed)
+    }
+    return result
+}
+
+struct NameProfile {
+    let name: String
+    let localizedNames: [String]
+    let localizedNamesByLanguage: [String: String]
+    let systemDisplayNames: [String]
+    let bundleDisplayNames: [String]
+}
+
+let supportedLanguages = [
+    "en", "fr", "it", "de", "es", "pt-BR", "zh-Hans", "zh-Hant", "ko", "ja",
+    "ru", "sr-Cyrl", "uk", "th", "vi", "ar", "ar-Najdi", "tr", "id", "cs",
+    "da", "nl", "no", "nn", "nb", "ms", "pl", "ro", "sv"
+]
+
+func uniqueLanguageCodes(_ codes: [String]) -> [String] {
+    var seen = Set<String>()
+    return codes.filter { seen.insert($0).inserted }
+}
+
+func displayLanguageFallbacks(for languageCode: String, includeEnglish: Bool = false) -> [String] {
+    var candidates = [
+        languageCode,
+        languageCode.replacingOccurrences(of: "_", with: "-")
+    ]
+
+    switch languageCode {
+    case "zh-Hans":
+        candidates.append("zh-Hant")
+    case "zh-Hant":
+        candidates.append("zh-Hans")
+    case "pt-BR":
+        candidates.append("pt")
+    case "sr-Cyrl":
+        candidates.append("sr")
+    case "ar-Najdi":
+        candidates.append("ar")
+    case "nb":
+        candidates.append(contentsOf: ["no", "nn"])
+    case "nn":
+        candidates.append(contentsOf: ["no", "nb"])
+    case "no":
+        candidates.append(contentsOf: ["nb", "nn"])
+    default:
+        if let base = languageCode.split(separator: "-").first.map(String.init) {
+            candidates.append(base)
+        }
+    }
+
+    if includeEnglish {
+        candidates.append("en")
+    }
+    return uniqueLanguageCodes(candidates)
+}
+
+func firstDisplayCandidate(_ values: [String]) -> String? {
+    values.lazy.compactMap(trim).first
+}
+
+func firstLocalizedName(for languageCodes: [String], in localizedNamesByLanguage: [String: String]) -> String? {
+    firstDisplayCandidate(languageCodes.compactMap { localizedNamesByLanguage[$0] })
+}
+
+func displayName(_ profile: NameProfile, languageCode: String) -> String {
+    let languageFallbacks = displayLanguageFallbacks(for: languageCode)
+
+    if let localizedName = firstLocalizedName(
+        for: languageFallbacks,
+        in: profile.localizedNamesByLanguage
+    ) {
+        return localizedName
+    }
+
+    if languageCode == "en",
+       let englishBaseName = firstDisplayCandidate([profile.name] + profile.bundleDisplayNames) {
+        return englishBaseName
+    }
+
+    if let systemDisplayName = firstDisplayCandidate(profile.systemDisplayNames) {
+        return systemDisplayName
+    }
+
+    if let englishName = firstLocalizedName(for: ["en"], in: profile.localizedNamesByLanguage) {
+        return englishName
+    }
+
+    if let bundleDisplayName = firstDisplayCandidate(profile.bundleDisplayNames) {
+        return bundleDisplayName
+    }
+
+    let skippedLanguageCodes = Set(languageFallbacks + ["en"])
+    let remainingLocalizedNames = supportedLanguages.compactMap { languageCode -> String? in
+        guard !skippedLanguageCodes.contains(languageCode) else { return nil }
+        return profile.localizedNamesByLanguage[languageCode]
+    }
+    if let localizedName = firstDisplayCandidate(remainingLocalizedNames) {
+        return localizedName
+    }
+
+    if let alias = firstDisplayCandidate(profile.localizedNames) {
+        return alias
+    }
+
+    return profile.name
+}
+
+func searchAliases(_ profile: NameProfile) -> [String] {
+    uniqueDisplayNames(
+        supportedLanguages.compactMap { profile.localizedNamesByLanguage[$0] }
+            + profile.systemDisplayNames
+            + profile.bundleDisplayNames
+            + profile.localizedNames
+            + [displayName(profile, languageCode: "zh-Hans")],
+        excluding: profile.name
+    )
+}
+
 func isNestedInsideAppBundle(_ url: URL) -> Bool {
     let components = url.standardizedFileURL.pathComponents
     guard let lastAppIndex = components.lastIndex(where: { $0.lowercased().hasSuffix(".app") }) else {
@@ -79,21 +213,68 @@ func bundleDisplayName(for url: URL) -> String? {
     return trim(bundle.infoDictionary?["CFBundleDisplayName"] as? String)
 }
 
-func displayName(name: String, localizedNames: [String], localizedNamesByLanguage: [String: String], languageCode: String) -> String {
-    var candidates = [languageCode]
-    if languageCode == "zh-Hans" { candidates.append("zh-Hant") }
-    if languageCode == "zh-Hant" { candidates.append("zh-Hans") }
-    candidates.append("en")
-    var seen = Set<String>()
-    for code in candidates where seen.insert(code).inserted {
-        if let localizedName = localizedNamesByLanguage[code], !localizedName.isEmpty {
-            return localizedName
-        }
-    }
-    if let localizedName = localizedNames.first, !localizedName.isEmpty {
-        return localizedName
-    }
-    return name
+func makeDocumentPaths(appPaths: [URL]) -> [String] {
+    appPaths
+        .filter { !isNestedInsideAppBundle($0) }
+        .map(\.path)
+}
+
+let multilingualProfile = NameProfile(
+    name: "InternalRunner",
+    localizedNames: [],
+    localizedNamesByLanguage: [
+        "en": "English Name",
+        "de": "Deutscher Name",
+        "ja": "日本語名",
+        "zh-Hans": "简体名"
+    ],
+    systemDisplayNames: ["System Visible"],
+    bundleDisplayNames: ["Bundle Visible"]
+)
+guard displayName(multilingualProfile, languageCode: "de") == "Deutscher Name" else {
+    fail("German localized display name was not preferred")
+}
+guard displayName(multilingualProfile, languageCode: "ja") == "日本語名" else {
+    fail("Japanese localized display name was not preferred")
+}
+guard displayName(multilingualProfile, languageCode: "zh-Hant") == "简体名" else {
+    fail("Chinese language fallback did not use paired Chinese localization")
+}
+
+let systemFallbackProfile = NameProfile(
+    name: "internal-helper",
+    localizedNames: [],
+    localizedNamesByLanguage: [:],
+    systemDisplayNames: ["Nom système"],
+    bundleDisplayNames: ["Bundle Visible"]
+)
+guard displayName(systemFallbackProfile, languageCode: "fr") == "Nom système" else {
+    fail("system/Finder display name was not used before bundle/internal names")
+}
+
+let englishBaseProfile = NameProfile(
+    name: "AweSun",
+    localizedNames: [],
+    localizedNamesByLanguage: [:],
+    systemDisplayNames: ["贝锐向日葵"],
+    bundleDisplayNames: []
+)
+guard displayName(englishBaseProfile, languageCode: "en") == "AweSun" else {
+    fail("English users should keep a presentable English base app name")
+}
+guard displayName(englishBaseProfile, languageCode: "zh-Hans") == "贝锐向日葵" else {
+    fail("non-English users should still get system-localized display fallback")
+}
+
+let englishFallbackProfile = NameProfile(
+    name: "inner-name",
+    localizedNames: [],
+    localizedNamesByLanguage: ["en": "Official English"],
+    systemDisplayNames: [],
+    bundleDisplayNames: []
+)
+guard displayName(englishFallbackProfile, languageCode: "sv") == "Official English" else {
+    fail("official English display name was not used as cross-language fallback")
 }
 
 guard FileManager.default.fileExists(atPath: appPath) else {
@@ -156,14 +337,27 @@ let helperLocalizedNames = uniqueLocalizedNames(
     ],
     excluding: "isunclient"
 )
-let helperDisplayName = displayName(
+let helperProfile = NameProfile(
     name: "isunclient",
     localizedNames: helperLocalizedNames,
     localizedNamesByLanguage: [:],
-    languageCode: "zh-Hans"
+    systemDisplayNames: helperLocalizedNames,
+    bundleDisplayNames: []
 )
+let helperDisplayName = displayName(helperProfile, languageCode: "zh-Hans")
 guard helperDisplayName == expectedDisplayName else {
     fail("displayName fallback returned \(helperDisplayName) instead of \(expectedDisplayName)")
+}
+
+let documentPaths = makeDocumentPaths(appPaths: [appURL, nestedURL])
+guard documentPaths.contains(appPath) else {
+    fail("Quick Search document fixture dropped outer wrapper app")
+}
+guard !documentPaths.contains(nestedURL.path) else {
+    fail("Quick Search document fixture included nested helper app: \(nestedURL.path)")
+}
+guard searchAliases(helperProfile).contains(expectedDisplayName) else {
+    fail("display aliases did not retain localized helper name for search")
 }
 
 print("PASS quick search app-name QA: \(expectedDisplayName) wrapper wins over nested isunclient")

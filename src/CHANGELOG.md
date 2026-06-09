@@ -1,5 +1,13 @@
 # TagLauncher Changelog
 
+## [7.8.25] — 2026-06-09
+
+- 新增统一 App 显示名解析策略：App Grid 和 Quick Search 标题优先使用当前语种的官方本地化名，再按同语系、系统/Finder/Spotlight 可见名、英文官方名和基础 bundle 名逐级 fallback
+- Quick Search 搜索别名与结果标题分离：内部 bundle 名、可执行名和 bundle id 继续参与搜索匹配，但不再优先作为用户可见标题
+- Quick Search 文档生成增加嵌套 `.app` 防御过滤，避免 wrapper / iOS-on-Mac 应用的内层 helper 作为独立结果漏出
+- Quick Search 名称 QA 增加多语种 fixture、系统显示名 fallback、英文基础名保留和“贝锐向日葵被控 / isunclient”最终文档过滤检查
+- 版本号更新为 `7.8.25`，Build 更新为 `20260609.1741`
+
 ## [7.8.24] — 2026-06-09
 
 - 修复全新用户首次安装后，Smart Start 自动整理完成提示中点击“OK/好的”可能把整个 App Grid 关闭的问题；确认提示现在只关闭 Smart Start 弹窗，App Grid 会继续留在当前页面
