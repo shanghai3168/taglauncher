@@ -18,3 +18,7 @@
 
 # Local scratch notes.
 /项目管理规范.md
+
+# Local Codex session memory and runtime data.
+/.codex/
+/.codex-sessionhistory/
