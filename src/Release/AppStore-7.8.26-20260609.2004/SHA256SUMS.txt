@@ -1,0 +1,2 @@
+fbc96c0cd618830ddd62c02ba51f2fc5d9757c7e7aa0f1d44aefd8461ab87c3e  Archive/TagLauncher-7.8.26-build20260609.2004.dmg
+b2a5059246aa076d41d40d3839eaa8535c90c437d7e2d4fcd5cbaa7592f7f6d3  Upload/TagLauncher-7.8.26-build20260609.2004.pkg
