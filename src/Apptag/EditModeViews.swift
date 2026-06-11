@@ -38,8 +38,8 @@ struct EditAppsHeaderView: View {
                 Text(hintText)
                     .font(.system(size: 11, weight: .medium))
                     .foregroundStyle(.secondary)
-                    .lineLimit(1)
-                    .truncationMode(.middle)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.trailing)
                     .frame(maxWidth: 460, alignment: .trailing)
                     .help(hintText)
             }
