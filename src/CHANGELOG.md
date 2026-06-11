@@ -1,5 +1,11 @@
 # TagLauncher Changelog
 
+## [7.8.27] — 2026-06-11
+
+- 设置页顶部导航改为自定义稳定 tab bar，不再依赖 SwiftUI `TabView` 默认 macOS 样式，避免 macOS 14 与较新系统渲染成不同的工具栏/分段控件外观
+- 保留设置页各 tab 内容逻辑，仅替换外层导航容器，降低对热键、App Grid、Quick Search 和数据层的回归影响
+- 版本号更新为 `7.8.27`，Build 更新为 `20260611.1548`
+
 ## [7.8.26] — 2026-06-09
 
 - 加固 Quick Search wrapper/helper 过滤：除 URL 组件判断外，直接识别 `.app/.../*.app`、`/Wrapper/`、`/Contents/Helpers/`、`/Contents/XPCServices/` 等内部 app 路径，避免内层 helper 继续作为独立搜索结果显示
