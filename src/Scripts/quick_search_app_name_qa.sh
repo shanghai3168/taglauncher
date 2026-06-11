@@ -5,6 +5,8 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DATA_LAYER="$ROOT_DIR/Apptag/DataLayer.swift"
 QUICK_SEARCH="$ROOT_DIR/Apptag/QuickSearch.swift"
 SUNLOGIN_APP="${1:-/Applications/贝锐向日葵被控.app}"
+MODULE_CACHE_DIR="${MODULE_CACHE_DIR:-${TMPDIR:-/tmp}/taglauncher-quick-search-qa-cache}"
+mkdir -p "$MODULE_CACHE_DIR"
 
 rg -Fq 'AppDisplayNameResolver.displayName' "$DATA_LAYER"
 rg -Fq 'systemDisplayNames' "$DATA_LAYER"
@@ -16,7 +18,7 @@ rg -Fq '.skipsPackageDescendants' "$DATA_LAYER"
 rg -Fq 'AppDisplayNameResolver.searchAliases' "$QUICK_SEARCH"
 rg -Fq 'AppIndexer.isInternalHelperAppPath($0.path)' "$QUICK_SEARCH"
 
-swift - "$SUNLOGIN_APP" <<'SWIFT'
+swift -module-cache-path "$MODULE_CACHE_DIR" - "$SUNLOGIN_APP" <<'SWIFT'
 import Foundation
 import CoreServices
 

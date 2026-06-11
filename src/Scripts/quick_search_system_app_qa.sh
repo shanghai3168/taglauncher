@@ -4,11 +4,13 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DATA_LAYER="$ROOT_DIR/Apptag/DataLayer.swift"
 KEYCHAIN_APP="/System/Library/CoreServices/Applications/Keychain Access.app"
+MODULE_CACHE_DIR="${MODULE_CACHE_DIR:-${TMPDIR:-/tmp}/taglauncher-quick-search-qa-cache}"
+mkdir -p "$MODULE_CACHE_DIR"
 
 rg -Fq 'URL(fileURLWithPath: "/System/Library/CoreServices/Applications")' "$DATA_LAYER"
 rg -Fq '"/System/Library/CoreServices/Applications/"' "$DATA_LAYER"
 
-swift - "$KEYCHAIN_APP" <<'SWIFT'
+swift -module-cache-path "$MODULE_CACHE_DIR" - "$KEYCHAIN_APP" <<'SWIFT'
 import Foundation
 import CoreServices
 

@@ -10,9 +10,12 @@ MACOS_DIR="$APP_BUNDLE/Contents/MacOS"
 RESOURCES_DIR="$APP_BUNDLE/Contents/Resources"
 SWIFT_DIR="$PROJECT_DIR/Apptag"
 INFO_PLIST="$SWIFT_DIR/Info.plist"
+MODULE_CACHE_DIR="${MODULE_CACHE_DIR:-$BUILD_DIR/ModuleCache}"
 
 SDK_PATH=$(xcrun --sdk macosx --show-sdk-path)
-TARGET="arm64-apple-macosx15.0"
+MACOS_DEPLOYMENT_TARGET="${MACOS_DEPLOYMENT_TARGET:-14.0}"
+TARGET_ARCH="${TARGET_ARCH:-arm64}"
+TARGET="${TARGET_ARCH}-apple-macosx${MACOS_DEPLOYMENT_TARGET}"
 
 APP_VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$INFO_PLIST")
 APP_BUILD="${APP_BUILD:-$(date '+%Y%m%d.%H%M')}"
@@ -48,6 +51,7 @@ rm -rf "$BUILD_DIR"
 echo "==> Creating bundle structure..."
 mkdir -p "$MACOS_DIR"
 mkdir -p "$RESOURCES_DIR"
+mkdir -p "$MODULE_CACHE_DIR"
 
 echo "==> Compiling Swift files..."
 SWIFT_FILES=()
@@ -63,6 +67,7 @@ swiftc \
     -lcompression \
     -sdk "$SDK_PATH" \
     -target "$TARGET" \
+    -module-cache-path "$MODULE_CACHE_DIR" \
     -Osize \
     "${SWIFT_FILES[@]}"
 
