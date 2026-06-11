@@ -17,7 +17,7 @@ struct TagLauncherApp: App {
         Settings {
             PreferencesView()
         }
-        .defaultSize(width: 1000, height: 480)
+        .defaultSize(width: 1000, height: 640)
         .commands {
             CommandGroup(replacing: .systemServices) { }
             CommandGroup(replacing: .appVisibility) { }
@@ -42,7 +42,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private static let launcherOverlayLevel = NSWindow.Level(rawValue: NSWindow.Level.mainMenu.rawValue - 1)
     private static let overlayDefaultLevel = launcherOverlayLevel
     private static let overlayTextInputLevel = launcherOverlayLevel
-    private static let settingsContentSize = NSSize(width: 1000, height: 480)
+    private static let settingsContentSize = NSSize(width: 1000, height: 640)
 
     private var statusItem: NSStatusItem?
     private var overlayKeyMonitor: Any?

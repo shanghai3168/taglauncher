@@ -38,6 +38,7 @@ private enum SettingsTab: String, CaseIterable, Identifiable {
 
 struct PreferencesView: View {
     private let settingsWindowWidth: CGFloat = 1000
+    private let settingsWindowHeight: CGFloat = 640
     private let settingsContentWidth: CGFloat = 940
     private let generalContentWidth: CGFloat = 720
     private let generalLabelWidth: CGFloat = 190
@@ -528,12 +529,12 @@ struct PreferencesView: View {
     }
 
     private var settingsTabBar: some View {
-        HStack(spacing: 18) {
+        HStack(spacing: 8) {
             ForEach(SettingsTab.allCases) { tab in
                 settingsTabButton(tab)
             }
         }
-        .frame(height: 104, alignment: .center)
+        .frame(height: 96, alignment: .center)
         .frame(maxWidth: .infinity)
         .background(Color(nsColor: .windowBackgroundColor))
     }
@@ -550,11 +551,12 @@ struct PreferencesView: View {
                     .frame(width: 32, height: 32)
                 Text(tr(tab.titleKey))
                     .font(.system(size: 13, weight: .semibold))
-                    .lineLimit(1)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.center)
                     .minimumScaleFactor(0.8)
             }
             .foregroundStyle(isSelected ? Color.accentColor : Color.secondary)
-            .frame(width: 72, height: 70)
+            .frame(width: 108, height: 74)
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill(isSelected ? Color.accentColor.opacity(0.10) : Color.clear)
@@ -1031,7 +1033,7 @@ struct PreferencesView: View {
                 .transition(.opacity.combined(with: .move(edge: .bottom)))
             }
         }
-        .frame(width: settingsWindowWidth, height: 480)
+        .frame(width: settingsWindowWidth, height: settingsWindowHeight)
         .onAppear {
             syncSelectedLanguage()
             showPendingHotkeyWarningIfNeeded()

@@ -77,7 +77,10 @@ cp "$INFO_PLIST" "$APP_INFO_PLIST"
 
 echo "==> Copying AppIcon.icns..."
 APPICON_SOURCE_DIR="$SWIFT_DIR/Assets.xcassets/AppIcon.appiconset"
-if [ -d "$APPICON_SOURCE_DIR" ]; then
+PREBUILT_APPICON="$PROJECT_DIR/icon-icns.icns"
+if [ -f "$PREBUILT_APPICON" ]; then
+    cp "$PREBUILT_APPICON" "$RESOURCES_DIR/AppIcon.icns"
+elif [ -d "$APPICON_SOURCE_DIR" ]; then
     TMP_ICONSET_PARENT="$(mktemp -d -t taglauncher-appicon.XXXXXX)"
     TMP_ICONSET="$TMP_ICONSET_PARENT/AppIcon.iconset"
     mkdir -p "$TMP_ICONSET"
@@ -102,8 +105,6 @@ if [ -d "$APPICON_SOURCE_DIR" ]; then
     done
     iconutil -c icns "$TMP_ICONSET" -o "$RESOURCES_DIR/AppIcon.icns"
     rm -rf "$TMP_ICONSET_PARENT"
-elif [ -f "$PROJECT_DIR/icon-icns.icns" ]; then
-    cp "$PROJECT_DIR/icon-icns.icns" "$RESOURCES_DIR/AppIcon.icns"
 elif [ -f "$SWIFT_DIR/AppIcon.iconset/icon_512x512@2x.png" ]; then
     iconutil -c icns "$SWIFT_DIR/AppIcon.iconset" -o "$RESOURCES_DIR/AppIcon.icns" 2>/dev/null
 else
