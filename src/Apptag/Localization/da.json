@@ -141,6 +141,7 @@
   "settings.initialLayout": "Initialiser layout:",
   "settings.initialLayoutUncategorized": "Ukategoriseret",
   "settings.initialLayoutSmart": "Smarte startkategorier",
+  "settings.customLayout": "Tilpasset layout:",
   "settings.applyScheme": "Anvend",
   "settings.applySystemSchemeWarningTitle": "Sikkerhedskopi anbefales",
   "settings.applySystemSchemeWarningMessage": "Anvendelse af systemets smarte startskema erstatter det aktuelle lokale skema. Du har ikke sikkerhedskopieret endnu; vi anbefaler kraftigt at eksportere en sikkerhedskopi først.",

@@ -141,6 +141,7 @@
   "settings.initialLayout": "تهيئة التخطيط:",
   "settings.initialLayoutUncategorized": "غير مصنف",
   "settings.initialLayoutSmart": "تصنيف أولي ذكي",
+  "settings.customLayout": "تخطيط مخصص:",
   "settings.applyScheme": "تطبيق",
   "settings.applySystemSchemeWarningTitle": "يُوصى بالنسخ الاحتياطي",
   "settings.applySystemSchemeWarningMessage": "سيؤدي تطبيق مخطط البداية الذكي للنظام إلى استبدال المخطط المحلي الحالي. لم تقم بعمل نسخة احتياطية بعد؛ نوصي بشدة بتصدير نسخة احتياطية قبل التطبيق.",

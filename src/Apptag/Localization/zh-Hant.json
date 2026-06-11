@@ -141,6 +141,7 @@
   "settings.initialLayout": "版面初始化：",
   "settings.initialLayoutUncategorized": "未分類",
   "settings.initialLayoutSmart": "智慧初始化分類",
+  "settings.customLayout": "自訂版面：",
   "settings.applyScheme": "套用",
   "settings.applySystemSchemeWarningTitle": "建議先備份",
   "settings.applySystemSchemeWarningMessage": "套用系統智慧化初始分類會覆蓋目前本機方案。您尚未備份，強烈建議先點選「匯出分類與佈局」備份後再套用。",

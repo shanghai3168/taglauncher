@@ -141,6 +141,7 @@
   "settings.initialLayout": "เริ่มต้นเลย์เอาต์:",
   "settings.initialLayoutUncategorized": "ไม่จัดหมวดหมู่",
   "settings.initialLayoutSmart": "หมวดหมู่เริ่มต้นอัจฉริยะ",
+  "settings.customLayout": "เค้าโครงแบบกำหนดเอง:",
   "settings.applyScheme": "นำไปใช้",
   "settings.applySystemSchemeWarningTitle": "แนะนำให้สำรองข้อมูล",
   "settings.applySystemSchemeWarningMessage": "การใช้ชุดเริ่มต้นอัจฉริยะของระบบจะแทนที่ชุดภายในเครื่องปัจจุบัน คุณยังไม่ได้สำรองข้อมูล เราแนะนำอย่างยิ่งให้ส่งออกข้อมูลสำรองก่อนนำไปใช้",

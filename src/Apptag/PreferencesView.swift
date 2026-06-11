@@ -49,9 +49,9 @@ struct PreferencesView: View {
     private let generalLabelWidth: CGFloat = 190
     private let generalControlWidth: CGFloat = 500
     private let compactPickerWidth: CGFloat = 320
-    private let dataPanelWidth: CGFloat = 760
-    private let dataLabelWidth: CGFloat = 220
-    private let dataActionWidth: CGFloat = 112
+    private let dataPanelWidth: CGFloat = 820
+    private let dataLabelWidth: CGFloat = 190
+    private let dataActionWidth: CGFloat = 128
 
     @AppStorage("tagFontSize") private var tagFontSize: Double = AppDefaults.tagFontSize
     @AppStorage("iconSize") private var iconSize: Double = AppDefaults.iconSize
@@ -456,6 +456,35 @@ struct PreferencesView: View {
         .buttonStyle(.plain)
     }
 
+    private func dataSectionTitle(_ title: String) -> some View {
+        Text(title)
+            .font(.system(size: 13, weight: .semibold))
+            .foregroundStyle(.primary)
+            .lineLimit(1)
+            .minimumScaleFactor(0.82)
+            .multilineTextAlignment(.trailing)
+            .frame(width: dataLabelWidth, alignment: .trailing)
+    }
+
+    private func dataSection<Content: View>(
+        minHeight: CGFloat,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+        content()
+            .padding(.horizontal, 20)
+            .padding(.vertical, 18)
+            .frame(width: dataPanelWidth, alignment: .leading)
+            .frame(minHeight: minHeight, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color(nsColor: .controlBackgroundColor))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .stroke(Color.secondary.opacity(0.18), lineWidth: 1)
+            )
+    }
+
     private func syncSelectedLanguage() {
         let code = L10n.selectedLanguageCode
         guard selectedLanguage != code else { return }
@@ -824,18 +853,12 @@ struct PreferencesView: View {
                     case .data:
             // Tab 5: Data
             VStack(spacing: 0) {
-                Spacer(minLength: 32)
+                Spacer(minLength: 36)
 
-                VStack(alignment: .center, spacing: 0) {
-                    VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .center, spacing: 24) {
+                    dataSection(minHeight: 124) {
                         HStack(alignment: .center, spacing: 12) {
-                            Text(tr("settings.initialLayout"))
-                                .font(.system(size: 13, weight: .semibold))
-                                .foregroundStyle(.secondary)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.82)
-                                .multilineTextAlignment(.trailing)
-                                .frame(width: dataLabelWidth, alignment: .trailing)
+                            dataSectionTitle(tr("settings.initialLayout"))
 
                             HStack(spacing: 22) {
                                 initialLayoutOption(
@@ -859,22 +882,65 @@ struct PreferencesView: View {
                             .frame(width: dataActionWidth, alignment: .trailing)
                             .layoutPriority(2)
                         }
+                    }
 
-                        HStack(alignment: .center, spacing: 12) {
-                            Text(tr("settings.previousScheme"))
-                                .font(.system(size: 13, weight: .semibold))
-                                .foregroundStyle(.secondary)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.82)
-                                .multilineTextAlignment(.trailing)
-                                .frame(width: dataLabelWidth, alignment: .trailing)
-                            Text(previousCategorySchemeName)
-                                .font(.system(size: 13, weight: .medium))
-                                .foregroundStyle(canRestorePreviousScheme ? .primary : .tertiary)
-                                .lineLimit(1)
-                                .truncationMode(.middle)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .layoutPriority(0)
+                    dataSection(minHeight: 190) {
+                        HStack(alignment: .top, spacing: 12) {
+                            dataSectionTitle(tr("settings.customLayout"))
+                                .padding(.top, 4)
+
+                            VStack(alignment: .leading, spacing: 10) {
+                                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                                    Text(tr("settings.previousScheme"))
+                                        .font(.system(size: 13, weight: .semibold))
+                                        .foregroundStyle(.secondary)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.82)
+                                    Text(previousCategorySchemeName)
+                                        .font(.system(size: 13, weight: .medium))
+                                        .foregroundStyle(canRestorePreviousScheme ? .primary : .tertiary)
+                                        .lineLimit(1)
+                                        .truncationMode(.middle)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+
+                                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                                    Text(tr("settings.currentScheme"))
+                                        .font(.system(size: 13, weight: .semibold))
+                                        .foregroundStyle(.secondary)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.82)
+                                    Text(currentCategorySchemeName)
+                                        .font(.system(size: 13, weight: .medium))
+                                        .foregroundStyle(.primary)
+                                        .lineLimit(1)
+                                        .truncationMode(.middle)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+
+                                Divider().opacity(0.35)
+                                    .padding(.top, 2)
+
+                                VStack(alignment: .center, spacing: 8) {
+                                    HStack(spacing: 12) {
+                                        Button(tr("settings.export")) { exportTags() }
+                                            .buttonStyle(.bordered)
+                                            .disabled(isDataFilePanelPresented)
+                                        Button(tr("settings.import")) { importTags() }
+                                            .buttonStyle(.bordered)
+                                            .disabled(isDataFilePanelPresented)
+                                    }
+                                    Text(tr("settings.backupDesc"))
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                        .multilineTextAlignment(.center)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                        .frame(maxWidth: dataPanelWidth - dataLabelWidth - dataActionWidth - 92, alignment: .center)
+                                }
+                                .frame(maxWidth: .infinity, alignment: .center)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .layoutPriority(1)
 
                             dataActionButton(
                                 tr("settings.restorePreviousScheme"),
@@ -885,60 +951,11 @@ struct PreferencesView: View {
                             .frame(width: dataActionWidth, alignment: .trailing)
                             .layoutPriority(2)
                         }
-
-                        HStack(alignment: .firstTextBaseline, spacing: 12) {
-                            Text(tr("settings.currentScheme"))
-                                .font(.system(size: 13, weight: .semibold))
-                                .foregroundStyle(.secondary)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.82)
-                                .multilineTextAlignment(.trailing)
-                                .frame(width: dataLabelWidth, alignment: .trailing)
-                            Text(currentCategorySchemeName)
-                                .font(.system(size: 13, weight: .medium))
-                                .foregroundStyle(.primary)
-                                .lineLimit(1)
-                                .truncationMode(.middle)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            Color.clear
-                                .frame(width: dataActionWidth, height: 1)
-                        }
-
-                        Divider().opacity(0.35)
-
-                        VStack(alignment: .center, spacing: 8) {
-                            HStack(spacing: 12) {
-                                Button(tr("settings.export")) { exportTags() }
-                                    .buttonStyle(.bordered)
-                                    .disabled(isDataFilePanelPresented)
-                                Button(tr("settings.import")) { importTags() }
-                                    .buttonStyle(.bordered)
-                                    .disabled(isDataFilePanelPresented)
-                            }
-                            Text(tr("settings.backupDesc"))
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                                .multilineTextAlignment(.center)
-                                .fixedSize(horizontal: false, vertical: true)
-                                .frame(maxWidth: dataPanelWidth - 72, alignment: .center)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .center)
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 16)
-                    .frame(width: dataPanelWidth, alignment: .leading)
-                    .background(
-                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .fill(Color(nsColor: .controlBackgroundColor))
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .stroke(Color.secondary.opacity(0.16), lineWidth: 1)
-                    )
                 }
                 .frame(width: dataPanelWidth, alignment: .center)
 
-                Spacer(minLength: 22)
+                Spacer(minLength: 30)
 
                 HStack(alignment: .center, spacing: 14) {
                     Text(tr("settings.bubbleDisplayScope"))

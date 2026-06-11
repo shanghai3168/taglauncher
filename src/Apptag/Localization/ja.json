@@ -141,6 +141,7 @@
   "settings.initialLayout": "レイアウト初期化：",
   "settings.initialLayoutUncategorized": "未分類",
   "settings.initialLayoutSmart": "スマート初期分類",
+  "settings.customLayout": "カスタムレイアウト：",
   "settings.applyScheme": "適用",
   "settings.applySystemSchemeWarningTitle": "バックアップをおすすめします",
   "settings.applySystemSchemeWarningMessage": "システム初期スマート分類を適用すると、現在のローカルスキームが置き換えられます。まだバックアップがありません。適用前に「カテゴリとレイアウトをエクスポート」でバックアップすることを強くおすすめします。",

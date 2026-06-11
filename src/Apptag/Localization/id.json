@@ -141,6 +141,7 @@
   "settings.initialLayout": "Inisialisasi tata letak:",
   "settings.initialLayoutUncategorized": "Tanpa kategori",
   "settings.initialLayoutSmart": "Kategori awal cerdas",
+  "settings.customLayout": "Tata letak kustom:",
   "settings.applyScheme": "Terapkan",
   "settings.applySystemSchemeWarningTitle": "Cadangan disarankan",
   "settings.applySystemSchemeWarningMessage": "Menerapkan skema awal pintar sistem akan mengganti skema lokal saat ini. Anda belum mencadangkannya; kami sangat menyarankan mengekspor cadangan sebelum menerapkan.",

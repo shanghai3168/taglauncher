@@ -141,6 +141,7 @@
   "settings.initialLayout": "Initialisation de la mise en page :",
   "settings.initialLayoutUncategorized": "Non classe",
   "settings.initialLayoutSmart": "Categories initiales intelligentes",
+  "settings.customLayout": "Disposition personnalisée :",
   "settings.applyScheme": "Appliquer",
   "settings.applySystemSchemeWarningTitle": "Sauvegarde recommandée",
   "settings.applySystemSchemeWarningMessage": "Appliquer le schéma initial intelligent du système remplacera le schéma local actuel. Vous ne l’avez pas encore sauvegardé ; nous vous recommandons fortement d’exporter une sauvegarde avant de l’appliquer.",

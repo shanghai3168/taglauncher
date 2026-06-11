@@ -141,6 +141,7 @@
   "settings.initialLayout": "Layout initialisieren:",
   "settings.initialLayoutUncategorized": "Nicht kategorisiert",
   "settings.initialLayoutSmart": "Smarte Anfangskategorien",
+  "settings.customLayout": "Benutzerdefiniertes Layout:",
   "settings.applyScheme": "Anwenden",
   "settings.applySystemSchemeWarningTitle": "Backup empfohlen",
   "settings.applySystemSchemeWarningMessage": "Das Anwenden des intelligenten System-Startschemas ersetzt das aktuelle lokale Schema. Es wurde noch nicht gesichert; wir empfehlen dringend, vor dem Anwenden ein Backup zu exportieren.",

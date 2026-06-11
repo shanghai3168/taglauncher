@@ -141,6 +141,7 @@
   "settings.initialLayout": "Initialiser oppsett:",
   "settings.initialLayoutUncategorized": "Ukategorisert",
   "settings.initialLayoutSmart": "Smarte startkategorier",
+  "settings.customLayout": "Egendefinert oppsett:",
   "settings.applyScheme": "Bruk",
   "settings.applySystemSchemeWarningTitle": "Sikkerhetskopi anbefales",
   "settings.applySystemSchemeWarningMessage": "Bruk av systemets smarte startskjema erstatter gjeldende lokale skjema. Du har ikke sikkerhetskopiert ennå; vi anbefaler sterkt å eksportere en sikkerhetskopi først.",

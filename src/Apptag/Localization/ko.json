@@ -141,6 +141,7 @@
   "settings.initialLayout": "레이아웃 초기화:",
   "settings.initialLayoutUncategorized": "미분류",
   "settings.initialLayoutSmart": "스마트 초기 분류",
+  "settings.customLayout": "사용자 지정 레이아웃:",
   "settings.applyScheme": "적용",
   "settings.applySystemSchemeWarningTitle": "백업 권장",
   "settings.applySystemSchemeWarningMessage": "시스템 스마트 초기 분류를 적용하면 현재 로컬 방식이 대체됩니다. 아직 백업하지 않았으므로 적용 전에 “분류 및 레이아웃 내보내기”로 백업하는 것을 강력히 권장합니다.",

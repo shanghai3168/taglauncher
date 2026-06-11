@@ -141,6 +141,7 @@
   "settings.initialLayout": "Yerlesimi baslat:",
   "settings.initialLayoutUncategorized": "Kategorisiz",
   "settings.initialLayoutSmart": "Akilli ilk kategoriler",
+  "settings.customLayout": "Özel düzen:",
   "settings.applyScheme": "Uygula",
   "settings.applySystemSchemeWarningTitle": "Yedekleme önerilir",
   "settings.applySystemSchemeWarningMessage": "Sistem akıllı başlangıç şemasını uygulamak geçerli yerel şemayı değiştirir. Henüz yedeklemediniz; uygulamadan önce bir yedek dışa aktarmanızı önemle öneririz.",

@@ -141,6 +141,7 @@
   "settings.initialLayout": "Inicjalizacja układu:",
   "settings.initialLayoutUncategorized": "Bez kategorii",
   "settings.initialLayoutSmart": "Inteligentne kategorie poczatkowe",
+  "settings.customLayout": "Niestandardowy układ:",
   "settings.applyScheme": "Zastosuj",
   "settings.applySystemSchemeWarningTitle": "Zalecana kopia zapasowa",
   "settings.applySystemSchemeWarningMessage": "Zastosowanie inteligentnego schematu początkowego systemu zastąpi bieżący schemat lokalny. Nie masz jeszcze kopii zapasowej; zdecydowanie zalecamy jej wyeksportowanie przed zastosowaniem.",

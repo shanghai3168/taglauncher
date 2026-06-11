@@ -141,6 +141,7 @@
   "settings.initialLayout": "Inicializace rozvrzeni:",
   "settings.initialLayoutUncategorized": "Nezarazeno",
   "settings.initialLayoutSmart": "Chytre pocatecni kategorie",
+  "settings.customLayout": "Vlastní rozvržení:",
   "settings.applyScheme": "Použít",
   "settings.applySystemSchemeWarningTitle": "Doporučujeme zálohu",
   "settings.applySystemSchemeWarningMessage": "Použití chytrého počátečního schématu systému nahradí aktuální místní schéma. Ještě nemáte zálohu; důrazně doporučujeme ji před použitím exportovat.",

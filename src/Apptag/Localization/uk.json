@@ -141,6 +141,7 @@
   "settings.initialLayout": "Ініціалізація розкладки:",
   "settings.initialLayoutUncategorized": "Без категорії",
   "settings.initialLayoutSmart": "Розумні початкові категорії",
+  "settings.customLayout": "Користувацьке компонування:",
   "settings.applyScheme": "Застосувати",
   "settings.applySystemSchemeWarningTitle": "Рекомендується резервна копія",
   "settings.applySystemSchemeWarningMessage": "Застосування розумної початкової схеми системи замінить поточну локальну схему. Ви ще не створили резервну копію; радимо експортувати її перед застосуванням.",

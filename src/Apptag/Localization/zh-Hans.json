@@ -141,6 +141,7 @@
   "settings.initialLayout": "布局初始化：",
   "settings.initialLayoutUncategorized": "未分类",
   "settings.initialLayoutSmart": "智能化初始化分类",
+  "settings.customLayout": "自定义布局：",
   "settings.applyScheme": "应用",
   "settings.applySystemSchemeWarningTitle": "建议先备份",
   "settings.applySystemSchemeWarningMessage": "应用系统智能化初始分类会覆盖当前本地方案。您还没有备份，强烈建议先点击“导出分类与布局”备份后再应用。",

@@ -141,6 +141,7 @@
   "settings.initialLayout": "Layout initialization:",
   "settings.initialLayoutUncategorized": "Uncategorized",
   "settings.initialLayoutSmart": "Smart initial categories",
+  "settings.customLayout": "Custom layout:",
   "settings.applyScheme": "Apply",
   "settings.applySystemSchemeWarningTitle": "Backup recommended",
   "settings.applySystemSchemeWarningMessage": "Applying the system smart initial scheme will replace the current local scheme. You have not backed it up yet; we strongly recommend exporting a backup before applying.",

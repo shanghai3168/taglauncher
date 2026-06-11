@@ -141,6 +141,7 @@
   "settings.initialLayout": "Initializare aspect:",
   "settings.initialLayoutUncategorized": "Necategorizat",
   "settings.initialLayoutSmart": "Categorii initiale inteligente",
+  "settings.customLayout": "Aspect personalizat:",
   "settings.applyScheme": "Aplică",
   "settings.applySystemSchemeWarningTitle": "Backup recomandat",
   "settings.applySystemSchemeWarningMessage": "Aplicarea schemei inteligente inițiale a sistemului va înlocui schema locală curentă. Nu ai încă o copie de siguranță; recomandăm să exporți una înainte de aplicare.",

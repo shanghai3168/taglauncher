@@ -141,6 +141,7 @@
   "settings.initialLayout": "Khởi tạo bố cục:",
   "settings.initialLayoutUncategorized": "Chưa phân loại",
   "settings.initialLayoutSmart": "Phân loại ban đầu thông minh",
+  "settings.customLayout": "Bố cục tùy chỉnh:",
   "settings.applyScheme": "Áp dụng",
   "settings.applySystemSchemeWarningTitle": "Nên sao lưu trước",
   "settings.applySystemSchemeWarningMessage": "Áp dụng sơ đồ khởi tạo thông minh của hệ thống sẽ thay thế sơ đồ cục bộ hiện tại. Bạn chưa sao lưu; chúng tôi khuyên bạn nên xuất bản sao lưu trước khi áp dụng.",

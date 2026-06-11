@@ -141,6 +141,7 @@
   "settings.initialLayout": "Inicializacion del diseno:",
   "settings.initialLayoutUncategorized": "Sin categorizar",
   "settings.initialLayoutSmart": "Categorias iniciales inteligentes",
+  "settings.customLayout": "Diseño personalizado:",
   "settings.applyScheme": "Aplicar",
   "settings.applySystemSchemeWarningTitle": "Se recomienda hacer copia de seguridad",
   "settings.applySystemSchemeWarningMessage": "Aplicar el esquema inicial inteligente del sistema reemplazará el esquema local actual. Aún no tienes una copia de seguridad; recomendamos exportarla antes de aplicar.",

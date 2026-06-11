@@ -141,6 +141,7 @@
   "settings.initialLayout": "Permulaan susun atur:",
   "settings.initialLayoutUncategorized": "Tidak berkategori",
   "settings.initialLayoutSmart": "Kategori awal pintar",
+  "settings.customLayout": "Tataletak tersuai:",
   "settings.applyScheme": "Guna",
   "settings.applySystemSchemeWarningTitle": "Sandaran disyorkan",
   "settings.applySystemSchemeWarningMessage": "Menggunakan skema awal pintar sistem akan menggantikan skema setempat semasa. Anda belum membuat sandaran; kami sangat mengesyorkan mengeksport sandaran sebelum menggunakan.",

@@ -141,6 +141,7 @@
   "settings.initialLayout": "Иницијализација распореда:",
   "settings.initialLayoutUncategorized": "Некатегорисано",
   "settings.initialLayoutSmart": "Паметне почетне категорије",
+  "settings.customLayout": "Прилагођени распоред:",
   "settings.applyScheme": "Примени",
   "settings.applySystemSchemeWarningTitle": "Препоручује се резервна копија",
   "settings.applySystemSchemeWarningMessage": "Примена паметне почетне шеме система замениће тренутну локалну шему. Још немате резервну копију; препоручујемо да је извезете пре примене.",

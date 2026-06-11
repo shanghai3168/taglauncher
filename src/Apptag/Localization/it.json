@@ -141,6 +141,7 @@
   "settings.initialLayout": "Inizializzazione layout:",
   "settings.initialLayoutUncategorized": "Non categorizzato",
   "settings.initialLayoutSmart": "Categorie iniziali smart",
+  "settings.customLayout": "Layout personalizzato:",
   "settings.applyScheme": "Applica",
   "settings.applySystemSchemeWarningTitle": "Backup consigliato",
   "settings.applySystemSchemeWarningMessage": "Applicare lo schema iniziale intelligente di sistema sostituirà lo schema locale attuale. Non hai ancora un backup; consigliamo vivamente di esportarne uno prima di applicare.",
