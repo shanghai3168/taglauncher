@@ -358,6 +358,7 @@ enum SmartStartService {
             store.tags = [:]
             store.appTags = [:]
             store.tagOrder = []
+            store.containerAppOrder = [:]
             store.disabledSystemCategoryIDs = []
         }
 

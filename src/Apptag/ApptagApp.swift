@@ -251,12 +251,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             .combinedSessionState,
             eventType: .leftMouseUp
         )
-        let recentMouseClick = min(lastMouseDown, lastMouseUp) < 1.2
+        let recentMouseClick = min(lastMouseDown, lastMouseUp) < 0.9
         return recentMouseClick && isPointerNearDockArea()
     }
 
     private func isPointerNearDockArea() -> Bool {
         let mouse = NSEvent.mouseLocation
+        let dockOrientation = UserDefaults(suiteName: "com.apple.dock")?
+            .string(forKey: "orientation") ?? "bottom"
+        let hiddenDockEdgeTolerance: CGFloat = 96
         return NSScreen.screens.contains { screen in
             let frame = screen.frame
             let visible = screen.visibleFrame
@@ -270,7 +273,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             let rightDock = visible.maxX < frame.maxX
                 && mouse.x <= frame.maxX
                 && mouse.x >= visible.maxX - 24
-            return bottomDock || leftDock || rightDock
+            let hiddenDockFallback: Bool
+            switch dockOrientation {
+            case "left":
+                hiddenDockFallback = mouse.x <= frame.minX + hiddenDockEdgeTolerance
+            case "right":
+                hiddenDockFallback = mouse.x >= frame.maxX - hiddenDockEdgeTolerance
+            default:
+                hiddenDockFallback = mouse.y <= frame.minY + hiddenDockEdgeTolerance
+            }
+            return bottomDock || leftDock || rightDock || hiddenDockFallback
         }
     }
 

@@ -5,6 +5,8 @@ struct AppLibrarySnapshot {
     let quickSearchDocuments: [QuickSearchDocument]
     let tagColors: [String: Int]
     let tagOrder: [String]
+    let tagDefinitions: [String: TagDatabase.TagDef]
+    let containerAppOrder: [String: [String]]
 }
 
 struct AppLibraryRefreshResult {
@@ -77,7 +79,13 @@ enum AppLibraryController {
             apps: apps,
             quickSearchDocuments: QuickSearchEngine.makeDocuments(apps: apps, store: store),
             tagColors: store.tags.mapValues { $0.color },
-            tagOrder: TagEditor.orderedTagNames()
+            tagOrder: TagEditor.orderedTagNames(in: store),
+            tagDefinitions: store.tags,
+            containerAppOrder: TagDatabase.normalizedContainerAppOrder(
+                store.containerAppOrder,
+                tags: store.tags,
+                appTags: store.appTags
+            )
         )
     }
 }

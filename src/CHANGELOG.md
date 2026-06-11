@@ -1,5 +1,14 @@
 # TagLauncher Changelog
 
+## [7.9.0] — 2026-06-11
+
+- 新增容器内 App 手动拖拽排序：同一容器内拖动 App 可改变显示顺序，不改变 App 与标签的归属关系
+- 新增稳定容器排序数据 `containerAppOrder`，使用非本地化容器 ID 保存顺序；刷新、重启、语言切换、导入导出、恢复上一方案和 SmartStart 替换时按统一规则保留、迁移或清理
+- App Grid 拖拽链路增加同容器排序意图和插入位置提示；跨容器移动、Option 复制、拖空白移除、Apple 内置保护继续沿用原有逻辑
+- 容器排序纳入分类方案 fingerprint 和自动上一方案快照，排序变化会被备份/恢复体系识别
+- 新增 `Scripts/app_ordering_data_qa.sh`，覆盖排序 schema、导入导出、备份恢复、SmartStart 清理、ContentView/AppGrid wiring 和拖拽 payload 静态门禁
+- 版本号更新为 `7.9.0`，Build 更新为 `20260611.2212`
+
 ## [7.8.31] — 2026-06-11
 
 - 设置页 Data 面板按原型拆分为两个独立边框区域：“布局初始化”和“自定义布局”分开展示，避免重置初始化、恢复、导入导出混在同一块区域里

@@ -41,6 +41,44 @@ struct AppInfo: Identifiable, Hashable {
     static func == (lhs: AppInfo, rhs: AppInfo) -> Bool { lhs.path == rhs.path }
 }
 
+enum AppContainerID {
+    static let uncategorized = "__container.uncategorized"
+    static let appleBuiltIn = "__container.appleBuiltIn"
+
+    static func tag(_ name: String) -> String {
+        "tag:\(name)"
+    }
+
+    static func system(_ id: SmartCategoryID) -> String {
+        "system:\(id.rawValue)"
+    }
+
+    static func forTag(_ name: String, definition: TagDatabase.TagDef?) -> String {
+        if let categoryID = definition?.systemCategoryID {
+            return system(categoryID)
+        }
+        return tag(name)
+    }
+
+    static func forLegacyGroupName(_ name: String) -> String {
+        if isUncategorizedDisplayName(name) {
+            return uncategorized
+        }
+        if isAppleBuiltInDisplayName(name) {
+            return appleBuiltIn
+        }
+        return tag(name)
+    }
+
+    private static func isUncategorizedDisplayName(_ name: String) -> Bool {
+        name == "Other" || name == tr("group.uncategorized")
+    }
+
+    private static func isAppleBuiltInDisplayName(_ name: String) -> Bool {
+        name == "Mac自带" || name == tr("group.appleBuiltIn")
+    }
+}
+
 enum AppDisplayNameResolver {
     static func displayName(for app: AppInfo, languageCode: String) -> String {
         let languageFallbacks = displayLanguageFallbacks(for: languageCode, includeEnglish: false)
@@ -177,9 +215,24 @@ enum AppDisplayNameResolver {
 }
 
 struct TagGroup: Identifiable {
-    var id: String { name }
+    var id: String { containerID }
+    let containerID: String
     let name: String
     let apps: [AppInfo]
+
+    init(containerID: String, name: String, apps: [AppInfo]) {
+        self.containerID = containerID
+        self.name = name
+        self.apps = apps
+    }
+
+    init(name: String, apps: [AppInfo]) {
+        self.init(
+            containerID: AppContainerID.forLegacyGroupName(name),
+            name: name,
+            apps: apps
+        )
+    }
 }
 
 // MARK: - Tag Color Mapping
@@ -705,26 +758,65 @@ enum AppIndexer {
         apps: [AppInfo],
         nameOverrides: [String: String] = [:],
         defaultGroupName: String = "Other",
-        tagOrder: [String] = []
+        tagOrder: [String] = [],
+        tagDefinitions: [String: TagDatabase.TagDef]? = nil,
+        containerAppOrder: [String: [String]]? = nil
     ) -> [TagGroup] {
         let macCategory = "Mac自带"
+        let loadedStore = (tagDefinitions == nil || containerAppOrder == nil) ? TagDatabase.load() : nil
+        let effectiveTagDefinitions = tagDefinitions ?? loadedStore?.tags ?? [:]
+        var appTagsByPath: [String: [String]] = [:]
+        var validAppPaths = Set<String>()
+        for app in apps {
+            let path = app.path.path
+            validAppPaths.insert(path)
+            appTagsByPath[path] = uniqueOrdered((appTagsByPath[path] ?? []) + app.tags)
+        }
+        let effectiveContainerAppOrder = TagDatabase.normalizedContainerAppOrder(
+            containerAppOrder ?? loadedStore?.containerAppOrder ?? [:],
+            tags: effectiveTagDefinitions,
+            appTags: appTagsByPath,
+            validAppPaths: validAppPaths
+        )
         var dict: [String: [AppInfo]] = [:]
+        var containerIDsByGroupName: [String: String] = [:]
         var seenAppIDsByGroup: [String: Set<URL>] = [:]
 
         for app in apps {
             if app.isAppleApp {
-                appendGroupedApp(app, to: macCategory, groups: &dict, seenAppIDsByGroup: &seenAppIDsByGroup)
+                appendGroupedApp(
+                    app,
+                    to: macCategory,
+                    containerID: AppContainerID.appleBuiltIn,
+                    groups: &dict,
+                    containerIDsByGroupName: &containerIDsByGroupName,
+                    seenAppIDsByGroup: &seenAppIDsByGroup
+                )
             }
 
             if app.tags.isEmpty {
                 if !app.isAppleApp {
-                    appendGroupedApp(app, to: defaultGroupName, groups: &dict, seenAppIDsByGroup: &seenAppIDsByGroup)
+                    appendGroupedApp(
+                        app,
+                        to: defaultGroupName,
+                        containerID: AppContainerID.uncategorized,
+                        groups: &dict,
+                        containerIDsByGroupName: &containerIDsByGroupName,
+                        seenAppIDsByGroup: &seenAppIDsByGroup
+                    )
                 }
             } else {
                 for tag in uniqueOrdered(app.tags) {
                     let displayName = nameOverrides[tag] ?? tag
                     guard displayName != macCategory else { continue }
-                    appendGroupedApp(app, to: displayName, groups: &dict, seenAppIDsByGroup: &seenAppIDsByGroup)
+                    appendGroupedApp(
+                        app,
+                        to: displayName,
+                        containerID: AppContainerID.forTag(tag, definition: effectiveTagDefinitions[tag]),
+                        groups: &dict,
+                        containerIDsByGroupName: &containerIDsByGroupName,
+                        seenAppIDsByGroup: &seenAppIDsByGroup
+                    )
                 }
             }
         }
@@ -747,16 +839,60 @@ enum AppIndexer {
                 if li != ri { return li < ri }
                 return lhs.key.localizedStandardCompare(rhs.key) == .orderedAscending
             }
-            .map { TagGroup(name: $0.key, apps: $0.value) }
+            .map { groupName, apps in
+                let containerID = containerIDsByGroupName[groupName] ?? AppContainerID.forLegacyGroupName(groupName)
+                return TagGroup(
+                    containerID: containerID,
+                    name: groupName,
+                    apps: orderedApps(
+                        apps,
+                        inContainer: containerID,
+                        containerAppOrder: effectiveContainerAppOrder
+                    )
+                )
+            }
+    }
+
+    static func orderedApps(
+        _ apps: [AppInfo],
+        inContainer containerID: String,
+        containerAppOrder: [String: [String]]
+    ) -> [AppInfo] {
+        applyAppOrder(
+            apps: apps,
+            order: containerAppOrder[containerID] ?? []
+        )
+    }
+
+    static func applyAppOrder(apps: [AppInfo], order: [String]) -> [AppInfo] {
+        let normalizedOrder = TagDatabase.normalizedAppOrderPaths(order)
+        guard !apps.isEmpty else { return [] }
+
+        var appsByPath: [String: AppInfo] = [:]
+        for app in apps where appsByPath[app.path.path] == nil {
+            appsByPath[app.path.path] = app
+        }
+
+        let ordered = normalizedOrder.compactMap { appsByPath[$0] }
+        let orderedPaths = Set(ordered.map { $0.path.path })
+        let remaining = apps
+            .filter { !orderedPaths.contains($0.path.path) }
+            .sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+        return ordered + remaining
     }
 
     private static func appendGroupedApp(
         _ app: AppInfo,
         to groupName: String,
+        containerID: String,
         groups: inout [String: [AppInfo]],
+        containerIDsByGroupName: inout [String: String],
         seenAppIDsByGroup: inout [String: Set<URL>]
     ) {
         if seenAppIDsByGroup[groupName, default: []].insert(app.id).inserted {
+            if containerIDsByGroupName[groupName] == nil {
+                containerIDsByGroupName[groupName] = containerID
+            }
             groups[groupName, default: []].append(app)
         }
     }
@@ -802,6 +938,7 @@ enum TagDatabase {
         var tags: [String: TagDef] = [:]
         var appTags: [String: [String]] = [:]  // path → tag names
         var tagOrder: [String] = []  // display order; empty → alpha sort
+        var containerAppOrder: [String: [String]] = [:]  // stable container ID → ordered app paths
         var uncommonAppPaths: [String] = []  // special marker; does not affect normal groups
         var uncommonSources: [String: UncommonSource] = [:]  // current uncommon source: auto/manual
         var appOpenCounts: [String: Int] = [:]  // launches opened from TagLauncher
@@ -818,6 +955,7 @@ enum TagDatabase {
             case tags
             case appTags
             case tagOrder
+            case containerAppOrder
             case uncommonAppPaths
             case uncommonSources
             case appOpenCounts
@@ -838,6 +976,10 @@ enum TagDatabase {
             tags = try container.decodeIfPresent([String: TagDef].self, forKey: .tags) ?? [:]
             appTags = try container.decodeIfPresent([String: [String]].self, forKey: .appTags) ?? [:]
             tagOrder = try container.decodeIfPresent([String].self, forKey: .tagOrder) ?? []
+            containerAppOrder = try container.decodeIfPresent(
+                [String: [String]].self,
+                forKey: .containerAppOrder
+            ) ?? [:]
             uncommonAppPaths = try container.decodeIfPresent([String].self, forKey: .uncommonAppPaths) ?? []
             uncommonSources = try container.decodeIfPresent([String: UncommonSource].self, forKey: .uncommonSources) ?? [:]
             appOpenCounts = try container.decodeIfPresent([String: Int].self, forKey: .appOpenCounts) ?? [:]
@@ -858,6 +1000,11 @@ enum TagDatabase {
             for path in uncommonAppPaths where uncommonSources[path] == nil {
                 uncommonSources[path] = .manual
             }
+            containerAppOrder = TagDatabase.normalizedContainerAppOrder(
+                containerAppOrder,
+                tags: tags,
+                appTags: appTags
+            )
         }
 
         var hasUserTagAssignments: Bool {
@@ -911,8 +1058,11 @@ enum TagDatabase {
 
     static func load() -> Store {
         guard let data = try? Data(contentsOf: storeURL),
-              let store = try? JSONDecoder().decode(Store.self, from: data)
+              var store = try? JSONDecoder().decode(Store.self, from: data)
         else { return Store() }
+        if normalizeContainerAppOrder(in: &store) {
+            save(store)
+        }
         return store
     }
 
@@ -925,10 +1075,156 @@ enum TagDatabase {
     }
 
     static func save(_ store: Store) {
+        var normalizedStore = store
+        _ = normalizeContainerAppOrder(in: &normalizedStore)
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        guard let data = try? encoder.encode(store) else { return }
+        guard let data = try? encoder.encode(normalizedStore) else { return }
         try? data.write(to: storeURL, options: .atomic)
+    }
+
+    static func normalizedAppOrderPaths(_ paths: [String]) -> [String] {
+        var seen = Set<String>()
+        return paths.compactMap { rawPath in
+            let path = rawPath.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !path.isEmpty, seen.insert(path).inserted else { return nil }
+            return path
+        }
+    }
+
+    static func normalizedContainerID(_ rawValue: String, tags: [String: TagDef] = [:]) -> String {
+        let value = rawValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !value.isEmpty else { return "" }
+        if value == AppContainerID.uncategorized
+            || value == AppContainerID.appleBuiltIn
+            || value.hasPrefix("tag:")
+            || value.hasPrefix("system:") {
+            return value
+        }
+        if value == "Other" || value == tr("group.uncategorized") {
+            return AppContainerID.uncategorized
+        }
+        if value == "Mac自带" || value == tr("group.appleBuiltIn") {
+            return AppContainerID.appleBuiltIn
+        }
+        return AppContainerID.forTag(value, definition: tags[value])
+    }
+
+    static func normalizedContainerAppOrder(
+        _ order: [String: [String]],
+        tags: [String: TagDef] = [:],
+        appTags: [String: [String]]? = nil,
+        validAppPaths: Set<String>? = nil
+    ) -> [String: [String]] {
+        var normalized: [String: [String]] = [:]
+        for (rawContainerID, rawPaths) in order {
+            let containerID = normalizedContainerID(rawContainerID, tags: tags)
+            guard !containerID.isEmpty,
+                  isContainerOrderAllowed(containerID, tags: tags)
+            else { continue }
+
+            var paths = normalizedAppOrderPaths(rawPaths)
+            if let validAppPaths {
+                paths = paths.filter { validAppPaths.contains($0) }
+            }
+            if let appTags {
+                paths = paths.filter {
+                    pathBelongsToContainer(
+                        path: $0,
+                        containerID: containerID,
+                        tags: tags,
+                        appTags: appTags
+                    )
+                }
+            }
+            guard !paths.isEmpty else { continue }
+
+            if let existing = normalized[containerID] {
+                normalized[containerID] = normalizedAppOrderPaths(existing + paths)
+            } else {
+                normalized[containerID] = paths
+            }
+        }
+        return normalized
+    }
+
+    @discardableResult
+    static func normalizeContainerAppOrder(
+        in store: inout Store,
+        validAppPaths: Set<String>? = nil
+    ) -> Bool {
+        let original = store.containerAppOrder
+        store.containerAppOrder = normalizedContainerAppOrder(
+            store.containerAppOrder,
+            tags: store.tags,
+            appTags: store.appTags,
+            validAppPaths: validAppPaths
+        )
+        return original != store.containerAppOrder
+    }
+
+    static func migrateContainerAppOrderKey(
+        in store: inout Store,
+        from oldContainerID: String,
+        to newContainerID: String
+    ) {
+        guard oldContainerID != newContainerID else { return }
+        let oldKey = normalizedContainerID(oldContainerID, tags: store.tags)
+        let newKey = normalizedContainerID(newContainerID, tags: store.tags)
+        guard !oldKey.isEmpty, !newKey.isEmpty,
+              let oldOrder = store.containerAppOrder.removeValue(forKey: oldKey)
+        else { return }
+
+        let mergedOrder = (store.containerAppOrder[newKey] ?? []) + oldOrder
+        store.containerAppOrder[newKey] = normalizedAppOrderPaths(mergedOrder)
+    }
+
+    static func removeContainerAppOrder(
+        in store: inout Store,
+        containerID: String
+    ) {
+        let key = normalizedContainerID(containerID, tags: store.tags)
+        guard !key.isEmpty else { return }
+        store.containerAppOrder.removeValue(forKey: key)
+    }
+
+    private static func isContainerOrderAllowed(_ containerID: String, tags: [String: TagDef]) -> Bool {
+        if containerID == AppContainerID.uncategorized || containerID == AppContainerID.appleBuiltIn {
+            return true
+        }
+        if containerID.hasPrefix("tag:") {
+            let tagName = String(containerID.dropFirst("tag:".count))
+            return tags[tagName] != nil
+        }
+        if containerID.hasPrefix("system:") {
+            let rawValue = String(containerID.dropFirst("system:".count))
+            guard let categoryID = SmartCategoryID(rawValue: rawValue) else { return false }
+            return tags.values.contains { $0.systemCategoryID == categoryID }
+        }
+        return false
+    }
+
+    private static func pathBelongsToContainer(
+        path: String,
+        containerID: String,
+        tags: [String: TagDef],
+        appTags: [String: [String]]
+    ) -> Bool {
+        if containerID == AppContainerID.uncategorized || containerID == AppContainerID.appleBuiltIn {
+            return true
+        }
+        if containerID.hasPrefix("tag:") {
+            let tagName = String(containerID.dropFirst("tag:".count))
+            return appTags[path]?.contains(tagName) == true
+        }
+        if containerID.hasPrefix("system:") {
+            let rawValue = String(containerID.dropFirst("system:".count))
+            guard let categoryID = SmartCategoryID(rawValue: rawValue),
+                  let tagName = tags.first(where: { $0.value.systemCategoryID == categoryID })?.key
+            else { return false }
+            return appTags[path]?.contains(tagName) == true
+        }
+        return false
     }
 
     static func noteFingerprint(_ value: String) -> String {
@@ -969,6 +1265,7 @@ enum TagDatabase {
         let tags: [String: TagDef]
         let appTags: [String: [String]]
         let tagOrder: [String]
+        let containerAppOrder: [String: [String]]
         let uncommonAppPaths: [String]
         let uncommonSources: [String: UncommonSource]
         let disabledSystemCategoryIDs: [SmartCategoryID]
@@ -1085,6 +1382,11 @@ enum TagDatabase {
             tags: store.tags,
             appTags: store.appTags.mapValues(uniqueOrdered),
             tagOrder: uniqueOrdered(store.tagOrder),
+            containerAppOrder: normalizedContainerAppOrder(
+                store.containerAppOrder,
+                tags: store.tags,
+                appTags: store.appTags
+            ),
             uncommonAppPaths: store.uncommonAppPaths.sorted(),
             uncommonSources: store.uncommonSources,
             disabledSystemCategoryIDs: store.disabledSystemCategoryIDs
@@ -1192,6 +1494,8 @@ enum TagDatabase {
 
     private static func renameTagKey(in store: inout Store, from oldName: String, to newName: String) {
         guard oldName != newName, let tagDef = store.tags.removeValue(forKey: oldName) else { return }
+        let oldContainerID = AppContainerID.forTag(oldName, definition: tagDef)
+        let newContainerID = AppContainerID.forTag(newName, definition: tagDef)
         store.tags[newName] = tagDef
         store.tagOrder = uniqueOrdered(store.tagOrder.map { $0 == oldName ? newName : $0 })
 
@@ -1203,6 +1507,8 @@ enum TagDatabase {
                 store.appTags[path] = renamedTags
             }
         }
+        migrateContainerAppOrderKey(in: &store, from: oldContainerID, to: newContainerID)
+        _ = normalizeContainerAppOrder(in: &store)
     }
 
     private static func uniqueOrdered(_ values: [String]) -> [String] {
@@ -1239,6 +1545,7 @@ enum TagDatabase {
         let previousStore = loadWithEnsuredCategoryScheme()
         var store = previousStore
         store.appTags = [:]
+        store.containerAppOrder = [:]
         saveUserCategorySchemeMutation(
             store,
             previous: previousStore,
@@ -1446,6 +1753,10 @@ enum TagEditor {
     /// Tag names in display order. Falls back to alpha sort if no custom order.
     static func orderedTagNames() -> [String] {
         let store = TagDatabase.load()
+        return orderedTagNames(in: store)
+    }
+
+    static func orderedTagNames(in store: TagDatabase.Store) -> [String] {
         let ordered = store.tagOrder.filter { store.tags[$0] != nil }
         let remaining = store.tags.keys.filter { !ordered.contains($0) }.sorted()
         return ordered + remaining
@@ -1460,6 +1771,31 @@ enum TagEditor {
             store,
             previous: previousStore,
             reason: "reorder-tags"
+        )
+    }
+
+    /// Persist the visible app order for one stable container.
+    static func reorderApps(inContainer containerID: String, orderedPaths: [String]) {
+        var store = TagDatabase.load()
+        _ = TagDatabase.normalizeContainerAppOrder(in: &store)
+        let previousStore = store
+
+        let key = TagDatabase.normalizedContainerID(containerID, tags: store.tags)
+        guard !key.isEmpty else { return }
+
+        let normalizedPaths = TagDatabase.normalizedAppOrderPaths(orderedPaths)
+        if normalizedPaths.isEmpty {
+            store.containerAppOrder.removeValue(forKey: key)
+        } else {
+            store.containerAppOrder[key] = normalizedPaths
+        }
+        _ = TagDatabase.normalizeContainerAppOrder(in: &store)
+
+        guard store.containerAppOrder != previousStore.containerAppOrder else { return }
+        TagDatabase.saveUserCategorySchemeMutation(
+            store,
+            previous: previousStore,
+            reason: "reorder-apps"
         )
     }
 
@@ -1630,8 +1966,12 @@ enum TagEditor {
         if store.knownAppPaths.isEmpty {
             let seededDefaultNotes = seedDefaultAppleAppNotes(for: apps, in: &store)
             let markedUncommon = markUnfamiliarAppleAppsAsUncommon(apps, in: &store)
+            let normalizedOrder = TagDatabase.normalizeContainerAppOrder(
+                in: &store,
+                validAppPaths: scannedPaths
+            )
             store.knownAppPaths = scannedPaths.sorted()
-            if apps.isEmpty == false || seededDefaultNotes || markedUncommon {
+            if apps.isEmpty == false || seededDefaultNotes || markedUncommon || normalizedOrder {
                 TagDatabase.save(store)
             }
             return store
@@ -1646,9 +1986,13 @@ enum TagEditor {
             }
             store.knownAppPaths = knownPaths.subtracting(removedPaths).sorted()
         }
+        let normalizedOrder = TagDatabase.normalizeContainerAppOrder(
+            in: &store,
+            validAppPaths: scannedPaths
+        )
 
         guard !newPaths.isEmpty else {
-            if !removedPaths.isEmpty {
+            if !removedPaths.isEmpty || normalizedOrder {
                 TagDatabase.save(store)
             }
             return store
@@ -1673,6 +2017,10 @@ enum TagEditor {
         _ = seedDefaultAppleAppNotes(for: newApps, in: &store)
         store.uncommonAppPaths = uncommonPaths.sorted()
         store.knownAppPaths = Set(store.knownAppPaths).union(newPaths).sorted()
+        _ = TagDatabase.normalizeContainerAppOrder(
+            in: &store,
+            validAppPaths: scannedPaths
+        )
         TagDatabase.save(store)
         return store
     }
@@ -1824,7 +2172,14 @@ enum TagEditor {
         let previousStore = store
         // Update tag definition
         if let def = store.tags.removeValue(forKey: oldName) {
+            let oldContainerID = AppContainerID.forTag(oldName, definition: def)
+            let newContainerID = AppContainerID.forTag(newName, definition: def)
             store.tags[newName] = def
+            TagDatabase.migrateContainerAppOrderKey(
+                in: &store,
+                from: oldContainerID,
+                to: newContainerID
+            )
         }
         store.tagOrder = store.tagOrder.map { $0 == oldName ? newName : $0 }
         // Update all app assignments
@@ -1834,6 +2189,7 @@ enum TagEditor {
                 store.appTags[path] = Array(NSOrderedSet(array: tags).compactMap { $0 as? String })
             }
         }
+        _ = TagDatabase.normalizeContainerAppOrder(in: &store)
         TagDatabase.saveUserCategorySchemeMutation(
             store,
             previous: previousStore,
@@ -1845,10 +2201,21 @@ enum TagEditor {
     static func deleteTagCompletely(_ tag: String) {
         var store = TagDatabase.load()
         let previousStore = store
-        if let removedTag = store.tags.removeValue(forKey: tag),
-           let categoryID = removedTag.systemCategoryID,
+        let removedTag = store.tags.removeValue(forKey: tag)
+        if let categoryID = removedTag?.systemCategoryID,
            !store.disabledSystemCategoryIDs.contains(categoryID) {
             store.disabledSystemCategoryIDs.append(categoryID)
+        }
+        if let removedTag {
+            TagDatabase.removeContainerAppOrder(
+                in: &store,
+                containerID: AppContainerID.forTag(tag, definition: removedTag)
+            )
+        } else {
+            TagDatabase.removeContainerAppOrder(
+                in: &store,
+                containerID: AppContainerID.tag(tag)
+            )
         }
         store.tagOrder.removeAll { $0 == tag }
         for (path, var tags) in store.appTags {
@@ -1859,6 +2226,7 @@ enum TagEditor {
                 store.appTags[path] = tags
             }
         }
+        _ = TagDatabase.normalizeContainerAppOrder(in: &store)
         TagDatabase.saveUserCategorySchemeMutation(
             store,
             previous: previousStore,

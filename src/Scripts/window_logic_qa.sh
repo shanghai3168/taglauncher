@@ -324,9 +324,8 @@ OSA
   log "PASS no TagLauncher Dock tile"
 }
 
-click_taglauncher_dock_tile() {
-  local coords x y
-  coords="$(osascript <<'OSA'
+taglauncher_dock_tile_coords() {
+  osascript <<'OSA'
 tell application "System Events"
   tell process "Dock"
     repeat with itemRef in UI elements of list 1
@@ -344,9 +343,54 @@ tell application "System Events"
   end tell
 end tell
 OSA
-)"
-  read -r x y <<<"$coords"
+}
+
+clamped_click_coords() {
+  local x="$1"
+  local y="$2"
+  local screen_line screen_x screen_y screen_w screen_h min_x max_x min_y max_y
+  if [[ -n "${screens_swift:-}" && -f "$screens_swift" ]]; then
+    screen_line="$(swift "$screens_swift" | awk -F'|' -v x="$x" '$4 <= x && x <= ($4 + $6) { print; exit }')"
+    if [[ -n "$screen_line" ]]; then
+      IFS='|' read -r _ _ _ screen_x screen_y screen_w screen_h <<<"$screen_line"
+      min_x=$((screen_x + 4))
+      max_x=$((screen_x + screen_w - 4))
+      min_y=$((screen_y + 4))
+      max_y=$((screen_y + screen_h - 4))
+      if (( x < min_x )); then x="$min_x"; fi
+      if (( x > max_x )); then x="$max_x"; fi
+      if (( y < min_y )); then y="$min_y"; fi
+      if (( y > max_y )); then y="$max_y"; fi
+    fi
+  fi
+  printf '%s %s\n' "$x" "$y"
+}
+
+click_taglauncher_dock_tile() {
+  local coords x y
+  coords="$(taglauncher_dock_tile_coords)"
+  read -r x y <<<"$(clamped_click_coords ${coords%% *} ${coords#* })"
+  move_xy "$x" "$y"
+  sleep 0.8
+  if coords="$(taglauncher_dock_tile_coords 2>/dev/null)"; then
+    read -r x y <<<"$(clamped_click_coords ${coords%% *} ${coords#* })"
+  fi
   click_xy "$x" "$y"
+  sleep 0.15
+  osascript <<'OSA' >/dev/null 2>&1 || true
+tell application "System Events"
+  tell process "Dock"
+    repeat with itemRef in UI elements of list 1
+      try
+        if (name of itemRef as text) is "TagLauncher" then
+          click itemRef
+          return
+        end if
+      end try
+    end repeat
+  end tell
+end tell
+OSA
 }
 
 open_overlay_from_dock_with_retry() {
@@ -1076,6 +1120,20 @@ assert_fullscreen_overlay_stable() {
   return 1
 }
 
+open_fullscreen_overlay_with_retry() {
+  local output=""
+  for _ in {1..3}; do
+    send_main_hotkey
+    sleep 0.4
+    if output="$(wait_swift_assert fullscreen-overlay 2>&1)"; then
+      printf '%s\n' "$output"
+      return 0
+    fi
+  done
+  printf '%s\n' "$output" >&2
+  return 1
+}
+
 show_overlay() {
   send_main_hotkey
   if wait_swift_assert overlay >/dev/null 2>&1; then
@@ -1296,8 +1354,7 @@ run_fullscreen_space_case() {
   prepare_isolated_app_instance
   start_fullscreen_qa_target
   move_pointer_to_fullscreen_target
-  send_main_hotkey
-  wait_swift_assert fullscreen-overlay
+  open_fullscreen_overlay_with_retry
   assert_fullscreen_overlay_stable
   log "==> QA fullscreen Space: quick search from appgrid does not switch Space"
   open_appgrid_quick_search_with_retry
@@ -1353,11 +1410,9 @@ assert_frontmost_taglauncher
 log "==> QA 4/7 and 5/7: appgrid-space quick search and double-Esc behavior"
 open_appgrid_quick_search_with_retry
 send_keycode 53
-sleep 0.4
-swift_assert overlay
+wait_swift_assert overlay
 send_keycode 53
-sleep 0.4
-swift_assert no-overlay
+wait_swift_assert no-overlay
 
 log "==> QA 4/7: appgrid scroll keeps Space and Esc keyboard routing"
 show_overlay
@@ -1365,13 +1420,11 @@ for _ in {1..5}; do
   page_scroll_appgrid
   open_appgrid_quick_search_with_retry
   send_keycode 53
-  sleep 0.25
-  swift_assert overlay
+  wait_swift_assert overlay
 done
 page_scroll_appgrid
 send_keycode 53
-sleep 0.35
-swift_assert no-overlay
+wait_swift_assert no-overlay
 
 log "==> QA 5/7: clicking outside quick search closes search, not appgrid"
 show_overlay

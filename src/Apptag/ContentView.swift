@@ -348,6 +348,8 @@ struct ContentView: View {
     @State private var allApps: [AppInfo] = []
     @State private var displayGroups: [TagGroup] = []
     @State private var tagColors: [String: Int] = [:]
+    @State private var tagDefinitions: [String: TagDatabase.TagDef] = [:]
+    @State private var containerAppOrder: [String: [String]] = [:]
     @State private var groupLayoutVersion = 0
     @State private var appGridScrollTargetID: String? = nil
     @State private var appGridScrollRequestToken = 0
@@ -1131,6 +1133,9 @@ struct ContentView: View {
                     onDropOutsideGroup: { path, source, copy in
                         dropAppOutsideGroup(path: path, sourceTag: source, copy: copy)
                     },
+                    onReorderApps: { containerID, orderedPaths in
+                        reorderApps(inContainer: containerID, orderedPaths: orderedPaths)
+                    },
                     onGroupActivate: { groupName in
                         if isColorlessContainerMode {
                             toggleColorlessFill(groupName)
@@ -1778,13 +1783,27 @@ struct ContentView: View {
 
     private func makeDisplayGroups(apps: [AppInfo], tagOrder: [String]) -> [TagGroup] {
         let order = tagOrder.isEmpty ? TagEditor.orderedTagNames() : tagOrder
-        let rawGroups = AppIndexer.group(apps: apps, defaultGroupName: defaultGroupName, tagOrder: order)
+        let rawGroups = AppIndexer.group(
+            apps: apps,
+            defaultGroupName: defaultGroupName,
+            tagOrder: order,
+            tagDefinitions: tagDefinitions,
+            containerAppOrder: containerAppOrder
+        )
         return rawGroups.map { group in
             if group.name == defaultGroupName {
-                return TagGroup(name: tr("group.uncategorized"), apps: group.apps)
+                return TagGroup(
+                    containerID: group.containerID,
+                    name: tr("group.uncategorized"),
+                    apps: group.apps
+                )
             }
             if group.name == "Mac自带" {
-                return TagGroup(name: tr("group.appleBuiltIn"), apps: group.apps)
+                return TagGroup(
+                    containerID: group.containerID,
+                    name: tr("group.appleBuiltIn"),
+                    apps: group.apps
+                )
             }
             return group
         }
@@ -2126,6 +2145,8 @@ struct ContentView: View {
     private func dropApp(path: String, sourceTag: String, targetTag: String, copy: Bool) {
         resetTransientDragState(keepingPendingUncategorizedDrop: true)
 
+        guard sourceTag != targetTag else { return }
+
         if isUncategorizedDropTarget(targetTag) {
             confirmAndMoveAppToUncategorized(path: path)
             return
@@ -2137,7 +2158,6 @@ struct ContentView: View {
         }
 
         guard tagColors[targetTag] != nil else { return }
-        guard sourceTag != targetTag || copy else { return }
         TagEditor.moveApp(
             path: path,
             from: sourceTag,
@@ -2156,6 +2176,18 @@ struct ContentView: View {
         guard !appHasTag(app, tagName: targetTag) else { return }
         TagEditor.appendTags([targetTag], to: [path])
         showDropRefresh()
+        refreshApps(forceLayoutRefresh: true)
+    }
+
+    private func reorderApps(inContainer containerID: String, orderedPaths: [String]) {
+        resetTransientDragState()
+        let key = TagDatabase.normalizedContainerID(containerID, tags: tagDefinitions)
+        let paths = TagDatabase.normalizedAppOrderPaths(orderedPaths)
+        guard !key.isEmpty, !paths.isEmpty else { return }
+
+        containerAppOrder[key] = paths
+        rebuildDisplayGroups(apps: allApps, tagOrder: draggedTagNames)
+        TagEditor.reorderApps(inContainer: key, orderedPaths: paths)
         refreshApps(forceLayoutRefresh: true)
     }
 
@@ -2462,6 +2494,8 @@ struct ContentView: View {
         allApps = snapshot.apps
         quickSearchDocuments = snapshot.quickSearchDocuments
         tagColors = snapshot.tagColors
+        tagDefinitions = snapshot.tagDefinitions
+        containerAppOrder = snapshot.containerAppOrder
         draggedTagNames = snapshot.tagOrder
         rebuildDisplayGroups(apps: snapshot.apps, tagOrder: snapshot.tagOrder)
         if quickSearchVisible {

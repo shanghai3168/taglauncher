@@ -46,6 +46,7 @@ struct AppGridCollectionView: NSViewRepresentable {
     let onEditNote: (AppInfo, CGRect) -> Void
     let onDropApp: (String, String, String, Bool) -> Void
     let onDropOutsideGroup: (String, String, Bool) -> Void
+    let onReorderApps: (String, [String]) -> Void
     let onGroupActivate: (String) -> Void
     let onScrollActivity: () -> Void
     let onDragModeChange: (Bool) -> Void
@@ -78,6 +79,7 @@ struct AppGridCollectionView: NSViewRepresentable {
             onEditNote: onEditNote,
             onDropApp: onDropApp,
             onDropOutsideGroup: onDropOutsideGroup,
+            onReorderApps: onReorderApps,
             onGroupActivate: onGroupActivate,
             onScrollActivity: onScrollActivity,
             onDragModeChange: onDragModeChange
@@ -107,9 +109,16 @@ struct AppGridCollectionView: NSViewRepresentable {
         var onEditNote: (AppInfo, CGRect) -> Void = { _, _ in }
         var onDropApp: (String, String, String, Bool) -> Void = { _, _, _, _ in }
         var onDropOutsideGroup: (String, String, Bool) -> Void = { _, _, _ in }
+        var onReorderApps: (String, [String]) -> Void = { _, _ in }
         var onGroupActivate: (String) -> Void = { _ in }
         var onScrollActivity: () -> Void = {}
         var onDragModeChange: (Bool) -> Void = { _ in }
+
+        private weak var activeReorderCard: AppGridGroupCardView?
+        private var activeDragPath = ""
+        private var activeDragSourceContainerID = ""
+        private var lastReorderContainerID = ""
+        private var lastReorderScreenFrame: NSRect?
 
         func update(
             groups: [TagGroup],
@@ -128,6 +137,7 @@ struct AppGridCollectionView: NSViewRepresentable {
             onEditNote: @escaping (AppInfo, CGRect) -> Void,
             onDropApp: @escaping (String, String, String, Bool) -> Void,
             onDropOutsideGroup: @escaping (String, String, Bool) -> Void,
+            onReorderApps: @escaping (String, [String]) -> Void,
             onGroupActivate: @escaping (String) -> Void,
             onScrollActivity: @escaping () -> Void,
             onDragModeChange: @escaping (Bool) -> Void
@@ -148,6 +158,7 @@ struct AppGridCollectionView: NSViewRepresentable {
             self.onEditNote = onEditNote
             self.onDropApp = onDropApp
             self.onDropOutsideGroup = onDropOutsideGroup
+            self.onReorderApps = onReorderApps
             self.onGroupActivate = onGroupActivate
             self.onScrollActivity = onScrollActivity
             self.onDragModeChange = onDragModeChange
@@ -228,6 +239,78 @@ struct AppGridCollectionView: NSViewRepresentable {
             return true
         }
 
+        fileprivate func beginAppIconDrag(path: String, sourceContainerID: String) {
+            activeDragPath = path
+            activeDragSourceContainerID = sourceContainerID
+            lastReorderContainerID = ""
+            lastReorderScreenFrame = nil
+            clearReorderInsertion()
+            onDragModeChange(true)
+        }
+
+        fileprivate func endAppIconDrag() {
+            clearReorderInsertion()
+            activeDragPath = ""
+            activeDragSourceContainerID = ""
+            lastReorderContainerID = ""
+            lastReorderScreenFrame = nil
+            onDragModeChange(false)
+        }
+
+        fileprivate func cancelAppIconDrag() {
+            clearReorderInsertion()
+            activeDragPath = ""
+            activeDragSourceContainerID = ""
+            lastReorderContainerID = ""
+            lastReorderScreenFrame = nil
+            onDragModeChange(false)
+        }
+
+        fileprivate func setReorderInsertion(card: AppGridGroupCardView, insertionIndex: Int) {
+            if let activeReorderCard, activeReorderCard !== card {
+                activeReorderCard.clearReorderInsertion()
+            }
+            activeReorderCard = card
+            lastReorderContainerID = card.containerID
+            lastReorderScreenFrame = card.screenFrame()
+            card.setReorderInsertion(index: insertionIndex)
+        }
+
+        fileprivate func clearReorderInsertion(card: AppGridGroupCardView? = nil) {
+            if let card {
+                card.clearReorderInsertion()
+                if activeReorderCard === card {
+                    activeReorderCard = nil
+                }
+                return
+            }
+            activeReorderCard?.clearReorderInsertion()
+            activeReorderCard = nil
+        }
+
+        fileprivate func activeReorderPath(in containerID: String, copy: Bool) -> String? {
+            guard !copy,
+                  !activeDragPath.isEmpty,
+                  activeDragSourceContainerID == containerID
+            else { return nil }
+            return activeDragPath
+        }
+
+        fileprivate func shouldCancelEmptyDropForActiveReorder(
+            path: String,
+            screenPoint: NSPoint,
+            copy: Bool
+        ) -> Bool {
+            guard !copy,
+                  !activeDragPath.isEmpty,
+                  activeDragPath == path,
+                  activeDragSourceContainerID == lastReorderContainerID,
+                  let lastReorderScreenFrame
+            else { return false }
+
+            return lastReorderScreenFrame.insetBy(dx: -44, dy: -44).contains(screenPoint)
+        }
+
         private static func signature(
             tagColors: [String: Int],
             displayMode: String,
@@ -291,6 +374,7 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
             NotificationCenter.default.removeObserver(scrollObserver)
         }
         scrollUnfreezeWorkItem?.cancel()
+        coordinator?.cancelAppIconDrag()
         AppDragCoordinator.shared.unregisterEmptyDropTarget(id: emptyDropTargetID)
     }
 
@@ -337,6 +421,8 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
     override func viewDidMoveToWindow() {
         super.viewDidMoveToWindow()
         if window == nil {
+            AppDragCoordinator.shared.cancelDrag()
+            coordinator?.cancelAppIconDrag()
             AppDragCoordinator.shared.unregisterEmptyDropTarget(id: emptyDropTargetID)
         } else {
             AppDragCoordinator.shared.registerEmptyDropTarget(id: emptyDropTargetID, view: self)
@@ -347,6 +433,14 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
         guard let coordinator,
               coordinator.displayStyle != .flat
         else { return }
+        if coordinator.shouldCancelEmptyDropForActiveReorder(
+            path: path,
+            screenPoint: screenPoint,
+            copy: copy
+        ) {
+            coordinator.cancelAppIconDrag()
+            return
+        }
         DispatchQueue.main.async {
             coordinator.onDropOutsideGroup(path, source, copy)
         }
@@ -386,6 +480,11 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
     }
 
     private func handleScrollActivity() {
+        if AppDragCoordinator.shared.hasActiveDrag {
+            AppDragCoordinator.shared.cancelDrag()
+        }
+        coordinator?.cancelAppIconDrag()
+
         if !scrollActivityIsActive {
             scrollActivityIsActive = true
             if coordinator?.setScrollBubbleDisabled(true) == true {
@@ -844,9 +943,11 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
     private weak var coordinator: AppGridCollectionView.Coordinator?
     private var group: TagGroup?
     private var iconViews: [AppGridIconNSView] = []
+    private var reorderInsertionIndex: Int?
     private var isMouseInside = false
     private var isHovered = false
     private var trackingAreaRef: NSTrackingArea?
+    var containerID: String { group?.containerID ?? "" }
 
     override var isFlipped: Bool { true }
 
@@ -878,6 +979,7 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
         AppDragCoordinator.shared.unregister(id: dropTargetID)
         group = nil
         coordinator = nil
+        reorderInsertionIndex = nil
         isMouseInside = false
         isHovered = false
         layer?.shadowOpacity = 0
@@ -982,19 +1084,71 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
         }
 
         drawHeader(title: group.name, displayStyle: displayStyle)
+        drawReorderInsertionIfNeeded()
     }
 
     func performDrop(path: String, source: String, copy: Bool) {
+        performDrop(path: path, source: source, sourceContainerID: "", copy: copy)
+    }
+
+    func performDrop(path: String, source: String, sourceContainerID: String, copy: Bool) {
         guard let group else { return }
+        if sourceContainerID == group.containerID {
+            if !copy,
+               let orderedPaths = reorderedAppPaths(moving: path) {
+                coordinator?.onReorderApps(group.containerID, orderedPaths)
+            }
+            coordinator?.endAppIconDrag()
+            clearReorderInsertion()
+            return
+        }
+
         coordinator?.onDropApp(path, source, group.name, copy)
         if source != group.name || copy {
             coordinator?.onDragModeChange(false)
         }
     }
 
+    func appDragHoverChanged(active: Bool) {
+        if !active {
+            coordinator?.clearReorderInsertion(card: self)
+        }
+    }
+
+    func appDragLocationChanged(screenPoint: NSPoint, copy: Bool) {
+        guard let coordinator,
+              let group,
+              coordinator.activeReorderPath(in: group.containerID, copy: copy) != nil,
+              let window
+        else {
+            coordinator?.clearReorderInsertion(card: self)
+            return
+        }
+
+        let windowPoint = window.convertPoint(fromScreen: screenPoint)
+        let localPoint = convert(windowPoint, from: nil)
+        coordinator.setReorderInsertion(
+            card: self,
+            insertionIndex: insertionIndex(for: localPoint)
+        )
+    }
+
     func replayPointerHover(windowPoint: NSPoint) {
         setPointerInside(bounds.contains(convert(windowPoint, from: nil)))
         iconViews.forEach { $0.replayPointerHover(windowPoint: windowPoint) }
+    }
+
+    func setReorderInsertion(index: Int) {
+        let clamped = min(max(0, index), iconViews.count)
+        guard reorderInsertionIndex != clamped else { return }
+        reorderInsertionIndex = clamped
+        needsDisplay = true
+    }
+
+    func clearReorderInsertion() {
+        guard reorderInsertionIndex != nil else { return }
+        reorderInsertionIndex = nil
+        needsDisplay = true
     }
 
     private func rebuildIconViews() {
@@ -1011,6 +1165,7 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
             iconView.configure(
                 app: app,
                 sourceTag: group.name,
+                sourceContainerID: group.containerID,
                 iconSize: coordinator.iconSize,
                 showName: coordinator.showNames,
                 coordinator: coordinator
@@ -1018,6 +1173,100 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
             addSubview(iconView)
             return iconView
         }
+    }
+
+    private func insertionIndex(for point: NSPoint) -> Int {
+        guard !iconViews.isEmpty else { return 0 }
+
+        var bestIndex = iconViews.count
+        var bestDistance = CGFloat.greatestFiniteMagnitude
+
+        for index in 0...iconViews.count {
+            guard let candidate = insertionCandidatePoint(for: index) else { continue }
+            let dx = point.x - candidate.x
+            let dy = point.y - candidate.y
+            let distance = dx * dx + dy * dy
+            if distance < bestDistance {
+                bestDistance = distance
+                bestIndex = index
+            }
+        }
+
+        return bestIndex
+    }
+
+    private func reorderedAppPaths(moving path: String) -> [String]? {
+        guard let group,
+              let insertionIndex = reorderInsertionIndex
+        else { return nil }
+
+        var paths = group.apps.map { $0.path.path }
+        guard let sourceIndex = paths.firstIndex(of: path) else { return nil }
+
+        paths.remove(at: sourceIndex)
+        var targetIndex = insertionIndex
+        if sourceIndex < insertionIndex {
+            targetIndex -= 1
+        }
+        targetIndex = min(max(0, targetIndex), paths.count)
+        paths.insert(path, at: targetIndex)
+
+        let originalPaths = group.apps.map { $0.path.path }
+        guard paths != originalPaths else { return nil }
+        return paths
+    }
+
+    private func drawReorderInsertionIfNeeded() {
+        guard let insertionIndex = reorderInsertionIndex,
+              let rect = insertionLineRect(for: insertionIndex)
+        else { return }
+
+        NSColor.controlAccentColor.withAlphaComponent(0.92).setFill()
+        let path = NSBezierPath(roundedRect: rect, xRadius: 2, yRadius: 2)
+        path.fill()
+    }
+
+    private func insertionLineRect(for index: Int) -> NSRect? {
+        guard let candidate = insertionCandidatePoint(for: index) else { return nil }
+        let referenceFrame: NSRect
+        if iconViews.indices.contains(index) {
+            referenceFrame = iconViews[index].frame
+        } else if let lastFrame = iconViews.last?.frame {
+            referenceFrame = lastFrame
+        } else {
+            return nil
+        }
+
+        let iconSize = coordinator?.iconSize ?? CGFloat(AppDefaults.iconSize)
+        let lineHeight = max(28, min(referenceFrame.height - 8, iconSize + 18))
+        return NSRect(
+            x: candidate.x - 2,
+            y: referenceFrame.midY - lineHeight / 2,
+            width: 4,
+            height: lineHeight
+        )
+    }
+
+    private func insertionCandidatePoint(for index: Int) -> NSPoint? {
+        guard !iconViews.isEmpty else { return nil }
+
+        if index <= 0 {
+            let first = iconViews[0].frame
+            return NSPoint(x: first.minX - 3, y: first.midY)
+        }
+
+        if index >= iconViews.count {
+            let last = iconViews[iconViews.count - 1].frame
+            return NSPoint(x: last.maxX + 3, y: last.midY)
+        }
+
+        let previous = iconViews[index - 1].frame
+        let next = iconViews[index].frame
+        if abs(previous.midY - next.midY) < 4 {
+            return NSPoint(x: (previous.maxX + next.minX) / 2, y: previous.midY)
+        }
+
+        return NSPoint(x: next.minX - 3, y: next.midY)
     }
 
     private func registerDropTargetIfNeeded() {
@@ -1142,6 +1391,7 @@ private final class AppGridIconNSView: NSView {
     private weak var coordinator: AppGridCollectionView.Coordinator?
     private var app: AppInfo?
     private var sourceTag = ""
+    private var sourceContainerID = ""
     private var iconSize: CGFloat = AppDefaults.iconSize
     private var showName = true
     private var isMouseInside = false
@@ -1166,12 +1416,14 @@ private final class AppGridIconNSView: NSView {
     func configure(
         app: AppInfo,
         sourceTag: String,
+        sourceContainerID: String,
         iconSize: CGFloat,
         showName: Bool,
         coordinator: AppGridCollectionView.Coordinator
     ) {
         self.app = app
         self.sourceTag = sourceTag
+        self.sourceContainerID = sourceContainerID
         self.iconSize = iconSize
         self.showName = showName
         self.coordinator = coordinator
@@ -1191,6 +1443,7 @@ private final class AppGridIconNSView: NSView {
         mouseDownEvent = nil
         didStartDrag = false
         isLongPressActive = false
+        sourceContainerID = ""
         longPressWorkItem = nil
     }
 
@@ -1293,6 +1546,12 @@ private final class AppGridIconNSView: NSView {
 
         didStartDrag = true
         longPressWorkItem?.cancel()
+        if let app {
+            coordinator?.beginAppIconDrag(
+                path: app.path.path,
+                sourceContainerID: sourceContainerID
+            )
+        }
         AppDragCoordinator.shared.beginDrag(
             image: makeDragImage(),
             payload: dragPayload,
@@ -1309,11 +1568,11 @@ private final class AppGridIconNSView: NSView {
                 at: screenPoint(for: event),
                 copy: event.modifierFlags.contains(.option)
             )
-            coordinator?.onDragModeChange(false)
+            coordinator?.endAppIconDrag()
         } else if !isLongPressActive, let app {
             coordinator?.onSelectApp(app)
         } else {
-            coordinator?.onDragModeChange(false)
+            coordinator?.cancelAppIconDrag()
         }
         didStartDrag = false
         isLongPressActive = false
@@ -1355,7 +1614,7 @@ private final class AppGridIconNSView: NSView {
 
     private var dragPayload: String {
         guard let app else { return "" }
-        return "\(app.path.path)\n\(sourceTag)"
+        return "\(app.path.path)\n\(sourceTag)\n\(sourceContainerID)"
     }
 
     private func setHover(_ hover: Bool, notify: Bool) {

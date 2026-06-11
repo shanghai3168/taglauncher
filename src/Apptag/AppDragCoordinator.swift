@@ -131,6 +131,7 @@ final class AppDragCoordinator {
             dragLayer.position = contentPoint
             CATransaction.commit()
             updateHoverTarget(at: screenPoint)
+            hoveredTarget?.appDragLocationChanged(screenPoint: screenPoint, copy: currentCopyMode)
             return
         }
 
@@ -144,6 +145,7 @@ final class AppDragCoordinator {
         )
         dragWindow.setFrameOrigin(origin)
         updateHoverTarget(at: screenPoint)
+        hoveredTarget?.appDragLocationChanged(screenPoint: screenPoint, copy: currentCopyMode)
     }
 
     func finishDrag(at screenPoint: NSPoint, copy: Bool) {
@@ -151,10 +153,17 @@ final class AppDragCoordinator {
         let parts = activePayload.components(separatedBy: "\n")
         guard let path = parts.first, !path.isEmpty else { return }
         let source = parts.dropFirst().first ?? ""
+        let sourceContainerID = parts.dropFirst(2).first ?? ""
         pruneDeadTargets()
 
         if let hitTarget = dropTarget(at: screenPoint) {
-            hitTarget.performDrop(path: path, source: source, copy: copy)
+            hitTarget.appDragLocationChanged(screenPoint: screenPoint, copy: copy)
+            hitTarget.performDrop(
+                path: path,
+                source: source,
+                sourceContainerID: sourceContainerID,
+                copy: copy
+            )
             return
         }
 
@@ -282,7 +291,9 @@ final class AppDragCoordinator {
 protocol AppDropTargetReceivingView: AnyObject {
     func screenFrame() -> NSRect?
     func appDragHoverChanged(active: Bool)
+    func appDragLocationChanged(screenPoint: NSPoint, copy: Bool)
     func performDrop(path: String, source: String, copy: Bool)
+    func performDrop(path: String, source: String, sourceContainerID: String, copy: Bool)
 }
 
 protocol AppEmptyDropReceivingView: AnyObject {
@@ -300,6 +311,10 @@ extension AppDropTargetReceivingView where Self: NSView {
 
 extension AppDropTargetReceivingView {
     func appDragHoverChanged(active: Bool) {}
+    func appDragLocationChanged(screenPoint: NSPoint, copy: Bool) {}
+    func performDrop(path: String, source: String, sourceContainerID: String, copy: Bool) {
+        performDrop(path: path, source: source, copy: copy)
+    }
 }
 
 extension AppEmptyDropReceivingView where Self: NSView {

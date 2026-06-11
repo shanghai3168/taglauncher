@@ -13,11 +13,6 @@
 
 ## Todo
 
-- [7.9.0 大需求] 容器内 App 手动拖拽排序。
-  - 状态: 方案已确认，详细 TODO 和过程文档已归档到 `../Docs/7.90/`。
-  - 版本: 后续实现从 `7.9.0` 开始记录，不混入 `7.8.x` 小版本。
-  - 入口: `../Docs/7.90/README.md`、`../Docs/7.90/01-容器内App手动排序-TODO.md`、`../Docs/7.90/02-专题讨论纪要.md`。
-
 - [发布后独立任务] 设置页 tab 容器 AppKit/自控化评估与实现。
   - 决策: 当前发布前 No-Go；保留 SwiftUI `TabView`，不改 QA 脚本。
   - 背景: QA 过程中曾观察到设置页顶部 tab 偶发折叠/消失，但目前不是稳定可复现 release blocker。
@@ -27,6 +22,13 @@
   - 验证要求: `bash build.sh`、`codesign --verify --deep --strict`、`Scripts/window_logic_qa.sh`；手工复核 6 个设置页、全屏/Split View 中 Settings 层级、文件面板层级、长文本语言和键盘/辅助功能导航。
 
 ## Done
+
+- [2026-06-11] 7.9.0 容器内 App 手动拖拽排序。
+  - 结果: 同一容器内拖动 App 可改变显示顺序；排序保存为分类与布局方案的一部分，刷新、重启、语言切换、导入导出、恢复上一方案和 SmartStart 替换按统一规则保留、迁移或清理。
+  - 范围: 新增稳定 `containerAppOrder`、容器 ID、排序持久化 helper、分类方案 fingerprint、App Grid 同容器插入位置提示和 `ContentView` 保存回调；跨容器移动、Option 复制、拖空白移除、Apple 内置保护、Quick Search 排名均不改。
+  - 文档: `../docs/7.90/README.md`、`../docs/7.90/01-容器内App手动排序-TODO.md`、`../docs/7.90/07-实现与QA记录.md`。
+  - 验证: `Scripts/app_ordering_data_qa.sh`、macOS 14 typecheck/build metadata、Quick Search 名称回归、SmartStart catalog QA、`Scripts/window_logic_qa.sh` 通过。
+  - 版本: `7.9.0 (20260611.2212)`。
 
 - [2026-06-09] 多语种 App 显示名通用加固。
   - 结果: 新增统一 `AppDisplayNameResolver`；App Grid 与 Quick Search 标题优先走当前语种/同语系/系统可见名/英文官方名/基础 bundle 名 fallback，内部 bundle 名和 bundle id 只作为搜索别名；`7.8.26` 进一步加固 `/Wrapper/`、`/Contents/Helpers/`、`.app/.../*.app` 内部 helper 过滤。

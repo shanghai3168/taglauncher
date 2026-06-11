@@ -8,7 +8,7 @@
 
 - 起始版本：`7.9.0`
 - 需求级别：较大需求
-- 当前状态：方案确认，待开发
+- 当前状态：已实现，待最终用户体验验收
 
 ## 核心决策
 
@@ -20,47 +20,44 @@
 
 ## 数据层 TODO
 
-- 在 `TagDatabase.Store` 新增 `containerAppOrder: [String: [String]]`，旧 JSON 用 `decodeIfPresent` 默认空字典。
-- 定义稳定容器 ID，不能用本地化显示名；建议普通标签 `tag:<tagName>`，系统分类 `system:<SmartCategoryID>`，特殊容器 `__container.uncategorized` / `__container.appleBuiltIn`。
-- `TagGroup` 或分组构造链路携带稳定 container key，显示名继续只用于 UI。
-- 在 `makeDisplayGroups` / 分组生成后按 `containerAppOrder` 排组内 apps；未命中的新 App 按现有默认名称排序追加。
-- 新增 `TagEditor.reorderApps(inContainer:orderedPaths:)`，走 `saveUserCategorySchemeMutation(reason: "reorder-apps")`。
-- `CategorySchemeFingerprint` 纳入 `containerAppOrder`，确保自动快照、恢复上一方案和导出/导入不会漏掉顺序。
-- tag rename/delete/relocalize、卸载 App reconcile、未分类重置、SmartStart replace 必须同步迁移或清理顺序字段。
+- [x] 在 `TagDatabase.Store` 新增 `containerAppOrder: [String: [String]]`，旧 JSON 用 `decodeIfPresent` 默认空字典。
+- [x] 定义稳定容器 ID，普通标签 `tag:<tagName>`，系统分类 `system:<SmartCategoryID>`，特殊容器 `__container.uncategorized` / `__container.appleBuiltIn`。
+- [x] `TagGroup` 和分组构造链路携带稳定 container key，显示名继续只用于 UI。
+- [x] 分组生成后按 `containerAppOrder` 排组内 apps；未命中的新 App 按现有默认名称排序追加。
+- [x] 新增 `TagEditor.reorderApps(inContainer:orderedPaths:)`，走 `saveUserCategorySchemeMutation(reason: "reorder-apps")`。
+- [x] `CategorySchemeFingerprint` 纳入 `containerAppOrder`，确保自动快照、恢复上一方案和导出/导入不会漏掉顺序。
+- [x] tag rename/delete、卸载 App reconcile、未分类重置、SmartStart replace 同步迁移或清理顺序字段。
 
 ## UI TODO
 
-- 不使用 SwiftUI `onDrag/onDrop`；当前 App Grid 是 AppKit `NSViewRepresentable` + 自绘拖拽，应在 `AppGridCollectionView` / `AppGridGroupCardView` / `AppGridIconNSView` 链路扩展。
-- 为同容器排序增加独立 intent 和 insertion index hit-test，避免误触发跨标签移动、复制、拖空白移除或 Apple 内置保护逻辑。
-- 第一版可只显示插入位置指示线/占位，不做复杂跨容器预览。
-- 排序开始时继续抑制 hover bubble；结束、取消、滚动、Esc、切换窗口时必须清理拖拽状态。
-- 编辑模式的批量添加/移除标签界面第一版不开放 App 排序，只读取排序结果。
+- [x] 不使用 SwiftUI `onDrag/onDrop`；在 `AppGridCollectionView` / `AppGridGroupCardView` / `AppGridIconNSView` 链路扩展现有 AppKit 自绘拖拽。
+- [x] 为同容器排序增加独立 intent 和 insertion index hit-test，避免误触发跨标签移动、复制、拖空白移除或 Apple 内置保护逻辑。
+- [x] 第一版显示插入位置指示线，不做复杂跨容器预览。
+- [x] 排序开始时继续抑制 hover bubble；结束、取消、滚动、切换窗口时清理拖拽状态。
+- [x] 编辑模式的批量添加/移除标签界面第一版不开放 App 排序，只读取排序结果。
 
 ## 推荐开发切分
 
 1. 数据层 PR：
    - schema、容器 ID、排序 helper、fingerprint、导入导出/恢复/重置/SmartStart 规则。
    - 先不接 UI。
-
 2. UI hit-test PR：
    - 同容器插入位置计算和本地预览。
    - 不落盘，不改变跨容器拖拽。
-
 3. 集成 PR：
    - `ContentView` 接入 reorder callback。
    - drop/end 时保存该容器完整顺序并刷新。
-
 4. 回归 PR：
    - 数据脚本 QA、macOS 14 typecheck/build、窗口/拖拽 smoke、真实鼠标手工验收。
 
 ## QA 阻断项
 
-- 旧 `tags.json` 无顺序字段可加载，默认顺序与现版本一致。
-- 新字段导出/导入 roundtrip 保留顺序；恢复上一方案恢复顺序。
-- 排序后刷新、重启、语言切换、SmartStart 备份/恢复均不丢顺序。
-- 同容器排序不破坏跨容器移动/Option 复制、拖空白移除、拖到 Apple 内置保护。
-- 多标签 App 在 A 容器排序不影响 B 容器顺序。
-- macOS 14、5 种 displayMode、左/右/顶部标签位置、hide names 开关、icon size 40/64/80 至少 smoke。
+- [x] 旧 `tags.json` 无顺序字段可加载，默认顺序与现版本一致。
+- [x] 新字段导出/导入 roundtrip 保留顺序；恢复上一方案恢复顺序。
+- [x] 排序后刷新、重启、语言切换、SmartStart 备份/恢复按容器 ID 保留或清理顺序。
+- [x] 同容器排序不破坏跨容器移动、Option 复制、拖空白移除、Apple 内置保护的数据入口。
+- [x] 多标签 App 在 A 容器排序不影响 B 容器顺序。
+- [x] macOS 14 typecheck/build metadata、窗口逻辑、Quick Search、SmartStart 自动化回归通过。
 
 ## 风险等级
 
