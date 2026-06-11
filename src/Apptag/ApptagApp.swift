@@ -42,6 +42,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private static let launcherOverlayLevel = NSWindow.Level(rawValue: NSWindow.Level.mainMenu.rawValue - 1)
     private static let overlayDefaultLevel = launcherOverlayLevel
     private static let overlayTextInputLevel = launcherOverlayLevel
+    private static let settingsContentSize = NSSize(width: 1000, height: 480)
 
     private var statusItem: NSStatusItem?
     private var overlayKeyMonitor: Any?
@@ -1295,15 +1296,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// Settings must always appear centered over the current overlay view and float above it.
     private func prepareSettingsWindow(_ window: NSWindow) {
         dismissQuickSearchIfNeeded()
-        let settingsSize = NSSize(width: 1000, height: 480)
+        let settingsSize = Self.settingsContentSize
+        let settingsFrameSize = window.frameRect(
+            forContentRect: NSRect(origin: .zero, size: settingsSize)
+        ).size
         window.identifier = NSUserInterfaceItemIdentifier("TagLauncherPreferencesWindow")
-        window.minSize = settingsSize
-        window.maxSize = settingsSize
-        if abs(window.frame.width - settingsSize.width) > 0.5 || abs(window.frame.height - settingsSize.height) > 0.5 {
-            window.setFrame(
-                NSRect(origin: window.frame.origin, size: settingsSize),
-                display: false
-            )
+        window.contentMinSize = settingsSize
+        window.contentMaxSize = settingsSize
+        window.minSize = settingsFrameSize
+        window.maxSize = settingsFrameSize
+        let currentContentSize = window.contentView?.bounds.size ?? window.contentLayoutRect.size
+        if abs(currentContentSize.width - settingsSize.width) > 0.5
+            || abs(currentContentSize.height - settingsSize.height) > 0.5 {
+            window.setContentSize(settingsSize)
         }
 
         if let overlayWindow, overlayWindow.isVisible {
@@ -1650,9 +1655,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             return
         }
 
-        let settingsSize = NSSize(width: 1000, height: 480)
         let window = NSWindow(
-            contentRect: NSRect(origin: .zero, size: settingsSize),
+            contentRect: NSRect(origin: .zero, size: Self.settingsContentSize),
             styleMask: [.titled, .closable],
             backing: .buffered,
             defer: false
