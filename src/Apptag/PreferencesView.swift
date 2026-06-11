@@ -36,6 +36,11 @@ private enum SettingsTab: String, CaseIterable, Identifiable {
     }
 }
 
+private enum InitialLayoutMode: String {
+    case uncategorized
+    case smart
+}
+
 struct PreferencesView: View {
     private let settingsWindowWidth: CGFloat = 1000
     private let settingsWindowHeight: CGFloat = 640
@@ -65,11 +70,14 @@ struct PreferencesView: View {
     @State private var tagColors: [String: Int] = [:]
     @State private var categoryScheme = TagDatabase.CategorySchemeState()
     @State private var isApplyingSystemScheme = false
+    @State private var isResettingToUncategorized = false
     @State private var showApplySystemSchemeConfirmation = false
+    @State private var showResetToUncategorizedConfirmation = false
     @State private var isDataFilePanelPresented = false
     @State private var hotkeyStatusToast: String? = nil
     @State private var hotkeyStatusToastToken: UUID? = nil
     @State private var selectedTab: SettingsTab = .general
+    @State private var selectedInitialLayoutMode: InitialLayoutMode = .smart
 
     private func scanApps() {
         DispatchQueue.global(qos: .userInitiated).async {
@@ -299,6 +307,18 @@ struct PreferencesView: View {
         }
     }
 
+    private func applySelectedInitialLayout() {
+        switch selectedInitialLayoutMode {
+        case .uncategorized:
+            guard !isResettingToUncategorized else { return }
+            withAnimation(.easeOut(duration: 0.16)) {
+                showResetToUncategorizedConfirmation = true
+            }
+        case .smart:
+            applySystemInitialScheme()
+        }
+    }
+
     private func performApplySystemInitialScheme() {
         guard !isApplyingSystemScheme else { return }
         showApplySystemSchemeConfirmation = false
@@ -326,6 +346,29 @@ struct PreferencesView: View {
                         message: tr("settings.systemSchemeApplyFailed")
                     )
                 }
+            }
+        }
+    }
+
+    private func performResetToUncategorized() {
+        guard !isResettingToUncategorized else { return }
+        showResetToUncategorizedConfirmation = false
+        TagDatabase.flushPendingCategorySchemeBackupBatch()
+        isResettingToUncategorized = true
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            let result = AppLibraryController.resetToUncategorized()
+
+            DispatchQueue.main.async {
+                isResettingToUncategorized = false
+                allApps = result.snapshot.apps
+                tagColors = result.snapshot.tagColors
+                refreshDataState()
+                notifyDataChanged()
+                showDataAlert(
+                    title: tr("settings.resetToUncategorizedApplied"),
+                    message: tr("settings.resetToUncategorizedAppliedMessage")
+                )
             }
         }
     }
@@ -383,6 +426,29 @@ struct PreferencesView: View {
                     .frame(width: 16, height: 16)
                 Text(title)
                     .font(.system(size: 13, weight: .medium))
+            }
+            .foregroundStyle(isSelected ? Color.accentColor : Color.primary)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func initialLayoutOption(
+        _ title: String,
+        mode: InitialLayoutMode
+    ) -> some View {
+        let isSelected = selectedInitialLayoutMode == mode
+        return Button {
+            selectedInitialLayoutMode = mode
+        } label: {
+            HStack(spacing: 6) {
+                Image(systemName: isSelected ? "largecircle.fill.circle" : "circle")
+                    .font(.system(size: 13, weight: .medium))
+                    .frame(width: 16, height: 16)
+                Text(title)
+                    .font(.system(size: 13, weight: .medium))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
             }
             .foregroundStyle(isSelected ? Color.accentColor : Color.primary)
             .contentShape(Rectangle())
@@ -763,7 +829,7 @@ struct PreferencesView: View {
                 VStack(alignment: .center, spacing: 0) {
                     VStack(alignment: .leading, spacing: 12) {
                         HStack(alignment: .center, spacing: 12) {
-                            Text(tr("settings.systemScheme"))
+                            Text(tr("settings.initialLayout"))
                                 .font(.system(size: 13, weight: .semibold))
                                 .foregroundStyle(.secondary)
                                 .lineLimit(1)
@@ -771,19 +837,24 @@ struct PreferencesView: View {
                                 .multilineTextAlignment(.trailing)
                                 .frame(width: dataLabelWidth, alignment: .trailing)
 
-                            Text(SmartStartService.systemInitialSchemeName)
-                                .font(.system(size: 13, weight: .medium))
-                                .foregroundStyle(.primary)
-                                .lineLimit(1)
-                                .truncationMode(.middle)
+                            HStack(spacing: 22) {
+                                initialLayoutOption(
+                                    tr("settings.initialLayoutUncategorized"),
+                                    mode: .uncategorized
+                                )
+                                initialLayoutOption(
+                                    tr("settings.initialLayoutSmart"),
+                                    mode: .smart
+                                )
+                            }
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                .layoutPriority(0)
+                                .layoutPriority(1)
 
                             dataActionButton(
                                 tr("settings.applyScheme"),
                                 prominent: true,
-                                enabled: !isApplyingSystemScheme,
-                                action: applySystemInitialScheme
+                                enabled: !isApplyingSystemScheme && !isResettingToUncategorized,
+                                action: applySelectedInitialLayout
                             )
                             .frame(width: dataActionWidth, alignment: .trailing)
                             .layoutPriority(2)
@@ -995,7 +1066,7 @@ struct PreferencesView: View {
             }
 
             if showApplySystemSchemeConfirmation {
-                ApplySystemSchemeConfirmationView(
+                SettingsConfirmationView(
                     title: tr("settings.applySystemSchemeWarningTitle"),
                     message: tr("settings.applySystemSchemeWarningMessage"),
                     confirmTitle: tr("settings.confirmApplyScheme"),
@@ -1004,6 +1075,23 @@ struct PreferencesView: View {
                     onCancel: {
                         withAnimation(.easeOut(duration: 0.14)) {
                             showApplySystemSchemeConfirmation = false
+                        }
+                    }
+                )
+                .zIndex(3)
+                .transition(.opacity)
+            }
+
+            if showResetToUncategorizedConfirmation {
+                SettingsConfirmationView(
+                    title: tr("settings.resetToUncategorizedWarningTitle"),
+                    message: tr("settings.resetToUncategorizedWarningMessage"),
+                    confirmTitle: tr("settings.confirmResetToUncategorized"),
+                    cancelTitle: tr("settings.cancel"),
+                    onConfirm: performResetToUncategorized,
+                    onCancel: {
+                        withAnimation(.easeOut(duration: 0.14)) {
+                            showResetToUncategorizedConfirmation = false
                         }
                     }
                 )
@@ -1118,7 +1206,7 @@ private struct StaticHotkeyInfoRow: View {
     }
 }
 
-private struct ApplySystemSchemeConfirmationView: View {
+private struct SettingsConfirmationView: View {
     let title: String
     let message: String
     let confirmTitle: String

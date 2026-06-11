@@ -22,6 +22,10 @@ struct AppLibrarySystemSchemeApplyResult {
     let summary: SmartStartSummary?
 }
 
+struct AppLibraryUncategorizedResetResult {
+    let snapshot: AppLibrarySnapshot
+}
+
 enum AppLibraryController {
     static func refresh(useCache: Bool = true) -> AppLibraryRefreshResult {
         let scannedApps = AppIndexer.scan(useCache: useCache)
@@ -53,6 +57,14 @@ enum AppLibraryController {
         return AppLibrarySystemSchemeApplyResult(
             snapshot: makeSnapshot(scannedApps: scannedApps, store: result.store),
             summary: result.summary
+        )
+    }
+
+    static func resetToUncategorized() -> AppLibraryUncategorizedResetResult {
+        let scannedApps = AppIndexer.scan(useCache: false)
+        let store = TagDatabase.resetAppTagAssignmentsToUncategorized()
+        return AppLibraryUncategorizedResetResult(
+            snapshot: makeSnapshot(scannedApps: scannedApps, store: store)
         )
     }
 

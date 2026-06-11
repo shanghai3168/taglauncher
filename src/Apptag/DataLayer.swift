@@ -1234,6 +1234,19 @@ enum TagDatabase {
         return store
     }
 
+    @discardableResult
+    static func resetAppTagAssignmentsToUncategorized() -> Store {
+        let previousStore = loadWithEnsuredCategoryScheme()
+        var store = previousStore
+        store.appTags = [:]
+        saveUserCategorySchemeMutation(
+            store,
+            previous: previousStore,
+            reason: "reset-uncategorized"
+        )
+        return loadWithEnsuredCategoryScheme()
+    }
+
     private static func applyImportedCategorySchemeMetadata(to store: inout Store, importedFileURL url: URL) {
         let importedCreatedAt = importedSchemeCreatedAt(from: url)
         store.categoryScheme.currentCreatedAt = importedCreatedAt
