@@ -3,6 +3,39 @@ import AppKit
 
 // MARK: - Preferences View
 
+private enum SettingsTab: String, CaseIterable, Identifiable {
+    case language
+    case general
+    case hotkeys
+    case tags
+    case data
+    case about
+
+    var id: String { rawValue }
+
+    var titleKey: String {
+        switch self {
+        case .language: return "settings.language"
+        case .general: return "settings.general"
+        case .hotkeys: return "quickSearch.hotkeys"
+        case .tags: return "settings.tags"
+        case .data: return "settings.data"
+        case .about: return "settings.about"
+        }
+    }
+
+    var systemImage: String {
+        switch self {
+        case .language: return "globe"
+        case .general: return "gearshape"
+        case .hotkeys: return "keyboard"
+        case .tags: return "tag.fill"
+        case .data: return "externaldrive.fill"
+        case .about: return "info.circle"
+        }
+    }
+}
+
 struct PreferencesView: View {
     private let settingsWindowWidth: CGFloat = 1000
     private let settingsContentWidth: CGFloat = 940
@@ -35,6 +68,7 @@ struct PreferencesView: View {
     @State private var isDataFilePanelPresented = false
     @State private var hotkeyStatusToast: String? = nil
     @State private var hotkeyStatusToastToken: UUID? = nil
+    @State private var selectedTab: SettingsTab = .general
 
     private func scanApps() {
         DispatchQueue.global(qos: .userInitiated).async {
@@ -493,9 +527,57 @@ struct PreferencesView: View {
         }
     }
 
+    private var settingsTabBar: some View {
+        HStack(spacing: 18) {
+            ForEach(SettingsTab.allCases) { tab in
+                settingsTabButton(tab)
+            }
+        }
+        .frame(height: 104, alignment: .center)
+        .frame(maxWidth: .infinity)
+        .background(Color(nsColor: .windowBackgroundColor))
+    }
+
+    private func settingsTabButton(_ tab: SettingsTab) -> some View {
+        let isSelected = selectedTab == tab
+        return Button {
+            selectedTab = tab
+        } label: {
+            VStack(spacing: 5) {
+                Image(systemName: tab.systemImage)
+                    .font(.system(size: 25, weight: .regular))
+                    .symbolRenderingMode(.hierarchical)
+                    .frame(width: 32, height: 32)
+                Text(tr(tab.titleKey))
+                    .font(.system(size: 13, weight: .semibold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+            }
+            .foregroundStyle(isSelected ? Color.accentColor : Color.secondary)
+            .frame(width: 72, height: 70)
+            .background(
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(isSelected ? Color.accentColor.opacity(0.10) : Color.clear)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .stroke(isSelected ? Color.accentColor.opacity(0.20) : Color.clear, lineWidth: 1)
+            )
+            .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(tr(tab.titleKey))
+        .accessibilityIdentifier("settings-tab-\(tab.rawValue)")
+    }
+
     var body: some View {
         ZStack {
-            TabView {
+            VStack(spacing: 0) {
+                settingsTabBar
+                Divider()
+                Group {
+                    switch selectedTab {
+                    case .language:
                 // Tab 1: Language
                 VStack(alignment: .leading, spacing: 10) {
                     Text(tr("settings.language"))
@@ -558,9 +640,9 @@ struct PreferencesView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 }
                 .frame(maxWidth: settingsContentWidth, alignment: .leading)
-                .tabItem { Label(tr("settings.language"), systemImage: "globe") }
                 .padding()
 
+                    case .general:
                 // Tab 2: General
                 ScrollView(.vertical, showsIndicators: true) {
                     VStack(alignment: .leading, spacing: 0) {
@@ -648,8 +730,8 @@ struct PreferencesView: View {
                     .frame(maxWidth: generalContentWidth, alignment: .center)
                     .padding()
                 }
-                .tabItem { Label(tr("settings.general"), systemImage: "gearshape") }
 
+                    case .hotkeys:
             // Tab 3: Hotkeys
             ScrollView(.vertical, showsIndicators: true) {
                 VStack(alignment: .leading, spacing: 16) {
@@ -659,8 +741,8 @@ struct PreferencesView: View {
                 .frame(maxWidth: generalContentWidth, alignment: .center)
                 .padding()
             }
-            .tabItem { Label(tr("quickSearch.hotkeys"), systemImage: "keyboard") }
 
+                    case .tags:
             // Tab 4: Tags
             VStack(spacing: 0) {
                 TagEditorView(
@@ -669,9 +751,9 @@ struct PreferencesView: View {
                     onRefresh: { scanApps() }
                 )
             }
-            .tabItem { Label(tr("settings.tags"), systemImage: "tag.fill") }
             .onAppear { scanApps() }
 
+                    case .data:
             // Tab 5: Data
             VStack(spacing: 0) {
                 Spacer(minLength: 32)
@@ -810,10 +892,10 @@ struct PreferencesView: View {
 
                 Spacer(minLength: 18)
             }
-            .tabItem { Label(tr("settings.data"), systemImage: "externaldrive.fill") }
             .padding()
             .onAppear { refreshDataState() }
 
+                    case .about:
             // Tab 6: About
             VStack(spacing: 0) {
                 Spacer(minLength: 72)
@@ -876,8 +958,10 @@ struct PreferencesView: View {
                 Spacer(minLength: 30)
                 Spacer(minLength: 18)
             }
-            .tabItem { Label(tr("settings.about"), systemImage: "info.circle") }
             .padding()
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .onChange(of: selectedLanguage) { _, code in
                 L10n.switchSelection(to: code)
