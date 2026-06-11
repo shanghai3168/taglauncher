@@ -12,40 +12,42 @@ struct EditAppsHeaderView: View {
     let onConfirm: () -> Void
 
     var body: some View {
-        HStack(alignment: .center, spacing: 14) {
-            HStack(alignment: .center, spacing: 12) {
-                Button(action: onExit) {
-                    Label(tr("edit.exit"), systemImage: "rectangle.portrait.and.arrow.right")
-                        .font(.system(size: 12))
-                }
-                .buttonStyle(.bordered)
-
-                EditOperationPicker(
-                    operation: operation,
-                    onSelect: onSelectOperation
-                )
+        HStack(alignment: .top, spacing: 14) {
+            Button(action: onExit) {
+                Label(tr("edit.exit"), systemImage: "rectangle.portrait.and.arrow.right")
+                    .font(.system(size: 12))
             }
+            .buttonStyle(.bordered)
 
-            Spacer(minLength: 16)
+            Spacer(minLength: 20)
 
-            Text(hintText)
-                .font(.system(size: 12, weight: .medium))
-                .foregroundStyle(.secondary)
-                .lineLimit(1)
-                .truncationMode(.middle)
-                .frame(minWidth: 0, maxWidth: 760, alignment: .trailing)
-                .layoutPriority(1)
-                .help(hintText)
+            VStack(alignment: .trailing, spacing: 5) {
+                HStack(alignment: .center, spacing: 14) {
+                    EditOperationPicker(
+                        operation: operation,
+                        onSelect: onSelectOperation
+                    )
 
-            Button(confirmTitle, action: onConfirm)
-                .buttonStyle(.borderedProminent)
-                .disabled(isConfirmDisabled)
-                .fixedSize(horizontal: true, vertical: false)
-                .layoutPriority(2)
+                    EditConfirmButton(
+                        title: confirmTitle,
+                        isDisabled: isConfirmDisabled,
+                        action: onConfirm
+                    )
+                }
+
+                Text(hintText)
+                    .font(.system(size: 11, weight: .medium))
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+                    .frame(maxWidth: 460, alignment: .trailing)
+                    .help(hintText)
+            }
+            .layoutPriority(1)
         }
         .padding(.horizontal, 24)
         .padding(.top, notchHeight > 0 ? notchHeight + 10 : 20)
-        .padding(.bottom, 12)
+        .padding(.bottom, 10)
     }
 }
 
@@ -54,24 +56,22 @@ private struct EditOperationPicker: View {
     let onSelect: (EditTagOperation) -> Void
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 10) {
             Text(tr("edit.operationLabel"))
                 .font(.system(size: 12, weight: .medium))
                 .foregroundStyle(.secondary)
 
-            HStack(spacing: 6) {
+            HStack(spacing: 14) {
                 EditOperationModeButton(
+                    operation: operation,
                     mode: .add,
                     titleKey: "edit.modeAdd",
-                    systemImage: "plus.circle.fill",
-                    isActive: operation == .add,
                     onSelect: onSelect
                 )
                 EditOperationModeButton(
+                    operation: operation,
                     mode: .remove,
                     titleKey: "edit.modeRemove",
-                    systemImage: "minus.circle.fill",
-                    isActive: operation == .remove,
                     onSelect: onSelect
                 )
             }
@@ -80,27 +80,75 @@ private struct EditOperationPicker: View {
 }
 
 private struct EditOperationModeButton: View {
+    let operation: EditTagOperation
     let mode: EditTagOperation
     let titleKey: String
-    let systemImage: String
-    let isActive: Bool
     let onSelect: (EditTagOperation) -> Void
+
+    private var isActive: Bool {
+        operation == mode
+    }
 
     var body: some View {
         Button {
             onSelect(mode)
         } label: {
-            Label(tr(titleKey), systemImage: systemImage)
-                .font(.system(size: 12, weight: .semibold))
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .foregroundStyle(isActive ? Color.white : Color.primary)
+            HStack(spacing: 6) {
+                ZStack {
+                    Circle()
+                        .strokeBorder(
+                            isActive ? Color.accentColor : Color.secondary.opacity(0.58),
+                            lineWidth: 1.6
+                        )
+                        .frame(width: 13, height: 13)
+                    if isActive {
+                        Circle()
+                            .fill(Color.accentColor)
+                            .frame(width: 7, height: 7)
+                    }
+                }
+
+                Text(tr(titleKey))
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(isActive ? Color.primary : Color.secondary)
+                    .lineLimit(1)
+            }
+            .padding(.vertical, 4)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(isActive ? .isSelected : [])
+        .help(tr(titleKey))
+    }
+}
+
+private struct EditConfirmButton: View {
+    let title: String
+    let isDisabled: Bool
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Text(title)
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(Color.white.opacity(isDisabled ? 0.76 : 1.0))
+                .lineLimit(1)
+                .minimumScaleFactor(0.82)
+                .frame(minWidth: 116)
+                .frame(height: 34)
+                .padding(.horizontal, 8)
                 .background(
-                    Capsule(style: .continuous)
-                        .fill(isActive ? Color.accentColor : Color.secondary.opacity(0.12))
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .fill(Color.accentColor.opacity(isDisabled ? 0.40 : 1.0))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .stroke(Color.accentColor.opacity(isDisabled ? 0.18 : 0.24), lineWidth: 1)
                 )
         }
         .buttonStyle(.plain)
+        .disabled(isDisabled)
+        .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
     }
 }
 
