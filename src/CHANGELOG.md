@@ -7,7 +7,7 @@
 - App Grid 拖拽链路增加同容器排序意图和插入位置提示；跨容器移动、Option 复制、拖空白移除、Apple 内置保护继续沿用原有逻辑
 - 容器排序纳入分类方案 fingerprint 和自动上一方案快照，排序变化会被备份/恢复体系识别
 - 新增 `Scripts/app_ordering_data_qa.sh`，覆盖排序 schema、导入导出、备份恢复、SmartStart 清理、ContentView/AppGrid wiring 和拖拽 payload 静态门禁
-- 版本号更新为 `7.9.0`，Build 更新为 `20260611.2212`
+- 版本号更新为 `7.9.0`，Build 更新为 `20260612.1121`
 
 ## [7.8.31] — 2026-06-11
 
