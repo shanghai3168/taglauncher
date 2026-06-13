@@ -282,10 +282,16 @@ struct AppGridCollectionView: NSViewRepresentable {
                 if activeReorderCard === card {
                     activeReorderCard = nil
                 }
+                if lastReorderContainerID == card.containerID {
+                    lastReorderContainerID = ""
+                    lastReorderScreenFrame = nil
+                }
                 return
             }
             activeReorderCard?.clearReorderInsertion()
             activeReorderCard = nil
+            lastReorderContainerID = ""
+            lastReorderScreenFrame = nil
         }
 
         fileprivate func activeReorderPath(in containerID: String, copy: Bool) -> String? {
@@ -308,7 +314,8 @@ struct AppGridCollectionView: NSViewRepresentable {
                   let lastReorderScreenFrame
             else { return false }
 
-            return lastReorderScreenFrame.insetBy(dx: -44, dy: -44).contains(screenPoint)
+            let guardOutset = AppGridCollectionMetrics.reorderEmptyDropCancelOutset
+            return lastReorderScreenFrame.insetBy(dx: -guardOutset, dy: -guardOutset).contains(screenPoint)
         }
 
         private static func signature(
@@ -860,6 +867,7 @@ private enum AppGridCollectionMetrics {
     static let headerBottomGap: CGFloat = 6
     static let iconColumnGap: CGFloat = 6
     static let iconRowGap: CGFloat = 2
+    static let reorderEmptyDropCancelOutset: CGFloat = 4
     static let hoverScale: CGFloat = 1.22
     static let labelHeight: CGFloat = 14
 

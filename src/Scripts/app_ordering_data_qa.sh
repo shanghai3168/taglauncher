@@ -105,6 +105,11 @@ app_grid_perform_drop_func = extract_braced_block(
     "AppGridGroupCardView.performDrop(path:source:sourceContainerID:copy:)",
     app_grid_text,
 )
+clear_reorder_insertion_func = extract_braced_block(
+    r"\bfileprivate\s+func\s+clearReorderInsertion\s*\(",
+    "Coordinator.clearReorderInsertion(card:)",
+    app_grid_text,
+)
 
 require(
     r"\bvar\s+containerAppOrder\s*:\s*\[String\s*:\s*\[String\]\]\s*=\s*\[:\]",
@@ -244,6 +249,29 @@ require(
     r"shouldCancelEmptyDropForActiveReorder\s*\([^)]*path\s*:\s*String[^)]*screenPoint\s*:\s*NSPoint[^)]*copy\s*:\s*Bool",
     "AppGrid must cancel near-edge same-container reorder drops instead of routing them to remove-tag empty drop",
     app_grid_text,
+)
+require(
+    r"\bstatic\s+let\s+reorderEmptyDropCancelOutset\s*:\s*CGFloat\s*=\s*[0-9.]+",
+    "AppGrid must name and centralize the tiny near-edge empty-drop cancel tolerance",
+    app_grid_text,
+)
+near_edge_match = re.search(
+    r"\bstatic\s+let\s+reorderEmptyDropCancelOutset\s*:\s*CGFloat\s*=\s*([0-9.]+)",
+    app_grid_text,
+)
+if not near_edge_match or float(near_edge_match.group(1)) > 8:
+    fail("near-edge empty-drop cancel tolerance must stay below the 16px card gap so real outside blank drops remove tags")
+if re.search(r"insetBy\s*\(\s*dx\s*:\s*-44\s*,\s*dy\s*:\s*-44\s*\)", app_grid_text):
+    fail("AppGrid must not restore the old 44px empty-drop cancel zone that swallows real outside blank drops")
+require(
+    r"insetBy\s*\(\s*dx\s*:\s*-guardOutset\s*,\s*dy\s*:\s*-guardOutset\s*\)",
+    "AppGrid shouldCancelEmptyDropForActiveReorder must use the bounded near-edge tolerance",
+    app_grid_text,
+)
+require(
+    r"if\s+lastReorderContainerID\s*==\s*card\.containerID\s*\{(?:(?!\n\s*\}).)*lastReorderContainerID\s*=\s*\"\"(?:(?!\n\s*\}).)*lastReorderScreenFrame\s*=\s*nil",
+    "AppGrid must clear stale reorder frame when leaving the source card so outside blank drops can remove tags",
+    clear_reorder_insertion_func,
 )
 require(
     r"if\s+sourceContainerID\s*==\s*group\.containerID\s*\{",
