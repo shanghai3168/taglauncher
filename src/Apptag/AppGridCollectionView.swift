@@ -38,6 +38,7 @@ struct AppGridCollectionView: NSViewRepresentable {
     let bubbleDisabled: Bool
     let showUncommonAppBubbles: Bool
     let highlightedGroupName: String?
+    let bottomContentPadding: CGFloat
     let contentRevision: Int
     let scrollTargetID: String?
     let scrollRequestToken: Int
@@ -71,6 +72,7 @@ struct AppGridCollectionView: NSViewRepresentable {
             bubbleDisabled: bubbleDisabled,
             showUncommonAppBubbles: showUncommonAppBubbles,
             highlightedGroupName: highlightedGroupName,
+            bottomContentPadding: bottomContentPadding,
             contentRevision: contentRevision,
             scrollTargetID: scrollTargetID,
             scrollRequestToken: scrollRequestToken,
@@ -97,6 +99,7 @@ struct AppGridCollectionView: NSViewRepresentable {
         private var scrollBubbleDisabled = false
         var showUncommonAppBubbles = AppDefaults.showUncommonAppBubbles
         var highlightedGroupName: String?
+        var bottomContentPadding: CGFloat = 0
         var contentRevision = 0
         var scrollTargetID: String?
         var scrollRequestToken = 0
@@ -129,6 +132,7 @@ struct AppGridCollectionView: NSViewRepresentable {
             bubbleDisabled: Bool,
             showUncommonAppBubbles: Bool,
             highlightedGroupName: String?,
+            bottomContentPadding: CGFloat,
             contentRevision: Int,
             scrollTargetID: String?,
             scrollRequestToken: Int,
@@ -150,6 +154,7 @@ struct AppGridCollectionView: NSViewRepresentable {
             self.externalBubbleDisabled = bubbleDisabled
             self.showUncommonAppBubbles = showUncommonAppBubbles
             self.highlightedGroupName = highlightedGroupName
+            self.bottomContentPadding = max(0, bottomContentPadding)
             self.contentRevision = contentRevision
             self.scrollTargetID = scrollTargetID
             self.scrollRequestToken = scrollRequestToken
@@ -169,6 +174,7 @@ struct AppGridCollectionView: NSViewRepresentable {
                 iconSize: iconSize,
                 showNames: showNames,
                 showUncommonAppBubbles: showUncommonAppBubbles,
+                bottomContentPadding: self.bottomContentPadding,
                 contentRevision: contentRevision
             )
             if nextSignature != contentSignature {
@@ -324,6 +330,7 @@ struct AppGridCollectionView: NSViewRepresentable {
             iconSize: CGFloat,
             showNames: Bool,
             showUncommonAppBubbles: Bool,
+            bottomContentPadding: CGFloat,
             contentRevision: Int
         ) -> String {
             let colorPart = tagColors
@@ -335,6 +342,7 @@ struct AppGridCollectionView: NSViewRepresentable {
                 "\(Int(iconSize.rounded()))",
                 showNames ? "names" : "nonames",
                 showUncommonAppBubbles ? "uncommon" : "allbubbles",
+                "bottom=\(Int(bottomContentPadding.rounded()))",
                 colorPart,
                 "rev=\(contentRevision)"
             ].joined(separator: "|")
@@ -567,7 +575,8 @@ private final class AppGridContainerCollectionLayout: NSCollectionViewLayout {
             groups: visibleGroups,
             contentWidth: collectionView.bounds.width,
             iconSize: iconSize,
-            displayMode: coordinator?.displayMode ?? AppDefaults.displayMode
+            displayMode: coordinator?.displayMode ?? AppDefaults.displayMode,
+            bottomContentPadding: coordinator?.bottomContentPadding ?? 0
         )
 
         var nextAttributes: [IndexPath: NSCollectionViewLayoutAttributes] = [:]
@@ -613,22 +622,39 @@ private final class AppGridContainerCollectionLayout: NSCollectionViewLayout {
         groups: [TagGroup],
         contentWidth: CGFloat,
         iconSize: CGFloat,
-        displayMode: String
+        displayMode: String,
+        bottomContentPadding: CGFloat
     ) -> LayoutPlan {
         switch AppGridCollectionDisplayMode(displayMode) {
         case .flat:
-            return makeFlatPlan(groups: groups, contentWidth: contentWidth, iconSize: iconSize)
+            return makeFlatPlan(
+                groups: groups,
+                contentWidth: contentWidth,
+                iconSize: iconSize,
+                bottomContentPadding: bottomContentPadding
+            )
         case .masonryContainer:
-            return makeMasonryPlan(groups: groups, contentWidth: contentWidth, iconSize: iconSize)
+            return makeMasonryPlan(
+                groups: groups,
+                contentWidth: contentWidth,
+                iconSize: iconSize,
+                bottomContentPadding: bottomContentPadding
+            )
         case .gridContainer:
-            return makeGridPlan(groups: groups, contentWidth: contentWidth, iconSize: iconSize)
+            return makeGridPlan(
+                groups: groups,
+                contentWidth: contentWidth,
+                iconSize: iconSize,
+                bottomContentPadding: bottomContentPadding
+            )
         }
     }
 
     private static func makeGridPlan(
         groups: [TagGroup],
         contentWidth: CGFloat,
-        iconSize: CGFloat
+        iconSize: CGFloat,
+        bottomContentPadding: CGFloat
     ) -> LayoutPlan {
         let boundedContentWidth = max(1, contentWidth)
         let outerPadding = AppGridCollectionMetrics.outerPadding
@@ -658,7 +684,8 @@ private final class AppGridContainerCollectionLayout: NSCollectionViewLayout {
             y += height + gap
         }
 
-        let contentHeight = rows.isEmpty ? outerPadding * 2 : y - gap + outerPadding
+        let contentHeight = (rows.isEmpty ? outerPadding * 2 : y - gap + outerPadding)
+            + max(0, bottomContentPadding)
         return LayoutPlan(
             items: items,
             contentSize: NSSize(width: boundedContentWidth, height: max(1, contentHeight))
@@ -668,7 +695,8 @@ private final class AppGridContainerCollectionLayout: NSCollectionViewLayout {
     private static func makeFlatPlan(
         groups: [TagGroup],
         contentWidth: CGFloat,
-        iconSize: CGFloat
+        iconSize: CGFloat,
+        bottomContentPadding: CGFloat
     ) -> LayoutPlan {
         let boundedContentWidth = max(1, contentWidth)
         let outerPadding = AppGridCollectionMetrics.outerPadding
@@ -691,7 +719,8 @@ private final class AppGridContainerCollectionLayout: NSCollectionViewLayout {
             y += height + AppGridCollectionMetrics.flatGroupGap
         }
 
-        let contentHeight = groups.isEmpty ? outerPadding * 2 : y - AppGridCollectionMetrics.flatGroupGap + outerPadding
+        let contentHeight = (groups.isEmpty ? outerPadding * 2 : y - AppGridCollectionMetrics.flatGroupGap + outerPadding)
+            + max(0, bottomContentPadding)
         return LayoutPlan(
             items: items,
             contentSize: NSSize(width: boundedContentWidth, height: max(1, contentHeight))
@@ -701,7 +730,8 @@ private final class AppGridContainerCollectionLayout: NSCollectionViewLayout {
     private static func makeMasonryPlan(
         groups: [TagGroup],
         contentWidth: CGFloat,
-        iconSize: CGFloat
+        iconSize: CGFloat,
+        bottomContentPadding: CGFloat
     ) -> LayoutPlan {
         let boundedContentWidth = max(1, contentWidth)
         let outerPadding = AppGridCollectionMetrics.outerPadding
@@ -731,7 +761,8 @@ private final class AppGridContainerCollectionLayout: NSCollectionViewLayout {
         }
 
         let tallest = columnHeights.max() ?? outerPadding
-        let contentHeight = groups.isEmpty ? outerPadding * 2 : tallest - gap + outerPadding
+        let contentHeight = (groups.isEmpty ? outerPadding * 2 : tallest - gap + outerPadding)
+            + max(0, bottomContentPadding)
         return LayoutPlan(
             items: items,
             contentSize: NSSize(width: boundedContentWidth, height: max(1, contentHeight))

@@ -62,6 +62,7 @@ struct PreferencesView: View {
     @AppStorage("showDockIcon") private var showDockIcon = AppDefaults.showDockIcon
     @AppStorage("launchAtLogin") private var launchAtLogin = AppDefaults.launchAtLogin
     @AppStorage("showUncommonAppBubbles") private var showUncommonAppBubbles = AppDefaults.showUncommonAppBubbles
+    @AppStorage("hideUsageTips") private var hideUsageTips = AppDefaults.hideUsageTips
     @AppStorage("mainHotkeyRegistrationState") private var mainHotkeyRegistrationState = LauncherHotkeyRegistrationState.active.rawValue
     @AppStorage("quickSearchHotkeyRegistrationState") private var quickSearchHotkeyRegistrationState = LauncherHotkeyRegistrationState.active.rawValue
     @State private var selectedLanguage = L10n.selectedLanguageCode
@@ -760,9 +761,12 @@ struct PreferencesView: View {
                                     AppDelegate.refreshChromeSettings()
                                 }
                             Toggle(tr("settings.hideAppNames"), isOn: $hideAppNames)
+                            Toggle(tr("settings.hideUsageTips"), isOn: $hideUsageTips)
+                                .help(tr("settings.hideUsageTipsDesc"))
                         }
                         .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.bottom, 16)
+                        .padding(.top, 12)
+                        .padding(.bottom, 18)
 
                         Divider()
                             .padding(.bottom, 16)
@@ -825,7 +829,9 @@ struct PreferencesView: View {
                         }
                     }
                     .frame(maxWidth: generalContentWidth, alignment: .center)
-                    .padding()
+                    .padding(.horizontal)
+                    .padding(.top, 28)
+                    .padding(.bottom)
                 }
 
                     case .hotkeys:

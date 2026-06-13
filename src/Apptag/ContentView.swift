@@ -340,6 +340,120 @@ private struct PendingTagRemovalDrop: Identifiable {
     let tagName: String
 }
 
+private struct AppGridUsageTip: Identifiable {
+    let id: Int
+    let titleKey: String
+    let detailKey: String
+}
+
+private struct AppGridUsageTipsBar: View {
+    static let reservedHeight: CGFloat = 64
+
+    let tips: [AppGridUsageTip]
+    @Binding var selectedIndex: Int
+    let dragModeActive: Bool
+
+    @State private var textHovered = false
+
+    private var safeIndex: Int {
+        guard tips.indices.contains(selectedIndex) else { return 0 }
+        return selectedIndex
+    }
+
+    private var currentTip: AppGridUsageTip? {
+        guard !tips.isEmpty else { return nil }
+        return tips[safeIndex]
+    }
+
+    var body: some View {
+        if let tip = currentTip {
+            HStack(spacing: 0) {
+                Text(tr(tip.titleKey))
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(Color.primary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.82)
+                    .padding(.horizontal, 14)
+                    .frame(width: 174, height: 42, alignment: .leading)
+                    .background(Color(nsColor: .controlBackgroundColor).opacity(0.96))
+
+                tipDetailText(tip)
+                    .frame(height: 42)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.black.opacity(0.88))
+
+                tipsControls
+                    .frame(width: 86, height: 42)
+                    .background(Color.black.opacity(0.88))
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .stroke(Color.primary.opacity(0.18), lineWidth: 1)
+            )
+            .shadow(color: .black.opacity(0.20), radius: 14, y: 7)
+            .frame(maxWidth: 980)
+            .padding(.horizontal, 18)
+            .padding(.bottom, 12)
+            .opacity(dragModeActive ? 0.72 : 1.0)
+            .allowsHitTesting(!dragModeActive)
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("\(tr(tip.titleKey)) \(tr(tip.detailKey))")
+        }
+    }
+
+    private func tipDetailText(_ tip: AppGridUsageTip) -> some View {
+        ScrollView(.horizontal, showsIndicators: textHovered) {
+            Text(tr(tip.detailKey))
+                .font(.system(size: 15, weight: .medium))
+                .foregroundStyle(Color.white.opacity(0.96))
+                .lineLimit(1)
+                .fixedSize(horizontal: true, vertical: false)
+                .padding(.horizontal, 14)
+                .frame(minHeight: 42, alignment: .center)
+        }
+        .onHover { textHovered = $0 }
+        .help(tr(tip.detailKey))
+    }
+
+    private var tipsControls: some View {
+        VStack(spacing: 4) {
+            HStack(spacing: 8) {
+                usageTipNavigationButton(systemImage: "chevron.left", labelKey: "usageTips.previous") {
+                    selectedIndex = (safeIndex - 1 + tips.count) % tips.count
+                }
+                usageTipNavigationButton(systemImage: "chevron.right", labelKey: "usageTips.next") {
+                    selectedIndex = (safeIndex + 1) % tips.count
+                }
+            }
+
+            HStack(spacing: 3) {
+                ForEach(tips.indices, id: \.self) { index in
+                    Circle()
+                        .fill(index == safeIndex ? Color.accentColor : Color.white.opacity(0.58))
+                        .frame(width: 4, height: 4)
+                }
+            }
+        }
+    }
+
+    private func usageTipNavigationButton(
+        systemImage: String,
+        labelKey: String,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            Image(systemName: systemImage)
+                .font(.system(size: 15, weight: .bold))
+                .foregroundStyle(Color.white.opacity(0.96))
+                .frame(width: 24, height: 22)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(tr(labelKey))
+    }
+}
+
 struct ContentView: View {
     let hideOverlay: () -> Void
     private let initialQuickSearchSource: String?
@@ -353,6 +467,7 @@ struct ContentView: View {
     @State private var groupLayoutVersion = 0
     @State private var appGridScrollTargetID: String? = nil
     @State private var appGridScrollRequestToken = 0
+    @State private var selectedUsageTipIndex = 0
 
     // Edit mode
     @State private var editPhase: EditPhase = .none
@@ -414,6 +529,7 @@ struct ContentView: View {
     @AppStorage("displayMode") private var displayMode = AppDefaults.displayMode
     @AppStorage("hideAppNames") private var hideAppNames = AppDefaults.hideAppNames
     @AppStorage("showUncommonAppBubbles") private var showUncommonAppBubbles = AppDefaults.showUncommonAppBubbles
+    @AppStorage("hideUsageTips") private var hideUsageTips = AppDefaults.hideUsageTips
     @AppStorage("useAppKitTagNavigation") private var useAppKitTagNavigation = AppDefaults.useAppKitTagNavigation
     @AppStorage("skipTagRemovalDropConfirm") private var skipTagRemovalDropConfirm = false
     @AppStorage("skipUncategorizedDropConfirm") private var skipUncategorizedDropConfirm = false
@@ -448,6 +564,23 @@ struct ContentView: View {
 
     private var isColorlessContainerMode: Bool {
         displayMode == "container" || displayMode == "gridContainer"
+    }
+
+    private var shouldShowUsageTips: Bool {
+        !hideUsageTips && !allApps.isEmpty && !quickSearchOnlySession
+    }
+
+    private var appGridUsageTips: [AppGridUsageTip] {
+        [
+            AppGridUsageTip(id: 1, titleKey: "usageTips.tip1.title", detailKey: "usageTips.tip1.detail"),
+            AppGridUsageTip(id: 2, titleKey: "usageTips.tip2.title", detailKey: "usageTips.tip2.detail"),
+            AppGridUsageTip(id: 3, titleKey: "usageTips.tip3.title", detailKey: "usageTips.tip3.detail"),
+            AppGridUsageTip(id: 4, titleKey: "usageTips.tip4.title", detailKey: "usageTips.tip4.detail"),
+            AppGridUsageTip(id: 5, titleKey: "usageTips.tip5.title", detailKey: "usageTips.tip5.detail"),
+            AppGridUsageTip(id: 6, titleKey: "usageTips.tip6.title", detailKey: "usageTips.tip6.detail"),
+            AppGridUsageTip(id: 7, titleKey: "usageTips.tip7.title", detailKey: "usageTips.tip7.detail"),
+            AppGridUsageTip(id: 8, titleKey: "usageTips.tip8.title", detailKey: "usageTips.tip8.detail"),
+        ]
     }
 
     private var shouldRenderAppGridBehindQuickSearch: Bool {
@@ -1112,38 +1245,50 @@ struct ContentView: View {
                 ProgressView().scaleEffect(0.8)
                 Spacer()
             } else {
-                AppGridCollectionView(
-                    groups: displayGroups,
-                    tagColors: tagColors,
-                    displayMode: displayMode,
-                    iconSize: iconSize,
-                    showNames: !hideAppNames,
-                    bubbleDisabled: appBubbleDisabled,
-                    showUncommonAppBubbles: showUncommonAppBubbles,
-                    highlightedGroupName: appGridHighlightedGroupName,
-                    contentRevision: groupLayoutVersion,
-                    scrollTargetID: appGridScrollTargetID,
-                    scrollRequestToken: appGridScrollRequestToken,
-                    onSelectApp: { app in openApp(app) },
-                    onBubbleHover: handleBubbleHover,
-                    onEditNote: beginEditingBubbleNote,
-                    onDropApp: { path, source, target, copy in
-                        dropApp(path: path, sourceTag: source, targetTag: target, copy: copy)
-                    },
-                    onDropOutsideGroup: { path, source, copy in
-                        dropAppOutsideGroup(path: path, sourceTag: source, copy: copy)
-                    },
-                    onReorderApps: { containerID, orderedPaths in
-                        reorderApps(inContainer: containerID, orderedPaths: orderedPaths)
-                    },
-                    onGroupActivate: { groupName in
-                        if isColorlessContainerMode {
-                            toggleColorlessFill(groupName)
-                        }
-                    },
-                    onScrollActivity: handleAppGridScrollActivity,
-                    onDragModeChange: { setAppDragMode($0) }
-                )
+                ZStack(alignment: .bottom) {
+                    AppGridCollectionView(
+                        groups: displayGroups,
+                        tagColors: tagColors,
+                        displayMode: displayMode,
+                        iconSize: iconSize,
+                        showNames: !hideAppNames,
+                        bubbleDisabled: appBubbleDisabled,
+                        showUncommonAppBubbles: showUncommonAppBubbles,
+                        highlightedGroupName: appGridHighlightedGroupName,
+                        bottomContentPadding: shouldShowUsageTips ? AppGridUsageTipsBar.reservedHeight : 0,
+                        contentRevision: groupLayoutVersion,
+                        scrollTargetID: appGridScrollTargetID,
+                        scrollRequestToken: appGridScrollRequestToken,
+                        onSelectApp: { app in openApp(app) },
+                        onBubbleHover: handleBubbleHover,
+                        onEditNote: beginEditingBubbleNote,
+                        onDropApp: { path, source, target, copy in
+                            dropApp(path: path, sourceTag: source, targetTag: target, copy: copy)
+                        },
+                        onDropOutsideGroup: { path, source, copy in
+                            dropAppOutsideGroup(path: path, sourceTag: source, copy: copy)
+                        },
+                        onReorderApps: { containerID, orderedPaths in
+                            reorderApps(inContainer: containerID, orderedPaths: orderedPaths)
+                        },
+                        onGroupActivate: { groupName in
+                            if isColorlessContainerMode {
+                                toggleColorlessFill(groupName)
+                            }
+                        },
+                        onScrollActivity: handleAppGridScrollActivity,
+                        onDragModeChange: { setAppDragMode($0) }
+                    )
+
+                    if shouldShowUsageTips {
+                        AppGridUsageTipsBar(
+                            tips: appGridUsageTips,
+                            selectedIndex: $selectedUsageTipIndex,
+                            dragModeActive: appGridInteraction.appDragModeActive
+                        )
+                        .zIndex(3)
+                    }
+                }
             }
         }
     }

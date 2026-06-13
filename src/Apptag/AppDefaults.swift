@@ -12,6 +12,7 @@ enum AppDefaults {
     static let showDockIcon = true
     static let launchAtLogin = true
     static let showUncommonAppBubbles = false
+    static let hideUsageTips = false
     static let useAppKitTagNavigation = true
 
     static func register() {
@@ -24,6 +25,7 @@ enum AppDefaults {
             "showDockIcon": showDockIcon,
             "launchAtLogin": launchAtLogin,
             "showUncommonAppBubbles": showUncommonAppBubbles,
+            "hideUsageTips": hideUsageTips,
             "useAppKitTagNavigation": useAppKitTagNavigation,
             "skipTagRemovalDropConfirm": false,
             "skipUncategorizedDropConfirm": false,
