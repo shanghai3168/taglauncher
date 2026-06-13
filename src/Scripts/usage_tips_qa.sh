@@ -86,9 +86,9 @@ require(
     "Usage tips must be implemented as a native AppKit NSView",
 )
 require(
-    r"enum\s+AppGridUsageTipsMetrics\s*\{(?P<body>.*?)static\s+let\s+reservedHeight\s*:\s*CGFloat\s*=\s*128",
+    r"enum\s+AppGridUsageTipsMetrics\s*\{(?P<body>.*?)static\s+let\s+barHeight\s*:\s*CGFloat\s*=\s*136(?P<body2>.*?)static\s+let\s+reservedHeight\s*:\s*CGFloat\s*=\s*176",
     app_grid,
-    "Usage tips overlay must reserve stable bottom space for the native HUD bar",
+    "Usage tips overlay must reserve a design-reviewed multi-line bottom space for the native HUD bar",
 )
 require(
     r"NSVisualEffectView\s*\(",
@@ -125,19 +125,34 @@ require(
     "Usage tips must ask the host to recompute width after localized text changes",
 )
 require(
-    r"availableTextWidth\s*=\s*max\s*\(\s*1\s*,\s*visualFrame\.maxX\s*-\s*titleX\s*-\s*titleDetailGap\s*-\s*trailingWidth\s*\)",
+    r"controlZoneWidth\s*:\s*CGFloat\s*=\s*176",
+    app_grid,
+    "Usage tips layout must reserve a fixed right-side control zone",
+)
+require(
+    r"availableTextWidth\s*=\s*max\s*\(\s*1\s*,\s*textRight\s*-\s*titleX\s*\)",
     app_grid,
     "Usage tips layout must allocate text from actual available AppGrid width",
 )
 require(
-    r"dotsView\.frame\s*=\s*NSRect\s*\((?P<body>.*?)x\s*:\s*buttonsGroupMinX\s*\+\s*\(buttonsWidth\s*-\s*dotsWidth\)\s*/\s*2(?P<body2>.*?)y\s*:\s*previousButton\.frame\.maxY\s*\+\s*6",
+    r"dotsView\.frame\s*=\s*NSRect\s*\((?P<body>.*?)x\s*:\s*buttonsGroupMinX\s*\+\s*\(buttonsWidth\s*-\s*dotsWidth\)\s*/\s*2(?P<body2>.*?)y\s*:\s*previousButton\.frame\.maxY\s*\+\s*buttonDotsGap",
     app_grid,
     "Usage tips page dots must sit centered below the previous/next arrow buttons",
 )
 require(
-    r"detailRight\s*=\s*previousButton\.frame\.minX\s*-\s*detailControlsGap",
+    r"detailRight\s*=\s*textRight",
     app_grid,
-    "Usage tips detail text must stop before the arrow controls when dots move below them",
+    "Usage tips detail text must stop before the fixed right-side arrow control zone",
+)
+require(
+    r"configureDetailLabel\s*\(\s*\)(?P<body>.*?)detailLabel\.lineBreakMode\s*=\s*\.byWordWrapping",
+    app_grid,
+    "Usage tip detail text must wrap naturally inside the reserved text column",
+)
+require(
+    r"detailLabel\.maximumNumberOfLines\s*=\s*2",
+    app_grid,
+    "Usage tip detail text must use the design-reviewed two-line body layout",
 )
 require(
     r"return\s+min\s*\(\s*maxAvailableWidth\s*,\s*preferredWidth\s*\)",
@@ -346,7 +361,12 @@ require(
 require(
     r"formattedTipDetail\s*\(_\s+text\s*:\s*String\s*\)",
     app_grid,
-    "Usage tips detail text must normalize > separators to -> for display",
+    "Usage tips detail text must normalize separators for display",
+)
+require(
+    r"replacingOccurrences\s*\(\s*of\s*:\s*\"\\\\s\*\(\?:-->\|->\|>\|→\|＞\)\\\\s\*\"\s*,\s*with\s*:\s*\"\\n\"",
+    app_grid,
+    "Usage tips detail text must convert -->, ->, and > separators into hard line breaks",
 )
 require(
     r"setUsageTipsBubbleDisabled\s*\(\s*inside\s*\)",

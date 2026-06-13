@@ -38,8 +38,8 @@ struct AppGridUsageTip: Equatable {
 }
 
 enum AppGridUsageTipsMetrics {
-    static let barHeight: CGFloat = 84
-    static let reservedHeight: CGFloat = 128
+    static let barHeight: CGFloat = 136
+    static let reservedHeight: CGFloat = 176
     static let bottomMargin: CGFloat = 20
     static let horizontalInset: CGFloat = 24
     static let minWidth: CGFloat = 640
@@ -943,44 +943,42 @@ private final class AppGridUsageTipsNSView: NSView {
         let paddingRight: CGFloat = 16
         let iconSize: CGFloat = 24
         let iconTextGap: CGFloat = 10
-        let titleDetailGap: CGFloat = 22
-        let detailControlsGap: CGFloat = 24
+        let controlZoneWidth: CGFloat = 176
         let buttonGap: CGFloat = 6
         let buttonSize: CGFloat = 48
+        let buttonDotsGap: CGFloat = 6
+        let dotsHeight: CGFloat = 10
         let dotsWidth = dotsView.preferredWidth
         let fullTitleWidth = ceil(titleLabel.attributedStringValue.size().width)
 
-        let centerY = visualFrame.midY
+        let titleX = visualFrame.minX + paddingLeft + iconSize + iconTextGap
+        let buttonsWidth = buttonSize * 2 + buttonGap
+        let buttonsGroupMinX = visualFrame.maxX - paddingRight - buttonsWidth
+        let textRight = visualFrame.maxX - controlZoneWidth
+        let availableTextWidth = max(1, textRight - titleX)
+        let titleWidth = min(fullTitleWidth, availableTextWidth)
+        let titleHeight: CGFloat = 32
+        let detailHeight: CGFloat = 68
+        let lineGap: CGFloat = 8
+        let textBlockHeight = titleHeight + lineGap + detailHeight
+        let textBlockY = visualFrame.minY + max(0, (visualFrame.height - textBlockHeight) / 2)
+
         iconView.frame = NSRect(
             x: visualFrame.minX + paddingLeft,
-            y: centerY - iconSize / 2,
+            y: visualFrame.midY - iconSize / 2,
             width: iconSize,
             height: iconSize
         )
 
-        let titleX = iconView.frame.maxX + iconTextGap
-        let buttonsWidth = buttonSize * 2 + buttonGap
-        let trailingWidth = paddingRight + buttonsWidth + detailControlsGap
-        let availableTextWidth = max(1, visualFrame.maxX - titleX - titleDetailGap - trailingWidth)
-        let minimumReadableDetailWidth: CGFloat = 220
-        let titleWidth: CGFloat
-        if availableTextWidth >= fullTitleWidth + minimumReadableDetailWidth {
-            titleWidth = fullTitleWidth
-        } else if availableTextWidth >= fullTitleWidth {
-            titleWidth = fullTitleWidth
-        } else {
-            titleWidth = max(1, availableTextWidth)
-        }
-
         titleLabel.frame = NSRect(
             x: titleX,
-            y: visualFrame.minY,
+            y: textBlockY,
             width: titleWidth,
-            height: visualFrame.height
+            height: titleHeight
         )
 
-        let buttonY = visualFrame.minY + 10
-        let buttonsGroupMinX = visualFrame.maxX - paddingRight - buttonsWidth
+        let controlGroupHeight = buttonSize + buttonDotsGap + dotsHeight
+        let buttonY = visualFrame.minY + max(0, (visualFrame.height - controlGroupHeight) / 2)
         nextButton.frame = NSRect(
             x: buttonsGroupMinX + buttonSize + buttonGap,
             y: buttonY,
@@ -995,18 +993,18 @@ private final class AppGridUsageTipsNSView: NSView {
         )
         dotsView.frame = NSRect(
             x: buttonsGroupMinX + (buttonsWidth - dotsWidth) / 2,
-            y: previousButton.frame.maxY + 6,
+            y: previousButton.frame.maxY + buttonDotsGap,
             width: dotsWidth,
-            height: 10
+            height: dotsHeight
         )
 
-        let detailX = titleLabel.frame.maxX + titleDetailGap
-        let detailRight = previousButton.frame.minX - detailControlsGap
+        let detailX = titleX
+        let detailRight = textRight
         detailScrollView.frame = NSRect(
             x: detailX,
-            y: visualFrame.minY,
+            y: titleLabel.frame.maxY + lineGap,
             width: max(1, detailRight - detailX),
-            height: visualFrame.height
+            height: detailHeight
         )
         layoutDetailLabel()
     }
@@ -1048,10 +1046,10 @@ private final class AppGridUsageTipsNSView: NSView {
 
     func preferredWidth(maxAvailableWidth: CGFloat) -> CGFloat {
         let padding: CGFloat = 22 + 16
-        let fixedWidth: CGFloat = 24 + 10 + 22 + 24 + 48 + 6 + 48
+        let fixedWidth: CGFloat = 24 + 10 + 24 + 48 + 6 + 48
         let titleWidth = ceil(titleLabel.attributedStringValue.size().width)
-        let detailWidth = ceil(detailLabel.attributedStringValue.size().width)
-        let contentWidth = padding + fixedWidth + titleWidth + detailWidth
+        let detailWidth = measuredDetailLineWidth()
+        let contentWidth = padding + fixedWidth + max(titleWidth, detailWidth)
         let preferredWidth = max(AppGridUsageTipsMetrics.minWidth, contentWidth)
         return min(maxAvailableWidth, preferredWidth)
     }
@@ -1081,7 +1079,7 @@ private final class AppGridUsageTipsNSView: NSView {
         addSubview(iconView)
 
         configureLabel(titleLabel, font: titleFont, lineBreakMode: .byClipping)
-        configureLabel(detailLabel, font: detailFont, lineBreakMode: .byClipping)
+        configureDetailLabel()
 
         detailScrollView.drawsBackground = false
         detailScrollView.hasVerticalScroller = false
@@ -1112,6 +1110,19 @@ private final class AppGridUsageTipsNSView: NSView {
         label.lineBreakMode = lineBreakMode
         label.maximumNumberOfLines = 1
         label.font = font
+    }
+
+    private func configureDetailLabel() {
+        detailLabel.cell = NSTextFieldCell(textCell: "")
+        detailLabel.isEditable = false
+        detailLabel.isSelectable = false
+        detailLabel.drawsBackground = false
+        detailLabel.isBordered = false
+        detailLabel.lineBreakMode = .byWordWrapping
+        detailLabel.maximumNumberOfLines = 2
+        detailLabel.font = detailFont
+        detailLabel.cell?.usesSingleLineMode = false
+        detailLabel.cell?.wraps = true
     }
 
     private func claimInteractionFocus() {
@@ -1180,9 +1191,17 @@ private final class AppGridUsageTipsNSView: NSView {
     }
 
     private func layoutDetailLabel() {
-        let textWidth = detailLabel.attributedStringValue.size().width
-        let width = max(detailScrollView.contentView.bounds.width, ceil(textWidth) + 18)
+        let width = max(1, detailScrollView.contentView.bounds.width)
+        detailLabel.preferredMaxLayoutWidth = width
         detailLabel.frame = NSRect(x: 0, y: 0, width: width, height: detailScrollView.bounds.height)
+    }
+
+    private func measuredDetailLineWidth() -> CGFloat {
+        let attributes: [NSAttributedString.Key: Any] = [.font: detailFont]
+        let lineWidths = detailLabel.stringValue
+            .components(separatedBy: .newlines)
+            .map { NSAttributedString(string: $0, attributes: attributes).size().width }
+        return ceil(lineWidths.max() ?? detailLabel.attributedStringValue.size().width)
     }
 
     private func currentVisualFrame() -> NSRect {
@@ -1198,8 +1217,10 @@ private final class AppGridUsageTipsNSView: NSView {
 
     private func formattedTipDetail(_ text: String) -> String {
         text
-            .replacingOccurrences(of: " > ", with: " -> ")
-            .replacingOccurrences(of: ">", with: "->")
+            .replacingOccurrences(of: "\\s*(?:-->|->|>|→|＞)\\s*", with: "\n", options: .regularExpression)
+            .replacingOccurrences(of: "[ \\t]{2,}", with: " ", options: .regularExpression)
+            .replacingOccurrences(of: "\\n{2,}", with: "\n", options: .regularExpression)
+            .trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     private func updateColors() {
