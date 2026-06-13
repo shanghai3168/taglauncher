@@ -944,8 +944,7 @@ private final class AppGridUsageTipsNSView: NSView {
         let iconSize: CGFloat = 24
         let iconTextGap: CGFloat = 10
         let titleDetailGap: CGFloat = 22
-        let detailDotsGap: CGFloat = 24
-        let dotsButtonGap: CGFloat = 16
+        let detailControlsGap: CGFloat = 24
         let buttonGap: CGFloat = 6
         let buttonSize: CGFloat = 48
         let dotsWidth = dotsView.preferredWidth
@@ -961,7 +960,7 @@ private final class AppGridUsageTipsNSView: NSView {
 
         let titleX = iconView.frame.maxX + iconTextGap
         let buttonsWidth = buttonSize * 2 + buttonGap
-        let trailingWidth = paddingRight + buttonsWidth + dotsButtonGap + dotsWidth + detailDotsGap
+        let trailingWidth = paddingRight + buttonsWidth + detailControlsGap
         let availableTextWidth = max(1, visualFrame.maxX - titleX - titleDetailGap - trailingWidth)
         let minimumReadableDetailWidth: CGFloat = 220
         let titleWidth: CGFloat
@@ -980,28 +979,29 @@ private final class AppGridUsageTipsNSView: NSView {
             height: visualFrame.height
         )
 
-        let buttonY = centerY - buttonSize / 2
+        let buttonY = visualFrame.minY + 10
+        let buttonsGroupMinX = visualFrame.maxX - paddingRight - buttonsWidth
         nextButton.frame = NSRect(
-            x: visualFrame.maxX - paddingRight - buttonSize,
+            x: buttonsGroupMinX + buttonSize + buttonGap,
             y: buttonY,
             width: buttonSize,
             height: buttonSize
         )
         previousButton.frame = NSRect(
-            x: nextButton.frame.minX - buttonGap - buttonSize,
+            x: buttonsGroupMinX,
             y: buttonY,
             width: buttonSize,
             height: buttonSize
         )
         dotsView.frame = NSRect(
-            x: previousButton.frame.minX - dotsButtonGap - dotsWidth,
-            y: centerY - 5,
+            x: buttonsGroupMinX + (buttonsWidth - dotsWidth) / 2,
+            y: previousButton.frame.maxY + 6,
             width: dotsWidth,
             height: 10
         )
 
         let detailX = titleLabel.frame.maxX + titleDetailGap
-        let detailRight = dotsView.frame.minX - detailDotsGap
+        let detailRight = previousButton.frame.minX - detailControlsGap
         detailScrollView.frame = NSRect(
             x: detailX,
             y: visualFrame.minY,
@@ -1048,11 +1048,10 @@ private final class AppGridUsageTipsNSView: NSView {
 
     func preferredWidth(maxAvailableWidth: CGFloat) -> CGFloat {
         let padding: CGFloat = 22 + 16
-        let fixedWidth: CGFloat = 24 + 10 + 22 + 24 + 16 + 48 + 6 + 48
-        let dotsWidth = dotsView.preferredWidth
+        let fixedWidth: CGFloat = 24 + 10 + 22 + 24 + 48 + 6 + 48
         let titleWidth = ceil(titleLabel.attributedStringValue.size().width)
         let detailWidth = ceil(detailLabel.attributedStringValue.size().width)
-        let contentWidth = padding + fixedWidth + dotsWidth + titleWidth + detailWidth
+        let contentWidth = padding + fixedWidth + titleWidth + detailWidth
         let preferredWidth = max(AppGridUsageTipsMetrics.minWidth, contentWidth)
         return min(maxAvailableWidth, preferredWidth)
     }

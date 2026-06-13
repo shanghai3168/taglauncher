@@ -130,6 +130,16 @@ require(
     "Usage tips layout must allocate text from actual available AppGrid width",
 )
 require(
+    r"dotsView\.frame\s*=\s*NSRect\s*\((?P<body>.*?)x\s*:\s*buttonsGroupMinX\s*\+\s*\(buttonsWidth\s*-\s*dotsWidth\)\s*/\s*2(?P<body2>.*?)y\s*:\s*previousButton\.frame\.maxY\s*\+\s*6",
+    app_grid,
+    "Usage tips page dots must sit centered below the previous/next arrow buttons",
+)
+require(
+    r"detailRight\s*=\s*previousButton\.frame\.minX\s*-\s*detailControlsGap",
+    app_grid,
+    "Usage tips detail text must stop before the arrow controls when dots move below them",
+)
+require(
     r"return\s+min\s*\(\s*maxAvailableWidth\s*,\s*preferredWidth\s*\)",
     app_grid,
     "Usage tips preferred width must expand up to available AppGrid width for long localizations",
