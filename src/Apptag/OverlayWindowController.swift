@@ -180,6 +180,12 @@ final class OverlayWindowController {
 
     func hide(force: Bool = false, discardWindow: Bool = false) {
         guard force || dependencies.canHideOverlay() else { return }
+        Diagnostics.log("overlay.hide", [
+            "force": force,
+            "discardWindow": discardWindow,
+            "hasWindow": window != nil,
+            "isVisible": window?.isVisible == true
+        ])
         generation &+= 1
         dependencies.onWillHide()
         if let settingsWindow = dependencies.settingsWindow(), settingsWindow.parent == window {

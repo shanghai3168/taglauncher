@@ -1751,7 +1751,13 @@ final class DismissibleHostingView<Content: View>: NSHostingView<Content> {
             super.mouseDown(with: event)
             return
         }
+        if routeUsageTipsMouseDownIfNeeded(event) {
+            return
+        }
         if hit == self {
+            if shouldSwallowUsageTipsBackdropClick(at: location) {
+                return
+            }
             if quickSearchSuppressesBackdropDismiss {
                 NotificationCenter.default.post(
                     name: .tagLauncherQuickSearchDismissRequested,
@@ -1784,6 +1790,32 @@ final class DismissibleHostingView<Content: View>: NSHostingView<Content> {
             return
         }
         super.mouseDown(with: event)
+    }
+
+    private func routeUsageTipsMouseDownIfNeeded(_ event: NSEvent) -> Bool {
+        guard let appGridHost = findAppGridCollectionHost(in: self) else { return false }
+        return appGridHost.handleUsageTipsMouseDown(event)
+    }
+
+    private func findAppGridCollectionHost(in view: NSView) -> AppGridCollectionHostView? {
+        if let host = view as? AppGridCollectionHostView {
+            return host
+        }
+        for subview in view.subviews {
+            if let host = findAppGridCollectionHost(in: subview) {
+                return host
+            }
+        }
+        return nil
+    }
+
+    private func shouldSwallowUsageTipsBackdropClick(at location: NSPoint) -> Bool {
+        guard !UserDefaults.standard.bool(forKey: "hideUsageTips") else { return false }
+        let height = min(bounds.height, AppGridUsageTipsMetrics.reservedHeight)
+        guard height > 0 else { return false }
+        let y = isFlipped ? max(0, bounds.height - height) : 0
+        let region = NSRect(x: 0, y: y, width: bounds.width, height: height)
+        return region.contains(location)
     }
 
     private func observeBackdropDismissSuppressionChanges() {

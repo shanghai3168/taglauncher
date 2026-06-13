@@ -1,5 +1,6 @@
 import SwiftUI
 import AppKit
+import Carbon.HIToolbox
 
 fileprivate enum AppGridCollectionDisplayMode: Equatable {
     case flat
@@ -37,10 +38,11 @@ struct AppGridUsageTip: Equatable {
 }
 
 enum AppGridUsageTipsMetrics {
-    static let barHeight: CGFloat = 68
-    static let reservedHeight: CGFloat = 104
-    static let bottomMargin: CGFloat = 18
-    static let horizontalInset: CGFloat = AppGridCollectionMetrics.outerPadding
+    static let barHeight: CGFloat = 84
+    static let reservedHeight: CGFloat = 128
+    static let bottomMargin: CGFloat = 20
+    static let horizontalInset: CGFloat = 24
+    static let minWidth: CGFloat = 640
 }
 
 struct AppGridCollectionView: NSViewRepresentable {
@@ -432,6 +434,7 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
     private let scrollView = AppGridScrollView()
     private let collectionView = NSCollectionView()
     private let gridLayout = AppGridContainerCollectionLayout()
+    private let usageTipsShieldView = AppGridUsageTipsShieldView()
     private let usageTipsView = AppGridUsageTipsNSView()
     private weak var coordinator: AppGridCollectionView.Coordinator?
     private var scrollObserver: NSObjectProtocol?
@@ -439,6 +442,8 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
     private var lastReportedBoundsOrigin: NSPoint?
     private var scrollUnfreezeWorkItem: DispatchWorkItem?
     private var scrollActivityIsActive = false
+    private var usageTipsEventRegionIsClaimed = false
+    private var usageTipsMouseMonitor: Any?
 
     override var isFlipped: Bool { true }
 
@@ -456,6 +461,7 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
         if let scrollObserver {
             NotificationCenter.default.removeObserver(scrollObserver)
         }
+        removeUsageTipsMouseMonitor()
         scrollUnfreezeWorkItem?.cancel()
         coordinator?.cancelAppIconDrag()
         AppDragCoordinator.shared.unregisterEmptyDropTarget(id: emptyDropTargetID)
@@ -508,12 +514,23 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
     override func viewDidMoveToWindow() {
         super.viewDidMoveToWindow()
         if window == nil {
+            removeUsageTipsMouseMonitor()
             AppDragCoordinator.shared.cancelDrag()
             coordinator?.cancelAppIconDrag()
             AppDragCoordinator.shared.unregisterEmptyDropTarget(id: emptyDropTargetID)
         } else {
+            installUsageTipsMouseMonitor()
             AppDragCoordinator.shared.registerEmptyDropTarget(id: emptyDropTargetID, view: self)
         }
+    }
+
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        if !usageTipsView.isHidden,
+           usageTipsView.frame.contains(point) {
+            let tipsPoint = usageTipsView.convert(point, from: self)
+            return usageTipsView.hitTest(tipsPoint) ?? usageTipsView
+        }
+        return super.hitTest(point)
     }
 
     func performEmptyDrop(path: String, source: String, screenPoint: NSPoint, copy: Bool) {
@@ -552,8 +569,16 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
         scrollView.borderType = .noBorder
         scrollView.documentView = collectionView
         addSubview(scrollView)
+        usageTipsShieldView.isHidden = true
+        usageTipsShieldView.onClaim = { [weak self] in
+            self?.claimUsageTipsEventRegion()
+        }
+        usageTipsShieldView.onRelease = { [weak self] in
+            self?.releaseUsageTipsEventRegion()
+        }
         usageTipsView.isHidden = true
-        addSubview(usageTipsView)
+        addSubview(usageTipsShieldView, positioned: .above, relativeTo: scrollView)
+        addSubview(usageTipsView, positioned: .above, relativeTo: usageTipsShieldView)
 
         scrollView.contentView.postsBoundsChangedNotifications = true
         scrollObserver = NotificationCenter.default.addObserver(
@@ -573,17 +598,63 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
               coordinator.usageTipsVisible
         else {
             usageTipsView.isHidden = true
+            usageTipsShieldView.isHidden = true
             usageTipsView.clearHoverState()
+            releaseUsageTipsEventRegion()
             usageTipsView.frame = .zero
+            usageTipsShieldView.frame = .zero
             return
         }
 
         let inset = min(AppGridUsageTipsMetrics.horizontalInset, max(0, bounds.width / 4))
-        let width = max(1, bounds.width - inset * 2)
+        let availableWidth = max(1, bounds.width - inset * 2)
+        let width = usageTipsView.preferredWidth(maxAvailableWidth: availableWidth)
         let height = AppGridUsageTipsMetrics.barHeight
-        let y = max(0, bounds.height - AppGridUsageTipsMetrics.bottomMargin - height)
+        usageTipsShieldView.isHidden = false
+        usageTipsShieldView.frame = usageTipsEventRegion()
+        usageTipsView.configureVisualLayout(
+            width: width,
+            height: height,
+            bottomMargin: AppGridUsageTipsMetrics.bottomMargin
+        )
         usageTipsView.isHidden = false
-        usageTipsView.frame = NSRect(x: inset, y: y, width: width, height: height)
+        usageTipsView.frame = usageTipsEventRegion()
+    }
+
+    fileprivate func relayoutUsageTipsAfterContentChange() {
+        positionUsageTipsView()
+        usageTipsView.needsLayout = true
+    }
+
+    private func usageTipsEventRegion() -> NSRect {
+        guard let coordinator,
+              coordinator.usageTipsVisible
+        else { return .zero }
+        let height = min(bounds.height, AppGridUsageTipsMetrics.reservedHeight)
+        return NSRect(
+            x: 0,
+            y: max(0, bounds.height - height),
+            width: bounds.width,
+            height: height
+        )
+    }
+
+    private func claimUsageTipsEventRegion() {
+        usageTipsEventRegionIsClaimed = true
+        window?.makeFirstResponder(usageTipsView)
+        if coordinator?.setUsageTipsBubbleDisabled(true) == true {
+            refreshVisibleRuntimeState()
+        }
+        coordinator?.onUsageTipsHoverChange(true)
+    }
+
+    private func releaseUsageTipsEventRegion() {
+        guard usageTipsEventRegionIsClaimed else { return }
+        usageTipsEventRegionIsClaimed = false
+        if coordinator?.setUsageTipsBubbleDisabled(false) == true {
+            refreshVisibleRuntimeState()
+        }
+        coordinator?.onUsageTipsHoverChange(false)
     }
 
     private func handleScrollActivity() {
@@ -623,6 +694,58 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
         refreshVisibleRuntimeState()
     }
 
+    func handleUsageTipsMouseDown(_ event: NSEvent) -> Bool {
+        handleUsageTipsMouseEvent(event, triggerButtons: true)
+    }
+
+    private func handleUsageTipsMouseEvent(_ event: NSEvent, triggerButtons: Bool) -> Bool {
+        let point = usageTipsHostPoint(for: event)
+        guard !usageTipsView.isHidden,
+              usageTipsView.frame.contains(point)
+        else { return false }
+
+        return usageTipsView.handleMouseEventFromHost(event, triggerButtons: triggerButtons)
+    }
+
+    private func installUsageTipsMouseMonitor() {
+        guard usageTipsMouseMonitor == nil else { return }
+        usageTipsMouseMonitor = NSEvent.addLocalMonitorForEvents(
+            matching: [
+                .leftMouseDown,
+                .leftMouseUp,
+                .rightMouseDown,
+                .rightMouseUp,
+                .otherMouseDown,
+                .otherMouseUp
+            ]
+        ) { [weak self] event in
+            guard let self,
+                  self.window != nil,
+                  self.handleUsageTipsMouseEvent(
+                    event,
+                    triggerButtons: event.type == .leftMouseDown
+                  )
+            else { return event }
+            return nil
+        }
+    }
+
+    private func usageTipsHostPoint(for event: NSEvent) -> NSPoint {
+        if event.window === window {
+            return convert(event.locationInWindow, from: nil)
+        }
+        guard let window else { return .zero }
+        let windowPoint = window.convertPoint(fromScreen: NSEvent.mouseLocation)
+        return convert(windowPoint, from: nil)
+    }
+
+    private func removeUsageTipsMouseMonitor() {
+        if let usageTipsMouseMonitor {
+            NSEvent.removeMonitor(usageTipsMouseMonitor)
+            self.usageTipsMouseMonitor = nil
+        }
+    }
+
     private func replayPointerHover() {
         guard let window else { return }
         let windowPoint = window.convertPoint(fromScreen: NSEvent.mouseLocation)
@@ -645,22 +768,80 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
     }
 }
 
+private final class AppGridUsageTipsShieldView: NSView {
+    var onClaim: (() -> Void)?
+    var onRelease: (() -> Void)?
+
+    private var trackingAreaRef: NSTrackingArea?
+
+    override var isFlipped: Bool { true }
+    override var acceptsFirstResponder: Bool { false }
+    override var mouseDownCanMoveWindow: Bool { false }
+
+    override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
+        true
+    }
+
+    override func updateTrackingAreas() {
+        super.updateTrackingAreas()
+        if let trackingAreaRef {
+            removeTrackingArea(trackingAreaRef)
+        }
+        let area = NSTrackingArea(
+            rect: .zero,
+            options: [.mouseEnteredAndExited, .mouseMoved, .activeAlways, .inVisibleRect],
+            owner: self,
+            userInfo: nil
+        )
+        addTrackingArea(area)
+        trackingAreaRef = area
+    }
+
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        guard !isHidden, bounds.contains(point) else { return nil }
+        onClaim?()
+        return self
+    }
+
+    override func mouseEntered(with event: NSEvent) { onClaim?() }
+    override func mouseMoved(with event: NSEvent) { onClaim?() }
+    override func mouseDragged(with event: NSEvent) { onClaim?() }
+    override func mouseExited(with event: NSEvent) { onRelease?() }
+    override func mouseDown(with event: NSEvent) {
+        Diagnostics.log("usageTips.shield.mouseDown")
+        onClaim?()
+    }
+    override func mouseUp(with event: NSEvent) {}
+    override func rightMouseDown(with event: NSEvent) { onClaim?() }
+    override func rightMouseUp(with event: NSEvent) {}
+    override func otherMouseDown(with event: NSEvent) { onClaim?() }
+    override func otherMouseUp(with event: NSEvent) {}
+    override func scrollWheel(with event: NSEvent) { onClaim?() }
+}
+
 private final class AppGridUsageTipsNSView: NSView {
     weak var coordinator: AppGridCollectionView.Coordinator?
 
-    private let titleBackgroundView = NSView()
+    private let backgroundView = NSVisualEffectView()
+    private let iconView = AppGridDecorativeImageView()
     private let titleLabel = NSTextField(labelWithString: "")
     private let detailScrollView = NSScrollView()
     private let detailLabel = NSTextField(labelWithString: "")
-    private let controlsView = NSView()
     private let previousButton = AppGridUsageTipIconButton(systemImage: "chevron.left")
     private let nextButton = AppGridUsageTipIconButton(systemImage: "chevron.right")
     private let dotsView = AppGridUsageTipDotsView()
     private var trackingAreaRef: NSTrackingArea?
     private var isPointerInside = false
+    private var visualWidth: CGFloat = AppGridUsageTipsMetrics.minWidth
+    private var visualHeight: CGFloat = AppGridUsageTipsMetrics.barHeight
+    private var visualBottomMargin: CGFloat = AppGridUsageTipsMetrics.bottomMargin
+
+    private let titleFont = NSFont.systemFont(ofSize: 24, weight: .semibold)
+    private let detailFont = NSFont.systemFont(ofSize: 24, weight: .regular)
 
     override var isFlipped: Bool { true }
-    override var acceptsFirstResponder: Bool { false }
+    override var acceptsFirstResponder: Bool { true }
+    override var mouseDownCanMoveWindow: Bool { false }
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -670,6 +851,10 @@ private final class AppGridUsageTipsNSView: NSView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setup()
+    }
+
+    override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
+        true
     }
 
     override func viewDidMoveToWindow() {
@@ -686,7 +871,7 @@ private final class AppGridUsageTipsNSView: NSView {
         }
         let area = NSTrackingArea(
             rect: .zero,
-            options: [.mouseEnteredAndExited, .activeAlways, .inVisibleRect],
+            options: [.mouseEnteredAndExited, .mouseMoved, .activeAlways, .inVisibleRect],
             owner: self,
             userInfo: nil
         )
@@ -696,11 +881,20 @@ private final class AppGridUsageTipsNSView: NSView {
 
     override func hitTest(_ point: NSPoint) -> NSView? {
         guard !isHidden, bounds.contains(point) else { return nil }
-        return super.hitTest(point) ?? self
+        setPointerInside(true)
+        let hitView = super.hitTest(point)
+        if hitView == nil || hitView === backgroundView || hitView?.isDescendant(of: backgroundView) == true {
+            return self
+        }
+        return hitView
     }
 
     override func mouseEntered(with event: NSEvent) {
-        setPointerInside(true)
+        claimInteractionFocus()
+    }
+
+    override func mouseMoved(with event: NSEvent) {
+        claimInteractionFocus()
     }
 
     override func mouseExited(with event: NSEvent) {
@@ -708,12 +902,33 @@ private final class AppGridUsageTipsNSView: NSView {
     }
 
     override func mouseDown(with event: NSEvent) {
-        window?.makeKeyAndOrderFront(nil)
+        Diagnostics.log("usageTips.hud.mouseDown")
+        if routeButtonClickIfNeeded(event) {
+            return
+        }
+        claimInteractionFocus()
+    }
+
+    override func mouseDragged(with event: NSEvent) {
+        claimInteractionFocus()
     }
 
     override func mouseUp(with event: NSEvent) {}
-    override func rightMouseDown(with event: NSEvent) {}
+    override func rightMouseDown(with event: NSEvent) { claimInteractionFocus() }
     override func rightMouseUp(with event: NSEvent) {}
+    override func otherMouseDown(with event: NSEvent) { claimInteractionFocus() }
+    override func otherMouseUp(with event: NSEvent) {}
+
+    override func keyDown(with event: NSEvent) {
+        switch Int(event.keyCode) {
+        case kVK_LeftArrow:
+            selectUsageTip(offset: -1)
+        case kVK_RightArrow:
+            selectUsageTip(offset: 1)
+        default:
+            super.keyDown(with: event)
+        }
+    }
 
     override func scrollWheel(with event: NSEvent) {
         detailScrollView.scrollWheel(with: event)
@@ -721,21 +936,78 @@ private final class AppGridUsageTipsNSView: NSView {
 
     override func layout() {
         super.layout()
-        let titleWidth = min(320, max(240, bounds.width * 0.24))
-        let controlsWidth: CGFloat = 120
-        let detailWidth = max(1, bounds.width - titleWidth - controlsWidth)
+        let visualFrame = currentVisualFrame()
+        backgroundView.frame = visualFrame
 
-        titleBackgroundView.frame = NSRect(x: 0, y: 0, width: titleWidth, height: bounds.height)
-        titleLabel.frame = titleBackgroundView.bounds.insetBy(dx: 18, dy: 0)
-        detailScrollView.frame = NSRect(x: titleWidth, y: 0, width: detailWidth, height: bounds.height)
-        controlsView.frame = NSRect(x: titleWidth + detailWidth, y: 0, width: controlsWidth, height: bounds.height)
+        let paddingLeft: CGFloat = 22
+        let paddingRight: CGFloat = 16
+        let iconSize: CGFloat = 24
+        let iconTextGap: CGFloat = 10
+        let titleDetailGap: CGFloat = 22
+        let detailDotsGap: CGFloat = 24
+        let dotsButtonGap: CGFloat = 16
+        let buttonGap: CGFloat = 6
+        let buttonSize: CGFloat = 48
+        let dotsWidth = dotsView.preferredWidth
+        let fullTitleWidth = ceil(titleLabel.attributedStringValue.size().width)
 
-        let buttonSize: CGFloat = 34
-        let buttonY: CGFloat = 9
-        previousButton.frame = NSRect(x: 22, y: buttonY, width: buttonSize, height: buttonSize)
-        nextButton.frame = NSRect(x: 64, y: buttonY, width: buttonSize, height: buttonSize)
-        dotsView.frame = NSRect(x: 18, y: 48, width: controlsWidth - 36, height: 10)
+        let centerY = visualFrame.midY
+        iconView.frame = NSRect(
+            x: visualFrame.minX + paddingLeft,
+            y: centerY - iconSize / 2,
+            width: iconSize,
+            height: iconSize
+        )
 
+        let titleX = iconView.frame.maxX + iconTextGap
+        let buttonsWidth = buttonSize * 2 + buttonGap
+        let trailingWidth = paddingRight + buttonsWidth + dotsButtonGap + dotsWidth + detailDotsGap
+        let availableTextWidth = max(1, visualFrame.maxX - titleX - titleDetailGap - trailingWidth)
+        let minimumReadableDetailWidth: CGFloat = 220
+        let titleWidth: CGFloat
+        if availableTextWidth >= fullTitleWidth + minimumReadableDetailWidth {
+            titleWidth = fullTitleWidth
+        } else if availableTextWidth >= fullTitleWidth {
+            titleWidth = fullTitleWidth
+        } else {
+            titleWidth = max(1, availableTextWidth)
+        }
+
+        titleLabel.frame = NSRect(
+            x: titleX,
+            y: visualFrame.minY,
+            width: titleWidth,
+            height: visualFrame.height
+        )
+
+        let buttonY = centerY - buttonSize / 2
+        nextButton.frame = NSRect(
+            x: visualFrame.maxX - paddingRight - buttonSize,
+            y: buttonY,
+            width: buttonSize,
+            height: buttonSize
+        )
+        previousButton.frame = NSRect(
+            x: nextButton.frame.minX - buttonGap - buttonSize,
+            y: buttonY,
+            width: buttonSize,
+            height: buttonSize
+        )
+        dotsView.frame = NSRect(
+            x: previousButton.frame.minX - dotsButtonGap - dotsWidth,
+            y: centerY - 5,
+            width: dotsWidth,
+            height: 10
+        )
+
+        let detailX = titleLabel.frame.maxX + titleDetailGap
+        let detailRight = dotsView.frame.minX - detailDotsGap
+        detailScrollView.frame = NSRect(
+            x: detailX,
+            y: visualFrame.minY,
+            width: max(1, detailRight - detailX),
+            height: visualFrame.height
+        )
         layoutDetailLabel()
     }
 
@@ -753,12 +1025,13 @@ private final class AppGridUsageTipsNSView: NSView {
         let safeIndex = min(max(0, coordinator.selectedUsageTipIndex), coordinator.usageTips.count - 1)
         let tip = coordinator.usageTips[safeIndex]
         titleLabel.stringValue = tr(tip.titleKey)
-        detailLabel.stringValue = tr(tip.detailKey)
-        previousButton.accessibilityLabel = tr("usageTips.previous")
-        nextButton.accessibilityLabel = tr("usageTips.next")
+        detailLabel.stringValue = formattedTipDetail(tr(tip.detailKey))
+        previousButton.buttonAccessibilityLabel = tr("usageTips.previous")
+        nextButton.buttonAccessibilityLabel = tr("usageTips.next")
         dotsView.configure(count: coordinator.usageTips.count, selectedIndex: safeIndex)
         updateColors()
-        layoutDetailLabel()
+        needsLayout = true
+        enclosingHostView?.relayoutUsageTipsAfterContentChange()
     }
 
     func clearHoverState() {
@@ -766,29 +1039,50 @@ private final class AppGridUsageTipsNSView: NSView {
         setPointerInside(false)
     }
 
+    func configureVisualLayout(width: CGFloat, height: CGFloat, bottomMargin: CGFloat) {
+        visualWidth = max(1, width)
+        visualHeight = max(1, height)
+        visualBottomMargin = max(0, bottomMargin)
+        needsLayout = true
+    }
+
+    func preferredWidth(maxAvailableWidth: CGFloat) -> CGFloat {
+        let padding: CGFloat = 22 + 16
+        let fixedWidth: CGFloat = 24 + 10 + 22 + 24 + 16 + 48 + 6 + 48
+        let dotsWidth = dotsView.preferredWidth
+        let titleWidth = ceil(titleLabel.attributedStringValue.size().width)
+        let detailWidth = ceil(detailLabel.attributedStringValue.size().width)
+        let contentWidth = padding + fixedWidth + dotsWidth + titleWidth + detailWidth
+        let preferredWidth = max(AppGridUsageTipsMetrics.minWidth, contentWidth)
+        return min(maxAvailableWidth, preferredWidth)
+    }
+
     private func setup() {
         wantsLayer = true
-        layer?.cornerRadius = 8
-        layer?.masksToBounds = true
+        layer?.shadowColor = NSColor.black.cgColor
+        layer?.shadowOpacity = 0.14
+        layer?.shadowRadius = 12
+        layer?.shadowOffset = NSSize(width: 0, height: -2)
 
-        titleBackgroundView.wantsLayer = true
-        controlsView.wantsLayer = true
+        backgroundView.material = .popover
+        backgroundView.blendingMode = .withinWindow
+        backgroundView.state = .active
+        backgroundView.wantsLayer = true
+        backgroundView.layer?.cornerRadius = 10
+        backgroundView.layer?.masksToBounds = true
+        backgroundView.layer?.borderWidth = 1
+        addSubview(backgroundView)
 
-        titleLabel.isEditable = false
-        titleLabel.isSelectable = false
-        titleLabel.drawsBackground = false
-        titleLabel.isBordered = false
-        titleLabel.lineBreakMode = .byTruncatingTail
-        titleLabel.maximumNumberOfLines = 1
-        titleLabel.font = NSFont.systemFont(ofSize: 24, weight: .bold)
+        let iconConfig = NSImage.SymbolConfiguration(pointSize: 24, weight: .semibold)
+        iconView.image = NSImage(
+            systemSymbolName: "lightbulb.fill",
+            accessibilityDescription: nil
+        )?.withSymbolConfiguration(iconConfig)
+        iconView.imageScaling = .scaleProportionallyDown
+        addSubview(iconView)
 
-        detailLabel.isEditable = false
-        detailLabel.isSelectable = false
-        detailLabel.drawsBackground = false
-        detailLabel.isBordered = false
-        detailLabel.lineBreakMode = .byClipping
-        detailLabel.maximumNumberOfLines = 1
-        detailLabel.font = NSFont.systemFont(ofSize: 24, weight: .bold)
+        configureLabel(titleLabel, font: titleFont, lineBreakMode: .byClipping)
+        configureLabel(detailLabel, font: detailFont, lineBreakMode: .byClipping)
 
         detailScrollView.drawsBackground = false
         detailScrollView.hasVerticalScroller = false
@@ -800,21 +1094,70 @@ private final class AppGridUsageTipsNSView: NSView {
         previousButton.action = { [weak self] in self?.selectUsageTip(offset: -1) }
         nextButton.action = { [weak self] in self?.selectUsageTip(offset: 1) }
 
-        addSubview(titleBackgroundView)
-        titleBackgroundView.addSubview(titleLabel)
+        addSubview(titleLabel)
         addSubview(detailScrollView)
-        addSubview(controlsView)
-        controlsView.addSubview(previousButton)
-        controlsView.addSubview(nextButton)
-        controlsView.addSubview(dotsView)
+        addSubview(dotsView)
+        addSubview(previousButton)
+        addSubview(nextButton)
 
         setAccessibilityRole(.group)
         updateColors()
     }
 
+    private func configureLabel(_ label: NSTextField, font: NSFont, lineBreakMode: NSLineBreakMode) {
+        label.cell = AppGridCenteredTextFieldCell(textCell: "")
+        label.isEditable = false
+        label.isSelectable = false
+        label.drawsBackground = false
+        label.isBordered = false
+        label.lineBreakMode = lineBreakMode
+        label.maximumNumberOfLines = 1
+        label.font = font
+    }
+
+    private func claimInteractionFocus() {
+        setPointerInside(true)
+        window?.makeFirstResponder(self)
+    }
+
+    func handleMouseEventFromHost(_ event: NSEvent, triggerButtons: Bool) -> Bool {
+        let point = usageTipsPoint(for: event)
+        guard bounds.contains(point) else { return false }
+        if triggerButtons, routeButtonClickIfNeeded(event) {
+            return true
+        }
+        claimInteractionFocus()
+        return true
+    }
+
     private func selectUsageTip(offset: Int) {
         coordinator?.selectUsageTip(offset: offset)
         applyCoordinatorState()
+    }
+
+    private func routeButtonClickIfNeeded(_ event: NSEvent) -> Bool {
+        let point = usageTipsPoint(for: event)
+        let hitOutset: CGFloat = 24
+        if nextButton.frame.insetBy(dx: -hitOutset, dy: -hitOutset).contains(point) {
+            Diagnostics.log("usageTips.hud.routedNext")
+            selectUsageTip(offset: 1)
+            return true
+        }
+        if previousButton.frame.insetBy(dx: -hitOutset, dy: -hitOutset).contains(point) {
+            Diagnostics.log("usageTips.hud.routedPrevious")
+            selectUsageTip(offset: -1)
+            return true
+        }
+        return false
+    }
+
+    private func usageTipsPoint(for event: NSEvent) -> NSPoint {
+        if event.window === window {
+            return convert(event.locationInWindow, from: nil)
+        }
+        guard let window else { return .zero }
+        let windowPoint = window.convertPoint(fromScreen: NSEvent.mouseLocation)
+        return convert(windowPoint, from: nil)
     }
 
     private func setPointerInside(_ inside: Bool) {
@@ -839,35 +1182,79 @@ private final class AppGridUsageTipsNSView: NSView {
 
     private func layoutDetailLabel() {
         let textWidth = detailLabel.attributedStringValue.size().width
-        let width = max(detailScrollView.contentView.bounds.width, ceil(textWidth) + 36)
-        detailLabel.frame = NSRect(x: 18, y: 0, width: width, height: bounds.height)
+        let width = max(detailScrollView.contentView.bounds.width, ceil(textWidth) + 18)
+        detailLabel.frame = NSRect(x: 0, y: 0, width: width, height: detailScrollView.bounds.height)
+    }
+
+    private func currentVisualFrame() -> NSRect {
+        let width = min(bounds.width, visualWidth)
+        let height = min(bounds.height, visualHeight)
+        return NSRect(
+            x: max(0, (bounds.width - width) / 2),
+            y: max(0, bounds.height - visualBottomMargin - height),
+            width: width,
+            height: height
+        )
+    }
+
+    private func formattedTipDetail(_ text: String) -> String {
+        text
+            .replacingOccurrences(of: " > ", with: " -> ")
+            .replacingOccurrences(of: ">", with: "->")
     }
 
     private func updateColors() {
-        layer?.backgroundColor = NSColor.black.withAlphaComponent(0.88).cgColor
-        layer?.borderColor = NSColor.labelColor.withAlphaComponent(0.18).cgColor
-        layer?.borderWidth = 1
-        titleBackgroundView.layer?.backgroundColor = NSColor.controlBackgroundColor.withAlphaComponent(0.96).cgColor
-        controlsView.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.88).cgColor
-        titleLabel.textColor = .labelColor
-        detailLabel.textColor = NSColor.white.withAlphaComponent(0.96)
+        backgroundView.layer?.borderColor = NSColor.separatorColor.withAlphaComponent(0.35).cgColor
+        iconView.contentTintColor = .systemYellow
+        titleLabel.textColor = .secondaryLabelColor
+        detailLabel.textColor = .labelColor
+        previousButton.tintColor = .labelColor
+        nextButton.tintColor = .labelColor
+        dotsView.needsDisplay = true
+    }
+}
+
+private final class AppGridCenteredTextFieldCell: NSTextFieldCell {
+    override func drawingRect(forBounds rect: NSRect) -> NSRect {
+        var drawingRect = super.drawingRect(forBounds: rect)
+        let textHeight = cellSize(forBounds: rect).height
+        drawingRect.origin.y = rect.origin.y + max(0, (rect.height - textHeight) / 2)
+        drawingRect.size.height = min(rect.height, textHeight + 2)
+        return drawingRect
+    }
+}
+
+private final class AppGridDecorativeImageView: NSImageView {
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        nil
+    }
+
+    override func isAccessibilityElement() -> Bool {
+        false
     }
 }
 
 private final class AppGridUsageTipIconButton: NSView {
     var action: (() -> Void)?
-    var accessibilityLabel: String = "" {
+    var buttonAccessibilityLabel: String = "" {
         didSet {
-            setAccessibilityLabel(accessibilityLabel)
+            setAccessibilityLabel(buttonAccessibilityLabel)
+        }
+    }
+    var tintColor: NSColor = .labelColor {
+        didSet {
+            imageView.contentTintColor = tintColor
         }
     }
 
-    private let imageView = NSImageView()
+    private let imageView = AppGridDecorativeImageView()
     private var trackingAreaRef: NSTrackingArea?
     private var isHovered = false
+    private var isPressed = false
 
     override var isFlipped: Bool { true }
     override var acceptsFirstResponder: Bool { false }
+    override var mouseDownCanMoveWindow: Bool { false }
 
     init(systemImage: String) {
         super.init(frame: .zero)
@@ -876,9 +1263,30 @@ private final class AppGridUsageTipIconButton: NSView {
 
     required init?(coder: NSCoder) { fatalError() }
 
+    override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
+        true
+    }
+
+    override func isAccessibilityElement() -> Bool {
+        true
+    }
+
+    override func accessibilityRole() -> NSAccessibility.Role? {
+        .button
+    }
+
+    override func accessibilityLabel() -> String? {
+        buttonAccessibilityLabel
+    }
+
+    override func accessibilityPerformPress() -> Bool {
+        action?()
+        return true
+    }
+
     override func layout() {
         super.layout()
-        let size: CGFloat = 24
+        let size: CGFloat = 26
         imageView.frame = NSRect(
             x: (bounds.width - size) / 2,
             y: (bounds.height - size) / 2,
@@ -913,28 +1321,38 @@ private final class AppGridUsageTipIconButton: NSView {
 
     override func mouseExited(with event: NSEvent) {
         isHovered = false
+        isPressed = false
         needsDisplay = true
     }
 
     override func mouseDown(with event: NSEvent) {
+        Diagnostics.log("usageTips.button.mouseDown", [
+            "label": buttonAccessibilityLabel
+        ])
+        isPressed = true
+        needsDisplay = true
         action?()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.10) { [weak self] in
+            self?.isPressed = false
+            self?.needsDisplay = true
+        }
     }
 
     override func draw(_ dirtyRect: NSRect) {
-        guard isHovered else { return }
-        NSColor.white.withAlphaComponent(0.12).setFill()
-        NSBezierPath(roundedRect: bounds.insetBy(dx: 1, dy: 1), xRadius: 7, yRadius: 7).fill()
+        guard isHovered || isPressed else { return }
+        tintColor.withAlphaComponent(isPressed ? 0.14 : 0.08).setFill()
+        NSBezierPath(roundedRect: bounds.insetBy(dx: 1, dy: 1), xRadius: 6, yRadius: 6).fill()
     }
 
     private func setup(systemImage: String) {
         wantsLayer = true
-        let config = NSImage.SymbolConfiguration(pointSize: 24, weight: .bold)
+        let config = NSImage.SymbolConfiguration(pointSize: 26, weight: .semibold)
         imageView.image = NSImage(
             systemSymbolName: systemImage,
             accessibilityDescription: nil
         )?.withSymbolConfiguration(config)
         imageView.imageScaling = .scaleProportionallyDown
-        imageView.contentTintColor = .white
+        imageView.contentTintColor = tintColor
         addSubview(imageView)
         setAccessibilityRole(.button)
     }
@@ -946,6 +1364,11 @@ private final class AppGridUsageTipDotsView: NSView {
 
     override var isFlipped: Bool { true }
 
+    var preferredWidth: CGFloat {
+        guard count > 0 else { return 0 }
+        return CGFloat(count) * 5 + CGFloat(max(0, count - 1)) * 5 + 2
+    }
+
     func configure(count: Int, selectedIndex: Int) {
         self.count = count
         self.selectedIndex = selectedIndex
@@ -954,21 +1377,25 @@ private final class AppGridUsageTipDotsView: NSView {
 
     override func draw(_ dirtyRect: NSRect) {
         guard count > 0 else { return }
-        let dotSize: CGFloat = 5
         let spacing: CGFloat = 5
-        let totalWidth = CGFloat(count) * dotSize + CGFloat(max(0, count - 1)) * spacing
+        let totalWidth = preferredWidth
         var x = (bounds.width - totalWidth) / 2
-        let y = (bounds.height - dotSize) / 2
+        let centerY = bounds.midY
 
         for index in 0..<count {
-            let color = index == selectedIndex
-                ? NSColor.controlAccentColor
-                : NSColor.white.withAlphaComponent(0.58)
+            let selected = index == selectedIndex
+            let dotSize: CGFloat = selected ? 6 : 5
+            let color = NSColor.labelColor.withAlphaComponent(selected ? 0.85 : 0.28)
             color.setFill()
             NSBezierPath(
-                ovalIn: NSRect(x: x, y: y, width: dotSize, height: dotSize)
+                ovalIn: NSRect(
+                    x: x,
+                    y: centerY - dotSize / 2,
+                    width: dotSize,
+                    height: dotSize
+                )
             ).fill()
-            x += dotSize + spacing
+            x += 5 + spacing
         }
     }
 }
