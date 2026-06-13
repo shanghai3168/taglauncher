@@ -821,6 +821,26 @@ enum AppIndexer {
             }
         }
 
+        for tagName in orderedTagDefinitionNames(
+            tagDefinitions: effectiveTagDefinitions,
+            tagOrder: tagOrder
+        ) {
+            let displayName = nameOverrides[tagName] ?? tagName
+            guard displayName != macCategory,
+                  displayName != defaultGroupName
+            else { continue }
+
+            if containerIDsByGroupName[displayName] == nil {
+                containerIDsByGroupName[displayName] = AppContainerID.forTag(
+                    tagName,
+                    definition: effectiveTagDefinitions[tagName]
+                )
+            }
+            if dict[displayName] == nil {
+                dict[displayName] = []
+            }
+        }
+
         // Build sort index from tagOrder: lower index = appears first
         var orderIndex: [String: Int] = [:]
         for (i, name) in tagOrder.enumerated() {
@@ -878,6 +898,18 @@ enum AppIndexer {
         let remaining = apps
             .filter { !orderedPaths.contains($0.path.path) }
             .sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+        return ordered + remaining
+    }
+
+    private static func orderedTagDefinitionNames(
+        tagDefinitions: [String: TagDatabase.TagDef],
+        tagOrder: [String]
+    ) -> [String] {
+        let ordered = tagOrder.filter { tagDefinitions[$0] != nil }
+        let orderedSet = Set(ordered)
+        let remaining = tagDefinitions.keys
+            .filter { !orderedSet.contains($0) }
+            .sorted()
         return ordered + remaining
     }
 

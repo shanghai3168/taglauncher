@@ -91,6 +91,10 @@ reset_uncategorized_func = extract_braced_block(
     r"\bstatic\s+func\s+resetAppTagAssignmentsToUncategorized\s*\(\s*\)\s*->\s*Store\b",
     "resetAppTagAssignmentsToUncategorized()",
 )
+app_indexer_group_func = extract_braced_block(
+    r"\bstatic\s+func\s+group\s*\(\s*apps\s*:\s*\[AppInfo\]",
+    "AppIndexer.group(apps:)",
+)
 content_drop_app_func = extract_braced_block(
     r"\bprivate\s+func\s+dropApp\s*\(\s*path\s*:\s*String\s*,\s*sourceTag\s*:\s*String\s*,\s*targetTag\s*:\s*String\s*,\s*copy\s*:\s*Bool\s*\)",
     "ContentView.dropApp(path:sourceTag:targetTag:copy:)",
@@ -155,6 +159,25 @@ require(
 require(
     r"normalizedContainerAppOrder\s*\([^)]*appTags\s*:\s*appTagsByPath\s*,\s*validAppPaths\s*:\s*validAppPaths",
     "AppIndexer.group must normalize display order against current visible app paths and memberships",
+)
+require(
+    r"\borderedTagDefinitionNames\s*\(\s*tagDefinitions\s*:\s*effectiveTagDefinitions\s*,\s*tagOrder\s*:\s*tagOrder\s*\)",
+    "AppIndexer.group must iterate stored tag definitions so empty tags remain visible",
+    app_indexer_group_func,
+)
+require(
+    r"containerIDsByGroupName\s*\[\s*displayName\s*\]\s*=\s*AppContainerID\.forTag\s*\(\s*tagName\s*,\s*definition\s*:\s*effectiveTagDefinitions\s*\[\s*tagName\s*\]\s*\)",
+    "AppIndexer.group must assign a stable container ID for empty tag groups",
+    app_indexer_group_func,
+)
+require(
+    r"if\s+dict\s*\[\s*displayName\s*\]\s*==\s*nil\s*\{\s*dict\s*\[\s*displayName\s*\]\s*=\s*\[\]\s*\}",
+    "AppIndexer.group must materialize empty tag groups instead of filtering them out",
+    app_indexer_group_func,
+)
+require(
+    r"\bprivate\s+static\s+func\s+orderedTagDefinitionNames\s*\(",
+    "AppIndexer must keep empty tag group insertion ordered and local to grouping logic",
 )
 require(
     r"\bstatic\s+func\s+normalizeContainerAppOrder\s*\(",
@@ -279,6 +302,6 @@ if new_fixture.get("containerAppOrder", {}).get("tag:Work") != [
 print(
     "PASS app ordering QA: Store decode/default, JSON roundtrip, "
     "fingerprint, import/export, backup/restore, SmartStart reset, "
-    "ContentView wiring, and AppGrid stable payload gates are present"
+    "empty tag groups, ContentView wiring, and AppGrid stable payload gates are present"
 )
 PY
