@@ -78,35 +78,101 @@ require(
     "General settings must expose a Hide usage tips toggle",
 )
 require(
-    r"\bprivate\s+struct\s+AppGridUsageTipsBar\s*:\s*View\b",
-    content_view,
-    "ContentView must define the app grid usage tips overlay",
+    r"\bprivate\s+final\s+class\s+AppGridUsageTipsNSView\s*:\s*NSView\b",
+    app_grid,
+    "Usage tips must be implemented as a native AppKit NSView",
 )
 require(
-    r"static\s+let\s+reservedHeight\s*:\s*CGFloat\s*=\s*64",
-    content_view,
-    "Usage tips overlay must reserve stable bottom space",
+    r"enum\s+AppGridUsageTipsMetrics\s*\{(?P<body>.*?)static\s+let\s+reservedHeight\s*:\s*CGFloat\s*=\s*104",
+    app_grid,
+    "Usage tips overlay must reserve stable bottom space for the larger native bar",
 )
 require(
-    r"ScrollView\s*\(\s*\.horizontal\s*,\s*showsIndicators\s*:\s*textHovered\s*\)",
-    content_view,
-    "Long localized tip text must be horizontally scrollable on hover",
+    r"detailScrollView\.hasHorizontalScroller\s*=\s*true",
+    app_grid,
+    "Long localized tip text must be horizontally scrollable in the native AppKit bar",
+)
+if len(re.findall(r"NSFont\.systemFont\s*\(\s*ofSize\s*:\s*24\s*,\s*weight\s*:\s*\.bold\s*\)", app_grid)) < 2:
+    fail("Usage tip title/detail fonts must use the larger 24pt native AppKit style")
+require(
+    r"override\s+func\s+scrollWheel\s*\(\s*with\s+event\s*:\s*NSEvent\s*\)\s*\{\s*detailScrollView\.scrollWheel\s*\(\s*with\s*:\s*event\s*\)",
+    app_grid,
+    "Usage tips must route wheel events to the native horizontal text scroller",
 )
 require(
-    r"\.onHover\s*\{\s*textHovered\s*=\s*\$0\s*\}",
-    content_view,
-    "Usage tip text must react to hover so long text can be inspected",
-)
-require(
-    r"bottomContentPadding\s*:\s*shouldShowUsageTips\s*\?\s*AppGridUsageTipsBar\.reservedHeight\s*:\s*0",
+    r"bottomContentPadding\s*:\s*shouldShowUsageTips\s*\?\s*AppGridUsageTipsMetrics\.reservedHeight\s*:\s*0",
     content_view,
     "AppGrid must reserve bottom content space when tips are visible",
 )
 require(
-    r"\.allowsHitTesting\s*\(\s*!dragModeActive\s*\)",
+    r"usageTipsVisible\s*:\s*shouldShowUsageTips",
     content_view,
-    "Usage tips overlay must stop intercepting drag/drop while app drag mode is active",
+    "ContentView must pass visibility into the native AppKit usage tips bar",
 )
+require(
+    r"selectedUsageTipIndex\s*:\s*\$selectedUsageTipIndex",
+    content_view,
+    "ContentView must bind usage tip selection to the native AppKit bar",
+)
+require(
+    r"override\s+func\s+hitTest\s*\(\s*_\s+point\s*:\s*NSPoint\s*\)\s*->\s*NSView\?\s*\{(?P<body>.*?)bounds\.contains\s*\(\s*point\s*\)",
+    app_grid,
+    "Native usage tips bar must own hit testing so clicks do not fall through to AppGrid",
+)
+require(
+    r"override\s+func\s+mouseDown\s*\(\s*with\s+event\s*:\s*NSEvent\s*\)",
+    app_grid,
+    "Native usage tips bar must swallow mouseDown events instead of letting clicks close the grid",
+)
+require(
+    r"private\s+final\s+class\s+AppGridUsageTipIconButton\s*:\s*NSView\b",
+    app_grid,
+    "Usage tip navigation controls must be native AppKit hit-testable views",
+)
+require(
+    r"func\s+selectUsageTip\s*\(\s*offset\s*:\s*Int\s*\)",
+    app_grid,
+    "Usage tip navigation must update the selected tip index from AppKit",
+)
+require(
+    r"previousButton\.action\s*=\s*\{\s*\[weak\s+self\]\s+in\s+self\?\.selectUsageTip\s*\(\s*offset\s*:\s*-1\s*\)\s*\}",
+    app_grid,
+    "Previous usage tip control must call the native selection handler",
+)
+require(
+    r"nextButton\.action\s*=\s*\{\s*\[weak\s+self\]\s+in\s+self\?\.selectUsageTip\s*\(\s*offset\s*:\s*1\s*\)\s*\}",
+    app_grid,
+    "Next usage tip control must call the native selection handler",
+)
+require(
+    r"override\s+func\s+mouseDown\s*\(\s*with\s+event\s*:\s*NSEvent\s*\)\s*\{\s*action\?\(\)\s*\}",
+    app_grid,
+    "Native usage tip icon buttons must invoke their action directly on mouseDown",
+)
+require(
+    r"onUsageTipIndexChange\s*\(\s*nextIndex\s*\)",
+    app_grid,
+    "Native usage tip selection must publish the new index back to SwiftUI state",
+)
+require(
+    r"setUsageTipsBubbleDisabled\s*\(\s*inside\s*\)",
+    app_grid,
+    "Hovering usage tips must suppress lower AppGrid bubbles",
+)
+require(
+    r"onUsageTipsHoverChange\s*\(\s*inside\s*\)",
+    app_grid,
+    "Hovering usage tips must notify ContentView to clear already visible SwiftUI bubbles",
+)
+require(
+    r"private\s+func\s+handleUsageTipsHoverChange\s*\(\s*_\s+hovering\s*:\s*Bool\s*\)",
+    content_view,
+    "ContentView must clear existing app bubbles while the native usage tips bar is hovered",
+)
+if re.search(r"AppGridUsageTipsBar\s*:\s*View|usageTipNavigationButton|ScrollView\s*\(\s*\.horizontal\s*,\s*showsIndicators\s*:\s*textHovered", content_view):
+    fail("usage tips must not be implemented with SwiftUI views in ContentView")
+if re.search(r"Text\s*\(\s*tr\s*\(\s*tip\.(?:titleKey|detailKey)", content_view):
+    fail("usage tip title/detail rendering must not use SwiftUI Text")
 require(
     r"let\s+bottomContentPadding\s*:\s*CGFloat",
     app_grid,

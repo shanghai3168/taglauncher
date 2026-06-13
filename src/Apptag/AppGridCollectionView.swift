@@ -27,6 +27,20 @@ fileprivate struct AppGridBubbleSuppressionReasons: OptionSet {
 
     static let externalInteraction = AppGridBubbleSuppressionReasons(rawValue: 1 << 0)
     static let scroll = AppGridBubbleSuppressionReasons(rawValue: 1 << 1)
+    static let usageTipsHover = AppGridBubbleSuppressionReasons(rawValue: 1 << 2)
+}
+
+struct AppGridUsageTip: Equatable {
+    let id: Int
+    let titleKey: String
+    let detailKey: String
+}
+
+enum AppGridUsageTipsMetrics {
+    static let barHeight: CGFloat = 68
+    static let reservedHeight: CGFloat = 104
+    static let bottomMargin: CGFloat = 18
+    static let horizontalInset: CGFloat = AppGridCollectionMetrics.outerPadding
 }
 
 struct AppGridCollectionView: NSViewRepresentable {
@@ -39,6 +53,9 @@ struct AppGridCollectionView: NSViewRepresentable {
     let showUncommonAppBubbles: Bool
     let highlightedGroupName: String?
     let bottomContentPadding: CGFloat
+    let usageTipsVisible: Bool
+    let usageTips: [AppGridUsageTip]
+    @Binding var selectedUsageTipIndex: Int
     let contentRevision: Int
     let scrollTargetID: String?
     let scrollRequestToken: Int
@@ -51,6 +68,7 @@ struct AppGridCollectionView: NSViewRepresentable {
     let onGroupActivate: (String) -> Void
     let onScrollActivity: () -> Void
     let onDragModeChange: (Bool) -> Void
+    let onUsageTipsHoverChange: (Bool) -> Void
 
     func makeCoordinator() -> Coordinator {
         Coordinator()
@@ -63,6 +81,7 @@ struct AppGridCollectionView: NSViewRepresentable {
     }
 
     func updateNSView(_ view: AppGridCollectionHostView, context: Context) {
+        let selectedUsageTipIndexBinding = $selectedUsageTipIndex
         context.coordinator.update(
             groups: groups,
             tagColors: tagColors,
@@ -73,6 +92,9 @@ struct AppGridCollectionView: NSViewRepresentable {
             showUncommonAppBubbles: showUncommonAppBubbles,
             highlightedGroupName: highlightedGroupName,
             bottomContentPadding: bottomContentPadding,
+            usageTipsVisible: usageTipsVisible,
+            usageTips: usageTips,
+            selectedUsageTipIndex: selectedUsageTipIndex,
             contentRevision: contentRevision,
             scrollTargetID: scrollTargetID,
             scrollRequestToken: scrollRequestToken,
@@ -84,7 +106,9 @@ struct AppGridCollectionView: NSViewRepresentable {
             onReorderApps: onReorderApps,
             onGroupActivate: onGroupActivate,
             onScrollActivity: onScrollActivity,
-            onDragModeChange: onDragModeChange
+            onDragModeChange: onDragModeChange,
+            onUsageTipIndexChange: { selectedUsageTipIndexBinding.wrappedValue = $0 },
+            onUsageTipsHoverChange: onUsageTipsHoverChange
         )
         view.applyCoordinatorUpdate()
     }
@@ -100,6 +124,10 @@ struct AppGridCollectionView: NSViewRepresentable {
         var showUncommonAppBubbles = AppDefaults.showUncommonAppBubbles
         var highlightedGroupName: String?
         var bottomContentPadding: CGFloat = 0
+        var usageTipsVisible = false
+        var usageTips: [AppGridUsageTip] = []
+        var selectedUsageTipIndex = 0
+        private var usageTipsBubbleDisabled = false
         var contentRevision = 0
         var scrollTargetID: String?
         var scrollRequestToken = 0
@@ -116,6 +144,8 @@ struct AppGridCollectionView: NSViewRepresentable {
         var onGroupActivate: (String) -> Void = { _ in }
         var onScrollActivity: () -> Void = {}
         var onDragModeChange: (Bool) -> Void = { _ in }
+        var onUsageTipIndexChange: (Int) -> Void = { _ in }
+        var onUsageTipsHoverChange: (Bool) -> Void = { _ in }
 
         private weak var activeReorderCard: AppGridGroupCardView?
         private var activeDragPath = ""
@@ -133,6 +163,9 @@ struct AppGridCollectionView: NSViewRepresentable {
             showUncommonAppBubbles: Bool,
             highlightedGroupName: String?,
             bottomContentPadding: CGFloat,
+            usageTipsVisible: Bool,
+            usageTips: [AppGridUsageTip],
+            selectedUsageTipIndex: Int,
             contentRevision: Int,
             scrollTargetID: String?,
             scrollRequestToken: Int,
@@ -144,7 +177,9 @@ struct AppGridCollectionView: NSViewRepresentable {
             onReorderApps: @escaping (String, [String]) -> Void,
             onGroupActivate: @escaping (String) -> Void,
             onScrollActivity: @escaping () -> Void,
-            onDragModeChange: @escaping (Bool) -> Void
+            onDragModeChange: @escaping (Bool) -> Void,
+            onUsageTipIndexChange: @escaping (Int) -> Void,
+            onUsageTipsHoverChange: @escaping (Bool) -> Void
         ) {
             self.groups = groups
             self.tagColors = tagColors
@@ -155,6 +190,9 @@ struct AppGridCollectionView: NSViewRepresentable {
             self.showUncommonAppBubbles = showUncommonAppBubbles
             self.highlightedGroupName = highlightedGroupName
             self.bottomContentPadding = max(0, bottomContentPadding)
+            self.usageTipsVisible = usageTipsVisible && !usageTips.isEmpty
+            self.usageTips = usageTips
+            self.selectedUsageTipIndex = Self.clampedUsageTipIndex(selectedUsageTipIndex, tips: usageTips)
             self.contentRevision = contentRevision
             self.scrollTargetID = scrollTargetID
             self.scrollRequestToken = scrollRequestToken
@@ -167,6 +205,11 @@ struct AppGridCollectionView: NSViewRepresentable {
             self.onGroupActivate = onGroupActivate
             self.onScrollActivity = onScrollActivity
             self.onDragModeChange = onDragModeChange
+            self.onUsageTipIndexChange = onUsageTipIndexChange
+            self.onUsageTipsHoverChange = onUsageTipsHoverChange
+            if !self.usageTipsVisible {
+                usageTipsBubbleDisabled = false
+            }
 
             let nextSignature = Self.signature(
                 tagColors: tagColors,
@@ -231,6 +274,9 @@ struct AppGridCollectionView: NSViewRepresentable {
             if scrollBubbleDisabled {
                 reasons.insert(.scroll)
             }
+            if usageTipsBubbleDisabled {
+                reasons.insert(.usageTipsHover)
+            }
             return reasons
         }
 
@@ -243,6 +289,22 @@ struct AppGridCollectionView: NSViewRepresentable {
             guard scrollBubbleDisabled != disabled else { return false }
             scrollBubbleDisabled = disabled
             return true
+        }
+
+        @discardableResult
+        func setUsageTipsBubbleDisabled(_ disabled: Bool) -> Bool {
+            guard usageTipsBubbleDisabled != disabled else { return false }
+            usageTipsBubbleDisabled = disabled
+            return true
+        }
+
+        func selectUsageTip(offset: Int) {
+            guard !usageTips.isEmpty else { return }
+            let count = usageTips.count
+            let nextIndex = (selectedUsageTipIndex + offset + count) % count
+            guard nextIndex != selectedUsageTipIndex else { return }
+            selectedUsageTipIndex = nextIndex
+            onUsageTipIndexChange(nextIndex)
         }
 
         fileprivate func beginAppIconDrag(path: String, sourceContainerID: String) {
@@ -347,6 +409,11 @@ struct AppGridCollectionView: NSViewRepresentable {
                 "rev=\(contentRevision)"
             ].joined(separator: "|")
         }
+
+        private static func clampedUsageTipIndex(_ index: Int, tips: [AppGridUsageTip]) -> Int {
+            guard !tips.isEmpty else { return 0 }
+            return min(max(0, index), tips.count - 1)
+        }
     }
 }
 
@@ -365,6 +432,7 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
     private let scrollView = AppGridScrollView()
     private let collectionView = NSCollectionView()
     private let gridLayout = AppGridContainerCollectionLayout()
+    private let usageTipsView = AppGridUsageTipsNSView()
     private weak var coordinator: AppGridCollectionView.Coordinator?
     private var scrollObserver: NSObjectProtocol?
     private var lastLayoutSize: NSSize = .zero
@@ -396,6 +464,7 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
     func configure(coordinator: AppGridCollectionView.Coordinator) {
         self.coordinator = coordinator
         gridLayout.coordinator = coordinator
+        usageTipsView.coordinator = coordinator
         collectionView.dataSource = coordinator
         collectionView.delegate = coordinator
     }
@@ -422,11 +491,14 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
                 }
             }
         }
+        usageTipsView.applyCoordinatorState()
+        positionUsageTipsView()
     }
 
     override func layout() {
         super.layout()
         scrollView.frame = bounds
+        positionUsageTipsView()
         if lastLayoutSize != bounds.size {
             lastLayoutSize = bounds.size
             gridLayout.invalidateLayout()
@@ -480,6 +552,8 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
         scrollView.borderType = .noBorder
         scrollView.documentView = collectionView
         addSubview(scrollView)
+        usageTipsView.isHidden = true
+        addSubview(usageTipsView)
 
         scrollView.contentView.postsBoundsChangedNotifications = true
         scrollObserver = NotificationCenter.default.addObserver(
@@ -492,6 +566,24 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
             else { return }
             self.handleScrollActivity()
         }
+    }
+
+    private func positionUsageTipsView() {
+        guard let coordinator,
+              coordinator.usageTipsVisible
+        else {
+            usageTipsView.isHidden = true
+            usageTipsView.clearHoverState()
+            usageTipsView.frame = .zero
+            return
+        }
+
+        let inset = min(AppGridUsageTipsMetrics.horizontalInset, max(0, bounds.width / 4))
+        let width = max(1, bounds.width - inset * 2)
+        let height = AppGridUsageTipsMetrics.barHeight
+        let y = max(0, bounds.height - AppGridUsageTipsMetrics.bottomMargin - height)
+        usageTipsView.isHidden = false
+        usageTipsView.frame = NSRect(x: inset, y: y, width: width, height: height)
     }
 
     private func handleScrollActivity() {
@@ -527,6 +619,10 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
         }
     }
 
+    fileprivate func refreshVisibleRuntimeStateForUsageTips() {
+        refreshVisibleRuntimeState()
+    }
+
     private func replayPointerHover() {
         guard let window else { return }
         let windowPoint = window.convertPoint(fromScreen: NSEvent.mouseLocation)
@@ -546,6 +642,334 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
             lastReportedBoundsOrigin = origin
         }
         return didScroll
+    }
+}
+
+private final class AppGridUsageTipsNSView: NSView {
+    weak var coordinator: AppGridCollectionView.Coordinator?
+
+    private let titleBackgroundView = NSView()
+    private let titleLabel = NSTextField(labelWithString: "")
+    private let detailScrollView = NSScrollView()
+    private let detailLabel = NSTextField(labelWithString: "")
+    private let controlsView = NSView()
+    private let previousButton = AppGridUsageTipIconButton(systemImage: "chevron.left")
+    private let nextButton = AppGridUsageTipIconButton(systemImage: "chevron.right")
+    private let dotsView = AppGridUsageTipDotsView()
+    private var trackingAreaRef: NSTrackingArea?
+    private var isPointerInside = false
+
+    override var isFlipped: Bool { true }
+    override var acceptsFirstResponder: Bool { false }
+
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        setup()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setup()
+    }
+
+    override func viewDidMoveToWindow() {
+        super.viewDidMoveToWindow()
+        if window == nil {
+            clearHoverState()
+        }
+    }
+
+    override func updateTrackingAreas() {
+        super.updateTrackingAreas()
+        if let trackingAreaRef {
+            removeTrackingArea(trackingAreaRef)
+        }
+        let area = NSTrackingArea(
+            rect: .zero,
+            options: [.mouseEnteredAndExited, .activeAlways, .inVisibleRect],
+            owner: self,
+            userInfo: nil
+        )
+        addTrackingArea(area)
+        trackingAreaRef = area
+    }
+
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        guard !isHidden, bounds.contains(point) else { return nil }
+        return super.hitTest(point) ?? self
+    }
+
+    override func mouseEntered(with event: NSEvent) {
+        setPointerInside(true)
+    }
+
+    override func mouseExited(with event: NSEvent) {
+        setPointerInside(false)
+    }
+
+    override func mouseDown(with event: NSEvent) {
+        window?.makeKeyAndOrderFront(nil)
+    }
+
+    override func mouseUp(with event: NSEvent) {}
+    override func rightMouseDown(with event: NSEvent) {}
+    override func rightMouseUp(with event: NSEvent) {}
+
+    override func scrollWheel(with event: NSEvent) {
+        detailScrollView.scrollWheel(with: event)
+    }
+
+    override func layout() {
+        super.layout()
+        let titleWidth = min(320, max(240, bounds.width * 0.24))
+        let controlsWidth: CGFloat = 120
+        let detailWidth = max(1, bounds.width - titleWidth - controlsWidth)
+
+        titleBackgroundView.frame = NSRect(x: 0, y: 0, width: titleWidth, height: bounds.height)
+        titleLabel.frame = titleBackgroundView.bounds.insetBy(dx: 18, dy: 0)
+        detailScrollView.frame = NSRect(x: titleWidth, y: 0, width: detailWidth, height: bounds.height)
+        controlsView.frame = NSRect(x: titleWidth + detailWidth, y: 0, width: controlsWidth, height: bounds.height)
+
+        let buttonSize: CGFloat = 34
+        let buttonY: CGFloat = 9
+        previousButton.frame = NSRect(x: 22, y: buttonY, width: buttonSize, height: buttonSize)
+        nextButton.frame = NSRect(x: 64, y: buttonY, width: buttonSize, height: buttonSize)
+        dotsView.frame = NSRect(x: 18, y: 48, width: controlsWidth - 36, height: 10)
+
+        layoutDetailLabel()
+    }
+
+    func applyCoordinatorState() {
+        guard let coordinator,
+              coordinator.usageTipsVisible,
+              !coordinator.usageTips.isEmpty
+        else {
+            isHidden = true
+            clearHoverState()
+            return
+        }
+
+        isHidden = false
+        let safeIndex = min(max(0, coordinator.selectedUsageTipIndex), coordinator.usageTips.count - 1)
+        let tip = coordinator.usageTips[safeIndex]
+        titleLabel.stringValue = tr(tip.titleKey)
+        detailLabel.stringValue = tr(tip.detailKey)
+        previousButton.accessibilityLabel = tr("usageTips.previous")
+        nextButton.accessibilityLabel = tr("usageTips.next")
+        dotsView.configure(count: coordinator.usageTips.count, selectedIndex: safeIndex)
+        updateColors()
+        layoutDetailLabel()
+    }
+
+    func clearHoverState() {
+        guard isPointerInside else { return }
+        setPointerInside(false)
+    }
+
+    private func setup() {
+        wantsLayer = true
+        layer?.cornerRadius = 8
+        layer?.masksToBounds = true
+
+        titleBackgroundView.wantsLayer = true
+        controlsView.wantsLayer = true
+
+        titleLabel.isEditable = false
+        titleLabel.isSelectable = false
+        titleLabel.drawsBackground = false
+        titleLabel.isBordered = false
+        titleLabel.lineBreakMode = .byTruncatingTail
+        titleLabel.maximumNumberOfLines = 1
+        titleLabel.font = NSFont.systemFont(ofSize: 24, weight: .bold)
+
+        detailLabel.isEditable = false
+        detailLabel.isSelectable = false
+        detailLabel.drawsBackground = false
+        detailLabel.isBordered = false
+        detailLabel.lineBreakMode = .byClipping
+        detailLabel.maximumNumberOfLines = 1
+        detailLabel.font = NSFont.systemFont(ofSize: 24, weight: .bold)
+
+        detailScrollView.drawsBackground = false
+        detailScrollView.hasVerticalScroller = false
+        detailScrollView.hasHorizontalScroller = true
+        detailScrollView.autohidesScrollers = true
+        detailScrollView.borderType = .noBorder
+        detailScrollView.documentView = detailLabel
+
+        previousButton.action = { [weak self] in self?.selectUsageTip(offset: -1) }
+        nextButton.action = { [weak self] in self?.selectUsageTip(offset: 1) }
+
+        addSubview(titleBackgroundView)
+        titleBackgroundView.addSubview(titleLabel)
+        addSubview(detailScrollView)
+        addSubview(controlsView)
+        controlsView.addSubview(previousButton)
+        controlsView.addSubview(nextButton)
+        controlsView.addSubview(dotsView)
+
+        setAccessibilityRole(.group)
+        updateColors()
+    }
+
+    private func selectUsageTip(offset: Int) {
+        coordinator?.selectUsageTip(offset: offset)
+        applyCoordinatorState()
+    }
+
+    private func setPointerInside(_ inside: Bool) {
+        guard isPointerInside != inside else { return }
+        isPointerInside = inside
+        if coordinator?.setUsageTipsBubbleDisabled(inside) == true {
+            enclosingHostView?.refreshVisibleRuntimeStateForUsageTips()
+        }
+        coordinator?.onUsageTipsHoverChange(inside)
+    }
+
+    private var enclosingHostView: AppGridCollectionHostView? {
+        var current = superview
+        while let view = current {
+            if let host = view as? AppGridCollectionHostView {
+                return host
+            }
+            current = view.superview
+        }
+        return nil
+    }
+
+    private func layoutDetailLabel() {
+        let textWidth = detailLabel.attributedStringValue.size().width
+        let width = max(detailScrollView.contentView.bounds.width, ceil(textWidth) + 36)
+        detailLabel.frame = NSRect(x: 18, y: 0, width: width, height: bounds.height)
+    }
+
+    private func updateColors() {
+        layer?.backgroundColor = NSColor.black.withAlphaComponent(0.88).cgColor
+        layer?.borderColor = NSColor.labelColor.withAlphaComponent(0.18).cgColor
+        layer?.borderWidth = 1
+        titleBackgroundView.layer?.backgroundColor = NSColor.controlBackgroundColor.withAlphaComponent(0.96).cgColor
+        controlsView.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.88).cgColor
+        titleLabel.textColor = .labelColor
+        detailLabel.textColor = NSColor.white.withAlphaComponent(0.96)
+    }
+}
+
+private final class AppGridUsageTipIconButton: NSView {
+    var action: (() -> Void)?
+    var accessibilityLabel: String = "" {
+        didSet {
+            setAccessibilityLabel(accessibilityLabel)
+        }
+    }
+
+    private let imageView = NSImageView()
+    private var trackingAreaRef: NSTrackingArea?
+    private var isHovered = false
+
+    override var isFlipped: Bool { true }
+    override var acceptsFirstResponder: Bool { false }
+
+    init(systemImage: String) {
+        super.init(frame: .zero)
+        setup(systemImage: systemImage)
+    }
+
+    required init?(coder: NSCoder) { fatalError() }
+
+    override func layout() {
+        super.layout()
+        let size: CGFloat = 24
+        imageView.frame = NSRect(
+            x: (bounds.width - size) / 2,
+            y: (bounds.height - size) / 2,
+            width: size,
+            height: size
+        )
+    }
+
+    override func updateTrackingAreas() {
+        super.updateTrackingAreas()
+        if let trackingAreaRef {
+            removeTrackingArea(trackingAreaRef)
+        }
+        let area = NSTrackingArea(
+            rect: .zero,
+            options: [.mouseEnteredAndExited, .activeAlways, .inVisibleRect],
+            owner: self,
+            userInfo: nil
+        )
+        addTrackingArea(area)
+        trackingAreaRef = area
+    }
+
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        bounds.contains(point) ? self : nil
+    }
+
+    override func mouseEntered(with event: NSEvent) {
+        isHovered = true
+        needsDisplay = true
+    }
+
+    override func mouseExited(with event: NSEvent) {
+        isHovered = false
+        needsDisplay = true
+    }
+
+    override func mouseDown(with event: NSEvent) {
+        action?()
+    }
+
+    override func draw(_ dirtyRect: NSRect) {
+        guard isHovered else { return }
+        NSColor.white.withAlphaComponent(0.12).setFill()
+        NSBezierPath(roundedRect: bounds.insetBy(dx: 1, dy: 1), xRadius: 7, yRadius: 7).fill()
+    }
+
+    private func setup(systemImage: String) {
+        wantsLayer = true
+        let config = NSImage.SymbolConfiguration(pointSize: 24, weight: .bold)
+        imageView.image = NSImage(
+            systemSymbolName: systemImage,
+            accessibilityDescription: nil
+        )?.withSymbolConfiguration(config)
+        imageView.imageScaling = .scaleProportionallyDown
+        imageView.contentTintColor = .white
+        addSubview(imageView)
+        setAccessibilityRole(.button)
+    }
+}
+
+private final class AppGridUsageTipDotsView: NSView {
+    private var count = 0
+    private var selectedIndex = 0
+
+    override var isFlipped: Bool { true }
+
+    func configure(count: Int, selectedIndex: Int) {
+        self.count = count
+        self.selectedIndex = selectedIndex
+        needsDisplay = true
+    }
+
+    override func draw(_ dirtyRect: NSRect) {
+        guard count > 0 else { return }
+        let dotSize: CGFloat = 5
+        let spacing: CGFloat = 5
+        let totalWidth = CGFloat(count) * dotSize + CGFloat(max(0, count - 1)) * spacing
+        var x = (bounds.width - totalWidth) / 2
+        let y = (bounds.height - dotSize) / 2
+
+        for index in 0..<count {
+            let color = index == selectedIndex
+                ? NSColor.controlAccentColor
+                : NSColor.white.withAlphaComponent(0.58)
+            color.setFill()
+            NSBezierPath(
+                ovalIn: NSRect(x: x, y: y, width: dotSize, height: dotSize)
+            ).fill()
+            x += dotSize + spacing
+        }
     }
 }
 
