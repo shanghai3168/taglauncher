@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TagLauncher — タグベースのアプリランチャー</title>
+  <meta name="description" content="Launchpad に頼る必要はありません。TagLauncher はアプリをタグ付きの一覧にまとめ、キーボードですばやく呼び出せます。">
+  <meta property="og:image" content="https://shanghai3168.github.io/taglauncher/assets/hero-visual.jpg">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="alternate" hreflang="zh-Hans" href="index.html">
+  <link rel="alternate" hreflang="en-US" href="index-en.html">
+  <link rel="alternate" hreflang="ar" href="index-ar.html">
+  <link rel="alternate" hreflang="cs" href="index-cs.html">
+  <link rel="alternate" hreflang="da" href="index-da.html">
+  <link rel="alternate" hreflang="de" href="index-de.html">
+  <link rel="alternate" hreflang="es-ES" href="index-es.html">
+  <link rel="alternate" hreflang="fr-FR" href="index-fr.html">
+  <link rel="alternate" hreflang="id" href="index-id.html">
+  <link rel="alternate" hreflang="it" href="index-it.html">
+  <link rel="alternate" hreflang="ja" href="index-ja.html">
+  <link rel="alternate" hreflang="ko" href="index-ko.html">
+  <link rel="alternate" hreflang="ms" href="index-ms.html">
+  <link rel="alternate" hreflang="no" href="index-no.html">
+  <link rel="alternate" hreflang="nl" href="index-nl.html">
+  <link rel="alternate" hreflang="pl" href="index-pl.html">
+  <link rel="alternate" hreflang="pt-BR" href="index-pt-BR.html">
+  <link rel="alternate" hreflang="ro" href="index-ro.html">
+  <link rel="alternate" hreflang="ru" href="index-ru.html">
+  <link rel="alternate" hreflang="sv" href="index-sv.html">
+  <link rel="alternate" hreflang="th" href="index-th.html">
+  <link rel="alternate" hreflang="tr" href="index-tr.html">
+  <link rel="alternate" hreflang="uk" href="index-uk.html">
+  <link rel="alternate" hreflang="vi" href="index-vi.html">
+  <link rel="alternate" hreflang="zh-Hant" href="index-zh-Hant.html">
+</head>
+<body class="page-home page-locale-ja">
+  <header class="site-header">
+    <div class="layout site-header__bar">
+      <a class="brand" href="index-ja.html">
+        <img src="assets/app-icon-256.png" width="34" height="34" alt="">
+        TagLauncher
+      </a>
+      <nav class="site-nav" aria-label="言語">
+        <a href="index-ja.html" aria-current="page">ホーム</a>
+        <a href="support-ja.html">サポート</a>
+        <a href="privacy.html">プライバシー</a>
+        <a href="https://github.com/shanghai3168/taglauncher/releases/download/v7.6.0/Taglauncher-help-en.pdf" rel="noopener" type="application/pdf">ヘルプPDF</a>
+      </nav>
+      <div class="lang-switch lang-switch--select">
+        <label class="sr-only" for="language-index">言語</label>
+        <select id="language-index" class="language-select" aria-label="言語" onchange="if (this.value) window.location.href=this.value">
+          <option value="index.html">简体中文</option><option value="index-en.html">English</option><option value="index-ar.html">العربية</option><option value="index-cs.html">Čeština</option><option value="index-da.html">Dansk</option><option value="index-de.html">Deutsch</option><option value="index-es.html">Español</option><option value="index-fr.html">Français</option><option value="index-id.html">Indonesia</option><option value="index-it.html">Italiano</option><option value="index-ja.html" selected>日本語</option><option value="index-ko.html">한국어</option><option value="index-ms.html">Melayu</option><option value="index-no.html">Norsk</option><option value="index-nl.html">Nederlands</option><option value="index-pl.html">Polski</option><option value="index-pt-BR.html">Português (BR)</option><option value="index-ro.html">Română</option><option value="index-ru.html">Русский</option><option value="index-sv.html">Svenska</option><option value="index-th.html">ไทย</option><option value="index-tr.html">Türkçe</option><option value="index-uk.html">Українська</option><option value="index-vi.html">Tiếng Việt</option><option value="index-zh-Hant.html">繁體中文</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" aria-label="TagLauncher">
+    <div class="layout hero__split">
+      <div class="hero__copy">
+        <h1 class="hero__headline">
+          <span>タグで整理する Mac アプリランチャー</span>
+        </h1>
+        <p class="hero__lead">Launchpad に頼る必要はありません。TagLauncher はアプリをタグ付きの一覧にまとめ、キーボードですばやく呼び出せます。</p>
+      </div>
+
+      <figure class="hero__art">
+        <img src="assets/hero-visual.jpg" alt="TagLauncher App Grid" width="1024" height="908" fetchpriority="high" decoding="async">
+      </figure>
+    </div>
+  </section>
+
+  <section class="views" aria-label="4つの表示を1画面に">
+    <div class="layout views__split">
+      <div class="views__gallery">
+        <figure class="views__shot"><img src="assets/views/view-01.jpg" alt="カラーコンテナ" width="720" height="468" loading="lazy" decoding="async"></figure>
+        <figure class="views__shot"><img src="assets/views/view-02.jpg" alt="無色コンテナ" width="720" height="468" loading="lazy" decoding="async"></figure>
+        <figure class="views__shot"><img src="assets/views/view-03.jpg" alt="カラーグリッド" width="720" height="468" loading="lazy" decoding="async"></figure>
+        <figure class="views__shot"><img src="assets/views/view-04.jpg" alt="無色グリッド" width="720" height="468" loading="lazy" decoding="async"></figure>
+      </div>
+
+      <div class="views__copy">
+        <h2 class="views__headline">4つの表示を1画面に</h2>
+        <p class="views__lead">フォルダを1つずつ開いたり、ページをめくったりする必要はありません。アプリ探しはもっと直接的であるべきです。</p>
+        <hr class="views__rule" aria-hidden="true">
+        <div class="views__details">
+          <div class="views__modes-block">
+            <p class="views__label">4つの表示モード</p>
+            <ul class="views__modes">
+              <li>カラーコンテナ</li>
+              <li>無色コンテナ</li>
+              <li>カラーグリッド</li>
+              <li>無色グリッド</li>
+            </ul>
+          </div>
+          <div class="views__shortcut">
+            <span class="views__shortcut-label">クイック起動</span>
+            <span class="views__shortcut-keys"><kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tags" aria-label="1つのアプリに複数のタグ">
+    <div class="layout tags__split">
+      <div class="tags__copy">
+        <h2 class="tags__headline">1つのアプリに複数のタグ</h2>
+        <ul class="tags__points">
+          <li>ツールを1つのフォルダに閉じ込めないでください。読書、デザイン、AI など自由なタグに分類できます。</li>
+          <li><strong>カラーコンテナ</strong> · 無色グリッド</li>
+          <li>ドラッグで並べ替え · JSON</li>
+        </ul>
+      </div>
+
+      <figure class="tags__art">
+        <img src="assets/tags-management.jpg" alt="1つのアプリに複数のタグ" width="880" height="572" loading="lazy" decoding="async">
+      </figure>
+    </div>
+  </section>
+
+  <section class="memo" aria-label="アプリのメモも検索">
+    <div class="layout memo__split">
+      <figure class="memo__art">
+        <img src="assets/app-memo.png" alt="アプリのメモも検索" width="1600" height="1040" loading="lazy" decoding="async">
+      </figure>
+
+      <div class="memo__copy">
+        <h2 class="memo__headline">アプリのメモも検索</h2>
+        <p class="memo__lead">用途メモを書き、ホバーで確認し、Quick Search から探せます。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="search" aria-label="アプリ、タグ、メモを検索">
+    <div class="layout search__split">
+      <div class="search__copy">
+        <h2 class="search__headline">アプリ、タグ、メモを検索</h2>
+        <p class="search__lead">タグや用途だけ覚えていても、Quick Search が目的のアプリへ導きます。</p>
+        <p class="search__tagline">Search apps, tags, and notes</p>
+        <div class="search__shortcut">
+          <span class="search__shortcut-label">クイック起動</span>
+          <span class="search__shortcut-keys"><kbd>fn</kbd> + <kbd>Space</kbd></span>
+        </div>
+      </div>
+
+      <figure class="search__art">
+        <img src="assets/quick-search.png" alt="アプリ、タグ、メモを検索" width="1809" height="1357" loading="lazy" decoding="async">
+      </figure>
+    </div>
+  </section>
+
+  <section class="backup" aria-label="バックアップと復元">
+    <div class="layout backup__split">
+      <figure class="backup__art">
+        <img src="assets/backup-restore.jpg" alt="バックアップと復元" width="1024" height="558" loading="lazy" decoding="async">
+      </figure>
+      <div class="backup__copy">
+        <h2 class="backup__headline">バックアップと復元</h2>
+        <p class="backup__lead">カテゴリ、順序、レイアウトを JSON として書き出し、別の Mac で復元できます。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="privacy" aria-label="完全オフライン、広告なし">
+    <div class="layout privacy__split">
+      <div class="privacy__copy">
+        <h2 class="privacy__headline">完全オフライン、広告なし</h2>
+        <p class="privacy__lead">データは Mac 内に保存されます。アカウント、クラウド同期、分析、広告、トラッキングはありません。</p>
+        <div class="privacy__feature">
+          <h3 class="privacy__feature-title"><span class="privacy__feature-icon" aria-hidden="true"></span>スマートタグ初期化</h3>
+          <p class="privacy__feature-text">5000以上の人気 Mac アプリ向け初期タグで、ゼロからの分類を減らします。</p>
+        </div>
+      </div>
+      <figure class="privacy__art">
+        <img src="assets/shield-check.png" alt="" width="379" height="437" loading="lazy" decoding="async" role="presentation">
+      </figure>
+    </div>
+  </section>
+
+  <section class="features" aria-label="スマートタグ初期化">
+    <div class="layout">
+      <h2 class="features__headline">スマートタグ初期化</h2>
+      <div class="feature-grid">
+        <div class="feature"><strong>App Grid</strong>フォルダを1つずつ開いたり、ページをめくったりする必要はありません。アプリ探しはもっと直接的であるべきです。</div>
+        <div class="feature"><strong>Quick Search</strong>タグや用途だけ覚えていても、Quick Search が目的のアプリへ導きます。</div>
+        <div class="feature"><strong>タグ</strong>ツールを1つのフォルダに閉じ込めないでください。読書、デザイン、AI など自由なタグに分類できます。</div>
+        <div class="feature"><strong>バックアップと復元</strong>カテゴリ、順序、レイアウトを JSON として書き出し、別の Mac で復元できます。</div>
+        <div class="feature"><strong>プライバシー</strong>データは Mac 内に保存されます。アカウント、クラウド同期、分析、広告、トラッキングはありません。</div>
+        <div class="feature"><strong>スマートタグ初期化</strong>5000以上の人気 Mac アプリ向け初期タグで、ゼロからの分類を減らします。</div>
+      </div>
+      <div class="features__cta">
+        <p>Mac App Store に近日登場 · macOS 14.0+ · 29 UI 言語</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="support-ja.html">サポート</a>
+          <a class="btn btn-secondary" href="privacy.html">プライバシー</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="layout">
+      <p>
+        <a href="mailto:shanghai3168@gmail.com">shanghai3168@gmail.com</a>
+        · <a href="support-ja.html">サポート</a>
+        · <a href="privacy.html">プライバシー</a>
+      </p>
+      <p>© 2026 TagLauncher · Hainan Wanxing Technology Co., Ltd. (海南万幸科技有限公司)</p>
+    </div>
+  </footer>
+</body>
+</html>

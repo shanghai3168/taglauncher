@@ -1,13 +1,36 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html lang="zh-Hans" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>支持 — TagLauncher</title>
-  <meta name="description" content="TagLauncher 支持：快捷键、常见问题、联系邮箱与帮助文档。">
+  <meta name="description" content="TagLauncher support, shortcuts, FAQ, contact email, and help PDF.">
   <link rel="stylesheet" href="styles.css">
   <link rel="alternate" hreflang="zh-Hans" href="support.html">
-  <link rel="alternate" hreflang="en" href="support-en.html">
+  <link rel="alternate" hreflang="en-US" href="support-en.html">
+  <link rel="alternate" hreflang="ar" href="support-ar.html">
+  <link rel="alternate" hreflang="cs" href="support-cs.html">
+  <link rel="alternate" hreflang="da" href="support-da.html">
+  <link rel="alternate" hreflang="de" href="support-de.html">
+  <link rel="alternate" hreflang="es-ES" href="support-es.html">
+  <link rel="alternate" hreflang="fr-FR" href="support-fr.html">
+  <link rel="alternate" hreflang="id" href="support-id.html">
+  <link rel="alternate" hreflang="it" href="support-it.html">
+  <link rel="alternate" hreflang="ja" href="support-ja.html">
+  <link rel="alternate" hreflang="ko" href="support-ko.html">
+  <link rel="alternate" hreflang="ms" href="support-ms.html">
+  <link rel="alternate" hreflang="no" href="support-no.html">
+  <link rel="alternate" hreflang="nl" href="support-nl.html">
+  <link rel="alternate" hreflang="pl" href="support-pl.html">
+  <link rel="alternate" hreflang="pt-BR" href="support-pt-BR.html">
+  <link rel="alternate" hreflang="ro" href="support-ro.html">
+  <link rel="alternate" hreflang="ru" href="support-ru.html">
+  <link rel="alternate" hreflang="sv" href="support-sv.html">
+  <link rel="alternate" hreflang="th" href="support-th.html">
+  <link rel="alternate" hreflang="tr" href="support-tr.html">
+  <link rel="alternate" hreflang="uk" href="support-uk.html">
+  <link rel="alternate" hreflang="vi" href="support-vi.html">
+  <link rel="alternate" hreflang="zh-Hant" href="support-zh-Hant.html">
 </head>
 <body>
   <header class="site-header">
@@ -16,15 +39,17 @@
         <img src="assets/app-icon-256.png" width="34" height="34" alt="">
         TagLauncher
       </a>
-      <nav class="site-nav" aria-label="导航">
+      <nav class="site-nav" aria-label="语言">
         <a href="index.html">首页</a>
         <a href="support.html" aria-current="page">支持</a>
         <a href="privacy-zh.html">隐私政策</a>
         <a href="https://github.com/shanghai3168/taglauncher/releases/download/v7.6.0/Taglauncher-help-zh.pdf" rel="noopener" type="application/pdf">帮助 PDF</a>
       </nav>
-      <div class="lang-switch" role="navigation" aria-label="语言">
-        <a href="support.html" class="is-active" hreflang="zh-Hans">中文</a>
-        <a href="support-en.html" hreflang="en">EN</a>
+      <div class="lang-switch lang-switch--select">
+        <label class="sr-only" for="language-support">语言</label>
+        <select id="language-support" class="language-select" aria-label="语言" onchange="if (this.value) window.location.href=this.value">
+          <option value="support.html" selected>简体中文</option><option value="support-en.html">English</option><option value="support-ar.html">العربية</option><option value="support-cs.html">Čeština</option><option value="support-da.html">Dansk</option><option value="support-de.html">Deutsch</option><option value="support-es.html">Español</option><option value="support-fr.html">Français</option><option value="support-id.html">Indonesia</option><option value="support-it.html">Italiano</option><option value="support-ja.html">日本語</option><option value="support-ko.html">한국어</option><option value="support-ms.html">Melayu</option><option value="support-no.html">Norsk</option><option value="support-nl.html">Nederlands</option><option value="support-pl.html">Polski</option><option value="support-pt-BR.html">Português (BR)</option><option value="support-ro.html">Română</option><option value="support-ru.html">Русский</option><option value="support-sv.html">Svenska</option><option value="support-th.html">ไทย</option><option value="support-tr.html">Türkçe</option><option value="support-uk.html">Українська</option><option value="support-vi.html">Tiếng Việt</option><option value="support-zh-Hant.html">繁體中文</option>
+        </select>
       </div>
     </div>
   </header>
@@ -34,60 +59,48 @@
       <article class="card">
         <h1>支持</h1>
         <p>
-          <strong>当前版本：</strong>7.8.15 (Build 20260605.2337)<br>
-          <strong>系统要求：</strong>macOS 15.0 或更高
+          <strong>当前版本:</strong> 7.9.1 (Build 20260613.2020)<br>
+          <strong>系统要求:</strong> macOS 14.0+
         </p>
 
-        <h2>联系 / Contact</h2>
-        <p>
-          电子邮件 / Email:
-          <a href="mailto:shanghai3168@gmail.com">shanghai3168@gmail.com</a>
-        </p>
-        <p>我们通常会在几个工作日内回复。发邮件时请说明 macOS 版本与 TagLauncher 版本号。</p>
+        <h2>联系</h2>
+        <p>Email: <a href="mailto:shanghai3168@gmail.com">shanghai3168@gmail.com</a></p>
+        <p>发邮件时请说明 macOS 版本与 TagLauncher 版本号。我们通常会在几个工作日内回复。</p>
 
-        <h2>默认快捷键 / Shortcuts</h2>
+        <h2>默认快捷键</h2>
         <ul>
-          <li><kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd> — 打开应用网格 / App Grid</li>
-          <li>应用网格内 <kbd>Space</kbd> — Quick Search</li>
-          <li><kbd>Fn</kbd> + <kbd>Space</kbd> — 仅 Quick Search（可在设置中调整）</li>
-          <li><kbd>Esc</kbd> — 关闭搜索或网格</li>
-          <li><kbd>Command</kbd> + <kbd>,</kbd> — 偏好设置 / Preferences</li>
+          <li><kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd> — App Grid</li>
+          <li><kbd>Space</kbd> — Quick Search inside App Grid</li>
+          <li><kbd>Fn</kbd> + <kbd>Space</kbd> — Global Quick Search</li>
+          <li><kbd>Esc</kbd> — Close Quick Search or App Grid</li>
+          <li><kbd>Command</kbd> + <kbd>,</kbd> — Settings</li>
         </ul>
-        <p>可在 TagLauncher 设置 → 快捷键 中查看或修改（视版本而定）。</p>
 
-        <h2>帮助文档 / Help</h2>
-        <p>
-          应用内「关于」可打开与当前界面语言匹配的帮助 PDF。
-          也可以直接下载中文版帮助文档：
-        </p>
-        <p>
-          <a href="https://github.com/shanghai3168/taglauncher/releases/download/v7.6.0/Taglauncher-help-zh.pdf" rel="noopener" type="application/pdf">
-            下载中文版帮助 PDF
-          </a>
-        </p>
+        <h2>帮助 PDF</h2>
+        <p>应用内关于面板会打开与当前界面语言匹配的帮助 PDF。也可以直接下载帮助文档：</p>
+        <p><a href="https://github.com/shanghai3168/taglauncher/releases/download/v7.6.0/Taglauncher-help-zh.pdf" rel="noopener" type="application/pdf">帮助 PDF</a></p>
 
-        <h2>常见问题 / FAQ</h2>
+        <h2>常见问题</h2>
         <h3>应用网格一直转圈？</h3>
-        <p>
-          请更新到 7.8.15 或更高版本。若仍出现，完全退出 TagLauncher 后重新打开；
-          或在设置 → 数据中确认布局文件未损坏，必要时从备份 JSON 恢复。
-        </p>
+        <p>请更新到 7.9.1 或更高版本。若仍出现，完全退出 TagLauncher 后重新打开，并检查数据页的布局备份。</p>
         <h3>如何备份分类与布局？</h3>
-        <p>设置 → 数据 →「导出分类与布局」，保存 JSON 文件。换机或重装后使用「导入」恢复。</p>
+        <p>打开设置 &gt; 数据 &gt; 导出分类与布局，保存 JSON 文件。换机或重装后用导入恢复。</p>
         <h3>一个应用能属于多个标签吗？</h3>
-        <p>可以。这是 TagLauncher 与 Launchpad 文件夹模型的主要区别之一。</p>
+        <p>可以。这正是 TagLauncher 和 Launchpad 文件夹模型的主要区别。</p>
         <h3>数据会上传到云端吗？</h3>
-        <p>不会。分类、标签与备忘保存在本机。详见 <a href="privacy-zh.html">隐私政策</a>。</p>
-
-        <h2>Mac App Store</h2>
-        <p>上架后本页将补充 App Store 产品链接。购买与退款请通过 Apple 支持流程处理。</p>
+        <p>不会。分类、标签、排序和备注都保存在本机。</p>
       </article>
     </div>
   </main>
 
   <footer class="site-footer">
     <div class="layout">
-      <p>© 2026 TagLauncher · 海南万幸科技有限公司</p>
+      <p>
+        <a href="mailto:shanghai3168@gmail.com">shanghai3168@gmail.com</a>
+        · <a href="support.html">支持</a>
+        · <a href="privacy-zh.html">隐私政策</a>
+      </p>
+      <p>© 2026 TagLauncher · Hainan Wanxing Technology Co., Ltd. (海南万幸科技有限公司)</p>
     </div>
   </footer>
 </body>
