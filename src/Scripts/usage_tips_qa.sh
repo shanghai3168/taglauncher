@@ -364,9 +364,9 @@ require(
     "Usage tips detail text must normalize separators for display",
 )
 require(
-    r"replacingOccurrences\s*\(\s*of\s*:\s*\"\\\\s\*\(\?:-->\|->\|>\|→\|＞\)\\\\s\*\"\s*,\s*with\s*:\s*\"\\n\"",
+    r"replacingOccurrences\s*\(\s*of\s*:\s*\"\\\\s\*\(\?:-->\|->\|>\|→\|＞\|,\)\\\\s\*\"\s*,\s*with\s*:\s*\"\\n\"",
     app_grid,
-    "Usage tips detail text must convert -->, ->, and > separators into hard line breaks",
+    "Usage tips detail text must turn navigation markers and commas into hard line breaks",
 )
 require(
     r"setUsageTipsBubbleDisabled\s*\(\s*inside\s*\)",
@@ -453,6 +453,16 @@ for path in json_files:
     missing = [key for key in required_keys if not data.get(key)]
     if missing:
         fail(f"{path.name} missing usage tip localization keys: {', '.join(missing)}")
+    if path.stem not in {"zh-Hans", "zh-Hant"}:
+        for tip_index in range(1, 9):
+            detail = data[f"usageTips.tip{tip_index}.detail"]
+            if any(marker in detail for marker in [">", "→", "＞"]):
+                fail(f"{path.name} usageTips.tip{tip_index}.detail must use a comma line break instead of navigation markers")
+            if detail.count(",") != 1:
+                fail(f"{path.name} usageTips.tip{tip_index}.detail must contain exactly one comma line break")
+            first, second = [part.strip() for part in detail.split(",", 1)]
+            if not first or not second:
+                fail(f"{path.name} usageTips.tip{tip_index}.detail must have text on both sides of the comma line break")
 
 print("PASS usage tips QA: overlay, hide setting, macOS 14-safe implementation, and 29-language localizations are present")
 PY

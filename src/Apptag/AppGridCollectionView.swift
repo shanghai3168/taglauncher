@@ -1217,7 +1217,7 @@ private final class AppGridUsageTipsNSView: NSView {
 
     private func formattedTipDetail(_ text: String) -> String {
         text
-            .replacingOccurrences(of: "\\s*(?:-->|->|>|→|＞)\\s*", with: "\n", options: .regularExpression)
+            .replacingOccurrences(of: "\\s*(?:-->|->|>|→|＞|,)\\s*", with: "\n", options: .regularExpression)
             .replacingOccurrences(of: "[ \\t]{2,}", with: " ", options: .regularExpression)
             .replacingOccurrences(of: "\\n{2,}", with: "\n", options: .regularExpression)
             .trimmingCharacters(in: .whitespacesAndNewlines)
