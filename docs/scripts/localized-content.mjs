@@ -608,9 +608,82 @@ export function helpUrl(locale) {
   return `https://github.com/shanghai3168/taglauncher/releases/download/v7.6.0/${pdf}`;
 }
 
+const APP_STRING_FALLBACK = {
+  "app.description": "tag-based app launcher",
+  "settings.coloredContainer": "Colored Container",
+  "settings.container": "Colorless Container",
+  "settings.coloredGridContainer": "Colored Grid",
+  "settings.gridContainer": "Colorless Grid",
+  "settings.tags": "Tags",
+  "settings.backup": "Backup & Restore",
+  "edit.dragHint": "Drag to reorder",
+  "quickSearch.placeholder": "Search apps, tags, and notes",
+  "quickSearch.title": "Quick Search"
+};
+
+const APP_STRING_FALLBACK_BY_CODE = {
+  "zh-Hans": { "app.description": "基于标签的应用启动器", "settings.coloredContainer": "彩色容器", "settings.container": "无色容器", "settings.coloredGridContainer": "彩色网格", "settings.gridContainer": "无色网格" },
+  en: { "app.description": "Tag-based app launcher", "settings.coloredContainer": "Colored Container", "settings.container": "Colorless Container", "settings.coloredGridContainer": "Colored Grid", "settings.gridContainer": "Colorless Grid" },
+  ar: { "app.description": "مشغل تطبيقات قائم على الوسوم", "settings.coloredContainer": "حاوية ملونة", "settings.container": "حاوية بلا لون", "settings.coloredGridContainer": "شبكة ملونة", "settings.gridContainer": "شبكة بلا لون" },
+  cs: { "app.description": "Spouštěč aplikací podle štítků", "settings.coloredContainer": "Barevný kontejner", "settings.container": "Bezbarvý kontejner", "settings.coloredGridContainer": "Barevná mřížka", "settings.gridContainer": "Bezbarvá mřížka" },
+  da: { "app.description": "Tagbaseret appstarter", "settings.coloredContainer": "Farvet beholder", "settings.container": "Farveløs beholder", "settings.coloredGridContainer": "Farvet gitter", "settings.gridContainer": "Farveløst gitter" },
+  de: { "app.description": "Tag-basierter App-Launcher", "settings.coloredContainer": "Farbiger Container", "settings.container": "Farbloser Container", "settings.coloredGridContainer": "Farbiges Raster", "settings.gridContainer": "Farbloses Raster" },
+  es: { "app.description": "Lanzador de apps basado en etiquetas", "settings.coloredContainer": "Contenedor coloreado", "settings.container": "Contenedor sin color", "settings.coloredGridContainer": "Cuadrícula coloreada", "settings.gridContainer": "Cuadrícula sin color" },
+  fr: { "app.description": "Lanceur d'applications par étiquettes", "settings.coloredContainer": "Conteneur coloré", "settings.container": "Conteneur sans couleur", "settings.coloredGridContainer": "Grille colorée", "settings.gridContainer": "Grille sans couleur" },
+  id: { "app.description": "Peluncur app berbasis tag", "settings.coloredContainer": "Kontainer berwarna", "settings.container": "Kontainer tanpa warna", "settings.coloredGridContainer": "Grid berwarna", "settings.gridContainer": "Grid tanpa warna" },
+  it: { "app.description": "Launcher di app basato su tag", "settings.coloredContainer": "Contenitore colorato", "settings.container": "Contenitore senza colore", "settings.coloredGridContainer": "Griglia colorata", "settings.gridContainer": "Griglia senza colore" },
+  ja: { "app.description": "タグベースのアプリランチャー", "settings.coloredContainer": "カラーコンテナ", "settings.container": "無色コンテナ", "settings.coloredGridContainer": "カラーグリッド", "settings.gridContainer": "無色グリッド" },
+  ko: { "app.description": "태그 기반 앱 런처", "settings.coloredContainer": "색상 컨테이너", "settings.container": "무색 컨테이너", "settings.coloredGridContainer": "색상 그리드", "settings.gridContainer": "무색 그리드" },
+  ms: { "app.description": "Peluncur app berbasis tag", "settings.coloredContainer": "Kontainer berwarna", "settings.container": "Kontainer tanpa warna", "settings.coloredGridContainer": "Grid berwarna", "settings.gridContainer": "Grid tanpa warna" },
+  no: { "app.description": "Etikettbasert appstarter", "settings.coloredContainer": "Farget beholder", "settings.container": "Fargeløs beholder", "settings.coloredGridContainer": "Farget rutenett", "settings.gridContainer": "Fargeløst rutenett" },
+  nl: { "app.description": "Taggebaseerde appstarter", "settings.coloredContainer": "Gekleurde container", "settings.container": "Kleurloze container", "settings.coloredGridContainer": "Gekleurd raster", "settings.gridContainer": "Kleurloos raster" },
+  pl: { "app.description": "Launcher aplikacji oparty na tagach", "settings.coloredContainer": "Kolorowy kontener", "settings.container": "Bezbarwny kontener", "settings.coloredGridContainer": "Kolorowa siatka", "settings.gridContainer": "Bezbarwna siatka" },
+  "pt-BR": { "app.description": "Inicializador de apps baseado em etiquetas", "settings.coloredContainer": "Contêiner colorido", "settings.container": "Contêiner sem cor", "settings.coloredGridContainer": "Grade colorida", "settings.gridContainer": "Grade sem cor" },
+  ro: { "app.description": "Lansator de aplicații bazat pe etichete", "settings.coloredContainer": "Container colorat", "settings.container": "Container fără culoare", "settings.coloredGridContainer": "Grilă colorată", "settings.gridContainer": "Grilă fără culoare" },
+  ru: { "app.description": "Лаунчер приложений на основе тегов", "settings.coloredContainer": "Цветной контейнер", "settings.container": "Бесцветный контейнер", "settings.coloredGridContainer": "Цветная сетка", "settings.gridContainer": "Бесцветная сетка" },
+  sv: { "app.description": "Taggbaserad appstartare", "settings.coloredContainer": "Färgad behållare", "settings.container": "Färglös behållare", "settings.coloredGridContainer": "Färgat rutnät", "settings.gridContainer": "Färglöst rutnät" },
+  th: { "app.description": "ตัวเปิดแอปตามแท็ก", "settings.coloredContainer": "คอนเทนเนอร์มีสี", "settings.container": "คอนเทนเนอร์ไม่มีสี", "settings.coloredGridContainer": "กริดมีสี", "settings.gridContainer": "กริดไม่มีสี" },
+  tr: { "app.description": "Etiket tabanlı uygulama başlatıcı", "settings.coloredContainer": "Renkli Kapsayıcı", "settings.container": "Renksiz Kapsayıcı", "settings.coloredGridContainer": "Renkli Izgara", "settings.gridContainer": "Renksiz Izgara" },
+  uk: { "app.description": "Запускач застосунків на основі тегів", "settings.coloredContainer": "Кольоровий контейнер", "settings.container": "Безбарвний контейнер", "settings.coloredGridContainer": "Кольорова сітка", "settings.gridContainer": "Безбарвна сітка" },
+  vi: { "app.description": "Trình khởi chạy ứng dụng theo thẻ", "settings.coloredContainer": "Vùng chứa có màu", "settings.container": "Vùng chứa không màu", "settings.coloredGridContainer": "Lưới có màu", "settings.gridContainer": "Lưới không màu" },
+  "zh-Hant": { "app.description": "基於標籤的應用程式啟動器", "settings.coloredContainer": "彩色容器", "settings.container": "無色容器", "settings.coloredGridContainer": "彩色網格", "settings.gridContainer": "無色網格" }
+};
+
+const APP_EXTRA_STRING_FALLBACK_BY_CODE = {
+  "zh-Hans": { "settings.tags": "标签", "settings.backup": "备份与恢复", "edit.dragHint": "拖拽排序", "quickSearch.placeholder": "搜索 App、标签和备注", "quickSearch.title": "快捷搜索" },
+  ar: { "settings.tags": "الوسوم", "settings.backup": "نسخ احتياطي واستعادة", "edit.dragHint": "اسحب لإعادة الترتيب" },
+  cs: { "settings.tags": "Štítky", "settings.backup": "Záloha a obnovení", "edit.dragHint": "Přetažením změňte pořadí" },
+  da: { "settings.tags": "Tags", "settings.backup": "Sikkerhedskopi og gendannelse", "edit.dragHint": "Træk for at ændre rækkefølge" },
+  de: { "settings.tags": "Tags", "settings.backup": "Sichern & Wiederherstellen", "edit.dragHint": "Zum Sortieren ziehen" },
+  es: { "settings.tags": "Etiquetas", "settings.backup": "Copia de seguridad", "edit.dragHint": "Arrastra para reordenar" },
+  fr: { "settings.tags": "Étiquettes", "settings.backup": "Sauvegarde et restauration", "edit.dragHint": "Faites glisser pour réorganiser" },
+  id: { "settings.tags": "Tag", "settings.backup": "Cadangkan & pulihkan", "edit.dragHint": "Seret untuk mengurutkan" },
+  it: { "settings.tags": "Tag", "settings.backup": "Backup e ripristino", "edit.dragHint": "Trascina per riordinare" },
+  ja: { "settings.tags": "タグ", "settings.backup": "バックアップと復元", "edit.dragHint": "ドラッグで並べ替え" },
+  ko: { "settings.tags": "태그", "settings.backup": "백업 및 복원", "edit.dragHint": "드래그하여 순서 변경" },
+  ms: { "settings.tags": "Tag", "settings.backup": "Sandaran & pulih", "edit.dragHint": "Seret untuk mengurutkan" },
+  no: { "settings.tags": "Etiketter", "settings.backup": "Sikkerhetskopi og gjenoppretting", "edit.dragHint": "Dra for å endre rekkefølge" },
+  nl: { "settings.tags": "Tags", "settings.backup": "Back-up en herstel", "edit.dragHint": "Sleep om te sorteren" },
+  pl: { "settings.tags": "Tagi", "settings.backup": "Kopia zapasowa i przywracanie", "edit.dragHint": "Przeciągnij, aby zmienić kolejność" },
+  "pt-BR": { "settings.tags": "Etiquetas", "settings.backup": "Backup e restauração", "edit.dragHint": "Arraste para reordenar" },
+  ro: { "settings.tags": "Etichete", "settings.backup": "Backup și restaurare", "edit.dragHint": "Trage pentru reordonare" },
+  ru: { "settings.tags": "Теги", "settings.backup": "Резервное копирование", "edit.dragHint": "Перетащите для сортировки" },
+  sv: { "settings.tags": "Taggar", "settings.backup": "Säkerhetskopiera och återställ", "edit.dragHint": "Dra för att ändra ordning" },
+  th: { "settings.tags": "แท็ก", "settings.backup": "สำรองและกู้คืน", "edit.dragHint": "ลากเพื่อจัดเรียง" },
+  tr: { "settings.tags": "Etiketler", "settings.backup": "Yedekle ve geri yükle", "edit.dragHint": "Sıralamak için sürükle" },
+  uk: { "settings.tags": "Теги", "settings.backup": "Резервне копіювання", "edit.dragHint": "Перетягніть для сортування" },
+  vi: { "settings.tags": "Thẻ", "settings.backup": "Sao lưu & khôi phục", "edit.dragHint": "Kéo để sắp xếp" },
+  "zh-Hant": { "settings.tags": "標籤", "settings.backup": "備份與還原", "edit.dragHint": "拖曳排序", "quickSearch.placeholder": "搜尋 App、標籤和備註", "quickSearch.title": "快捷搜尋" }
+};
+
 export function loadAppStrings(rootDir, locale) {
-  const fallback = JSON.parse(fs.readFileSync(path.join(rootDir, "src/Apptag/Localization/en.json"), "utf8"));
-  const targetPath = path.join(rootDir, "src/Apptag/Localization", `${locale.appCode}.json`);
+  const localizationDir = path.join(rootDir, "src/Apptag/Localization");
+  const fallbackPath = path.join(localizationDir, "en.json");
+  const embeddedFallback = { ...APP_STRING_FALLBACK, ...(APP_STRING_FALLBACK_BY_CODE[locale.code] || {}), ...(APP_EXTRA_STRING_FALLBACK_BY_CODE[locale.code] || {}) };
+  const fallback = fs.existsSync(fallbackPath)
+    ? { ...embeddedFallback, ...JSON.parse(fs.readFileSync(fallbackPath, "utf8")) }
+    : embeddedFallback;
+  const targetPath = path.join(localizationDir, `${locale.appCode}.json`);
   if (!fs.existsSync(targetPath)) return fallback;
   return { ...fallback, ...JSON.parse(fs.readFileSync(targetPath, "utf8")) };
 }
