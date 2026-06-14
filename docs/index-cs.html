@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="cs" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TagLauncher — Spouštěč aplikací podle štítků</title>
+  <meta name="description" content="Launchpad vám chybět nemusí. TagLauncher dá aplikace do jedné přehledné mřížky se štítky a klávesovými zkratkami.">
+  <meta property="og:image" content="https://shanghai3168.github.io/taglauncher/assets/hero-visual.jpg">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="alternate" hreflang="zh-Hans" href="index.html">
+  <link rel="alternate" hreflang="en-US" href="index-en.html">
+  <link rel="alternate" hreflang="ar" href="index-ar.html">
+  <link rel="alternate" hreflang="cs" href="index-cs.html">
+  <link rel="alternate" hreflang="da" href="index-da.html">
+  <link rel="alternate" hreflang="de" href="index-de.html">
+  <link rel="alternate" hreflang="es-ES" href="index-es.html">
+  <link rel="alternate" hreflang="fr-FR" href="index-fr.html">
+  <link rel="alternate" hreflang="id" href="index-id.html">
+  <link rel="alternate" hreflang="it" href="index-it.html">
+  <link rel="alternate" hreflang="ja" href="index-ja.html">
+  <link rel="alternate" hreflang="ko" href="index-ko.html">
+  <link rel="alternate" hreflang="ms" href="index-ms.html">
+  <link rel="alternate" hreflang="no" href="index-no.html">
+  <link rel="alternate" hreflang="nl" href="index-nl.html">
+  <link rel="alternate" hreflang="pl" href="index-pl.html">
+  <link rel="alternate" hreflang="pt-BR" href="index-pt-BR.html">
+  <link rel="alternate" hreflang="ro" href="index-ro.html">
+  <link rel="alternate" hreflang="ru" href="index-ru.html">
+  <link rel="alternate" hreflang="sv" href="index-sv.html">
+  <link rel="alternate" hreflang="th" href="index-th.html">
+  <link rel="alternate" hreflang="tr" href="index-tr.html">
+  <link rel="alternate" hreflang="uk" href="index-uk.html">
+  <link rel="alternate" hreflang="vi" href="index-vi.html">
+  <link rel="alternate" hreflang="zh-Hant" href="index-zh-Hant.html">
+</head>
+<body class="page-home page-locale-cs">
+  <header class="site-header">
+    <div class="layout site-header__bar">
+      <a class="brand" href="index-cs.html">
+        <img src="assets/app-icon-256.png" width="34" height="34" alt="">
+        TagLauncher
+      </a>
+      <nav class="site-nav" aria-label="Jazyk">
+        <a href="index-cs.html" aria-current="page">Domů</a>
+        <a href="support-cs.html">Podpora</a>
+        <a href="privacy.html">Soukromí</a>
+        <a href="https://github.com/shanghai3168/taglauncher/releases/download/v7.6.0/Taglauncher-help-en.pdf" rel="noopener" type="application/pdf">Nápověda PDF</a>
+      </nav>
+      <div class="lang-switch lang-switch--select">
+        <label class="sr-only" for="language-index">Jazyk</label>
+        <select id="language-index" class="language-select" aria-label="Jazyk" onchange="if (this.value) window.location.href=this.value">
+          <option value="index.html">简体中文</option><option value="index-en.html">English</option><option value="index-ar.html">العربية</option><option value="index-cs.html" selected>Čeština</option><option value="index-da.html">Dansk</option><option value="index-de.html">Deutsch</option><option value="index-es.html">Español</option><option value="index-fr.html">Français</option><option value="index-id.html">Indonesia</option><option value="index-it.html">Italiano</option><option value="index-ja.html">日本語</option><option value="index-ko.html">한국어</option><option value="index-ms.html">Melayu</option><option value="index-no.html">Norsk</option><option value="index-nl.html">Nederlands</option><option value="index-pl.html">Polski</option><option value="index-pt-BR.html">Português (BR)</option><option value="index-ro.html">Română</option><option value="index-ru.html">Русский</option><option value="index-sv.html">Svenska</option><option value="index-th.html">ไทย</option><option value="index-tr.html">Türkçe</option><option value="index-uk.html">Українська</option><option value="index-vi.html">Tiếng Việt</option><option value="index-zh-Hant.html">繁體中文</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" aria-label="TagLauncher">
+    <div class="layout hero__split">
+      <div class="hero__copy">
+        <h1 class="hero__headline">
+          <span>Spouštěč aplikací pro Mac podle štítků</span>
+        </h1>
+        <p class="hero__lead">Launchpad vám chybět nemusí. TagLauncher dá aplikace do jedné přehledné mřížky se štítky a klávesovými zkratkami.</p>
+      </div>
+
+      <figure class="hero__art">
+        <img src="assets/hero-visual.jpg" alt="TagLauncher App Grid" width="1024" height="908" fetchpriority="high" decoding="async">
+      </figure>
+    </div>
+  </section>
+
+  <section class="views" aria-label="Čtyři zobrazení na jedné obrazovce">
+    <div class="layout views__split">
+      <div class="views__gallery">
+        <figure class="views__shot"><img src="assets/views/view-01.jpg" alt="Barevný kontejner" width="720" height="468" loading="lazy" decoding="async"></figure>
+        <figure class="views__shot"><img src="assets/views/view-02.jpg" alt="Bezbarvý kontejner" width="720" height="468" loading="lazy" decoding="async"></figure>
+        <figure class="views__shot"><img src="assets/views/view-03.jpg" alt="Barevná mřížka" width="720" height="468" loading="lazy" decoding="async"></figure>
+        <figure class="views__shot"><img src="assets/views/view-04.jpg" alt="Bezbarvá mřížka" width="720" height="468" loading="lazy" decoding="async"></figure>
+      </div>
+
+      <div class="views__copy">
+        <h2 class="views__headline">Čtyři zobrazení na jedné obrazovce</h2>
+        <p class="views__lead">Bez otevírání složek a listování stránkami. Najít aplikaci má být rychlé a přímé.</p>
+        <hr class="views__rule" aria-hidden="true">
+        <div class="views__details">
+          <div class="views__modes-block">
+            <p class="views__label">4 režimy zobrazení</p>
+            <ul class="views__modes">
+              <li>Barevný kontejner</li>
+              <li>Bezbarvý kontejner</li>
+              <li>Barevná mřížka</li>
+              <li>Bezbarvá mřížka</li>
+            </ul>
+          </div>
+          <div class="views__shortcut">
+            <span class="views__shortcut-label">Rychlé spuštění</span>
+            <span class="views__shortcut-keys"><kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tags" aria-label="Jedna aplikace, více štítků">
+    <div class="layout tags__split">
+      <div class="tags__copy">
+        <h2 class="tags__headline">Jedna aplikace, více štítků</h2>
+        <ul class="tags__points">
+          <li>Nenuťte nástroje do jedné složky. Aplikace může patřit do práce, designu, AI i vlastních štítků.</li>
+          <li><strong>Barevný kontejner</strong> · Bezbarvá mřížka</li>
+          <li>Přetažením změňte pořadí · JSON</li>
+        </ul>
+      </div>
+
+      <figure class="tags__art">
+        <img src="assets/tags-management.jpg" alt="Jedna aplikace, více štítků" width="880" height="572" loading="lazy" decoding="async">
+      </figure>
+    </div>
+  </section>
+
+  <section class="memo" aria-label="Hledejte i poznámky aplikací">
+    <div class="layout memo__split">
+      <figure class="memo__art">
+        <img src="assets/app-memo.png" alt="Hledejte i poznámky aplikací" width="1600" height="1040" loading="lazy" decoding="async">
+      </figure>
+
+      <div class="memo__copy">
+        <h2 class="memo__headline">Hledejte i poznámky aplikací</h2>
+        <p class="memo__lead">Doplňte účel aplikace, zobrazte jej při najetí a najděte jej přes Quick Search.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="search" aria-label="Hledejte aplikace, štítky a poznámky">
+    <div class="layout search__split">
+      <div class="search__copy">
+        <h2 class="search__headline">Hledejte aplikace, štítky a poznámky</h2>
+        <p class="search__lead">Stačí si pamatovat štítek nebo účel. Quick Search vás dovede ke správné aplikaci.</p>
+        <p class="search__tagline">Search apps, tags, and notes</p>
+        <div class="search__shortcut">
+          <span class="search__shortcut-label">Rychlé spuštění</span>
+          <span class="search__shortcut-keys"><kbd>fn</kbd> + <kbd>Space</kbd></span>
+        </div>
+      </div>
+
+      <figure class="search__art">
+        <img src="assets/quick-search.png" alt="Hledejte aplikace, štítky a poznámky" width="1809" height="1357" loading="lazy" decoding="async">
+      </figure>
+    </div>
+  </section>
+
+  <section class="backup" aria-label="Záloha a obnovení">
+    <div class="layout backup__split">
+      <figure class="backup__art">
+        <img src="assets/backup-restore.jpg" alt="Záloha a obnovení" width="1024" height="558" loading="lazy" decoding="async">
+      </figure>
+      <div class="backup__copy">
+        <h2 class="backup__headline">Záloha a obnovení</h2>
+        <p class="backup__lead">Kategorie, pořadí a rozložení exportujete jako JSON a obnovíte na jiném Macu.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="privacy" aria-label="100 % offline, bez reklam">
+    <div class="layout privacy__split">
+      <div class="privacy__copy">
+        <h2 class="privacy__headline">100 % offline, bez reklam</h2>
+        <p class="privacy__lead">Data zůstávají na Macu. Bez účtu, cloudu, analytiky, reklam i sledování.</p>
+        <div class="privacy__feature">
+          <h3 class="privacy__feature-title"><span class="privacy__feature-icon" aria-hidden="true"></span>Chytrá inicializace štítků</h3>
+          <p class="privacy__feature-text">Počáteční štítky pro 5000+ oblíbených Mac aplikací zkracují nastavování od nuly.</p>
+        </div>
+      </div>
+      <figure class="privacy__art">
+        <img src="assets/shield-check.png" alt="" width="379" height="437" loading="lazy" decoding="async" role="presentation">
+      </figure>
+    </div>
+  </section>
+
+  <section class="features" aria-label="Chytrá inicializace štítků">
+    <div class="layout">
+      <h2 class="features__headline">Chytrá inicializace štítků</h2>
+      <div class="feature-grid">
+        <div class="feature"><strong>App Grid</strong>Bez otevírání složek a listování stránkami. Najít aplikaci má být rychlé a přímé.</div>
+        <div class="feature"><strong>Quick Search</strong>Stačí si pamatovat štítek nebo účel. Quick Search vás dovede ke správné aplikaci.</div>
+        <div class="feature"><strong>Štítky</strong>Nenuťte nástroje do jedné složky. Aplikace může patřit do práce, designu, AI i vlastních štítků.</div>
+        <div class="feature"><strong>Záloha a obnovení</strong>Kategorie, pořadí a rozložení exportujete jako JSON a obnovíte na jiném Macu.</div>
+        <div class="feature"><strong>Soukromí</strong>Data zůstávají na Macu. Bez účtu, cloudu, analytiky, reklam i sledování.</div>
+        <div class="feature"><strong>Chytrá inicializace štítků</strong>Počáteční štítky pro 5000+ oblíbených Mac aplikací zkracují nastavování od nuly.</div>
+      </div>
+      <div class="features__cta">
+        <p>Brzy v Mac App Store · macOS 14.0+ · 29 jazyků rozhraní</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="support-cs.html">Podpora</a>
+          <a class="btn btn-secondary" href="privacy.html">Soukromí</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="layout">
+      <p>
+        <a href="mailto:shanghai3168@gmail.com">shanghai3168@gmail.com</a>
+        · <a href="support-cs.html">Podpora</a>
+        · <a href="privacy.html">Soukromí</a>
+      </p>
+      <p>© 2026 TagLauncher · Hainan Wanxing Technology Co., Ltd. (海南万幸科技有限公司)</p>
+    </div>
+  </footer>
+</body>
+</html>

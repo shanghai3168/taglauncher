@@ -1,83 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TagLauncher — Tag-based Mac app launcher</title>
-  <meta name="description" content="TagLauncher organizes Mac apps with tags: scrollable grid, multi-tag apps, searchable notes, JSON layout backup—beyond Launchpad folders and pages.">
+  <title>TagLauncher — Tag-based app launcher</title>
+  <meta name="description" content="Do not mourn Launchpad. TagLauncher puts your apps into one tag-based, keyboard-friendly grid.">
   <meta property="og:image" content="https://shanghai3168.github.io/taglauncher/assets/hero-visual.jpg">
   <link rel="stylesheet" href="styles.css">
-  <link rel="alternate" hreflang="en" href="index-en.html">
   <link rel="alternate" hreflang="zh-Hans" href="index.html">
+  <link rel="alternate" hreflang="en-US" href="index-en.html">
+  <link rel="alternate" hreflang="ar" href="index-ar.html">
+  <link rel="alternate" hreflang="cs" href="index-cs.html">
+  <link rel="alternate" hreflang="da" href="index-da.html">
+  <link rel="alternate" hreflang="de" href="index-de.html">
+  <link rel="alternate" hreflang="es-ES" href="index-es.html">
+  <link rel="alternate" hreflang="fr-FR" href="index-fr.html">
+  <link rel="alternate" hreflang="id" href="index-id.html">
+  <link rel="alternate" hreflang="it" href="index-it.html">
+  <link rel="alternate" hreflang="ja" href="index-ja.html">
+  <link rel="alternate" hreflang="ko" href="index-ko.html">
+  <link rel="alternate" hreflang="ms" href="index-ms.html">
+  <link rel="alternate" hreflang="no" href="index-no.html">
+  <link rel="alternate" hreflang="nl" href="index-nl.html">
+  <link rel="alternate" hreflang="pl" href="index-pl.html">
+  <link rel="alternate" hreflang="pt-BR" href="index-pt-BR.html">
+  <link rel="alternate" hreflang="ro" href="index-ro.html">
+  <link rel="alternate" hreflang="ru" href="index-ru.html">
+  <link rel="alternate" hreflang="sv" href="index-sv.html">
+  <link rel="alternate" hreflang="th" href="index-th.html">
+  <link rel="alternate" hreflang="tr" href="index-tr.html">
+  <link rel="alternate" hreflang="uk" href="index-uk.html">
+  <link rel="alternate" hreflang="vi" href="index-vi.html">
+  <link rel="alternate" hreflang="zh-Hant" href="index-zh-Hant.html">
 </head>
-<body class="page-home">
+<body class="page-home page-locale-en">
   <header class="site-header">
     <div class="layout site-header__bar">
       <a class="brand" href="index-en.html">
         <img src="assets/app-icon-256.png" width="34" height="34" alt="">
         TagLauncher
       </a>
-      <nav class="site-nav" aria-label="Main">
+      <nav class="site-nav" aria-label="Language">
         <a href="index-en.html" aria-current="page">Home</a>
         <a href="support-en.html">Support</a>
         <a href="privacy.html">Privacy</a>
         <a href="https://github.com/shanghai3168/taglauncher/releases/download/v7.6.0/Taglauncher-help-en.pdf" rel="noopener" type="application/pdf">Help PDF</a>
       </nav>
-      <div class="lang-switch" role="navigation" aria-label="Language">
-        <a href="index.html" hreflang="zh-Hans">中文</a>
-        <a href="index-en.html" class="is-active" hreflang="en">EN</a>
+      <div class="lang-switch lang-switch--select">
+        <label class="sr-only" for="language-index">Language</label>
+        <select id="language-index" class="language-select" aria-label="Language" onchange="if (this.value) window.location.href=this.value">
+          <option value="index.html">简体中文</option><option value="index-en.html" selected>English</option><option value="index-ar.html">العربية</option><option value="index-cs.html">Čeština</option><option value="index-da.html">Dansk</option><option value="index-de.html">Deutsch</option><option value="index-es.html">Español</option><option value="index-fr.html">Français</option><option value="index-id.html">Indonesia</option><option value="index-it.html">Italiano</option><option value="index-ja.html">日本語</option><option value="index-ko.html">한국어</option><option value="index-ms.html">Melayu</option><option value="index-no.html">Norsk</option><option value="index-nl.html">Nederlands</option><option value="index-pl.html">Polski</option><option value="index-pt-BR.html">Português (BR)</option><option value="index-ro.html">Română</option><option value="index-ru.html">Русский</option><option value="index-sv.html">Svenska</option><option value="index-th.html">ไทย</option><option value="index-tr.html">Türkçe</option><option value="index-uk.html">Українська</option><option value="index-vi.html">Tiếng Việt</option><option value="index-zh-Hant.html">繁體中文</option>
+        </select>
       </div>
     </div>
   </header>
 
-  <section class="hero" aria-label="TagLauncher hero">
+  <section class="hero" aria-label="TagLauncher">
     <div class="layout hero__split">
       <div class="hero__copy">
-        <h1 class="hero__headline">Possibly the best Mac app launcher—in the world</h1>
-        <p class="hero__lead">Don't mourn Launchpad on macOS 26 Tahoe—it was never truly good anyway.</p>
+        <h1 class="hero__headline">
+          <span>Possibly the best Mac app launcher in the world</span>
+        </h1>
+        <p class="hero__lead">Do not mourn Launchpad. TagLauncher puts your apps into one tag-based, keyboard-friendly grid.</p>
       </div>
 
       <figure class="hero__art">
-        <img
-          src="assets/hero-visual.jpg"
-          alt="TagLauncher App Grid with stacked 3D window presentation"
-          width="1024"
-          height="908"
-          fetchpriority="high"
-          decoding="async">
+        <img src="assets/hero-visual.jpg" alt="TagLauncher App Grid" width="1024" height="908" fetchpriority="high" decoding="async">
       </figure>
     </div>
   </section>
 
-  <section class="views" aria-label="Four view modes">
+  <section class="views" aria-label="Four views, all on one screen">
     <div class="layout views__split">
       <div class="views__gallery">
-        <figure class="views__shot">
-          <img src="assets/views/view-01.jpg" alt="Flat view" width="720" height="468" loading="lazy" decoding="async">
-        </figure>
-        <figure class="views__shot">
-          <img src="assets/views/view-02.jpg" alt="Plain container view" width="720" height="468" loading="lazy" decoding="async">
-        </figure>
-        <figure class="views__shot">
-          <img src="assets/views/view-03.jpg" alt="Colored container view" width="720" height="468" loading="lazy" decoding="async">
-        </figure>
-        <figure class="views__shot">
-          <img src="assets/views/view-04.jpg" alt="Plain grid view" width="720" height="468" loading="lazy" decoding="async">
-        </figure>
+        <figure class="views__shot"><img src="assets/views/view-01.jpg" alt="Colored Container" width="720" height="468" loading="lazy" decoding="async"></figure>
+        <figure class="views__shot"><img src="assets/views/view-02.jpg" alt="Colorless Container" width="720" height="468" loading="lazy" decoding="async"></figure>
+        <figure class="views__shot"><img src="assets/views/view-03.jpg" alt="Colored Grid" width="720" height="468" loading="lazy" decoding="async"></figure>
+        <figure class="views__shot"><img src="assets/views/view-04.jpg" alt="Colorless Grid" width="720" height="468" loading="lazy" decoding="async"></figure>
       </div>
 
       <div class="views__copy">
-        <h2 class="views__headline">Four views—everything on one screen</h2>
-        <p class="views__lead">No more opening folders one by one or flipping through pages. You're just finding an app—it shouldn't feel like a trek.</p>
+        <h2 class="views__headline">Four views, all on one screen</h2>
+        <p class="views__lead">No more opening folders one by one or flipping through pages. Finding an app should be direct.</p>
         <hr class="views__rule" aria-hidden="true">
         <div class="views__details">
           <div class="views__modes-block">
             <p class="views__label">4 view modes</p>
             <ul class="views__modes">
-              <li>Flat</li>
-              <li>Plain containers</li>
-              <li>Colored containers</li>
-              <li>Plain grid</li>
+              <li>Colored Container</li>
+              <li>Colorless Container</li>
+              <li>Colored Grid</li>
+              <li>Colorless Grid</li>
             </ul>
           </div>
           <div class="views__shortcut">
@@ -89,68 +102,50 @@
     </div>
   </section>
 
-  <section class="tags" aria-label="Tag-based organization">
+  <section class="tags" aria-label="One app. Many tags.">
     <div class="layout tags__split">
       <div class="tags__copy">
-        <h2 class="tags__headline">Tag-based organization</h2>
+        <h2 class="tags__headline">One app. Many tags.</h2>
         <ul class="tags__points">
-          <li>No more choosing just one folder—an app can belong to multiple tags at once.</li>
-          <li><strong>Multi-color tag system</strong> with custom colors</li>
-          <li>Drag to categorize: drop on a tag name or container; drop on empty space to remove</li>
+          <li>Stop forcing tools into one folder. An app can belong to Reading, Design, AI, or any custom tag.</li>
+          <li><strong>Colored Container</strong> · Colorless Grid</li>
+          <li>Drag to reorder · JSON</li>
         </ul>
       </div>
 
       <figure class="tags__art">
-        <img
-          src="assets/tags-management.jpg"
-          alt="TagLauncher tag management with multi-tag apps and custom colors"
-          width="880"
-          height="572"
-          loading="lazy"
-          decoding="async">
+        <img src="assets/tags-management.jpg" alt="One app. Many tags." width="880" height="572" loading="lazy" decoding="async">
       </figure>
     </div>
   </section>
 
-  <section class="memo" aria-label="App memos">
+  <section class="memo" aria-label="Search app notes too">
     <div class="layout memo__split">
       <figure class="memo__art">
-        <img
-          src="assets/app-memo.png"
-          alt="TagLauncher app memo shown on hover"
-          width="1600"
-          height="1040"
-          loading="lazy"
-          decoding="async">
+        <img src="assets/app-memo.png" alt="Search app notes too" width="1600" height="1040" loading="lazy" decoding="async">
       </figure>
 
       <div class="memo__copy">
-        <h2 class="memo__headline">Write memos for your apps</h2>
-        <p class="memo__lead">Edit usage notes. Hover to reveal—clear at a glance.</p>
+        <h2 class="memo__headline">Search app notes too</h2>
+        <p class="memo__lead">Write usage notes, reveal them on hover, and find them through Quick Search.</p>
       </div>
     </div>
   </section>
 
-  <section class="search" aria-label="Global Quick Search">
+  <section class="search" aria-label="Search apps, tags, and notes">
     <div class="layout search__split">
       <div class="search__copy">
-        <h2 class="search__headline">Global Quick Search</h2>
-        <p class="search__lead">Search app names, tags, and memos—instantly.</p>
-        <p class="search__tagline">The experience macOS never gave you—we do.</p>
+        <h2 class="search__headline">Search apps, tags, and notes</h2>
+        <p class="search__lead">Even if you remember only a tag or purpose, Quick Search helps you reach the right app.</p>
+        <p class="search__tagline">Search apps, tags, and notes</p>
         <div class="search__shortcut">
-          <span class="search__shortcut-label">Shortcut</span>
+          <span class="search__shortcut-label">Quick launch</span>
           <span class="search__shortcut-keys"><kbd>fn</kbd> + <kbd>Space</kbd></span>
         </div>
       </div>
 
       <figure class="search__art">
-        <img
-          src="assets/quick-search.png"
-          alt="TagLauncher Quick Search for apps, tags, and memos"
-          width="1809"
-          height="1357"
-          loading="lazy"
-          decoding="async">
+        <img src="assets/quick-search.png" alt="Search apps, tags, and notes" width="1809" height="1357" loading="lazy" decoding="async">
       </figure>
     </div>
   </section>
@@ -158,93 +153,47 @@
   <section class="backup" aria-label="Backup &amp; Restore">
     <div class="layout backup__split">
       <figure class="backup__art">
-        <img
-          src="assets/backup-restore.jpg"
-          alt="TagLauncher JSON backup and restore for tags and layout"
-          width="1024"
-          height="558"
-          loading="lazy"
-          decoding="async">
+        <img src="assets/backup-restore.jpg" alt="Backup &amp; Restore" width="1024" height="558" loading="lazy" decoding="async">
       </figure>
-
       <div class="backup__copy">
         <h2 class="backup__headline">Backup &amp; Restore</h2>
-        <p class="backup__lead"><strong>Tags and layout data</strong> support JSON <strong>backup</strong>—export / import so you never lose your setup.</p>
+        <p class="backup__lead">Export categories, order, and layout as JSON. Restore them after reinstalling or moving Macs.</p>
       </div>
     </div>
   </section>
 
-  <section class="privacy" aria-label="Offline privacy">
+  <section class="privacy" aria-label="100% offline, 100% ad-free">
     <div class="layout privacy__split">
       <div class="privacy__copy">
         <h2 class="privacy__headline">100% offline, 100% ad-free</h2>
-        <p class="privacy__lead">Data stays on your device—no analytics SDK, no ads. Never needs the network.</p>
-
+        <p class="privacy__lead">Data stays on your Mac. This build has no account, cloud sync, analytics SDK, ads, or tracking.</p>
         <div class="privacy__feature">
-          <h3 class="privacy__feature-title">
-            <span class="privacy__feature-icon" aria-hidden="true"></span>
-            Privacy matters
-          </h3>
-          <p class="privacy__feature-text">TagLauncher never touches your privacy. Every line of code is built for local efficiency.</p>
-        </div>
-
-        <div class="privacy__feature">
-          <h3 class="privacy__feature-title privacy__feature-title--accent">
-            <span class="privacy__feature-icon" aria-hidden="true"></span>
-            Pure &amp; native
-          </h3>
-          <p class="privacy__feature-text">No bloated network components—fast launch, zero background footprint.</p>
+          <h3 class="privacy__feature-title"><span class="privacy__feature-icon" aria-hidden="true"></span>Smart tag initialization</h3>
+          <p class="privacy__feature-text">Initial tag plans for 5000+ popular Mac apps reduce the pain of starting from zero.</p>
         </div>
       </div>
-
       <figure class="privacy__art">
-        <img
-          src="assets/shield-check.png"
-          alt=""
-          width="379"
-          height="437"
-          loading="lazy"
-          decoding="async"
-          role="presentation">
+        <img src="assets/shield-check.png" alt="" width="379" height="437" loading="lazy" decoding="async" role="presentation">
       </figure>
     </div>
   </section>
 
-  <section class="features" aria-label="Core features">
+  <section class="features" aria-label="Smart tag initialization">
     <div class="layout">
-      <h2 class="features__headline">Core features</h2>
+      <h2 class="features__headline">Smart tag initialization</h2>
       <div class="feature-grid">
-        <div class="feature">
-          <strong>App Grid</strong>
-          <kbd>Option</kbd>+<kbd>Shift</kbd>+<kbd>Space</kbd> opens the grid.
-        </div>
-        <div class="feature">
-          <strong>Quick Search</strong>
-          <kbd>fn</kbd>+<kbd>Space</kbd> searches names, tags, and notes.
-        </div>
-        <div class="feature">
-          <strong>Tags</strong>
-          Custom colors; drag icons onto tags.
-        </div>
-        <div class="feature">
-          <strong>App notes</strong>
-          Remember what each app is for.
-        </div>
-        <div class="feature">
-          <strong>Layout backup</strong>
-          Export and import JSON.
-        </div>
-        <div class="feature">
-          <strong>Smart tag initialization</strong>
-          Initializes tag sets for 5000+ popular Mac apps, reducing setup from zero.
-        </div>
+        <div class="feature"><strong>App Grid</strong>No more opening folders one by one or flipping through pages. Finding an app should be direct.</div>
+        <div class="feature"><strong>Quick Search</strong>Even if you remember only a tag or purpose, Quick Search helps you reach the right app.</div>
+        <div class="feature"><strong>Tags</strong>Stop forcing tools into one folder. An app can belong to Reading, Design, AI, or any custom tag.</div>
+        <div class="feature"><strong>Backup &amp; Restore</strong>Export categories, order, and layout as JSON. Restore them after reinstalling or moving Macs.</div>
+        <div class="feature"><strong>Privacy</strong>Data stays on your Mac. This build has no account, cloud sync, analytics SDK, ads, or tracking.</div>
+        <div class="feature"><strong>Smart tag initialization</strong>Initial tag plans for 5000+ popular Mac apps reduce the pain of starting from zero.</div>
       </div>
-
       <div class="features__cta">
-        <p>Mac App Store coming soon · macOS 15.0+ · 29 UI languages</p>
+        <p>Mac App Store coming soon · macOS 14.0+ · 29 UI languages</p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="support-en.html">Support &amp; contact</a>
-          <a class="btn btn-secondary" href="privacy.html">Privacy policy</a>
+          <a class="btn btn-primary" href="support-en.html">Support</a>
+          <a class="btn btn-secondary" href="privacy.html">Privacy</a>
         </div>
       </div>
     </div>
