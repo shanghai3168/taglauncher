@@ -12,10 +12,83 @@ SWIFT_DIR="$PROJECT_DIR/Apptag"
 INFO_PLIST="$SWIFT_DIR/Info.plist"
 MODULE_CACHE_DIR="${MODULE_CACHE_DIR:-$BUILD_DIR/ModuleCache}"
 
-SDK_PATH=$(xcrun --sdk macosx --show-sdk-path)
 MACOS_DEPLOYMENT_TARGET="${MACOS_DEPLOYMENT_TARGET:-14.0}"
 TARGET_ARCH="${TARGET_ARCH:-arm64}"
 TARGET="${TARGET_ARCH}-apple-macosx${MACOS_DEPLOYMENT_TARGET}"
+SWIFTC="${SWIFTC:-swiftc}"
+
+select_macos_sdk() {
+    local target="$1"
+    local explicit_sdk="${SDK_PATH:-${SDKROOT:-}}"
+    if [ -n "$explicit_sdk" ]; then
+        if [ ! -d "$explicit_sdk" ]; then
+            echo "❌ Explicit SDK path does not exist: $explicit_sdk" >&2
+            return 1
+        fi
+        echo "$explicit_sdk"
+        return 0
+    fi
+
+    local default_sdk
+    default_sdk="$(xcrun --sdk macosx --show-sdk-path 2>/dev/null || true)"
+    local sdk_candidates
+    sdk_candidates="$(python3 - "$default_sdk" <<'PY'
+import glob
+import os
+import re
+import sys
+
+seen = set()
+candidates = []
+
+def add(path):
+    if not path:
+        return
+    real = os.path.realpath(path)
+    if os.path.isdir(path) and real not in seen:
+        seen.add(real)
+        candidates.append(path)
+
+if len(sys.argv) > 1:
+    add(sys.argv[1])
+
+for path in glob.glob("/Library/Developer/CommandLineTools/SDKs/MacOSX*.sdk"):
+    add(path)
+
+for path in glob.glob("/Applications/Xcode*.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX*.sdk"):
+    add(path)
+
+def version_key(path):
+    name = os.path.basename(path)
+    match = re.search(r"MacOSX(\d+(?:\.\d+)*)\.sdk$", name)
+    if not match:
+        return ()
+    return tuple(int(part) for part in match.group(1).split("."))
+
+default_real = os.path.realpath(sys.argv[1]) if len(sys.argv) > 1 else ""
+rest = [p for p in candidates if os.path.realpath(p) != default_real]
+rest.sort(key=version_key, reverse=True)
+ordered = [p for p in candidates if os.path.realpath(p) == default_real] + rest
+for path in ordered:
+    print(path)
+PY
+)"
+
+    while IFS= read -r sdk; do
+        [ -n "$sdk" ] || continue
+        if printf 'import Swift\n' | "$SWIFTC" -typecheck -sdk "$sdk" -target "$target" - >/dev/null 2>&1; then
+            echo "$sdk"
+            return 0
+        fi
+    done <<< "$sdk_candidates"
+
+    echo "❌ No installed macOS SDK is compatible with current swiftc for target $target" >&2
+    echo "   swiftc: $("$SWIFTC" --version | head -n 1)" >&2
+    echo "   default SDK: $default_sdk" >&2
+    return 1
+}
+
+SDK_PATH="$(select_macos_sdk "$TARGET")"
 
 APP_VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$INFO_PLIST")
 APP_BUILD="${APP_BUILD:-$(date '+%Y%m%d.%H%M')}"
@@ -26,6 +99,8 @@ if [ -z "$APP_VERSION" ] || ! [[ "$APP_BUILD" =~ ^[0-9]{8}\.[0-9]{4}$ ]]; then
 fi
 
 echo "==> Packaging $APP_NAME $APP_VERSION ($APP_BUILD)"
+echo "==> Using SDK: $SDK_PATH"
+echo "==> Using Swift compiler: $SWIFTC"
 
 # --- Optional: App Store / Sandbox signing ---
 # Set CODESIGN_IDENTITY to your "Apple Distribution" or "Mac Developer" cert name.
@@ -58,7 +133,7 @@ SWIFT_FILES=()
 while IFS= read -r file; do
     SWIFT_FILES+=("$file")
 done < <(find "$SWIFT_DIR" -name '*.swift' -print | sort)
-swiftc \
+"$SWIFTC" \
     -o "$MACOS_DIR/$APP_NAME" \
     -framework AppKit \
     -framework SwiftUI \

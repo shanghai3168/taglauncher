@@ -342,11 +342,53 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
 
+    private func foregroundWindowForActivationPolicyRestore() -> NSWindow? {
+        if let settingsWindow, settingsWindow.isVisible {
+            return settingsWindow
+        }
+        if let overlayWindow, overlayWindow.isVisible {
+            return overlayWindow
+        }
+        return NSApp.keyWindow
+    }
+
+    private func setLauncherActivationPolicy(_ desiredPolicy: NSApplication.ActivationPolicy) {
+        guard NSApp.activationPolicy() != desiredPolicy else { return }
+
+        let restoreWindow = desiredPolicy == .accessory && NSApp.isActive
+            ? foregroundWindowForActivationPolicyRestore()
+            : nil
+
+        // Deactivate before switching regular -> accessory; otherwise Dock can
+        // keep a stale running tile until Dock itself restarts.
+        if desiredPolicy == .accessory && NSApp.isActive {
+            NSApp.deactivate()
+        }
+
+        NSApp.setActivationPolicy(desiredPolicy)
+
+        guard desiredPolicy == .accessory,
+              let restoreWindow,
+              restoreWindow.isVisible
+        else { return }
+
+        DispatchQueue.main.async { [weak self, weak restoreWindow] in
+            guard let self,
+                  let restoreWindow,
+                  restoreWindow.isVisible,
+                  self.requiresForegroundOwnership
+            else { return }
+            NSApp.activate(ignoringOtherApps: true)
+            restoreWindow.makeKeyAndOrderFront(nil)
+            restoreWindow.orderFrontRegardless()
+        }
+    }
+
     private func beginLauncherForegroundOwnership(activate: Bool = true, keyWindow: NSWindow? = nil) {
         let showDock = UserDefaults.standard.bool(forKey: Self.showDockIconKey)
         let desiredPolicy: NSApplication.ActivationPolicy = showDock ? .regular : .accessory
         if NSApp.activationPolicy() != desiredPolicy {
-            NSApp.setActivationPolicy(desiredPolicy)
+            setLauncherActivationPolicy(desiredPolicy)
         }
         if activate, showDock {
             claimLauncherForeground(keyWindow: keyWindow)
@@ -363,7 +405,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         overlayGeneration expectedOverlayGeneration: Int? = nil
     ) {
         if NSApp.activationPolicy() != .regular {
-            NSApp.setActivationPolicy(.regular)
+            setLauncherActivationPolicy(.regular)
         }
 
         if isOverlayVisible && !NSApp.presentationOptions.contains(.hideDock) {
@@ -425,7 +467,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             ? .regular
             : (showDock ? .regular : .accessory))))
         if NSApp.activationPolicy() != desiredPolicy {
-            NSApp.setActivationPolicy(desiredPolicy)
+            setLauncherActivationPolicy(desiredPolicy)
         }
 
         let desiredPresentation: NSApplication.PresentationOptions = isOverlayVisible ? [.hideDock] : []

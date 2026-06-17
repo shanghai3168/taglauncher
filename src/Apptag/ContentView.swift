@@ -82,6 +82,10 @@ struct MacTextField: NSViewRepresentable {
     }
 
     func updateNSView(_ container: TextFieldContainer, context: Context) {
+        if let editor = container.textField.currentEditor() as? NSTextView,
+           editor.hasMarkedText() {
+            return
+        }
         if container.textField.stringValue != text {
             container.textField.stringValue = text
         }
@@ -106,6 +110,9 @@ struct MacTextField: NSViewRepresentable {
         }
 
         func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+            if textView.hasMarkedText() {
+                return false
+            }
             if commandSelector == #selector(NSResponder.insertNewline(_:)) {
                 onSubmit?()
                 return true
@@ -319,6 +326,8 @@ private struct AppGridInteractionState {
     var bubbleDraftNote = ""
     var tagNavigationHoveredGroupName: String? = nil
     var tagNavigationAppDropTargetName: String? = nil
+    var tagNavigationLastHoverScrollID: String? = nil
+    var tagNavigationLastHoverScrollAt: Date? = nil
 }
 
 private struct EditActionFeedback: Identifiable {
@@ -436,6 +445,8 @@ struct ContentView: View {
             ?? (isColorlessContainerMode ? filledColorlessContainer : nil)
     }
     private let rightSidebarFloatingClearance: CGFloat = 44
+    private let tagNavigationHoverScrollDelay: TimeInterval = 0.14
+    private let tagNavigationHoverScrollInterval: TimeInterval = 0.22
     private var floatingButtonSurfaceColor: Color {
         colorScheme == .dark
             ? Color.white.opacity(0.10)
@@ -2040,7 +2051,7 @@ struct ContentView: View {
     }
 
     private func handleTagNavigationHover(_ id: String, active: Bool) {
-        if appGridInteraction.appDragModeActive {
+        if appGridInteraction.appDragModeActive || tagNavDragModeActive {
             if !active, appGridInteraction.tagNavigationHoveredGroupName == id {
                 appGridInteraction.tagNavigationHoveredGroupName = nil
             }
@@ -2056,6 +2067,7 @@ struct ContentView: View {
 
         appGridInteraction.tagNavigationHoveredGroupName = id
         fillColorlessContainer(id)
+        scheduleTagNavigationHoverScroll(id)
     }
 
     private func handleTagNavigationAppDropHover(_ id: String, active: Bool) {
@@ -2074,6 +2086,26 @@ struct ContentView: View {
         }
 
         appGridInteraction.tagNavigationAppDropTargetName = id
+    }
+
+    private func scheduleTagNavigationHoverScroll(_ id: String) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + tagNavigationHoverScrollDelay) {
+            guard appGridInteraction.tagNavigationHoveredGroupName == id else { return }
+            guard !appGridInteraction.appDragModeActive && !tagNavDragModeActive else { return }
+            scrollToTagFromHover(id)
+        }
+    }
+
+    private func scrollToTagFromHover(_ id: String) {
+        let now = Date()
+        if appGridInteraction.tagNavigationLastHoverScrollID == id,
+           let lastScrollAt = appGridInteraction.tagNavigationLastHoverScrollAt,
+           now.timeIntervalSince(lastScrollAt) < tagNavigationHoverScrollInterval {
+            return
+        }
+        appGridInteraction.tagNavigationLastHoverScrollID = id
+        appGridInteraction.tagNavigationLastHoverScrollAt = now
+        scrollTo(id)
     }
 
     private func fillColorlessContainer(_ id: String) {
