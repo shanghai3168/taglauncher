@@ -1004,6 +1004,21 @@
       ]
     },
     {
+      "bundleIdentifier": "com.apple.campo",
+      "normalizedName": "siri-campo",
+      "canonicalName": "Siri",
+      "defaultTag": [
+        "system"
+      ],
+      "familiar": false,
+      "aliases": [
+        "campo",
+        "Campo",
+        "siri",
+        "Siri"
+      ]
+    },
+    {
       "bundleIdentifier": "com.apple.stickies",
       "normalizedName": "stickies",
       "canonicalName": "Stickies",

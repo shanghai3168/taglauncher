@@ -370,6 +370,11 @@
       "note": "Pintu masuk pembantu suara, boleh menyemak maklumat."
     },
     {
+      "bundleIdentifier": "com.apple.campo",
+      "displayName": "Siri",
+      "note": "Pintu masuk pembantu suara, boleh menyemak maklumat."
+    },
+    {
       "bundleIdentifier": "com.apple.stickies",
       "displayName": "Nota Lekat",
       "note": "Nota melekit desktop, nota sementara disiarkan betul-betul di hadapan anda"

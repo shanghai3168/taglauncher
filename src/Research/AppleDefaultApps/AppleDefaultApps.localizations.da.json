@@ -370,6 +370,11 @@
       "note": "Stemmeassistent indgang, kan tjekke oplysninger, åbne apps og styre systemet"
     },
     {
+      "bundleIdentifier": "com.apple.campo",
+      "displayName": "Siri",
+      "note": "Stemmeassistent indgang, kan tjekke oplysninger, åbne apps og styre systemet"
+    },
+    {
       "bundleIdentifier": "com.apple.stickies",
       "displayName": "Huskesedler",
       "note": "Sticky notes på skrivebordet, midlertidige noter er lagt op lige foran dig"

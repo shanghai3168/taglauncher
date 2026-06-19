@@ -370,6 +370,11 @@
       "note": "Lối vào trợ lý giọng nói, có thể kiểm tra thông tin."
     },
     {
+      "bundleIdentifier": "com.apple.campo",
+      "displayName": "Siri",
+      "note": "Lối vào trợ lý giọng nói, có thể kiểm tra thông tin."
+    },
+    {
       "bundleIdentifier": "com.apple.stickies",
       "displayName": "Giấy ghi chú",
       "note": "Ghi chú dán trên màn hình, ghi chú tạm thời được dán ngay trước mặt bạn"

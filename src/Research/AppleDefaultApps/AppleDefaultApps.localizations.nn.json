@@ -370,6 +370,11 @@
       "note": "Stemmeassistent inngang, kan sjekke informasjon."
     },
     {
+      "bundleIdentifier": "com.apple.campo",
+      "displayName": "Siri",
+      "note": "Stemmeassistent inngang, kan sjekke informasjon."
+    },
+    {
       "bundleIdentifier": "com.apple.stickies",
       "displayName": "Huskelapper",
       "note": "Klistrelapper på skrivebordet, midlertidige notater er lagt ut rett foran deg"

@@ -72,6 +72,7 @@ script-editor,Automation,com.apple.scripteditor2,写和运行 AppleScript，控�
 sf-symbols,ui-prototyping,com.apple.sfsymbols,Apple 官方符号库，做原生界面必备
 shortcuts,Automation,com.apple.shortcuts,把多个动作串成一键流程，是现代版 Automator
 siri,system,com.apple.siri.launcher,语音助手入口，能查信息、开 App、控制系统
+siri-campo,system,com.apple.campo,语音助手入口，能查信息、开 App、控制系统
 stickies,Notes,com.apple.stickies,桌面便利贴，临时记事就贴在眼前
 stocks,finance,com.apple.stocks,看股票和市场动态的小面板
 system-information,device-management,com.apple.systemprofiler,查看硬件、软件和设备详情，查配置最准确

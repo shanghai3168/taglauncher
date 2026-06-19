@@ -370,6 +370,11 @@
       "note": "语音助手入口，能查信息、开 App、控制系统"
     },
     {
+      "bundleIdentifier": "com.apple.campo",
+      "displayName": "Siri",
+      "note": "语音助手入口，能查信息、开 App、控制系统"
+    },
+    {
       "bundleIdentifier": "com.apple.stickies",
       "displayName": "便笺",
       "note": "桌面便利贴，临时记事就贴在眼前"

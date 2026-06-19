@@ -370,6 +370,11 @@
       "note": "음성비서 출입, 정보 확인, 앱 실행, 시스템 제어 가능"
     },
     {
+      "bundleIdentifier": "com.apple.campo",
+      "displayName": "Siri",
+      "note": "음성비서 출입, 정보 확인, 앱 실행, 시스템 제어 가능"
+    },
+    {
       "bundleIdentifier": "com.apple.stickies",
       "displayName": "스티커",
       "note": "데스크탑 스티커 메모, 임시 메모가 바로 앞에 게시됩니다"

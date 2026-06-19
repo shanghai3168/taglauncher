@@ -108,33 +108,78 @@ enum AppleDefaultAppCatalog {
 
     @discardableResult
     static func relocalizeDefaultNotesForCurrentLanguage(apps: [AppInfo]) -> Bool {
+        guard let base = loadBaseSnapshot() else { return false }
+
         var store = TagDatabase.load()
+        let originalStore = store
         var changed = false
+        var adoptedLegacyDefaultNote = false
 
         for app in apps where app.isAppleApp {
             let path = app.path.path
-            guard let currentNote = normalizedNote(store.appNotes[path]) else { continue }
-            guard let metadata = store.appNoteMetadata[path],
-                  metadata.origin == .appleDefault
+            guard let bundleIdentifier = normalizedBundleIdentifier(app.bundleIdentifier),
+                  base.byBundleIdentifier[bundleIdentifier] != nil,
+                  let currentNote = normalizedNote(store.appNotes[path], limit: base.noteLimit),
+                  let localizedNote = localizedNote(forBundleIdentifier: bundleIdentifier)
             else { continue }
+
+            let metadata = store.appNoteMetadata[path]
+            if metadata?.origin == .manual {
+                continue
+            }
 
             let currentFingerprint = TagDatabase.noteFingerprint(currentNote)
-            let expectedFingerprint = metadata.apple?.noteFingerprint ?? metadata.noteFingerprint
-            guard expectedFingerprint == currentFingerprint else { continue }
-            guard let defaultNote = Self.defaultNote(for: app),
-                  defaultNote.note != currentNote
-            else { continue }
+            let matchesKnownAppleDefault = noteMatchesKnownDefault(
+                currentNote,
+                forBundleIdentifier: bundleIdentifier,
+                base: base
+            )
 
-            store.appNotes[path] = defaultNote.note
+            let canRelocalize: Bool
+            switch metadata?.origin {
+            case .some(.manual):
+                canRelocalize = false
+            case .some(.appleDefault):
+                let expectedFingerprint = metadata?.apple?.noteFingerprint ?? metadata?.noteFingerprint
+                canRelocalize = expectedFingerprint == currentFingerprint || matchesKnownAppleDefault
+                if expectedFingerprint != currentFingerprint && matchesKnownAppleDefault {
+                    adoptedLegacyDefaultNote = true
+                }
+            case .some(.catalogDefault):
+                canRelocalize = matchesKnownAppleDefault
+                if canRelocalize {
+                    adoptedLegacyDefaultNote = true
+                }
+            case .none:
+                canRelocalize = matchesKnownAppleDefault
+                if canRelocalize {
+                    adoptedLegacyDefaultNote = true
+                }
+            }
+
+            guard canRelocalize else { continue }
+
+            let metadataMatchesLocalizedNote = metadata?.origin == .appleDefault
+                && metadata?.apple?.entryID == localizedNote.provenance.entryID
+                && metadata?.apple?.languageCode == localizedNote.provenance.languageCode
+                && metadata?.apple?.notesVersion == localizedNote.provenance.notesVersion
+                && metadata?.apple?.noteFingerprint == localizedNote.provenance.noteFingerprint
+                && metadata?.noteFingerprint == localizedNote.provenance.noteFingerprint
+            guard localizedNote.note != currentNote || !metadataMatchesLocalizedNote else { continue }
+
+            store.appNotes[path] = localizedNote.note
             store.appNoteMetadata[path] = TagDatabase.AppNoteMetadata(
                 origin: .appleDefault,
-                apple: defaultNote.provenance,
-                noteFingerprint: defaultNote.provenance.noteFingerprint
+                apple: localizedNote.provenance,
+                noteFingerprint: localizedNote.provenance.noteFingerprint
             )
             changed = true
         }
 
         if changed {
+            if adoptedLegacyDefaultNote {
+                _ = TagDatabase.backup(originalStore, reason: "apple-default-note-migration")
+            }
             TagDatabase.save(store)
         }
         return changed
@@ -166,6 +211,65 @@ enum AppleDefaultAppCatalog {
             )
         }
         return nil
+    }
+
+    private static func noteMatchesKnownDefault(
+        _ note: String,
+        forBundleIdentifier bundleIdentifier: String,
+        base: BaseSnapshot
+    ) -> Bool {
+        let fingerprint = TagDatabase.noteFingerprint(note)
+        return knownDefaultNoteFingerprints(
+            forBundleIdentifier: bundleIdentifier,
+            base: base
+        ).contains(fingerprint)
+    }
+
+    private static func knownDefaultNoteFingerprints(
+        forBundleIdentifier bundleIdentifier: String,
+        base: BaseSnapshot
+    ) -> Set<String> {
+        var result = Set<String>()
+        for languageCode in base.supportedLanguages {
+            guard let snapshot = loadLocalizationSnapshot(languageCode: languageCode),
+                  let note = normalizedNote(snapshot.notes[bundleIdentifier], limit: base.noteLimit)
+            else { continue }
+            for variant in legacyDefaultNoteVariants(note, limit: base.noteLimit) {
+                result.insert(TagDatabase.noteFingerprint(variant))
+            }
+        }
+        return result
+    }
+
+    private static func legacyDefaultNoteVariants(_ note: String, limit: Int) -> [String] {
+        let trimmed = String(note.trimmingCharacters(in: .whitespacesAndNewlines).prefix(limit))
+        guard !trimmed.isEmpty else { return [] }
+
+        var variants = [trimmed]
+        let stripped = noteByRemovingTrailingSentencePunctuation(trimmed)
+        if stripped != trimmed {
+            variants.append(stripped)
+        }
+
+        for suffix in [".", "。"] {
+            let punctuated = String((stripped + suffix).prefix(limit))
+            if !punctuated.isEmpty {
+                variants.append(punctuated)
+            }
+        }
+
+        var seen = Set<String>()
+        return variants.filter { seen.insert($0).inserted }
+    }
+
+    private static func noteByRemovingTrailingSentencePunctuation(_ value: String) -> String {
+        var result = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        let punctuation = CharacterSet(charactersIn: ".。．!！?？")
+        while let scalar = result.unicodeScalars.last,
+              punctuation.contains(scalar) {
+            result.removeLast()
+        }
+        return result
     }
 
     private static func loadBaseSnapshot() -> BaseSnapshot? {

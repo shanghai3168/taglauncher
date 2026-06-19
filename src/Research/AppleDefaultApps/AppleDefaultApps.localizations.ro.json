@@ -370,6 +370,11 @@
       "note": "Intrarea asistentului vocal, poate verifica informații."
     },
     {
+      "bundleIdentifier": "com.apple.campo",
+      "displayName": "Siri",
+      "note": "Intrarea asistentului vocal, poate verifica informații."
+    },
+    {
       "bundleIdentifier": "com.apple.stickies",
       "displayName": "Note adezive",
       "note": "Notele lipicioase de pe desktop."

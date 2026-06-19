@@ -370,6 +370,11 @@
       "note": "Voice assistant for search, app launch, and system control"
     },
     {
+      "bundleIdentifier": "com.apple.campo",
+      "displayName": "Siri",
+      "note": "Voice assistant for search, app launch, and system control"
+    },
+    {
       "bundleIdentifier": "com.apple.stickies",
       "displayName": "Stickies",
       "note": "Desktop sticky notes for temporary reminders"

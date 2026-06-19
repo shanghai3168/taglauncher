@@ -370,6 +370,11 @@
       "note": "Sprachassistent-Eingang, kann Informationen überprüfen."
     },
     {
+      "bundleIdentifier": "com.apple.campo",
+      "displayName": "Siri",
+      "note": "Sprachassistent-Eingang, kann Informationen überprüfen."
+    },
+    {
       "bundleIdentifier": "com.apple.stickies",
       "displayName": "Notizzettel",
       "note": "Haftnotizen für den Desktop und temporäre Notizen werden direkt vor."

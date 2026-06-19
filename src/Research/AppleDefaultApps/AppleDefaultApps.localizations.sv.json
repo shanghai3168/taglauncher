@@ -370,6 +370,11 @@
       "note": "Röstassistent ingång, kan kontrollera information."
     },
     {
+      "bundleIdentifier": "com.apple.campo",
+      "displayName": "Siri",
+      "note": "Röstassistent ingång, kan kontrollera information."
+    },
+    {
       "bundleIdentifier": "com.apple.stickies",
       "displayName": "Kom-ihåg-lappar",
       "note": "Skrivbordslappar, tillfälliga anteckningar läggs upp precis framför dig"

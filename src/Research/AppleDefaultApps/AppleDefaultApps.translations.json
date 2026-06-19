@@ -125,7 +125,8 @@
       "ios-app-installer": "iOS App安装器",
       "keychain-access": "钥匙串访问",
       "ticket-viewer": "票据显示程序",
-      "wireless-diagnostics": "无线诊断"
+      "wireless-diagnostics": "无线诊断",
+      "siri-campo": "Siri"
     },
     "zh-Hant": {
       "finder": "Finder",
@@ -216,7 +217,8 @@
       "ios-app-installer": "iOS App安裝程式",
       "keychain-access": "鑰匙圈存取",
       "ticket-viewer": "票券檢視程式",
-      "wireless-diagnostics": "無線診斷"
+      "wireless-diagnostics": "無線診斷",
+      "siri-campo": "Siri"
     },
     "en": {
       "finder": "Finder",
@@ -307,7 +309,8 @@
       "ios-app-installer": "iOS App Installer",
       "keychain-access": "Keychain Access",
       "ticket-viewer": "Ticket Viewer",
-      "wireless-diagnostics": "Wireless Diagnostics"
+      "wireless-diagnostics": "Wireless Diagnostics",
+      "siri-campo": "Siri"
     },
     "fr": {
       "finder": "Finder",
@@ -398,7 +401,8 @@
       "ios-app-installer": "Programme d’installation d’apps iOS",
       "keychain-access": "Trousseaux d’accès",
       "ticket-viewer": "Visualiseur de ticket",
-      "wireless-diagnostics": "Diagnostics sans fil"
+      "wireless-diagnostics": "Diagnostics sans fil",
+      "siri-campo": "Siri"
     },
     "it": {
       "finder": "Finder",
@@ -489,7 +493,8 @@
       "ios-app-installer": "Installer App iOS",
       "keychain-access": "Accesso Portachiavi",
       "ticket-viewer": "Visore Ticket",
-      "wireless-diagnostics": "Diagnosi Wireless"
+      "wireless-diagnostics": "Diagnosi Wireless",
+      "siri-campo": "Siri"
     },
     "de": {
       "finder": "Finder",
@@ -580,7 +585,8 @@
       "ios-app-installer": "iOS-App-Installationsprogramm",
       "keychain-access": "Schlüsselbund­verwaltung",
       "ticket-viewer": "Ticket-Viewer",
-      "wireless-diagnostics": "Diagnose für drahtlose Umgebungen"
+      "wireless-diagnostics": "Diagnose für drahtlose Umgebungen",
+      "siri-campo": "Siri"
     },
     "es": {
       "finder": "Finder",
@@ -671,7 +677,8 @@
       "ios-app-installer": "Instalador de Apps de iOS",
       "keychain-access": "Acceso a Llaveros",
       "ticket-viewer": "Visor de Tiques",
-      "wireless-diagnostics": "Diagnóstico Inalámbrico"
+      "wireless-diagnostics": "Diagnóstico Inalámbrico",
+      "siri-campo": "Siri"
     },
     "pt-BR": {
       "finder": "Finder",
@@ -762,7 +769,8 @@
       "ios-app-installer": "Instalador de Apps para iOS",
       "keychain-access": "Acesso às Chaves",
       "ticket-viewer": "Visualizador de Tíquetes",
-      "wireless-diagnostics": "Diagnóstico da Rede Sem Fio"
+      "wireless-diagnostics": "Diagnóstico da Rede Sem Fio",
+      "siri-campo": "Siri"
     },
     "ko": {
       "finder": "Finder",
@@ -853,7 +861,8 @@
       "ios-app-installer": "iOS 앱 설치 프로그램",
       "keychain-access": "키체인 접근",
       "ticket-viewer": "티켓 뷰어",
-      "wireless-diagnostics": "무선 진단"
+      "wireless-diagnostics": "무선 진단",
+      "siri-campo": "Siri"
     },
     "ja": {
       "finder": "Finder",
@@ -944,7 +953,8 @@
       "ios-app-installer": "iOSアプリインストーラ",
       "keychain-access": "キーチェーンアクセス",
       "ticket-viewer": "チケットビューア",
-      "wireless-diagnostics": "ワイヤレス診断"
+      "wireless-diagnostics": "ワイヤレス診断",
+      "siri-campo": "Siri"
     },
     "ru": {
       "finder": "Finder",
@@ -1035,7 +1045,8 @@
       "ios-app-installer": "Установщик iOS-приложений",
       "keychain-access": "Связка ключей",
       "ticket-viewer": "Просмотр билетов",
-      "wireless-diagnostics": "Беспроводная диагностика"
+      "wireless-diagnostics": "Беспроводная диагностика",
+      "siri-campo": "Siri"
     },
     "sr-Cyrl": {
       "finder": "Finder",
@@ -1126,7 +1137,8 @@
       "ios-app-installer": "iOS App Installer",
       "keychain-access": "Keychain Access",
       "ticket-viewer": "Ticket Viewer",
-      "wireless-diagnostics": "Wireless Diagnostics"
+      "wireless-diagnostics": "Wireless Diagnostics",
+      "siri-campo": "Siri"
     },
     "uk": {
       "finder": "Finder",
@@ -1217,7 +1229,8 @@
       "ios-app-installer": "Інсталятор програм iOS",
       "keychain-access": "Ключар",
       "ticket-viewer": "Переглядач квитків",
-      "wireless-diagnostics": "Діагностика бездротових мереж"
+      "wireless-diagnostics": "Діагностика бездротових мереж",
+      "siri-campo": "Siri"
     },
     "th": {
       "finder": "Finder",
@@ -1308,7 +1321,8 @@
       "ios-app-installer": "ตัวติดตั้งแอป iOS",
       "keychain-access": "การเข้าถึงพวงกุญแจ",
       "ticket-viewer": "ตัวดูตั๋ว",
-      "wireless-diagnostics": "การวินิจฉัยระบบไร้สาย"
+      "wireless-diagnostics": "การวินิจฉัยระบบไร้สาย",
+      "siri-campo": "Siri"
     },
     "vi": {
       "finder": "Finder",
@@ -1399,7 +1413,8 @@
       "ios-app-installer": "Trình cài đặt ứng dụng iOS",
       "keychain-access": "Truy cập chuỗi khóa",
       "ticket-viewer": "Trình xem Vé",
-      "wireless-diagnostics": "Chẩn đoán không dây"
+      "wireless-diagnostics": "Chẩn đoán không dây",
+      "siri-campo": "Siri"
     },
     "ar": {
       "finder": "فايندر",
@@ -1490,7 +1505,8 @@
       "ios-app-installer": "مثبِّت تطبيق iOS",
       "keychain-access": "الوصول إلى سلسلة المفاتيح",
       "ticket-viewer": "عارض التذاكر",
-      "wireless-diagnostics": "تشخيصات الشبكة اللاسلكية"
+      "wireless-diagnostics": "تشخيصات الشبكة اللاسلكية",
+      "siri-campo": "Siri"
     },
     "ar-Najdi": {
       "finder": "فايندر",
@@ -1581,7 +1597,8 @@
       "ios-app-installer": "مثبِّت تطبيق iOS",
       "keychain-access": "الوصول إلى سلسلة المفاتيح",
       "ticket-viewer": "عارض التذاكر",
-      "wireless-diagnostics": "تشخيصات الشبكة اللاسلكية"
+      "wireless-diagnostics": "تشخيصات الشبكة اللاسلكية",
+      "siri-campo": "Siri"
     },
     "tr": {
       "finder": "Finder",
@@ -1672,7 +1689,8 @@
       "ios-app-installer": "iOS Uygulaması Yükleyici",
       "keychain-access": "Anahtar Zinciri Erişimi",
       "ticket-viewer": "Bilet Görüntüleyici",
-      "wireless-diagnostics": "Kablosuz Ağ Tanıları"
+      "wireless-diagnostics": "Kablosuz Ağ Tanıları",
+      "siri-campo": "Siri"
     },
     "id": {
       "finder": "Finder",
@@ -1763,7 +1781,8 @@
       "ios-app-installer": "Penginstal App iOS",
       "keychain-access": "Akses Rantai Kunci",
       "ticket-viewer": "Penampil Tiket",
-      "wireless-diagnostics": "Diagnostik Nirkabel"
+      "wireless-diagnostics": "Diagnostik Nirkabel",
+      "siri-campo": "Siri"
     },
     "cs": {
       "finder": "Finder",
@@ -1854,7 +1873,8 @@
       "ios-app-installer": "Instalátor aplikací pro iOS",
       "keychain-access": "Klíčenka",
       "ticket-viewer": "Prohlížeč lístků",
-      "wireless-diagnostics": "Diagnostika bezdrátové sítě"
+      "wireless-diagnostics": "Diagnostika bezdrátové sítě",
+      "siri-campo": "Siri"
     },
     "da": {
       "finder": "Finder",
@@ -1945,7 +1965,8 @@
       "ios-app-installer": "Installering af iOS-apps",
       "keychain-access": "Hovednøglering",
       "ticket-viewer": "Billetfremviser",
-      "wireless-diagnostics": "Trådløs diagnostik"
+      "wireless-diagnostics": "Trådløs diagnostik",
+      "siri-campo": "Siri"
     },
     "nl": {
       "finder": "Finder",
@@ -2036,7 +2057,8 @@
       "ios-app-installer": "iOS-appinstallatieprogramma",
       "keychain-access": "Sleutelhanger­toegang",
       "ticket-viewer": "Ticketviewer",
-      "wireless-diagnostics": "Wifiprobleemoplossing"
+      "wireless-diagnostics": "Wifiprobleemoplossing",
+      "siri-campo": "Siri"
     },
     "no": {
       "finder": "Finder",
@@ -2127,7 +2149,8 @@
       "ios-app-installer": "Appinstallerer for iOS",
       "keychain-access": "Nøkkelringtilgang",
       "ticket-viewer": "Billettvisning",
-      "wireless-diagnostics": "Wi-Fi-diagnostikk"
+      "wireless-diagnostics": "Wi-Fi-diagnostikk",
+      "siri-campo": "Siri"
     },
     "nn": {
       "finder": "Finder",
@@ -2218,7 +2241,8 @@
       "ios-app-installer": "Appinstallerer for iOS",
       "keychain-access": "Nøkkelringtilgang",
       "ticket-viewer": "Billettvisning",
-      "wireless-diagnostics": "Wi-Fi-diagnostikk"
+      "wireless-diagnostics": "Wi-Fi-diagnostikk",
+      "siri-campo": "Siri"
     },
     "nb": {
       "finder": "Finder",
@@ -2309,7 +2333,8 @@
       "ios-app-installer": "Appinstallerer for iOS",
       "keychain-access": "Nøkkelringtilgang",
       "ticket-viewer": "Billettvisning",
-      "wireless-diagnostics": "Wi-Fi-diagnostikk"
+      "wireless-diagnostics": "Wi-Fi-diagnostikk",
+      "siri-campo": "Siri"
     },
     "ms": {
       "finder": "Finder",
@@ -2400,7 +2425,8 @@
       "ios-app-installer": "Pemasang App iOS",
       "keychain-access": "Akses Rantai Kunci",
       "ticket-viewer": "Pemapar Tiket",
-      "wireless-diagnostics": "Diagnostik Wayarles"
+      "wireless-diagnostics": "Diagnostik Wayarles",
+      "siri-campo": "Siri"
     },
     "pl": {
       "finder": "Finder",
@@ -2491,7 +2517,8 @@
       "ios-app-installer": "Instalator aplikacji iOS",
       "keychain-access": "Dostęp do pęku kluczy",
       "ticket-viewer": "Podgląd biletów",
-      "wireless-diagnostics": "Diagnostyka sieci bezprzewodowej"
+      "wireless-diagnostics": "Diagnostyka sieci bezprzewodowej",
+      "siri-campo": "Siri"
     },
     "ro": {
       "finder": "Finder",
@@ -2582,7 +2609,8 @@
       "ios-app-installer": "Program de instalare aplicații iOS",
       "keychain-access": "Acces portchei",
       "ticket-viewer": "Observator tichet",
-      "wireless-diagnostics": "Diagnoză wireless"
+      "wireless-diagnostics": "Diagnoză wireless",
+      "siri-campo": "Siri"
     },
     "sv": {
       "finder": "Finder",
@@ -2673,7 +2701,8 @@
       "ios-app-installer": "iOS-appinstallerare",
       "keychain-access": "Nyckelhanterare",
       "ticket-viewer": "Biljettvisare",
-      "wireless-diagnostics": "Trådlös diagnos"
+      "wireless-diagnostics": "Trådlös diagnos",
+      "siri-campo": "Siri"
     }
   },
   "notesByLanguage": {
@@ -2766,7 +2795,8 @@
       "ios-app-installer": "安装 iOS App 包的系统辅助工具",
       "keychain-access": "管理密码、证书、密钥和安全项目",
       "ticket-viewer": "查看 Kerberos 票据和身份验证状态",
-      "wireless-diagnostics": "诊断 Wi-Fi 问题并生成无线报告"
+      "wireless-diagnostics": "诊断 Wi-Fi 问题并生成无线报告",
+      "siri-campo": "语音助手入口，能查信息、开 App、控制系统"
     },
     "zh-Hant": {
       "finder": "macOS 系統自帶工具，適合完成對應的系統管理或日常操作",
@@ -2857,7 +2887,8 @@
       "ios-app-installer": "安裝 iOS App 套件的系統輔助工具",
       "keychain-access": "管理密碼、憑證、密鑰和安全項目",
       "ticket-viewer": "查看 Kerberos 票券和驗證狀態",
-      "wireless-diagnostics": "診斷 Wi-Fi 問題並產生無線報告"
+      "wireless-diagnostics": "診斷 Wi-Fi 問題並產生無線報告",
+      "siri-campo": "語音助手入口，能查信息、開 App、控制系統"
     },
     "en": {
       "finder": "Manage files, folders, disks, and connected devices on Mac",
@@ -2948,7 +2979,8 @@
       "ios-app-installer": "Install iOS app packages with a system helper",
       "keychain-access": "Manage passwords, certificates, keys, and secure items",
       "ticket-viewer": "View Kerberos tickets and authentication status",
-      "wireless-diagnostics": "Diagnose Wi-Fi issues and create wireless reports"
+      "wireless-diagnostics": "Diagnose Wi-Fi issues and create wireless reports",
+      "siri-campo": "Voice assistant for search, app launch, and system control"
     },
     "fr": {
       "finder": "Gère fichiers, dossiers, disques et appareils connectés au Mac",
@@ -3039,7 +3071,8 @@
       "ios-app-installer": "Installe des paquets d’apps iOS avec l’outil système",
       "keychain-access": "Gère mots de passe, certificats, clés et éléments sûrs",
       "ticket-viewer": "Affiche les tickets Kerberos et l’état d’authentification",
-      "wireless-diagnostics": "Diagnostique le Wi-Fi et crée des rapports sans fil"
+      "wireless-diagnostics": "Diagnostique le Wi-Fi et crée des rapports sans fil",
+      "siri-campo": "Assistant vocal pour recherche, ouverture d'apps et réglages"
     },
     "it": {
       "finder": "Il sistema macOS è dotato di strumenti adatti per completare la.",
@@ -3130,7 +3163,8 @@
       "ios-app-installer": "Installa pacchetti di app iOS con lo strumento di sistema",
       "keychain-access": "Gestisce password, certificati, chiavi ed elementi sicuri",
       "ticket-viewer": "Mostra ticket Kerberos e stato di autenticazione",
-      "wireless-diagnostics": "Diagnostica il Wi-Fi e crea report wireless"
+      "wireless-diagnostics": "Diagnostica il Wi-Fi e crea report wireless",
+      "siri-campo": "Ingresso con assistente vocale, può verificare informazioni."
     },
     "de": {
       "finder": "Dateimanager des Mac für Ordner, Laufwerke und Geräte",
@@ -3221,7 +3255,8 @@
       "ios-app-installer": "Installiert iOS-App-Pakete mit einem Systemhelfer",
       "keychain-access": "Verwaltet Passwörter, Zertifikate, Schlüssel und sichere Objekte",
       "ticket-viewer": "Zeigt Kerberos-Tickets und den Anmeldestatus",
-      "wireless-diagnostics": "Diagnostiziert WLAN-Probleme und erstellt Berichte"
+      "wireless-diagnostics": "Diagnostiziert WLAN-Probleme und erstellt Berichte",
+      "siri-campo": "Sprachassistent-Eingang, kann Informationen überprüfen."
     },
     "es": {
       "finder": "El sistema macOS viene con herramientas adecuadas para completar la.",
@@ -3312,7 +3347,8 @@
       "ios-app-installer": "Instala paquetes de apps iOS con una ayuda del sistema",
       "keychain-access": "Gestiona contraseñas, certificados, claves y elementos seguros",
       "ticket-viewer": "Muestra tickets Kerberos y estado de autenticación",
-      "wireless-diagnostics": "Diagnostica Wi-Fi y crea informes inalámbricos"
+      "wireless-diagnostics": "Diagnostica Wi-Fi y crea informes inalámbricos",
+      "siri-campo": "Entrada de asistente de voz, puede verificar información."
     },
     "pt-BR": {
       "finder": "O sistema macOS vem com ferramentas adequadas para concluir o.",
@@ -3403,7 +3439,8 @@
       "ios-app-installer": "Instala pacotes de apps iOS com ajuda do sistema",
       "keychain-access": "Gerencia senhas, certificados, chaves e itens seguros",
       "ticket-viewer": "Mostra tíquetes Kerberos e estado de autenticação",
-      "wireless-diagnostics": "Diagnostica Wi-Fi e cria relatórios sem fio"
+      "wireless-diagnostics": "Diagnostica Wi-Fi e cria relatórios sem fio",
+      "siri-campo": "Entrada do assistente de voz, pode verificar informaçõe."
     },
     "ko": {
       "finder": "macOS 시스템에는 해당 시스템 관리 또는 일상 작업을 완료하는 데 적합한 도구가 함께 제공됩니다",
@@ -3494,7 +3531,8 @@
       "ios-app-installer": "iOS 앱 패키지를 설치하는 시스템 도구입니다",
       "keychain-access": "암호, 인증서, 키와 보안 항목을 관리합니다",
       "ticket-viewer": "Kerberos 티켓과 인증 상태를 확인합니다",
-      "wireless-diagnostics": "Wi-Fi 문제를 진단하고 무선 보고서를 만듭니다"
+      "wireless-diagnostics": "Wi-Fi 문제를 진단하고 무선 보고서를 만듭니다",
+      "siri-campo": "음성비서 출입, 정보 확인, 앱 실행, 시스템 제어 가능"
     },
     "ja": {
       "finder": "Macのファイル、フォルダ、ディスク、接続デバイスを管理",
@@ -3585,7 +3623,8 @@
       "ios-app-installer": "iOS Appパッケージをインストールするシステム補助ツール",
       "keychain-access": "パスワード、証明書、鍵、安全項目を管理",
       "ticket-viewer": "Kerberosチケットと認証状態を確認",
-      "wireless-diagnostics": "Wi-Fi問題を診断し、無線レポートを作成"
+      "wireless-diagnostics": "Wi-Fi問題を診断し、無線レポートを作成",
+      "siri-campo": "検索、アプリ起動、システム操作に使う音声アシスタント"
     },
     "ru": {
       "finder": "Система macOS поставляется с инструментами.",
@@ -3676,7 +3715,8 @@
       "ios-app-installer": "Устанавливает пакеты приложений iOS системным помощником",
       "keychain-access": "Управляет паролями, сертификатами, ключами и защищенными объектами",
       "ticket-viewer": "Показывает билеты Kerberos и состояние аутентификации",
-      "wireless-diagnostics": "Диагностирует Wi-Fi и создает отчеты о сети"
+      "wireless-diagnostics": "Диагностирует Wi-Fi и создает отчеты о сети",
+      "siri-campo": "Вход с голосовым помощником, позволяющий проверять информацию."
     },
     "sr-Cyrl": {
       "finder": "МацОС систем долази са алаткама.",
@@ -3767,7 +3807,8 @@
       "ios-app-installer": "Инсталира iOS пакете апликација системским алатом",
       "keychain-access": "Управља лозинкама, сертификатима, кључевима и безбедним ставкама",
       "ticket-viewer": "Приказује Kerberos тикете и стање аутентификације",
-      "wireless-diagnostics": "Дијагностикује Wi-Fi и прави бежичне извештаје"
+      "wireless-diagnostics": "Дијагностикује Wi-Fi и прави бежичне извештаје",
+      "siri-campo": "Улаз гласовног помоћника, може да проверава информације."
     },
     "uk": {
       "finder": "Система macOS постачається з інструментами.",
@@ -3858,7 +3899,8 @@
       "ios-app-installer": "Встановлює пакети iOS App системним помічником",
       "keychain-access": "Керує паролями, сертифікатами, ключами та захищеними об’єктами",
       "ticket-viewer": "Показує квитки Kerberos і стан автентифікації",
-      "wireless-diagnostics": "Діагностує Wi-Fi і створює бездротові звіти"
+      "wireless-diagnostics": "Діагностує Wi-Fi і створює бездротові звіти",
+      "siri-campo": "Вхід голосового помічника, який може перевіряти інформацію."
     },
     "th": {
       "finder": "ระบบ macOS มาพร้อมกับเครื่องมือที่เหมาะสำหรับการจัดการระบบที่เกี่ยวข้องห",
@@ -3949,7 +3991,8 @@
       "ios-app-installer": "ติดตั้งแพ็กเกจแอป iOS ด้วยเครื่องมือระบบ",
       "keychain-access": "จัดการรหัสผ่าน ใบรับรอง กุญแจ และรายการปลอดภัย",
       "ticket-viewer": "ดูตั๋ว Kerberos และสถานะการตรวจสอบสิทธิ์",
-      "wireless-diagnostics": "วินิจฉัย Wi-Fi และสร้างรายงานไร้สาย"
+      "wireless-diagnostics": "วินิจฉัย Wi-Fi และสร้างรายงานไร้สาย",
+      "siri-campo": "ทางเข้าระบบสั่งงานด้วยเสียง สามารถตรวจสอบข้อมูล เปิดแอพ และควบคุมระบบได้"
     },
     "vi": {
       "finder": "Hệ thống macOS đi kèm với các công cụ phù hợp để hoàn thành việc quản.",
@@ -4040,7 +4083,8 @@
       "ios-app-installer": "Cài gói ứng dụng iOS bằng công cụ hệ thống",
       "keychain-access": "Quản lý mật khẩu, chứng chỉ, khóa và mục bảo mật",
       "ticket-viewer": "Xem vé Kerberos và trạng thái xác thực",
-      "wireless-diagnostics": "Chẩn đoán Wi-Fi và tạo báo cáo không dây"
+      "wireless-diagnostics": "Chẩn đoán Wi-Fi và tạo báo cáo không dây",
+      "siri-campo": "Lối vào trợ lý giọng nói, có thể kiểm tra thông tin."
     },
     "ar": {
       "finder": "يأتي نظام macOS مزودًا بأدوات مناسبة لإكمال إدارة النظام المقابلة أو.",
@@ -4131,7 +4175,8 @@
       "ios-app-installer": "يثبت حزم تطبيقات iOS بأداة النظام",
       "keychain-access": "يدير كلمات السر والشهادات والمفاتيح والعناصر الآمنة",
       "ticket-viewer": "يعرض تذاكر Kerberos وحالة المصادقة",
-      "wireless-diagnostics": "يشخص مشاكل Wi-Fi وينشئ تقارير لاسلكية"
+      "wireless-diagnostics": "يشخص مشاكل Wi-Fi وينشئ تقارير لاسلكية",
+      "siri-campo": "مدخل مساعد صوتي، يمكنه التحقق من المعلومات، وفتح التطبيقات، والتحكم في النظام"
     },
     "ar-Najdi": {
       "finder": "يأتي نظام macOS مزودًا بأدوات مناسبة لإكمال إدارة النظام المقابلة أو.",
@@ -4222,7 +4267,8 @@
       "ios-app-installer": "يثبت حزم تطبيقات iOS بأداة النظام",
       "keychain-access": "يدير كلمات السر والشهادات والمفاتيح والعناصر الآمنة",
       "ticket-viewer": "يعرض تذاكر Kerberos وحالة المصادقة",
-      "wireless-diagnostics": "يشخص مشاكل Wi-Fi وينشئ تقارير لاسلكية"
+      "wireless-diagnostics": "يشخص مشاكل Wi-Fi وينشئ تقارير لاسلكية",
+      "siri-campo": "مدخل مساعد صوتي، يمكنه التحقق من المعلومات، وفتح التطبيقات، والتحكم في النظام"
     },
     "tr": {
       "finder": "MacOS sistemi, ilgili sistem yönetimini veya günlük işlemleri.",
@@ -4313,7 +4359,8 @@
       "ios-app-installer": "iOS uygulama paketlerini sistem aracıyla yükler",
       "keychain-access": "Parolaları, sertifikaları, anahtarları ve güvenli öğeleri yönetir",
       "ticket-viewer": "Kerberos biletlerini ve kimlik doğrulama durumunu gösterir",
-      "wireless-diagnostics": "Wi-Fi sorunlarını tanılar ve kablosuz rapor oluşturur"
+      "wireless-diagnostics": "Wi-Fi sorunlarını tanılar ve kablosuz rapor oluşturur",
+      "siri-campo": "Sesli asistan girişi, bilgileri kontrol edebilir."
     },
     "id": {
       "finder": "Sistem macOS dilengkapi dengan alat yang cocok untuk menyelesaikan.",
@@ -4404,7 +4451,8 @@
       "ios-app-installer": "Menginstal paket app iOS dengan alat sistem",
       "keychain-access": "Mengelola kata sandi, sertifikat, kunci, dan item aman",
       "ticket-viewer": "Melihat tiket Kerberos dan status autentikasi",
-      "wireless-diagnostics": "Mendiagnosis Wi-Fi dan membuat laporan nirkabel"
+      "wireless-diagnostics": "Mendiagnosis Wi-Fi dan membuat laporan nirkabel",
+      "siri-campo": "Pintu masuk asisten suara, dapat memeriksa informasi, membuka aplikasi."
     },
     "cs": {
       "finder": "Systém macOS je dodáván s nástroji vhodnými pro dokončení odpovídající.",
@@ -4495,7 +4543,8 @@
       "ios-app-installer": "Instaluje balíčky aplikací iOS systémovým nástrojem",
       "keychain-access": "Spravuje hesla, certifikáty, klíče a zabezpečené položky",
       "ticket-viewer": "Zobrazí lístky Kerberos a stav ověření",
-      "wireless-diagnostics": "Diagnostikuje Wi-Fi a vytváří bezdrátové zprávy"
+      "wireless-diagnostics": "Diagnostikuje Wi-Fi a vytváří bezdrátové zprávy",
+      "siri-campo": "Vstup hlasového asistenta, může kontrolovat informace."
     },
     "da": {
       "finder": "MacOS-systemet leveres med værktøjer.",
@@ -4586,7 +4635,8 @@
       "ios-app-installer": "Installerer iOS-app-pakker med et systemværktøj",
       "keychain-access": "Administrerer adgangskoder, certifikater, nøgler og sikre emner",
       "ticket-viewer": "Viser Kerberos-billetter og godkendelsesstatus",
-      "wireless-diagnostics": "Diagnosticerer Wi-Fi og opretter trådløse rapporter"
+      "wireless-diagnostics": "Diagnosticerer Wi-Fi og opretter trådløse rapporter",
+      "siri-campo": "Stemmeassistent indgang, kan tjekke oplysninger, åbne apps og styre systemet"
     },
     "nl": {
       "finder": "Mac-bestandsbeheer voor mappen, schijven en apparaten",
@@ -4677,7 +4727,8 @@
       "ios-app-installer": "Installeert iOS-app-pakketten met een systeemhulp",
       "keychain-access": "Beheert wachtwoorden, certificaten, sleutels en beveiligde items",
       "ticket-viewer": "Toont Kerberos-tickets en authenticatiestatus",
-      "wireless-diagnostics": "Diagnosticeert wifi en maakt draadloze rapporten"
+      "wireless-diagnostics": "Diagnosticeert wifi en maakt draadloze rapporten",
+      "siri-campo": "Toegang met stemassistent, kan informatie controleren."
     },
     "no": {
       "finder": "MacOS-systemet kommer med verktøy.",
@@ -4768,7 +4819,8 @@
       "ios-app-installer": "Installerer iOS-app-pakker med systemverktøy",
       "keychain-access": "Administrerer passord, sertifikater, nøkler og sikre objekter",
       "ticket-viewer": "Viser Kerberos-billetter og autentiseringsstatus",
-      "wireless-diagnostics": "Diagnostiserer Wi-Fi og lager trådløse rapporter"
+      "wireless-diagnostics": "Diagnostiserer Wi-Fi og lager trådløse rapporter",
+      "siri-campo": "Stemmeassistent inngang, kan sjekke informasjon."
     },
     "nn": {
       "finder": "MacOS-systemet kommer med verktøy.",
@@ -4859,7 +4911,8 @@
       "ios-app-installer": "Installerer iOS-app-pakkar med systemverktøy",
       "keychain-access": "Handterer passord, sertifikat, nøklar og sikre objekt",
       "ticket-viewer": "Viser Kerberos-billettar og autentiseringsstatus",
-      "wireless-diagnostics": "Diagnostiserer Wi-Fi og lagar trådlause rapportar"
+      "wireless-diagnostics": "Diagnostiserer Wi-Fi og lagar trådlause rapportar",
+      "siri-campo": "Stemmeassistent inngang, kan sjekke informasjon."
     },
     "nb": {
       "finder": "MacOS-systemet kommer med verktøy.",
@@ -4950,7 +5003,8 @@
       "ios-app-installer": "Installerer iOS-app-pakker med systemverktøy",
       "keychain-access": "Administrerer passord, sertifikater, nøkler og sikre objekter",
       "ticket-viewer": "Viser Kerberos-billetter og autentiseringsstatus",
-      "wireless-diagnostics": "Diagnostiserer Wi-Fi og lager trådløse rapporter"
+      "wireless-diagnostics": "Diagnostiserer Wi-Fi og lager trådløse rapporter",
+      "siri-campo": "Stemmeassistent inngang, kan sjekke informasjon."
     },
     "ms": {
       "finder": "Sistem macOS disertakan dengan alatan.",
@@ -5041,7 +5095,8 @@
       "ios-app-installer": "Memasang pakej app iOS dengan alat sistem",
       "keychain-access": "Mengurus kata laluan, sijil, kunci dan item selamat",
       "ticket-viewer": "Melihat tiket Kerberos dan status pengesahan",
-      "wireless-diagnostics": "Mendiagnosis Wi-Fi dan mencipta laporan wayarles"
+      "wireless-diagnostics": "Mendiagnosis Wi-Fi dan mencipta laporan wayarles",
+      "siri-campo": "Pintu masuk pembantu suara, boleh menyemak maklumat."
     },
     "pl": {
       "finder": "System macOS jest wyposażony w narzędzia odpowiednie do odpowiedniego.",
@@ -5132,7 +5187,8 @@
       "ios-app-installer": "Instaluje pakiety aplikacji iOS narzędziem systemowym",
       "keychain-access": "Zarządza hasłami, certyfikatami, kluczami i bezpiecznymi elementami",
       "ticket-viewer": "Pokazuje bilety Kerberos i stan uwierzytelnienia",
-      "wireless-diagnostics": "Diagnozuje Wi-Fi i tworzy raporty sieci bezprzewodowej"
+      "wireless-diagnostics": "Diagnozuje Wi-Fi i tworzy raporty sieci bezprzewodowej",
+      "siri-campo": "Wejście asystenta głosowego, może sprawdzać informacje."
     },
     "ro": {
       "finder": "Sistemul macOS vine cu instrumente.",
@@ -5223,7 +5279,8 @@
       "ios-app-installer": "Instalează pachete de aplicații iOS cu instrumentul sistem",
       "keychain-access": "Gestionează parole, certificate, chei și elemente sigure",
       "ticket-viewer": "Afișează tichete Kerberos și starea autentificării",
-      "wireless-diagnostics": "Diagnostichează Wi-Fi și creează rapoarte wireless"
+      "wireless-diagnostics": "Diagnostichează Wi-Fi și creează rapoarte wireless",
+      "siri-campo": "Intrarea asistentului vocal, poate verifica informații."
     },
     "sv": {
       "finder": "MacOS-systemet levereras med verktyg.",
@@ -5314,7 +5371,8 @@
       "ios-app-installer": "Installerar iOS-apppaket med ett systemverktyg",
       "keychain-access": "Hanterar lösenord, certifikat, nycklar och säkra objekt",
       "ticket-viewer": "Visar Kerberos-biljetter och autentiseringsstatus",
-      "wireless-diagnostics": "Diagnostiserar Wi-Fi och skapar trådlösa rapporter"
+      "wireless-diagnostics": "Diagnostiserar Wi-Fi och skapar trådlösa rapporter",
+      "siri-campo": "Röstassistent ingång, kan kontrollera information."
     }
   }
 }

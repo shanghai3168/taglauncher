@@ -36,10 +36,16 @@ if rg -n 'SmartStartService\.defaultNote\(for: app\)' "$DATA_LAYER_SWIFT" >/dev/
   fail "Apple default note seeding must not call SmartStartService.defaultNote(for:)"
 fi
 
-rg -Fq 'metadata.origin == .appleDefault' "$APPLE_CATALOG_SWIFT" \
-  || fail "Apple relocalization must only touch appleDefault notes"
+rg -Fq 'case .some(.appleDefault)' "$APPLE_CATALOG_SWIFT" \
+  || fail "Apple relocalization must have an explicit appleDefault path"
 rg -Fq 'expectedFingerprint == currentFingerprint' "$APPLE_CATALOG_SWIFT" \
   || fail "Apple relocalization must require fingerprint match before overwrite"
+rg -Fq 'noteMatchesKnownDefault(' "$APPLE_CATALOG_SWIFT" \
+  || fail "Apple relocalization must adopt legacy default notes by exact known-default fingerprint"
+rg -Fq 'legacyDefaultNoteVariants' "$APPLE_CATALOG_SWIFT" \
+  || fail "Apple relocalization must include historical default-note punctuation variants"
+rg -Fq 'apple-default-note-migration' "$APPLE_CATALOG_SWIFT" \
+  || fail "Apple relocalization must back up before adopting legacy no-metadata notes"
 rg -Fq 'origin: .appleDefault' "$APPLE_CATALOG_SWIFT" \
   || fail "Apple relocalization must preserve appleDefault metadata"
 

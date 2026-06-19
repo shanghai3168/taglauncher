@@ -370,6 +370,11 @@
       "note": "Wejście asystenta głosowego, może sprawdzać informacje."
     },
     {
+      "bundleIdentifier": "com.apple.campo",
+      "displayName": "Siri",
+      "note": "Wejście asystenta głosowego, może sprawdzać informacje."
+    },
+    {
       "bundleIdentifier": "com.apple.stickies",
       "displayName": "Nalepki",
       "note": "Notatki samoprzylepne na pulpicie."

@@ -108,7 +108,7 @@ require(
 if re.search(r"static\s+let\s+maxWidth\s*:\s*CGFloat", app_grid):
     fail("Usage tips HUD must not use a hard maximum width that truncates localized titles")
 require(
-    r"fullTitleWidth\s*=\s*ceil\s*\(\s*titleLabel\.attributedStringValue\.size\(\)\.width\s*\)",
+    r"let\s+titleWidth\s*=\s*ceil\s*\(\s*titleLabel\.attributedStringValue\.size\(\)\.width\s*\)",
     app_grid,
     "Usage tips layout must measure the localized title width instead of using a fixed title column",
 )
@@ -116,6 +116,16 @@ require(
     r"configureLabel\s*\(\s*titleLabel\s*,\s*font\s*:\s*titleFont\s*,\s*lineBreakMode\s*:\s*\.byClipping\s*\)",
     app_grid,
     "Usage tip titles must not use tail truncation ellipses",
+)
+require(
+    r"let\s+titleWidth\s*=\s*availableTextWidth",
+    app_grid,
+    "Usage tip title label must span the text column so centered titles are visually centered",
+)
+require(
+    r"configureLabel\s*\(_\s+label\s*:\s*NSTextField,\s*font\s*:\s*NSFont,\s*lineBreakMode\s*:\s*NSLineBreakMode\s*\)\s*\{(?P<body>.*?)label\.alignment\s*=\s*\.center",
+    app_grid,
+    "Usage tip title labels must be horizontally centered",
 )
 if re.search(r"configureLabel\s*\(\s*titleLabel\s*,\s*font\s*:\s*titleFont\s*,\s*lineBreakMode\s*:\s*\.byTruncatingTail\s*\)", app_grid):
     fail("Usage tip titles must not be configured with byTruncatingTail")
@@ -453,6 +463,10 @@ for path in json_files:
     missing = [key for key in required_keys if not data.get(key)]
     if missing:
         fail(f"{path.name} missing usage tip localization keys: {', '.join(missing)}")
+    for tip_index in range(1, 9):
+        title = data[f"usageTips.tip{tip_index}.title"]
+        if re.search(r"\s*[:：]\s*$", title):
+            fail(f"{path.name} usageTips.tip{tip_index}.title must not end with a colon")
     if path.stem not in {"zh-Hans", "zh-Hant"}:
         for tip_index in range(1, 9):
             detail = data[f"usageTips.tip{tip_index}.detail"]

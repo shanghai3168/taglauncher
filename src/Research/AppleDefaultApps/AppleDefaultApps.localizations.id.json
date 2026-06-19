@@ -370,6 +370,11 @@
       "note": "Pintu masuk asisten suara, dapat memeriksa informasi, membuka aplikasi."
     },
     {
+      "bundleIdentifier": "com.apple.campo",
+      "displayName": "Siri",
+      "note": "Pintu masuk asisten suara, dapat memeriksa informasi, membuka aplikasi."
+    },
+    {
       "bundleIdentifier": "com.apple.stickies",
       "displayName": "Sticky",
       "note": "Catatan tempel desktop, catatan sementara diposting tepat di depan Anda"

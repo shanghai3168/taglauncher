@@ -949,14 +949,13 @@ private final class AppGridUsageTipsNSView: NSView {
         let buttonDotsGap: CGFloat = 6
         let dotsHeight: CGFloat = 10
         let dotsWidth = dotsView.preferredWidth
-        let fullTitleWidth = ceil(titleLabel.attributedStringValue.size().width)
 
         let titleX = visualFrame.minX + paddingLeft + iconSize + iconTextGap
         let buttonsWidth = buttonSize * 2 + buttonGap
         let buttonsGroupMinX = visualFrame.maxX - paddingRight - buttonsWidth
         let textRight = visualFrame.maxX - controlZoneWidth
         let availableTextWidth = max(1, textRight - titleX)
-        let titleWidth = min(fullTitleWidth, availableTextWidth)
+        let titleWidth = availableTextWidth
         let titleHeight: CGFloat = 32
         let detailHeight: CGFloat = 68
         let lineGap: CGFloat = 8
@@ -1109,6 +1108,7 @@ private final class AppGridUsageTipsNSView: NSView {
         label.isBordered = false
         label.lineBreakMode = lineBreakMode
         label.maximumNumberOfLines = 1
+        label.alignment = .center
         label.font = font
     }
 
