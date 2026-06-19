@@ -44,6 +44,8 @@ rg -Fq 'noteMatchesKnownDefault(' "$APPLE_CATALOG_SWIFT" \
   || fail "Apple relocalization must adopt legacy default notes by exact known-default fingerprint"
 rg -Fq 'legacyDefaultNoteVariants' "$APPLE_CATALOG_SWIFT" \
   || fail "Apple relocalization must include historical default-note punctuation variants"
+rg -Fq 'legacyDefaultNoteFingerprintsByBundleIdentifier' "$APPLE_CATALOG_SWIFT" \
+  || fail "Apple relocalization must include pre-metadata historical Apple default notes"
 rg -Fq 'apple-default-note-migration' "$APPLE_CATALOG_SWIFT" \
   || fail "Apple relocalization must back up before adopting legacy no-metadata notes"
 rg -Fq 'origin: .appleDefault' "$APPLE_CATALOG_SWIFT" \

@@ -61,6 +61,58 @@ enum AppleDefaultAppCatalog {
     private static let cacheLock = NSLock()
     private static var cachedBaseSnapshot: BaseSnapshot?
     private static var cachedLocalizationSnapshots: [String: LocalizationSnapshot] = [:]
+    private static let legacyDefaultNoteFingerprintsByBundleIdentifier: [String: Set<String>] = [
+        "com.apple.chess": [
+            "9f72f1448c7e9b47",
+            "a3b754a4f06eee33",
+            "abc8528f6a2ca356"
+        ],
+        "com.apple.freeform": [
+            "32fee0886cf2c6bb",
+            "503c25567e9640c2",
+            "aee5e9a7730252f7"
+        ],
+        "com.apple.home": [
+            "003e996159a187cc",
+            "2707ce5206adfb2a",
+            "5b0207586af532a9"
+        ],
+        "com.apple.music": [
+            "545fa7c8a0d216fa",
+            "8867798c868c8c30",
+            "bce11863b08fac8b"
+        ],
+        "com.apple.passwords": [
+            "58b38191593ec9b9",
+            "a72f91e414c90254",
+            "fa1ce5e1bb5998cd"
+        ],
+        "com.apple.mobilephone": [
+            "703bd99a660e80e4",
+            "80d0df54c7ddf2d1",
+            "9d57741d3114a1a2"
+        ],
+        "com.apple.tv": [
+            "6a29d8ece97cd432",
+            "e1efb690bf1c6b94",
+            "e28785e11f914401"
+        ],
+        "com.apple.backup.launcher": [
+            "78edffa39f28cee2",
+            "cbf81a2b5e77725b",
+            "dc568bb30164e897"
+        ],
+        "com.apple.diskutility": [
+            "77324bc5de72e176",
+            "c43f8e117573f5ed",
+            "fd581938fd34e888"
+        ],
+        "com.apple.screencontinuity": [
+            "171a629bd17970fa",
+            "2965e73ff5566d19",
+            "bb4662c4f15ab83c"
+        ]
+    ]
 
     static func isKnownAppleApp(_ app: AppInfo) -> Bool {
         entry(for: app) != nil
@@ -238,6 +290,7 @@ enum AppleDefaultAppCatalog {
                 result.insert(TagDatabase.noteFingerprint(variant))
             }
         }
+        result.formUnion(legacyDefaultNoteFingerprintsByBundleIdentifier[bundleIdentifier] ?? [])
         return result
     }
 

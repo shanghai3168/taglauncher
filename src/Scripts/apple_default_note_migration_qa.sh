@@ -78,7 +78,11 @@ translations = load_json(apple_dir / "AppleDefaultApps.translations.json")
 languages = base.get("supportedLanguages", [])
 note_limit = int(base.get("noteLimit", 80))
 entries = base.get("entries", [])
-bundle_ids = {entry.get("bundleIdentifier") for entry in entries}
+bundle_ids = {
+    entry.get("bundleIdentifier").lower()
+    for entry in entries
+    if isinstance(entry.get("bundleIdentifier"), str)
+}
 normalized_names = {entry.get("normalizedName") for entry in entries}
 
 for bundle in ["com.apple.colorsyncutility", "com.apple.campo", "com.apple.siri.launcher"]:
@@ -104,7 +108,7 @@ for language in languages:
     path = apple_dir / f"AppleDefaultApps.localizations.{language}.json"
     catalog = load_json(path)
     localizations[language] = {
-        item["bundleIdentifier"]: item
+        item["bundleIdentifier"].lower(): item
         for item in catalog.get("entries", [])
         if isinstance(item, dict) and isinstance(item.get("bundleIdentifier"), str)
     }
@@ -139,9 +143,43 @@ for bundle in bundle_ids:
             fingerprints.add(note_fingerprint(variant, note_limit))
     known_fingerprints_by_bundle[bundle] = fingerprints
 
+historical_default_notes = {
+    "com.apple.chess": "系统自带国际象棋，摸鱼时比刷网页更优雅。",
+    "com.apple.freeform": "无限白板，适合头脑风暴、草图和乱七八糟的想法。",
+    "com.apple.home": "控制 HomeKit 设备，让 Mac 也能管家里的灯和空调。",
+    "com.apple.music": "本地音乐和 Apple Music 的播放器。",
+    "com.apple.passwords": "系统密码管家，账号、验证码和通行密钥集中管。",
+    "com.apple.mobilephone": "通过 iPhone 在 Mac 上接打电话。",
+    "com.apple.tv": "Apple TV 和本地影视内容的入口。",
+    "com.apple.backup.launcher": "系统备份工具，后悔药就靠它提前准备。",
+    "com.apple.diskutility": "管磁盘、分区、格式化和急救，别乱点但很重要。",
+    "com.apple.screencontinuity": "在 Mac 上直接操作 iPhone，少一次伸手拿手机。",
+}
+for bundle, note in historical_default_notes.items():
+    if bundle not in known_fingerprints_by_bundle:
+        fail(f"historical default bundle is not in Apple base: {bundle}")
+    for variant in legacy_variants(note, note_limit):
+        known_fingerprints_by_bundle[bundle].add(note_fingerprint(variant, note_limit))
+
 legacy_zh_note_with_period = zh_default_note + "。"
 if note_fingerprint(legacy_zh_note_with_period, note_limit) not in known_fingerprints_by_bundle[colorsync_bundle]:
     fail("legacy zh-Hans ColorSync note with historical period must match known Apple defaults")
+
+for bundle, note in historical_default_notes.items():
+    if note_fingerprint(note, note_limit) not in known_fingerprints_by_bundle[bundle]:
+        fail(f"historical default note must match for {bundle}")
+    for language in languages:
+        localized_entry = localizations[language].get(bundle)
+        if not localized_entry:
+            fail(f"historical default note target is missing localization for {language}/{bundle}")
+        localized_note = normalized_note(localized_entry.get("note"), note_limit)
+        if not localized_note:
+            fail(f"historical default note target is empty for {language}/{bundle}")
+        if language not in {"zh-Hans", "zh-Hant"} and localized_note == note:
+            fail(
+                "historical default note migration would keep Chinese text "
+                f"for {language}/{bundle}: {localized_note!r}"
+            )
 
 manual_chinese_note = zh_default_note + " 我自己加的备注"
 if note_fingerprint(manual_chinese_note, note_limit) in known_fingerprints_by_bundle[colorsync_bundle]:
@@ -161,6 +199,10 @@ rg -Fq 'noteMatchesKnownDefault(' "$APPLE_CATALOG_SWIFT" \
   || fail "AppleDefaultAppCatalog must match legacy notes against known Apple defaults"
 rg -Fq 'legacyDefaultNoteVariants' "$APPLE_CATALOG_SWIFT" \
   || fail "AppleDefaultAppCatalog must include historical punctuation variants"
+rg -Fq 'legacyDefaultNoteFingerprintsByBundleIdentifier' "$APPLE_CATALOG_SWIFT" \
+  || fail "AppleDefaultAppCatalog must include historical Apple default notes"
+rg -Fq 'a3b754a4f06eee33' "$APPLE_CATALOG_SWIFT" \
+  || fail "AppleDefaultAppCatalog must include pre-metadata Chess default note"
 rg -Fq 'metadata?.origin == .manual' "$APPLE_CATALOG_SWIFT" \
   || fail "AppleDefaultAppCatalog must protect manual notes"
 rg -Fq 'apple-default-note-migration' "$APPLE_CATALOG_SWIFT" \

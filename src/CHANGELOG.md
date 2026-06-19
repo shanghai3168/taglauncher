@@ -1,5 +1,13 @@
 # TagLauncher Changelog
 
+## [7.9.4] — 2026-06-19
+
+- 补修 Apple 自带应用默认备注迁移：覆盖 7.9 之前已写入用户库、但没有 metadata 的历史默认文案，修复 Chess、TV、Phone、Freeform、Music、Time Machine 等应用切换到非中文语言后仍显示旧中文备注的问题
+- Apple 默认备注迁移改为历史 fingerprint 白名单，不在运行时代码里维护旧中文展示文案，也不放宽为“看到中文就覆盖”，继续保护用户手写备注
+- 加强 Apple 默认应用资源 QA：29 个语种的初始化备注禁止出现其他语种脚本污染，translations 和运行用 localizations 双重检查
+- 加强迁移 QA：用真实暴露的旧中文默认备注作为 fixture，逐个验证迁移到 29 个语种后不会保留旧中文
+- 版本号更新为 `7.9.4`，Build 更新为 `20260619.2221`
+
 ## [7.9.3] — 2026-06-19
 
 - 修复 Apple 自带应用默认备注在切换语言后仍显示旧中文的问题；旧版本写入但缺少来源 metadata 的默认备注现在会按 bundle 精确匹配默认备注 fingerprint 后迁移为当前语言

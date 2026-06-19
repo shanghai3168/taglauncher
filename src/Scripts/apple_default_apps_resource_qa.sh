@@ -159,6 +159,55 @@ if not isinstance(display_names_by_language, dict):
 if not isinstance(notes_by_language, dict):
     fail("Apple translations notesByLanguage must be an object")
 
+script_patterns = {
+    "cjk": re.compile(r"[\u4e00-\u9fff]"),
+    "kana": re.compile(r"[\u3040-\u30ff]"),
+    "hangul": re.compile(r"[\uac00-\ud7af]"),
+    "cyrillic": re.compile(r"[\u0400-\u04ff]"),
+    "arabic": re.compile(r"[\u0600-\u06ff]"),
+    "thai": re.compile(r"[\u0e00-\u0e7f]"),
+}
+
+expected_script_requirements = {
+    "zh-Hans": ("cjk",),
+    "zh-Hant": ("cjk",),
+    "ja": ("kana",),
+    "ko": ("hangul",),
+    "ar": ("arabic",),
+    "ar-Najdi": ("arabic",),
+    "ru": ("cyrillic",),
+    "uk": ("cyrillic",),
+    "sr-Cyrl": ("cyrillic",),
+    "th": ("thai",),
+}
+
+forbidden_scripts_by_language = {
+    "zh-Hans": ("kana", "hangul", "cyrillic", "arabic", "thai"),
+    "zh-Hant": ("kana", "hangul", "cyrillic", "arabic", "thai"),
+    "ja": ("hangul", "cyrillic", "arabic", "thai"),
+    "ko": ("cjk", "kana", "cyrillic", "arabic", "thai"),
+    "ar": ("cjk", "kana", "hangul", "cyrillic", "thai"),
+    "ar-Najdi": ("cjk", "kana", "hangul", "cyrillic", "thai"),
+    "ru": ("cjk", "kana", "hangul", "arabic", "thai"),
+    "uk": ("cjk", "kana", "hangul", "arabic", "thai"),
+    "sr-Cyrl": ("cjk", "kana", "hangul", "arabic", "thai"),
+    "th": ("cjk", "kana", "hangul", "cyrillic", "arabic"),
+}
+
+for code in l10n_codes:
+    forbidden_scripts_by_language.setdefault(
+        code,
+        ("cjk", "kana", "hangul", "cyrillic", "arabic", "thai"),
+    )
+
+def assert_note_language_clean(code: str, note: str, context: str) -> None:
+    for script_name in expected_script_requirements.get(code, ()):
+        if not script_patterns[script_name].search(note):
+            fail(f"{context} does not contain expected {script_name} script for {code}")
+    for script_name in forbidden_scripts_by_language.get(code, ()):
+        if script_patterns[script_name].search(note):
+            fail(f"{context} contains unexpected {script_name} script for {code}: {note!r}")
+
 for code in l10n_codes:
     display_names = display_names_by_language.get(code)
     notes = notes_by_language.get(code)
@@ -187,6 +236,7 @@ for code in l10n_codes:
             fail(f"Apple translations note for {code}/{normalized} is identical to zh-Hans")
         if code not in {"zh-Hans", "zh-Hant", "ja"} and re.search(r"[\u4e00-\u9fff]", note):
             fail(f"Apple translations note for {code}/{normalized} contains Chinese characters")
+        assert_note_language_clean(code, note, f"Apple translations note for {code}/{normalized}")
 
 bad_fragments = [
     "Apple 內建 App",
@@ -234,19 +284,6 @@ bad_fragments = [
     "null",
 ]
 
-script_requirements = {
-    "zh-Hans": re.compile(r"[\u4e00-\u9fff]"),
-    "zh-Hant": re.compile(r"[\u4e00-\u9fff]"),
-    "ja": re.compile(r"[\u3040-\u30ff\u4e00-\u9fff]"),
-    "ko": re.compile(r"[\uac00-\ud7af]"),
-    "ar": re.compile(r"[\u0600-\u06ff]"),
-    "ar-Najdi": re.compile(r"[\u0600-\u06ff]"),
-    "ru": re.compile(r"[\u0400-\u04ff]"),
-    "uk": re.compile(r"[\u0400-\u04ff]"),
-    "sr-Cyrl": re.compile(r"[\u0400-\u04ff]"),
-    "th": re.compile(r"[\u0e00-\u0e7f]"),
-}
-
 for code in l10n_codes:
     path = apple_dir / f"AppleDefaultApps.localizations.{code}.json"
     if not path.is_file():
@@ -283,8 +320,7 @@ for code in l10n_codes:
         for fragment in bad_fragments:
             if fragment in note:
                 fail(f"{path.name} note for {bundle} contains blocked fragment: {fragment!r}")
-        if code in script_requirements and not script_requirements[code].search(note):
-            fail(f"{path.name} note for {bundle} does not contain expected script for {code}")
+        assert_note_language_clean(code, note, f"{path.name} note for {bundle}")
     missing = bundle_ids - set(entries_by_bundle)
     if missing:
         fail(f"{path.name} is missing {len(missing)} Apple entries; first missing: {sorted(missing)[:5]}")
