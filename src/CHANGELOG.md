@@ -1,12 +1,5 @@
 # TagLauncher Changelog
 
-## [7.9.3] — 2026-06-19
-
-- 优化 App Grid 背景材质：底层从 HUD 风格切换为更适合内容区域的 macOS `contentBackground` material，让容器之间的空白区域更像统一的原生材质表面
-- 保持 App Grid 交互不变：不改布局、拖拽、Quick Search、卡片绘制、窗口层级和点击命中逻辑
-- 新增 `app_grid_material_background_qa.sh`，防止 App Grid 背景材质回退并确认背景层保持不可点击
-- 版本号更新为 `7.9.3`，Build 更新为 `20260619.2012`
-
 ## [7.9.2] — 2026-06-17
 
 - 恢复 App Grid 标签列表 hover 自动滚动：鼠标停到某个标签时会自动滚动到对应容器，点击标签仍保持立即滚动

@@ -492,7 +492,7 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             if shouldRenderAppGridBehindQuickSearch {
-                VisualEffectView(material: .contentBackground, blendingMode: .behindWindow)
+                VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
                     .ignoresSafeArea()
                     .allowsHitTesting(false)
             }
