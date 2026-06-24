@@ -21,6 +21,7 @@ struct TagNavigationView: NSViewRepresentable {
     let appDragModeActive: Bool
     let appDropTargetID: String?
     let onActivate: (String) -> Void
+    let onDoubleActivate: (String) -> Void
     let onHoverChange: (String, Bool) -> Void
     let canReorder: (String) -> Bool
     let canAcceptAppDrop: (String) -> Bool
@@ -41,6 +42,7 @@ struct TagNavigationView: NSViewRepresentable {
             appDragModeActive: appDragModeActive,
             appDropTargetID: appDropTargetID,
             onActivate: onActivate,
+            onDoubleActivate: onDoubleActivate,
             onHoverChange: onHoverChange,
             canReorder: canReorder,
             canAcceptAppDrop: canAcceptAppDrop,
@@ -63,6 +65,7 @@ struct TagNavigationView: NSViewRepresentable {
             appDragModeActive: appDragModeActive,
             appDropTargetID: appDropTargetID,
             onActivate: onActivate,
+            onDoubleActivate: onDoubleActivate,
             onHoverChange: onHoverChange,
             canReorder: canReorder,
             canAcceptAppDrop: canAcceptAppDrop,
@@ -100,6 +103,7 @@ final class TagNavigationHostView: NSView {
         appDragModeActive: Bool,
         appDropTargetID: String?,
         onActivate: @escaping (String) -> Void,
+        onDoubleActivate: @escaping (String) -> Void,
         onHoverChange: @escaping (String, Bool) -> Void,
         canReorder: @escaping (String) -> Bool,
         canAcceptAppDrop: @escaping (String) -> Bool,
@@ -118,6 +122,7 @@ final class TagNavigationHostView: NSView {
             appDragModeActive: appDragModeActive,
             appDropTargetID: appDropTargetID,
             onActivate: onActivate,
+            onDoubleActivate: onDoubleActivate,
             onHoverChange: onHoverChange,
             canReorder: canReorder,
             canAcceptAppDrop: canAcceptAppDrop,
@@ -170,6 +175,7 @@ final class TagNavigationDocumentView: NSView {
     private var appDragModeActive = false
     private var appDropTargetID: String?
     private var onActivate: (String) -> Void = { _ in }
+    private var onDoubleActivate: (String) -> Void = { _ in }
     private var onHoverChange: (String, Bool) -> Void = { _, _ in }
     private var canReorder: (String) -> Bool = { _ in false }
     private var canAcceptAppDrop: (String) -> Bool = { _ in false }
@@ -190,6 +196,7 @@ final class TagNavigationDocumentView: NSView {
         appDragModeActive: Bool,
         appDropTargetID: String?,
         onActivate: @escaping (String) -> Void,
+        onDoubleActivate: @escaping (String) -> Void,
         onHoverChange: @escaping (String, Bool) -> Void,
         canReorder: @escaping (String) -> Bool,
         canAcceptAppDrop: @escaping (String) -> Bool,
@@ -210,6 +217,7 @@ final class TagNavigationDocumentView: NSView {
         self.appDragModeActive = appDragModeActive
         self.appDropTargetID = appDropTargetID
         self.onActivate = onActivate
+        self.onDoubleActivate = onDoubleActivate
         self.onHoverChange = onHoverChange
         self.canReorder = canReorder
         self.canAcceptAppDrop = canAcceptAppDrop
@@ -261,6 +269,7 @@ final class TagNavigationDocumentView: NSView {
         buttons = items.map { item in
             let button = TagNavigationButton(item: item, orientation: orientation)
             button.onActivate = { [weak self] tagID in self?.onActivate(tagID) }
+            button.onDoubleActivate = { [weak self] tagID in self?.onDoubleActivate(tagID) }
             button.onHoverChange = { [weak self] tagID, active in self?.onHoverChange(tagID, active) }
             button.canReorder = { [weak self] tagID in self?.canReorder(tagID) ?? false }
             button.onReorderBegan = { [weak self] tagID in self?.onReorderBegan(tagID) }
@@ -348,6 +357,7 @@ final class TagNavigationDocumentView: NSView {
 
 final class TagNavigationButton: NSButton, AppDropTargetReceivingView {
     var onActivate: (String) -> Void = { _ in }
+    var onDoubleActivate: (String) -> Void = { _ in }
     var onHoverChange: (String, Bool) -> Void = { _, _ in }
     var canReorder: (String) -> Bool = { _ in false }
     var onReorderBegan: (String) -> Void = { _ in }
@@ -475,6 +485,11 @@ final class TagNavigationButton: NSButton, AppDropTargetReceivingView {
     }
 
     override func mouseDown(with event: NSEvent) {
+        if event.clickCount >= 2 {
+            onDoubleActivate(item.id)
+            return
+        }
+
         guard canReorder(item.id) else {
             onActivate(item.id)
             return

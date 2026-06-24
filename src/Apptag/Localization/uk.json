@@ -12,6 +12,9 @@
   "settings.languagePicker": "Мова застосунку:",
   "settings.languageDesc": "Оберіть мову меню та налаштувань.",
   "settings.general": "Загальні",
+  "settings.theme": "Тема",
+  "settings.themeDesc": "Виберіть тему тла сітки програм.",
+  "settings.themeScopeDesc": "Теми змінюють лише тло сітки програм. Контейнери зберігають єдину скляну поверхню.",
   "settings.tags": "Теги",
   "settings.data": "Дані",
   "settings.about": "Про програму",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "Порада 7 — Упорядкувати програми",
   "usageTips.tip7.detail": "Утримуйте програму, перетягніть її всередині контейнера.",
   "usageTips.tip8.title": "Порада 8 — Редагувати нотатки",
-  "usageTips.tip8.detail": "Клацніть програму правою кнопкою, введіть нотатку."
+  "usageTips.tip8.detail": "Клацніть програму правою кнопкою, введіть нотатку.",
+  "theme.default": "Типова",
+  "theme.deepBlue": "Глибокий синій",
+  "theme.black": "Чорна",
+  "theme.pink": "Рожева",
+  "theme.purple": "Фіолетова",
+  "theme.green": "Зелена",
+  "theme.blue": "Синя",
+  "theme.colorful": "Барвиста"
 }

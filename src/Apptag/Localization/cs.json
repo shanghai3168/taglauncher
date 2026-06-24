@@ -12,6 +12,9 @@
   "settings.languagePicker": "Jazyk aplikace:",
   "settings.languageDesc": "Vyberte jazyk používaný v nabídkách a nastaveních.",
   "settings.general": "Obecné",
+  "settings.theme": "Motiv",
+  "settings.themeDesc": "Vyberte motiv pozadí mřížky aplikací.",
+  "settings.themeScopeDesc": "Motivy mění jen pozadí mřížky aplikací. Kontejnery si ponechají jednotný skleněný povrch.",
   "settings.tags": "Štítky",
   "settings.data": "Data",
   "settings.about": "O aplikaci",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "Tip 7 - Seřadit aplikace",
   "usageTips.tip7.detail": "Podržte aplikaci, přetáhněte ji na místo v kontejneru.",
   "usageTips.tip8.title": "Tip 8 - Upravit poznámky",
-  "usageTips.tip8.detail": "Klikněte na aplikaci pravým tlačítkem, zadejte poznámku."
+  "usageTips.tip8.detail": "Klikněte na aplikaci pravým tlačítkem, zadejte poznámku.",
+  "theme.default": "Výchozí",
+  "theme.deepBlue": "Tmavě modrý",
+  "theme.black": "Černý",
+  "theme.pink": "Růžový",
+  "theme.purple": "Fialový",
+  "theme.green": "Zelený",
+  "theme.blue": "Modrý",
+  "theme.colorful": "Barevný"
 }

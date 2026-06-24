@@ -6,6 +6,7 @@ import AppKit
 private enum SettingsTab: String, CaseIterable, Identifiable {
     case language
     case general
+    case theme
     case hotkeys
     case tags
     case data
@@ -17,6 +18,7 @@ private enum SettingsTab: String, CaseIterable, Identifiable {
         switch self {
         case .language: return "settings.language"
         case .general: return "settings.general"
+        case .theme: return "settings.theme"
         case .hotkeys: return "quickSearch.hotkeys"
         case .tags: return "settings.tags"
         case .data: return "settings.data"
@@ -28,6 +30,7 @@ private enum SettingsTab: String, CaseIterable, Identifiable {
         switch self {
         case .language: return "globe"
         case .general: return "gearshape"
+        case .theme: return "paintpalette.fill"
         case .hotkeys: return "keyboard"
         case .tags: return "tag.fill"
         case .data: return "externaldrive.fill"
@@ -63,6 +66,7 @@ struct PreferencesView: View {
     @AppStorage("launchAtLogin") private var launchAtLogin = AppDefaults.launchAtLogin
     @AppStorage("showUncommonAppBubbles") private var showUncommonAppBubbles = AppDefaults.showUncommonAppBubbles
     @AppStorage("hideUsageTips") private var hideUsageTips = AppDefaults.hideUsageTips
+    @AppStorage(AppGridTheme.storageKey) private var appGridThemeID = AppDefaults.appGridThemeID
     @AppStorage("mainHotkeyRegistrationState") private var mainHotkeyRegistrationState = LauncherHotkeyRegistrationState.active.rawValue
     @AppStorage("quickSearchHotkeyRegistrationState") private var quickSearchHotkeyRegistrationState = LauncherHotkeyRegistrationState.active.rawValue
     @State private var selectedLanguage = L10n.selectedLanguageCode
@@ -79,6 +83,16 @@ struct PreferencesView: View {
     @State private var hotkeyStatusToastToken: UUID? = nil
     @State private var selectedTab: SettingsTab = .general
     @State private var selectedInitialLayoutMode: InitialLayoutMode = .smart
+
+    init(initialTabRawValue: String? = nil) {
+        let initialTab = initialTabRawValue.flatMap(SettingsTab.init(rawValue:)) ?? .general
+        _selectedTab = State(initialValue: initialTab)
+    }
+
+    private func selectTab(rawValue: String?) {
+        guard let rawValue, let tab = SettingsTab(rawValue: rawValue) else { return }
+        selectedTab = tab
+    }
 
     private func scanApps() {
         DispatchQueue.global(qos: .userInitiated).async {
@@ -514,6 +528,12 @@ struct PreferencesView: View {
             GridItem(.flexible(minimum: 220), spacing: 10, alignment: .top),
         ]
     }
+    private var themeColumns: [GridItem] {
+        [
+            GridItem(.flexible(minimum: 220), spacing: 12, alignment: .top),
+            GridItem(.flexible(minimum: 220), spacing: 12, alignment: .top),
+        ]
+    }
     private var displayModeOptions: [(id: String, title: String)] {
         [
             ("flat", tr("settings.flat")),
@@ -525,6 +545,9 @@ struct PreferencesView: View {
     }
     private var containerDisplayModeOptions: [(id: String, title: String)] {
         Array(displayModeOptions.dropFirst())
+    }
+    private var selectedAppGridTheme: AppGridTheme {
+        AppGridTheme(storedID: appGridThemeID)
     }
 
     private func generalSettingRow<Control: View>(
@@ -833,6 +856,40 @@ struct PreferencesView: View {
                     .padding(.top, 28)
                     .padding(.bottom)
                 }
+
+                    case .theme:
+            ScrollView(.vertical, showsIndicators: true) {
+                VStack(alignment: .leading, spacing: 18) {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(tr("settings.theme"))
+                            .font(.headline)
+                        Text(tr("settings.themeDesc"))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+
+                    LazyVGrid(columns: themeColumns, alignment: .leading, spacing: 12) {
+                        ForEach(AppGridTheme.allCases) { theme in
+                            ThemeOptionButton(
+                                theme: theme,
+                                title: tr(theme.titleKey),
+                                isSelected: selectedAppGridTheme == theme
+                            ) {
+                                appGridThemeID = theme.rawValue
+                            }
+                        }
+                    }
+
+                    Text(tr("settings.themeScopeDesc"))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxWidth: generalContentWidth, alignment: .leading)
+                .padding(.horizontal)
+                .padding(.top, 28)
+                .padding(.bottom)
+            }
 
                     case .hotkeys:
             // Tab 3: Hotkeys
@@ -1152,6 +1209,9 @@ struct PreferencesView: View {
         .onReceive(NotificationCenter.default.publisher(for: .tagLauncherHotkeyRegistrationChanged)) { _ in
             showPendingHotkeyWarningIfNeeded()
         }
+        .onReceive(NotificationCenter.default.publisher(for: .tagLauncherPreferencesTabRequested)) { notification in
+            selectTab(rawValue: notification.userInfo?[SettingsTabTarget.userInfoKey] as? String)
+        }
     }
 
     private func showLanguageRefresh() {
@@ -1328,6 +1388,71 @@ private struct ConfirmationActionButton: View {
         }
         .buttonStyle(.plain)
         .contentShape(RoundedRectangle(cornerRadius: 7, style: .continuous))
+    }
+}
+
+private struct ThemeOptionButton: View {
+    let theme: AppGridTheme
+    let title: String
+    let isSelected: Bool
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 12) {
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(
+                        LinearGradient(
+                            colors: theme.previewColors,
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 70, height: 42)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .stroke(previewStrokeColor, lineWidth: 1)
+                    )
+                    .shadow(
+                        color: isSelected ? Color.accentColor.opacity(0.22) : Color.clear,
+                        radius: 10,
+                        x: 0,
+                        y: 4
+                    )
+
+                Text(title)
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(.primary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.82)
+
+                Spacer(minLength: 0)
+
+                Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundStyle(isSelected ? Color.accentColor : Color.secondary.opacity(0.42))
+            }
+            .padding(10)
+            .frame(maxWidth: .infinity, minHeight: 64)
+            .background(
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(isSelected ? Color.accentColor.opacity(0.10) : Color(nsColor: .controlBackgroundColor))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .stroke(isSelected ? Color.accentColor.opacity(0.32) : Color.secondary.opacity(0.16), lineWidth: 1)
+            )
+            .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(title)
+        .accessibilityIdentifier("theme-option-\(theme.rawValue)")
+    }
+
+    private var previewStrokeColor: Color {
+        theme.isDefaultLight
+            ? Color.secondary.opacity(0.26)
+            : Color.white.opacity(0.24)
     }
 }
 

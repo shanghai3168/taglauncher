@@ -12,6 +12,9 @@
   "settings.languagePicker": "Langue de l'app :",
   "settings.languageDesc": "Choisissez la langue utilisée par les menus et les réglages.",
   "settings.general": "Général",
+  "settings.theme": "Thème",
+  "settings.themeDesc": "Choisissez le thème d’arrière-plan de la grille d’apps.",
+  "settings.themeScopeDesc": "Les thèmes ne modifient que l’arrière-plan de la grille d’apps. Les conteneurs gardent une surface vitrée uniforme.",
   "settings.tags": "Étiquettes",
   "settings.data": "Données",
   "settings.about": "À propos",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "Astuce 7 - Trier les apps",
   "usageTips.tip7.detail": "Appuyez longuement sur une app, déposez-la dans le conteneur.",
   "usageTips.tip8.title": "Astuce 8 - Modifier les notes",
-  "usageTips.tip8.detail": "Clic droit sur une app, saisissez une note."
+  "usageTips.tip8.detail": "Clic droit sur une app, saisissez une note.",
+  "theme.default": "Par défaut",
+  "theme.deepBlue": "Bleu profond",
+  "theme.black": "Noir",
+  "theme.pink": "Rose",
+  "theme.purple": "Violet",
+  "theme.green": "Vert",
+  "theme.blue": "Bleu",
+  "theme.colorful": "Coloré"
 }

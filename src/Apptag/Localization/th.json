@@ -12,6 +12,9 @@
   "settings.languagePicker": "ภาษาของแอป:",
   "settings.languageDesc": "เลือกภาษาที่ใช้ในเมนูและการตั้งค่า",
   "settings.general": "ทั่วไป",
+  "settings.theme": "ธีม",
+  "settings.themeDesc": "เลือกธีมพื้นหลังของกริดแอป",
+  "settings.themeScopeDesc": "ธีมจะเปลี่ยนเฉพาะพื้นหลังของกริดแอป คอนเทนเนอร์ยังคงเป็นพื้นผิวกระจกแบบเดียวกัน",
   "settings.tags": "แท็ก",
   "settings.data": "ข้อมูล",
   "settings.about": "เกี่ยวกับ",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "เคล็ดลับ 7 - จัดลำดับแอป",
   "usageTips.tip7.detail": "กดแอปค้างไว้, ลากภายในคอนเทนเนอร์",
   "usageTips.tip8.title": "เคล็ดลับ 8 - แก้ไขโน้ต",
-  "usageTips.tip8.detail": "คลิกขวาที่แอป, ป้อนโน้ต"
+  "usageTips.tip8.detail": "คลิกขวาที่แอป, ป้อนโน้ต",
+  "theme.default": "ค่าเริ่มต้น",
+  "theme.deepBlue": "น้ำเงินเข้ม",
+  "theme.black": "ดำ",
+  "theme.pink": "ชมพู",
+  "theme.purple": "ม่วง",
+  "theme.green": "เขียว",
+  "theme.blue": "น้ำเงิน",
+  "theme.colorful": "หลากสี"
 }

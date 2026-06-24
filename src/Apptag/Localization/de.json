@@ -12,6 +12,9 @@
   "settings.languagePicker": "App-Sprache:",
   "settings.languageDesc": "Wähle die Sprache für Menüs und Einstellungen.",
   "settings.general": "Allgemein",
+  "settings.theme": "Design",
+  "settings.themeDesc": "Wähle das Hintergrunddesign für das App-Raster.",
+  "settings.themeScopeDesc": "Designs ändern nur den Hintergrund des App-Rasters. Container behalten eine einheitliche Glasfläche.",
   "settings.tags": "Tags",
   "settings.data": "Daten",
   "settings.about": "Über",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "Tipp 7 - Apps sortieren",
   "usageTips.tip7.detail": "App gedrückt halten, zur Position im Container ziehen.",
   "usageTips.tip8.title": "Tipp 8 - Notizen bearbeiten",
-  "usageTips.tip8.detail": "Rechtsklick auf App, Notiz eingeben."
+  "usageTips.tip8.detail": "Rechtsklick auf App, Notiz eingeben.",
+  "theme.default": "Standard",
+  "theme.deepBlue": "Tiefblau",
+  "theme.black": "Schwarz",
+  "theme.pink": "Pink",
+  "theme.purple": "Violett",
+  "theme.green": "Grün",
+  "theme.blue": "Blau",
+  "theme.colorful": "Bunt"
 }

@@ -12,6 +12,9 @@
   "settings.languagePicker": "Ngôn ngữ ứng dụng:",
   "settings.languageDesc": "Chọn ngôn ngữ dùng cho menu và cài đặt.",
   "settings.general": "Chung",
+  "settings.theme": "Chủ đề",
+  "settings.themeDesc": "Chọn chủ đề nền cho lưới ứng dụng.",
+  "settings.themeScopeDesc": "Chủ đề chỉ thay đổi nền của lưới ứng dụng. Các khung giữ một bề mặt kính thống nhất.",
   "settings.tags": "Thẻ",
   "settings.data": "Dữ liệu",
   "settings.about": "Giới thiệu",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "Mẹo 7 - Sắp xếp ứng dụng",
   "usageTips.tip7.detail": "Nhấn giữ ứng dụng, kéo trong vùng chứa.",
   "usageTips.tip8.title": "Mẹo 8 - Chỉnh sửa ghi chú",
-  "usageTips.tip8.detail": "Nhấp chuột phải vào ứng dụng, nhập ghi chú."
+  "usageTips.tip8.detail": "Nhấp chuột phải vào ứng dụng, nhập ghi chú.",
+  "theme.default": "Mặc định",
+  "theme.deepBlue": "Xanh lam đậm",
+  "theme.black": "Đen",
+  "theme.pink": "Hồng",
+  "theme.purple": "Tím",
+  "theme.green": "Xanh lá",
+  "theme.blue": "Xanh lam",
+  "theme.colorful": "Nhiều màu"
 }

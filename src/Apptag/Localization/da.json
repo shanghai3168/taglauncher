@@ -12,6 +12,9 @@
   "settings.languagePicker": "Appsprog:",
   "settings.languageDesc": "Vælg sproget til menuer og indstillinger.",
   "settings.general": "Generelt",
+  "settings.theme": "Tema",
+  "settings.themeDesc": "Vælg baggrundstema for appgitteret.",
+  "settings.themeScopeDesc": "Temaer ændrer kun baggrunden i appgitteret. Containere beholder en ensartet glasflade.",
   "settings.tags": "Tags",
   "settings.data": "Data",
   "settings.about": "Om",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "Tip 7 - Sortér apps",
   "usageTips.tip7.detail": "Hold en app nede, flyt den i containeren.",
   "usageTips.tip8.title": "Tip 8 - Rediger noter",
-  "usageTips.tip8.detail": "Højreklik på en app, indtast en note."
+  "usageTips.tip8.detail": "Højreklik på en app, indtast en note.",
+  "theme.default": "Standard",
+  "theme.deepBlue": "Dyb blå",
+  "theme.black": "Sort",
+  "theme.pink": "Pink",
+  "theme.purple": "Lilla",
+  "theme.green": "Grøn",
+  "theme.blue": "Blå",
+  "theme.colorful": "Farverig"
 }

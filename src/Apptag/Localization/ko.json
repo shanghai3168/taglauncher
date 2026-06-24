@@ -12,6 +12,9 @@
   "settings.languagePicker": "앱 언어:",
   "settings.languageDesc": "메뉴와 설정에서 사용할 언어를 선택합니다.",
   "settings.general": "일반",
+  "settings.theme": "테마",
+  "settings.themeDesc": "앱 그리드 배경 테마를 선택합니다.",
+  "settings.themeScopeDesc": "테마는 앱 그리드 배경만 바꿉니다. 컨테이너는 일관된 유리 표면을 유지합니다.",
   "settings.tags": "태그",
   "settings.data": "데이터",
   "settings.about": "정보",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "팁 7 - 앱 정렬",
   "usageTips.tip7.detail": "앱을 길게 누르기, 컨테이너 안에서 이동.",
   "usageTips.tip8.title": "팁 8 - 메모 편집",
-  "usageTips.tip8.detail": "앱을 오른쪽 클릭, 메모 입력."
+  "usageTips.tip8.detail": "앱을 오른쪽 클릭, 메모 입력.",
+  "theme.default": "기본",
+  "theme.deepBlue": "딥 블루",
+  "theme.black": "검정",
+  "theme.pink": "분홍",
+  "theme.purple": "보라",
+  "theme.green": "초록",
+  "theme.blue": "파랑",
+  "theme.colorful": "컬러풀"
 }

@@ -12,6 +12,9 @@
   "settings.languagePicker": "Idioma do app:",
   "settings.languageDesc": "Escolha o idioma usado nos menus e ajustes.",
   "settings.general": "Geral",
+  "settings.theme": "Tema",
+  "settings.themeDesc": "Escolha o tema de fundo da grade de apps.",
+  "settings.themeScopeDesc": "Os temas mudam apenas o fundo da grade de apps. Os contêineres mantêm uma superfície de vidro consistente.",
   "settings.tags": "Etiquetas",
   "settings.data": "Dados",
   "settings.about": "Sobre",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "Dica 7 - Reordenar apps",
   "usageTips.tip7.detail": "Pressione e segure um app, mova dentro do contêiner.",
   "usageTips.tip8.title": "Dica 8 - Editar notas",
-  "usageTips.tip8.detail": "Clique com o botão direito em um app, digite uma nota."
+  "usageTips.tip8.detail": "Clique com o botão direito em um app, digite uma nota.",
+  "theme.default": "Padrão",
+  "theme.deepBlue": "Azul profundo",
+  "theme.black": "Preto",
+  "theme.pink": "Rosa",
+  "theme.purple": "Roxo",
+  "theme.green": "Verde",
+  "theme.blue": "Azul",
+  "theme.colorful": "Colorido"
 }

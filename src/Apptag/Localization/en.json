@@ -12,6 +12,9 @@
   "settings.languagePicker": "App language:",
   "settings.languageDesc": "Choose the language used by menus and settings.",
   "settings.general": "General",
+  "settings.theme": "Theme",
+  "settings.themeDesc": "Choose the App Grid background theme.",
+  "settings.themeScopeDesc": "Themes only change the App Grid background. Containers keep one consistent glass surface.",
   "settings.tags": "Tags",
   "settings.data": "Data",
   "settings.about": "About",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "Tip 7 - Reorder apps",
   "usageTips.tip7.detail": "Long-press an app, then drag it to a spot in the container.",
   "usageTips.tip8.title": "Tip 8 - Edit notes",
-  "usageTips.tip8.detail": "Right-click an app, enter a note."
+  "usageTips.tip8.detail": "Right-click an app, enter a note.",
+  "theme.default": "Default",
+  "theme.deepBlue": "Deep Blue",
+  "theme.black": "Black",
+  "theme.pink": "Pink",
+  "theme.purple": "Purple",
+  "theme.green": "Green",
+  "theme.blue": "Blue",
+  "theme.colorful": "Colorful"
 }

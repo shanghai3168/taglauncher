@@ -8,9 +8,15 @@ extension Notification.Name {
     static let tagLauncherAppNoteEditingChanged = Notification.Name("TagLauncherAppNoteEditingChanged")
     static let tagLauncherDataDidChange = Notification.Name("TagLauncherDataDidChange")
     static let tagLauncherOpenPreferencesRequested = Notification.Name("TagLauncherOpenPreferencesRequested")
+    static let tagLauncherPreferencesTabRequested = Notification.Name("TagLauncherPreferencesTabRequested")
     static let tagLauncherOverlayDidShow = Notification.Name("TagLauncherOverlayDidShow")
     static let tagLauncherOverlayDidHide = Notification.Name("TagLauncherOverlayDidHide")
     static let tagLauncherModalInteractionChanged = Notification.Name("TagLauncherModalInteractionChanged")
+}
+
+enum SettingsTabTarget {
+    static let userInfoKey = "tab"
+    static let tags = "tags"
 }
 
 // MARK: - Edit Phase
@@ -385,6 +391,8 @@ struct ContentView: View {
     @State private var smartStartNotice: SmartStartNotice? = nil
     @State private var pendingSmartStartDraft: SmartCategorizationDraft? = nil
     @State private var refreshInProgress = false
+    @State private var loadingSpinnerVisible = false
+    @State private var loadingSpinnerToken = 0
     @State private var refreshAgainAfterCurrent = false
     @State private var refreshAgainForceLayout = false
     @State private var refreshAgainUseCache = true
@@ -426,6 +434,7 @@ struct ContentView: View {
     @AppStorage("hideAppNames") private var hideAppNames = AppDefaults.hideAppNames
     @AppStorage("showUncommonAppBubbles") private var showUncommonAppBubbles = AppDefaults.showUncommonAppBubbles
     @AppStorage("hideUsageTips") private var hideUsageTips = AppDefaults.hideUsageTips
+    @AppStorage(AppGridTheme.storageKey) private var appGridThemeID = AppDefaults.appGridThemeID
     @AppStorage("useAppKitTagNavigation") private var useAppKitTagNavigation = AppDefaults.useAppKitTagNavigation
     @AppStorage("skipTagRemovalDropConfirm") private var skipTagRemovalDropConfirm = false
     @AppStorage("skipUncategorizedDropConfirm") private var skipUncategorizedDropConfirm = false
@@ -434,6 +443,7 @@ struct ContentView: View {
     private let editSidebarHorizontalInset: CGFloat = 12
     private let floatingControlsTrailingInset: CGFloat = 20
     private let floatingControlsReservedWidth: CGFloat = 120
+    private let loadingSpinnerDelay: TimeInterval = 0.25
     private var appBubbleDisabled: Bool {
         usageTipsHovered
             || appGridInteraction.appDragModeActive
@@ -448,9 +458,17 @@ struct ContentView: View {
     private let tagNavigationHoverScrollDelay: TimeInterval = 0.14
     private let tagNavigationHoverScrollInterval: TimeInterval = 0.22
     private var floatingButtonSurfaceColor: Color {
-        colorScheme == .dark
+        return colorScheme == .dark
             ? Color.white.opacity(0.10)
             : Color.white.opacity(0.78)
+    }
+
+    private var appGridTheme: AppGridTheme {
+        AppGridTheme(storedID: appGridThemeID)
+    }
+
+    private var renderedAppGridTheme: AppGridTheme {
+        editPhase == .none ? appGridTheme : .defaultLight
     }
 
     private var isSideLayout: Bool {
@@ -492,9 +510,7 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             if shouldRenderAppGridBehindQuickSearch {
-                VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
-                    .ignoresSafeArea()
-                    .allowsHitTesting(false)
+                appGridBackground
             }
 
             if shouldRenderAppGridBehindQuickSearch {
@@ -956,6 +972,39 @@ struct ContentView: View {
         }
     }
 
+    private var appGridBackground: some View {
+        let theme = renderedAppGridTheme
+        return ZStack {
+            if theme.usesVisualEffectBackdrop {
+                VisualEffectView(
+                    material: theme.material,
+                    blendingMode: .behindWindow
+                )
+            }
+            if theme.isPureBlackBackground {
+                Color.black
+            }
+            if !theme.isDefaultLight {
+                LinearGradient(
+                    colors: theme.backgroundBaseColors,
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                LinearGradient(
+                    colors: theme.backgroundAccentColors,
+                    startPoint: .topTrailing,
+                    endPoint: .bottomLeading
+                )
+                if theme.backgroundDimmingOpacity > 0 {
+                    Rectangle()
+                        .fill(Color.black.opacity(theme.backgroundDimmingOpacity))
+                }
+            }
+        }
+        .ignoresSafeArea()
+        .allowsHitTesting(false)
+    }
+
     private var floatingActionButtons: some View {
         HStack(spacing: 8) {
             floatingOverlayButton(systemImage: "pencil.line") {
@@ -1053,6 +1102,9 @@ struct ContentView: View {
             onActivate: { tagID in
                 activateTagNavigation(tagID)
             },
+            onDoubleActivate: { _ in
+                openTagSettingsFromNavigation()
+            },
             onHoverChange: { tagID, active in
                 handleTagNavigationHover(tagID, active: active)
             },
@@ -1077,6 +1129,14 @@ struct ContentView: View {
             onAppDrop: { path, source, targetTag, copy in
                 dropAppOnTagNavigation(path: path, sourceTag: source, targetTag: targetTag, copy: copy)
             }
+        )
+    }
+
+    private func openTagSettingsFromNavigation() {
+        NotificationCenter.default.post(
+            name: .tagLauncherOpenPreferencesRequested,
+            object: nil,
+            userInfo: [SettingsTabTarget.userInfoKey: SettingsTabTarget.tags]
         )
     }
 
@@ -1141,7 +1201,9 @@ struct ContentView: View {
         Group {
             if allApps.isEmpty {
                 Spacer()
-                ProgressView().scaleEffect(0.8)
+                if loadingSpinnerVisible {
+                    ProgressView().scaleEffect(0.8)
+                }
                 Spacer()
             } else {
                 AppGridCollectionView(
@@ -1150,6 +1212,7 @@ struct ContentView: View {
                     displayMode: displayMode,
                     iconSize: iconSize,
                     showNames: !hideAppNames,
+                    appGridTheme: renderedAppGridTheme,
                     bubbleDisabled: appBubbleDisabled,
                     showUncommonAppBubbles: showUncommonAppBubbles,
                     highlightedGroupName: appGridHighlightedGroupName,
@@ -1241,17 +1304,32 @@ struct ContentView: View {
                 } label: {
                     Label(tr("edit.exit"), systemImage: "rectangle.portrait.and.arrow.right")
                         .font(.system(size: 12))
+                        .foregroundStyle(renderedAppGridTheme.editPrimaryTextColor)
+                        .padding(.horizontal, 8)
+                        .frame(height: 28)
+                        .background(
+                            RoundedRectangle(cornerRadius: 7, style: .continuous)
+                                .fill(renderedAppGridTheme.editControlSurfaceColor)
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 7, style: .continuous)
+                                .stroke(renderedAppGridTheme.editControlStrokeColor, lineWidth: 1)
+                        )
                 }
-                .buttonStyle(.bordered)
+                .buttonStyle(.plain)
+                .shadow(color: renderedAppGridTheme.editButtonShadowColor, radius: 10, y: 4)
                 Spacer()
-                Text(tr("edit.tags")).font(.headline)
+                Text(tr("edit.tags"))
+                    .font(.headline)
+                    .foregroundStyle(renderedAppGridTheme.editPrimaryTextColor)
                 Spacer()
             }
             .padding(.horizontal, 24)
             .padding(.top, notchHeight > 0 ? notchHeight + 10 : 20)
             .padding(.bottom, 12)
+            .background(renderedAppGridTheme.editToolbarSurfaceColor)
 
-            Divider().opacity(0.3)
+            Rectangle().fill(renderedAppGridTheme.editDividerColor).frame(height: 1)
 
             TagEditorView(
                 tagColors: $tagColors,
@@ -1266,6 +1344,7 @@ struct ContentView: View {
     private var editAppsView: some View {
         VStack(spacing: 0) {
             EditAppsHeaderView(
+                theme: renderedAppGridTheme,
                 operation: editTagOperation,
                 hintText: editModeHintText,
                 confirmTitle: editConfirmTitle,
@@ -1279,11 +1358,12 @@ struct ContentView: View {
                 onConfirm: confirmAssign
             )
 
-            Divider().opacity(0.3)
+            Rectangle().fill(renderedAppGridTheme.editDividerColor).frame(height: 1)
 
             HStack(spacing: 0) {
                 VStack(alignment: .leading, spacing: 4) {
                     EditAppsSidebarIntroView(
+                        theme: renderedAppGridTheme,
                         width: editSidebarWidth,
                         horizontalInset: editSidebarHorizontalInset
                     )
@@ -1315,10 +1395,14 @@ struct ContentView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 }
                 .frame(width: editSidebarWidth, alignment: .topLeading)
-                Rectangle().fill(.secondary.opacity(0.12)).frame(width: 1)
+                Rectangle().fill(renderedAppGridTheme.editDividerColor).frame(width: 1)
 
                 if allApps.isEmpty {
-                    Spacer(); ProgressView().scaleEffect(0.8); Spacer()
+                    Spacer()
+                    if loadingSpinnerVisible {
+                        ProgressView().scaleEffect(0.8)
+                    }
+                    Spacer()
                 } else {
                     editAppsGrid
                 }
@@ -1342,12 +1426,12 @@ struct ContentView: View {
     private func editFlatGroup(_ group: TagGroup) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 0) {
-                Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
+                Rectangle().fill(renderedAppGridTheme.editDividerColor).frame(height: 1)
                 Text(group.name)
                     .font(.system(size: tagFontSize, weight: .semibold))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(renderedAppGridTheme.editSecondaryTextColor)
                     .padding(.horizontal, 10)
-                Rectangle().fill(.secondary.opacity(0.25)).frame(height: 1)
+                Rectangle().fill(renderedAppGridTheme.editDividerColor).frame(height: 1)
             }
             .padding(.bottom, 6)
 
@@ -1380,7 +1464,8 @@ struct ContentView: View {
             colorIndex: colorIndex,
             operation: editTagOperation,
             isSelected: isSelected,
-            isRemovableCandidate: isRemovableCandidate
+            isRemovableCandidate: isRemovableCandidate,
+            theme: renderedAppGridTheme
         ) {
             if isSelected {
                 selectedTagNames.remove(tagName)
@@ -1454,7 +1539,8 @@ struct ContentView: View {
         return EditableAppSelectionItem(
             app: app,
             iconSize: iconSize,
-            isSelected: isSelected
+            isSelected: isSelected,
+            theme: renderedAppGridTheme
         ) {
             toggleEditableAppSelection(app)
         }
@@ -1877,16 +1963,24 @@ struct ContentView: View {
         // Each overlay show creates a fresh ContentView with empty `allApps`. The indexer
         // cache may still be warm from a prior overlay/settings scan, so path-signature
         // alone must not skip the first hydrate or the grid spinner never clears.
-        guard allApps.isEmpty || AppIndexer.shouldRefreshForSearchPathChanges() else { return }
+        let wasEmpty = allApps.isEmpty
+        hydrateFromLastAppLibrarySnapshotIfNeeded()
+        guard wasEmpty || AppIndexer.shouldRefreshForSearchPathChanges() else { return }
         refreshApps()
     }
 
     private func refreshAppsForQuickSearch() {
+        hydrateFromLastAppLibrarySnapshotIfNeeded()
         guard allApps.isEmpty
             || quickSearchDocuments.isEmpty
             || AppIndexer.shouldRefreshForSearchPathChanges()
         else { return }
         refreshApps()
+    }
+
+    private func hydrateFromLastAppLibrarySnapshotIfNeeded() {
+        guard allApps.isEmpty, let snapshot = AppLibraryController.lastSnapshot() else { return }
+        applyAppLibrarySnapshot(snapshot)
     }
 
     private func refreshNotchHeight() {
@@ -2534,6 +2628,7 @@ struct ContentView: View {
         }
 
         refreshInProgress = true
+        scheduleLoadingSpinnerIfNeeded()
         DispatchQueue.global(qos: .userInitiated).async {
             let result = AppLibraryController.refresh(useCache: useCache)
             DispatchQueue.main.async {
@@ -2543,6 +2638,7 @@ struct ContentView: View {
                     finishDropRefreshAfterMinimumDuration()
                 }
                 refreshInProgress = false
+                hideLoadingSpinner()
                 if refreshAgainAfterCurrent {
                     let shouldForceLayout = refreshAgainForceLayout
                     let shouldUseCache = refreshAgainUseCache
@@ -2553,6 +2649,25 @@ struct ContentView: View {
                 }
             }
         }
+    }
+
+    private func scheduleLoadingSpinnerIfNeeded() {
+        loadingSpinnerToken &+= 1
+        let token = loadingSpinnerToken
+        loadingSpinnerVisible = false
+        guard allApps.isEmpty else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + loadingSpinnerDelay) {
+            guard token == loadingSpinnerToken,
+                  refreshInProgress,
+                  allApps.isEmpty
+            else { return }
+            loadingSpinnerVisible = true
+        }
+    }
+
+    private func hideLoadingSpinner() {
+        loadingSpinnerToken &+= 1
+        loadingSpinnerVisible = false
     }
 
     private func applyAppLibrarySnapshot(_ snapshot: AppLibrarySnapshot) {

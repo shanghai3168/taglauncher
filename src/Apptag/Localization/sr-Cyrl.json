@@ -12,6 +12,9 @@
   "settings.languagePicker": "Језик апликације:",
   "settings.languageDesc": "Изаберите језик менија и подешавања.",
   "settings.general": "Опште",
+  "settings.theme": "Тема",
+  "settings.themeDesc": "Изаберите тему позадине мреже апликација.",
+  "settings.themeScopeDesc": "Теме мењају само позадину мреже апликација. Контејнери задржавају једноличну стаклену површину.",
   "settings.tags": "Ознаке",
   "settings.data": "Data",
   "settings.about": "О програму",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "Савет 7 - Поређај апликације",
   "usageTips.tip7.detail": "Држите апликацију, превуците је унутар контејнера.",
   "usageTips.tip8.title": "Савет 8 - Уреди белешке",
-  "usageTips.tip8.detail": "Кликните десним тастером на апликацију, унесите белешку."
+  "usageTips.tip8.detail": "Кликните десним тастером на апликацију, унесите белешку.",
+  "theme.default": "Подразумевана",
+  "theme.deepBlue": "Дубока плава",
+  "theme.black": "Црна",
+  "theme.pink": "Розе",
+  "theme.purple": "Љубичаста",
+  "theme.green": "Зелена",
+  "theme.blue": "Плава",
+  "theme.colorful": "Шарена"
 }

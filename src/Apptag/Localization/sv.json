@@ -12,6 +12,9 @@
   "settings.languagePicker": "Appspråk:",
   "settings.languageDesc": "Välj språket som används i menyer och inställningar.",
   "settings.general": "Allmänt",
+  "settings.theme": "Tema",
+  "settings.themeDesc": "Välj bakgrundstema för apprutnätet.",
+  "settings.themeScopeDesc": "Teman ändrar bara bakgrunden i apprutnätet. Behållare har en enhetlig glasyta.",
   "settings.tags": "Taggar",
   "settings.data": "Data",
   "settings.about": "Om",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "Tips 7 - Sortera appar",
   "usageTips.tip7.detail": "Håll ned en app, flytta den i containern.",
   "usageTips.tip8.title": "Tips 8 - Redigera anteckningar",
-  "usageTips.tip8.detail": "Högerklicka på en app, skriv en anteckning."
+  "usageTips.tip8.detail": "Högerklicka på en app, skriv en anteckning.",
+  "theme.default": "Standard",
+  "theme.deepBlue": "Djupblå",
+  "theme.black": "Svart",
+  "theme.pink": "Rosa",
+  "theme.purple": "Lila",
+  "theme.green": "Grön",
+  "theme.blue": "Blå",
+  "theme.colorful": "Färgstark"
 }

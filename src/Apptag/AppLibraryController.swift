@@ -29,6 +29,15 @@ struct AppLibraryUncategorizedResetResult {
 }
 
 enum AppLibraryController {
+    private static let snapshotCacheLock = NSLock()
+    private static var cachedSnapshot: AppLibrarySnapshot?
+
+    static func lastSnapshot() -> AppLibrarySnapshot? {
+        snapshotCacheLock.lock()
+        defer { snapshotCacheLock.unlock() }
+        return cachedSnapshot
+    }
+
     static func refresh(useCache: Bool = true) -> AppLibraryRefreshResult {
         let scannedApps = AppIndexer.scan(useCache: useCache)
         let reconciledStore = TagEditor.reconcileScannedApps(scannedApps)
@@ -36,8 +45,10 @@ enum AppLibraryController {
             apps: scannedApps,
             store: reconciledStore
         )
+        let snapshot = makeSnapshot(scannedApps: scannedApps, store: smartStartResult.store)
+        updateLastSnapshot(snapshot)
         return AppLibraryRefreshResult(
-            snapshot: makeSnapshot(scannedApps: scannedApps, store: smartStartResult.store),
+            snapshot: snapshot,
             smartStartResult: smartStartResult
         )
     }
@@ -47,8 +58,10 @@ enum AppLibraryController {
         scannedApps: [AppInfo]
     ) -> AppLibrarySmartStartApplyResult {
         let result = SmartStartService.applySuggestion(draft)
+        let snapshot = makeSnapshot(scannedApps: scannedApps, store: result.store)
+        updateLastSnapshot(snapshot)
         return AppLibrarySmartStartApplyResult(
-            snapshot: makeSnapshot(scannedApps: scannedApps, store: result.store),
+            snapshot: snapshot,
             summary: result.summary
         )
     }
@@ -56,8 +69,10 @@ enum AppLibraryController {
     static func applySystemInitialScheme() -> AppLibrarySystemSchemeApplyResult {
         let scannedApps = AppIndexer.scan(useCache: false)
         let result = SmartStartService.applySystemInitialScheme(apps: scannedApps)
+        let snapshot = makeSnapshot(scannedApps: scannedApps, store: result.store)
+        updateLastSnapshot(snapshot)
         return AppLibrarySystemSchemeApplyResult(
-            snapshot: makeSnapshot(scannedApps: scannedApps, store: result.store),
+            snapshot: snapshot,
             summary: result.summary
         )
     }
@@ -65,9 +80,17 @@ enum AppLibraryController {
     static func resetToUncategorized() -> AppLibraryUncategorizedResetResult {
         let scannedApps = AppIndexer.scan(useCache: false)
         let store = TagDatabase.resetAppTagAssignmentsToUncategorized()
+        let snapshot = makeSnapshot(scannedApps: scannedApps, store: store)
+        updateLastSnapshot(snapshot)
         return AppLibraryUncategorizedResetResult(
-            snapshot: makeSnapshot(scannedApps: scannedApps, store: store)
+            snapshot: snapshot
         )
+    }
+
+    private static func updateLastSnapshot(_ snapshot: AppLibrarySnapshot) {
+        snapshotCacheLock.lock()
+        cachedSnapshot = snapshot
+        snapshotCacheLock.unlock()
     }
 
     private static func makeSnapshot(

@@ -12,6 +12,9 @@
   "settings.languagePicker": "Limba aplicației:",
   "settings.languageDesc": "Alege limba folosită pentru meniuri și setări.",
   "settings.general": "General",
+  "settings.theme": "Temă",
+  "settings.themeDesc": "Alege tema fundalului pentru grila de aplicații.",
+  "settings.themeScopeDesc": "Temele schimbă doar fundalul grilei de aplicații. Containerele păstrează o suprafață de sticlă uniformă.",
   "settings.tags": "Etichete",
   "settings.data": "Date",
   "settings.about": "Despre",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "Sfat 7 - Reordonează aplicații",
   "usageTips.tip7.detail": "Ține apăsată o aplicație, mut-o în container.",
   "usageTips.tip8.title": "Sfat 8 - Editează notițe",
-  "usageTips.tip8.detail": "Click dreapta pe o aplicație, introdu o notiță."
+  "usageTips.tip8.detail": "Click dreapta pe o aplicație, introdu o notiță.",
+  "theme.default": "Implicită",
+  "theme.deepBlue": "Albastru profund",
+  "theme.black": "Negru",
+  "theme.pink": "Roz",
+  "theme.purple": "Mov",
+  "theme.green": "Verde",
+  "theme.blue": "Albastru",
+  "theme.colorful": "Colorată"
 }

@@ -12,6 +12,9 @@
   "settings.languagePicker": "Bahasa aplikasi:",
   "settings.languageDesc": "Pilih bahasa yang digunakan untuk menu dan pengaturan.",
   "settings.general": "Umum",
+  "settings.theme": "Tema",
+  "settings.themeDesc": "Pilih tema latar belakang grid app.",
+  "settings.themeScopeDesc": "Tema hanya mengubah latar belakang grid app. Kontainer tetap memakai permukaan kaca yang konsisten.",
   "settings.tags": "Tag",
   "settings.data": "Data",
   "settings.about": "Tentang",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "Tips 7 - Urutkan app",
   "usageTips.tip7.detail": "Tekan lama app, pindahkan di dalam kontainer.",
   "usageTips.tip8.title": "Tips 8 - Edit catatan",
-  "usageTips.tip8.detail": "Klik kanan app, masukkan catatan."
+  "usageTips.tip8.detail": "Klik kanan app, masukkan catatan.",
+  "theme.default": "Default",
+  "theme.deepBlue": "Biru Tua",
+  "theme.black": "Hitam",
+  "theme.pink": "Merah Muda",
+  "theme.purple": "Ungu",
+  "theme.green": "Hijau",
+  "theme.blue": "Biru",
+  "theme.colorful": "Berwarna"
 }

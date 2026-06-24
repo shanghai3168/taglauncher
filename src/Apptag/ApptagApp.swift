@@ -1667,9 +1667,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             forName: .tagLauncherOpenPreferencesRequested,
             object: nil,
             queue: .main
-        ) { [weak self] _ in
-            self?.openPreferences()
+        ) { [weak self] notification in
+            self?.openPreferences(targetTab: Self.preferencesTabTarget(from: notification))
         }
+    }
+
+    private static func preferencesTabTarget(from notification: Notification) -> String? {
+        notification.userInfo?[SettingsTabTarget.userInfoKey] as? String
     }
 
     private func observeExternalActivationRequests() {
@@ -1691,6 +1695,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     @objc private func openPreferences(_ sender: Any? = nil) {
+        openPreferences(targetTab: nil)
+    }
+
+    private func openPreferences(targetTab: String?) {
         dismissQuickSearchIfNeeded()
         TagDatabase.flushPendingCategorySchemeBackupBatch()
         if overlayAvoidsSpaceSwitch {
@@ -1706,6 +1714,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         if let settingsWindow {
             prepareSettingsWindow(settingsWindow)
+            requestPreferencesTabSelection(targetTab)
             return
         }
 
@@ -1716,10 +1725,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             defer: false
         )
         window.title = tr("menu.preferences").replacingOccurrences(of: "…", with: "")
-        window.contentView = NSHostingView(rootView: PreferencesView())
+        window.contentView = NSHostingView(rootView: PreferencesView(initialTabRawValue: targetTab))
         window.isReleasedWhenClosed = false
         settingsWindow = window
         prepareSettingsWindow(window)
+    }
+
+    private func requestPreferencesTabSelection(_ targetTab: String?) {
+        guard let targetTab else { return }
+        NotificationCenter.default.post(
+            name: .tagLauncherPreferencesTabRequested,
+            object: nil,
+            userInfo: [SettingsTabTarget.userInfoKey: targetTab]
+        )
     }
 
     private func dismissQuickSearchIfNeeded() {

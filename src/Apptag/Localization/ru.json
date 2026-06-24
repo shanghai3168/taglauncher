@@ -12,6 +12,9 @@
   "settings.languagePicker": "Язык приложения:",
   "settings.languageDesc": "Выберите язык меню и настроек.",
   "settings.general": "Общие",
+  "settings.theme": "Тема",
+  "settings.themeDesc": "Выберите тему фона сетки приложений.",
+  "settings.themeScopeDesc": "Темы меняют только фон сетки приложений. Контейнеры сохраняют единый стеклянный вид.",
   "settings.tags": "Теги",
   "settings.data": "Данные",
   "settings.about": "О программе",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "Совет 7 — Упорядочить приложения",
   "usageTips.tip7.detail": "Удерживайте приложение, перетащите внутри контейнера.",
   "usageTips.tip8.title": "Совет 8 — Редактировать заметки",
-  "usageTips.tip8.detail": "Щелкните приложение правой кнопкой, введите заметку."
+  "usageTips.tip8.detail": "Щелкните приложение правой кнопкой, введите заметку.",
+  "theme.default": "По умолчанию",
+  "theme.deepBlue": "Глубокий синий",
+  "theme.black": "Чёрный",
+  "theme.pink": "Розовый",
+  "theme.purple": "Фиолетовый",
+  "theme.green": "Зелёный",
+  "theme.blue": "Синий",
+  "theme.colorful": "Цветной"
 }

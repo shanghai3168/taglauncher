@@ -12,6 +12,9 @@
   "settings.languagePicker": "لغة التطبيق:",
   "settings.languageDesc": "اختر اللغة المستخدمة في القوائم والإعدادات.",
   "settings.general": "عام",
+  "settings.theme": "السمة",
+  "settings.themeDesc": "اختر سمة خلفية شبكة التطبيقات.",
+  "settings.themeScopeDesc": "تغيّر السمات خلفية شبكة التطبيقات فقط. تبقى الحاويات بسطح زجاجي موحّد.",
   "settings.tags": "الوسوم",
   "settings.data": "البيانات",
   "settings.about": "حول",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "النصيحة 7 - ترتيب التطبيقات",
   "usageTips.tip7.detail": "اضغط مطولاً على تطبيق, اسحبه إلى موضع داخل الحاوية.",
   "usageTips.tip8.title": "النصيحة 8 - تحرير الملاحظات",
-  "usageTips.tip8.detail": "انقر بزر الماوس الأيمن على تطبيق, أدخل ملاحظة."
+  "usageTips.tip8.detail": "انقر بزر الماوس الأيمن على تطبيق, أدخل ملاحظة.",
+  "theme.default": "الافتراضية",
+  "theme.deepBlue": "أزرق عميق",
+  "theme.black": "أسود",
+  "theme.pink": "وردي",
+  "theme.purple": "بنفسجي",
+  "theme.green": "أخضر",
+  "theme.blue": "أزرق",
+  "theme.colorful": "ملوّن"
 }

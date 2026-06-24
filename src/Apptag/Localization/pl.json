@@ -12,6 +12,9 @@
   "settings.languagePicker": "Język aplikacji:",
   "settings.languageDesc": "Wybierz język menu i ustawień.",
   "settings.general": "Ogólne",
+  "settings.theme": "Motyw",
+  "settings.themeDesc": "Wybierz motyw tła siatki aplikacji.",
+  "settings.themeScopeDesc": "Motywy zmieniają tylko tło siatki aplikacji. Kontenery zachowują jednolitą szklaną powierzchnię.",
   "settings.tags": "Tagi",
   "settings.data": "Dane",
   "settings.about": "O aplikacji",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "Wskazówka 7 - Sortuj aplikacje",
   "usageTips.tip7.detail": "Przytrzymaj aplikację, przeciągnij ją w kontenerze.",
   "usageTips.tip8.title": "Wskazówka 8 - Edytuj notatki",
-  "usageTips.tip8.detail": "Kliknij aplikację prawym przyciskiem, wpisz notatkę."
+  "usageTips.tip8.detail": "Kliknij aplikację prawym przyciskiem, wpisz notatkę.",
+  "theme.default": "Domyślny",
+  "theme.deepBlue": "Głęboki niebieski",
+  "theme.black": "Czarny",
+  "theme.pink": "Różowy",
+  "theme.purple": "Fioletowy",
+  "theme.green": "Zielony",
+  "theme.blue": "Niebieski",
+  "theme.colorful": "Kolorowy"
 }

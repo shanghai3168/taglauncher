@@ -13,9 +13,11 @@ enum AppDefaults {
     static let launchAtLogin = true
     static let showUncommonAppBubbles = false
     static let hideUsageTips = false
+    static let appGridThemeID = AppGridTheme.defaultLight.rawValue
     static let useAppKitTagNavigation = true
 
     static func register() {
+        migrateAppGridThemePreferenceIfNeeded()
         UserDefaults.standard.register(defaults: [
             "tagFontSize": tagFontSize,
             "iconSize": iconSize,
@@ -26,6 +28,7 @@ enum AppDefaults {
             "launchAtLogin": launchAtLogin,
             "showUncommonAppBubbles": showUncommonAppBubbles,
             "hideUsageTips": hideUsageTips,
+            AppGridTheme.storageKey: appGridThemeID,
             "useAppKitTagNavigation": useAppKitTagNavigation,
             "skipTagRemovalDropConfirm": false,
             "skipUncategorizedDropConfirm": false,
@@ -38,6 +41,15 @@ enum AppDefaults {
     static func hasStoredValue(for key: String) -> Bool {
         let domain = Bundle.main.bundleIdentifier ?? AppIdentity.bundleIdentifier
         return UserDefaults.standard.persistentDomain(forName: domain)?[key] != nil
+    }
+
+    private static func migrateAppGridThemePreferenceIfNeeded() {
+        let defaults = UserDefaults.standard
+        guard !hasStoredValue(for: AppGridTheme.storageKey),
+              hasStoredValue(for: "useDarkAppGrid"),
+              defaults.bool(forKey: "useDarkAppGrid")
+        else { return }
+        defaults.set(AppGridTheme.deepBlue.rawValue, forKey: AppGridTheme.storageKey)
     }
 
     private static func removeShortcutCustomizationDefaults() {

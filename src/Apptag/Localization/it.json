@@ -12,6 +12,9 @@
   "settings.languagePicker": "Lingua app:",
   "settings.languageDesc": "Scegli la lingua usata da menu e impostazioni.",
   "settings.general": "Generali",
+  "settings.theme": "Tema",
+  "settings.themeDesc": "Scegli il tema di sfondo della griglia delle app.",
+  "settings.themeScopeDesc": "I temi cambiano solo lo sfondo della griglia delle app. I contenitori mantengono una superficie in vetro uniforme.",
   "settings.tags": "Tag",
   "settings.data": "Dati",
   "settings.about": "Informazioni",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "Suggerimento 7 - Riordinare app",
   "usageTips.tip7.detail": "Tieni premuta un’app, spostala nel contenitore.",
   "usageTips.tip8.title": "Suggerimento 8 - Modificare note",
-  "usageTips.tip8.detail": "Fai clic destro su un’app, inserisci una nota."
+  "usageTips.tip8.detail": "Fai clic destro su un’app, inserisci una nota.",
+  "theme.default": "Predefinito",
+  "theme.deepBlue": "Blu profondo",
+  "theme.black": "Nero",
+  "theme.pink": "Rosa",
+  "theme.purple": "Viola",
+  "theme.green": "Verde",
+  "theme.blue": "Blu",
+  "theme.colorful": "Colorato"
 }

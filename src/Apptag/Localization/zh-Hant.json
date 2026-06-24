@@ -12,6 +12,9 @@
   "settings.languagePicker": "應用程式語言：",
   "settings.languageDesc": "選擇選單和設定面板使用的語言。",
   "settings.general": "一般",
+  "settings.theme": "主題",
+  "settings.themeDesc": "選擇應用程式網格的背景主題。",
+  "settings.themeScopeDesc": "主題只會改變應用程式網格背景。容器會保持一致的玻璃面板。",
   "settings.tags": "標籤",
   "settings.data": "資料",
   "settings.about": "關於",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "技巧7-應用排序",
   "usageTips.tip7.detail": "長按應用程式圖示開始拖曳 > 拖到容器內目標位置後放開",
   "usageTips.tip8.title": "技巧8-編輯備註",
-  "usageTips.tip8.detail": "在應用程式上按右鍵 > 輸入內容"
+  "usageTips.tip8.detail": "在應用程式上按右鍵 > 輸入內容",
+  "theme.default": "預設",
+  "theme.deepBlue": "深藍",
+  "theme.black": "黑色",
+  "theme.pink": "粉紅",
+  "theme.purple": "紫色",
+  "theme.green": "綠色",
+  "theme.blue": "藍色",
+  "theme.colorful": "炫彩"
 }

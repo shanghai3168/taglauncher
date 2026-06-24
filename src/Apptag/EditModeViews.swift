@@ -2,6 +2,7 @@ import SwiftUI
 import AppKit
 
 struct EditAppsHeaderView: View {
+    let theme: AppGridTheme
     let operation: EditTagOperation
     let hintText: String
     let confirmTitle: String
@@ -16,19 +17,34 @@ struct EditAppsHeaderView: View {
             Button(action: onExit) {
                 Label(tr("edit.exit"), systemImage: "rectangle.portrait.and.arrow.right")
                     .font(.system(size: 12))
+                    .foregroundStyle(theme.editPrimaryTextColor)
+                    .padding(.horizontal, 8)
+                    .frame(height: 28)
+                    .background(
+                        RoundedRectangle(cornerRadius: 7, style: .continuous)
+                            .fill(theme.editControlSurfaceColor)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 7, style: .continuous)
+                            .stroke(theme.editControlStrokeColor, lineWidth: 1)
+                    )
             }
-            .buttonStyle(.bordered)
+            .buttonStyle(.plain)
+            .help(tr("edit.exit"))
+            .shadow(color: theme.editButtonShadowColor, radius: 10, y: 4)
 
             Spacer(minLength: 20)
 
             VStack(alignment: .trailing, spacing: 5) {
                 HStack(alignment: .center, spacing: 14) {
                     EditOperationPicker(
+                        theme: theme,
                         operation: operation,
                         onSelect: onSelectOperation
                     )
 
                     EditConfirmButton(
+                        theme: theme,
                         title: confirmTitle,
                         isDisabled: isConfirmDisabled,
                         action: onConfirm
@@ -37,7 +53,7 @@ struct EditAppsHeaderView: View {
 
                 Text(hintText)
                     .font(.system(size: 11, weight: .medium))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.editSecondaryTextColor)
                     .lineLimit(2)
                     .multilineTextAlignment(.trailing)
                     .frame(maxWidth: 460, alignment: .trailing)
@@ -48,10 +64,12 @@ struct EditAppsHeaderView: View {
         .padding(.horizontal, 24)
         .padding(.top, notchHeight > 0 ? notchHeight + 10 : 20)
         .padding(.bottom, 10)
+        .background(theme.editToolbarSurfaceColor)
     }
 }
 
 private struct EditOperationPicker: View {
+    let theme: AppGridTheme
     let operation: EditTagOperation
     let onSelect: (EditTagOperation) -> Void
 
@@ -59,16 +77,18 @@ private struct EditOperationPicker: View {
         HStack(spacing: 10) {
             Text(tr("edit.operationLabel"))
                 .font(.system(size: 12, weight: .medium))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.editSecondaryTextColor)
 
             HStack(spacing: 14) {
                 EditOperationModeButton(
+                    theme: theme,
                     operation: operation,
                     mode: .add,
                     titleKey: "edit.modeAdd",
                     onSelect: onSelect
                 )
                 EditOperationModeButton(
+                    theme: theme,
                     operation: operation,
                     mode: .remove,
                     titleKey: "edit.modeRemove",
@@ -76,10 +96,22 @@ private struct EditOperationPicker: View {
                 )
             }
         }
+        .padding(.horizontal, 10)
+        .frame(height: 34)
+        .background(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .fill(theme.editControlSurfaceColor)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .stroke(theme.editControlStrokeColor, lineWidth: 1)
+        )
+        .shadow(color: theme.editButtonShadowColor, radius: 10, y: 4)
     }
 }
 
 private struct EditOperationModeButton: View {
+    let theme: AppGridTheme
     let operation: EditTagOperation
     let mode: EditTagOperation
     let titleKey: String
@@ -97,23 +129,24 @@ private struct EditOperationModeButton: View {
                 ZStack {
                     Circle()
                         .strokeBorder(
-                            isActive ? Color.accentColor : Color.secondary.opacity(0.58),
+                            isActive ? theme.editAccentColor : theme.editInactiveIndicatorColor,
                             lineWidth: 1.6
                         )
                         .frame(width: 13, height: 13)
                     if isActive {
                         Circle()
-                            .fill(Color.accentColor)
+                            .fill(theme.editAccentColor)
                             .frame(width: 7, height: 7)
                     }
                 }
 
                 Text(tr(titleKey))
                     .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(isActive ? Color.primary : Color.secondary)
+                    .foregroundStyle(isActive ? theme.editPrimaryTextColor : theme.editSecondaryTextColor)
                     .lineLimit(1)
             }
             .padding(.vertical, 4)
+            .padding(.horizontal, 2)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -123,6 +156,7 @@ private struct EditOperationModeButton: View {
 }
 
 private struct EditConfirmButton: View {
+    let theme: AppGridTheme
     let title: String
     let isDisabled: Bool
     let action: () -> Void
@@ -131,7 +165,7 @@ private struct EditConfirmButton: View {
         Button(action: action) {
             Text(title)
                 .font(.system(size: 13, weight: .semibold))
-                .foregroundStyle(Color.white.opacity(isDisabled ? 0.76 : 1.0))
+                .foregroundStyle(isDisabled ? theme.editDisabledTextColor : theme.editConfirmForegroundColor)
                 .lineLimit(1)
                 .minimumScaleFactor(0.82)
                 .frame(minWidth: 116)
@@ -139,20 +173,22 @@ private struct EditConfirmButton: View {
                 .padding(.horizontal, 8)
                 .background(
                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(Color.accentColor.opacity(isDisabled ? 0.40 : 1.0))
+                        .fill(isDisabled ? theme.editDisabledSurfaceColor : theme.editAccentColor)
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .stroke(Color.accentColor.opacity(isDisabled ? 0.18 : 0.24), lineWidth: 1)
+                        .stroke(isDisabled ? theme.editControlStrokeColor : theme.editAccentColor.opacity(0.72), lineWidth: 1)
                 )
         }
         .buttonStyle(.plain)
         .disabled(isDisabled)
         .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+        .shadow(color: isDisabled ? Color.clear : theme.editButtonShadowColor, radius: 12, y: 5)
     }
 }
 
 struct EditAppsSidebarIntroView: View {
+    let theme: AppGridTheme
     let width: CGFloat
     let horizontalInset: CGFloat
 
@@ -160,7 +196,7 @@ struct EditAppsSidebarIntroView: View {
         VStack(alignment: .leading, spacing: 6) {
             Text(tr("edit.selectTags"))
                 .font(.caption)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.editSecondaryTextColor)
                 .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
                 .multilineTextAlignment(.leading)
@@ -168,7 +204,7 @@ struct EditAppsSidebarIntroView: View {
 
             Text(tr("edit.dragHint"))
                 .font(.caption2)
-                .foregroundStyle(.tertiary)
+                .foregroundStyle(theme.editTertiaryTextColor)
                 .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
                 .multilineTextAlignment(.leading)
@@ -188,6 +224,7 @@ struct EditSelectableTagItem: View {
     let operation: EditTagOperation
     let isSelected: Bool
     let isRemovableCandidate: Bool
+    let theme: AppGridTheme
     let onToggle: () -> Void
 
     private var isEnabled: Bool {
@@ -205,7 +242,7 @@ struct EditSelectableTagItem: View {
     var body: some View {
         HStack(spacing: 6) {
             Circle()
-                .fill(isSelected ? Color.accentColor : Color.secondary.opacity(isEnabled ? 0.3 : 0.18))
+                .fill(isSelected ? theme.editAccentColor : theme.editInactiveIndicatorColor.opacity(isEnabled ? 1.0 : 0.56))
                 .frame(width: 16, height: 16)
                 .overlay(
                     isSelected
@@ -217,7 +254,7 @@ struct EditSelectableTagItem: View {
 
             Text(displayName)
                 .font(.system(size: 13, weight: isUncommon ? .semibold : .medium))
-                .foregroundStyle(isEnabled ? Color.primary : Color.secondary.opacity(0.66))
+                .foregroundStyle(isEnabled ? theme.editPrimaryTextColor : theme.editDisabledTextColor)
                 .lineLimit(1)
                 .truncationMode(.tail)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -226,13 +263,13 @@ struct EditSelectableTagItem: View {
                 if isUncommon {
                     Image(systemName: "questionmark.bubble.fill")
                         .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(isEnabled ? Color.secondary : Color.secondary.opacity(0.55))
+                        .foregroundStyle(isEnabled ? theme.editSecondaryTextColor : theme.editDisabledTextColor)
                         .frame(width: 16, height: 16)
                 }
                 if showsPendingRemoval {
                     Image(systemName: "trash.fill")
                         .font(.system(size: 11, weight: .bold))
-                        .foregroundStyle(.red)
+                        .foregroundStyle(Color.red.opacity(theme.usesDarkGlass ? 0.96 : 0.84))
                         .frame(width: 16, height: 16)
                         .transition(.scale(scale: 0.85).combined(with: .opacity))
                 } else if operation == .remove {
@@ -255,9 +292,13 @@ struct EditSelectableTagItem: View {
                 .fill(
                     Color(
                         nsColor: TagColor.nsColor(for: colorIndex)
-                            .withAlphaComponent(isEnabled ? (isUncommon ? 0.22 : 0.3) : 0.12)
+                            .withAlphaComponent(isEnabled ? (isUncommon ? 0.26 : 0.34) : 0.16)
                     )
                 )
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 6)
+                .stroke(theme.editControlStrokeColor.opacity(isSelected ? 1.0 : 0.44), lineWidth: isSelected ? 1.1 : 0.6)
         )
         .contentShape(RoundedRectangle(cornerRadius: 6))
         .onTapGesture {
@@ -273,6 +314,7 @@ struct EditableAppSelectionItem: View {
     let app: AppInfo
     let iconSize: CGFloat
     let isSelected: Bool
+    let theme: AppGridTheme
     let onToggle: () -> Void
 
     var body: some View {
@@ -285,7 +327,7 @@ struct EditableAppSelectionItem: View {
                         .frame(width: iconSize, height: iconSize)
 
                     Circle()
-                        .fill(isSelected ? Color.accentColor : Color.secondary.opacity(0.3))
+                        .fill(isSelected ? theme.editAccentColor : theme.editInactiveIndicatorColor)
                         .frame(width: 20, height: 20)
                         .overlay(
                             isSelected
@@ -299,6 +341,7 @@ struct EditableAppSelectionItem: View {
 
                 Text(app.displayName)
                     .font(.system(size: 11, weight: .medium))
+                    .foregroundStyle(theme.editPrimaryTextColor)
                     .lineLimit(1)
                     .truncationMode(.tail)
                     .frame(maxWidth: iconSize + 20)
@@ -307,6 +350,14 @@ struct EditableAppSelectionItem: View {
             .padding(.horizontal, 4)
             .contentShape(RoundedRectangle(cornerRadius: 10))
             .opacity(isSelected ? 1.0 : 0.65)
+            .background(
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .fill(isSelected ? theme.editControlSurfaceColor : Color.clear)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .stroke(isSelected ? theme.editControlStrokeColor : Color.clear, lineWidth: 1)
+            )
         }
         .buttonStyle(.plain)
     }

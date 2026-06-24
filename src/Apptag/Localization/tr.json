@@ -12,6 +12,9 @@
   "settings.languagePicker": "Uygulama dili:",
   "settings.languageDesc": "Menülerde ve ayarlarda kullanılan dili seçin.",
   "settings.general": "Genel",
+  "settings.theme": "Tema",
+  "settings.themeDesc": "Uygulama ızgarası arka plan temasını seçin.",
+  "settings.themeScopeDesc": "Temalar yalnızca uygulama ızgarası arka planını değiştirir. Kapsayıcılar tutarlı bir cam yüzey olarak kalır.",
   "settings.tags": "Etiketler",
   "settings.data": "Veri",
   "settings.about": "Hakkında",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "İpucu 7 - Uygulamaları sırala",
   "usageTips.tip7.detail": "Bir uygulamaya uzun basın, kapsayıcı içinde taşıyın.",
   "usageTips.tip8.title": "İpucu 8 - Notları düzenle",
-  "usageTips.tip8.detail": "Bir uygulamaya sağ tıklayın, not girin."
+  "usageTips.tip8.detail": "Bir uygulamaya sağ tıklayın, not girin.",
+  "theme.default": "Varsayılan",
+  "theme.deepBlue": "Derin Mavi",
+  "theme.black": "Siyah",
+  "theme.pink": "Pembe",
+  "theme.purple": "Mor",
+  "theme.green": "Yeşil",
+  "theme.blue": "Mavi",
+  "theme.colorful": "Renkli"
 }

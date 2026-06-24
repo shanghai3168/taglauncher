@@ -12,6 +12,9 @@
   "settings.languagePicker": "应用语言：",
   "settings.languageDesc": "选择菜单和设置面板使用的语言。",
   "settings.general": "通用",
+  "settings.theme": "主题",
+  "settings.themeDesc": "选择应用网格的背景主题。",
+  "settings.themeScopeDesc": "主题只改变应用网格背景。容器保持统一的玻璃面板。",
   "settings.tags": "标签",
   "settings.data": "数据",
   "settings.about": "关于",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "技巧7-应用排序",
   "usageTips.tip7.detail": "长按应用图标启动拖动 > 拖动到容器内的目标位置，放手即可",
   "usageTips.tip8.title": "技巧8-编辑备注",
-  "usageTips.tip8.detail": "在应用上点击右键 > 输入内容"
+  "usageTips.tip8.detail": "在应用上点击右键 > 输入内容",
+  "theme.default": "默认",
+  "theme.deepBlue": "深蓝",
+  "theme.black": "黑色",
+  "theme.pink": "粉色",
+  "theme.purple": "紫色",
+  "theme.green": "绿色",
+  "theme.blue": "蓝色",
+  "theme.colorful": "炫彩"
 }

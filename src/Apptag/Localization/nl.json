@@ -12,6 +12,9 @@
   "settings.languagePicker": "App-taal:",
   "settings.languageDesc": "Kies de taal voor menu’s en instellingen.",
   "settings.general": "Algemeen",
+  "settings.theme": "Thema",
+  "settings.themeDesc": "Kies het achtergrondthema voor het app-raster.",
+  "settings.themeScopeDesc": "Thema’s wijzigen alleen de achtergrond van het app-raster. Containers behouden één consistente glaslaag.",
   "settings.tags": "Tags",
   "settings.data": "Gegevens",
   "settings.about": "Over",
@@ -227,5 +230,13 @@
   "usageTips.tip7.title": "Tip 7 - Apps sorteren",
   "usageTips.tip7.detail": "Houd een app ingedrukt, sleep binnen de container.",
   "usageTips.tip8.title": "Tip 8 - Notities bewerken",
-  "usageTips.tip8.detail": "Klik met rechts op een app, voer een notitie in."
+  "usageTips.tip8.detail": "Klik met rechts op een app, voer een notitie in.",
+  "theme.default": "Standaard",
+  "theme.deepBlue": "Diepblauw",
+  "theme.black": "Zwart",
+  "theme.pink": "Roze",
+  "theme.purple": "Paars",
+  "theme.green": "Groen",
+  "theme.blue": "Blauw",
+  "theme.colorful": "Kleurrijk"
 }

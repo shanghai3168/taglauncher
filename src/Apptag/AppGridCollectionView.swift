@@ -51,6 +51,7 @@ struct AppGridCollectionView: NSViewRepresentable {
     let displayMode: String
     let iconSize: CGFloat
     let showNames: Bool
+    let appGridTheme: AppGridTheme
     let bubbleDisabled: Bool
     let showUncommonAppBubbles: Bool
     let highlightedGroupName: String?
@@ -90,6 +91,7 @@ struct AppGridCollectionView: NSViewRepresentable {
             displayMode: displayMode,
             iconSize: iconSize,
             showNames: showNames,
+            appGridTheme: appGridTheme,
             bubbleDisabled: bubbleDisabled,
             showUncommonAppBubbles: showUncommonAppBubbles,
             highlightedGroupName: highlightedGroupName,
@@ -121,6 +123,7 @@ struct AppGridCollectionView: NSViewRepresentable {
         var displayMode = AppDefaults.displayMode
         var iconSize: CGFloat = AppDefaults.iconSize
         var showNames = true
+        var appGridTheme = AppGridTheme.fallback
         private var externalBubbleDisabled = false
         private var scrollBubbleDisabled = false
         var showUncommonAppBubbles = AppDefaults.showUncommonAppBubbles
@@ -161,6 +164,7 @@ struct AppGridCollectionView: NSViewRepresentable {
             displayMode: String,
             iconSize: CGFloat,
             showNames: Bool,
+            appGridTheme: AppGridTheme,
             bubbleDisabled: Bool,
             showUncommonAppBubbles: Bool,
             highlightedGroupName: String?,
@@ -188,6 +192,7 @@ struct AppGridCollectionView: NSViewRepresentable {
             self.displayMode = displayMode
             self.iconSize = iconSize
             self.showNames = showNames
+            self.appGridTheme = appGridTheme
             self.externalBubbleDisabled = bubbleDisabled
             self.showUncommonAppBubbles = showUncommonAppBubbles
             self.highlightedGroupName = highlightedGroupName
@@ -218,6 +223,7 @@ struct AppGridCollectionView: NSViewRepresentable {
                 displayMode: displayMode,
                 iconSize: iconSize,
                 showNames: showNames,
+                appGridTheme: appGridTheme,
                 showUncommonAppBubbles: showUncommonAppBubbles,
                 bottomContentPadding: self.bottomContentPadding,
                 contentRevision: contentRevision
@@ -393,6 +399,7 @@ struct AppGridCollectionView: NSViewRepresentable {
             displayMode: String,
             iconSize: CGFloat,
             showNames: Bool,
+            appGridTheme: AppGridTheme,
             showUncommonAppBubbles: Bool,
             bottomContentPadding: CGFloat,
             contentRevision: Int
@@ -405,6 +412,7 @@ struct AppGridCollectionView: NSViewRepresentable {
                 displayMode,
                 "\(Int(iconSize.rounded()))",
                 showNames ? "names" : "nonames",
+                "theme=\(appGridTheme.rawValue)",
                 showUncommonAppBubbles ? "uncommon" : "allbubbles",
                 "bottom=\(Int(bottomContentPadding.rounded()))",
                 colorPart,
@@ -477,6 +485,7 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
 
     func applyCoordinatorUpdate() {
         guard let coordinator else { return }
+        applyAppearance()
         if coordinator.needsReload {
             coordinator.needsReload = false
             collectionView.reloadData()
@@ -765,6 +774,12 @@ final class AppGridCollectionHostView: NSView, AppEmptyDropReceivingView {
             lastReportedBoundsOrigin = origin
         }
         return didScroll
+    }
+
+    private func applyAppearance() {
+        let usesDarkGlass = coordinator?.appGridTheme.usesDarkGlass == true
+        layer?.backgroundColor = NSColor.clear.cgColor
+        collectionView.appearance = usesDarkGlass ? NSAppearance(named: .darkAqua) : nil
     }
 }
 
@@ -1418,6 +1433,7 @@ private final class AppGridUsageTipDotsView: NSView {
             x += 5 + spacing
         }
     }
+
 }
 
 private final class AppGridContainerCollectionLayout: NSCollectionViewLayout {
@@ -1982,15 +1998,24 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
         if displayStyle.usesCardSurface {
             let rect = bounds.insetBy(dx: 0.5, dy: 0.5)
             let path = NSBezierPath(roundedRect: rect, xRadius: 14, yRadius: 14)
-            cardSurfaceColor().setFill()
-            path.fill()
-            if coordinator.isColoredContainerMode || isColorlessActive {
-                tagColor.withAlphaComponent(0.30).setFill()
+            if coordinator.appGridTheme.usesDarkGlass {
+                drawDarkCardSurface(
+                    path: path,
+                    tagColor: tagColor,
+                    isActive: isHovered || isNavigationHighlighted,
+                    isTinted: coordinator.isColoredContainerMode || isColorlessActive
+                )
+            } else {
+                cardSurfaceColor().setFill()
                 path.fill()
+                if coordinator.isColoredContainerMode || isColorlessActive {
+                    tagColor.withAlphaComponent(0.30).setFill()
+                    path.fill()
+                }
+                NSColor.labelColor.withAlphaComponent(0.08).setStroke()
+                path.lineWidth = 1
+                path.stroke()
             }
-            NSColor.labelColor.withAlphaComponent(0.08).setStroke()
-            path.lineWidth = 1
-            path.stroke()
         }
 
         drawHeader(title: group.name, displayStyle: displayStyle)
@@ -2210,6 +2235,17 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
             && (isHovered || isNavigationHighlighted)
         let shouldShadow = coordinator.displayStyle.usesCardSurface
             && ((coordinator.isColoredContainerMode && (isHovered || isNavigationHighlighted)) || isColorlessActive)
+        if coordinator.appGridTheme.usesDarkGlass && coordinator.displayStyle.usesCardSurface {
+            let tagColor = TagColor.nsColor(for: coordinator.tagColors[group?.name ?? ""] ?? 0)
+            let active = isHovered || isNavigationHighlighted
+            layer?.shadowColor = active
+                ? tagColor.withAlphaComponent(0.82).cgColor
+                : NSColor.black.withAlphaComponent(0.72).cgColor
+            layer?.shadowOpacity = active ? 0.50 : 0.28
+            layer?.shadowRadius = active ? 24 : 14
+            layer?.shadowOffset = NSSize(width: 0, height: active ? -8 : -4)
+            return
+        }
         layer?.shadowColor = NSColor.black.cgColor
         layer?.shadowOpacity = shouldShadow ? 0.22 : 0
         layer?.shadowRadius = shouldShadow ? 8 : 0
@@ -2245,6 +2281,40 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
         return NSColor.white.withAlphaComponent(0.62)
     }
 
+    private func drawDarkCardSurface(
+        path: NSBezierPath,
+        tagColor: NSColor,
+        isActive: Bool,
+        isTinted: Bool
+    ) {
+        NSGraphicsContext.saveGraphicsState()
+        if isActive {
+            let glow = NSShadow()
+            glow.shadowColor = tagColor.withAlphaComponent(0.36)
+            glow.shadowBlurRadius = 28
+            glow.shadowOffset = NSSize(width: 0, height: -8)
+            glow.set()
+        }
+        NSColor(calibratedRed: 0.12, green: 0.18, blue: 0.25, alpha: 0.58).setFill()
+        path.fill()
+        NSGraphicsContext.restoreGraphicsState()
+
+        if isTinted {
+            tagColor.withAlphaComponent(isActive ? 0.18 : 0.10).setFill()
+            path.fill()
+        }
+
+        NSColor.white.withAlphaComponent(isActive ? 0.08 : 0.045).setFill()
+        path.fill()
+
+        let strokeColor = isActive
+            ? tagColor.withAlphaComponent(0.72)
+            : NSColor.white.withAlphaComponent(0.18)
+        strokeColor.setStroke()
+        path.lineWidth = isActive ? 1.4 : 1.0
+        path.stroke()
+    }
+
     private func drawHeader(title: String, displayStyle: AppGridCollectionDisplayMode) {
         let horizontalInset = displayStyle.usesCardSurface ? AppGridCollectionMetrics.cardPadding : 0
         let verticalInset = displayStyle.usesCardSurface ? AppGridCollectionMetrics.cardPadding : 0
@@ -2254,9 +2324,13 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
             width: max(1, bounds.width - horizontalInset * 2),
             height: AppGridCollectionMetrics.headerHeight
         )
+        let isDarkGrid = coordinator?.appGridTheme.usesDarkGlass == true
+        let headerTextColor = isDarkGrid
+            ? NSColor.white.withAlphaComponent(0.74)
+            : NSColor.secondaryLabelColor
         let attributes: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: 18, weight: .semibold),
-            .foregroundColor: NSColor.secondaryLabelColor,
+            .foregroundColor: headerTextColor,
             .paragraphStyle: centeredParagraph(lineBreak: .byTruncatingMiddle)
         ]
         let titleSize = title.size(withAttributes: attributes)
@@ -2268,7 +2342,9 @@ private final class AppGridGroupCardView: NSView, AppDropTargetReceivingView {
             height: headerRect.height - 6
         )
         let lineY = headerRect.midY
-        NSColor.secondaryLabelColor.withAlphaComponent(0.25).setStroke()
+        (isDarkGrid ? NSColor.white : NSColor.secondaryLabelColor)
+            .withAlphaComponent(isDarkGrid ? 0.16 : 0.25)
+            .setStroke()
         let leftLine = NSBezierPath()
         leftLine.move(to: NSPoint(x: headerRect.minX, y: lineY))
         leftLine.line(to: NSPoint(x: max(headerRect.minX, titleRect.minX - 2), y: lineY))
