@@ -193,3 +193,64 @@
   - `src/build/TagLauncher-8.0.0-build20260624.1815.dmg`
 - SHA256：
   - `373355c87055680cb13e873bc5909abd84817d9ac2eaa98cc1ec2748be64bc80`
+
+### 2026-06-24 23:41 使用技巧横幅重设计
+
+- 用户确认最终方案：
+  - 布局选“2 分区式教学横幅”。
+  - 亮色主题使用浅玻璃配色。
+  - 深色/黑色主题使用同样布局，但切换到深色玻璃材质和白色文字。
+- 角色分工结论：
+  - 架构：继续使用原生 AppKit `AppGridUsageTipsNSView`，不引入 SwiftUI；tips 跟随 `renderedAppGridTheme`，编辑模式仍继承默认浅色主题 override。
+  - 代码审核：保留全宽透明 shield 和 local mouse monitor，避免点击穿透到底层 AppGrid；箭头只在命中区域触发翻页。
+  - QA：更新 `usage_tips_qa.sh`，覆盖分区式布局、主题配色、关闭按钮、全宽事件拦截、29 语种文案和 macOS 14 兼容。
+- 本轮实现：
+  - 使用技巧横幅底部横向占满可用宽度。
+  - 左侧独立标题面板显示灯泡图标、技巧编号和标题。
+  - 中央正文区域展示两行动作说明，保留长文本横向滚动能力。
+  - 右侧固定上一条/下一条按钮，页点移动到箭头下方。
+  - 右上角新增弱视觉关闭按钮；默认半透明，hover/press 更清晰；点击后写入 `hideUsageTips`。
+  - `updateColors()` 按 `AppGridTheme.usesDarkGlass` 切换浅玻璃/深玻璃 token。
+  - 29 个语种新增 `usageTips.close`。
+- QA：
+  - `bash Scripts/usage_tips_qa.sh`：PASS。
+  - `bash Scripts/macos14_availability_typecheck_qa.sh`：PASS。
+  - `git diff --check`：PASS。
+  - `bash build.sh`：PASS，生成 `src/build/TagLauncher.app`。
+  - `bash Scripts/macos14_build_metadata_qa.sh`：PASS，`LSMinimumSystemVersion=14.0`，`minos=14.0`，`arches=arm64`。
+  - `codesign --verify --deep --strict --verbose=2 build/TagLauncher.app`：PASS。
+  - 构建产物版本：`8.0.2 (20260625.1322)`。
+  - `bash Scripts/theme_settings_qa.sh`：PASS。
+  - `bash Scripts/tag_navigation_hover_scroll_qa.sh`：PASS。
+  - `bash Scripts/macos14_availability_typecheck_qa.sh`：PASS。
+  - `APP_BUILD=20260624.2331 bash build.sh`：PASS。
+
+### 2026-06-25 使用技巧横幅 26.0625-2 视觉优化
+
+- 需求来源：`canvas/26.06-UI调整.excalidraw` frame `26.0625-2`。
+- 用户标注问题：
+  - 标题区空间充裕但排版仍显拥挤。
+  - 标题字号偏小，需要适当放大并加粗，同时不能撑破 29 语种矩形空间。
+  - 标题字色需要按主题优化，必须保持清晰可读。
+  - 标题前 icon 不应固定为单一灯泡，需要按技巧类型变化。
+  - 正文超过一行时应采用 ordered list 样式。
+  - 第 1 条标题改为“编辑标签”，正文补充“打开设置切换到标签编辑”和“在标签列表双击标签快速进入标签编辑页”。
+  - 以上文案修改覆盖 29 个语种。
+- 本轮实现：
+  - `AppGridUsageTipsNSView` 标题字号从 22 semibold 调整为 25 bold。
+  - 左侧标题面板宽度从 300-380pt 扩展为 350-460pt，降低长语种标题换行/挤压风险。
+  - 标题和 icon 改为按 `AppGridTheme` 取高对比 accent；深蓝/黑色主题继续使用白字优先。
+  - 按 tip id 切换语义 SF Symbol：编辑标签、套用标签、移动、复制、移除、排序、备注等不再共用灯泡 icon。
+  - 正文 formatter 保留分隔符转换规则，并在多段内容时自动渲染为 `1.` / `2.` 编号步骤。
+  - 第 1 条使用技巧 29 个语种 title/detail 已同步更新。
+  - `Scripts/usage_tips_qa.sh` 增加标题字号、标题面板宽度、语义 icon、主题 accent、ordered list 和第 1 条双击标签说明检查。
+- QA：
+  - `bash Scripts/usage_tips_qa.sh`：PASS。
+  - `bash Scripts/macos14_build_metadata_qa.sh`：PASS，`LSMinimumSystemVersion=14.0`，`minos=14.0`，`arches=arm64`。
+  - `bash Scripts/appgrid_startup_loading_qa.sh`：PASS。
+  - `bash Scripts/app_ordering_data_qa.sh`：PASS。
+  - `bash Scripts/apple_default_note_policy_qa.sh`：PASS。
+  - `bash Scripts/apple_default_apps_resource_qa.sh`：PASS。
+  - `bash Scripts/quick_search_app_name_qa.sh`：SKIP，本机没有 `/Applications/贝锐向日葵被控.app` fixture。
+  - `bash Scripts/window_logic_qa.sh`：未作为本轮通过项；脚本在 Dock tile 去重检查处失败，退出后无 TagLauncher 进程残留，判断为 GUI/Dock 可访问性环境或既有 QA 基础设施问题，和本轮使用技巧横幅代码路径无直接交集。
+- 版本推进到：`8.0.2 / 20260624.2341`。

@@ -38,8 +38,8 @@ struct AppGridUsageTip: Equatable {
 }
 
 enum AppGridUsageTipsMetrics {
-    static let barHeight: CGFloat = 136
-    static let reservedHeight: CGFloat = 176
+    static let barHeight: CGFloat = 154
+    static let reservedHeight: CGFloat = 194
     static let bottomMargin: CGFloat = 20
     static let horizontalInset: CGFloat = 24
     static let minWidth: CGFloat = 640
@@ -71,6 +71,7 @@ struct AppGridCollectionView: NSViewRepresentable {
     let onGroupActivate: (String) -> Void
     let onScrollActivity: () -> Void
     let onDragModeChange: (Bool) -> Void
+    let onHideUsageTips: () -> Void
     let onUsageTipsHoverChange: (Bool) -> Void
 
     func makeCoordinator() -> Coordinator {
@@ -111,6 +112,7 @@ struct AppGridCollectionView: NSViewRepresentable {
             onGroupActivate: onGroupActivate,
             onScrollActivity: onScrollActivity,
             onDragModeChange: onDragModeChange,
+            onHideUsageTips: onHideUsageTips,
             onUsageTipIndexChange: { selectedUsageTipIndexBinding.wrappedValue = $0 },
             onUsageTipsHoverChange: onUsageTipsHoverChange
         )
@@ -149,6 +151,7 @@ struct AppGridCollectionView: NSViewRepresentable {
         var onGroupActivate: (String) -> Void = { _ in }
         var onScrollActivity: () -> Void = {}
         var onDragModeChange: (Bool) -> Void = { _ in }
+        var onHideUsageTips: () -> Void = {}
         var onUsageTipIndexChange: (Int) -> Void = { _ in }
         var onUsageTipsHoverChange: (Bool) -> Void = { _ in }
 
@@ -184,6 +187,7 @@ struct AppGridCollectionView: NSViewRepresentable {
             onGroupActivate: @escaping (String) -> Void,
             onScrollActivity: @escaping () -> Void,
             onDragModeChange: @escaping (Bool) -> Void,
+            onHideUsageTips: @escaping () -> Void,
             onUsageTipIndexChange: @escaping (Int) -> Void,
             onUsageTipsHoverChange: @escaping (Bool) -> Void
         ) {
@@ -212,6 +216,7 @@ struct AppGridCollectionView: NSViewRepresentable {
             self.onGroupActivate = onGroupActivate
             self.onScrollActivity = onScrollActivity
             self.onDragModeChange = onDragModeChange
+            self.onHideUsageTips = onHideUsageTips
             self.onUsageTipIndexChange = onUsageTipIndexChange
             self.onUsageTipsHoverChange = onUsageTipsHoverChange
             if !self.usageTipsVisible {
@@ -838,10 +843,12 @@ private final class AppGridUsageTipsNSView: NSView {
     weak var coordinator: AppGridCollectionView.Coordinator?
 
     private let backgroundView = NSVisualEffectView()
+    private let titlePanelView = NSView()
     private let iconView = AppGridDecorativeImageView()
     private let titleLabel = NSTextField(labelWithString: "")
     private let detailScrollView = NSScrollView()
     private let detailLabel = NSTextField(labelWithString: "")
+    private let closeButton = AppGridUsageTipIconButton(systemImage: "xmark")
     private let previousButton = AppGridUsageTipIconButton(systemImage: "chevron.left")
     private let nextButton = AppGridUsageTipIconButton(systemImage: "chevron.right")
     private let dotsView = AppGridUsageTipDotsView()
@@ -850,9 +857,10 @@ private final class AppGridUsageTipsNSView: NSView {
     private var visualWidth: CGFloat = AppGridUsageTipsMetrics.minWidth
     private var visualHeight: CGFloat = AppGridUsageTipsMetrics.barHeight
     private var visualBottomMargin: CGFloat = AppGridUsageTipsMetrics.bottomMargin
+    private var currentDetailText = ""
 
-    private let titleFont = NSFont.systemFont(ofSize: 24, weight: .semibold)
-    private let detailFont = NSFont.systemFont(ofSize: 24, weight: .regular)
+    private let titleFont = NSFont.systemFont(ofSize: 25, weight: .bold)
+    private let detailFont = NSFont.systemFont(ofSize: 24, weight: .medium)
 
     override var isFlipped: Bool { true }
     override var acceptsFirstResponder: Bool { true }
@@ -954,41 +962,65 @@ private final class AppGridUsageTipsNSView: NSView {
         let visualFrame = currentVisualFrame()
         backgroundView.frame = visualFrame
 
-        let paddingLeft: CGFloat = 22
-        let paddingRight: CGFloat = 16
-        let iconSize: CGFloat = 24
-        let iconTextGap: CGFloat = 10
-        let controlZoneWidth: CGFloat = 176
-        let buttonGap: CGFloat = 6
-        let buttonSize: CGFloat = 48
-        let buttonDotsGap: CGFloat = 6
+        let outerPaddingX: CGFloat = 20
+        let outerPaddingY: CGFloat = 19
+        let titlePanelWidth = min(
+            max(350, visualFrame.width * 0.24),
+            min(460, visualFrame.width * 0.36)
+        )
+        let titlePanelHeight = max(1, min(116, visualFrame.height - outerPaddingY * 2))
+        let titlePanelFrame = NSRect(
+            x: visualFrame.minX + outerPaddingX,
+            y: visualFrame.midY - titlePanelHeight / 2,
+            width: titlePanelWidth,
+            height: titlePanelHeight
+        )
+        titlePanelView.frame = titlePanelFrame
+
+        let iconSize: CGFloat = 26
+        let controlZoneWidth: CGFloat = min(148, max(128, visualFrame.width * 0.08))
+        let buttonGap: CGFloat = 12
+        let buttonSize: CGFloat = 52
+        let buttonDotsGap: CGFloat = 10
         let dotsHeight: CGFloat = 10
         let dotsWidth = dotsView.preferredWidth
 
-        let titleX = visualFrame.minX + paddingLeft + iconSize + iconTextGap
+        let titleIconGap: CGFloat = 20
+        let titleSidePadding: CGFloat = 28
+        let titleX = titlePanelFrame.minX + titleSidePadding + iconSize + titleIconGap
+        let titleWidth = max(1, titlePanelFrame.maxX - titleX - titleSidePadding)
+        let titleHeight: CGFloat = 68
+        let titleY = titlePanelFrame.midY - titleHeight / 2
+        let detailGap = visualFrame.width < 980 ? CGFloat(30) : CGFloat(52)
+        let controlGap = visualFrame.width < 980 ? CGFloat(24) : CGFloat(36)
+        let detailX = titlePanelFrame.maxX + detailGap
+        let controlsMaxX = visualFrame.maxX - 54
+        let textRight = controlsMaxX - controlZoneWidth - controlGap
+        let detailHeight: CGFloat = 88
+        let detailY = visualFrame.minY + max(0, (visualFrame.height - detailHeight) / 2)
+
         let buttonsWidth = buttonSize * 2 + buttonGap
-        let buttonsGroupMinX = visualFrame.maxX - paddingRight - buttonsWidth
-        let textRight = visualFrame.maxX - controlZoneWidth
-        let availableTextWidth = max(1, textRight - titleX)
-        let titleWidth = availableTextWidth
-        let titleHeight: CGFloat = 32
-        let detailHeight: CGFloat = 68
-        let lineGap: CGFloat = 8
-        let textBlockHeight = titleHeight + lineGap + detailHeight
-        let textBlockY = visualFrame.minY + max(0, (visualFrame.height - textBlockHeight) / 2)
+        let buttonsGroupMinX = controlsMaxX - buttonsWidth
 
         iconView.frame = NSRect(
-            x: visualFrame.minX + paddingLeft,
-            y: visualFrame.midY - iconSize / 2,
+            x: titlePanelFrame.minX + titleSidePadding,
+            y: titlePanelFrame.midY - iconSize / 2,
             width: iconSize,
             height: iconSize
         )
 
         titleLabel.frame = NSRect(
             x: titleX,
-            y: textBlockY,
+            y: titleY,
             width: titleWidth,
             height: titleHeight
+        )
+
+        closeButton.frame = NSRect(
+            x: visualFrame.maxX - 40,
+            y: visualFrame.minY + 10,
+            width: 30,
+            height: 30
         )
 
         let controlGroupHeight = buttonSize + buttonDotsGap + dotsHeight
@@ -1012,12 +1044,10 @@ private final class AppGridUsageTipsNSView: NSView {
             height: dotsHeight
         )
 
-        let detailX = titleX
-        let detailRight = textRight
         detailScrollView.frame = NSRect(
             x: detailX,
-            y: titleLabel.frame.maxY + lineGap,
-            width: max(1, detailRight - detailX),
+            y: detailY,
+            width: max(1, textRight - detailX),
             height: detailHeight
         )
         layoutDetailLabel()
@@ -1037,7 +1067,9 @@ private final class AppGridUsageTipsNSView: NSView {
         let safeIndex = min(max(0, coordinator.selectedUsageTipIndex), coordinator.usageTips.count - 1)
         let tip = coordinator.usageTips[safeIndex]
         titleLabel.stringValue = tr(tip.titleKey)
-        detailLabel.stringValue = formattedTipDetail(tr(tip.detailKey))
+        updateTipIcon(id: tip.id)
+        currentDetailText = formattedTipDetail(tr(tip.detailKey))
+        closeButton.buttonAccessibilityLabel = tr("usageTips.close")
         previousButton.buttonAccessibilityLabel = tr("usageTips.previous")
         nextButton.buttonAccessibilityLabel = tr("usageTips.next")
         dotsView.configure(count: coordinator.usageTips.count, selectedIndex: safeIndex)
@@ -1059,13 +1091,7 @@ private final class AppGridUsageTipsNSView: NSView {
     }
 
     func preferredWidth(maxAvailableWidth: CGFloat) -> CGFloat {
-        let padding: CGFloat = 22 + 16
-        let fixedWidth: CGFloat = 24 + 10 + 24 + 48 + 6 + 48
-        let titleWidth = ceil(titleLabel.attributedStringValue.size().width)
-        let detailWidth = measuredDetailLineWidth()
-        let contentWidth = padding + fixedWidth + max(titleWidth, detailWidth)
-        let preferredWidth = max(AppGridUsageTipsMetrics.minWidth, contentWidth)
-        return min(maxAvailableWidth, preferredWidth)
+        max(1, maxAvailableWidth)
     }
 
     private func setup() {
@@ -1084,7 +1110,13 @@ private final class AppGridUsageTipsNSView: NSView {
         backgroundView.layer?.borderWidth = 1
         addSubview(backgroundView)
 
-        let iconConfig = NSImage.SymbolConfiguration(pointSize: 24, weight: .semibold)
+        titlePanelView.wantsLayer = true
+        titlePanelView.layer?.cornerRadius = 18
+        titlePanelView.layer?.masksToBounds = true
+        titlePanelView.layer?.borderWidth = 1
+        addSubview(titlePanelView)
+
+        let iconConfig = NSImage.SymbolConfiguration(pointSize: 26, weight: .bold)
         iconView.image = NSImage(
             systemSymbolName: "lightbulb.fill",
             accessibilityDescription: nil
@@ -1092,7 +1124,7 @@ private final class AppGridUsageTipsNSView: NSView {
         iconView.imageScaling = .scaleProportionallyDown
         addSubview(iconView)
 
-        configureLabel(titleLabel, font: titleFont, lineBreakMode: .byClipping)
+        configureLabel(titleLabel, font: titleFont, lineBreakMode: .byWordWrapping)
         configureDetailLabel()
 
         detailScrollView.drawsBackground = false
@@ -1102,12 +1134,14 @@ private final class AppGridUsageTipsNSView: NSView {
         detailScrollView.borderType = .noBorder
         detailScrollView.documentView = detailLabel
 
+        closeButton.action = { [weak self] in self?.hideUsageTips() }
         previousButton.action = { [weak self] in self?.selectUsageTip(offset: -1) }
         nextButton.action = { [weak self] in self?.selectUsageTip(offset: 1) }
 
         addSubview(titleLabel)
         addSubview(detailScrollView)
         addSubview(dotsView)
+        addSubview(closeButton)
         addSubview(previousButton)
         addSubview(nextButton)
 
@@ -1122,13 +1156,13 @@ private final class AppGridUsageTipsNSView: NSView {
         label.drawsBackground = false
         label.isBordered = false
         label.lineBreakMode = lineBreakMode
-        label.maximumNumberOfLines = 1
-        label.alignment = .center
+        label.maximumNumberOfLines = 2
+        label.alignment = .left
         label.font = font
     }
 
     private func configureDetailLabel() {
-        detailLabel.cell = NSTextFieldCell(textCell: "")
+        detailLabel.cell = AppGridCenteredMultilineTextFieldCell(textCell: "")
         detailLabel.isEditable = false
         detailLabel.isSelectable = false
         detailLabel.drawsBackground = false
@@ -1160,9 +1194,22 @@ private final class AppGridUsageTipsNSView: NSView {
         applyCoordinatorState()
     }
 
+    private func hideUsageTips() {
+        Diagnostics.log("usageTips.hud.close")
+        clearHoverState()
+        isHidden = true
+        coordinator?.onHideUsageTips()
+    }
+
     private func routeButtonClickIfNeeded(_ event: NSEvent) -> Bool {
         let point = usageTipsPoint(for: event)
-        let hitOutset: CGFloat = 24
+        let closeHitOutset: CGFloat = 8
+        if closeButton.frame.insetBy(dx: -closeHitOutset, dy: -closeHitOutset).contains(point) {
+            closeButton.performPressFeedback()
+            hideUsageTips()
+            return true
+        }
+        let hitOutset: CGFloat = 6
         if nextButton.frame.insetBy(dx: -hitOutset, dy: -hitOutset).contains(point) {
             Diagnostics.log("usageTips.hud.routedNext")
             selectUsageTip(offset: 1)
@@ -1211,14 +1258,6 @@ private final class AppGridUsageTipsNSView: NSView {
         detailLabel.frame = NSRect(x: 0, y: 0, width: width, height: detailScrollView.bounds.height)
     }
 
-    private func measuredDetailLineWidth() -> CGFloat {
-        let attributes: [NSAttributedString.Key: Any] = [.font: detailFont]
-        let lineWidths = detailLabel.stringValue
-            .components(separatedBy: .newlines)
-            .map { NSAttributedString(string: $0, attributes: attributes).size().width }
-        return ceil(lineWidths.max() ?? detailLabel.attributedStringValue.size().width)
-    }
-
     private func currentVisualFrame() -> NSRect {
         let width = min(bounds.width, visualWidth)
         let height = min(bounds.height, visualHeight)
@@ -1231,21 +1270,197 @@ private final class AppGridUsageTipsNSView: NSView {
     }
 
     private func formattedTipDetail(_ text: String) -> String {
-        text
+        let normalized = text
             .replacingOccurrences(of: "\\s*(?:-->|->|>|→|＞|,)\\s*", with: "\n", options: .regularExpression)
             .replacingOccurrences(of: "[ \\t]{2,}", with: " ", options: .regularExpression)
             .replacingOccurrences(of: "\\n{2,}", with: "\n", options: .regularExpression)
             .trimmingCharacters(in: .whitespacesAndNewlines)
+        return orderedTipDetail(normalized)
+    }
+
+    private func orderedTipDetail(_ text: String) -> String {
+        let lines = text
+            .components(separatedBy: .newlines)
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+        guard lines.count > 1 else { return text }
+        return lines
+            .enumerated()
+            .map { "\($0.offset + 1). \($0.element)" }
+            .joined(separator: "\n")
+    }
+
+    private func updateTipIcon(id: Int) {
+        let symbolName: String
+        switch id {
+        case 1:
+            symbolName = "tag.fill"
+        case 2:
+            symbolName = "checkmark.seal.fill"
+        case 3:
+            symbolName = "arrow.up.and.down.and.arrow.left.and.right"
+        case 4:
+            symbolName = "doc.on.doc.fill"
+        case 5:
+            symbolName = "minus.circle.fill"
+        case 6:
+            symbolName = "arrow.up.arrow.down.circle.fill"
+        case 7:
+            symbolName = "square.grid.2x2.fill"
+        case 8:
+            symbolName = "note.text"
+        default:
+            symbolName = "lightbulb.fill"
+        }
+        let iconConfig = NSImage.SymbolConfiguration(pointSize: 26, weight: .bold)
+        iconView.image = NSImage(
+            systemSymbolName: symbolName,
+            accessibilityDescription: nil
+        )?.withSymbolConfiguration(iconConfig)
+        ?? NSImage(
+            systemSymbolName: "lightbulb.fill",
+            accessibilityDescription: nil
+        )?.withSymbolConfiguration(iconConfig)
     }
 
     private func updateColors() {
-        backgroundView.layer?.borderColor = NSColor.separatorColor.withAlphaComponent(0.35).cgColor
-        iconView.contentTintColor = .systemYellow
-        titleLabel.textColor = .secondaryLabelColor
-        detailLabel.textColor = .labelColor
-        previousButton.tintColor = .labelColor
-        nextButton.tintColor = .labelColor
-        dotsView.needsDisplay = true
+        let usesDarkGlass = coordinator?.appGridTheme.usesDarkGlass == true
+
+        backgroundView.material = usesDarkGlass ? .underWindowBackground : .popover
+        backgroundView.appearance = usesDarkGlass ? NSAppearance(named: .darkAqua) : nil
+        backgroundView.layer?.backgroundColor = (
+            usesDarkGlass
+                ? NSColor.black.withAlphaComponent(0.46)
+                : NSColor.white.withAlphaComponent(0.54)
+        ).cgColor
+        backgroundView.layer?.borderColor = (
+            usesDarkGlass
+                ? NSColor.white.withAlphaComponent(0.22)
+                : NSColor.black.withAlphaComponent(0.18)
+        ).cgColor
+
+        titlePanelView.layer?.backgroundColor = (
+            usesDarkGlass
+                ? NSColor.white.withAlphaComponent(0.08)
+                : NSColor.white.withAlphaComponent(0.42)
+        ).cgColor
+        titlePanelView.layer?.borderColor = (
+            usesDarkGlass
+                ? NSColor.white.withAlphaComponent(0.12)
+                : NSColor.black.withAlphaComponent(0.08)
+        ).cgColor
+
+        let theme = coordinator?.appGridTheme ?? .fallback
+        let accentColor = usageTipAccentColor(for: theme)
+        iconView.contentTintColor = accentColor
+        titleLabel.textColor = usesDarkGlass
+            ? NSColor.white.withAlphaComponent(0.92)
+            : accentColor.withAlphaComponent(0.94)
+        detailLabel.textColor = usesDarkGlass
+            ? NSColor.white.withAlphaComponent(0.95)
+            : NSColor(calibratedRed: 0.08, green: 0.10, blue: 0.13, alpha: 0.94)
+        applyDetailTextStyle()
+
+        let buttonTint = usesDarkGlass
+            ? NSColor.white.withAlphaComponent(0.90)
+            : NSColor(calibratedWhite: 0.08, alpha: 0.92)
+        let buttonHoverTint = usesDarkGlass
+            ? NSColor.white
+            : NSColor(calibratedWhite: 0.04, alpha: 1.00)
+        let buttonPressedTint = usesDarkGlass
+            ? NSColor.white
+            : NSColor.black
+        let buttonSurface = usesDarkGlass
+            ? NSColor.white.withAlphaComponent(0.10)
+            : NSColor.white.withAlphaComponent(0.38)
+        let buttonHoverSurface = usesDarkGlass
+            ? NSColor.white.withAlphaComponent(0.20)
+            : NSColor.white.withAlphaComponent(0.70)
+        let buttonPressedSurface = usesDarkGlass
+            ? NSColor.white.withAlphaComponent(0.28)
+            : NSColor.white.withAlphaComponent(0.86)
+        let buttonBorder = usesDarkGlass
+            ? NSColor.white.withAlphaComponent(0.14)
+            : NSColor.black.withAlphaComponent(0.10)
+        [previousButton, nextButton].forEach { button in
+            button.tintColor = buttonTint
+            button.hoveredTintColor = buttonHoverTint
+            button.pressedTintColor = buttonPressedTint
+            button.surfaceColor = buttonSurface
+            button.hoveredSurfaceColor = buttonHoverSurface
+            button.pressedSurfaceColor = buttonPressedSurface
+            button.borderColor = buttonBorder
+        }
+
+        closeButton.tintColor = usesDarkGlass
+            ? NSColor.white.withAlphaComponent(0.42)
+            : NSColor.black.withAlphaComponent(0.34)
+        closeButton.hoveredTintColor = usesDarkGlass
+            ? NSColor.white.withAlphaComponent(0.86)
+            : NSColor.black.withAlphaComponent(0.78)
+        closeButton.pressedTintColor = usesDarkGlass ? .white : .black
+        closeButton.surfaceColor = usesDarkGlass
+            ? NSColor.white.withAlphaComponent(0.04)
+            : NSColor.white.withAlphaComponent(0.08)
+        closeButton.hoveredSurfaceColor = usesDarkGlass
+            ? NSColor.white.withAlphaComponent(0.14)
+            : NSColor.white.withAlphaComponent(0.62)
+        closeButton.pressedSurfaceColor = usesDarkGlass
+            ? NSColor.white.withAlphaComponent(0.22)
+            : NSColor.white.withAlphaComponent(0.82)
+        closeButton.borderColor = usesDarkGlass
+            ? NSColor.white.withAlphaComponent(0.08)
+            : NSColor.black.withAlphaComponent(0.08)
+
+        dotsView.selectedColor = usesDarkGlass
+            ? NSColor.white.withAlphaComponent(0.88)
+            : NSColor.labelColor.withAlphaComponent(0.74)
+        dotsView.idleColor = usesDarkGlass
+            ? NSColor.white.withAlphaComponent(0.28)
+            : NSColor.labelColor.withAlphaComponent(0.24)
+
+        layer?.shadowOpacity = usesDarkGlass ? 0.28 : 0.14
+        layer?.shadowRadius = usesDarkGlass ? 18 : 12
+        needsDisplay = true
+    }
+
+    private func usageTipAccentColor(for theme: AppGridTheme) -> NSColor {
+        switch theme {
+        case .defaultLight:
+            return NSColor(calibratedRed: 0.34, green: 0.40, blue: 0.48, alpha: 1.00)
+        case .deepBlue:
+            return NSColor(calibratedRed: 0.42, green: 0.80, blue: 1.00, alpha: 1.00)
+        case .black:
+            return NSColor(calibratedRed: 0.36, green: 0.74, blue: 1.00, alpha: 1.00)
+        case .pink:
+            return NSColor(calibratedRed: 0.70, green: 0.18, blue: 0.45, alpha: 1.00)
+        case .purple:
+            return NSColor(calibratedRed: 0.40, green: 0.22, blue: 0.70, alpha: 1.00)
+        case .green:
+            return NSColor(calibratedRed: 0.08, green: 0.42, blue: 0.22, alpha: 1.00)
+        case .blue:
+            return NSColor(calibratedRed: 0.06, green: 0.34, blue: 0.74, alpha: 1.00)
+        case .colorful:
+            return NSColor(calibratedRed: 0.06, green: 0.44, blue: 0.78, alpha: 1.00)
+        }
+    }
+
+    private func applyDetailTextStyle() {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .left
+        paragraphStyle.lineBreakMode = .byWordWrapping
+        paragraphStyle.minimumLineHeight = 31
+        paragraphStyle.maximumLineHeight = 34
+        paragraphStyle.lineSpacing = 6
+
+        detailLabel.attributedStringValue = NSAttributedString(
+            string: currentDetailText,
+            attributes: [
+                .font: detailFont,
+                .foregroundColor: detailLabel.textColor ?? NSColor.labelColor,
+                .paragraphStyle: paragraphStyle
+            ]
+        )
     }
 }
 
@@ -1255,6 +1470,20 @@ private final class AppGridCenteredTextFieldCell: NSTextFieldCell {
         let textHeight = cellSize(forBounds: rect).height
         drawingRect.origin.y = rect.origin.y + max(0, (rect.height - textHeight) / 2)
         drawingRect.size.height = min(rect.height, textHeight + 2)
+        return drawingRect
+    }
+}
+
+private final class AppGridCenteredMultilineTextFieldCell: NSTextFieldCell {
+    override func drawingRect(forBounds rect: NSRect) -> NSRect {
+        var drawingRect = super.drawingRect(forBounds: rect)
+        let textHeight = attributedStringValue.boundingRect(
+            with: NSSize(width: max(1, rect.width), height: .greatestFiniteMagnitude),
+            options: [.usesLineFragmentOrigin, .usesFontLeading]
+        ).height
+        let centeredHeight = min(rect.height, ceil(textHeight) + 4)
+        drawingRect.origin.y = rect.origin.y + max(0, (rect.height - centeredHeight) / 2)
+        drawingRect.size.height = centeredHeight
         return drawingRect
     }
 }
@@ -1278,8 +1507,26 @@ private final class AppGridUsageTipIconButton: NSView {
     }
     var tintColor: NSColor = .labelColor {
         didSet {
-            imageView.contentTintColor = tintColor
+            updateIconTint()
         }
+    }
+    var hoveredTintColor: NSColor? {
+        didSet { updateIconTint() }
+    }
+    var pressedTintColor: NSColor? {
+        didSet { updateIconTint() }
+    }
+    var surfaceColor: NSColor = .clear {
+        didSet { needsDisplay = true }
+    }
+    var hoveredSurfaceColor: NSColor = NSColor.labelColor.withAlphaComponent(0.08) {
+        didSet { needsDisplay = true }
+    }
+    var pressedSurfaceColor: NSColor = NSColor.labelColor.withAlphaComponent(0.14) {
+        didSet { needsDisplay = true }
+    }
+    var borderColor: NSColor = .clear {
+        didSet { needsDisplay = true }
     }
 
     private let imageView = AppGridDecorativeImageView()
@@ -1319,9 +1566,20 @@ private final class AppGridUsageTipIconButton: NSView {
         return true
     }
 
+    func performPressFeedback() {
+        isPressed = true
+        needsDisplay = true
+        updateIconTint()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.10) { [weak self] in
+            self?.isPressed = false
+            self?.needsDisplay = true
+            self?.updateIconTint()
+        }
+    }
+
     override func layout() {
         super.layout()
-        let size: CGFloat = 26
+        let size = min(CGFloat(26), max(14, min(bounds.width, bounds.height) * 0.62))
         imageView.frame = NSRect(
             x: (bounds.width - size) / 2,
             y: (bounds.height - size) / 2,
@@ -1352,31 +1610,32 @@ private final class AppGridUsageTipIconButton: NSView {
     override func mouseEntered(with event: NSEvent) {
         isHovered = true
         needsDisplay = true
+        updateIconTint()
     }
 
     override func mouseExited(with event: NSEvent) {
         isHovered = false
         isPressed = false
         needsDisplay = true
+        updateIconTint()
     }
 
     override func mouseDown(with event: NSEvent) {
         Diagnostics.log("usageTips.button.mouseDown", [
             "label": buttonAccessibilityLabel
         ])
-        isPressed = true
-        needsDisplay = true
+        performPressFeedback()
         action?()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.10) { [weak self] in
-            self?.isPressed = false
-            self?.needsDisplay = true
-        }
     }
 
     override func draw(_ dirtyRect: NSRect) {
-        guard isHovered || isPressed else { return }
-        tintColor.withAlphaComponent(isPressed ? 0.14 : 0.08).setFill()
-        NSBezierPath(roundedRect: bounds.insetBy(dx: 1, dy: 1), xRadius: 6, yRadius: 6).fill()
+        let path = NSBezierPath(roundedRect: bounds.insetBy(dx: 1, dy: 1), xRadius: 8, yRadius: 8)
+        let fill = isPressed ? pressedSurfaceColor : isHovered ? hoveredSurfaceColor : surfaceColor
+        fill.setFill()
+        path.fill()
+        borderColor.setStroke()
+        path.lineWidth = 1
+        path.stroke()
     }
 
     private func setup(systemImage: String) {
@@ -1391,11 +1650,27 @@ private final class AppGridUsageTipIconButton: NSView {
         addSubview(imageView)
         setAccessibilityRole(.button)
     }
+
+    private func updateIconTint() {
+        if isPressed, let pressedTintColor {
+            imageView.contentTintColor = pressedTintColor
+        } else if isHovered, let hoveredTintColor {
+            imageView.contentTintColor = hoveredTintColor
+        } else {
+            imageView.contentTintColor = tintColor
+        }
+    }
 }
 
 private final class AppGridUsageTipDotsView: NSView {
     private var count = 0
     private var selectedIndex = 0
+    var selectedColor: NSColor = .labelColor {
+        didSet { needsDisplay = true }
+    }
+    var idleColor: NSColor = NSColor.labelColor.withAlphaComponent(0.28) {
+        didSet { needsDisplay = true }
+    }
 
     override var isFlipped: Bool { true }
 
@@ -1420,7 +1695,7 @@ private final class AppGridUsageTipDotsView: NSView {
         for index in 0..<count {
             let selected = index == selectedIndex
             let dotSize: CGFloat = selected ? 6 : 5
-            let color = NSColor.labelColor.withAlphaComponent(selected ? 0.85 : 0.28)
+            let color = selected ? selectedColor : idleColor
             color.setFill()
             NSBezierPath(
                 ovalIn: NSRect(

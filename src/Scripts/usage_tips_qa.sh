@@ -7,6 +7,7 @@ APP_GRID_SWIFT="$ROOT_DIR/Apptag/AppGridCollectionView.swift"
 APPTAG_APP_SWIFT="$ROOT_DIR/Apptag/ApptagApp.swift"
 PREFERENCES_VIEW_SWIFT="$ROOT_DIR/Apptag/PreferencesView.swift"
 APP_DEFAULTS_SWIFT="$ROOT_DIR/Apptag/AppDefaults.swift"
+APP_GRID_THEME_SWIFT="$ROOT_DIR/Apptag/AppGridTheme.swift"
 LOCALIZATION_DIR="$ROOT_DIR/Apptag/Localization"
 
 fail() {
@@ -19,9 +20,10 @@ fail() {
 [[ -f "$APPTAG_APP_SWIFT" ]] || fail "missing ApptagApp.swift"
 [[ -f "$PREFERENCES_VIEW_SWIFT" ]] || fail "missing PreferencesView.swift"
 [[ -f "$APP_DEFAULTS_SWIFT" ]] || fail "missing AppDefaults.swift"
+[[ -f "$APP_GRID_THEME_SWIFT" ]] || fail "missing AppGridTheme.swift"
 [[ -d "$LOCALIZATION_DIR" ]] || fail "missing Localization directory"
 
-python3 - "$CONTENT_VIEW_SWIFT" "$APP_GRID_SWIFT" "$APPTAG_APP_SWIFT" "$PREFERENCES_VIEW_SWIFT" "$APP_DEFAULTS_SWIFT" "$LOCALIZATION_DIR" <<'PY'
+python3 - "$CONTENT_VIEW_SWIFT" "$APP_GRID_SWIFT" "$APPTAG_APP_SWIFT" "$PREFERENCES_VIEW_SWIFT" "$APP_DEFAULTS_SWIFT" "$APP_GRID_THEME_SWIFT" "$LOCALIZATION_DIR" <<'PY'
 import json
 import pathlib
 import re
@@ -32,17 +34,8 @@ app_grid = pathlib.Path(sys.argv[2]).read_text(encoding="utf-8")
 apptag_app = pathlib.Path(sys.argv[3]).read_text(encoding="utf-8")
 preferences = pathlib.Path(sys.argv[4]).read_text(encoding="utf-8")
 defaults = pathlib.Path(sys.argv[5]).read_text(encoding="utf-8")
-localization_dir = pathlib.Path(sys.argv[6])
-
-required_keys = [
-    "settings.hideUsageTips",
-    "settings.hideUsageTipsDesc",
-    "usageTips.previous",
-    "usageTips.next",
-]
-for index in range(1, 9):
-    required_keys.append(f"usageTips.tip{index}.title")
-    required_keys.append(f"usageTips.tip{index}.detail")
+theme = pathlib.Path(sys.argv[6]).read_text(encoding="utf-8")
+localization_dir = pathlib.Path(sys.argv[7])
 
 
 def fail(message: str) -> None:
@@ -55,6 +48,17 @@ def require(pattern: str, source: str, message: str) -> None:
         fail(message)
 
 
+required_keys = [
+    "settings.hideUsageTips",
+    "settings.hideUsageTipsDesc",
+    "usageTips.previous",
+    "usageTips.next",
+    "usageTips.close",
+]
+for index in range(1, 9):
+    required_keys.append(f"usageTips.tip{index}.title")
+    required_keys.append(f"usageTips.tip{index}.detail")
+
 require(
     r"static\s+let\s+hideUsageTips\s*=\s*false",
     defaults,
@@ -65,121 +69,34 @@ require(
     defaults,
     "AppDefaults.register must register hideUsageTips",
 )
-require(
-    r'@AppStorage\("hideUsageTips"\)\s+private\s+var\s+hideUsageTips\s*=\s*AppDefaults\.hideUsageTips',
-    content_view,
-    "ContentView must observe hideUsageTips with AppStorage",
-)
-require(
-    r'@AppStorage\("hideUsageTips"\)\s+private\s+var\s+hideUsageTips\s*=\s*AppDefaults\.hideUsageTips',
-    preferences,
-    "PreferencesView must persist hideUsageTips with AppStorage",
-)
+for source_name, source in {
+    "ContentView.swift": content_view,
+    "PreferencesView.swift": preferences,
+}.items():
+    require(
+        r'@AppStorage\("hideUsageTips"\)\s+private\s+var\s+hideUsageTips\s*=\s*AppDefaults\.hideUsageTips',
+        source,
+        f"{source_name} must persist hideUsageTips with AppStorage",
+    )
+
 require(
     r'Toggle\s*\(\s*tr\("settings\.hideUsageTips"\)\s*,\s*isOn\s*:\s*\$hideUsageTips\s*\)',
     preferences,
     "General settings must expose a Hide usage tips toggle",
 )
+
 require(
     r"\bprivate\s+final\s+class\s+AppGridUsageTipsNSView\s*:\s*NSView\b",
     app_grid,
     "Usage tips must be implemented as a native AppKit NSView",
 )
+if re.search(r"AppGridUsageTipsBar\s*:\s*View|usageTipNavigationButton|Text\s*\(\s*tr\s*\(\s*tip\.", content_view):
+    fail("usage tips must not be rendered by SwiftUI in ContentView")
+
 require(
-    r"enum\s+AppGridUsageTipsMetrics\s*\{(?P<body>.*?)static\s+let\s+barHeight\s*:\s*CGFloat\s*=\s*136(?P<body2>.*?)static\s+let\s+reservedHeight\s*:\s*CGFloat\s*=\s*176",
+    r"enum\s+AppGridUsageTipsMetrics\s*\{(?P<body>.*?)static\s+let\s+barHeight\s*:\s*CGFloat\s*=\s*154(?P<body2>.*?)static\s+let\s+reservedHeight\s*:\s*CGFloat\s*=\s*194",
     app_grid,
-    "Usage tips overlay must reserve a design-reviewed multi-line bottom space for the native HUD bar",
-)
-require(
-    r"NSVisualEffectView\s*\(",
-    app_grid,
-    "Usage tips must use a native macOS visual effect surface instead of split black/white blocks",
-)
-require(
-    r'systemSymbolName\s*:\s*"lightbulb\.fill"',
-    app_grid,
-    "Usage tips HUD must include a compact native guidance icon",
-)
-require(
-    r"preferredWidth\s*\(\s*maxAvailableWidth\s*:\s*CGFloat\s*\)",
-    app_grid,
-    "Usage tips HUD must be content-adaptive instead of stretched across the full AppGrid",
-)
-if re.search(r"static\s+let\s+maxWidth\s*:\s*CGFloat", app_grid):
-    fail("Usage tips HUD must not use a hard maximum width that truncates localized titles")
-require(
-    r"let\s+titleWidth\s*=\s*ceil\s*\(\s*titleLabel\.attributedStringValue\.size\(\)\.width\s*\)",
-    app_grid,
-    "Usage tips layout must measure the localized title width instead of using a fixed title column",
-)
-require(
-    r"configureLabel\s*\(\s*titleLabel\s*,\s*font\s*:\s*titleFont\s*,\s*lineBreakMode\s*:\s*\.byClipping\s*\)",
-    app_grid,
-    "Usage tip titles must not use tail truncation ellipses",
-)
-require(
-    r"let\s+titleWidth\s*=\s*availableTextWidth",
-    app_grid,
-    "Usage tip title label must span the text column so centered titles are visually centered",
-)
-require(
-    r"configureLabel\s*\(_\s+label\s*:\s*NSTextField,\s*font\s*:\s*NSFont,\s*lineBreakMode\s*:\s*NSLineBreakMode\s*\)\s*\{(?P<body>.*?)label\.alignment\s*=\s*\.center",
-    app_grid,
-    "Usage tip title labels must be horizontally centered",
-)
-if re.search(r"configureLabel\s*\(\s*titleLabel\s*,\s*font\s*:\s*titleFont\s*,\s*lineBreakMode\s*:\s*\.byTruncatingTail\s*\)", app_grid):
-    fail("Usage tip titles must not be configured with byTruncatingTail")
-require(
-    r"relayoutUsageTipsAfterContentChange\s*\(\s*\)",
-    app_grid,
-    "Usage tips must ask the host to recompute width after localized text changes",
-)
-require(
-    r"controlZoneWidth\s*:\s*CGFloat\s*=\s*176",
-    app_grid,
-    "Usage tips layout must reserve a fixed right-side control zone",
-)
-require(
-    r"availableTextWidth\s*=\s*max\s*\(\s*1\s*,\s*textRight\s*-\s*titleX\s*\)",
-    app_grid,
-    "Usage tips layout must allocate text from actual available AppGrid width",
-)
-require(
-    r"dotsView\.frame\s*=\s*NSRect\s*\((?P<body>.*?)x\s*:\s*buttonsGroupMinX\s*\+\s*\(buttonsWidth\s*-\s*dotsWidth\)\s*/\s*2(?P<body2>.*?)y\s*:\s*previousButton\.frame\.maxY\s*\+\s*buttonDotsGap",
-    app_grid,
-    "Usage tips page dots must sit centered below the previous/next arrow buttons",
-)
-require(
-    r"detailRight\s*=\s*textRight",
-    app_grid,
-    "Usage tips detail text must stop before the fixed right-side arrow control zone",
-)
-require(
-    r"configureDetailLabel\s*\(\s*\)(?P<body>.*?)detailLabel\.lineBreakMode\s*=\s*\.byWordWrapping",
-    app_grid,
-    "Usage tip detail text must wrap naturally inside the reserved text column",
-)
-require(
-    r"detailLabel\.maximumNumberOfLines\s*=\s*2",
-    app_grid,
-    "Usage tip detail text must use the design-reviewed two-line body layout",
-)
-require(
-    r"return\s+min\s*\(\s*maxAvailableWidth\s*,\s*preferredWidth\s*\)",
-    app_grid,
-    "Usage tips preferred width must expand up to available AppGrid width for long localizations",
-)
-require(
-    r"detailScrollView\.hasHorizontalScroller\s*=\s*true",
-    app_grid,
-    "Long localized tip text must be horizontally scrollable in the native AppKit bar",
-)
-if len(re.findall(r"NSFont\.systemFont\s*\(\s*ofSize\s*:\s*24\s*,\s*weight\s*:\s*\.(?:semibold|regular)\s*\)", app_grid)) < 2:
-    fail("Usage tip title/detail fonts must use readable 24pt native HUD typography")
-require(
-    r"override\s+func\s+scrollWheel\s*\(\s*with\s+event\s*:\s*NSEvent\s*\)\s*\{\s*detailScrollView\.scrollWheel\s*\(\s*with\s*:\s*event\s*\)",
-    app_grid,
-    "Usage tips must route wheel events to the native horizontal text scroller",
+    "usage tips must reserve the new design-reviewed full-width teaching banner height",
 )
 require(
     r"bottomContentPadding\s*:\s*shouldShowUsageTips\s*\?\s*AppGridUsageTipsMetrics\.reservedHeight\s*:\s*0",
@@ -189,257 +106,222 @@ require(
 require(
     r"usageTipsVisible\s*:\s*shouldShowUsageTips",
     content_view,
-    "ContentView must pass visibility into the native AppKit usage tips bar",
+    "ContentView must pass usage tip visibility into AppGrid",
 )
 require(
     r"selectedUsageTipIndex\s*:\s*\$selectedUsageTipIndex",
     content_view,
-    "ContentView must bind usage tip selection to the native AppKit bar",
+    "ContentView must bind usage tip selection to AppGrid",
 )
 require(
-    r"override\s+func\s+hitTest\s*\(\s*_\s+point\s*:\s*NSPoint\s*\)\s*->\s*NSView\?\s*\{(?P<body>.*?)bounds\.contains\s*\(\s*point\s*\)",
+    r"onHideUsageTips\s*:\s*\{\s*hideUsageTips\s*=\s*true\s*\}",
+    content_view,
+    "closing the native usage tips banner must persist hideUsageTips",
+)
+require(
+    r"let\s+onHideUsageTips\s*:\s*\(\)\s*->\s*Void",
     app_grid,
-    "Native usage tips bar must own hit testing so clicks do not fall through to AppGrid",
+    "AppGridCollectionView must accept an onHideUsageTips callback",
 )
 require(
-    r"override\s+func\s+hitTest\s*\(\s*_\s+point\s*:\s*NSPoint\s*\)\s*->\s*NSView\?\s*\{(?P<body>.*?)usageTipsView\.frame\.contains\s*\(\s*point\s*\)",
+    r"closeButton\.action\s*=\s*\{\s*\[weak\s+self\]\s+in\s+self\?\.hideUsageTips\(\)\s*\}",
     app_grid,
-    "AppGrid host must prioritize the native usage tips hit-test region above the collection view",
+    "close button must call the native hideUsageTips handler",
 )
 require(
+    r"coordinator\?\.onHideUsageTips\(\)",
+    app_grid,
+    "native hideUsageTips must call back to persisted SwiftUI state",
+)
+
+require(
+    r"private\s+let\s+titlePanelView\s*=\s*NSView\(\)",
+    app_grid,
+    "usage tips must use a separated title panel",
+)
+require(
+    r"private\s+let\s+titleFont\s*=\s*NSFont\.systemFont\s*\(\s*ofSize\s*:\s*25\s*,\s*weight\s*:\s*\.bold\s*\)",
+    app_grid,
+    "usage tips title must use the design-reviewed larger bold title font",
+)
+require(
+    r"titlePanelWidth\s*=\s*min\s*\((?P<body>.*?)max\s*\(\s*350\s*,\s*visualFrame\.width\s*\*\s*0\.24\s*\)(?P<body2>.*?)min\s*\(\s*460\s*,\s*visualFrame\.width\s*\*\s*0\.36\s*\)",
+    app_grid,
+    "usage tips title panel must be wide enough for 29-language titles",
+)
+require(
+    r"private\s+let\s+closeButton\s*=\s*AppGridUsageTipIconButton\s*\(\s*systemImage\s*:\s*\"xmark\"\s*\)",
+    app_grid,
+    "usage tips must provide a low-emphasis native close button",
+)
+require(
+    r"controlZoneWidth\s*:\s*CGFloat\s*=\s*min\s*\(\s*148\s*,\s*max\s*\(\s*128\s*,\s*visualFrame\.width\s*\*\s*0\.08\s*\)\s*\)",
+    app_grid,
+    "usage tips must reserve a stable 128-148pt right-side control zone",
+)
+require(
+    r"func\s+preferredWidth\s*\(\s*maxAvailableWidth\s*:\s*CGFloat\s*\)\s*->\s*CGFloat\s*\{\s*max\s*\(\s*1\s*,\s*maxAvailableWidth\s*\)\s*\}",
+    app_grid,
+    "usage tips visual banner must occupy the available bottom width",
+)
+require(
+    r"dotsView\.frame\s*=\s*NSRect\s*\((?P<body>.*?)x\s*:\s*buttonsGroupMinX\s*\+\s*\(buttonsWidth\s*-\s*dotsWidth\)\s*/\s*2(?P<body2>.*?)y\s*:\s*previousButton\.frame\.maxY\s*\+\s*buttonDotsGap",
+    app_grid,
+    "page dots must be centered below the previous/next arrows",
+)
+require(
+    r"detailScrollView\.frame\s*=\s*NSRect\s*\((?P<body>.*?)x\s*:\s*detailX(?P<body2>.*?)width\s*:\s*max\s*\(\s*1\s*,\s*textRight\s*-\s*detailX\s*\)",
+    app_grid,
+    "detail text must live in the middle reading area and stop before controls",
+)
+require(
+    r"detailLabel\.lineBreakMode\s*=\s*\.byWordWrapping",
+    app_grid,
+    "detail text must wrap inside the two-line teaching banner",
+)
+require(
+    r"detailLabel\.maximumNumberOfLines\s*=\s*2",
+    app_grid,
+    "detail text must keep the design-reviewed two-line layout",
+)
+require(
+    r"detailLabel\.cell\s*=\s*AppGridCenteredMultilineTextFieldCell\s*\(\s*textCell\s*:\s*\"\"\s*\)",
+    app_grid,
+    "detail text must use a vertically centered multiline cell",
+)
+require(
+    r"paragraphStyle\.minimumLineHeight\s*=\s*31(?P<body>.*?)paragraphStyle\.maximumLineHeight\s*=\s*34(?P<body2>.*?)paragraphStyle\.lineSpacing\s*=\s*6",
+    app_grid,
+    "detail text must use the design-reviewed line height and spacing",
+)
+require(
+    r"detailScrollView\.hasHorizontalScroller\s*=\s*true",
+    app_grid,
+    "long localized tip text must remain horizontally scrollable",
+)
+require(
+    r"formattedTipDetail\s*\(_\s+text\s*:\s*String\s*\)",
+    app_grid,
+    "usage tips detail text must normalize separators for display",
+)
+require(
+    r"orderedTipDetail\s*\(_\s+text\s*:\s*String\s*\)(?P<body>.*?)map\s*\{\s*\"\\\(\$0\.offset\s*\+\s*1\)\.\s*\\\(\$0\.element\)\"\s*\}",
+    app_grid,
+    "multi-line usage tips detail must be rendered as an ordered list",
+)
+require(
+    r"replacingOccurrences\s*\(\s*of\s*:\s*\"\\\\s\*\(\?:-->\|->\|>\|→\|＞\|,\)\\\\s\*\"\s*,\s*with\s*:\s*\"\\n\"",
+    app_grid,
+    "usage tips detail text must turn separators into hard line breaks",
+)
+require(
+    r"updateTipIcon\s*\(\s*id\s*:\s*tip\.id\s*\)",
+    app_grid,
+    "usage tips must update the leading icon for each tip",
+)
+require(
+    r"private\s+func\s+updateTipIcon\s*\(\s*id\s*:\s*Int\s*\)(?P<body>.*?)case\s+1:(?P<body2>.*?)tag\.fill(?P<body3>.*?)case\s+8:(?P<body4>.*?)note\.text",
+    app_grid,
+    "usage tips must vary the leading icon by tip type",
+)
+
+require(
+    r"private\s+func\s+updateColors\(\)(?P<body>.*?)coordinator\?\.appGridTheme\.usesDarkGlass\s*==\s*true",
+    app_grid,
+    "usage tips colors must be driven by the current AppGrid theme",
+)
+for token in [
+    r"backgroundView\.material\s*=\s*usesDarkGlass\s*\?\s*\.underWindowBackground\s*:\s*\.popover",
+    r"backgroundView\.appearance\s*=\s*usesDarkGlass\s*\?\s*NSAppearance\s*\(\s*named\s*:\s*\.darkAqua\s*\)\s*:\s*nil",
+    r"titlePanelView\.layer\?\.backgroundColor",
+    r"usageTipAccentColor\s*\(\s*for\s*:\s*theme\s*\)",
+    r"titleLabel\.textColor\s*=\s*usesDarkGlass",
+    r"detailLabel\.textColor\s*=\s*usesDarkGlass",
+    r"closeButton\.hoveredTintColor\s*=\s*usesDarkGlass",
+    r"dotsView\.selectedColor\s*=\s*usesDarkGlass",
+]:
+    require(token, app_grid, f"usage tips theme token missing: {token}")
+require(
+    r"private\s+func\s+usageTipAccentColor\s*\(\s*for\s+theme\s*:\s*AppGridTheme\s*\)\s*->\s*NSColor(?P<body>.*?)case\s+\.pink:(?P<body2>.*?)case\s+\.colorful:",
+    app_grid,
+    "usage tips title color must provide per-theme readable accent colors",
+)
+
+require(
+    r"var\s+usesDarkGlass\s*:\s*Bool\s*\{(?P<body>.*?)case\s+\.deepBlue,\s*\.black:(?P<body2>.*?)return\s+true",
+    theme,
+    "only dark/deep-black themes should use the dark glass palette",
+)
+
+for token in [
     r"usageTipsEventRegion\s*\(\s*\)\s*->\s*NSRect",
-    app_grid,
-    "AppGrid host must reserve a full bottom event region for tips so clicks cannot pass through",
-)
-require(
-    r"private\s+final\s+class\s+AppGridUsageTipsShieldView\s*:\s*NSView\b",
-    app_grid,
-    "AppGrid must use a native transparent shield view for the full bottom tips event region",
-)
-require(
     r"usageTipsShieldView\.frame\s*=\s*usageTipsEventRegion\s*\(\s*\)",
-    app_grid,
-    "Usage tips shield must cover the full bottom event region, not just the visible HUD",
-)
-require(
     r"usageTipsView\.frame\s*=\s*usageTipsEventRegion\s*\(\s*\)",
-    app_grid,
-    "Usage tips HUD hit-test view itself must cover the full bottom event region",
-)
-require(
-    r"configureVisualLayout\s*\(\s*width\s*:\s*CGFloat\s*,\s*height\s*:\s*CGFloat\s*,\s*bottomMargin\s*:\s*CGFloat\s*\)",
-    app_grid,
-    "Usage tips must separate full hit-test coverage from the centered visual HUD frame",
-)
-require(
-    r"currentVisualFrame\s*\(\s*\)\s*->\s*NSRect",
-    app_grid,
-    "Usage tips must compute a centered visual frame inside the full bottom hit-test region",
-)
-require(
     r"addSubview\s*\(\s*usageTipsShieldView\s*,\s*positioned\s*:\s*\.above\s*,\s*relativeTo\s*:\s*scrollView\s*\)",
-    app_grid,
-    "Usage tips shield must sit above the AppGrid collection scroll view",
-)
-require(
     r"addSubview\s*\(\s*usageTipsView\s*,\s*positioned\s*:\s*\.above\s*,\s*relativeTo\s*:\s*usageTipsShieldView\s*\)",
-    app_grid,
-    "Visible usage tips HUD must sit above the transparent event shield",
-)
-require(
     r"claimUsageTipsEventRegion\s*\(\s*\)",
-    app_grid,
-    "AppGrid host must claim bottom tips events and suppress lower bubbles",
-)
-require(
     r"handleUsageTipsMouseDown\s*\(\s*_\s+event\s*:\s*NSEvent\s*\)\s*->\s*Bool",
-    app_grid,
-    "AppGrid host must expose a native AppKit event router for usage tips clicks",
-)
+]:
+    require(token, app_grid, f"usage tips click-through protection missing: {token}")
 require(
     r"addLocalMonitorForEvents\s*\(\s*matching\s*:\s*\[(?P<body>.*?)\.leftMouseDown(?P<body2>.*?)\.leftMouseUp(?P<body3>.*?)\.rightMouseDown(?P<body4>.*?)\.otherMouseUp",
     app_grid,
     "AppGrid host must intercept usage tips mouseDown/mouseUp events before NSCollectionView app items receive them",
 )
 require(
-    r"\.leftMouseUp(?P<body>.*?)\.rightMouseUp(?P<body2>.*?)\.otherMouseUp",
-    app_grid,
-    "AppGrid host must also swallow mouseUp events in the usage tips region so app icons below cannot open on release",
-)
-require(
     r"triggerButtons\s*:\s*event\.type\s*==\s*\.leftMouseDown",
     app_grid,
-    "Usage tips monitor must only trigger paging on left mouseDown, not on mouseUp or right/other clicks",
+    "usage tips monitor must only trigger page changes on left mouseDown",
 )
 require(
-    r"usageTipsHostPoint\s*\(\s*for\s+event\s*:\s*NSEvent\s*\)\s*->\s*NSPoint",
+    r"func\s+handleMouseEventFromHost\s*\(\s*_\s+event\s*:\s*NSEvent\s*,\s*triggerButtons\s*:\s*Bool\s*\)\s*->\s*Bool\s*\{(?P<body>.*?)if\s+triggerButtons,\s*routeButtonClickIfNeeded\s*\(\s*event\s*\)(?P<body2>.*?)claimInteractionFocus\(\)(?P<body3>.*?)return\s+true",
     app_grid,
-    "Usage tips mouse monitor must resolve the event position through the AppGrid host",
+    "host-routed tips clicks must consume the event and only trigger buttons on hit regions",
 )
-require(
-    r"window\.convertPoint\s*\(\s*fromScreen\s*:\s*NSEvent\.mouseLocation\s*\)",
-    app_grid,
-    "Usage tips hit testing must fall back to current screen mouse location when event.window is unreliable",
-)
-require(
-    r"self\.handleUsageTipsMouseEvent\s*\(\s*event\s*,(?P<body>.*?)triggerButtons\s*:\s*event\.type\s*==\s*\.leftMouseDown(?P<body2>.*?)return\s+nil",
-    app_grid,
-    "Usage tips mouse monitor must swallow handled bottom-tip events so app icons below cannot open",
-)
-require(
-    r"removeUsageTipsMouseMonitor\s*\(\s*\)",
-    app_grid,
-    "Usage tips mouse monitor must be removed when the AppGrid host leaves its window",
-)
-require(
-    r"func\s+handleMouseEventFromHost\s*\(\s*_\s+event\s*:\s*NSEvent\s*,\s*triggerButtons\s*:\s*Bool\s*\)\s*->\s*Bool\s*\{(?P<body>.*?)if\s+triggerButtons\s*,\s*routeButtonClickIfNeeded\s*\(\s*event\s*\)(?P<body2>.*?)claimInteractionFocus\s*\(\s*\)(?P<body3>.*?)return\s+true",
-    app_grid,
-    "Usage tips host-routed clicks must only trigger page changes on arrow hit regions and otherwise only consume the event",
-)
-if re.search(r"handleMouseEventFromHost\s*\(\s*_\s+event\s*:\s*NSEvent\s*,\s*triggerButtons\s*:\s*Bool\s*\)\s*->\s*Bool\s*\{(?P<body>.*?)target\.mouseDown", app_grid, re.S):
-    fail("Usage tips host-routed clicks must not redispatch arbitrary mouseDown events that can pierce to app icons")
-require(
-    r"override\s+func\s+mouseDown\s*\(\s*with\s+event\s*:\s*NSEvent\s*\)",
-    app_grid,
-    "Native usage tips bar must swallow mouseDown events instead of letting clicks close the grid",
-)
-require(
+if re.search(r"handleMouseEventFromHost\s*\(\s*_\s+event\s*:\s*NSEvent,\s*triggerButtons\s*:\s*Bool\s*\).*?target\.mouseDown", app_grid, re.S):
+    fail("usage tips host-routed clicks must not redispatch arbitrary mouseDown events")
+
+for token in [
     r"private\s+final\s+class\s+AppGridUsageTipIconButton\s*:\s*NSView\b",
-    app_grid,
-    "Usage tip navigation controls must be native AppKit hit-testable views",
-)
-require(
-    r"private\s+final\s+class\s+AppGridDecorativeImageView\s*:\s*NSImageView\b(?P<body>.*?)override\s+func\s+hitTest\s*\(\s*_\s+point\s*:\s*NSPoint\s*\)\s*->\s*NSView\?\s*\{\s*nil\s*\}",
-    app_grid,
-    "Usage tip icon images must not steal hit testing from their parent AppKit controls",
-)
-require(
-    r"private\s+final\s+class\s+AppGridUsageTipIconButton\s*:\s*NSView\b(?P<body>.*?)acceptsFirstMouse\s*\(\s*for\s+event\s*:\s*NSEvent\?\s*\)\s*->\s*Bool\s*\{\s*true\s*\}",
-    app_grid,
-    "Usage tip navigation controls must accept first mouse clicks in the floating overlay",
-)
-require(
+    r"override\s+func\s+acceptsFirstMouse\s*\(\s*for\s+event\s*:\s*NSEvent\?\s*\)\s*->\s*Bool\s*\{\s*true\s*\}",
     r"override\s+func\s+isAccessibilityElement\s*\(\s*\)\s*->\s*Bool\s*\{\s*true\s*\}",
-    app_grid,
-    "Usage tip navigation controls must be exposed as accessibility elements",
-)
-require(
     r"override\s+func\s+accessibilityRole\s*\(\s*\)\s*->\s*NSAccessibility\.Role\?\s*\{\s*\.button\s*\}",
-    app_grid,
-    "Usage tip navigation controls must expose the AX button role",
-)
-require(
     r"override\s+func\s+accessibilityPerformPress\s*\(\s*\)\s*->\s*Bool\s*\{(?P<body>.*?)action\?\(\)(?P<body2>.*?)return\s+true",
-    app_grid,
-    "Usage tip navigation controls must support AX press actions",
-)
-require(
-    r"override\s+var\s+mouseDownCanMoveWindow\s*:\s*Bool\s*\{\s*false\s*\}",
-    app_grid,
-    "Usage tips hit-test views must not let mouseDown move or dismiss the overlay window",
-)
-require(
-    r"func\s+selectUsageTip\s*\(\s*offset\s*:\s*Int\s*\)",
-    app_grid,
-    "Usage tip navigation must update the selected tip index from AppKit",
-)
+    r"var\s+hoveredTintColor\s*:\s*NSColor\?",
+    r"var\s+pressedTintColor\s*:\s*NSColor\?",
+    r"func\s+performPressFeedback\(\)",
+    r"private\s+func\s+updateIconTint\(\)",
+]:
+    require(token, app_grid, f"native usage tip control behavior missing: {token}")
 require(
     r"previousButton\.action\s*=\s*\{\s*\[weak\s+self\]\s+in\s+self\?\.selectUsageTip\s*\(\s*offset\s*:\s*-1\s*\)\s*\}",
     app_grid,
-    "Previous usage tip control must call the native selection handler",
+    "previous usage tip control must page backward",
 )
 require(
     r"nextButton\.action\s*=\s*\{\s*\[weak\s+self\]\s+in\s+self\?\.selectUsageTip\s*\(\s*offset\s*:\s*1\s*\)\s*\}",
     app_grid,
-    "Next usage tip control must call the native selection handler",
+    "next usage tip control must page forward",
 )
 require(
-    r"override\s+func\s+mouseDown\s*\(\s*with\s+event\s*:\s*NSEvent\s*\)\s*\{(?P<body>.*?)action\?\(\)",
+    r"routeButtonClickIfNeeded\s*\(_\s+event\s*:\s*NSEvent\s*\)(?P<body>.*?)nextButton\.frame\.insetBy(?P<body2>.*?)previousButton\.frame\.insetBy",
     app_grid,
-    "Native usage tip icon buttons must invoke their action directly on mouseDown",
+    "usage tip arrows must only respond inside their hit regions",
 )
 require(
-    r"onUsageTipIndexChange\s*\(\s*nextIndex\s*\)",
+    r"override\s+func\s+keyDown\s*\(\s*with\s+event\s*:\s*NSEvent\s*\)(?P<body>.*?)kVK_LeftArrow(?P<body2>.*?)kVK_RightArrow",
     app_grid,
-    "Native usage tip selection must publish the new index back to SwiftUI state",
-)
-require(
-    r"override\s+func\s+keyDown\s*\(\s*with\s+event\s*:\s*NSEvent\s*\)\s*\{(?P<body>.*?)kVK_LeftArrow(?P<body2>.*?)kVK_RightArrow",
-    app_grid,
-    "Focused native usage tips HUD must support left/right arrow key switching",
-)
-require(
-    r"formattedTipDetail\s*\(_\s+text\s*:\s*String\s*\)",
-    app_grid,
-    "Usage tips detail text must normalize separators for display",
-)
-require(
-    r"replacingOccurrences\s*\(\s*of\s*:\s*\"\\\\s\*\(\?:-->\|->\|>\|→\|＞\|,\)\\\\s\*\"\s*,\s*with\s*:\s*\"\\n\"",
-    app_grid,
-    "Usage tips detail text must turn navigation markers and commas into hard line breaks",
-)
-require(
-    r"setUsageTipsBubbleDisabled\s*\(\s*inside\s*\)",
-    app_grid,
-    "Hovering usage tips must suppress lower AppGrid bubbles",
-)
-require(
-    r"onUsageTipsHoverChange\s*\(\s*inside\s*\)",
-    app_grid,
-    "Hovering usage tips must notify ContentView to clear already visible SwiftUI bubbles",
-)
-require(
-    r"shouldSwallowUsageTipsBackdropClick\s*\(\s*at\s+location\s*:\s*NSPoint\s*\)\s*->\s*Bool",
-    apptag_app,
-    "DismissibleHostingView must not treat bottom usage tips clicks as backdrop taps",
-)
-require(
-    r"routeUsageTipsMouseDownIfNeeded\s*\(\s*event\s*\)",
-    apptag_app,
-    "DismissibleHostingView must forward bottom usage tips clicks to native AppKit controls before swallowing",
-)
-require(
-    r"findAppGridCollectionHost\s*\(\s*in\s+view\s*:\s*NSView\s*\)\s*->\s*AppGridCollectionHostView\?",
-    apptag_app,
-    "DismissibleHostingView must locate the native AppGrid host for usage tips event forwarding",
-)
-require(
-    r"AppGridUsageTipsMetrics\.reservedHeight",
-    apptag_app,
-    "Backdrop usage tips guard must match the native AppGrid reserved height",
-)
-require(
-    r'UserDefaults\.standard\.bool\s*\(\s*forKey\s*:\s*"hideUsageTips"\s*\)',
-    apptag_app,
-    "Backdrop usage tips guard must respect the hide usage tips setting",
-)
-require(
-    r"private\s+func\s+handleUsageTipsHoverChange\s*\(\s*_\s+hovering\s*:\s*Bool\s*\)",
-    content_view,
-    "ContentView must clear existing app bubbles while the native usage tips bar is hovered",
-)
-if re.search(r"AppGridUsageTipsBar\s*:\s*View|usageTipNavigationButton|ScrollView\s*\(\s*\.horizontal\s*,\s*showsIndicators\s*:\s*textHovered", content_view):
-    fail("usage tips must not be implemented with SwiftUI views in ContentView")
-if re.search(r"Text\s*\(\s*tr\s*\(\s*tip\.(?:titleKey|detailKey)", content_view):
-    fail("usage tip title/detail rendering must not use SwiftUI Text")
-require(
-    r"let\s+bottomContentPadding\s*:\s*CGFloat",
-    app_grid,
-    "AppGridCollectionView must accept bottom content padding",
-)
-if '"bottom=\\(Int(bottomContentPadding.rounded()))"' not in app_grid:
-    fail("AppGrid layout signature must include bottom content padding")
-require(
-    r"\+\s*max\s*\(\s*0\s*,\s*bottomContentPadding\s*\)",
-    app_grid,
-    "AppGrid layout plans must add bottom content padding to content height",
+    "focused native usage tips HUD must support left/right arrow keys",
 )
 
-tip_ids = [int(value) for value in re.findall(r"AppGridUsageTip\s*\(\s*id\s*:\s*(\d+)", content_view)]
-if tip_ids != list(range(1, 9)):
-    fail(f"usage tip IDs must be exactly 1 through 8, got {tip_ids}")
-if "usageTips.tip0" in content_view:
-    fail("usage tips must not expose a zero-based tip number")
+for token in [
+    r"shouldSwallowUsageTipsBackdropClick\s*\(\s*at\s+location\s*:\s*NSPoint\s*\)\s*->\s*Bool",
+    r"routeUsageTipsMouseDownIfNeeded\s*\(\s*event\s*\)",
+    r"findAppGridCollectionHost\s*\(\s*in\s+view\s*:\s*NSView\s*\)\s*->\s*AppGridCollectionHostView\?",
+    r"AppGridUsageTipsMetrics\.reservedHeight",
+    r'UserDefaults\.standard\.bool\s*\(\s*forKey\s*:\s*"hideUsageTips"\s*\)',
+]:
+    require(token, apptag_app, f"App window backdrop usage-tips protection missing: {token}")
 
 for source_name, source in {
     "ContentView.swift": content_view,
@@ -450,6 +332,12 @@ for source_name, source in {
         fail(f"{source_name} must not rely on macOS 15/26 availability for usage tips")
     if "scrollClipDisabled" in source:
         fail(f"{source_name} must avoid newer scrollClipDisabled behavior for macOS 14 compatibility")
+
+tip_ids = [int(value) for value in re.findall(r"AppGridUsageTip\s*\(\s*id\s*:\s*(\d+)", content_view)]
+if tip_ids != list(range(1, 9)):
+    fail(f"usage tip IDs must be exactly 1 through 8, got {tip_ids}")
+if "usageTips.tip0" in content_view:
+    fail("usage tips must not expose a zero-based tip number")
 
 json_files = sorted(localization_dir.glob("*.json"))
 if len(json_files) != 29:
@@ -467,6 +355,23 @@ for path in json_files:
         title = data[f"usageTips.tip{tip_index}.title"]
         if re.search(r"\s*[:：]\s*$", title):
             fail(f"{path.name} usageTips.tip{tip_index}.title must not end with a colon")
+    tip1_title = data["usageTips.tip1.title"]
+    tip1_detail = data["usageTips.tip1.detail"]
+    if path.stem == "en":
+        if tip1_title != "Tip 1 - Edit tags":
+            fail("en.json usageTips.tip1.title must describe editing tags")
+        if "Double-click" not in tip1_detail or "tag list" not in tip1_detail:
+            fail("en.json usageTips.tip1.detail must mention double-clicking a tag in the tag list")
+    if path.stem == "zh-Hans":
+        if tip1_title != "技巧1-编辑标签":
+            fail("zh-Hans.json usageTips.tip1.title must be 编辑标签")
+        if "双击标签" not in tip1_detail or "标签列表" not in tip1_detail:
+            fail("zh-Hans.json usageTips.tip1.detail must mention double-clicking in the tag list")
+    if path.stem == "zh-Hant":
+        if tip1_title != "技巧1-編輯標籤":
+            fail("zh-Hant.json usageTips.tip1.title must be 編輯標籤")
+        if "雙擊標籤" not in tip1_detail or "標籤列表" not in tip1_detail:
+            fail("zh-Hant.json usageTips.tip1.detail must mention double-clicking in the tag list")
     if path.stem not in {"zh-Hans", "zh-Hant"}:
         for tip_index in range(1, 9):
             detail = data[f"usageTips.tip{tip_index}.detail"]
@@ -478,5 +383,5 @@ for path in json_files:
             if not first or not second:
                 fail(f"{path.name} usageTips.tip{tip_index}.detail must have text on both sides of the comma line break")
 
-print("PASS usage tips QA: overlay, hide setting, macOS 14-safe implementation, and 29-language localizations are present")
+print("PASS usage tips QA: native split teaching banner, theme-aware glass, click protection, close action, and 29-language localizations are present")
 PY

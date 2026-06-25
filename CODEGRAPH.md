@@ -13,7 +13,7 @@
   - Keeps the most recent in-process `AppLibrarySnapshot` so newly-created overlay views can render immediately while background refresh catches up.
 
 - AppGrid collection renderer: `src/Apptag/AppGridCollectionView.swift`
-  - AppKit `NSCollectionView` implementation for grouped app layout, drag/drop, app ordering, bubbles, and usage tips overlay.
+  - AppKit `NSCollectionView` implementation for grouped app layout, drag/drop, app ordering, bubbles, and the native split teaching-banner usage tips overlay.
   - Should not own full-screen AppGrid theme gradients; it receives theme only for derived glass readability.
 
 - AppGrid theme model: `src/Apptag/AppGridTheme.swift`
@@ -44,7 +44,7 @@
 - `src/Scripts/macos14_build_metadata_qa.sh`
   - Verifies build metadata and deployment target.
 - `src/Scripts/usage_tips_qa.sh`
-  - Verifies usage tips overlay and 29-language coverage.
+  - Verifies native usage tips overlay, split teaching-banner layout, theme-aware accent/readability, click-through protection, close action, ordered-list details, and 29-language coverage.
 - `src/Scripts/tag_navigation_hover_scroll_qa.sh`
   - Verifies tag hover scroll semantics remain guarded.
 - `src/Scripts/tag_double_click_preferences_qa.sh`
@@ -61,5 +61,7 @@
 - The default theme preserves the original light AppGrid background.
 - Legacy users with `useDarkAppGrid=true` must land on the `deepBlue` theme.
 - Tag navigation single-click must keep immediate scroll behavior. Hover must keep guarded auto-scroll. Long-press must keep tag reorder behavior. Double-click may open Preferences on the Tags tab but must not replace those existing behaviors.
+- Usage tips must remain a native AppKit overlay, not SwiftUI. The bottom teaching banner must consume its own click region so it never opens underlying apps; only arrow hit regions change pages.
+- Usage tips title/detail text must remain readable across the default, dark, and bright App Grid themes; all visible usage-tip copy must stay complete across 29 localization files.
 
-Last updated: 2026-06-24, tag double-click opens Tags settings.
+Last updated: 2026-06-25, usage tips teaching banner visual optimization.

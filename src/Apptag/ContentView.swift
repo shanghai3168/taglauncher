@@ -1242,6 +1242,7 @@ struct ContentView: View {
                     },
                     onScrollActivity: handleAppGridScrollActivity,
                     onDragModeChange: { setAppDragMode($0) },
+                    onHideUsageTips: { hideUsageTips = true },
                     onUsageTipsHoverChange: handleUsageTipsHoverChange
                 )
             }
