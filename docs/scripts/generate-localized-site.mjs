@@ -88,6 +88,13 @@ function homePage(locale) {
   const modes = modeLabels(app);
   const support = pageFile("support", locale);
   const privacy = privacyFile(locale);
+  const viewsLead = copy.siteViewsLead || copy.viewsLead;
+  const tagsVisualLine = copy.siteTagsVisualLine
+    ? esc(copy.siteTagsVisualLine)
+    : `<strong>${esc(app["settings.coloredContainer"] || "Colored Container")}</strong> · ${esc(app["settings.gridContainer"] || "Colorless Grid")}`;
+  const tagsDragLine = copy.siteTagsDragLine
+    ? esc(copy.siteTagsDragLine)
+    : `${esc(app["edit.dragHint"] || "Drag to reorder")} · JSON`;
   return `<!DOCTYPE html>
 <html lang="${esc(locale.htmlLang)}" dir="${esc(locale.dir)}">
 <head>
@@ -125,7 +132,7 @@ ${header("index", locale, copy)}
 
       <div class="views__copy">
         <h2 class="views__headline">${esc(copy.viewsTitle)}</h2>
-        <p class="views__lead">${esc(copy.viewsLead)}</p>
+        <p class="views__lead">${esc(viewsLead)}</p>
         <hr class="views__rule" aria-hidden="true">
         <div class="views__details">
           <div class="views__modes-block">
@@ -149,8 +156,8 @@ ${header("index", locale, copy)}
         <h2 class="tags__headline">${esc(copy.tagsTitle)}</h2>
         <ul class="tags__points">
           <li>${esc(copy.tagsLead)}</li>
-          <li><strong>${esc(app["settings.coloredContainer"] || "Colored Container")}</strong> · ${esc(app["settings.gridContainer"] || "Colorless Grid")}</li>
-          <li>${esc(app["edit.dragHint"] || "Drag to reorder")} · JSON</li>
+          <li>${tagsVisualLine}</li>
+          <li>${tagsDragLine}</li>
         </ul>
       </div>
 
@@ -223,7 +230,7 @@ ${header("index", locale, copy)}
     <div class="layout">
       <h2 class="features__headline">${esc(copy.smartTitle)}</h2>
       <div class="feature-grid">
-        <div class="feature"><strong>App Grid</strong>${esc(copy.viewsLead)}</div>
+        <div class="feature"><strong>App Grid</strong>${esc(viewsLead)}</div>
         <div class="feature"><strong>Quick Search</strong>${esc(copy.searchLead)}</div>
         <div class="feature"><strong>${esc(app["settings.tags"] || "Tags")}</strong>${esc(copy.tagsLead)}</div>
         <div class="feature"><strong>${esc(app["settings.backup"] || "Backup & Restore")}</strong>${esc(copy.backupLead)}</div>
